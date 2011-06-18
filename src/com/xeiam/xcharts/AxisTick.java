@@ -149,6 +149,12 @@ public class AxisTick implements IChartPart {
             // System.out.println("b= " + b);
             tickLabels.add(format(b.doubleValue()));
             int tickLabelPosition = (int) (leftMargin + ((b.doubleValue() - axis.getMin()) / (axis.getMax() - axis.getMin()) * tickSpace));
+
+            // a check if all axis data are the exact same values
+            if (Math.abs(axis.getMax() - axis.getMin()) / 5 == 0.0) {
+                tickLabelPosition = (int) (leftMargin + tickSpace / 2.0);
+            }
+
             tickLocations.add(tickLabelPosition);
         }
     }
@@ -162,7 +168,11 @@ public class AxisTick implements IChartPart {
         // e.g. 724.1 --> 7.241 * 10 ** 2
         double mantissa = gridStepHint;
         int exponent = 0;
-        if (mantissa < 1) {
+        if (mantissa == 0) {
+            // mantissa = 0.0;
+            exponent = 1;
+
+        } else if (mantissa < 1) {
             while (mantissa < 1) {
                 mantissa *= 10.0;
                 exponent--;

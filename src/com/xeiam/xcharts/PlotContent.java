@@ -75,6 +75,16 @@ public class PlotContent implements IChartPart {
                 int xTransform = (int) (xLeftMargin + ((xData[i] - xMin) / (xMax - xMin) * xTickSpace));
                 int yTransform = (int) (bounds.getHeight() - (yLeftMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));
 
+                // a check if all y data are the exact same values
+                if (Math.abs(xMax - xMin) / 5 == 0.0) {
+                    xTransform = (int) (bounds.getWidth() / 2.0);
+                }
+
+                // a check if all y data are the exact same values
+                if (Math.abs(yMax - yMin) / 5 == 0.0) {
+                    yTransform = (int) (bounds.getHeight() / 2.0);
+                }
+
                 int xOffset = (int) (bounds.getX() + xTransform - 1);
                 int yOffset = (int) (bounds.getY() + yTransform);
 

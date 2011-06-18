@@ -23,33 +23,21 @@ import javax.swing.JPanel;
 import com.xeiam.xcharts.Chart;
 import com.xeiam.xcharts.JChartPanel;
 import com.xeiam.xcharts.series.Series;
-import com.xeiam.xcharts.series.SeriesMarker;
 
 /**
+ * Demonstrated/Tests plotting horizontal and vertical lines
+ * 
  * @author timmolter
  */
-public class SwingChart {
+public class SwingChart3 {
 
     private static void createAndShowGUI() {
 
-        // // generates sine data
-        // int size = 100;
-        // double[] xData1 = new double[size + 1];
-        // double[] yData1 = new double[size + 1];
-        // for (int i = 0; i <= size; i++) {
-        // double radians = (Math.PI / (size / 2) * i);
-        // xData1[i] = i - size / 2;
-        // yData1[i] = size * Math.sin(radians);
-        // }
-
         // generates linear data
-        int size2 = 100;
-        double[] xData2 = new double[size2 + 1];
-        double[] yData2 = new double[size2 + 1];
-        for (int i = 0; i <= size2; i++) {
-            xData2[i] = -size2 + 2 * i;
-            yData2[i] = -size2 + 2 * i;
-        }
+        double[] xData1 = new double[] { 0.0, 1.0, 2.0 };
+        double[] yData1 = new double[] { 0.0, 0.0, 0.0 };
+        double[] xData2 = new double[] { 0.0, 0.0, 0.0 };
+        double[] yData2 = new double[] { 0.0, 1.0, 2.0 };
 
         // Create and set up the window.
         JFrame frame = new JFrame("XChart");
@@ -67,19 +55,9 @@ public class SwingChart {
         // chart.setChartLegendVisible(false);
         // chart.setAxisTitlesVisible(false);
 
-        // Series 1
-        // Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);
-        // series1.setLineColor(SeriesColor.PURPLE);
-        // series1.setLineStyle(SeriesLineStyle.NONE);
-        // series1.setMarkerColor(SeriesColor.GREEN);
-        // series1.setMarker(SeriesMarker.NONE);
-
-        // Series 2
-        Series series2 = chart.addSeries("y=x", xData2, yData2);
-        // series2.setLineColor(SeriesColor.PURPLE);
-        // series2.setLineStyle(SeriesLineStyle.NONE);
-        // series2.setMarkerColor(SeriesColor.GREEN);
-        series2.setMarker(SeriesMarker.NONE);
+        // Series
+        Series series1 = chart.addSeries("y=0", xData1, yData1);
+        Series series2 = chart.addSeries("x=0", xData2, yData2);
 
         // Swing
         JPanel chartPanel = new JChartPanel(chart);

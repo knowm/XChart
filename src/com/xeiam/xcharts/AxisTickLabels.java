@@ -60,7 +60,7 @@ public class AxisTickLabels implements IChartPart {
 
         g.setColor(foreground);
 
-        if (axis.getDirection() == Axis.Direction.Y) {
+        if (axis.getDirection() == Axis.Direction.Y) { // Y-Axis
 
             int xOffset = (int) (axis.getAxisTitle().getBounds().getX() + axis.getAxisTitle().getBounds().getWidth());
             int yOffset = (int) (axis.getPaintZone().getY());
