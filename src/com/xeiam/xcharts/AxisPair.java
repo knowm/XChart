@@ -98,16 +98,15 @@ public class AxisPair implements IChartPart {
     }
 
     public static int getTickSpace(int workingSpace) {
-
         int tickSpace = (int) (workingSpace * 0.95);
         return tickSpace;
     }
 
-    public static int getLeftMargin(int workingSpace, int tickSpace) {
+    public static int getMargin(int workingSpace, int tickSpace) {
 
         int marginSpace = workingSpace - tickSpace;
-        int leftMargin = (int) (marginSpace / 2.0);
-        return leftMargin;
+        int margin = (int) (marginSpace / 2.0);
+        return margin;
     }
 
     @Override

@@ -131,47 +131,51 @@ public class AxisTick implements IChartPart {
      */
     private void determineAxisTick() {
 
+        System.out.println("workingSpace= " + workingSpace);
+
         int tickSpace = AxisPair.getTickSpace(workingSpace);
-        int leftMargin = AxisPair.getLeftMargin(workingSpace, tickSpace);
+        System.out.println("tickSpace= " + tickSpace);
+
+        int margin = AxisPair.getMargin(workingSpace, tickSpace);
 
         final BigDecimal MIN = new BigDecimal(new Double(axis.getMin()).toString());
         BigDecimal firstPosition;
-        BigDecimal tickStep = getGridStep();
+        BigDecimal gridStep = getGridStep(tickSpace);
 
-        if (MIN.remainder(tickStep).doubleValue() <= 0) {
-            firstPosition = MIN.subtract(MIN.remainder(tickStep));
+        double xyz = MIN.remainder(gridStep).doubleValue();
+        if (xyz <= 0.0) {
+            firstPosition = MIN.subtract(MIN.remainder(gridStep));
         } else {
-            firstPosition = MIN.subtract(MIN.remainder(tickStep)).add(tickStep);
+            firstPosition = MIN.subtract(MIN.remainder(gridStep)).add(gridStep);
         }
 
-        for (BigDecimal b = firstPosition; b.doubleValue() <= axis.getMax(); b = b.add(tickStep)) {
+        for (BigDecimal b = firstPosition; b.doubleValue() <= axis.getMax(); b = b.add(gridStep)) {
 
             // System.out.println("b= " + b);
             tickLabels.add(format(b.doubleValue()));
-            int tickLabelPosition = (int) (leftMargin + ((b.doubleValue() - axis.getMin()) / (axis.getMax() - axis.getMin()) * tickSpace));
+            int tickLabelPosition = (int) (margin + ((b.doubleValue() - axis.getMin()) / (axis.getMax() - axis.getMin()) * tickSpace));
+            // System.out.println("tickLabelPosition= " + tickLabelPosition);
 
             // a check if all axis data are the exact same values
             if (Math.abs(axis.getMax() - axis.getMin()) / 5 == 0.0) {
-                tickLabelPosition = (int) (leftMargin + tickSpace / 2.0);
+                tickLabelPosition = (int) (margin + tickSpace / 2.0);
             }
 
             tickLocations.add(tickLabelPosition);
         }
     }
 
-    private BigDecimal getGridStep() {
+    private BigDecimal getGridStep(int tickSpace) {
 
         double length = Math.abs(axis.getMax() - axis.getMin());
-        double gridStepHint = length / workingSpace * DEFAULT_TICK_MARK_STEP_HINT;
+        double gridStepHint = length / tickSpace * DEFAULT_TICK_MARK_STEP_HINT;
 
         // gridStepHint --> mantissa * 10 ** exponent
         // e.g. 724.1 --> 7.241 * 10 ** 2
         double mantissa = gridStepHint;
         int exponent = 0;
         if (mantissa == 0) {
-            // mantissa = 0.0;
             exponent = 1;
-
         } else if (mantissa < 1) {
             while (mantissa < 1) {
                 mantissa *= 10.0;

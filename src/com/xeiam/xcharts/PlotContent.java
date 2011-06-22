@@ -53,11 +53,11 @@ public class PlotContent implements IChartPart {
 
             // X-Axis
             int xTickSpace = AxisPair.getTickSpace((int) bounds.getWidth());
-            int xLeftMargin = AxisPair.getLeftMargin((int) bounds.getWidth(), xTickSpace);
+            int xLeftMargin = AxisPair.getMargin((int) bounds.getWidth(), xTickSpace);
 
             // Y-Axis
             int yTickSpace = AxisPair.getTickSpace((int) bounds.getHeight());
-            int yLeftMargin = AxisPair.getLeftMargin((int) bounds.getHeight(), yTickSpace);
+            int yTopMargin = AxisPair.getMargin((int) bounds.getHeight(), yTickSpace);
 
             // data points
             double[] xData = series.getxData();
@@ -72,8 +72,16 @@ public class PlotContent implements IChartPart {
 
             for (int i = 0; i < xData.length; i++) {
 
+                if (Double.isInfinite(xData[i]) || Double.isNaN(xData[i])) {
+                    throw new RuntimeException("Infinite or NaN values in xAxis Data not allowed!!!");
+                }
+
+                if (Double.isInfinite(yData[i]) || Double.isNaN(yData[i])) {
+                    throw new RuntimeException("Infinite or NaN values in yAxis Data not allowed!!!");
+                }
+
                 int xTransform = (int) (xLeftMargin + ((xData[i] - xMin) / (xMax - xMin) * xTickSpace));
-                int yTransform = (int) (bounds.getHeight() - (yLeftMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));
+                int yTransform = (int) (bounds.getHeight() - (yTopMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));
 
                 // a check if all y data are the exact same values
                 if (Math.abs(xMax - xMin) / 5 == 0.0) {
