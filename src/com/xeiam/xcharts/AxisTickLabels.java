@@ -68,11 +68,11 @@ public class AxisTickLabels implements IChartPart {
             for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
                 String tickLabel = axisTick.getTickLabels().get(i);
-                int tickLocation = axisTick.getTickLocations().get(axisTick.getTickLocations().size() - i - 1); // reverse traverse
+                int tickLocation = axisTick.getTickLocations().get(i);
 
                 TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
                 Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
-                layout.draw(g, xOffset, (int) (yOffset + tickLocation + tickLabelBounds.getHeight() / 2.0));
+                layout.draw(g, xOffset, (int) (yOffset + axis.getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
                 if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
                     maxTickLabelWidth = (int) tickLabelBounds.getWidth();

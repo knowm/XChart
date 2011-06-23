@@ -57,7 +57,7 @@ public class AxisTickMarks implements IChartPart {
 
         g.setColor(foreground);
 
-        if (axis.getDirection() == Axis.Direction.Y) {
+        if (axis.getDirection() == Axis.Direction.Y) { // Y-Axis
 
             int xOffset = (int) (axisTick.getAxisTickLabels().getBounds().getX() + axisTick.getAxisTickLabels().getBounds().getWidth() + AxisTick.AXIS_TICK_PADDING);
             int yOffset = (int) (axis.getPaintZone().getY());
@@ -68,7 +68,7 @@ public class AxisTickMarks implements IChartPart {
                 g.setColor(foreground);
                 g.setStroke(stroke);
 
-                g.drawLine(xOffset, yOffset + tickLocation, xOffset + TICK_LENGTH, yOffset + tickLocation);
+                g.drawLine(xOffset, yOffset + (int) (axis.getPaintZone().getHeight() - tickLocation), xOffset + TICK_LENGTH, yOffset + (int) (axis.getPaintZone().getHeight() - tickLocation));
 
             }
 
@@ -77,7 +77,7 @@ public class AxisTickMarks implements IChartPart {
             // g.setColor(Color.blue);
             // g.draw(bounds);
 
-        } else {
+        } else { // X-Axis
 
             int xOffset = (int) (axis.getPaintZone().getX());
             int yOffset = (int) (axisTick.getAxisTickLabels().getBounds().getY() - AxisTick.AXIS_TICK_PADDING);
