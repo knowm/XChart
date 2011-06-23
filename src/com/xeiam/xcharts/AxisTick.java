@@ -131,10 +131,10 @@ public class AxisTick implements IChartPart {
      */
     private void determineAxisTick() {
 
-        System.out.println("workingSpace= " + workingSpace);
+        // System.out.println("workingSpace= " + workingSpace);
 
         int tickSpace = AxisPair.getTickSpace(workingSpace);
-        System.out.println("tickSpace= " + tickSpace);
+        // System.out.println("tickSpace= " + tickSpace);
 
         int margin = AxisPair.getMargin(workingSpace, tickSpace);
 
