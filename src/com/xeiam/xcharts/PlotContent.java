@@ -72,45 +72,48 @@ public class PlotContent implements IChartPart {
 
             for (int i = 0; i < xData.length; i++) {
 
-                if (Double.isInfinite(xData[i]) || Double.isNaN(xData[i])) {
-                    throw new RuntimeException("Infinite or NaN values in xAxis Data not allowed!!!");
-                }
+                // if (Double.isInfinite(xData[i]) || Double.isNaN(xData[i])) {
+                // throw new RuntimeException("Infinite or NaN values in xAxis Data not allowed!!!");
+                // }
+                //
+                // if (Double.isInfinite(yData[i]) || Double.isNaN(yData[i])) {
+                // throw new RuntimeException("Infinite or NaN values in yAxis Data not allowed!!!");
+                // }
 
-                if (Double.isInfinite(yData[i]) || Double.isNaN(yData[i])) {
-                    throw new RuntimeException("Infinite or NaN values in yAxis Data not allowed!!!");
-                }
+                if (!Double.isInfinite(xData[i]) && !Double.isNaN(xData[i]) && !Double.isInfinite(yData[i]) && !Double.isNaN(yData[i])) {
 
-                int xTransform = (int) (xLeftMargin + ((xData[i] - xMin) / (xMax - xMin) * xTickSpace));
-                int yTransform = (int) (bounds.getHeight() - (yTopMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));
+                    int xTransform = (int) (xLeftMargin + ((xData[i] - xMin) / (xMax - xMin) * xTickSpace));
+                    int yTransform = (int) (bounds.getHeight() - (yTopMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));
 
-                // a check if all y data are the exact same values
-                if (Math.abs(xMax - xMin) / 5 == 0.0) {
-                    xTransform = (int) (bounds.getWidth() / 2.0);
-                }
-
-                // a check if all y data are the exact same values
-                if (Math.abs(yMax - yMin) / 5 == 0.0) {
-                    yTransform = (int) (bounds.getHeight() / 2.0);
-                }
-
-                int xOffset = (int) (bounds.getX() + xTransform - 1);
-                int yOffset = (int) (bounds.getY() + yTransform);
-
-                // paint line
-                if (series.getLineStyle() != null) {
-                    if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
-                        g.setColor(series.getLineColor());
-                        g.setStroke(series.getLineStyle());
-                        g.drawLine(previousX, previousY, xOffset, yOffset);
+                    // a check if all y data are the exact same values
+                    if (Math.abs(xMax - xMin) / 5 == 0.0) {
+                        xTransform = (int) (bounds.getWidth() / 2.0);
                     }
-                    previousX = xOffset;
-                    previousY = yOffset;
-                }
 
-                // paint marker
-                if (series.getMarker() != null) {
-                    g.setColor(series.getMarkerColor());
-                    series.getMarker().paint(g, xOffset, yOffset);
+                    // a check if all y data are the exact same values
+                    if (Math.abs(yMax - yMin) / 5 == 0.0) {
+                        yTransform = (int) (bounds.getHeight() / 2.0);
+                    }
+
+                    int xOffset = (int) (bounds.getX() + xTransform - 1);
+                    int yOffset = (int) (bounds.getY() + yTransform);
+
+                    // paint line
+                    if (series.getLineStyle() != null) {
+                        if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+                            g.setColor(series.getLineColor());
+                            g.setStroke(series.getLineStyle());
+                            g.drawLine(previousX, previousY, xOffset, yOffset);
+                        }
+                        previousX = xOffset;
+                        previousY = yOffset;
+                    }
+
+                    // paint marker
+                    if (series.getMarker() != null) {
+                        g.setColor(series.getMarkerColor());
+                        series.getMarker().paint(g, xOffset, yOffset);
+                    }
                 }
             }
         }
