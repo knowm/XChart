@@ -15,14 +15,11 @@
  */
 package com.xeiam.xcharts.example;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+import com.xeiam.swing.SwingHelper;
 import com.xeiam.xcharts.Chart;
-import com.xeiam.xcharts.JChartPanel;
 import com.xeiam.xcharts.series.Series;
+import com.xeiam.xcharts.series.SeriesColor;
+import com.xeiam.xcharts.series.SeriesLineStyle;
 import com.xeiam.xcharts.series.SeriesMarker;
 
 /**
@@ -32,15 +29,15 @@ public class SwingChart {
 
     private static void createAndShowGUI() {
 
-        // // generates sine data
-        // int size = 100;
-        // double[] xData1 = new double[size + 1];
-        // double[] yData1 = new double[size + 1];
-        // for (int i = 0; i <= size; i++) {
-        // double radians = (Math.PI / (size / 2) * i);
-        // xData1[i] = i - size / 2;
-        // yData1[i] = size * Math.sin(radians);
-        // }
+        // generates sine data
+        int size = 100;
+        double[] xData1 = new double[size + 1];
+        double[] yData1 = new double[size + 1];
+        for (int i = 0; i <= size; i++) {
+            double radians = (Math.PI / (size / 2) * i);
+            xData1[i] = i - size / 2;
+            yData1[i] = size * Math.sin(radians);
+        }
 
         // generates linear data
         int size2 = 100;
@@ -52,9 +49,6 @@ public class SwingChart {
         }
 
         // Create and set up the window.
-        JFrame frame = new JFrame("XChart");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setUndecorated(true);
 
         // Create Chart
         Chart chart = new Chart(800, 600);
@@ -68,29 +62,21 @@ public class SwingChart {
         // chart.setAxisTitlesVisible(false);
 
         // Series 1
-        // Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);
-        // series1.setLineColor(SeriesColor.PURPLE);
-        // series1.setLineStyle(SeriesLineStyle.NONE);
-        // series1.setMarkerColor(SeriesColor.GREEN);
-        // series1.setMarker(SeriesMarker.NONE);
+        Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);
+        series1.setLineColor(SeriesColor.PURPLE);
+        series1.setLineStyle(SeriesLineStyle.NONE);
+        series1.setMarkerColor(SeriesColor.GREEN);
+        series1.setMarker(SeriesMarker.NONE);
 
         // Series 2
-        Series series2 = chart.addSeries("y=x", xData2, yData2);
+        // Series series2 = chart.addSeries("y=x", xData2, yData2);
         // series2.setLineColor(SeriesColor.PURPLE);
         // series2.setLineStyle(SeriesLineStyle.NONE);
         // series2.setMarkerColor(SeriesColor.GREEN);
-        series2.setMarker(SeriesMarker.NONE);
+        // series2.setMarker(SeriesMarker.NONE);
 
-        // Swing
-        JPanel chartPanel = new JChartPanel(chart);
-
-        // add the panel to the content pane
-        frame.getContentPane().add(chartPanel, BorderLayout.CENTER);
-
-        // Display the window
-        frame.pack();
-        frame.setLocationRelativeTo(null); // centers on screen
-        frame.setVisible(true);
+        SwingHelper swingHelper = new SwingHelper(chart);
+        swingHelper.displayChart();
     }
 
     public static void main(String[] args) {

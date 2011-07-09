@@ -25,18 +25,32 @@ import com.xeiam.xcharts.series.SeriesMarker;
  * 
  * @author timmolter
  */
-public class SwingChart4 {
+public class SwingChart5 {
 
     private static void createAndShowGUI() {
 
-        // generates linear data
-        double[] yData1 = new double[] { 0.0, 0.0, 0.0, -10.0, 15.0, 15.0 };
+        Chart[] charts = new Chart[3];
+        for (int i = 0; i < charts.length; i++) {
+            charts[i] = getRandomWalkChart(1000);
+        }
+
+        SwingHelper swingHelper = new SwingHelper(charts);
+        swingHelper.displayChart();
+
+    }
+
+    private static Chart getRandomWalkChart(int N) {
+
+        double[] y = new double[N];
+        for (int i = 1; i < y.length; i++) {
+            y[i] = y[i - 1] + Math.random() - .5;
+        }
 
         // Create Chart
         Chart chart = new Chart(600, 300);
 
         // Customize Chart
-        chart.setChartTitle("Sample Chart");
+        chart.setChartTitle("Random Walk");
         chart.setXAxisTitle("X");
         chart.setYAxisTitle("Y");
         chart.setChartTitleVisible(true);
@@ -44,11 +58,10 @@ public class SwingChart4 {
         chart.setAxisTitlesVisible(true);
 
         // Series
-        Series series1 = chart.addSeries("y=0", null, yData1);
+        Series series1 = chart.addSeries("y=0", null, y);
         series1.setMarker(SeriesMarker.NONE);
 
-        SwingHelper swingHelper = new SwingHelper(chart);
-        swingHelper.displayChart();
+        return chart;
 
     }
 

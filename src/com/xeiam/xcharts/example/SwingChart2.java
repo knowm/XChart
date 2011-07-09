@@ -15,13 +15,8 @@
  */
 package com.xeiam.xcharts.example;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
+import com.xeiam.swing.SwingHelper;
 import com.xeiam.xcharts.Chart;
-import com.xeiam.xcharts.JChartPanel;
 import com.xeiam.xcharts.series.Series;
 
 /**
@@ -30,11 +25,6 @@ import com.xeiam.xcharts.series.Series;
 public class SwingChart2 {
 
     private static void createAndShowGUI() {
-
-        // Create and set up the window.
-        JFrame frame = new JFrame("XChart");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setUndecorated(true);
 
         // Create Chart
         Chart chart = new Chart(800, 600);
@@ -65,16 +55,8 @@ public class SwingChart2 {
             // series.setMarker(SeriesMarker.NONE);
         }
 
-        // Swing
-        JPanel chartPanel = new JChartPanel(chart);
-
-        // add the panel to the content pane
-        frame.getContentPane().add(chartPanel, BorderLayout.CENTER);
-
-        // Display the window
-        frame.pack();
-        frame.setLocationRelativeTo(null); // centers on screen
-        frame.setVisible(true);
+        SwingHelper swingHelper = new SwingHelper(chart);
+        swingHelper.displayChart();
     }
 
     public static void main(String[] args) {
