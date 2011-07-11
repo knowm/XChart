@@ -42,7 +42,6 @@ public class AxisTickLabels implements IChartPart {
     protected AxisTickLabels(Axis axis, AxisTick axisTick) {
 
         this.axis = axis;
-
         this.axisTick = axisTick;
     }
 

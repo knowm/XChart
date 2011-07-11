@@ -38,15 +38,16 @@ public class AxisTick implements IChartPart {
 
     private int workingSpace;
 
-    // private double[] data;
-
-    // /** the default tick mark step hint */
+    /** the default tick mark step hint */
     private static final int DEFAULT_TICK_MARK_STEP_HINT = 64;
 
     protected final static int AXIS_TICK_PADDING = 4;
 
-    /** the format for tick labels */
-    private Format format = new DecimalFormat("#.###########");
+    /** the normal format for tick labels */
+    private Format normalFormat = new DecimalFormat("#.###########");
+
+    /** the scientific format for tick labels */
+    private Format scientificFormat = new DecimalFormat("0.###E0");
 
     /** the bounds */
     private Rectangle bounds = new Rectangle(); // default all-zero rectangle
@@ -226,7 +227,11 @@ public class AxisTick implements IChartPart {
 
     private String format(double value) {
 
-        return this.format.format(value);
+        if (Math.abs(value) < 9999 && Math.abs(value) > .0001) {
+            return this.normalFormat.format(value);
+        } else {
+            return this.scientificFormat.format(value);
+        }
     }
 
 }
