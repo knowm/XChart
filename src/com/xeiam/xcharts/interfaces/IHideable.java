@@ -6,9 +6,10 @@
  *******************************************************************************/
 package com.xeiam.xcharts.interfaces;
 
-
 /**
  * Chart Legend interface
+ * 
+ * @author timmolter
  */
 public interface IHideable extends IChartPart {
 

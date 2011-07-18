@@ -13,44 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xcharts.example;
+package com.xeiam.examples;
 
 import com.xeiam.swing.SwingHelper;
 import com.xeiam.xcharts.Chart;
 import com.xeiam.xcharts.series.Series;
+import com.xeiam.xcharts.series.SeriesMarker;
 
 /**
  * Demonstrated/Tests plotting horizontal and vertical lines
  * 
  * @author timmolter
  */
-public class SwingChart3 {
+public class SwingChart4 {
 
     private static void createAndShowGUI() {
 
         // generates linear data
-        double[] xData1 = new double[] { 0.0, 1.0, 2.0 };
-        double[] yData1 = new double[] { 0.0, 0.0, 0.0 };
-        double[] xData2 = new double[] { 0.0, 0.0, 0.0 };
-        double[] yData2 = new double[] { 0.0, 1.0, 2.0 };
+        double[] yData1 = new double[] { 0.0, 0.0, 0.0, -10.0, 15.0, 15.0 };
 
         // Create Chart
-        Chart chart = new Chart(800, 600);
+        Chart chart = new Chart(600, 300);
 
         // Customize Chart
         chart.setChartTitle("Sample Chart");
         chart.setXAxisTitle("X");
         chart.setYAxisTitle("Y");
-        // chart.setChartTitleVisible(false);
-        // chart.setChartLegendVisible(false);
-        // chart.setAxisTitlesVisible(false);
+        chart.setChartTitleVisible(true);
+        chart.setChartLegendVisible(true);
+        chart.setAxisTitlesVisible(true);
 
         // Series
-        Series series1 = chart.addSeries("y=0", xData1, yData1);
-        Series series2 = chart.addSeries("x=0", xData2, yData2);
+        Series series1 = chart.addSeries("y=0", null, yData1);
+        series1.setMarker(SeriesMarker.NONE);
 
         SwingHelper swingHelper = new SwingHelper(chart);
         swingHelper.displayChart();
+
     }
 
     public static void main(String[] args) {

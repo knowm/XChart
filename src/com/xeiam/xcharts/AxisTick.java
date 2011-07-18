@@ -1,9 +1,18 @@
-/*******************************************************************************
- * Copyright (c) 2008-2011 SWTChart project. All rights reserved. 
- * 
- * This code is distributed under the terms of the Eclipse Public License v1.0
- * which is available at http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+/**
+ * Copyright 2011 Xeiam LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.xeiam.xcharts;
 
 import java.awt.Graphics2D;
@@ -227,7 +236,7 @@ public class AxisTick implements IChartPart {
 
     private String format(double value) {
 
-        if (Math.abs(value) < 9999 && Math.abs(value) > .0001) {
+        if (Math.abs(value) < 9999 && Math.abs(value) > .0001 || value == 0) {
             return this.normalFormat.format(value);
         } else {
             return this.scientificFormat.format(value);

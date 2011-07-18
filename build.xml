@@ -55,4 +55,22 @@
    <target name="jar" depends="build, delete">
     </target>
 	
+	<target name="javadoc">
+	    <javadoc
+
+	          access="public"
+	           destdir="${javadoc.dir}"
+	           author="true"
+	           version="true"
+	           use="true"
+	           windowtitle="com.xeiam.xchart"
+	       >
+
+	        <fileset dir="${src.dir}" defaultexcludes="yes">
+	            <include name="**/*.java"/>
+	            <exclude name="org/test/**/*.java" />
+	        </fileset>
+	    </javadoc>
+	</target>
+	
 </project>
