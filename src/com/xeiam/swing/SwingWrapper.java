@@ -29,7 +29,9 @@ import com.xeiam.xcharts.JChartPanel;
  */
 public class SwingWrapper {
 
-    Chart[] charts;
+    private Chart[] charts;
+    private int numRows;
+    private int numColumns;
 
     /**
      * Constructor
@@ -46,8 +48,10 @@ public class SwingWrapper {
      * 
      * @param charts
      */
-    public SwingWrapper(Chart[] charts) {
+    public SwingWrapper(Chart[] charts, int numRows, int numColumns) {
         this.charts = charts;
+        this.numRows = numRows;
+        this.numColumns = numColumns;
     }
 
     /**
@@ -80,7 +84,7 @@ public class SwingWrapper {
     /**
      * Display the chart in a Swing JFrame
      */
-    public void displayChartMatrix(final int numRows, final int numColumns) {
+    public void displayChartMatrix() {
 
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.

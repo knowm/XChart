@@ -20,6 +20,8 @@ import com.xeiam.xcharts.Chart;
 import com.xeiam.xcharts.QuickChart;
 
 /**
+ * Create a chart matrix
+ * 
  * @author timmolter
  */
 public class Example4 {
@@ -39,13 +41,12 @@ public class Example4 {
                 // yData2d[k] = getRandomWalk(1000);
                 // }
                 // charts[chartCount++] = QuickChart.getChart(i + "," + j, "X", "Y", null, null, yData2d);
-                charts[chartCount++] = QuickChart.getChart(i + "," + j, "X", "Y", "random walk", null, getRandomWalk(1000));
+                charts[chartCount++] = QuickChart.getChart(i + "," + j, "X", "Y", null, null, getRandomWalk(1000));
 
             }
         }
 
-        SwingWrapper swingWrapper = new SwingWrapper(charts);
-        swingWrapper.displayChartMatrix(numRows, numCols);
+        new SwingWrapper(charts, numRows, numCols).displayChartMatrix();
 
     }
 

@@ -56,7 +56,7 @@ public class QuickChart {
     public static Chart getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
 
         // Create Chart
-        Chart chart = new Chart(600, 300);
+        Chart chart = new Chart(400, 280);
 
         // Customize Chart
         chart.setChartTitle(chartTitle);
