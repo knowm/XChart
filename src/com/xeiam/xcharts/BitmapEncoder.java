@@ -29,6 +29,8 @@ import javax.servlet.ServletOutputStream;
 public class BitmapEncoder {
 
     /**
+     * Saves a chart as a PNG file
+     * 
      * @param chart
      * @param pFileName
      */
@@ -45,6 +47,8 @@ public class BitmapEncoder {
     }
 
     /**
+     * Streams a chart as a PNG file
+     * 
      * @param out
      * @param chart
      */

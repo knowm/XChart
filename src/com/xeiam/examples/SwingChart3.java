@@ -26,7 +26,7 @@ import com.xeiam.xcharts.series.Series;
  */
 public class SwingChart3 {
 
-    private static void createAndShowGUI() {
+    public static void main(String[] args) {
 
         // generates linear data
         double[] xData1 = new double[] { 0.0, 1.0, 2.0 };
@@ -53,9 +53,4 @@ public class SwingChart3 {
         swingHelper.displayChart();
     }
 
-    public static void main(String[] args) {
-
-        createAndShowGUI();
-
-    }
 }

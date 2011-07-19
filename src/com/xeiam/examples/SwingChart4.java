@@ -27,7 +27,7 @@ import com.xeiam.xcharts.series.SeriesMarker;
  */
 public class SwingChart4 {
 
-    private static void createAndShowGUI() {
+    public static void main(String[] args) {
 
         // generates linear data
         double[] yData1 = new double[] { 0.0, 0.0, 0.0, -10.0, 15.0, 15.0 };
@@ -52,9 +52,4 @@ public class SwingChart4 {
 
     }
 
-    public static void main(String[] args) {
-
-        createAndShowGUI();
-
-    }
 }

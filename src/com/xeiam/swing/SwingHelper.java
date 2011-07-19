@@ -22,6 +22,9 @@ import javax.swing.JPanel;
 import com.xeiam.xcharts.Chart;
 import com.xeiam.xcharts.JChartPanel;
 
+/**
+ * @author timmolter
+ */
 public class SwingHelper {
 
     Chart[] charts;

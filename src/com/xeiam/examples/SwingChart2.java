@@ -24,7 +24,7 @@ import com.xeiam.xcharts.series.Series;
  */
 public class SwingChart2 {
 
-    private static void createAndShowGUI() {
+    public static void main(String[] args) {
 
         // Create Chart
         Chart chart = new Chart(800, 600);
@@ -59,15 +59,4 @@ public class SwingChart2 {
         swingHelper.displayChart();
     }
 
-    public static void main(String[] args) {
-
-        // Schedule a job for the event-dispatching thread:
-        // creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
 }

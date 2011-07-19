@@ -23,14 +23,16 @@ import com.xeiam.xcharts.series.SeriesLineStyle;
 import com.xeiam.xcharts.series.SeriesMarker;
 
 /**
+ * Embed a Chart in a simple Swing application
+ * 
  * @author timmolter
  */
-public class SwingChart {
+public class Example2 {
 
-    private static void createAndShowGUI() {
+    public static void main(String[] args) {
 
         // generates sine data
-        int size = 100;
+        int size = 30;
         double[] xData1 = new double[size + 1];
         double[] yData1 = new double[size + 1];
         for (int i = 0; i <= size; i++) {
@@ -39,55 +41,23 @@ public class SwingChart {
             yData1[i] = size * Math.sin(radians);
         }
 
-        // generates linear data
-        int size2 = 100;
-        double[] xData2 = new double[size2 + 1];
-        double[] yData2 = new double[size2 + 1];
-        for (int i = 0; i <= size2; i++) {
-            xData2[i] = -size2 + 2 * i;
-            yData2[i] = -size2 + 2 * i;
-        }
-
-        // Create and set up the window.
-
         // Create Chart
-        Chart chart = new Chart(800, 600);
+        Chart chart = new Chart(440, 300);
 
         // Customize Chart
-        chart.setChartTitle("Sample Chart");
-        chart.setXAxisTitle("X");
-        chart.setYAxisTitle("Y");
-        // chart.setChartTitleVisible(false);
-        // chart.setChartLegendVisible(false);
-        // chart.setAxisTitlesVisible(false);
+        chart.setChartTitleVisible(false);
+        chart.setChartLegendVisible(false);
+        chart.setAxisTitlesVisible(false);
 
         // Series 1
         Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);
         series1.setLineColor(SeriesColor.PURPLE);
-        series1.setLineStyle(SeriesLineStyle.NONE);
+        series1.setLineStyle(SeriesLineStyle.DASH_DASH);
         series1.setMarkerColor(SeriesColor.GREEN);
-        series1.setMarker(SeriesMarker.NONE);
-
-        // Series 2
-        // Series series2 = chart.addSeries("y=x", xData2, yData2);
-        // series2.setLineColor(SeriesColor.PURPLE);
-        // series2.setLineStyle(SeriesLineStyle.NONE);
-        // series2.setMarkerColor(SeriesColor.GREEN);
-        // series2.setMarker(SeriesMarker.NONE);
+        series1.setMarker(SeriesMarker.SQUARE);
 
         SwingHelper swingHelper = new SwingHelper(chart);
         swingHelper.displayChart();
     }
 
-    public static void main(String[] args) {
-
-        // Schedule a job for the event-dispatching thread:
-        // creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
 }

@@ -15,11 +15,9 @@
  */
 package com.xeiam.examples;
 
-import com.xeiam.swing.QuickXChart;
+import com.xeiam.swing.QuickChart;
 
 /**
- * Demonstrated/Tests plotting horizontal and vertical lines
- * 
  * @author timmolter
  */
 public class SwingChart5 {
@@ -40,7 +38,7 @@ public class SwingChart5 {
         int numRows = 2;
         int numCols = 2;
 
-        QuickXChart quickChart = new QuickXChart(2, 2);
+        QuickChart quickChart = new QuickChart(2, 2);
 
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols; j++) {

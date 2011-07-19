@@ -19,9 +19,11 @@ import com.xeiam.xcharts.BitmapEncoder;
 import com.xeiam.xcharts.Chart;
 
 /**
+ * Creates a simple charts and saves it as aPNG image file.
+ * 
  * @author timmolter
  */
-public class BitmapChart {
+public class Example1 {
 
     private static final double[] xData = { 0.0, 1.0, 2.0 };
     private static final double[] yData = { 0.0, 1.0, 2.0 };
@@ -36,7 +38,7 @@ public class BitmapChart {
         chart.addSeries("y(x)", xData, yData);
 
         try {
-            BitmapEncoder.savePNG(chart, "/test/Chart_Small.png");
+            BitmapEncoder.savePNG(chart, "/test/Sample_Chart.png");
         } catch (Exception e) {
             e.printStackTrace();
         }

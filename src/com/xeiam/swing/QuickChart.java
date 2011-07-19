@@ -25,7 +25,7 @@ import com.xeiam.xcharts.JChartPanel;
 import com.xeiam.xcharts.series.Series;
 import com.xeiam.xcharts.series.SeriesMarker;
 
-public class QuickXChart {
+public class QuickChart {
 
     Chart[] charts;
     int numRows;
@@ -42,7 +42,7 @@ public class QuickXChart {
     boolean chartLegendVisible = true;
     boolean axisTitlesVisible = true;
 
-    public QuickXChart(int numRows, int numCols) {
+    public QuickChart(int numRows, int numCols) {
         charts = new Chart[numRows * numCols];
         this.numRows = numRows;
         this.numCols = numCols;
