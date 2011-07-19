@@ -15,7 +15,7 @@
  */
 package com.xeiam.examples;
 
-import com.xeiam.swing.SwingHelper;
+import com.xeiam.swing.SwingWrapper;
 import com.xeiam.xcharts.Chart;
 import com.xeiam.xcharts.series.Series;
 import com.xeiam.xcharts.series.SeriesColor;
@@ -56,7 +56,7 @@ public class Example2 {
         series1.setMarkerColor(SeriesColor.GREEN);
         series1.setMarker(SeriesMarker.SQUARE);
 
-        SwingHelper swingHelper = new SwingHelper(chart);
+        SwingWrapper swingHelper = new SwingWrapper(chart);
         swingHelper.displayChart();
     }
 

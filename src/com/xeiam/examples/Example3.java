@@ -15,24 +15,25 @@
  */
 package com.xeiam.examples;
 
-import com.xeiam.swing.SwingHelper;
+import com.xeiam.swing.SwingWrapper;
 import com.xeiam.xcharts.Chart;
-import com.xeiam.xcharts.series.Series;
 
 /**
+ * Create 14 different curves on one chart
+ * 
  * @author timmolter
  */
-public class SwingChart2 {
+public class Example3 {
 
     public static void main(String[] args) {
 
         // Create Chart
-        Chart chart = new Chart(800, 600);
+        Chart chart = new Chart(700, 500);
 
         for (int i = 1; i <= 14; i++) {
 
             // generates linear data
-            int b = 50;
+            int b = 20;
             double[] xData = new double[b + 1];
             double[] yData = new double[b + 1];
             for (int x = 0; x <= b; x++) {
@@ -44,18 +45,13 @@ public class SwingChart2 {
             chart.setChartTitle("Sample Chart");
             chart.setXAxisTitle("X");
             chart.setYAxisTitle("Y");
-            // chart.setChartTitleVisible(false);
-            // chart.setChartLegendVisible(false);
-            // chart.setAxisTitlesVisible(false);
 
-            Series series = chart.addSeries("y=" + 2 * i + "x-" + i * b + "b", xData, yData);
-            // series.setLineColor(SeriesColor.PURPLE);
-            // series.setLineStyle(SeriesLineStyle.NONE);
-            // series.setMarkerColor(SeriesColor.GREEN);
-            // series.setMarker(SeriesMarker.NONE);
+            String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
+            chart.addSeries(seriesName, xData, yData);
+
         }
 
-        SwingHelper swingHelper = new SwingHelper(chart);
+        SwingWrapper swingHelper = new SwingWrapper(chart);
         swingHelper.displayChart();
     }
 

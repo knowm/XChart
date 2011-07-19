@@ -15,6 +15,8 @@
  */
 package com.xeiam.swing;
 
+import java.awt.GridLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,19 +27,32 @@ import com.xeiam.xcharts.JChartPanel;
 /**
  * @author timmolter
  */
-public class SwingHelper {
+public class SwingWrapper {
 
     Chart[] charts;
 
-    public SwingHelper(Chart chart) {
+    /**
+     * Constructor
+     * 
+     * @param chart
+     */
+    public SwingWrapper(Chart chart) {
         this.charts = new Chart[1];
         charts[0] = chart;
     }
 
-    public SwingHelper(Chart[] charts) {
+    /**
+     * Constructor
+     * 
+     * @param charts
+     */
+    public SwingWrapper(Chart[] charts) {
         this.charts = charts;
     }
 
+    /**
+     * Display the chart in a Swing JFrame
+     */
     public void displayChart() {
 
         // Schedule a job for the event-dispatching thread:
@@ -55,7 +70,39 @@ public class SwingHelper {
                     frame.getContentPane().add(chartPanel);
                 }
 
-                // frame.setContentPane(newContentPane);
+                // Display the window.
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
+    }
+
+    /**
+     * Display the chart in a Swing JFrame
+     */
+    public void displayChartMatrix(final int numRows, final int numColumns) {
+
+        // Schedule a job for the event-dispatching thread:
+        // creating and showing this application's GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // Create and set up the window.
+                JFrame frame = new JFrame("XChart");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
+
+                for (int i = 0; i < charts.length; i++) {
+
+                    if (charts[i] != null) {
+                        JPanel chartPanel = new JChartPanel(charts[i]);
+                        frame.getContentPane().add(chartPanel);
+                    } else {
+                        JPanel chartPanel = new JPanel();
+                        frame.getContentPane().add(chartPanel);
+                    }
+
+                }
 
                 // Display the window.
                 frame.pack();
