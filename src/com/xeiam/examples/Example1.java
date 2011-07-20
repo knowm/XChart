@@ -25,10 +25,10 @@ import com.xeiam.xcharts.Chart;
  */
 public class Example1 {
 
-    private static final double[] xData = { 0.0, 1.0, 2.0 };
-    private static final double[] yData = { 0.0, 1.0, 2.0 };
-
     public static void main(String[] args) {
+
+        double[] xData = { 0.0, 1.0, 2.0 };
+        double[] yData = { 0.0, 1.0, 2.0 };
 
         // Create Chart
         Chart chart = new Chart(500, 400);

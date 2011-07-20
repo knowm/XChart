@@ -69,13 +69,13 @@ public class Chart {
 
     }
 
-    // INTERNAL GETTERS & SETTERS
+    // GETTERS & SETTERS
 
-    protected int getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    protected int getHeight() {
+    public int getHeight() {
         return height;
     }
 

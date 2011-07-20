@@ -19,7 +19,7 @@ import com.xeiam.swing.SwingWrapper;
 import com.xeiam.xcharts.Chart;
 
 /**
- * Create 14 different curves on one chart
+ * Create multiple curves on one chart
  * 
  * @author timmolter
  */
