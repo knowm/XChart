@@ -85,7 +85,8 @@ public class Axis implements IChartPart {
     }
 
     /**
-     * @param data
+     * @param min
+     * @param max
      */
     public void addMinMax(double min, double max) {
 

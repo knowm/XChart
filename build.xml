@@ -4,7 +4,7 @@
     <property file="build.properties"/>
 	
     <path id="classpath">
-    	<fileset dir="${extlib.dir}" />
+    	<fileset dir="${lib.dir}" />
     </path>
 
     <target name="clean">
@@ -57,20 +57,23 @@
 	
 	<target name="javadoc">
 	    <javadoc
-
-	          access="public"
+	           access="public"
 	           destdir="${javadoc.dir}"
 	           author="true"
 	           version="true"
 	           use="true"
 	           windowtitle="com.xeiam.xchart"
 	       >
-
-	        <fileset dir="${src.dir}" defaultexcludes="yes">
+	    	<classpath>
+    	        <fileset dir="${lib.dir}">
+    	            <include name="**/*.jar"/>
+    	        </fileset>
+	    	</classpath>
+	        <fileset dir="${src.dir}">
 	            <include name="**/*.java"/>
-	            <exclude name="org/test/**/*.java" />
 	        </fileset>
 	    </javadoc>
+		
 	</target>
 	
 </project>

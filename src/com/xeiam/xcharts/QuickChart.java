@@ -32,7 +32,7 @@ public class QuickChart {
      * @param seriesName
      * @param xData
      * @param yData
-     * @return
+     * @return a Chart Object
      */
     public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, double[] xData, double[] yData) {
 
@@ -51,7 +51,7 @@ public class QuickChart {
      * @param seriesNames
      * @param xData
      * @param yData
-     * @return
+     * @return a Chart Object
      */
     public static Chart getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
 

@@ -46,10 +46,10 @@ public class AxisTickMarks implements IChartPart {
     private Rectangle bounds = new Rectangle(); // default all-zero rectangle
 
     /**
-     * Constructor.
+     * Constructor
      * 
-     * @param chart the chart
-     * @param axis the axis
+     * @param axis
+     * @param axisTick
      */
     public AxisTickMarks(Axis axis, AxisTick axisTick) {
         this.axis = axis;
