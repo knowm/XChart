@@ -178,6 +178,9 @@ public class AxisTick implements IChartPart {
     private BigDecimal getGridStep(int tickSpace) {
 
         double length = Math.abs(axis.getMax() - axis.getMin());
+        // System.out.println(axis.getMax());
+        // System.out.println(axis.getMin());
+        // System.out.println(length);
         double gridStepHint = length / tickSpace * DEFAULT_TICK_MARK_STEP_HINT;
 
         // gridStepHint --> mantissa * 10 ** exponent

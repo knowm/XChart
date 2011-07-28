@@ -49,7 +49,7 @@ public class Axis implements IChartPart {
 
     private double min = Double.MAX_VALUE;
 
-    private double max = Double.MIN_VALUE;
+    private double max = -Double.MAX_VALUE;
 
     /** the bounds */
     private Rectangle bounds = new Rectangle(); // default all-zero rectangle
@@ -90,12 +90,18 @@ public class Axis implements IChartPart {
      */
     public void addMinMax(double min, double max) {
 
+        // System.out.println(min);
+        // System.out.println(max);
+
         if (min < this.min) {
             this.min = min;
         }
         if (max > this.max) {
             this.max = max;
         }
+
+        // System.out.println(this.min);
+        // System.out.println(this.max);
     }
 
     public Direction getDirection() {

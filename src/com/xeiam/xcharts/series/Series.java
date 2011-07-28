@@ -80,6 +80,8 @@ public class Series {
         Arrays.sort(yDataClone);
         this.yMin = yDataClone[0];
         this.yMax = yDataClone[yDataClone.length - 1];
+        // System.out.println(yMin);
+        // System.out.println(yMax);
 
         Color color = SeriesColor.getNextAWTColor();
         this.strokeColor = color;

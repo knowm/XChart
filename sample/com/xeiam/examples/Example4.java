@@ -36,18 +36,10 @@ public class Example4 {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numCols; j++) {
 
-                // double[][] yData2d = new double[10][1000];
-                // for (int k = 0; k < yData2d.length; k++) {
-                // yData2d[k] = getRandomWalk(1000);
-                // }
-                // charts[chartCount++] = QuickChart.getChart(i + "," + j, "X", "Y", null, null, yData2d);
                 charts[chartCount++] = QuickChart.getChart(i + "," + j, "X", "Y", null, null, getRandomWalk(1000));
-
             }
         }
-
         new SwingWrapper(charts, numRows, numCols).displayChartMatrix();
-
     }
 
     /**
@@ -59,11 +51,10 @@ public class Example4 {
     private static double[] getRandomWalk(int numPoints) {
 
         double[] y = new double[numPoints];
+        y[0] = -1000;
         for (int i = 1; i < y.length; i++) {
             y[i] = y[i - 1] + Math.random() - .5;
         }
-
         return y;
-
     }
 }
