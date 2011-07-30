@@ -72,15 +72,15 @@ public class PlotContent implements IChartPart {
 
             for (int i = 0; i < xData.length; i++) {
 
-                // if (Double.isInfinite(xData[i]) || Double.isNaN(xData[i])) {
-                // throw new RuntimeException("Infinite or NaN values in xAxis Data not allowed!!!");
-                // }
-                //
-                // if (Double.isInfinite(yData[i]) || Double.isNaN(yData[i])) {
-                // throw new RuntimeException("Infinite or NaN values in yAxis Data not allowed!!!");
-                // }
+                if (Double.isInfinite(xData[i])) {
+                    throw new RuntimeException("Infinite values in xAxis Data not allowed!!!");
+                }
 
-                if (!Double.isInfinite(xData[i]) && !Double.isNaN(xData[i]) && !Double.isInfinite(yData[i]) && !Double.isNaN(yData[i])) {
+                if (Double.isInfinite(yData[i])) {
+                    throw new RuntimeException("Infinite values in yAxis Data not allowed!!!");
+                }
+
+                if (!Double.isNaN(xData[i]) && !Double.isNaN(yData[i])) {
 
                     int xTransform = (int) (xLeftMargin + ((xData[i] - xMin) / (xMax - xMin) * xTickSpace));
                     int yTransform = (int) (bounds.getHeight() - (yTopMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));

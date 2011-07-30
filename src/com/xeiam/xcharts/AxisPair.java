@@ -58,16 +58,42 @@ public class AxisPair implements IChartPart {
      */
     public Series addSeries(String seriesName, double[] xData, double[] yData) {
 
+        // Sanity checks
+        if (yData == null) {
+            throw new RuntimeException("Y-Axis data cannot be null!!!");
+        }
+        if (yData.length == 0) {
+            throw new RuntimeException("Y-Axis data cannot be empty!!!");
+        }
+        if (xData != null && xData.length == 0) {
+            throw new RuntimeException("X-Axis data cannot be empty!!!");
+        }
+        if (xData != null && xData.length == 1 && Double.isNaN(yData[0])) {
+            throw new RuntimeException("X-Axis data cannot contain a single NaN value!!!");
+        }
+        if (yData.length == 1 && Double.isNaN(yData[0])) {
+            throw new RuntimeException("Y-Axis data cannot contain a single NaN value!!!");
+        }
+
         Series series;
         if (xData != null) {
+            verifyValues(xData);
+            verifyValues(yData);
             series = new Series(seriesName, xData, yData);
         } else { // generate xData
             double[] generatedXData = new double[yData.length];
+            verifyValues(yData);
             for (int i = 1; i < yData.length; i++) {
                 generatedXData[i] = i;
             }
             series = new Series(seriesName, generatedXData, yData);
         }
+
+        // Sanity check
+        if (xData != null && xData.length != yData.length) {
+            throw new RuntimeException("X and Y-Axis lengths are not the same!!! ");
+        }
+
         seriesMap.put(seriesCount++, series);
 
         // add min/max to axis
@@ -75,6 +101,22 @@ public class AxisPair implements IChartPart {
         yAxis.addMinMax(series.getyMin(), series.getyMax());
 
         return series;
+    }
+
+    /**
+     * Checks for invalid values in data array
+     * 
+     * @param data
+     */
+    private void verifyValues(double[] data) {
+
+        for (int i = 0; i < data.length; i++) {
+            if (data[i] == Double.POSITIVE_INFINITY) {
+                throw new RuntimeException("Axis data cannot contain Double.POSITIVE_INFINITY!!!");
+            } else if (data[i] == Double.NEGATIVE_INFINITY) {
+                throw new RuntimeException("Axis data cannot contain Double.NEGATIVE_INFINITY!!!");
+            }
+        }
     }
 
     protected Axis getXAxis() {
@@ -111,6 +153,7 @@ public class AxisPair implements IChartPart {
 
     @Override
     public void paint(Graphics2D g) {
+
         yAxis.paint(g);
         xAxis.paint(g);
     }

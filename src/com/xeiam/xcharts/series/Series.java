@@ -17,7 +17,6 @@ package com.xeiam.xcharts.series;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.util.Arrays;
 
 import com.xeiam.xcharts.series.markers.Marker;
 
@@ -33,16 +32,16 @@ public class Series {
     protected double[] yData;
 
     /** the minimum value of axis range */
-    private double xMin = 0d;
+    private double xMin;
 
     /** the maximum value of axis range */
-    private double xMax = 1d;
+    private double xMax;
 
     /** the minimum value of axis range */
-    private double yMin = 0d;
+    private double yMin;
 
     /** the maximum value of axis range */
-    private double yMax = 1d;
+    private double yMax;
 
     /** Line Style */
     private BasicStroke stroke;
@@ -70,16 +69,14 @@ public class Series {
         this.yData = yData;
 
         // xData
-        double[] xDataClone = xData.clone();
-        Arrays.sort(xDataClone);
-        this.xMin = xDataClone[0];
-        this.xMax = xDataClone[xDataClone.length - 1];
+        double[] xMinMax = findMinMax(xData);
+        this.xMin = xMinMax[0];
+        this.xMax = xMinMax[1];
 
         // yData
-        double[] yDataClone = yData.clone();
-        Arrays.sort(yDataClone);
-        this.yMin = yDataClone[0];
-        this.yMax = yDataClone[yDataClone.length - 1];
+        double[] yMinMax = findMinMax(yData);
+        this.yMin = yMinMax[0];
+        this.yMax = yMinMax[1];
         // System.out.println(yMin);
         // System.out.println(yMax);
 
@@ -90,6 +87,24 @@ public class Series {
         this.marker = SeriesMarker.getNextMarker();
         this.stroke = SeriesLineStyle.getNextBasicStroke();
 
+    }
+
+    private double[] findMinMax(double[] data) {
+        Double min = null;
+        Double max = null;
+        for (int i = 0; i < data.length; i++) {
+            if (min == null || data[i] < min) {
+                if (!Double.isNaN(data[i])) {
+                    min = data[i];
+                }
+            }
+            if (max == null || data[i] > max) {
+                if (!Double.isNaN(data[i])) {
+                    max = data[i];
+                }
+            }
+        }
+        return new double[] { min, max };
     }
 
     public String getName() {

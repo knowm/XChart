@@ -51,6 +51,11 @@ public class Chart {
 
     public void paint(final Graphics2D g) {
 
+        // Sanity check
+        if (axisPair.getSeriesMap().isEmpty()) {
+            throw new RuntimeException("No series defined for Chart!!!");
+        }
+
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
         g.setColor(ChartColor.getAWTColor(ChartColor.GREY));
         g.fillRect(0, 0, width, height);

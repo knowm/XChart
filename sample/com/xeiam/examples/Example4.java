@@ -51,7 +51,7 @@ public class Example4 {
     private static double[] getRandomWalk(int numPoints) {
 
         double[] y = new double[numPoints];
-        y[0] = -1000;
+        y[0] = 0;
         for (int i = 1; i < y.length; i++) {
             y[i] = y[i - 1] + Math.random() - .5;
         }

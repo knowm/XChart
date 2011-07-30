@@ -148,30 +148,32 @@ public class AxisTick implements IChartPart {
 
         int margin = AxisPair.getMargin(workingSpace, tickSpace);
 
-        final BigDecimal MIN = new BigDecimal(new Double(axis.getMin()).toString());
-        BigDecimal firstPosition;
-        BigDecimal gridStep = getGridStep(tickSpace);
-
-        double xyz = MIN.remainder(gridStep).doubleValue();
-        if (xyz <= 0.0) {
-            firstPosition = MIN.subtract(MIN.remainder(gridStep));
+        // a check if all axis data are the exact same values
+        if (axis.getMax() == axis.getMin()) {
+            tickLabels.add(format(axis.getMax()));
+            tickLocations.add((int) (margin + tickSpace / 2.0));
         } else {
-            firstPosition = MIN.subtract(MIN.remainder(gridStep)).add(gridStep);
-        }
 
-        for (BigDecimal b = firstPosition; b.doubleValue() <= axis.getMax(); b = b.add(gridStep)) {
+            final BigDecimal MIN = new BigDecimal(new Double(axis.getMin()).toString());
+            BigDecimal firstPosition;
+            BigDecimal gridStep = getGridStep(tickSpace);
 
-            // System.out.println("b= " + b);
-            tickLabels.add(format(b.doubleValue()));
-            int tickLabelPosition = (int) (margin + ((b.doubleValue() - axis.getMin()) / (axis.getMax() - axis.getMin()) * tickSpace));
-            // System.out.println("tickLabelPosition= " + tickLabelPosition);
-
-            // a check if all axis data are the exact same values
-            if (Math.abs(axis.getMax() - axis.getMin()) / 5 == 0.0) {
-                tickLabelPosition = (int) (margin + tickSpace / 2.0);
+            double xyz = MIN.remainder(gridStep).doubleValue();
+            if (xyz <= 0.0) {
+                firstPosition = MIN.subtract(MIN.remainder(gridStep));
+            } else {
+                firstPosition = MIN.subtract(MIN.remainder(gridStep)).add(gridStep);
             }
 
-            tickLocations.add(tickLabelPosition);
+            for (BigDecimal b = firstPosition; b.doubleValue() <= axis.getMax(); b = b.add(gridStep)) {
+
+                // System.out.println("b= " + b);
+                tickLabels.add(format(b.doubleValue()));
+                int tickLabelPosition = (int) (margin + ((b.doubleValue() - axis.getMin()) / (axis.getMax() - axis.getMin()) * tickSpace));
+                // System.out.println("tickLabelPosition= " + tickLabelPosition);
+
+                tickLocations.add(tickLabelPosition);
+            }
         }
     }
 
