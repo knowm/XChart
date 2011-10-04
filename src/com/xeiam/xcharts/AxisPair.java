@@ -59,6 +59,9 @@ public class AxisPair implements IChartPart {
     public Series addSeries(String seriesName, double[] xData, double[] yData) {
 
         // Sanity checks
+        if (seriesName == null) {
+            throw new RuntimeException("Series Name cannot be null!!!");
+        }
         if (yData == null) {
             throw new RuntimeException("Y-Axis data cannot be null!!!");
         }
