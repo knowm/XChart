@@ -25,34 +25,34 @@ import com.xeiam.xcharts.Chart;
  */
 public class Example3 {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        // Create Chart
-        Chart chart = new Chart(700, 500);
+    // Create Chart
+    Chart chart = new Chart(700, 500);
 
-        for (int i = 1; i <= 14; i++) {
+    for (int i = 1; i <= 14; i++) {
 
-            // generates linear data
-            int b = 20;
-            double[] xData = new double[b + 1];
-            double[] yData = new double[b + 1];
-            for (int x = 0; x <= b; x++) {
-                xData[x] = 2 * x - b;
-                yData[x] = 2 * i * x - i * b;
-            }
+      // generates linear data
+      int b = 20;
+      double[] xData = new double[b + 1];
+      double[] yData = new double[b + 1];
+      for (int x = 0; x <= b; x++) {
+        xData[x] = 2 * x - b;
+        yData[x] = 2 * i * x - i * b;
+      }
 
-            // Customize Chart
-            chart.setChartTitle("Sample Chart");
-            chart.setXAxisTitle("X");
-            chart.setYAxisTitle("Y");
+      // Customize Chart
+      chart.setChartTitle("Sample Chart");
+      chart.setXAxisTitle("X");
+      chart.setYAxisTitle("Y");
 
-            String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
-            chart.addSeries(seriesName, xData, yData);
+      String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
+      chart.addSeries(seriesName, xData, yData);
 
-        }
-
-        SwingWrapper swingHelper = new SwingWrapper(chart);
-        swingHelper.displayChart();
     }
+
+    SwingWrapper swingHelper = new SwingWrapper(chart);
+    swingHelper.displayChart();
+  }
 
 }
