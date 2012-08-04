@@ -25,22 +25,22 @@ import com.xeiam.xcharts.Chart;
  */
 public class Example1 {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        double[] xData = { 0.0, 1.0, 2.0 };
-        double[] yData = { 0.0, 1.0, 2.0 };
+    double[] xData = { 0.0, 1.0, 2.0 };
+    double[] yData = { 0.0, 1.0, 2.0 };
 
-        // Create Chart
-        Chart chart = new Chart(500, 400);
-        chart.setChartTitle("Sample Chart");
-        chart.setXAxisTitle("X");
-        chart.setYAxisTitle("Y");
-        chart.addSeries("y(x)", xData, yData);
+    // Create Chart
+    Chart chart = new Chart(500, 400);
+    chart.setChartTitle("Sample Chart");
+    chart.setXAxisTitle("X");
+    chart.setYAxisTitle("Y");
+    chart.addSeries("y(x)", xData, yData);
 
-        try {
-            BitmapEncoder.savePNG(chart, "/test/Sample_Chart.png");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    try {
+      BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 }
