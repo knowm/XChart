@@ -23,27 +23,27 @@ import java.awt.Polygon;
  */
 public class TriangleDown extends Marker {
 
-    @Override
-    public void paint(Graphics2D g, int xOffset, int yOffset) {
+  @Override
+  public void paint(Graphics2D g, int xOffset, int yOffset) {
 
-        g.setStroke(stroke);
+    g.setStroke(stroke);
 
-        int[] x = new int[3];
-        int[] y = new int[3];
-        int n = 3;
+    int[] x = new int[3];
+    int[] y = new int[3];
+    int n = 3;
 
-        // Make a triangle
-        int halfSize = (int) (Math.ceil((Marker.SIZE + 1) / 2.0));
-        x[0] = xOffset - halfSize + 0;
-        x[1] = xOffset - halfSize + halfSize;
-        x[2] = xOffset - halfSize + Marker.SIZE + 1;
+    // Make a triangle
+    int halfSize = (int) (Math.ceil((Marker.SIZE + 1) / 2.0));
+    x[0] = xOffset - halfSize + 0;
+    x[1] = xOffset - halfSize + halfSize;
+    x[2] = xOffset - halfSize + Marker.SIZE + 1;
 
-        y[0] = 1 + yOffset - halfSize + 0;
-        y[1] = 1 + yOffset - halfSize + Marker.SIZE + 1;
-        y[2] = 1 + yOffset - halfSize + 0;
+    y[0] = 1 + yOffset - halfSize + 0;
+    y[1] = 1 + yOffset - halfSize + Marker.SIZE + 1;
+    y[2] = 1 + yOffset - halfSize + 0;
 
-        Polygon triangle = new Polygon(x, y, n);
-        g.fillPolygon(triangle);
+    Polygon triangle = new Polygon(x, y, n);
+    g.fillPolygon(triangle);
 
-    }
+  }
 }

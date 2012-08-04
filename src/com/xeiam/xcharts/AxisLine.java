@@ -27,76 +27,79 @@ import com.xeiam.xcharts.interfaces.IChartPart;
  */
 public class AxisLine implements IChartPart {
 
-    /** the axis */
-    private Axis axis;
+  /** the axis */
+  private Axis axis;
 
-    /** the visibility state of grid */
-    protected boolean isVisible = true; // default to true
+  /** the visibility state of grid */
+  protected boolean isVisible = true; // default to true
 
-    /** the foreground color */
-    private Color foreground = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default foreground color
+  /** the foreground color */
+  private Color foreground = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default foreground color
 
-    /** the line style */
-    private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  /** the line style */
+  private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
-    /** the bounds */
-    private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  /** the bounds */
+  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
 
-    /**
-     * Constructor
-     * 
-     * @param axis the axis
-     */
-    public AxisLine(Axis axis) {
-        this.axis = axis;
+  /**
+   * Constructor
+   * 
+   * @param axis the axis
+   */
+  public AxisLine(Axis axis) {
+
+    this.axis = axis;
+
+  }
+
+  public BasicStroke getStroke() {
+
+    return stroke;
+  }
+
+  @Override
+  public void paint(Graphics2D g) {
+
+    g.setColor(foreground);
+
+    if (axis.getDirection() == Axis.Direction.Y) {
+
+      int xOffset = (int) (axis.getAxisTick().getBounds().getX() + axis.getAxisTick().getBounds().getWidth());
+      int yOffset = (int) (axis.getPaintZone().getY());
+
+      g.setColor(foreground);
+      g.setStroke(stroke);
+
+      g.drawLine(xOffset, yOffset, xOffset, (int) (yOffset + axis.getPaintZone().getHeight()));
+
+      // bounds
+      bounds = new Rectangle(xOffset, yOffset, (int) stroke.getLineWidth(), (int) axis.getPaintZone().getHeight());
+      // g.setColor(Color.green);
+      // g.draw(bounds);
+
+    } else {
+
+      int xOffset = (int) (axis.getPaintZone().getX());
+      int yOffset = (int) (axis.getAxisTick().getBounds().getY() - stroke.getLineWidth());
+
+      g.setColor(foreground);
+      g.setStroke(stroke);
+
+      g.drawLine(xOffset, yOffset, (int) (xOffset + axis.getPaintZone().getWidth()), yOffset);
+
+      // bounds
+      bounds = new Rectangle(xOffset, yOffset, (int) axis.getPaintZone().getWidth(), (int) stroke.getLineWidth());
+      // g.setColor(Color.green);
+      // g.draw(bounds);
 
     }
+  }
 
-    public BasicStroke getStroke() {
-        return stroke;
-    }
+  @Override
+  public Rectangle getBounds() {
 
-    @Override
-    public void paint(Graphics2D g) {
-
-        g.setColor(foreground);
-
-        if (axis.getDirection() == Axis.Direction.Y) {
-
-            int xOffset = (int) (axis.getAxisTick().getBounds().getX() + axis.getAxisTick().getBounds().getWidth());
-            int yOffset = (int) (axis.getPaintZone().getY());
-
-            g.setColor(foreground);
-            g.setStroke(stroke);
-
-            g.drawLine(xOffset, yOffset, xOffset, (int) (yOffset + axis.getPaintZone().getHeight()));
-
-            // bounds
-            bounds = new Rectangle(xOffset, yOffset, (int) stroke.getLineWidth(), (int) axis.getPaintZone().getHeight());
-            // g.setColor(Color.green);
-            // g.draw(bounds);
-
-        } else {
-
-            int xOffset = (int) (axis.getPaintZone().getX());
-            int yOffset = (int) (axis.getAxisTick().getBounds().getY() - stroke.getLineWidth());
-
-            g.setColor(foreground);
-            g.setStroke(stroke);
-
-            g.drawLine(xOffset, yOffset, (int) (xOffset + axis.getPaintZone().getWidth()), yOffset);
-
-            // bounds
-            bounds = new Rectangle(xOffset, yOffset, (int) axis.getPaintZone().getWidth(), (int) stroke.getLineWidth());
-            // g.setColor(Color.green);
-            // g.draw(bounds);
-
-        }
-    }
-
-    @Override
-    public Rectangle getBounds() {
-        // TODO Auto-generated method stub
-        return bounds;
-    }
+    // TODO Auto-generated method stub
+    return bounds;
+  }
 }

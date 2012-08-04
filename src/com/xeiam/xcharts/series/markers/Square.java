@@ -23,12 +23,12 @@ import java.awt.Rectangle;
  */
 public class Square extends Marker {
 
-    @Override
-    public void paint(Graphics2D g, int xOffset, int yOffset) {
+  @Override
+  public void paint(Graphics2D g, int xOffset, int yOffset) {
 
-        g.setStroke(stroke);
-        g.fill(new Rectangle(xOffset + Marker.X_OFFSET, yOffset + Marker.Y_OFFSET, Marker.SIZE, Marker.SIZE));
+    g.setStroke(stroke);
+    g.fill(new Rectangle(xOffset + Marker.X_OFFSET, yOffset + Marker.Y_OFFSET, Marker.SIZE, Marker.SIZE));
 
-    }
+  }
 
 }

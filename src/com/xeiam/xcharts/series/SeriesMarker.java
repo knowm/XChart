@@ -31,66 +31,70 @@ import com.xeiam.xcharts.series.markers.TriangleUp;
  */
 public enum SeriesMarker {
 
-    /** NONE */
-    NONE(-1, null),
+  /** NONE */
+  NONE(-1, null),
 
-    /** CIRCLE */
-    CIRCLE(0, new Circle()),
+  /** CIRCLE */
+  CIRCLE(0, new Circle()),
 
-    /** DIAMOND */
-    DIAMOND(1, new Diamond()),
+  /** DIAMOND */
+  DIAMOND(1, new Diamond()),
 
-    /** SQUARE */
-    SQUARE(2, new Square()),
+  /** SQUARE */
+  SQUARE(2, new Square()),
 
-    /** TRIANGLE_DOWN */
-    TRIANGLE_DOWN(3, new TriangleDown()),
+  /** TRIANGLE_DOWN */
+  TRIANGLE_DOWN(3, new TriangleDown()),
 
-    /** TRIANGLE_UP */
-    TRIANGLE_UP(4, new TriangleUp());
+  /** TRIANGLE_UP */
+  TRIANGLE_UP(4, new TriangleUp());
 
-    int id;
-    Marker marker;
-    private static int nextId = 0;
+  int id;
+  Marker marker;
+  private static int nextId = 0;
 
-    private static final Map<Integer, SeriesMarker> idLookup = new HashMap<Integer, SeriesMarker>();
-    static {
-        for (SeriesMarker seriesMarker : EnumSet.allOf(SeriesMarker.class)) {
-            idLookup.put(seriesMarker.getId(), seriesMarker);
-        }
+  private static final Map<Integer, SeriesMarker> idLookup = new HashMap<Integer, SeriesMarker>();
+  static {
+    for (SeriesMarker seriesMarker : EnumSet.allOf(SeriesMarker.class)) {
+      idLookup.put(seriesMarker.getId(), seriesMarker);
     }
+  }
 
-    private Integer getId() {
-        return id;
+  private Integer getId() {
+
+    return id;
+  }
+
+  public static void resetId() {
+
+    nextId = 0;
+  }
+
+  protected static Marker getMarker(SeriesMarker seriesMarker) {
+
+    return seriesMarker.marker;
+  }
+
+  protected static Marker getNextMarker() {
+
+    SeriesMarker seriesMarker = idLookup.get(nextId);
+    if (seriesMarker == null) {
+      // rotate thru from beginning
+      resetId();
     }
+    return idLookup.get(nextId++).marker;
+  }
 
-    public static void resetId() {
-        nextId = 0;
-    }
+  /**
+   * Constructor
+   * 
+   * @param id
+   * @param color
+   */
+  private SeriesMarker(int id, Marker marker) {
 
-    protected static Marker getMarker(SeriesMarker seriesMarker) {
-        return seriesMarker.marker;
-    }
-
-    protected static Marker getNextMarker() {
-
-        SeriesMarker seriesMarker = idLookup.get(nextId);
-        if (seriesMarker == null) {
-            // rotate thru from beginning
-            resetId();
-        }
-        return idLookup.get(nextId++).marker;
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param id
-     * @param color
-     */
-    private SeriesMarker(int id, Marker marker) {
-        this.id = id;
-        this.marker = marker;
-    }
+    this.id = id;
+    this.marker = marker;
+  }
 
 }

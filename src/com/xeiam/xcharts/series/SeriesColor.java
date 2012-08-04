@@ -25,88 +25,92 @@ import java.util.Map;
  */
 public enum SeriesColor {
 
-    /** BLUE */
-    BLUE(0, new Color(0, 55, 255)),
+  /** BLUE */
+  BLUE(0, new Color(0, 55, 255)),
 
-    /** ORANGE */
-    ORANGE(1, new Color(255, 172, 0)),
+  /** ORANGE */
+  ORANGE(1, new Color(255, 172, 0)),
 
-    /** PURPLE */
-    PURPLE(2, new Color(128, 0, 255)),
+  /** PURPLE */
+  PURPLE(2, new Color(128, 0, 255)),
 
-    /** GREEN */
-    GREEN(3, new Color(0, 205, 0)),
+  /** GREEN */
+  GREEN(3, new Color(0, 205, 0)),
 
-    /** RED */
-    RED(4, new Color(205, 0, 0)),
+  /** RED */
+  RED(4, new Color(205, 0, 0)),
 
-    /** YELLOW */
-    YELLOW(5, new Color(255, 215, 0)),
+  /** YELLOW */
+  YELLOW(5, new Color(255, 215, 0)),
 
-    /** MAGENTA */
-    MAGENTA(6, new Color(255, 0, 255)),
+  /** MAGENTA */
+  MAGENTA(6, new Color(255, 0, 255)),
 
-    /** PINK */
-    PINK(7, new Color(255, 166, 201)),
+  /** PINK */
+  PINK(7, new Color(255, 166, 201)),
 
-    /** LIGHT_GREY */
-    LIGHT_GREY(8, new Color(207, 207, 207)),
+  /** LIGHT_GREY */
+  LIGHT_GREY(8, new Color(207, 207, 207)),
 
-    /** CYAN */
-    CYAN(9, new Color(0, 255, 255)),
+  /** CYAN */
+  CYAN(9, new Color(0, 255, 255)),
 
-    /** BROWN */
-    BROWN(10, new Color(150, 74, 0)),
+  /** BROWN */
+  BROWN(10, new Color(150, 74, 0)),
 
-    /** BLACK */
-    BLACK(11, new Color(0, 0, 0)),
+  /** BLACK */
+  BLACK(11, new Color(0, 0, 0)),
 
-    /** RANDOM */
-    RANDOM(12, new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
+  /** RANDOM */
+  RANDOM(12, new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
 
-    int id;
-    Color color;
+  int id;
+  Color color;
 
-    private static int nextId = 0;
+  private static int nextId = 0;
 
-    private static final Map<Integer, SeriesColor> idLookup = new HashMap<Integer, SeriesColor>();
-    static {
-        for (SeriesColor seriesColor : EnumSet.allOf(SeriesColor.class)) {
-            idLookup.put(seriesColor.getId(), seriesColor);
-        }
+  private static final Map<Integer, SeriesColor> idLookup = new HashMap<Integer, SeriesColor>();
+  static {
+    for (SeriesColor seriesColor : EnumSet.allOf(SeriesColor.class)) {
+      idLookup.put(seriesColor.getId(), seriesColor);
     }
+  }
 
-    private Integer getId() {
-        return id;
+  private Integer getId() {
+
+    return id;
+  }
+
+  public static void resetId() {
+
+    nextId = 0;
+  }
+
+  protected static Color getAWTColor(SeriesColor seriesColor) {
+
+    return seriesColor.color;
+  }
+
+  protected static Color getNextAWTColor() {
+
+    SeriesColor seriesColor = idLookup.get(nextId);
+    if (seriesColor == null) {
+      // rotate thru from beginning
+      resetId();
     }
+    return idLookup.get(nextId++).color;
+  }
 
-    public static void resetId() {
-        nextId = 0;
-    }
+  /**
+   * Constructor
+   * 
+   * @param id
+   * @param color
+   */
+  private SeriesColor(int id, Color color) {
 
-    protected static Color getAWTColor(SeriesColor seriesColor) {
-        return seriesColor.color;
-    }
-
-    protected static Color getNextAWTColor() {
-
-        SeriesColor seriesColor = idLookup.get(nextId);
-        if (seriesColor == null) {
-            // rotate thru from beginning
-            resetId();
-        }
-        return idLookup.get(nextId++).color;
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param id
-     * @param color
-     */
-    private SeriesColor(int id, Color color) {
-        this.id = id;
-        this.color = color;
-    }
+    this.id = id;
+    this.color = color;
+  }
 
 }

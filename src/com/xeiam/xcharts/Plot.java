@@ -25,43 +25,45 @@ import com.xeiam.xcharts.interfaces.IChartPart;
  */
 public class Plot implements IChartPart {
 
-    private Chart chart;
+  private Chart chart;
 
-    private PlotSurface plotSurface;
+  private PlotSurface plotSurface;
 
-    private PlotContent plotContent;
+  private PlotContent plotContent;
 
-    public static final int PLOT_PADDING = 5;
+  public static final int PLOT_PADDING = 5;
 
-    /** the bounds */
-    private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  /** the bounds */
+  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
 
-    public Plot(Chart chart) {
-        this.chart = chart;
-        this.plotSurface = new PlotSurface(chart, this);
-        this.plotContent = new PlotContent(chart, this);
-    }
+  public Plot(Chart chart) {
 
-    @Override
-    public Rectangle getBounds() {
-        return bounds;
-    }
+    this.chart = chart;
+    this.plotSurface = new PlotSurface(chart, this);
+    this.plotContent = new PlotContent(chart, this);
+  }
 
-    @Override
-    public void paint(Graphics2D g) {
+  @Override
+  public Rectangle getBounds() {
 
-        // calculate bounds
-        int xOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getX() + chart.getAxisPair().getYAxis().getBounds().getWidth() + PLOT_PADDING);
-        int yOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getY());
-        int width = (int) chart.getAxisPair().getXAxis().getBounds().getWidth();
-        int height = (int) chart.getAxisPair().getYAxis().getBounds().getHeight();
-        bounds = new Rectangle(xOffset, yOffset, width, height);
-        // g.setColor(Color.green);
-        // g.draw(bounds);
+    return bounds;
+  }
 
-        plotSurface.paint(g);
-        plotContent.paint(g);
+  @Override
+  public void paint(Graphics2D g) {
 
-    }
+    // calculate bounds
+    int xOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getX() + chart.getAxisPair().getYAxis().getBounds().getWidth() + PLOT_PADDING);
+    int yOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getY());
+    int width = (int) chart.getAxisPair().getXAxis().getBounds().getWidth();
+    int height = (int) chart.getAxisPair().getYAxis().getBounds().getHeight();
+    bounds = new Rectangle(xOffset, yOffset, width, height);
+    // g.setColor(Color.green);
+    // g.draw(bounds);
+
+    plotSurface.paint(g);
+    plotContent.paint(g);
+
+  }
 
 }

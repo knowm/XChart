@@ -25,162 +25,182 @@ import com.xeiam.xcharts.series.markers.Marker;
  */
 public class Series {
 
-    private String name = "";
+  private String name = "";
 
-    protected double[] xData;
+  protected double[] xData;
 
-    protected double[] yData;
+  protected double[] yData;
 
-    /** the minimum value of axis range */
-    private double xMin;
+  /** the minimum value of axis range */
+  private double xMin;
 
-    /** the maximum value of axis range */
-    private double xMax;
+  /** the maximum value of axis range */
+  private double xMax;
 
-    /** the minimum value of axis range */
-    private double yMin;
+  /** the minimum value of axis range */
+  private double yMin;
 
-    /** the maximum value of axis range */
-    private double yMax;
+  /** the maximum value of axis range */
+  private double yMax;
 
-    /** Line Style */
-    private BasicStroke stroke;
+  /** Line Style */
+  private BasicStroke stroke;
 
-    /** Line Color */
-    private Color strokeColor;
+  /** Line Color */
+  private Color strokeColor;
 
-    /** Marker Style */
-    private Marker marker;
+  /** Marker Style */
+  private Marker marker;
 
-    /** Marker Color */
-    private Color markerColor;
+  /** Marker Color */
+  private Color markerColor;
 
-    /**
-     * Constructor
-     * 
-     * @param name
-     * @param xData
-     * @param yData
-     */
-    public Series(String name, double[] xData, double[] yData) {
+  /**
+   * Constructor
+   * 
+   * @param name
+   * @param xData
+   * @param yData
+   */
+  public Series(String name, double[] xData, double[] yData) {
 
-        this.name = name;
-        this.xData = xData;
-        this.yData = yData;
+    this.name = name;
+    this.xData = xData;
+    this.yData = yData;
 
-        // xData
-        double[] xMinMax = findMinMax(xData);
-        this.xMin = xMinMax[0];
-        this.xMax = xMinMax[1];
+    // xData
+    double[] xMinMax = findMinMax(xData);
+    this.xMin = xMinMax[0];
+    this.xMax = xMinMax[1];
 
-        // yData
-        double[] yMinMax = findMinMax(yData);
-        this.yMin = yMinMax[0];
-        this.yMax = yMinMax[1];
-        // System.out.println(yMin);
-        // System.out.println(yMax);
+    // yData
+    double[] yMinMax = findMinMax(yData);
+    this.yMin = yMinMax[0];
+    this.yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
 
-        Color color = SeriesColor.getNextAWTColor();
-        this.strokeColor = color;
-        this.markerColor = color;
+    Color color = SeriesColor.getNextAWTColor();
+    this.strokeColor = color;
+    this.markerColor = color;
 
-        this.marker = SeriesMarker.getNextMarker();
-        this.stroke = SeriesLineStyle.getNextBasicStroke();
+    this.marker = SeriesMarker.getNextMarker();
+    this.stroke = SeriesLineStyle.getNextBasicStroke();
 
-    }
+  }
 
-    private double[] findMinMax(double[] data) {
-        Double min = null;
-        Double max = null;
-        for (int i = 0; i < data.length; i++) {
-            if (min == null || data[i] < min) {
-                if (!Double.isNaN(data[i])) {
-                    min = data[i];
-                }
-            }
-            if (max == null || data[i] > max) {
-                if (!Double.isNaN(data[i])) {
-                    max = data[i];
-                }
-            }
+  private double[] findMinMax(double[] data) {
+
+    Double min = null;
+    Double max = null;
+    for (int i = 0; i < data.length; i++) {
+      if (min == null || data[i] < min) {
+        if (!Double.isNaN(data[i])) {
+          min = data[i];
         }
-        return new double[] { min, max };
+      }
+      if (max == null || data[i] > max) {
+        if (!Double.isNaN(data[i])) {
+          max = data[i];
+        }
+      }
     }
+    return new double[] { min, max };
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
 
-    public double[] getxData() {
-        return xData;
-    }
+    return name;
+  }
 
-    public double[] getyData() {
-        return yData;
-    }
+  public double[] getxData() {
 
-    public double getxMin() {
-        return xMin;
-    }
+    return xData;
+  }
 
-    public double getxMax() {
-        return xMax;
-    }
+  public double[] getyData() {
 
-    public double getyMin() {
-        return yMin;
-    }
+    return yData;
+  }
 
-    public double getyMax() {
-        return yMax;
-    }
+  public double getxMin() {
 
-    public BasicStroke getLineStyle() {
-        return stroke;
-    }
+    return xMin;
+  }
 
-    public void setLineStyle(SeriesLineStyle lineStyle) {
-        this.stroke = SeriesLineStyle.getBasicStroke(lineStyle);
-    }
+  public double getxMax() {
 
-    public void setLineStyle(BasicStroke lineStyle) {
-        this.stroke = lineStyle;
-    }
+    return xMax;
+  }
 
-    public Color getLineColor() {
-        return strokeColor;
-    }
+  public double getyMin() {
 
-    public void setLineColor(SeriesColor lineColor) {
-        this.strokeColor = SeriesColor.getAWTColor(lineColor);
-    }
+    return yMin;
+  }
 
-    public void setLineColor(java.awt.Color lineColor) {
-        this.strokeColor = lineColor;
-    }
+  public double getyMax() {
 
-    public Marker getMarker() {
-        return marker;
-    }
+    return yMax;
+  }
 
-    public void setMarker(SeriesMarker marker) {
-        this.marker = SeriesMarker.getMarker(marker);
-    }
+  public BasicStroke getLineStyle() {
 
-    public void setMarker(Marker marker) {
-        this.marker = marker;
-    }
+    return stroke;
+  }
 
-    public Color getMarkerColor() {
-        return markerColor;
-    }
+  public void setLineStyle(SeriesLineStyle lineStyle) {
 
-    public void setMarkerColor(SeriesColor lineColor) {
-        this.markerColor = SeriesColor.getAWTColor(lineColor);
-    }
+    this.stroke = SeriesLineStyle.getBasicStroke(lineStyle);
+  }
 
-    public void setMarkerColor(java.awt.Color lineColor) {
-        this.markerColor = lineColor;
-    }
+  public void setLineStyle(BasicStroke lineStyle) {
+
+    this.stroke = lineStyle;
+  }
+
+  public Color getLineColor() {
+
+    return strokeColor;
+  }
+
+  public void setLineColor(SeriesColor lineColor) {
+
+    this.strokeColor = SeriesColor.getAWTColor(lineColor);
+  }
+
+  public void setLineColor(java.awt.Color lineColor) {
+
+    this.strokeColor = lineColor;
+  }
+
+  public Marker getMarker() {
+
+    return marker;
+  }
+
+  public void setMarker(SeriesMarker marker) {
+
+    this.marker = SeriesMarker.getMarker(marker);
+  }
+
+  public void setMarker(Marker marker) {
+
+    this.marker = marker;
+  }
+
+  public Color getMarkerColor() {
+
+    return markerColor;
+  }
+
+  public void setMarkerColor(SeriesColor lineColor) {
+
+    this.markerColor = SeriesColor.getAWTColor(lineColor);
+  }
+
+  public void setMarkerColor(java.awt.Color lineColor) {
+
+    this.markerColor = lineColor;
+  }
 
 }

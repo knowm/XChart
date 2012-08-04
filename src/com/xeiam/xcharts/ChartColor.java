@@ -22,34 +22,36 @@ import java.awt.Color;
  */
 public enum ChartColor {
 
-    /** BLACK */
-    BLACK(new Color(0, 0, 0)),
+  /** BLACK */
+  BLACK(new Color(0, 0, 0)),
 
-    /** WHITE */
-    WHITE(new Color(255, 255, 255)),
+  /** WHITE */
+  WHITE(new Color(255, 255, 255)),
 
-    /** DARK_GREY */
-    DARK_GREY(new Color(22, 22, 22)),
+  /** DARK_GREY */
+  DARK_GREY(new Color(22, 22, 22)),
 
-    /** GREY */
-    GREY(new Color(200, 200, 200)),
+  /** GREY */
+  GREY(new Color(200, 200, 200)),
 
-    /** LIGHT_GREY */
-    LIGHT_GREY(new Color(252, 252, 252));
+  /** LIGHT_GREY */
+  LIGHT_GREY(new Color(252, 252, 252));
 
-    Color color;
+  Color color;
 
-    protected static Color getAWTColor(ChartColor chartColor) {
-        return chartColor.color;
-    }
+  protected static Color getAWTColor(ChartColor chartColor) {
 
-    /**
-     * Constructor
-     * 
-     * @param color
-     */
-    private ChartColor(Color color) {
-        this.color = color;
-    }
+    return chartColor.color;
+  }
+
+  /**
+   * Constructor
+   * 
+   * @param color
+   */
+  private ChartColor(Color color) {
+
+    this.color = color;
+  }
 
 }

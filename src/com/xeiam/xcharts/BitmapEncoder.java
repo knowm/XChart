@@ -28,37 +28,37 @@ import javax.servlet.ServletOutputStream;
  */
 public class BitmapEncoder {
 
-    /**
-     * Saves a chart as a PNG file
-     * 
-     * @param chart
-     * @param pFileName
-     */
-    public static void savePNG(Chart chart, String pFileName) throws Exception {
+  /**
+   * Saves a chart as a PNG file
+   * 
+   * @param chart
+   * @param pFileName
+   */
+  public static void savePNG(Chart chart, String pFileName) throws Exception {
 
-        BufferedImage lBufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
-        Graphics2D lGraphics2D = lBufferedImage.createGraphics();
-        chart.paint(lGraphics2D);
+    BufferedImage lBufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
+    Graphics2D lGraphics2D = lBufferedImage.createGraphics();
+    chart.paint(lGraphics2D);
 
-        // Save chart as PNG
-        OutputStream out = new FileOutputStream(pFileName);
-        ImageIO.write(lBufferedImage, "png", out);
-        out.close();
-    }
+    // Save chart as PNG
+    OutputStream out = new FileOutputStream(pFileName);
+    ImageIO.write(lBufferedImage, "png", out);
+    out.close();
+  }
 
-    /**
-     * Streams a chart as a PNG file
-     * 
-     * @param out
-     * @param chart
-     */
-    public static void streamPNG(ServletOutputStream out, Chart chart) throws Exception {
+  /**
+   * Streams a chart as a PNG file
+   * 
+   * @param out
+   * @param chart
+   */
+  public static void streamPNG(ServletOutputStream out, Chart chart) throws Exception {
 
-        BufferedImage lBufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
-        Graphics2D lGraphics2D = lBufferedImage.createGraphics();
-        chart.paint(lGraphics2D);
+    BufferedImage lBufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
+    Graphics2D lGraphics2D = lBufferedImage.createGraphics();
+    chart.paint(lGraphics2D);
 
-        ImageIO.write(lBufferedImage, "png", out);
-        out.close();
-    }
+    ImageIO.write(lBufferedImage, "png", out);
+    out.close();
+  }
 }

@@ -27,95 +27,97 @@ import com.xeiam.xcharts.series.Series;
  */
 public class PlotContent implements IChartPart {
 
-    private Chart chart;
+  private Chart chart;
 
-    private Plot plot;
+  private Plot plot;
 
-    public PlotContent(Chart chart, Plot plot) {
-        this.chart = chart;
-        this.plot = plot;
-    }
+  public PlotContent(Chart chart, Plot plot) {
 
-    @Override
-    public Rectangle getBounds() {
-        return plot.getBounds();
-    }
+    this.chart = chart;
+    this.plot = plot;
+  }
 
-    @Override
-    public void paint(Graphics2D g) {
+  @Override
+  public Rectangle getBounds() {
 
-        Rectangle bounds = plot.getBounds();
+    return plot.getBounds();
+  }
 
-        Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
-        for (Integer seriesId : seriesMap.keySet()) {
+  @Override
+  public void paint(Graphics2D g) {
 
-            Series series = seriesMap.get(seriesId);
+    Rectangle bounds = plot.getBounds();
 
-            // X-Axis
-            int xTickSpace = AxisPair.getTickSpace((int) bounds.getWidth());
-            int xLeftMargin = AxisPair.getMargin((int) bounds.getWidth(), xTickSpace);
+    Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
+    for (Integer seriesId : seriesMap.keySet()) {
 
-            // Y-Axis
-            int yTickSpace = AxisPair.getTickSpace((int) bounds.getHeight());
-            int yTopMargin = AxisPair.getMargin((int) bounds.getHeight(), yTickSpace);
+      Series series = seriesMap.get(seriesId);
 
-            // data points
-            double[] xData = series.getxData();
-            double xMin = chart.getAxisPair().getXAxis().getMin();
-            double xMax = chart.getAxisPair().getXAxis().getMax();
-            double[] yData = series.getyData();
-            double yMin = chart.getAxisPair().getYAxis().getMin();
-            double yMax = chart.getAxisPair().getYAxis().getMax();
+      // X-Axis
+      int xTickSpace = AxisPair.getTickSpace((int) bounds.getWidth());
+      int xLeftMargin = AxisPair.getMargin((int) bounds.getWidth(), xTickSpace);
 
-            int previousX = Integer.MIN_VALUE;
-            int previousY = Integer.MIN_VALUE;
+      // Y-Axis
+      int yTickSpace = AxisPair.getTickSpace((int) bounds.getHeight());
+      int yTopMargin = AxisPair.getMargin((int) bounds.getHeight(), yTickSpace);
 
-            for (int i = 0; i < xData.length; i++) {
+      // data points
+      double[] xData = series.getxData();
+      double xMin = chart.getAxisPair().getXAxis().getMin();
+      double xMax = chart.getAxisPair().getXAxis().getMax();
+      double[] yData = series.getyData();
+      double yMin = chart.getAxisPair().getYAxis().getMin();
+      double yMax = chart.getAxisPair().getYAxis().getMax();
 
-                if (Double.isInfinite(xData[i])) {
-                    throw new RuntimeException("Infinite values in xAxis Data not allowed!!!");
-                }
+      int previousX = Integer.MIN_VALUE;
+      int previousY = Integer.MIN_VALUE;
 
-                if (Double.isInfinite(yData[i])) {
-                    throw new RuntimeException("Infinite values in yAxis Data not allowed!!!");
-                }
+      for (int i = 0; i < xData.length; i++) {
 
-                if (!Double.isNaN(xData[i]) && !Double.isNaN(yData[i])) {
-
-                    int xTransform = (int) (xLeftMargin + ((xData[i] - xMin) / (xMax - xMin) * xTickSpace));
-                    int yTransform = (int) (bounds.getHeight() - (yTopMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));
-
-                    // a check if all y data are the exact same values
-                    if (Math.abs(xMax - xMin) / 5 == 0.0) {
-                        xTransform = (int) (bounds.getWidth() / 2.0);
-                    }
-
-                    // a check if all y data are the exact same values
-                    if (Math.abs(yMax - yMin) / 5 == 0.0) {
-                        yTransform = (int) (bounds.getHeight() / 2.0);
-                    }
-
-                    int xOffset = (int) (bounds.getX() + xTransform - 1);
-                    int yOffset = (int) (bounds.getY() + yTransform);
-
-                    // paint line
-                    if (series.getLineStyle() != null) {
-                        if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
-                            g.setColor(series.getLineColor());
-                            g.setStroke(series.getLineStyle());
-                            g.drawLine(previousX, previousY, xOffset, yOffset);
-                        }
-                        previousX = xOffset;
-                        previousY = yOffset;
-                    }
-
-                    // paint marker
-                    if (series.getMarker() != null) {
-                        g.setColor(series.getMarkerColor());
-                        series.getMarker().paint(g, xOffset, yOffset);
-                    }
-                }
-            }
+        if (Double.isInfinite(xData[i])) {
+          throw new RuntimeException("Infinite values in xAxis Data not allowed!!!");
         }
+
+        if (Double.isInfinite(yData[i])) {
+          throw new RuntimeException("Infinite values in yAxis Data not allowed!!!");
+        }
+
+        if (!Double.isNaN(xData[i]) && !Double.isNaN(yData[i])) {
+
+          int xTransform = (int) (xLeftMargin + ((xData[i] - xMin) / (xMax - xMin) * xTickSpace));
+          int yTransform = (int) (bounds.getHeight() - (yTopMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));
+
+          // a check if all y data are the exact same values
+          if (Math.abs(xMax - xMin) / 5 == 0.0) {
+            xTransform = (int) (bounds.getWidth() / 2.0);
+          }
+
+          // a check if all y data are the exact same values
+          if (Math.abs(yMax - yMin) / 5 == 0.0) {
+            yTransform = (int) (bounds.getHeight() / 2.0);
+          }
+
+          int xOffset = (int) (bounds.getX() + xTransform - 1);
+          int yOffset = (int) (bounds.getY() + yTransform);
+
+          // paint line
+          if (series.getLineStyle() != null) {
+            if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+              g.setColor(series.getLineColor());
+              g.setStroke(series.getLineStyle());
+              g.drawLine(previousX, previousY, xOffset, yOffset);
+            }
+            previousX = xOffset;
+            previousY = yOffset;
+          }
+
+          // paint marker
+          if (series.getMarker() != null) {
+            g.setColor(series.getMarkerColor());
+            series.getMarker().paint(g, xOffset, yOffset);
+          }
+        }
+      }
     }
+  }
 }

@@ -29,69 +29,73 @@ import com.xeiam.xcharts.interfaces.IHideable;
  */
 public class ChartTitle implements IHideable {
 
-    /** the chart */
-    protected Chart chart;
+  /** the chart */
+  protected Chart chart;
 
-    /** the title text */
-    protected String text = ""; // default to ""
+  /** the title text */
+  protected String text = ""; // default to ""
 
-    /** the visibility state of title */
-    protected boolean isVisible = false; // default to false
+  /** the visibility state of title */
+  protected boolean isVisible = false; // default to false
 
-    /** the font */
-    private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 14); // default font
+  /** the font */
+  private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 14); // default font
 
-    /** the foreground color */
-    private Color foreground = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default foreground color
+  /** the foreground color */
+  private Color foreground = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default foreground color
 
-    /** the bounds */
-    private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  /** the bounds */
+  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
 
-    /**
-     * Constructor
-     */
-    public ChartTitle(Chart pChart) {
-        this.chart = pChart;
+  /**
+   * Constructor
+   */
+  public ChartTitle(Chart pChart) {
+
+    this.chart = pChart;
+  }
+
+  public void setText(String text) {
+
+    if (text.trim().equalsIgnoreCase("")) {
+      this.isVisible = false;
+    } else {
+      this.isVisible = true;
+    }
+    this.text = text;
+  }
+
+  @Override
+  public void setVisible(boolean isVisible) {
+
+    this.isVisible = isVisible;
+  }
+
+  @Override
+  public void paint(Graphics2D g) {
+
+    if (isVisible) {
+
+      FontRenderContext frc = g.getFontRenderContext();
+      TextLayout textLayout = new TextLayout(this.text, this.font, frc);
+      Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+      // System.out.println(rectangle);
+      int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
+      int yOffset = (int) (Chart.CHART_PADDING - rectangle.getY());
+
+      g.setColor(foreground);
+      textLayout.draw(g, xOffset, yOffset);
+
+      bounds = new Rectangle(xOffset, (int) (yOffset + rectangle.getY()), (int) rectangle.getWidth(), (int) rectangle.getHeight());
+      // g.setColor(Color.green);
+      // g.draw(bounds);
     }
 
-    public void setText(String text) {
-        if (text.trim().equalsIgnoreCase("")) {
-            this.isVisible = false;
-        } else {
-            this.isVisible = true;
-        }
-        this.text = text;
-    }
+  }
 
-    @Override
-    public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
+  @Override
+  public Rectangle getBounds() {
 
-    @Override
-    public void paint(Graphics2D g) {
-
-        if (isVisible) {
-
-            FontRenderContext frc = g.getFontRenderContext();
-            TextLayout textLayout = new TextLayout(this.text, this.font, frc);
-            Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-            // System.out.println(rectangle);
-            int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
-            int yOffset = (int) (Chart.CHART_PADDING - rectangle.getY());
-
-            g.setColor(foreground);
-            textLayout.draw(g, xOffset, yOffset);
-
-            bounds = new Rectangle(xOffset, (int) (yOffset + rectangle.getY()), (int) rectangle.getWidth(), (int) rectangle.getHeight());
-            // g.setColor(Color.green);
-            // g.draw(bounds);
-        }
-
-    }
-
-    @Override
-    public Rectangle getBounds() {
-        return bounds;
-    }
+    return bounds;
+  }
 }

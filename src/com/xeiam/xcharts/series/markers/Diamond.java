@@ -23,30 +23,30 @@ import java.awt.Polygon;
  */
 public class Diamond extends Marker {
 
-    @Override
-    public void paint(Graphics2D g, int xOffset, int yOffset) {
+  @Override
+  public void paint(Graphics2D g, int xOffset, int yOffset) {
 
-        g.setStroke(stroke);
+    g.setStroke(stroke);
 
-        int[] x = new int[4];
-        int[] y = new int[4];
-        int n = 4;
+    int[] x = new int[4];
+    int[] y = new int[4];
+    int n = 4;
 
-        // Make a diamond
-        int halfSize = (int) (Math.ceil((Marker.SIZE + 3) / 2.0));
-        x[0] = xOffset - halfSize + 0;
-        x[1] = xOffset - halfSize + halfSize;
-        x[2] = xOffset - halfSize + Marker.SIZE + 3;
-        x[3] = xOffset - halfSize + halfSize;
+    // Make a diamond
+    int halfSize = (int) (Math.ceil((Marker.SIZE + 3) / 2.0));
+    x[0] = xOffset - halfSize + 0;
+    x[1] = xOffset - halfSize + halfSize;
+    x[2] = xOffset - halfSize + Marker.SIZE + 3;
+    x[3] = xOffset - halfSize + halfSize;
 
-        y[0] = 1 + yOffset - halfSize + halfSize;
-        y[1] = 1 + yOffset - halfSize + Marker.SIZE + 3;
-        y[2] = 1 + yOffset - halfSize + halfSize;
-        y[3] = 1 + yOffset - halfSize + 0;
+    y[0] = 1 + yOffset - halfSize + halfSize;
+    y[1] = 1 + yOffset - halfSize + Marker.SIZE + 3;
+    y[2] = 1 + yOffset - halfSize + halfSize;
+    y[3] = 1 + yOffset - halfSize + 0;
 
-        Polygon diamond = new Polygon(x, y, n);
-        g.fillPolygon(diamond);
+    Polygon diamond = new Polygon(x, y, n);
+    g.fillPolygon(diamond);
 
-    }
+  }
 
 }

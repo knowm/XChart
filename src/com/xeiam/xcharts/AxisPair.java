@@ -28,142 +28,149 @@ import com.xeiam.xcharts.series.Series;
  */
 public class AxisPair implements IChartPart {
 
-    /** the chart */
-    private Chart chart;
+  /** the chart */
+  private Chart chart;
 
-    private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
+  private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
 
-    int seriesCount = 0;
+  int seriesCount = 0;
 
-    Axis xAxis;
-    Axis yAxis;
+  Axis xAxis;
+  Axis yAxis;
 
-    /**
-     * Constructor.
-     * 
-     * @param chart the chart
-     */
-    public AxisPair(Chart chart) {
+  /**
+   * Constructor.
+   * 
+   * @param chart the chart
+   */
+  public AxisPair(Chart chart) {
 
-        this.chart = chart;
+    this.chart = chart;
 
-        // add axes
-        xAxis = new Axis(chart, this, Axis.Direction.X);
-        yAxis = new Axis(chart, this, Axis.Direction.Y);
+    // add axes
+    xAxis = new Axis(chart, this, Axis.Direction.X);
+    yAxis = new Axis(chart, this, Axis.Direction.Y);
+  }
+
+  /**
+   * @param xData
+   * @param yData
+   */
+  public Series addSeries(String seriesName, double[] xData, double[] yData) {
+
+    // Sanity checks
+    if (seriesName == null) {
+      throw new RuntimeException("Series Name cannot be null!!!");
+    }
+    if (yData == null) {
+      throw new RuntimeException("Y-Axis data cannot be null!!!");
+    }
+    if (yData.length == 0) {
+      throw new RuntimeException("Y-Axis data cannot be empty!!!");
+    }
+    if (xData != null && xData.length == 0) {
+      throw new RuntimeException("X-Axis data cannot be empty!!!");
+    }
+    if (xData != null && xData.length == 1 && Double.isNaN(yData[0])) {
+      throw new RuntimeException("X-Axis data cannot contain a single NaN value!!!");
+    }
+    if (yData.length == 1 && Double.isNaN(yData[0])) {
+      throw new RuntimeException("Y-Axis data cannot contain a single NaN value!!!");
     }
 
-    /**
-     * @param xData
-     * @param yData
-     */
-    public Series addSeries(String seriesName, double[] xData, double[] yData) {
-
-        // Sanity checks
-        if (seriesName == null) {
-            throw new RuntimeException("Series Name cannot be null!!!");
-        }
-        if (yData == null) {
-            throw new RuntimeException("Y-Axis data cannot be null!!!");
-        }
-        if (yData.length == 0) {
-            throw new RuntimeException("Y-Axis data cannot be empty!!!");
-        }
-        if (xData != null && xData.length == 0) {
-            throw new RuntimeException("X-Axis data cannot be empty!!!");
-        }
-        if (xData != null && xData.length == 1 && Double.isNaN(yData[0])) {
-            throw new RuntimeException("X-Axis data cannot contain a single NaN value!!!");
-        }
-        if (yData.length == 1 && Double.isNaN(yData[0])) {
-            throw new RuntimeException("Y-Axis data cannot contain a single NaN value!!!");
-        }
-
-        Series series;
-        if (xData != null) {
-            verifyValues(xData);
-            verifyValues(yData);
-            series = new Series(seriesName, xData, yData);
-        } else { // generate xData
-            double[] generatedXData = new double[yData.length];
-            verifyValues(yData);
-            for (int i = 1; i < yData.length; i++) {
-                generatedXData[i] = i;
-            }
-            series = new Series(seriesName, generatedXData, yData);
-        }
-
-        // Sanity check
-        if (xData != null && xData.length != yData.length) {
-            throw new RuntimeException("X and Y-Axis lengths are not the same!!! ");
-        }
-
-        seriesMap.put(seriesCount++, series);
-
-        // add min/max to axis
-        xAxis.addMinMax(series.getxMin(), series.getxMax());
-        yAxis.addMinMax(series.getyMin(), series.getyMax());
-
-        return series;
+    Series series;
+    if (xData != null) {
+      verifyValues(xData);
+      verifyValues(yData);
+      series = new Series(seriesName, xData, yData);
+    } else { // generate xData
+      double[] generatedXData = new double[yData.length];
+      verifyValues(yData);
+      for (int i = 1; i < yData.length; i++) {
+        generatedXData[i] = i;
+      }
+      series = new Series(seriesName, generatedXData, yData);
     }
 
-    /**
-     * Checks for invalid values in data array
-     * 
-     * @param data
-     */
-    private void verifyValues(double[] data) {
-
-        for (int i = 0; i < data.length; i++) {
-            if (data[i] == Double.POSITIVE_INFINITY) {
-                throw new RuntimeException("Axis data cannot contain Double.POSITIVE_INFINITY!!!");
-            } else if (data[i] == Double.NEGATIVE_INFINITY) {
-                throw new RuntimeException("Axis data cannot contain Double.NEGATIVE_INFINITY!!!");
-            }
-        }
+    // Sanity check
+    if (xData != null && xData.length != yData.length) {
+      throw new RuntimeException("X and Y-Axis lengths are not the same!!! ");
     }
 
-    protected Axis getXAxis() {
-        return xAxis;
+    seriesMap.put(seriesCount++, series);
+
+    // add min/max to axis
+    xAxis.addMinMax(series.getxMin(), series.getxMax());
+    yAxis.addMinMax(series.getyMin(), series.getyMax());
+
+    return series;
+  }
+
+  /**
+   * Checks for invalid values in data array
+   * 
+   * @param data
+   */
+  private void verifyValues(double[] data) {
+
+    for (int i = 0; i < data.length; i++) {
+      if (data[i] == Double.POSITIVE_INFINITY) {
+        throw new RuntimeException("Axis data cannot contain Double.POSITIVE_INFINITY!!!");
+      } else if (data[i] == Double.NEGATIVE_INFINITY) {
+        throw new RuntimeException("Axis data cannot contain Double.NEGATIVE_INFINITY!!!");
+      }
     }
+  }
 
-    protected Axis getYAxis() {
-        return yAxis;
-    }
+  protected Axis getXAxis() {
 
-    protected Rectangle getChartTitleBounds() {
-        return chart.getTitle().getBounds();
-    }
+    return xAxis;
+  }
 
-    protected Rectangle getChartLegendBounds() {
-        return chart.getLegend().getBounds();
-    }
+  protected Axis getYAxis() {
 
-    protected Map<Integer, Series> getSeriesMap() {
-        return seriesMap;
-    }
+    return yAxis;
+  }
 
-    public static int getTickSpace(int workingSpace) {
-        int tickSpace = (int) (workingSpace * 0.95);
-        return tickSpace;
-    }
+  protected Rectangle getChartTitleBounds() {
 
-    public static int getMargin(int workingSpace, int tickSpace) {
+    return chart.getTitle().getBounds();
+  }
 
-        int marginSpace = workingSpace - tickSpace;
-        int margin = (int) (marginSpace / 2.0);
-        return margin;
-    }
+  protected Rectangle getChartLegendBounds() {
 
-    @Override
-    public void paint(Graphics2D g) {
+    return chart.getLegend().getBounds();
+  }
 
-        yAxis.paint(g);
-        xAxis.paint(g);
-    }
+  protected Map<Integer, Series> getSeriesMap() {
 
-    @Override
-    public Rectangle getBounds() {
-        return null; // should never be called
-    }
+    return seriesMap;
+  }
+
+  public static int getTickSpace(int workingSpace) {
+
+    int tickSpace = (int) (workingSpace * 0.95);
+    return tickSpace;
+  }
+
+  public static int getMargin(int workingSpace, int tickSpace) {
+
+    int marginSpace = workingSpace - tickSpace;
+    int margin = (int) (marginSpace / 2.0);
+    return margin;
+  }
+
+  @Override
+  public void paint(Graphics2D g) {
+
+    yAxis.paint(g);
+    xAxis.paint(g);
+  }
+
+  @Override
+  public Rectangle getBounds() {
+
+    return null; // should never be called
+  }
 
 }

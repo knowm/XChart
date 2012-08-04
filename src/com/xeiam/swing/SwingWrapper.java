@@ -31,106 +31,115 @@ import com.xeiam.xcharts.Chart;
  */
 public class SwingWrapper {
 
-    private Chart[] charts;
-    private int numRows;
-    private int numColumns;
+  private Chart[] charts;
+  private int numRows;
+  private int numColumns;
 
-    /**
-     * Constructor
-     * 
-     * @param chart
-     */
-    public SwingWrapper(Chart chart) {
-        this.charts = new Chart[1];
-        charts[0] = chart;
-    }
+  /**
+   * Constructor
+   * 
+   * @param chart
+   */
+  public SwingWrapper(Chart chart) {
 
-    /**
-     * Constructor
-     * 
-     * @param charts
-     */
-    public SwingWrapper(Chart[] charts, int numRows, int numColumns) {
-        this.charts = charts;
-        this.numRows = numRows;
-        this.numColumns = numColumns;
-    }
+    this.charts = new Chart[1];
+    charts[0] = chart;
+  }
 
-    /**
-     * Display the chart in a Swing JFrame
-     */
-    public void displayChart() {
+  /**
+   * Constructor
+   * 
+   * @param charts
+   */
+  public SwingWrapper(Chart[] charts, int numRows, int numColumns) {
 
-        // Schedule a job for the event-dispatching thread:
-        // creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // Create and set up the window.
-                JFrame frame = new JFrame("XChart");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+    this.charts = charts;
+    this.numRows = numRows;
+    this.numColumns = numColumns;
+  }
 
-                JPanel chartPanel = new ChartJPanel(charts[0]);
-                frame.getContentPane().add(chartPanel);
+  /**
+   * Display the chart in a Swing JFrame
+   */
+  public void displayChart() {
 
-                // Display the window.
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
-    }
+    // Schedule a job for the event-dispatching thread:
+    // creating and showing this application's GUI.
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
-    /**
-     * Display the chart in a Swing JFrame
-     */
-    public void displayChartMatrix() {
+      @Override
+      public void run() {
 
-        // Schedule a job for the event-dispatching thread:
-        // creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                // Create and set up the window.
-                JFrame frame = new JFrame("XChart");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
+        // Create and set up the window.
+        JFrame frame = new JFrame("XChart");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
-                for (int i = 0; i < charts.length; i++) {
+        JPanel chartPanel = new ChartJPanel(charts[0]);
+        frame.getContentPane().add(chartPanel);
 
-                    if (charts[i] != null) {
-                        JPanel chartPanel = new ChartJPanel(charts[i]);
-                        frame.getContentPane().add(chartPanel);
-                    } else {
-                        JPanel chartPanel = new JPanel();
-                        frame.getContentPane().add(chartPanel);
-                    }
+        // Display the window.
+        frame.pack();
+        frame.setVisible(true);
+      }
+    });
+  }
 
-                }
+  /**
+   * Display the chart in a Swing JFrame
+   */
+  public void displayChartMatrix() {
 
-                // Display the window.
-                frame.pack();
-                frame.setVisible(true);
-            }
-        });
-    }
+    // Schedule a job for the event-dispatching thread:
+    // creating and showing this application's GUI.
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
-    private class ChartJPanel extends JPanel {
+      @Override
+      public void run() {
 
-        private Chart chart;
+        // Create and set up the window.
+        JFrame frame = new JFrame("XChart");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
 
-        public ChartJPanel(Chart chart) {
-            this.chart = chart;
+        for (int i = 0; i < charts.length; i++) {
+
+          if (charts[i] != null) {
+            JPanel chartPanel = new ChartJPanel(charts[i]);
+            frame.getContentPane().add(chartPanel);
+          } else {
+            JPanel chartPanel = new JPanel();
+            frame.getContentPane().add(chartPanel);
+          }
+
         }
 
-        @Override
-        public void paint(Graphics g) {
-            chart.paint((Graphics2D) g);
-        }
+        // Display the window.
+        frame.pack();
+        frame.setVisible(true);
+      }
+    });
+  }
 
-        @Override
-        public Dimension getPreferredSize() {
-            return new Dimension(chart.getWidth(), chart.getHeight());
-        }
+  private class ChartJPanel extends JPanel {
+
+    private Chart chart;
+
+    public ChartJPanel(Chart chart) {
+
+      this.chart = chart;
     }
+
+    @Override
+    public void paint(Graphics g) {
+
+      chart.paint((Graphics2D) g);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+
+      return new Dimension(chart.getWidth(), chart.getHeight());
+    }
+  }
 }

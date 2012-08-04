@@ -13,6 +13,6 @@ package com.xeiam.xcharts.interfaces;
  */
 public interface IHideable extends IChartPart {
 
-    public void setVisible(boolean visible);
+  public void setVisible(boolean visible);
 
 }

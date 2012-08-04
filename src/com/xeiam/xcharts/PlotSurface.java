@@ -28,65 +28,67 @@ import com.xeiam.xcharts.interfaces.IChartPart;
  */
 public class PlotSurface implements IChartPart {
 
-    private Chart chart;
+  private Chart chart;
 
-    private Plot plot;
+  private Plot plot;
 
-    /** the foreground color */
-    private Color foreground = ChartColor.getAWTColor(ChartColor.GREY); // default foreground color
+  /** the foreground color */
+  private Color foreground = ChartColor.getAWTColor(ChartColor.GREY); // default foreground color
 
-    /** the background color */
-    private Color background = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
+  /** the background color */
+  private Color background = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
 
-    /** the line style */
-    private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
+  /** the line style */
+  private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
 
-    public PlotSurface(Chart chart, Plot plot) {
-        this.chart = chart;
-        this.plot = plot;
+  public PlotSurface(Chart chart, Plot plot) {
+
+    this.chart = chart;
+    this.plot = plot;
+  }
+
+  @Override
+  public Rectangle getBounds() {
+
+    return plot.getBounds();
+  }
+
+  @Override
+  public void paint(Graphics2D g) {
+
+    Rectangle bounds = plot.getBounds();
+
+    // paint background
+    Rectangle backgroundRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
+    g.setColor(background);
+    g.fill(backgroundRectangle);
+    Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
+    g.setColor(ChartColor.getAWTColor(ChartColor.DARK_GREY));
+    g.draw(borderRectangle);
+
+    // paint grid lines
+    // horizontal
+    List<Integer> yAxisTickLocations = chart.getAxisPair().getYAxis().getAxisTick().getTickLocations();
+    for (int i = 0; i < yAxisTickLocations.size(); i++) {
+
+      int tickLocation = yAxisTickLocations.get(i);
+
+      g.setColor(foreground);
+      g.setStroke(stroke);
+      // System.out.println("bounds.getY()= " + bounds.getY());
+      g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2), (int) (bounds.getY() + bounds.getHeight() - tickLocation));
     }
 
-    @Override
-    public Rectangle getBounds() {
-        return plot.getBounds();
+    // vertical
+    List<Integer> xAxisTickLocations = chart.getAxisPair().getXAxis().getAxisTick().getTickLocations();
+    for (int i = 0; i < xAxisTickLocations.size(); i++) {
+
+      int tickLocation = xAxisTickLocations.get(i);
+
+      g.setColor(foreground);
+      g.setStroke(stroke);
+
+      g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
     }
-
-    @Override
-    public void paint(Graphics2D g) {
-
-        Rectangle bounds = plot.getBounds();
-
-        // paint background
-        Rectangle backgroundRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-        g.setColor(background);
-        g.fill(backgroundRectangle);
-        Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-        g.setColor(ChartColor.getAWTColor(ChartColor.DARK_GREY));
-        g.draw(borderRectangle);
-
-        // paint grid lines
-        // horizontal
-        List<Integer> yAxisTickLocations = chart.getAxisPair().getYAxis().getAxisTick().getTickLocations();
-        for (int i = 0; i < yAxisTickLocations.size(); i++) {
-
-            int tickLocation = yAxisTickLocations.get(i);
-
-            g.setColor(foreground);
-            g.setStroke(stroke);
-            // System.out.println("bounds.getY()= " + bounds.getY());
-            g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2), (int) (bounds.getY() + bounds.getHeight() - tickLocation));
-        }
-
-        // vertical
-        List<Integer> xAxisTickLocations = chart.getAxisPair().getXAxis().getAxisTick().getTickLocations();
-        for (int i = 0; i < xAxisTickLocations.size(); i++) {
-
-            int tickLocation = xAxisTickLocations.get(i);
-
-            g.setColor(foreground);
-            g.setStroke(stroke);
-
-            g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
-        }
-    }
+  }
 }

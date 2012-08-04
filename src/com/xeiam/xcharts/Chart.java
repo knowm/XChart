@@ -28,106 +28,120 @@ import com.xeiam.xcharts.series.SeriesMarker;
  */
 public class Chart {
 
-    private int width;
-    private int height;
+  private int width;
+  private int height;
 
-    protected final static int CHART_PADDING = 10;
+  protected final static int CHART_PADDING = 10;
 
-    private ChartTitle chartTitle = new ChartTitle(this);
-    private ChartLegend chartLegend = new ChartLegend(this);
-    private AxisPair axisPair = new AxisPair(this);
-    private Plot plot = new Plot(this);
+  private ChartTitle chartTitle = new ChartTitle(this);
+  private ChartLegend chartLegend = new ChartLegend(this);
+  private AxisPair axisPair = new AxisPair(this);
+  private Plot plot = new Plot(this);
 
-    /**
-     * Constructor
-     * 
-     * @param pWidth
-     * @param pHeight
-     */
-    public Chart(final int pWidth, final int pHeight) {
-        width = pWidth;
-        height = pHeight;
+  /**
+   * Constructor
+   * 
+   * @param pWidth
+   * @param pHeight
+   */
+  public Chart(final int pWidth, final int pHeight) {
+
+    width = pWidth;
+    height = pHeight;
+  }
+
+  public void paint(final Graphics2D g) {
+
+    // Sanity check
+    if (axisPair.getSeriesMap().isEmpty()) {
+      throw new RuntimeException("No series defined for Chart!!!");
     }
 
-    public void paint(final Graphics2D g) {
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
+    g.setColor(ChartColor.getAWTColor(ChartColor.GREY));
+    g.fillRect(0, 0, width, height);
 
-        // Sanity check
-        if (axisPair.getSeriesMap().isEmpty()) {
-            throw new RuntimeException("No series defined for Chart!!!");
-        }
+    chartTitle.paint(g);
+    chartLegend.paint(g);
+    axisPair.paint(g);
+    plot.paint(g);
 
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-        g.setColor(ChartColor.getAWTColor(ChartColor.GREY));
-        g.fillRect(0, 0, width, height);
+    g.dispose();
 
-        chartTitle.paint(g);
-        chartLegend.paint(g);
-        axisPair.paint(g);
-        plot.paint(g);
+    // reset static Ids
+    SeriesColor.resetId();
+    SeriesLineStyle.resetId();
+    SeriesMarker.resetId();
 
-        g.dispose();
+  }
 
-        // reset static Ids
-        SeriesColor.resetId();
-        SeriesLineStyle.resetId();
-        SeriesMarker.resetId();
+  // GETTERS & SETTERS
 
-    }
+  public int getWidth() {
 
-    // GETTERS & SETTERS
+    return width;
+  }
 
-    public int getWidth() {
-        return width;
-    }
+  public int getHeight() {
 
-    public int getHeight() {
-        return height;
-    }
+    return height;
+  }
 
-    protected ChartTitle getTitle() {
-        return chartTitle;
-    }
+  protected ChartTitle getTitle() {
 
-    protected ChartLegend getLegend() {
-        return chartLegend;
-    }
+    return chartTitle;
+  }
 
-    protected AxisPair getAxisPair() {
-        return axisPair;
-    }
+  protected ChartLegend getLegend() {
 
-    protected Plot getPlot() {
-        return plot;
-    }
+    return chartLegend;
+  }
 
-    // EXTERNAL GETTERS & SETTERS
+  protected AxisPair getAxisPair() {
 
-    public Series addSeries(String seriesName, double[] xData, double[] yData) {
-        return axisPair.addSeries(seriesName, xData, yData);
-    }
+    return axisPair;
+  }
 
-    public void setChartTitle(String title) {
-        this.chartTitle.setText(title);
-    }
+  protected Plot getPlot() {
 
-    public void setChartTitleVisible(boolean isVisible) {
-        this.chartTitle.setVisible(isVisible);
-    }
+    return plot;
+  }
 
-    public void setXAxisTitle(String title) {
-        this.axisPair.getXAxis().setAxisTitle(title);
-    }
+  // EXTERNAL GETTERS & SETTERS
 
-    public void setYAxisTitle(String title) {
-        this.axisPair.getYAxis().setAxisTitle(title);
-    }
+  public Series addSeries(String seriesName, double[] xData, double[] yData) {
 
-    public void setAxisTitlesVisible(boolean isVisible) {
-        this.axisPair.getXAxis().getAxisTitle().setVisible(isVisible);
-        this.axisPair.getYAxis().getAxisTitle().setVisible(isVisible);
-    }
+    return axisPair.addSeries(seriesName, xData, yData);
+  }
 
-    public void setChartLegendVisible(boolean isVisible) {
-        this.chartLegend.setVisible(isVisible);
-    }
+  public void setChartTitle(String title) {
+
+    this.chartTitle.setText(title);
+  }
+
+  public void setChartTitleVisible(boolean isVisible) {
+
+    this.chartTitle.setVisible(isVisible);
+  }
+
+  public void setXAxisTitle(String title) {
+
+    this.axisPair.getXAxis().setAxisTitle(title);
+  }
+
+  public void setYAxisTitle(String title) {
+
+    this.axisPair.getYAxis().setAxisTitle(title);
+  }
+
+  public void setAxisTitlesVisible(boolean isVisible) {
+
+    this.axisPair.getXAxis().getAxisTitle().setVisible(isVisible);
+    this.axisPair.getYAxis().getAxisTitle().setVisible(isVisible);
+  }
+
+  public void setChartLegendVisible(boolean isVisible) {
+
+    this.chartLegend.setVisible(isVisible);
+  }
 }

@@ -23,8 +23,8 @@ import java.awt.Rectangle;
  */
 public interface IChartPart {
 
-    public Rectangle getBounds();
+  public Rectangle getBounds();
 
-    public void paint(final Graphics2D g);
+  public void paint(final Graphics2D g);
 
 }

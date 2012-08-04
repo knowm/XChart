@@ -32,118 +32,121 @@ import com.xeiam.xcharts.series.markers.Marker;
  */
 public class ChartLegend implements IHideable {
 
-    /** the chart */
-    private Chart chart;
+  /** the chart */
+  private Chart chart;
 
-    /** the visibility state of legend */
-    private boolean isVisible = true; // default to true
+  /** the visibility state of legend */
+  private boolean isVisible = true; // default to true
 
-    /** the font */
-    private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 11); // default font
+  /** the font */
+  private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 11); // default font
 
-    /** the border color */
-    private Color border = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default border color
+  /** the border color */
+  private Color border = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default border color
 
-    /** the background color */
-    private Color background = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
+  /** the background color */
+  private Color background = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
 
-    /** the foreground color */
-    private Color foreground = ChartColor.getAWTColor(ChartColor.BLACK); // default foreground color
-    private final int LEGEND_PADDING = 10;
+  /** the foreground color */
+  private Color foreground = ChartColor.getAWTColor(ChartColor.BLACK); // default foreground color
+  private final int LEGEND_PADDING = 10;
 
-    /** the bounds */
-    private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  /** the bounds */
+  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
 
-    /**
-     * Constructor
-     */
-    public ChartLegend(Chart pChart) {
-        this.chart = pChart;
-    }
+  /**
+   * Constructor
+   */
+  public ChartLegend(Chart pChart) {
 
-    @Override
-    public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
+    this.chart = pChart;
+  }
 
-    @Override
-    public void paint(Graphics2D g) {
+  @Override
+  public void setVisible(boolean isVisible) {
 
-        if (isVisible) {
+    this.isVisible = isVisible;
+  }
 
-            Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
+  @Override
+  public void paint(Graphics2D g) {
 
-            // determine legend text content max width
-            int legendTextContentMaxWidth = 0;
-            int legendTextContentMaxHeight = 0;
+    if (isVisible) {
 
-            for (Integer seriesId : seriesMap.keySet()) {
-                Series series = seriesMap.get(seriesId);
-                TextLayout textLayout = new TextLayout(series.getName(), font, new FontRenderContext(null, true, false));
-                Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-                // System.out.println(rectangle);
-                if (rectangle.getWidth() > legendTextContentMaxWidth) {
-                    legendTextContentMaxWidth = (int) rectangle.getWidth();
-                }
-                if (rectangle.getHeight() > legendTextContentMaxHeight) {
-                    legendTextContentMaxHeight = (int) rectangle.getHeight();
-                }
-            }
+      Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
 
-            // determine legend content height
-            int legendContentHeight = 0;
-            int maxContentHeight = Math.max(legendTextContentMaxHeight, Marker.SIZE);
-            legendContentHeight = maxContentHeight * seriesMap.size() + LEGEND_PADDING * (seriesMap.size() - 1);
+      // determine legend text content max width
+      int legendTextContentMaxWidth = 0;
+      int legendTextContentMaxHeight = 0;
 
-            // determine legend content width
-            int legendContentWidth = (int) (3.0 * Marker.SIZE + LEGEND_PADDING + legendTextContentMaxWidth);
+      for (Integer seriesId : seriesMap.keySet()) {
+        Series series = seriesMap.get(seriesId);
+        TextLayout textLayout = new TextLayout(series.getName(), font, new FontRenderContext(null, true, false));
+        Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+        // System.out.println(rectangle);
+        if (rectangle.getWidth() > legendTextContentMaxWidth) {
+          legendTextContentMaxWidth = (int) rectangle.getWidth();
+        }
+        if (rectangle.getHeight() > legendTextContentMaxHeight) {
+          legendTextContentMaxHeight = (int) rectangle.getHeight();
+        }
+      }
 
-            // Draw Legend Box
-            int legendBoxWidth = legendContentWidth + 2 * LEGEND_PADDING;
-            int legendBoxHeight = legendContentHeight + 2 * LEGEND_PADDING;
-            int xOffset = (chart.getWidth() - legendBoxWidth - Chart.CHART_PADDING);
-            int yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getTitle().getBounds().getY() + chart.getTitle().getBounds().getHeight());
+      // determine legend content height
+      int legendContentHeight = 0;
+      int maxContentHeight = Math.max(legendTextContentMaxHeight, Marker.SIZE);
+      legendContentHeight = maxContentHeight * seriesMap.size() + LEGEND_PADDING * (seriesMap.size() - 1);
 
-            g.setColor(border);
-            g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
-            g.setColor(background);
-            g.fillRect(xOffset + 1, yOffset + 1, legendBoxWidth - 1, legendBoxHeight - 1);
+      // determine legend content width
+      int legendContentWidth = (int) (3.0 * Marker.SIZE + LEGEND_PADDING + legendTextContentMaxWidth);
 
-            // Draw legend content inside legend box
-            int startx = xOffset + LEGEND_PADDING;
-            int starty = yOffset + LEGEND_PADDING;
-            for (Integer seriesId : seriesMap.keySet()) {
-                Series series = seriesMap.get(seriesId);
-                // paint line
-                if (series.getLineStyle() != null) {
-                    g.setColor(series.getLineColor());
-                    g.setStroke(series.getLineStyle());
-                    g.drawLine(startx, starty - Marker.Y_OFFSET, (int) (startx + Marker.SIZE * 3.0), starty - Marker.Y_OFFSET);
-                }
-                // paint marker
-                if (series.getMarker() != null) {
-                    g.setColor(series.getMarkerColor());
-                    series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty - Marker.Y_OFFSET);
-                }
+      // Draw Legend Box
+      int legendBoxWidth = legendContentWidth + 2 * LEGEND_PADDING;
+      int legendBoxHeight = legendContentHeight + 2 * LEGEND_PADDING;
+      int xOffset = (chart.getWidth() - legendBoxWidth - Chart.CHART_PADDING);
+      int yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getTitle().getBounds().getY() + chart.getTitle().getBounds().getHeight());
 
-                // paint series name
-                g.setColor(foreground);
-                TextLayout layout = new TextLayout(series.getName(), font, new FontRenderContext(null, true, false));
-                layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + LEGEND_PADDING), (starty + Marker.SIZE));
-                starty = starty + legendTextContentMaxHeight + LEGEND_PADDING;
-            }
+      g.setColor(border);
+      g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
+      g.setColor(background);
+      g.fillRect(xOffset + 1, yOffset + 1, legendBoxWidth - 1, legendBoxHeight - 1);
 
-            // bounds
-            bounds = new Rectangle(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
-            // g.setColor(Color.blue);
-            // g.draw(bounds);
+      // Draw legend content inside legend box
+      int startx = xOffset + LEGEND_PADDING;
+      int starty = yOffset + LEGEND_PADDING;
+      for (Integer seriesId : seriesMap.keySet()) {
+        Series series = seriesMap.get(seriesId);
+        // paint line
+        if (series.getLineStyle() != null) {
+          g.setColor(series.getLineColor());
+          g.setStroke(series.getLineStyle());
+          g.drawLine(startx, starty - Marker.Y_OFFSET, (int) (startx + Marker.SIZE * 3.0), starty - Marker.Y_OFFSET);
+        }
+        // paint marker
+        if (series.getMarker() != null) {
+          g.setColor(series.getMarkerColor());
+          series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty - Marker.Y_OFFSET);
         }
 
+        // paint series name
+        g.setColor(foreground);
+        TextLayout layout = new TextLayout(series.getName(), font, new FontRenderContext(null, true, false));
+        layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + LEGEND_PADDING), (starty + Marker.SIZE));
+        starty = starty + legendTextContentMaxHeight + LEGEND_PADDING;
+      }
+
+      // bounds
+      bounds = new Rectangle(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
+      // g.setColor(Color.blue);
+      // g.draw(bounds);
     }
 
-    @Override
-    public Rectangle getBounds() {
-        return bounds;
-    }
+  }
+
+  @Override
+  public Rectangle getBounds() {
+
+    return bounds;
+  }
 
 }
