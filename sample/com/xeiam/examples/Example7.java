@@ -25,20 +25,20 @@ import com.xeiam.xcharts.Chart;
  */
 public class Example7 {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        // Create Chart
-        Chart chart = new Chart(700, 500);
+    // Create Chart
+    Chart chart = new Chart(700, 500);
 
-        // Customize Chart
-        chart.setChartTitle("Sample Chart");
-        chart.setXAxisTitle("X");
-        chart.setYAxisTitle("Y");
+    // Customize Chart
+    chart.setChartTitle("Sample Chart");
+    chart.setXAxisTitle("X");
+    chart.setYAxisTitle("Y");
 
-        chart.addSeries("NaN Value at (2,2)", null, new double[] { 0, 1, Double.NaN, 3, 4 });
+    chart.addSeries("NaN Value at (2,2)", null, new double[] { 0, 1, Double.NaN, 3, 4 });
 
-        SwingWrapper swingHelper = new SwingWrapper(chart);
-        swingHelper.displayChart();
-    }
+    SwingWrapper swingHelper = new SwingWrapper(chart);
+    swingHelper.displayChart();
+  }
 
 }

@@ -25,20 +25,20 @@ import com.xeiam.xcharts.Chart;
  */
 public class Example6 {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        // Create Chart
-        Chart chart = new Chart(700, 500);
+    // Create Chart
+    Chart chart = new Chart(700, 500);
 
-        // Customize Chart
-        chart.setChartTitle("Sample Chart");
-        chart.setXAxisTitle("X");
-        chart.setYAxisTitle("Y");
+    // Customize Chart
+    chart.setChartTitle("Sample Chart");
+    chart.setXAxisTitle("X");
+    chart.setYAxisTitle("Y");
 
-        chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
+    chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
 
-        SwingWrapper swingHelper = new SwingWrapper(chart);
-        swingHelper.displayChart();
-    }
+    SwingWrapper swingHelper = new SwingWrapper(chart);
+    swingHelper.displayChart();
+  }
 
 }

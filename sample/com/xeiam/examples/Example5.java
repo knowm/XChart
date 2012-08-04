@@ -25,21 +25,21 @@ import com.xeiam.xcharts.Chart;
  */
 public class Example5 {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        // Create Chart
-        Chart chart = new Chart(700, 500);
+    // Create Chart
+    Chart chart = new Chart(700, 500);
 
-        // Customize Chart
-        chart.setChartTitle("Sample Chart");
-        chart.setXAxisTitle("X");
-        chart.setYAxisTitle("Y");
+    // Customize Chart
+    chart.setChartTitle("Sample Chart");
+    chart.setXAxisTitle("X");
+    chart.setYAxisTitle("Y");
 
-        chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
-        chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
+    chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
+    chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
 
-        SwingWrapper swingHelper = new SwingWrapper(chart);
-        swingHelper.displayChart();
-    }
+    SwingWrapper swingHelper = new SwingWrapper(chart);
+    swingHelper.displayChart();
+  }
 
 }

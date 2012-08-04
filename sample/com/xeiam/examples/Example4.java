@@ -26,35 +26,35 @@ import com.xeiam.xcharts.QuickChart;
  */
 public class Example4 {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        int numRows = 2;
-        int numCols = 2;
-        Chart[] charts = new Chart[numRows * numCols];
+    int numRows = 2;
+    int numCols = 2;
+    Chart[] charts = new Chart[numRows * numCols];
 
-        int chartCount = 0;
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numCols; j++) {
+    int chartCount = 0;
+    for (int i = 0; i < numRows; i++) {
+      for (int j = 0; j < numCols; j++) {
 
-                charts[chartCount++] = QuickChart.getChart(i + "," + j, "X", "Y", null, null, getRandomWalk(1000));
-            }
-        }
-        new SwingWrapper(charts, numRows, numCols).displayChartMatrix();
+        charts[chartCount++] = QuickChart.getChart(i + "," + j, "X", "Y", null, null, getRandomWalk(1000));
+      }
     }
+    new SwingWrapper(charts, numRows, numCols).displayChartMatrix();
+  }
 
-    /**
-     * Generates a set of random walk data
-     * 
-     * @param numPoints
-     * @return
-     */
-    private static double[] getRandomWalk(int numPoints) {
+  /**
+   * Generates a set of random walk data
+   * 
+   * @param numPoints
+   * @return
+   */
+  private static double[] getRandomWalk(int numPoints) {
 
-        double[] y = new double[numPoints];
-        y[0] = 0;
-        for (int i = 1; i < y.length; i++) {
-            y[i] = y[i - 1] + Math.random() - .5;
-        }
-        return y;
+    double[] y = new double[numPoints];
+    y[0] = 0;
+    for (int i = 1; i < y.length; i++) {
+      y[i] = y[i - 1] + Math.random() - .5;
     }
+    return y;
+  }
 }
