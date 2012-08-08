@@ -28,12 +28,12 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>snapshots</id>
+			<id>xeiam_oss.snapshots</id>
 			<name>Nexus Snapshots Repo</name>
 			<url>http://nexus.xeiam.com/content/repositories/snapshots/</url>
 		</snapshotRepository>
 		<repository>
-			<id>releases</id>
+			<id>xeiam_oss.releases</id>
 			<name>Nexus Release Repo</name>
 			<url>http://nexus.xeiam.com/content/repositories/releases/</url>
 		</repository>
