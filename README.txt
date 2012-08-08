@@ -27,7 +27,6 @@ Download Jar: http://xeiam.com/xchart.jsp
 
 Maven
 -----
-
 The XChart Java artifacts are currently hosted on the Xeiam Nexus repository here:
 
     <repositories>
