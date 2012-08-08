@@ -18,5 +18,27 @@ under the sun, XChart is for you.
     ********************************************************
     
 
-Dependencies: 
-	servlet-api.jar (not required)
+Getting Started
+===============
+
+Non-Maven
+---------
+Download Jar: http://xeiam.com/xchart.jsp
+
+Maven
+-----
+
+The XChart Java artifacts are currently hosted on the Xeiam Nexus repository here:
+
+    <repositories>
+      <repository>
+        <id>xchange-release</id>
+        <releases/>
+        <url>http://nexus.xeiam.com/content/repositories/releases</url>
+      </repository>
+      <repository>
+        <id>xchange-snapshot</id>
+        <snapshots/>
+        <url>http://nexus.xeiam.com/content/repositories/snapshots/</url>
+      </repository>
+    </repositories>
