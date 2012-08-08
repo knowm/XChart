@@ -1,6 +1,6 @@
-dist/
+target/
 javadoc/
 bin/
 .classpath
 .project
-.settings
+.settings/

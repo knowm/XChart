@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>XChart</name>
+	<groupId>com.xeiam</groupId>
+	<artifactId>xchart</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<description>Basic Charts for Java Applications</description>
+	<url>http://xeiam.com</url>
+	<inceptionYear>2012</inceptionYear>
+
+	<organization>
+		<name>Xeiam, LLC</name>
+		<url>http://xeiam.com/</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>Tim Molter</name>
+		</developer>
+		<developer>
+			<name>Alex Nugent</name>
+		</developer>
+	</developers>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Nexus Snapshots Repo</name>
+			<url>http://nexus.xeiam.com/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>releases</id>
+			<name>Nexus Release Repo</name>
+			<url>http://nexus.xeiam.com/nexus/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+</project>
