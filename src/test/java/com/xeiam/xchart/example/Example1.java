@@ -15,6 +15,9 @@
  */
 package com.xeiam.xchart.example;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
 
@@ -27,8 +30,8 @@ public class Example1 {
 
   public static void main(String[] args) {
 
-    double[] xData = { 0.0, 1.0, 2.0 };
-    double[] yData = { 0.0, 1.0, 2.0 };
+    Collection<Number> xData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0 });
+    Collection<Number> yData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0 });
 
     // Create Chart
     Chart chart = new Chart(500, 400);

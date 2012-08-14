@@ -111,12 +111,27 @@ public class Chart {
 
   // PUBLIC SETTERS
 
+  /**
+   * Add series data as Collection<Number>
+   * 
+   * @param seriesName
+   * @param xData Collection<Number>
+   * @param yData Collection<Number>
+   * @return
+   */
   public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
 
     return axisPair.addSeries(seriesName, xData, yData);
   }
 
-  @Deprecated
+  /**
+   * Convenience Method - Add series data as double arrays
+   * 
+   * @param seriesName
+   * @param xData double[]
+   * @param yData double[]
+   * @return
+   */
   public Series addSeries(String seriesName, double[] xData, double[] yData) {
 
     Collection<Number> xDataNumber = null;

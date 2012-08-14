@@ -15,6 +15,9 @@
  */
 package com.xeiam.xchart.example;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.SeriesColor;
@@ -33,12 +36,12 @@ public class Example2 {
 
     // generates sine data
     int size = 30;
-    double[] xData1 = new double[size + 1];
-    double[] yData1 = new double[size + 1];
+    Collection<Number> xData1 = new ArrayList<Number>();
+    Collection<Number> yData1 = new ArrayList<Number>();
     for (int i = 0; i <= size; i++) {
       double radians = (Math.PI / (size / 2) * i);
-      xData1[i] = i - size / 2;
-      yData1[i] = size * Math.sin(radians);
+      xData1.add(i - size / 2);
+      yData1.add(size * Math.sin(radians));
     }
 
     // Create Chart

@@ -15,6 +15,9 @@
  */
 package com.xeiam.xchart.example;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.swing.SwingWrapper;
 
@@ -34,11 +37,11 @@ public class Example3 {
 
       // generates linear data
       int b = 20;
-      double[] xData = new double[b + 1];
-      double[] yData = new double[b + 1];
+      Collection<Number> xData = new ArrayList<Number>();
+      Collection<Number> yData = new ArrayList<Number>();
       for (int x = 0; x <= b; x++) {
-        xData[x] = 2 * x - b;
-        yData[x] = 2 * i * x - i * b;
+        xData.add(2 * x - b);
+        yData.add(2 * i * x - i * b);
       }
 
       // Customize Chart
