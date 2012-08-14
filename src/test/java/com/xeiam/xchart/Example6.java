@@ -15,9 +15,7 @@
  */
 package com.xeiam.xchart;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.swing.SwingWrapper;
-
 
 /**
  * Create chart with single point
@@ -38,8 +36,7 @@ public class Example6 {
 
     chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
 
-    SwingWrapper swingHelper = new SwingWrapper(chart);
-    swingHelper.displayChart();
+    new SwingWrapper(chart).displayChart();
   }
 
 }

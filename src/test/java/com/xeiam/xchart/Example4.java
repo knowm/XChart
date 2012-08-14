@@ -19,7 +19,6 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
 import com.xeiam.xchart.swing.SwingWrapper;
 
-
 /**
  * Create a chart matrix
  * 

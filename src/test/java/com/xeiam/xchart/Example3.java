@@ -15,9 +15,7 @@
  */
 package com.xeiam.xchart;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.swing.SwingWrapper;
-
 
 /**
  * Create multiple curves on one chart
@@ -52,8 +50,7 @@ public class Example3 {
 
     }
 
-    SwingWrapper swingHelper = new SwingWrapper(chart);
-    swingHelper.displayChart();
+    new SwingWrapper(chart).displayChart();
   }
 
 }

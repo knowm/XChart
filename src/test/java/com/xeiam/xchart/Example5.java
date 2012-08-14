@@ -15,9 +15,7 @@
  */
 package com.xeiam.xchart;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.swing.SwingWrapper;
-
 
 /**
  * Plot vertical and horizontal lines
@@ -39,8 +37,7 @@ public class Example5 {
     chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
     chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
 
-    SwingWrapper swingHelper = new SwingWrapper(chart);
-    swingHelper.displayChart();
+    new SwingWrapper(chart).displayChart();
   }
 
 }

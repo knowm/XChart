@@ -15,13 +15,11 @@
  */
 package com.xeiam.xchart;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.SeriesColor;
 import com.xeiam.xchart.series.SeriesLineStyle;
 import com.xeiam.xchart.series.SeriesMarker;
 import com.xeiam.xchart.swing.SwingWrapper;
-
 
 /**
  * Embed a Chart in a simple Swing application
@@ -57,8 +55,7 @@ public class Example2 {
     series1.setMarkerColor(SeriesColor.GREEN);
     series1.setMarker(SeriesMarker.SQUARE);
 
-    SwingWrapper swingHelper = new SwingWrapper(chart);
-    swingHelper.displayChart();
+    new SwingWrapper(chart).displayChart();
   }
 
 }

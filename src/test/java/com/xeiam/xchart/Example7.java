@@ -15,9 +15,7 @@
  */
 package com.xeiam.xchart;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.swing.SwingWrapper;
-
 
 /**
  * Create chart with NaN values
@@ -38,8 +36,7 @@ public class Example7 {
 
     chart.addSeries("NaN Value at (2,2)", null, new double[] { 0, 1, Double.NaN, 3, 4 });
 
-    SwingWrapper swingHelper = new SwingWrapper(chart);
-    swingHelper.displayChart();
+    new SwingWrapper(chart).displayChart();
   }
 
 }
