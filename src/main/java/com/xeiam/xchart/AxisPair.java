@@ -17,12 +17,13 @@ package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.xeiam.xchart.interfaces.IChartPart;
 import com.xeiam.xchart.series.Series;
-
 
 /**
  * @author timmolter
@@ -57,45 +58,42 @@ public class AxisPair implements IChartPart {
    * @param xData
    * @param yData
    */
-  public Series addSeries(String seriesName, double[] xData, double[] yData) {
+  public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
 
     // Sanity checks
     if (seriesName == null) {
-      throw new RuntimeException("Series Name cannot be null!!!");
+      throw new IllegalArgumentException("Series Name cannot be null!!!");
     }
     if (yData == null) {
-      throw new RuntimeException("Y-Axis data cannot be null!!!");
+      throw new IllegalArgumentException("Y-Axis data cannot be null!!!");
     }
-    if (yData.length == 0) {
-      throw new RuntimeException("Y-Axis data cannot be empty!!!");
+    if (yData.size() == 0) {
+      throw new IllegalArgumentException("Y-Axis data cannot be empty!!!");
     }
-    if (xData != null && xData.length == 0) {
-      throw new RuntimeException("X-Axis data cannot be empty!!!");
+    if (xData != null && xData.size() == 0) {
+      throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
     }
-    if (xData != null && xData.length == 1 && Double.isNaN(yData[0])) {
-      throw new RuntimeException("X-Axis data cannot contain a single NaN value!!!");
+    if (xData != null && xData.size() == 1 && Double.isNaN(xData.iterator().next().doubleValue())) {
+      throw new IllegalArgumentException("X-Axis data cannot contain a single NaN value!!!");
     }
-    if (yData.length == 1 && Double.isNaN(yData[0])) {
-      throw new RuntimeException("Y-Axis data cannot contain a single NaN value!!!");
+    if (yData.size() == 1 && Double.isNaN(yData.iterator().next().doubleValue())) {
+      throw new IllegalArgumentException("Y-Axis data cannot contain a single NaN value!!!");
     }
 
     Series series;
     if (xData != null) {
-      verifyValues(xData);
-      verifyValues(yData);
       series = new Series(seriesName, xData, yData);
     } else { // generate xData
-      double[] generatedXData = new double[yData.length];
-      verifyValues(yData);
-      for (int i = 1; i < yData.length; i++) {
-        generatedXData[i] = i;
+      Collection<Number> generatedXData = new ArrayList<Number>();
+      for (int i = 1; i < yData.size(); i++) {
+        generatedXData.add(i);
       }
       series = new Series(seriesName, generatedXData, yData);
     }
 
     // Sanity check
-    if (xData != null && xData.length != yData.length) {
-      throw new RuntimeException("X and Y-Axis lengths are not the same!!! ");
+    if (xData != null && xData.size() != yData.size()) {
+      throw new IllegalArgumentException("X and Y-Axis lengths are not the same!!! ");
     }
 
     seriesMap.put(seriesCount++, series);
@@ -105,22 +103,6 @@ public class AxisPair implements IChartPart {
     yAxis.addMinMax(series.getyMin(), series.getyMax());
 
     return series;
-  }
-
-  /**
-   * Checks for invalid values in data array
-   * 
-   * @param data
-   */
-  private void verifyValues(double[] data) {
-
-    for (int i = 0; i < data.length; i++) {
-      if (data[i] == Double.POSITIVE_INFINITY) {
-        throw new RuntimeException("Axis data cannot contain Double.POSITIVE_INFINITY!!!");
-      } else if (data[i] == Double.NEGATIVE_INFINITY) {
-        throw new RuntimeException("Axis data cannot contain Double.NEGATIVE_INFINITY!!!");
-      }
-    }
   }
 
   protected Axis getXAxis() {

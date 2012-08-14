@@ -17,11 +17,12 @@ package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.xeiam.xchart.interfaces.IChartPart;
 import com.xeiam.xchart.series.Series;
-
 
 /**
  * @author timmolter
@@ -63,30 +64,27 @@ public class PlotContent implements IChartPart {
       int yTopMargin = AxisPair.getMargin((int) bounds.getHeight(), yTickSpace);
 
       // data points
-      double[] xData = series.getxData();
+      Collection<Number> xData = series.getxData();
       double xMin = chart.getAxisPair().getXAxis().getMin();
       double xMax = chart.getAxisPair().getXAxis().getMax();
-      double[] yData = series.getyData();
+      Collection<Number> yData = series.getyData();
       double yMin = chart.getAxisPair().getYAxis().getMin();
       double yMax = chart.getAxisPair().getYAxis().getMax();
 
       int previousX = Integer.MIN_VALUE;
       int previousY = Integer.MIN_VALUE;
 
-      for (int i = 0; i < xData.length; i++) {
+      Iterator<Number> xItr = xData.iterator();
+      Iterator<Number> yItr = yData.iterator();
+      while (xItr.hasNext()) {
 
-        if (Double.isInfinite(xData[i])) {
-          throw new RuntimeException("Infinite values in xAxis Data not allowed!!!");
-        }
+        double x = xItr.next().doubleValue();
+        double y = yItr.next().doubleValue();
 
-        if (Double.isInfinite(yData[i])) {
-          throw new RuntimeException("Infinite values in yAxis Data not allowed!!!");
-        }
+        if (!Double.isNaN(x) && !Double.isNaN(y)) {
 
-        if (!Double.isNaN(xData[i]) && !Double.isNaN(yData[i])) {
-
-          int xTransform = (int) (xLeftMargin + ((xData[i] - xMin) / (xMax - xMin) * xTickSpace));
-          int yTransform = (int) (bounds.getHeight() - (yTopMargin + (yData[i] - yMin) / (yMax - yMin) * yTickSpace));
+          int xTransform = (int) (xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace));
+          int yTransform = (int) (bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace));
 
           // a check if all y data are the exact same values
           if (Math.abs(xMax - xMin) / 5 == 0.0) {

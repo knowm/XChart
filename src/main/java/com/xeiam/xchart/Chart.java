@@ -17,6 +17,8 @@ package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.SeriesColor;
@@ -107,11 +109,29 @@ public class Chart {
     return plot;
   }
 
-  // EXTERNAL GETTERS & SETTERS
+  // PUBLIC SETTERS
 
-  public Series addSeries(String seriesName, double[] xData, double[] yData) {
+  public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
 
     return axisPair.addSeries(seriesName, xData, yData);
+  }
+
+  @Deprecated
+  public Series addSeries(String seriesName, double[] xData, double[] yData) {
+
+    Collection<Number> xDataNumber = null;
+    if (xData != null) {
+      xDataNumber = new ArrayList<Number>();
+      for (double d : xData) {
+        xDataNumber.add(new Double(d));
+      }
+    }
+    Collection<Number> yDataNumber = new ArrayList<Number>();
+    for (double d : yData) {
+      yDataNumber.add(new Double(d));
+    }
+
+    return axisPair.addSeries(seriesName, xDataNumber, yDataNumber);
   }
 
   public void setChartTitle(String title) {

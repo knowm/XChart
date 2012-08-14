@@ -17,9 +17,9 @@ package com.xeiam.xchart.series;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.util.Collection;
 
 import com.xeiam.xchart.series.markers.Marker;
-
 
 /**
  * @author timmolter
@@ -28,9 +28,9 @@ public class Series {
 
   private String name = "";
 
-  protected double[] xData;
+  protected Collection<Number> xData;
 
-  protected double[] yData;
+  protected Collection<Number> yData;
 
   /** the minimum value of axis range */
   private double xMin;
@@ -63,7 +63,7 @@ public class Series {
    * @param xData
    * @param yData
    */
-  public Series(String name, double[] xData, double[] yData) {
+  public Series(String name, Collection<Number> xData, Collection<Number> yData) {
 
     this.name = name;
     this.xData = xData;
@@ -90,23 +90,44 @@ public class Series {
 
   }
 
-  private double[] findMinMax(double[] data) {
+  /**
+   * Finds the min and max of a dataset
+   * 
+   * @param data
+   * @return
+   */
+  private double[] findMinMax(Collection<Number> data) {
 
     Double min = null;
     Double max = null;
-    for (int i = 0; i < data.length; i++) {
-      if (min == null || data[i] < min) {
-        if (!Double.isNaN(data[i])) {
-          min = data[i];
+    for (Number number : data) {
+      verify(number.doubleValue());
+      if (min == null || number.doubleValue() < min) {
+        if (!Double.isNaN(number.doubleValue())) {
+          min = number.doubleValue();
         }
       }
-      if (max == null || data[i] > max) {
-        if (!Double.isNaN(data[i])) {
-          max = data[i];
+      if (max == null || number.doubleValue() > max) {
+        if (!Double.isNaN(number.doubleValue())) {
+          max = number.doubleValue();
         }
       }
     }
     return new double[] { min, max };
+  }
+
+  /**
+   * Checks for invalid values in data array
+   * 
+   * @param data
+   */
+  private void verify(double value) {
+
+    if (value == Double.POSITIVE_INFINITY) {
+      throw new RuntimeException("Axis data cannot contain Double.POSITIVE_INFINITY!!!");
+    } else if (value == Double.NEGATIVE_INFINITY) {
+      throw new RuntimeException("Axis data cannot contain Double.NEGATIVE_INFINITY!!!");
+    }
   }
 
   public String getName() {
@@ -114,12 +135,12 @@ public class Series {
     return name;
   }
 
-  public double[] getxData() {
+  public Collection<Number> getxData() {
 
     return xData;
   }
 
-  public double[] getyData() {
+  public Collection<Number> getyData() {
 
     return yData;
   }
