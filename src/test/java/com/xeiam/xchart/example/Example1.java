@@ -18,8 +18,8 @@ package com.xeiam.xchart.example;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.io.BitmapEncoder;
 
 /**
  * Creates a simple charts and saves it as aPNG image file.
@@ -28,7 +28,7 @@ import com.xeiam.xchart.Chart;
  */
 public class Example1 {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
 
     Collection<Number> xData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0 });
     Collection<Number> yData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0 });
@@ -40,10 +40,7 @@ public class Example1 {
     chart.setYAxisTitle("Y");
     chart.addSeries("y(x)", xData, yData);
 
-    try {
-      BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
+
   }
 }

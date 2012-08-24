@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
+import com.xeiam.xchart.io.ServletEncoder;
 
 /**
  * Generates, stores, and serves charts
@@ -50,7 +50,7 @@ public class ChartServletExample extends HttpServlet {
     ServletOutputStream out = response.getOutputStream();
 
     try {
-      BitmapEncoder.streamPNG(out, chart);
+      ServletEncoder.streamPNG(out, chart);
     } catch (Exception e) {
       e.printStackTrace();
     }
