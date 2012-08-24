@@ -51,6 +51,8 @@ public class SwingWrapper {
    * Deprecated Constructor - use the one that takes a Collection! This will be removed in next version.
    * 
    * @param charts
+   * @param numRows
+   * @param numColumns
    */
   @Deprecated
   public SwingWrapper(Chart[] charts, int numRows, int numColumns) {
@@ -63,9 +65,26 @@ public class SwingWrapper {
   }
 
   /**
+   * Constructor - The number of rows and columns will be calculated automatically
+   * 
+   * @param charts
+   * @param numRows
+   * @param numColumns
+   */
+  public SwingWrapper(List<Chart> charts) {
+
+    this.charts = charts;
+
+    this.numRows = (int) (Math.sqrt(charts.size()) + .5);
+    this.numColumns = (int) ((double) charts.size() / this.numRows + 1);
+  }
+
+  /**
    * Constructor
    * 
    * @param charts
+   * @param numRows - the number of rows
+   * @param numColumns - the number of columns
    */
   public SwingWrapper(List<Chart> charts, int numRows, int numColumns) {
 

@@ -31,17 +31,14 @@ public class Example4 {
 
   public static void main(String[] args) {
 
-    int numRows = 2;
-    int numCols = 2;
+    int numCharts = 4;
 
     List<Chart> charts = new ArrayList<Chart>();
 
-    for (int i = 0; i < numRows; i++) {
-      for (int j = 0; j < numCols; j++) {
-        charts.add(QuickChart.getChart(i + "," + j, "X", "Y", null, null, getRandomWalk(1000)));
-      }
+    for (int i = 0; i < numCharts; i++) {
+      charts.add(QuickChart.getChart("" + i, "X", "Y", null, null, getRandomWalk(1000)));
     }
-    new SwingWrapper(charts, numRows, numCols).displayChartMatrix();
+    new SwingWrapper(charts).displayChartMatrix();
   }
 
   /**
