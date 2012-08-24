@@ -15,6 +15,9 @@
  */
 package com.xeiam.xchart.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
 import com.xeiam.xchart.swing.SwingWrapper;
@@ -30,13 +33,12 @@ public class Example4 {
 
     int numRows = 2;
     int numCols = 2;
-    Chart[] charts = new Chart[numRows * numCols];
 
-    int chartCount = 0;
+    List<Chart> charts = new ArrayList<Chart>();
+
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numCols; j++) {
-
-        charts[chartCount++] = QuickChart.getChart(i + "," + j, "X", "Y", null, null, getRandomWalk(1000));
+        charts.add(QuickChart.getChart(i + "," + j, "X", "Y", null, null, getRandomWalk(1000)));
       }
     }
     new SwingWrapper(charts, numRows, numCols).displayChartMatrix();
