@@ -39,6 +39,12 @@ public enum ChartColor {
 
   Color color;
 
+  /**
+   * Get a AWT Color Object
+   * 
+   * @param chartColor
+   * @return
+   */
   protected static Color getAWTColor(ChartColor chartColor) {
 
     return chartColor.color;

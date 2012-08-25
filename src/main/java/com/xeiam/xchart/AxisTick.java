@@ -25,7 +25,6 @@ import java.util.List;
 
 import com.xeiam.xchart.interfaces.IChartPart;
 
-
 /**
  * An axis tick.
  */
@@ -145,8 +144,8 @@ public class AxisTick implements IChartPart {
   }
 
   /**
-     * 
-     */
+   * 
+   */
   private void determineAxisTick() {
 
     // System.out.println("workingSpace= " + workingSpace);

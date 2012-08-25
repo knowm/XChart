@@ -18,6 +18,7 @@ package com.xeiam.xchart.series;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.util.Collection;
+import java.util.Iterator;
 
 import com.xeiam.xchart.series.markers.Marker;
 
@@ -31,6 +32,8 @@ public class Series {
   protected Collection<Number> xData;
 
   protected Collection<Number> yData;
+
+  protected Collection<Number> errorBars;
 
   /** the minimum value of axis range */
   private double xMin;
@@ -63,11 +66,12 @@ public class Series {
    * @param xData
    * @param yData
    */
-  public Series(String name, Collection<Number> xData, Collection<Number> yData) {
+  public Series(String name, Collection<Number> xData, Collection<Number> yData, Collection<Number> errorBars) {
 
     this.name = name;
     this.xData = xData;
     this.yData = yData;
+    this.errorBars = errorBars;
 
     // xData
     double[] xMinMax = findMinMax(xData);
@@ -75,7 +79,12 @@ public class Series {
     this.xMax = xMinMax[1];
 
     // yData
-    double[] yMinMax = findMinMax(yData);
+    double[] yMinMax = null;
+    if (errorBars == null) {
+      yMinMax = findMinMax(yData);
+    } else {
+      yMinMax = findMinMaxWithErrorBars(yData, errorBars);
+    }
     this.yMin = yMinMax[0];
     this.yMax = yMinMax[1];
     // System.out.println(yMin);
@@ -117,6 +126,37 @@ public class Series {
   }
 
   /**
+   * Finds the min and max of a dataset accounting for error bars
+   * 
+   * @param data
+   * @return
+   */
+  private double[] findMinMaxWithErrorBars(Collection<Number> data, Collection<Number> errorBars) {
+
+    Double min = null;
+    Double max = null;
+
+    Iterator<Number> itr = data.iterator();
+    Iterator<Number> ebItr = errorBars.iterator();
+    while (itr.hasNext()) {
+      double number = itr.next().doubleValue();
+      double eb = ebItr.next().doubleValue();
+      verify(number);
+      if (min == null || (number - eb) < min) {
+        if (!Double.isNaN(number)) {
+          min = number - eb;
+        }
+      }
+      if (max == null || (number + eb) > max) {
+        if (!Double.isNaN(number)) {
+          max = number + eb;
+        }
+      }
+    }
+    return new double[] { min, max };
+  }
+
+  /**
    * Checks for invalid values in data array
    * 
    * @param data
@@ -143,6 +183,11 @@ public class Series {
   public Collection<Number> getyData() {
 
     return yData;
+  }
+
+  public Collection<Number> getErrorBars() {
+
+    return errorBars;
   }
 
   public double getxMin() {

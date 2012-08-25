@@ -20,7 +20,6 @@ import java.awt.Rectangle;
 
 import com.xeiam.xchart.interfaces.IChartPart;
 
-
 /**
  * @author timmolter
  */

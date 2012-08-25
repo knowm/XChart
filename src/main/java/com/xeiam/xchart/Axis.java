@@ -151,8 +151,8 @@ public class Axis implements IChartPart {
   }
 
   /**
-     * 
-     */
+   * @return
+   */
   public int getSizeHint() {
 
     if (direction == Direction.X) { // X-Axis

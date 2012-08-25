@@ -58,7 +58,7 @@ public class AxisPair implements IChartPart {
    * @param xData
    * @param yData
    */
-  public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
+  public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData, Collection<Number> errorBars) {
 
     // Sanity checks
     if (seriesName == null) {
@@ -82,18 +82,21 @@ public class AxisPair implements IChartPart {
 
     Series series;
     if (xData != null) {
-      series = new Series(seriesName, xData, yData);
+      series = new Series(seriesName, xData, yData, errorBars);
     } else { // generate xData
       Collection<Number> generatedXData = new ArrayList<Number>();
       for (int i = 1; i < yData.size(); i++) {
         generatedXData.add(i);
       }
-      series = new Series(seriesName, generatedXData, yData);
+      series = new Series(seriesName, generatedXData, yData, errorBars);
     }
 
     // Sanity check
     if (xData != null && xData.size() != yData.size()) {
-      throw new IllegalArgumentException("X and Y-Axis lengths are not the same!!! ");
+      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!! ");
+    }
+    if (errorBars != null && errorBars.size() != yData.size()) {
+      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!! ");
     }
 
     seriesMap.put(seriesCount++, series);

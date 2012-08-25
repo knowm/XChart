@@ -41,8 +41,22 @@ public enum SeriesLineStyle {
   DOT_DOT(3, new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 1.0f, 1.0f }, 0.0f));
 
   int id;
+
   BasicStroke basicStroke;
+
   private static int nextId = 0;
+
+  /**
+   * Constructor
+   * 
+   * @param id
+   * @param color
+   */
+  private SeriesLineStyle(int id, BasicStroke basicStroke) {
+
+    this.id = id;
+    this.basicStroke = basicStroke;
+  }
 
   private static final Map<Integer, SeriesLineStyle> idLookup = new HashMap<Integer, SeriesLineStyle>();
   static {
@@ -61,11 +75,22 @@ public enum SeriesLineStyle {
     nextId = 0;
   }
 
-  protected static BasicStroke getBasicStroke(SeriesLineStyle seriesMarker) {
+  /**
+   * Get an AWT Stroke
+   * 
+   * @param seriesMarker
+   * @return
+   */
+  public static BasicStroke getBasicStroke(SeriesLineStyle seriesMarker) {
 
     return seriesMarker.basicStroke;
   }
 
+  /**
+   * Gets the next Stroke
+   * 
+   * @return
+   */
   protected static BasicStroke getNextBasicStroke() {
 
     SeriesLineStyle seriesLineStyle = idLookup.get(nextId);
@@ -76,15 +101,4 @@ public enum SeriesLineStyle {
     return idLookup.get(nextId++).basicStroke;
   }
 
-  /**
-   * Constructor
-   * 
-   * @param id
-   * @param color
-   */
-  private SeriesLineStyle(int id, BasicStroke basicStroke) {
-
-    this.id = id;
-    this.basicStroke = basicStroke;
-  }
 }

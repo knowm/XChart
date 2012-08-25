@@ -52,6 +52,9 @@ public class Chart {
     height = pHeight;
   }
 
+  /**
+   * @param g
+   */
   public void paint(final Graphics2D g) {
 
     // Sanity check
@@ -121,7 +124,12 @@ public class Chart {
    */
   public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
 
-    return axisPair.addSeries(seriesName, xData, yData);
+    return axisPair.addSeries(seriesName, xData, yData, null);
+  }
+
+  public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData, Collection<Number> errorBars) {
+
+    return axisPair.addSeries(seriesName, xData, yData, errorBars);
   }
 
   /**
@@ -132,6 +140,7 @@ public class Chart {
    * @param yData double[]
    * @return
    */
+  @Deprecated
   public Series addSeries(String seriesName, double[] xData, double[] yData) {
 
     Collection<Number> xDataNumber = null;
@@ -146,7 +155,7 @@ public class Chart {
       yDataNumber.add(new Double(d));
     }
 
-    return axisPair.addSeries(seriesName, xDataNumber, yDataNumber);
+    return axisPair.addSeries(seriesName, xDataNumber, yDataNumber, null);
   }
 
   public void setChartTitle(String title) {

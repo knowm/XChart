@@ -23,6 +23,7 @@ import java.util.Map;
 
 import com.xeiam.xchart.interfaces.IChartPart;
 import com.xeiam.xchart.series.Series;
+import com.xeiam.xchart.series.SeriesLineStyle;
 
 /**
  * @author timmolter
@@ -70,17 +71,25 @@ public class PlotContent implements IChartPart {
       Collection<Number> yData = series.getyData();
       double yMin = chart.getAxisPair().getYAxis().getMin();
       double yMax = chart.getAxisPair().getYAxis().getMax();
+      Collection<Number> errorBars = series.getErrorBars();
 
       int previousX = Integer.MIN_VALUE;
       int previousY = Integer.MIN_VALUE;
 
       Iterator<Number> xItr = xData.iterator();
       Iterator<Number> yItr = yData.iterator();
+      Iterator<Number> ebItr = null;
+      if (errorBars != null) {
+        ebItr = errorBars.iterator();
+      }
       while (xItr.hasNext()) {
 
         double x = xItr.next().doubleValue();
         double y = yItr.next().doubleValue();
-
+        double eb = 0.0;
+        if (errorBars != null) {
+          eb = ebItr.next().doubleValue();
+        }
         if (!Double.isNaN(x) && !Double.isNaN(y)) {
 
           int xTransform = (int) (xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace));
@@ -114,6 +123,17 @@ public class PlotContent implements IChartPart {
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
             series.getMarker().paint(g, xOffset, yOffset);
+          }
+
+          // paint errorbar
+          if (errorBars != null) {
+            g.setColor(ChartColor.getAWTColor(ChartColor.DARK_GREY));
+            g.setStroke(SeriesLineStyle.getBasicStroke(SeriesLineStyle.SOLID));
+            int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax - yMin));
+            int top = (int) (bounds.getHeight() * eb / (yMax - yMin));
+            g.drawLine(xOffset, yOffset + bottom, xOffset, yOffset + top);
+            g.drawLine(xOffset - 3, yOffset + bottom, xOffset + 3, yOffset + bottom);
+            g.drawLine(xOffset - 3, yOffset + top, xOffset + 3, yOffset + top);
           }
         }
       }
