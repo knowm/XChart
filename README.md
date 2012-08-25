@@ -1,3 +1,6 @@
+Description
+===============
+
 XChart is a charting API for Java. While several charting APIs already
 exist, most of them require a steep learning curve and the code base
 is bloated, full of too many "features" and/or very outdated. 
