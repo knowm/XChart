@@ -46,7 +46,7 @@ public class Example8 {
     }
 
     // Create Chart
-    Chart chart = new Chart(440, 300);
+    Chart chart = new Chart(600, 400);
 
     // Customize Chart
     chart.setChartTitleVisible(false);
