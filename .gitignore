@@ -1,6 +1,4 @@
 target/
-javadoc/
-bin/
 .classpath
 .project
 .settings/
