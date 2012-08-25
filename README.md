@@ -19,20 +19,28 @@ Download Jar: http://xeiam.com/xchart.jsp
 
 Maven
 -----
-The XChart Java artifacts are currently hosted on the Xeiam Nexus repository here:
+The XChart artifacts are currently hosted on the Xeiam Nexus repository here:
 
-    <repositories>
-      <repository>
-        <id>xchange-release</id>
-        <releases/>
-        <url>http://nexus.xeiam.com/content/repositories/releases</url>
-      </repository>
-      <repository>
-        <id>xchange-snapshot</id>
-        <snapshots/>
-        <url>http://nexus.xeiam.com/content/repositories/snapshots/</url>
-      </repository>
-    </repositories>
+<repositories>
+  <repository>
+    <id>xchange-release</id>
+    <releases/>
+    <url>http://nexus.xeiam.com/content/repositories/releases</url>
+  </repository>
+  <repository>
+    <id>xchange-snapshot</id>
+    <snapshots/>
+    <url>http://nexus.xeiam.com/content/repositories/snapshots/</url>
+  </repository>
+</repositories>
+  
+Add this to dependencies in pom.xml:
+
+<dependency>
+  <groupId>com.xeiam</groupId>
+  <artifactId>xchart</artifactId>
+  <version>1.1.0-SNAPSHOT</version>
+</dependency>
 
 Building
 ===============
