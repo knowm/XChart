@@ -36,5 +36,5 @@ The XChart Java artifacts are currently hosted on the Xeiam Nexus repository her
 
 Building
 ===============
-mvn clean package
-mvn javadoc:javadoc
+mvn clean package  
+mvn javadoc:javadoc  
