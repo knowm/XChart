@@ -140,8 +140,21 @@ public class Chart {
    * @param yData double[]
    * @return
    */
-  @Deprecated
   public Series addSeries(String seriesName, double[] xData, double[] yData) {
+
+    return addSeries(seriesName, xData, yData, null);
+  }
+
+  /**
+   * Convenience Method - Add series data as double arrays with errorbars
+   * 
+   * @param seriesName
+   * @param xData
+   * @param yData
+   * @param errorBars
+   * @return
+   */
+  public Series addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
     Collection<Number> xDataNumber = null;
     if (xData != null) {
@@ -154,8 +167,15 @@ public class Chart {
     for (double d : yData) {
       yDataNumber.add(new Double(d));
     }
+    Collection<Number> errorBarDataNumber = null;
+    if (errorBars != null) {
+      errorBarDataNumber = new ArrayList<Number>();
+      for (double d : errorBars) {
+        errorBarDataNumber.add(new Double(d));
+      }
+    }
 
-    return axisPair.addSeries(seriesName, xDataNumber, yDataNumber, null);
+    return axisPair.addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
   }
 
   public void setChartTitle(String title) {
