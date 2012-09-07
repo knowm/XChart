@@ -9,8 +9,8 @@
 	<version>1.2.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<description>Basic Charts for Java Applications</description>
-	<url>http://xeiam.com</url>
-	<inceptionYear>2012</inceptionYear>
+	<url>http://xeiam.com/xchart.jsp</url>
+	<inceptionYear>2011</inceptionYear>
 
 	<organization>
 		<name>Xeiam, LLC</name>
@@ -25,7 +25,24 @@
 			<name>Alex Nugent</name>
 		</developer>
 	</developers>
-
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/timmolter/XChart/issues</url>
+	</issueManagement>
+	<scm>
+		<url>https://github.com/timmolter/XChart</url>
+	</scm>
+	<ciManagement>
+		<url>http://ci.xeiam.com/</url>
+	</ciManagement>
 	<distributionManagement>
 		<snapshotRepository>
 			<id>xeiam_oss.snapshots</id>
@@ -86,34 +103,34 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-            <!-- Generates a source code JAR during package -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>2.2</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- Generates a Javadoc JAR during package -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.8.1</version>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+			<!-- Generates a source code JAR during package -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Generates a Javadoc JAR during package -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
