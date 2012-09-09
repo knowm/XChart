@@ -43,10 +43,10 @@ public class AxisTick implements IChartPart, IHideable {
   private AxisTickMarks axisTickMarks;
 
   /** the arraylist of tick label position in pixels */
-  private List<Integer> tickLocations = new LinkedList<Integer>();
+  private List<Integer> tickLocations;
 
   /** the arraylist of tick label vales */
-  private List<String> tickLabels = new LinkedList<String>();
+  private List<String> tickLabels;
 
   private int workingSpace;
 
@@ -66,7 +66,7 @@ public class AxisTick implements IChartPart, IHideable {
   private SimpleDateFormat simpleDateformat = new SimpleDateFormat("MM-dd");
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  private Rectangle bounds;
 
   /** the visibility state of axistick */
   protected boolean isVisible = true; // default to true
@@ -119,6 +119,8 @@ public class AxisTick implements IChartPart, IHideable {
   @Override
   public void paint(Graphics2D g) {
 
+    bounds = new Rectangle();
+
     if (axis.getDirection() == Axis.Direction.Y) {
       workingSpace = (int) axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
       // System.out.println("workingspace= " + workingSpace);
@@ -159,6 +161,9 @@ public class AxisTick implements IChartPart, IHideable {
    * 
    */
   private void determineAxisTick() {
+
+    tickLocations = new LinkedList<Integer>();
+    tickLabels = new LinkedList<String>();
 
     // System.out.println("workingSpace= " + workingSpace);
 

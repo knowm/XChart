@@ -48,19 +48,12 @@ public class Example3 {
       chart.setChartTitle("Sample Chart");
       chart.setXAxisTitle("X");
       chart.setYAxisTitle("Y");
-      // chart.setAxisTicksVisible(false);
-      // chart.setAxisTitlesVisible(false);
-      // chart.setXAxisTitleVisible(false);
-      // chart.setXAxisTicksVisible(false);
-      chart.setChartTitleVisible(false);
-      chart.setChartLegendVisible(false);
-      chart.setChartGridlinesVisible(false);
 
       String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
       chart.addSeries(seriesName, xData, yData);
 
     }
-
+    // JFrame testFrame = new TestFrame(chart);
     new SwingWrapper(chart).displayChart();
   }
 }

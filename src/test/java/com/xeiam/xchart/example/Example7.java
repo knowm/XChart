@@ -15,29 +15,33 @@
  */
 package com.xeiam.xchart.example;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.swing.SwingWrapper;
 
 /**
- * Create chart with NaN values
+ * Creates a simple charts using Longs as inputs
  * 
  * @author timmolter
  */
 public class Example7 {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
+
+    Collection<Number> xData = Arrays.asList(new Number[] { 12228120L, 12228984L, 12229848L, 12230712L, 12231576L, 12232440L, 12233304L, 12234168L, 12235032L, 12235896L });
+    Collection<Number> yData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0 });
 
     // Create Chart
     Chart chart = new Chart(700, 500);
-
-    // Customize Chart
     chart.setChartTitle("Sample Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-
-    chart.addSeries("NaN Value at (3,2)", null, new double[] { 0, 1, Double.NaN, 3, 4 });
+    chart.addSeries("y(x)", xData, yData);
 
     new SwingWrapper(chart).displayChart();
+
   }
 
 }

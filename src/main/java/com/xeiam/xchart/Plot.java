@@ -34,7 +34,7 @@ public class Plot implements IChartPart {
   public static final int PLOT_PADDING = 3;
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  private Rectangle bounds;
 
   public Plot(Chart chart) {
 
@@ -51,6 +51,8 @@ public class Plot implements IChartPart {
 
   @Override
   public void paint(Graphics2D g) {
+
+    bounds = new Rectangle();
 
     // calculate bounds
     int xOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getX() + chart.getAxisPair().getYAxis().getBounds().getWidth() + (chart.getAxisPair().getYAxis().getAxisTick().isVisible ? (Plot.PLOT_PADDING + 1) : 0));

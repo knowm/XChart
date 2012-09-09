@@ -52,7 +52,8 @@ public class Example9 {
     chart.setChartTitle("Sample Chart with Date X-Axis");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-
+    chart.setChartGridlinesVisible(false);
+    chart.setXAxisTicksVisible(false);
     chart.addDateSeries("Fake Data", xData, yData);
 
     new SwingWrapper(chart).displayChart();

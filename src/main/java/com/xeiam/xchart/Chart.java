@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
@@ -57,10 +56,7 @@ public class Chart {
   /**
    * @param g
    */
-  public void paint(final Graphics2D g, int width, int height) {
-
-    g.setColor(Color.white);
-    g.fillRect(0, 0, width, height);
+  public void paint(Graphics2D g, int width, int height) {
 
     this.width = width;
     this.height = height;
@@ -71,7 +67,7 @@ public class Chart {
   /**
    * @param g
    */
-  public void paint(final Graphics2D g) {
+  public void paint(Graphics2D g) {
 
     // Sanity check
     if (axisPair.getSeriesMap().isEmpty()) {

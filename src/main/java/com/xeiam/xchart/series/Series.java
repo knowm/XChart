@@ -32,8 +32,6 @@ public class Series {
 
   private String name = "";
 
-  // private AxisType seriesType;
-
   protected Collection<?> xData;
 
   protected Collection<Number> yData;
@@ -121,25 +119,17 @@ public class Series {
       BigDecimal bigDecimal = null;
 
       if (axisType == AxisType.NUMBER) {
-        bigDecimal = new BigDecimal(((Number) dataPoint).doubleValue());
-        verify(bigDecimal);
+        bigDecimal = new BigDecimal(((Number) dataPoint).toString());
 
       } else if (axisType == AxisType.DATE) {
         Date date = (Date) dataPoint;
         bigDecimal = new BigDecimal(date.getTime());
-        verify(bigDecimal);
       }
-      // if (min == null || bigDecimal < min) {
       if (min == null || bigDecimal.compareTo(min) < 0) {
-        if (!Double.isNaN(bigDecimal.doubleValue())) {
-          min = bigDecimal;
-        }
+        min = bigDecimal;
       }
-      // if (max == null || bigDecimal > max) {
       if (max == null || bigDecimal.compareTo(max) > 0) {
-        if (!Double.isNaN(bigDecimal.doubleValue())) {
-          max = bigDecimal;
-        }
+        max = bigDecimal;
       }
     }
 
@@ -162,43 +152,14 @@ public class Series {
     while (itr.hasNext()) {
       BigDecimal bigDecimal = new BigDecimal(itr.next().doubleValue());
       BigDecimal eb = new BigDecimal(ebItr.next().doubleValue());
-      verify(bigDecimal);
       if (min == null || (bigDecimal.subtract(eb)).compareTo(min) < 0) {
-        if (!Double.isNaN(bigDecimal.doubleValue())) {
-          min = bigDecimal.subtract(eb);
-        }
+        min = bigDecimal.subtract(eb);
       }
       if (max == null || (bigDecimal.add(eb)).compareTo(max) > 0) {
-        if (!Double.isNaN(bigDecimal.doubleValue())) {
-          max = bigDecimal.add(eb);
-        }
+        max = bigDecimal.add(eb);
       }
     }
     return new BigDecimal[] { min, max };
-  }
-
-  /**
-   * Checks for invalid values in data array
-   * 
-   * @param data
-   */
-  private void verify(BigDecimal value) {
-
-    // TODO get rid of this if not a Number axis type
-    double doubleValue = value.doubleValue();
-    if (doubleValue == Double.POSITIVE_INFINITY) {
-      throw new RuntimeException("Axis data cannot contain Double.POSITIVE_INFINITY!!!");
-    } else if (doubleValue == Double.NEGATIVE_INFINITY) {
-      throw new RuntimeException("Axis data cannot contain Double.NEGATIVE_INFINITY!!!");
-    }
-    // TODO get rid of this if not a Date axis type
-    long longValue = value.longValue();
-    if (longValue == Long.MAX_VALUE) {
-      throw new RuntimeException("Axis data cannot be greater than Long.MAX_VALUE!!!");
-    } else if (longValue == Long.MIN_VALUE) {
-      throw new RuntimeException("Axis data cannot be less than Long.MIN_VALUE!!!");
-    }
-
   }
 
   public String getName() {

@@ -58,10 +58,10 @@ public class Axis implements IChartPart {
   private BigDecimal max = null;
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  private Rectangle bounds;
 
   /** the paint zone */
-  private Rectangle paintZone = new Rectangle(); // default all-zero rectangle
+  private Rectangle paintZone;
 
   /** An axis direction */
   public enum Direction {
@@ -197,6 +197,9 @@ public class Axis implements IChartPart {
 
   @Override
   public void paint(Graphics2D g) {
+
+    paintZone = new Rectangle();
+    bounds = new Rectangle();
 
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis

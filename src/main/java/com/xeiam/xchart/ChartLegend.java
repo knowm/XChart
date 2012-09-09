@@ -49,10 +49,11 @@ public class ChartLegend implements IHideable {
 
   /** the foreground color */
   private Color foreground = ChartColor.getAWTColor(ChartColor.BLACK); // default foreground color
+
   private final int LEGEND_PADDING = 10;
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  private Rectangle bounds;
 
   /**
    * Constructor
@@ -70,6 +71,8 @@ public class ChartLegend implements IHideable {
 
   @Override
   public void paint(Graphics2D g) {
+
+    bounds = new Rectangle();
 
     if (isVisible) {
 

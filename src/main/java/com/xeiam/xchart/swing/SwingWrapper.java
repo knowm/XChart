@@ -44,23 +44,6 @@ public class SwingWrapper {
   }
 
   /**
-   * Deprecated Constructor - use the one that takes a Collection! This will be removed in next version.
-   * 
-   * @param charts
-   * @param numRows
-   * @param numColumns
-   */
-  @Deprecated
-  public SwingWrapper(Chart[] charts, int numRows, int numColumns) {
-
-    for (int i = 0; i < charts.length; i++) {
-      this.charts.add(charts[i]);
-    }
-    this.numRows = numRows;
-    this.numColumns = numColumns;
-  }
-
-  /**
    * Constructor - The number of rows and columns will be calculated automatically
    * 
    * @param charts

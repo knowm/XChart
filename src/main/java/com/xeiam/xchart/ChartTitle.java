@@ -45,7 +45,7 @@ public class ChartTitle implements IHideable {
   private Color foreground = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default foreground color
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  private Rectangle bounds;
 
   /**
    * Constructor
@@ -74,17 +74,20 @@ public class ChartTitle implements IHideable {
   @Override
   public void paint(Graphics2D g) {
 
-    FontRenderContext frc = g.getFontRenderContext();
-    TextLayout textLayout = new TextLayout(this.text, this.font, frc);
-    Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-    int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
-    int yOffset = (int) ((isVisible ? (Chart.CHART_PADDING - rectangle.getY()) : 0));
-
-    bounds = new Rectangle(xOffset, yOffset + (isVisible ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (isVisible ? rectangle.getHeight() : 0));
-    // g.setColor(Color.green);
-    // g.draw(bounds);
+    bounds = new Rectangle();
 
     if (isVisible) {
+
+      FontRenderContext frc = g.getFontRenderContext();
+      TextLayout textLayout = new TextLayout(text, font, frc);
+      Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+      int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
+      int yOffset = (int) ((isVisible ? (Chart.CHART_PADDING - rectangle.getY()) : 0));
+
+      bounds = new Rectangle(xOffset, yOffset + (isVisible ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (isVisible ? rectangle.getHeight() : 0));
+      // g.setColor(Color.green);
+      // g.draw(bounds);
+
       g.setColor(foreground);
       textLayout.draw(g, xOffset, yOffset);
     }

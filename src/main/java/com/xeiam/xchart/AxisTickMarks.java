@@ -43,7 +43,7 @@ public class AxisTickMarks implements IChartPart {
   public static final int TICK_LENGTH = 3;
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  private Rectangle bounds;
 
   /**
    * Constructor
@@ -65,6 +65,8 @@ public class AxisTickMarks implements IChartPart {
 
   @Override
   public void paint(Graphics2D g) {
+
+    bounds = new Rectangle();
 
     g.setColor(foreground);
 

@@ -41,7 +41,7 @@ public class AxisTickLabels implements IChartPart {
   private Color foreground = ChartColor.getAWTColor(ChartColor.DARK_GREY);// default foreground color
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+  private Rectangle bounds;
 
   /**
    * Constructor
@@ -68,6 +68,8 @@ public class AxisTickLabels implements IChartPart {
   @Override
   public void paint(Graphics2D g) {
 
+    bounds = new Rectangle();
+
     g.setColor(foreground);
 
     if (axis.getDirection() == Axis.Direction.Y) { // Y-Axis
@@ -80,7 +82,9 @@ public class AxisTickLabels implements IChartPart {
         String tickLabel = axisTick.getTickLabels().get(i);
         int tickLocation = axisTick.getTickLocations().get(i);
 
-        TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
+        FontRenderContext frc = g.getFontRenderContext();
+        // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
+        TextLayout layout = new TextLayout(tickLabel, font, frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
         layout.draw(g, xOffset, (int) (yOffset + axis.getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
@@ -104,7 +108,8 @@ public class AxisTickLabels implements IChartPart {
         String tickLabel = axisTick.getTickLabels().get(i);
         int tickLocation = axisTick.getTickLocations().get(i);
 
-        TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
+        FontRenderContext frc = g.getFontRenderContext();
+        TextLayout layout = new TextLayout(tickLabel, font, frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
         layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
 

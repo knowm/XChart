@@ -102,55 +102,53 @@ public class PlotContent implements IChartPart {
         if (errorBars != null) {
           eb = ebItr.next().doubleValue();
         }
-        if (!Double.isNaN(x.doubleValue()) && !Double.isNaN(y.doubleValue())) {
 
-          // int xTransform = (int) (xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace));
-          int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
-          // int yTransform = (int) (bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace));
-          int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+        // int xTransform = (int) (xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace));
+        int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
+        // int yTransform = (int) (bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace));
+        int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
 
-          // a check if all y data are the exact same values
-          if (Math.abs(xMax.subtract(xMin).doubleValue()) / 5 == 0.0) {
-            xTransform = (int) (bounds.getWidth() / 2.0);
+        // a check if all y data are the exact same values
+        if (Math.abs(xMax.subtract(xMin).doubleValue()) / 5 == 0.0) {
+          xTransform = (int) (bounds.getWidth() / 2.0);
+        }
+
+        // a check if all y data are the exact same values
+        if (Math.abs(yMax.subtract(yMin).doubleValue()) / 5 == 0.0) {
+          yTransform = (int) (bounds.getHeight() / 2.0);
+        }
+
+        int xOffset = (int) (bounds.getX() + xTransform - 1);
+        int yOffset = (int) (bounds.getY() + yTransform);
+        // System.out.println(yOffset);
+        // System.out.println(yTransform);
+
+        // paint line
+        if (series.getLineStyle() != null) {
+          if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+            g.setColor(series.getLineColor());
+            g.setStroke(series.getLineStyle());
+            g.drawLine(previousX, previousY, xOffset, yOffset);
           }
+          previousX = xOffset;
+          previousY = yOffset;
+        }
 
-          // a check if all y data are the exact same values
-          if (Math.abs(yMax.subtract(yMin).doubleValue()) / 5 == 0.0) {
-            yTransform = (int) (bounds.getHeight() / 2.0);
-          }
+        // paint marker
+        if (series.getMarker() != null) {
+          g.setColor(series.getMarkerColor());
+          series.getMarker().paint(g, xOffset, yOffset);
+        }
 
-          int xOffset = (int) (bounds.getX() + xTransform - 1);
-          int yOffset = (int) (bounds.getY() + yTransform);
-          // System.out.println(yOffset);
-          // System.out.println(yTransform);
-
-          // paint line
-          if (series.getLineStyle() != null) {
-            if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
-              g.setColor(series.getLineColor());
-              g.setStroke(series.getLineStyle());
-              g.drawLine(previousX, previousY, xOffset, yOffset);
-            }
-            previousX = xOffset;
-            previousY = yOffset;
-          }
-
-          // paint marker
-          if (series.getMarker() != null) {
-            g.setColor(series.getMarkerColor());
-            series.getMarker().paint(g, xOffset, yOffset);
-          }
-
-          // paint errorbar
-          if (errorBars != null) {
-            g.setColor(ChartColor.getAWTColor(ChartColor.DARK_GREY));
-            g.setStroke(SeriesLineStyle.getBasicStroke(SeriesLineStyle.SOLID));
-            int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
-            int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
-            g.drawLine(xOffset, yOffset + bottom, xOffset, yOffset + top);
-            g.drawLine(xOffset - 3, yOffset + bottom, xOffset + 3, yOffset + bottom);
-            g.drawLine(xOffset - 3, yOffset + top, xOffset + 3, yOffset + top);
-          }
+        // paint errorbar
+        if (errorBars != null) {
+          g.setColor(ChartColor.getAWTColor(ChartColor.DARK_GREY));
+          g.setStroke(SeriesLineStyle.getBasicStroke(SeriesLineStyle.SOLID));
+          int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
+          int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
+          g.drawLine(xOffset, yOffset + bottom, xOffset, yOffset + top);
+          g.drawLine(xOffset - 3, yOffset + bottom, xOffset + 3, yOffset + bottom);
+          g.drawLine(xOffset - 3, yOffset + top, xOffset + 3, yOffset + top);
         }
       }
 

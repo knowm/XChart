@@ -77,9 +77,6 @@ public class AxisPair implements IChartPart {
     if (xData != null && xData.size() == 0) {
       throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
     }
-    if (yData.size() == 1 && Double.isNaN(yData.iterator().next().doubleValue())) {
-      throw new IllegalArgumentException("Y-Axis data cannot contain a single NaN value!!!");
-    }
 
     Series series = null;
     if (xData != null) {

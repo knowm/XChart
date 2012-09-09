@@ -29,11 +29,12 @@ import com.xeiam.xchart.Chart;
  */
 public class XChartJPanel extends JPanel {
 
-  private Chart chart;
+  private final Chart chart;
 
-  public XChartJPanel(Chart chart) {
+  public XChartJPanel(final Chart chart) {
 
     this.chart = chart;
+
   }
 
   @Override
@@ -41,10 +42,7 @@ public class XChartJPanel extends JPanel {
 
     super.paintComponent(g);
 
-    super.removeAll();
-    System.out.println(getSize().toString());
-
-    chart.paint((Graphics2D) g, getSize().width, getSize().height);
+    chart.paint((Graphics2D) g, getWidth(), getHeight());
   }
 
   @Override
