@@ -23,7 +23,6 @@ import java.awt.Stroke;
 
 import com.xeiam.xchart.interfaces.IChartPart;
 
-
 /**
  * Axis tick marks.
  */
@@ -73,6 +72,8 @@ public class AxisTickMarks implements IChartPart {
 
       int xOffset = (int) (axisTick.getAxisTickLabels().getBounds().getX() + axisTick.getAxisTickLabels().getBounds().getWidth() + AxisTick.AXIS_TICK_PADDING);
       int yOffset = (int) (axis.getPaintZone().getY());
+
+      // tick marks
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
         int tickLocation = axisTick.getTickLocations().get(i);
@@ -83,16 +84,20 @@ public class AxisTickMarks implements IChartPart {
         g.drawLine(xOffset, yOffset + (int) (axis.getPaintZone().getHeight() - tickLocation), xOffset + TICK_LENGTH, yOffset + (int) (axis.getPaintZone().getHeight() - tickLocation));
 
       }
+      // Line
+      g.drawLine(xOffset + TICK_LENGTH, yOffset, xOffset + TICK_LENGTH, yOffset + (int) axis.getPaintZone().getHeight());
 
       // bounds
       bounds = new Rectangle(xOffset, yOffset, TICK_LENGTH, (int) axis.getPaintZone().getHeight());
-      // g.setColor(Color.blue);
+      // g.setColor(Color.yellow);
       // g.draw(bounds);
 
     } else { // X-Axis
 
       int xOffset = (int) (axis.getPaintZone().getX());
       int yOffset = (int) (axisTick.getAxisTickLabels().getBounds().getY() - AxisTick.AXIS_TICK_PADDING);
+
+      // tick marks
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
         int tickLocation = axisTick.getTickLocations().get(i);
@@ -102,12 +107,13 @@ public class AxisTickMarks implements IChartPart {
 
         g.drawLine(xOffset + tickLocation, yOffset, xOffset + tickLocation, yOffset - TICK_LENGTH);
       }
+      // Line
+      g.drawLine(xOffset, yOffset - TICK_LENGTH, xOffset + (int) axis.getPaintZone().getWidth(), yOffset - TICK_LENGTH);
 
       // bounds
       bounds = new Rectangle(xOffset, yOffset - TICK_LENGTH, (int) axis.getPaintZone().getWidth(), TICK_LENGTH);
-      // g.setColor(Color.blue);
+      // g.setColor(Color.yellow);
       // g.draw(bounds);
     }
   }
-
 }

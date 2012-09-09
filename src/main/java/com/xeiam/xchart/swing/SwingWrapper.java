@@ -15,14 +15,10 @@
  */
 package com.xeiam.xchart.swing;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -108,10 +104,10 @@ public class SwingWrapper {
         // Create and set up the window.
         JFrame frame = new JFrame("XChart");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-
-        JPanel chartPanel = new ChartJPanel(charts.get(0));
-        frame.getContentPane().add(chartPanel);
+        // frame.setSize(new Dimension(charts.get(0).getWidth(), charts.get(0).getHeight()));
+        JPanel chartPanel = new XChartJPanel(charts.get(0));
+        // frame.getContentPane().add(chartPanel);
+        frame.add(chartPanel);
 
         // Display the window.
         frame.pack();
@@ -139,7 +135,7 @@ public class SwingWrapper {
 
         for (Chart chart : charts) {
           if (chart != null) {
-            JPanel chartPanel = new ChartJPanel(chart);
+            JPanel chartPanel = new XChartJPanel(chart);
             frame.getContentPane().add(chartPanel);
           } else {
             JPanel chartPanel = new JPanel();
@@ -155,25 +151,4 @@ public class SwingWrapper {
     });
   }
 
-  private class ChartJPanel extends JPanel {
-
-    private Chart chart;
-
-    public ChartJPanel(Chart chart) {
-
-      this.chart = chart;
-    }
-
-    @Override
-    public void paint(Graphics g) {
-
-      chart.paint((Graphics2D) g);
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-
-      return new Dimension(chart.getWidth(), chart.getHeight());
-    }
-  }
 }

@@ -20,15 +20,18 @@ import java.awt.Rectangle;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.xeiam.xchart.Axis.AxisType;
 import com.xeiam.xchart.interfaces.IChartPart;
+import com.xeiam.xchart.interfaces.IHideable;
 
 /**
  * An axis tick.
  */
-public class AxisTick implements IChartPart {
+public class AxisTick implements IChartPart, IHideable {
 
   /** the axis */
   private Axis axis;
@@ -50,6 +53,7 @@ public class AxisTick implements IChartPart {
   /** the default tick mark step hint */
   private static final int DEFAULT_TICK_MARK_STEP_HINT = 64;
 
+  /** the padding between the tick labels and the tick marks */
   protected final static int AXIS_TICK_PADDING = 4;
 
   /** the normal format for tick labels */
@@ -58,8 +62,14 @@ public class AxisTick implements IChartPart {
   /** the scientific format for tick labels */
   private Format scientificFormat = new DecimalFormat("0.###E0");
 
+  // private SimpleDateFormat simpleDateformat = new SimpleDateFormat("dd.MM.yyyy");
+  private SimpleDateFormat simpleDateformat = new SimpleDateFormat("MM-dd");
+
   /** the bounds */
   private Rectangle bounds = new Rectangle(); // default all-zero rectangle
+
+  /** the visibility state of axistick */
+  protected boolean isVisible = true; // default to true
 
   /**
    * Constructor.
@@ -126,19 +136,21 @@ public class AxisTick implements IChartPart {
     // System.out.println(label);
     // }
 
-    axisTickLabels.paint(g);
-    axisTickMarks.paint(g);
+    if (isVisible) {
+      axisTickLabels.paint(g);
+      axisTickMarks.paint(g);
 
-    if (axis.getDirection() == Axis.Direction.Y) {
-      bounds = new Rectangle((int) axisTickLabels.getBounds().getX(), (int) (axisTickLabels.getBounds().getY()), (int) (axisTickLabels.getBounds().getWidth() + AXIS_TICK_PADDING + axisTickMarks.getBounds().getWidth()),
-          (int) (axisTickMarks.getBounds().getHeight()));
-      // g.setColor(Color.red);
-      // g.draw(bounds);
-    } else {
-      bounds = new Rectangle((int) axisTickMarks.getBounds().getX(), (int) (axisTickMarks.getBounds().getY()), (int) axisTickLabels.getBounds().getWidth(), (int) (axisTickMarks.getBounds().getHeight()
-          + AXIS_TICK_PADDING + axisTickLabels.getBounds().getHeight()));
-      // g.setColor(Color.red);
-      // g.draw(bounds);
+      if (axis.getDirection() == Axis.Direction.Y) {
+        bounds = new Rectangle((int) axisTickLabels.getBounds().getX(), (int) (axisTickLabels.getBounds().getY()),
+            (int) (axisTickLabels.getBounds().getWidth() + AXIS_TICK_PADDING + axisTickMarks.getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
+        // g.setColor(Color.red);
+        // g.draw(bounds);
+      } else {
+        bounds = new Rectangle((int) axisTickMarks.getBounds().getX(), (int) (axisTickMarks.getBounds().getY()), (int) axisTickLabels.getBounds().getWidth(), (int) (axisTickMarks.getBounds().getHeight()
+            + AXIS_TICK_PADDING + axisTickLabels.getBounds().getHeight()));
+        // g.setColor(Color.red);
+        // g.draw(bounds);
+      }
     }
 
   }
@@ -161,7 +173,7 @@ public class AxisTick implements IChartPart {
       tickLocations.add((int) (margin + tickSpace / 2.0));
     } else {
 
-      final BigDecimal MIN = new BigDecimal(new Double(axis.getMin()).toString());
+      final BigDecimal MIN = new BigDecimal(axis.getMin().doubleValue());
       BigDecimal firstPosition;
       BigDecimal gridStep = getGridStep(tickSpace);
 
@@ -172,11 +184,11 @@ public class AxisTick implements IChartPart {
         firstPosition = MIN.subtract(MIN.remainder(gridStep)).add(gridStep);
       }
 
-      for (BigDecimal b = firstPosition; b.doubleValue() <= axis.getMax(); b = b.add(gridStep)) {
+      for (BigDecimal b = firstPosition; b.compareTo(axis.getMax()) <= 0; b = b.add(gridStep)) {
 
         // System.out.println("b= " + b);
-        tickLabels.add(format(b.doubleValue()));
-        int tickLabelPosition = (int) (margin + ((b.doubleValue() - axis.getMin()) / (axis.getMax() - axis.getMin()) * tickSpace));
+        tickLabels.add(format(b));
+        int tickLabelPosition = (int) (margin + ((b.subtract(axis.getMin())).doubleValue() / (axis.getMax().subtract(axis.getMin())).doubleValue() * tickSpace));
         // System.out.println("tickLabelPosition= " + tickLabelPosition);
 
         tickLocations.add(tickLabelPosition);
@@ -186,7 +198,7 @@ public class AxisTick implements IChartPart {
 
   private BigDecimal getGridStep(int tickSpace) {
 
-    double length = Math.abs(axis.getMax() - axis.getMin());
+    double length = Math.abs(axis.getMax().subtract(axis.getMin()).doubleValue());
     // System.out.println(axis.getMax());
     // System.out.println(axis.getMin());
     // System.out.println(length);
@@ -246,13 +258,23 @@ public class AxisTick implements IChartPart {
     return value;
   }
 
-  private String format(double value) {
+  private String format(BigDecimal value) {
 
-    if (Math.abs(value) < 9999 && Math.abs(value) > .0001 || value == 0) {
-      return this.normalFormat.format(value);
+    if (axis.getAxisType() == AxisType.NUMBER) {
+      if (Math.abs(value.doubleValue()) < 9999 && Math.abs(value.doubleValue()) > .0001 || value.doubleValue() == 0) {
+        return normalFormat.format(value.doubleValue());
+      } else {
+        return scientificFormat.format(value.doubleValue());
+      }
     } else {
-      return this.scientificFormat.format(value);
+      return simpleDateformat.format(value.longValueExact());
     }
+
   }
 
+  @Override
+  public void setVisible(boolean isVisible) {
+
+    this.isVisible = isVisible;
+  }
 }

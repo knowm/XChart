@@ -39,7 +39,7 @@ Add this to dependencies in pom.xml:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>1.2.0-SNAPSHOT</version>
+      <version>1.1.0</version>
     </dependency>
 
 Building

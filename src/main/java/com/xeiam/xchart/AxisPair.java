@@ -19,9 +19,12 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.xeiam.xchart.Axis.AxisType;
 import com.xeiam.xchart.interfaces.IChartPart;
 import com.xeiam.xchart.series.Series;
 
@@ -55,10 +58,11 @@ public class AxisPair implements IChartPart {
   }
 
   /**
+   * @param <T>
    * @param xData
    * @param yData
    */
-  public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData, Collection<Number> errorBars) {
+  public <T> Series addSeries(String seriesName, Collection<T> xData, Collection<Number> yData, Collection<Number> errorBars) {
 
     // Sanity checks
     if (seriesName == null) {
@@ -73,22 +77,30 @@ public class AxisPair implements IChartPart {
     if (xData != null && xData.size() == 0) {
       throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
     }
-    if (xData != null && xData.size() == 1 && Double.isNaN(xData.iterator().next().doubleValue())) {
-      throw new IllegalArgumentException("X-Axis data cannot contain a single NaN value!!!");
-    }
     if (yData.size() == 1 && Double.isNaN(yData.iterator().next().doubleValue())) {
       throw new IllegalArgumentException("Y-Axis data cannot contain a single NaN value!!!");
     }
 
-    Series series;
+    Series series = null;
     if (xData != null) {
-      series = new Series(seriesName, xData, yData, errorBars);
+      // Check if xAxis series contains Number or Date data
+      Iterator<?> itr = xData.iterator();
+      Object dataPoint = itr.next();
+      if (dataPoint instanceof Number) {
+        xAxis.setAxisType(AxisType.NUMBER);
+      } else if (dataPoint instanceof Date) {
+        xAxis.setAxisType(AxisType.DATE);
+      }
+      yAxis.setAxisType(AxisType.NUMBER);
+      series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars);
     } else { // generate xData
       Collection<Number> generatedXData = new ArrayList<Number>();
       for (int i = 1; i < yData.size(); i++) {
         generatedXData.add(i);
       }
-      series = new Series(seriesName, generatedXData, yData, errorBars);
+      xAxis.setAxisType(AxisType.NUMBER);
+      yAxis.setAxisType(AxisType.NUMBER);
+      series = new Series(seriesName, generatedXData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars);
     }
 
     // Sanity check

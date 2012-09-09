@@ -17,10 +17,13 @@ package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.xeiam.xchart.Axis.AxisType;
 import com.xeiam.xchart.interfaces.IChartPart;
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.SeriesLineStyle;
@@ -65,18 +68,18 @@ public class PlotContent implements IChartPart {
       int yTopMargin = AxisPair.getMargin((int) bounds.getHeight(), yTickSpace);
 
       // data points
-      Collection<Number> xData = series.getxData();
-      double xMin = chart.getAxisPair().getXAxis().getMin();
-      double xMax = chart.getAxisPair().getXAxis().getMax();
+      Collection<?> xData = series.getxData();
+      BigDecimal xMin = chart.getAxisPair().getXAxis().getMin();
+      BigDecimal xMax = chart.getAxisPair().getXAxis().getMax();
       Collection<Number> yData = series.getyData();
-      double yMin = chart.getAxisPair().getYAxis().getMin();
-      double yMax = chart.getAxisPair().getYAxis().getMax();
+      BigDecimal yMin = chart.getAxisPair().getYAxis().getMin();
+      BigDecimal yMax = chart.getAxisPair().getYAxis().getMax();
       Collection<Number> errorBars = series.getErrorBars();
 
       int previousX = Integer.MIN_VALUE;
       int previousY = Integer.MIN_VALUE;
 
-      Iterator<Number> xItr = xData.iterator();
+      Iterator<?> xItr = xData.iterator();
       Iterator<Number> yItr = yData.iterator();
       Iterator<Number> ebItr = null;
       if (errorBars != null) {
@@ -84,29 +87,42 @@ public class PlotContent implements IChartPart {
       }
       while (xItr.hasNext()) {
 
-        double x = xItr.next().doubleValue();
-        double y = yItr.next().doubleValue();
+        BigDecimal x = null;
+        if (chart.getAxisPair().getXAxis().getAxisType() == AxisType.NUMBER) {
+          x = new BigDecimal(((Number) xItr.next()).doubleValue());
+        }
+        if (chart.getAxisPair().getXAxis().getAxisType() == AxisType.DATE) {
+          x = new BigDecimal(((Date) xItr.next()).getTime());
+          System.out.println(x);
+        }
+
+        BigDecimal y = new BigDecimal(yItr.next().doubleValue());
+        // System.out.println(y);
         double eb = 0.0;
         if (errorBars != null) {
           eb = ebItr.next().doubleValue();
         }
-        if (!Double.isNaN(x) && !Double.isNaN(y)) {
+        if (!Double.isNaN(x.doubleValue()) && !Double.isNaN(y.doubleValue())) {
 
-          int xTransform = (int) (xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace));
-          int yTransform = (int) (bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace));
+          // int xTransform = (int) (xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace));
+          int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
+          // int yTransform = (int) (bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace));
+          int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
 
           // a check if all y data are the exact same values
-          if (Math.abs(xMax - xMin) / 5 == 0.0) {
+          if (Math.abs(xMax.subtract(xMin).doubleValue()) / 5 == 0.0) {
             xTransform = (int) (bounds.getWidth() / 2.0);
           }
 
           // a check if all y data are the exact same values
-          if (Math.abs(yMax - yMin) / 5 == 0.0) {
+          if (Math.abs(yMax.subtract(yMin).doubleValue()) / 5 == 0.0) {
             yTransform = (int) (bounds.getHeight() / 2.0);
           }
 
           int xOffset = (int) (bounds.getX() + xTransform - 1);
           int yOffset = (int) (bounds.getY() + yTransform);
+          // System.out.println(yOffset);
+          // System.out.println(yTransform);
 
           // paint line
           if (series.getLineStyle() != null) {
@@ -129,14 +145,17 @@ public class PlotContent implements IChartPart {
           if (errorBars != null) {
             g.setColor(ChartColor.getAWTColor(ChartColor.DARK_GREY));
             g.setStroke(SeriesLineStyle.getBasicStroke(SeriesLineStyle.SOLID));
-            int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax - yMin));
-            int top = (int) (bounds.getHeight() * eb / (yMax - yMin));
+            int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
+            int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
             g.drawLine(xOffset, yOffset + bottom, xOffset, yOffset + top);
             g.drawLine(xOffset - 3, yOffset + bottom, xOffset + 3, yOffset + bottom);
             g.drawLine(xOffset - 3, yOffset + top, xOffset + 3, yOffset + top);
           }
         }
       }
+
     }
+
   }
+
 }

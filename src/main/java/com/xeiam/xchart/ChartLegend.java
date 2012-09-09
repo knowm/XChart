@@ -27,7 +27,6 @@ import com.xeiam.xchart.interfaces.IHideable;
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.markers.Marker;
 
-
 /**
  * @author timmolter
  */
@@ -37,7 +36,7 @@ public class ChartLegend implements IHideable {
   private Chart chart;
 
   /** the visibility state of legend */
-  private boolean isVisible = true; // default to true
+  protected boolean isVisible = true; // default to true
 
   /** the font */
   private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 11); // default font
@@ -104,7 +103,7 @@ public class ChartLegend implements IHideable {
       // Draw Legend Box
       int legendBoxWidth = legendContentWidth + 2 * LEGEND_PADDING;
       int legendBoxHeight = legendContentHeight + 2 * LEGEND_PADDING;
-      int xOffset = (chart.getWidth() - legendBoxWidth - Chart.CHART_PADDING);
+      int xOffset = chart.getWidth() - legendBoxWidth - Chart.CHART_PADDING;
       int yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getTitle().getBounds().getY() + chart.getTitle().getBounds().getHeight());
 
       g.setColor(border);

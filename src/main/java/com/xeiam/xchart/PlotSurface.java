@@ -22,12 +22,12 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import com.xeiam.xchart.interfaces.IChartPart;
-
+import com.xeiam.xchart.interfaces.IHideable;
 
 /**
  * @author timmolter
  */
-public class PlotSurface implements IChartPart {
+public class PlotSurface implements IChartPart, IHideable {
 
   private Chart chart;
 
@@ -42,6 +42,15 @@ public class PlotSurface implements IChartPart {
   /** the line style */
   private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
 
+  /** the visibility state of PlotSurface */
+  protected boolean isVisible = true; // default to true
+
+  /**
+   * Constructor
+   * 
+   * @param chart
+   * @param plot
+   */
   public PlotSurface(Chart chart, Plot plot) {
 
     this.chart = chart;
@@ -68,28 +77,37 @@ public class PlotSurface implements IChartPart {
     g.draw(borderRectangle);
 
     // paint grid lines
-    // horizontal
-    List<Integer> yAxisTickLocations = chart.getAxisPair().getYAxis().getAxisTick().getTickLocations();
-    for (int i = 0; i < yAxisTickLocations.size(); i++) {
+    if (isVisible) {
+      // horizontal
+      List<Integer> yAxisTickLocations = chart.getAxisPair().getYAxis().getAxisTick().getTickLocations();
+      for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
-      int tickLocation = yAxisTickLocations.get(i);
+        int tickLocation = yAxisTickLocations.get(i);
 
-      g.setColor(foreground);
-      g.setStroke(stroke);
-      // System.out.println("bounds.getY()= " + bounds.getY());
-      g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2), (int) (bounds.getY() + bounds.getHeight() - tickLocation));
+        g.setColor(foreground);
+        g.setStroke(stroke);
+        // System.out.println("bounds.getY()= " + bounds.getY());
+        g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2), (int) (bounds.getY() + bounds.getHeight() - tickLocation));
+      }
+
+      // vertical
+      List<Integer> xAxisTickLocations = chart.getAxisPair().getXAxis().getAxisTick().getTickLocations();
+      for (int i = 0; i < xAxisTickLocations.size(); i++) {
+
+        int tickLocation = xAxisTickLocations.get(i);
+
+        g.setColor(foreground);
+        g.setStroke(stroke);
+
+        g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
+      }
     }
+  }
 
-    // vertical
-    List<Integer> xAxisTickLocations = chart.getAxisPair().getXAxis().getAxisTick().getTickLocations();
-    for (int i = 0; i < xAxisTickLocations.size(); i++) {
+  @Override
+  public void setVisible(boolean isVisible) {
 
-      int tickLocation = xAxisTickLocations.get(i);
+    this.isVisible = isVisible;
 
-      g.setColor(foreground);
-      g.setStroke(stroke);
-
-      g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
-    }
   }
 }

@@ -24,7 +24,6 @@ import java.awt.font.TextLayout;
 
 import com.xeiam.xchart.interfaces.IChartPart;
 
-
 /**
  * Axis tick labels
  */

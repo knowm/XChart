@@ -31,7 +31,7 @@ public class Plot implements IChartPart {
 
   private PlotContent plotContent;
 
-  public static final int PLOT_PADDING = 5;
+  public static final int PLOT_PADDING = 3;
 
   /** the bounds */
   private Rectangle bounds = new Rectangle(); // default all-zero rectangle
@@ -53,7 +53,7 @@ public class Plot implements IChartPart {
   public void paint(Graphics2D g) {
 
     // calculate bounds
-    int xOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getX() + chart.getAxisPair().getYAxis().getBounds().getWidth() + PLOT_PADDING);
+    int xOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getX() + chart.getAxisPair().getYAxis().getBounds().getWidth() + (chart.getAxisPair().getYAxis().getAxisTick().isVisible ? (Plot.PLOT_PADDING + 1) : 0));
     int yOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getY());
     int width = (int) chart.getAxisPair().getXAxis().getBounds().getWidth();
     int height = (int) chart.getAxisPair().getYAxis().getBounds().getHeight();
@@ -64,6 +64,14 @@ public class Plot implements IChartPart {
     plotSurface.paint(g);
     plotContent.paint(g);
 
+  }
+
+  /**
+   * @return the plotSurface
+   */
+  public PlotSurface getPlotSurface() {
+
+    return plotSurface;
   }
 
 }

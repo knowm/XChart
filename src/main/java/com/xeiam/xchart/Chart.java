@@ -15,10 +15,12 @@
  */
 package com.xeiam.xchart;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.SeriesColor;
@@ -46,10 +48,24 @@ public class Chart {
    * @param pWidth
    * @param pHeight
    */
-  public Chart(final int pWidth, final int pHeight) {
+  public Chart(int width, int height) {
 
-    width = pWidth;
-    height = pHeight;
+    this.width = width;
+    this.height = height;
+  }
+
+  /**
+   * @param g
+   */
+  public void paint(final Graphics2D g, int width, int height) {
+
+    g.setColor(Color.white);
+    g.fillRect(0, 0, width, height);
+
+    this.width = width;
+    this.height = height;
+
+    paint(g);
   }
 
   /**
@@ -113,6 +129,21 @@ public class Chart {
   }
 
   // PUBLIC SETTERS
+
+  /**
+   * @param seriesName
+   * @param xData
+   * @param yData
+   */
+  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData) {
+
+    return axisPair.addSeries(seriesName, xData, yData, null);
+  }
+
+  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData, Collection<Number> errorBars) {
+
+    return axisPair.addSeries(seriesName, xData, yData, errorBars);
+  }
 
   /**
    * Add series data as Collection<Number>
@@ -183,11 +214,6 @@ public class Chart {
     this.chartTitle.setText(title);
   }
 
-  public void setChartTitleVisible(boolean isVisible) {
-
-    this.chartTitle.setVisible(isVisible);
-  }
-
   public void setXAxisTitle(String title) {
 
     this.axisPair.getXAxis().setAxisTitle(title);
@@ -198,14 +224,52 @@ public class Chart {
     this.axisPair.getYAxis().setAxisTitle(title);
   }
 
+  // ChartPart visibility ////////////////////////////////
+
+  public void setChartTitleVisible(boolean isVisible) {
+
+    this.chartTitle.setVisible(isVisible);
+  }
+
   public void setAxisTitlesVisible(boolean isVisible) {
 
     this.axisPair.getXAxis().getAxisTitle().setVisible(isVisible);
     this.axisPair.getYAxis().getAxisTitle().setVisible(isVisible);
   }
 
+  public void setXAxisTitleVisible(boolean isVisible) {
+
+    this.axisPair.getXAxis().getAxisTitle().setVisible(isVisible);
+  }
+
+  public void setYAxisTitleVisible(boolean isVisible) {
+
+    this.axisPair.getYAxis().getAxisTitle().setVisible(isVisible);
+  }
+
   public void setChartLegendVisible(boolean isVisible) {
 
     this.chartLegend.setVisible(isVisible);
+  }
+
+  public void setAxisTicksVisible(boolean isVisible) {
+
+    this.axisPair.getXAxis().getAxisTick().setVisible(isVisible);
+    this.axisPair.getYAxis().getAxisTick().setVisible(isVisible);
+  }
+
+  public void setXAxisTicksVisible(boolean isVisible) {
+
+    this.axisPair.getXAxis().getAxisTick().setVisible(isVisible);
+  }
+
+  public void setYAxisTicksVisible(boolean isVisible) {
+
+    this.axisPair.getYAxis().getAxisTick().setVisible(isVisible);
+  }
+
+  public void setChartGridlinesVisible(boolean isVisible) {
+
+    this.plot.getPlotSurface().setVisible(isVisible);
   }
 }

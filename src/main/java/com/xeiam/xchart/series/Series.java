@@ -17,9 +17,12 @@ package com.xeiam.xchart.series;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
+import com.xeiam.xchart.Axis.AxisType;
 import com.xeiam.xchart.series.markers.Marker;
 
 /**
@@ -29,23 +32,25 @@ public class Series {
 
   private String name = "";
 
-  protected Collection<Number> xData;
+  // private AxisType seriesType;
+
+  protected Collection<?> xData;
 
   protected Collection<Number> yData;
 
   protected Collection<Number> errorBars;
 
   /** the minimum value of axis range */
-  private double xMin;
+  private BigDecimal xMin;
 
   /** the maximum value of axis range */
-  private double xMax;
+  private BigDecimal xMax;
 
   /** the minimum value of axis range */
-  private double yMin;
+  private BigDecimal yMin;
 
   /** the maximum value of axis range */
-  private double yMax;
+  private BigDecimal yMax;
 
   /** Line Style */
   private BasicStroke stroke;
@@ -62,11 +67,12 @@ public class Series {
   /**
    * Constructor
    * 
+   * @param <?>
    * @param name
    * @param xData
    * @param yData
    */
-  public Series(String name, Collection<Number> xData, Collection<Number> yData, Collection<Number> errorBars) {
+  public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<Number> yData, AxisType yAxisType, Collection<Number> errorBars) {
 
     this.name = name;
     this.xData = xData;
@@ -74,28 +80,28 @@ public class Series {
     this.errorBars = errorBars;
 
     // xData
-    double[] xMinMax = findMinMax(xData);
-    this.xMin = xMinMax[0];
-    this.xMax = xMinMax[1];
+    BigDecimal[] xMinMax = findMinMax(xData, xAxisType);
+    xMin = xMinMax[0];
+    xMax = xMinMax[1];
 
     // yData
-    double[] yMinMax = null;
+    BigDecimal[] yMinMax = null;
     if (errorBars == null) {
-      yMinMax = findMinMax(yData);
+      yMinMax = findMinMax(yData, yAxisType);
     } else {
       yMinMax = findMinMaxWithErrorBars(yData, errorBars);
     }
-    this.yMin = yMinMax[0];
-    this.yMax = yMinMax[1];
+    yMin = yMinMax[0];
+    yMax = yMinMax[1];
     // System.out.println(yMin);
     // System.out.println(yMax);
 
     Color color = SeriesColor.getNextAWTColor();
-    this.strokeColor = color;
-    this.markerColor = color;
+    strokeColor = color;
+    markerColor = color;
 
-    this.marker = SeriesMarker.getNextMarker();
-    this.stroke = SeriesLineStyle.getNextBasicStroke();
+    marker = SeriesMarker.getNextMarker();
+    stroke = SeriesLineStyle.getNextBasicStroke();
 
   }
 
@@ -105,24 +111,39 @@ public class Series {
    * @param data
    * @return
    */
-  private double[] findMinMax(Collection<Number> data) {
+  private BigDecimal[] findMinMax(Collection<?> data, AxisType axisType) {
 
-    Double min = null;
-    Double max = null;
-    for (Number number : data) {
-      verify(number.doubleValue());
-      if (min == null || number.doubleValue() < min) {
-        if (!Double.isNaN(number.doubleValue())) {
-          min = number.doubleValue();
+    BigDecimal min = null;
+    BigDecimal max = null;
+
+    for (Object dataPoint : data) {
+
+      BigDecimal bigDecimal = null;
+
+      if (axisType == AxisType.NUMBER) {
+        bigDecimal = new BigDecimal(((Number) dataPoint).doubleValue());
+        verify(bigDecimal);
+
+      } else if (axisType == AxisType.DATE) {
+        Date date = (Date) dataPoint;
+        bigDecimal = new BigDecimal(date.getTime());
+        verify(bigDecimal);
+      }
+      // if (min == null || bigDecimal < min) {
+      if (min == null || bigDecimal.compareTo(min) < 0) {
+        if (!Double.isNaN(bigDecimal.doubleValue())) {
+          min = bigDecimal;
         }
       }
-      if (max == null || number.doubleValue() > max) {
-        if (!Double.isNaN(number.doubleValue())) {
-          max = number.doubleValue();
+      // if (max == null || bigDecimal > max) {
+      if (max == null || bigDecimal.compareTo(max) > 0) {
+        if (!Double.isNaN(bigDecimal.doubleValue())) {
+          max = bigDecimal;
         }
       }
     }
-    return new double[] { min, max };
+
+    return new BigDecimal[] { min, max };
   }
 
   /**
@@ -131,29 +152,29 @@ public class Series {
    * @param data
    * @return
    */
-  private double[] findMinMaxWithErrorBars(Collection<Number> data, Collection<Number> errorBars) {
+  private BigDecimal[] findMinMaxWithErrorBars(Collection<Number> data, Collection<Number> errorBars) {
 
-    Double min = null;
-    Double max = null;
+    BigDecimal min = null;
+    BigDecimal max = null;
 
     Iterator<Number> itr = data.iterator();
     Iterator<Number> ebItr = errorBars.iterator();
     while (itr.hasNext()) {
-      double number = itr.next().doubleValue();
-      double eb = ebItr.next().doubleValue();
-      verify(number);
-      if (min == null || (number - eb) < min) {
-        if (!Double.isNaN(number)) {
-          min = number - eb;
+      BigDecimal bigDecimal = new BigDecimal(itr.next().doubleValue());
+      BigDecimal eb = new BigDecimal(ebItr.next().doubleValue());
+      verify(bigDecimal);
+      if (min == null || (bigDecimal.subtract(eb)).compareTo(min) < 0) {
+        if (!Double.isNaN(bigDecimal.doubleValue())) {
+          min = bigDecimal.subtract(eb);
         }
       }
-      if (max == null || (number + eb) > max) {
-        if (!Double.isNaN(number)) {
-          max = number + eb;
+      if (max == null || (bigDecimal.add(eb)).compareTo(max) > 0) {
+        if (!Double.isNaN(bigDecimal.doubleValue())) {
+          max = bigDecimal.add(eb);
         }
       }
     }
-    return new double[] { min, max };
+    return new BigDecimal[] { min, max };
   }
 
   /**
@@ -161,13 +182,23 @@ public class Series {
    * 
    * @param data
    */
-  private void verify(double value) {
+  private void verify(BigDecimal value) {
 
-    if (value == Double.POSITIVE_INFINITY) {
+    // TODO get rid of this if not a Number axis type
+    double doubleValue = value.doubleValue();
+    if (doubleValue == Double.POSITIVE_INFINITY) {
       throw new RuntimeException("Axis data cannot contain Double.POSITIVE_INFINITY!!!");
-    } else if (value == Double.NEGATIVE_INFINITY) {
+    } else if (doubleValue == Double.NEGATIVE_INFINITY) {
       throw new RuntimeException("Axis data cannot contain Double.NEGATIVE_INFINITY!!!");
     }
+    // TODO get rid of this if not a Date axis type
+    long longValue = value.longValue();
+    if (longValue == Long.MAX_VALUE) {
+      throw new RuntimeException("Axis data cannot be greater than Long.MAX_VALUE!!!");
+    } else if (longValue == Long.MIN_VALUE) {
+      throw new RuntimeException("Axis data cannot be less than Long.MIN_VALUE!!!");
+    }
+
   }
 
   public String getName() {
@@ -175,7 +206,7 @@ public class Series {
     return name;
   }
 
-  public Collection<Number> getxData() {
+  public Collection<?> getxData() {
 
     return xData;
   }
@@ -190,22 +221,22 @@ public class Series {
     return errorBars;
   }
 
-  public double getxMin() {
+  public BigDecimal getxMin() {
 
     return xMin;
   }
 
-  public double getxMax() {
+  public BigDecimal getxMax() {
 
     return xMax;
   }
 
-  public double getyMin() {
+  public BigDecimal getyMin() {
 
     return yMin;
   }
 
-  public double getyMax() {
+  public BigDecimal getyMax() {
 
     return yMax;
   }
@@ -217,12 +248,12 @@ public class Series {
 
   public void setLineStyle(SeriesLineStyle lineStyle) {
 
-    this.stroke = SeriesLineStyle.getBasicStroke(lineStyle);
+    stroke = SeriesLineStyle.getBasicStroke(lineStyle);
   }
 
   public void setLineStyle(BasicStroke lineStyle) {
 
-    this.stroke = lineStyle;
+    stroke = lineStyle;
   }
 
   public Color getLineColor() {
@@ -232,12 +263,12 @@ public class Series {
 
   public void setLineColor(SeriesColor lineColor) {
 
-    this.strokeColor = SeriesColor.getAWTColor(lineColor);
+    strokeColor = SeriesColor.getAWTColor(lineColor);
   }
 
   public void setLineColor(java.awt.Color lineColor) {
 
-    this.strokeColor = lineColor;
+    strokeColor = lineColor;
   }
 
   public Marker getMarker() {

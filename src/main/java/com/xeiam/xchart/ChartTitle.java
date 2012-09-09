@@ -24,7 +24,6 @@ import java.awt.font.TextLayout;
 
 import com.xeiam.xchart.interfaces.IHideable;
 
-
 /**
  * Chart Title
  */
@@ -75,21 +74,19 @@ public class ChartTitle implements IHideable {
   @Override
   public void paint(Graphics2D g) {
 
+    FontRenderContext frc = g.getFontRenderContext();
+    TextLayout textLayout = new TextLayout(this.text, this.font, frc);
+    Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+    int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
+    int yOffset = (int) ((isVisible ? (Chart.CHART_PADDING - rectangle.getY()) : 0));
+
+    bounds = new Rectangle(xOffset, yOffset + (isVisible ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (isVisible ? rectangle.getHeight() : 0));
+    // g.setColor(Color.green);
+    // g.draw(bounds);
+
     if (isVisible) {
-
-      FontRenderContext frc = g.getFontRenderContext();
-      TextLayout textLayout = new TextLayout(this.text, this.font, frc);
-      Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-      // System.out.println(rectangle);
-      int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
-      int yOffset = (int) (Chart.CHART_PADDING - rectangle.getY());
-
       g.setColor(foreground);
       textLayout.draw(g, xOffset, yOffset);
-
-      bounds = new Rectangle(xOffset, (int) (yOffset + rectangle.getY()), (int) rectangle.getWidth(), (int) rectangle.getHeight());
-      // g.setColor(Color.green);
-      // g.draw(bounds);
     }
 
   }
