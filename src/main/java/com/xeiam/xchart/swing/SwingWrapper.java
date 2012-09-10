@@ -87,9 +87,7 @@ public class SwingWrapper {
         // Create and set up the window.
         JFrame frame = new JFrame("XChart");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // frame.setSize(new Dimension(charts.get(0).getWidth(), charts.get(0).getHeight()));
         JPanel chartPanel = new XChartJPanel(charts.get(0));
-        // frame.getContentPane().add(chartPanel);
         frame.add(chartPanel);
 
         // Display the window.
@@ -119,7 +117,7 @@ public class SwingWrapper {
         for (Chart chart : charts) {
           if (chart != null) {
             JPanel chartPanel = new XChartJPanel(chart);
-            frame.getContentPane().add(chartPanel);
+            frame.add(chartPanel);
           } else {
             JPanel chartPanel = new JPanel();
             frame.getContentPane().add(chartPanel);

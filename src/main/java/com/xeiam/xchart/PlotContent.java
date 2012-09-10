@@ -93,7 +93,7 @@ public class PlotContent implements IChartPart {
         }
         if (chart.getAxisPair().getXAxis().getAxisType() == AxisType.DATE) {
           x = new BigDecimal(((Date) xItr.next()).getTime());
-          System.out.println(x);
+          // System.out.println(x);
         }
 
         BigDecimal y = new BigDecimal(yItr.next().doubleValue());
