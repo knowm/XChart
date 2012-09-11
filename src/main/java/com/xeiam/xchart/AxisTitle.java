@@ -29,6 +29,8 @@ import com.xeiam.xchart.interfaces.IHideable;
  */
 public class AxisTitle implements IHideable {
 
+  protected final static int AXIS_TITLE_PADDING = 10;
+
   /** the chart */
   private Axis axis;
 
@@ -36,15 +38,13 @@ public class AxisTitle implements IHideable {
   protected String text = ""; // default to ""
 
   /** the visibility state of title */
-  protected boolean isVisible = false; // default to false
+  protected boolean isVisible = false; // default to false, set true if text is set
 
   /** the font */
-  private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 12); // default font
+  protected Font font;
 
   /** the bounds */
   private Rectangle bounds;
-
-  protected final static int AXIS_TITLE_PADDING = 10;
 
   /**
    * Constructor.
@@ -54,6 +54,7 @@ public class AxisTitle implements IHideable {
   public AxisTitle(Axis axis) {
 
     this.axis = axis;
+    font = new Font(Font.SANS_SERIF, Font.BOLD, 12); // default font
   }
 
   protected String getText() {

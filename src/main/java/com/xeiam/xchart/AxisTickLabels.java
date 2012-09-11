@@ -31,7 +31,7 @@ public class AxisTickLabels implements IChartPart {
   private AxisTick axisTick;
 
   /** the font */
-  private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 12); // default font
+  protected Font font;
 
   /** the bounds */
   private Rectangle bounds;
@@ -44,11 +44,7 @@ public class AxisTickLabels implements IChartPart {
   protected AxisTickLabels(AxisTick axisTick) {
 
     this.axisTick = axisTick;
-  }
-
-  public Font getFont() {
-
-    return font;
+    font = new Font(Font.SANS_SERIF, Font.BOLD, 12); // default font
   }
 
   @Override

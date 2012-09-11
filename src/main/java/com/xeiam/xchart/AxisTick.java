@@ -37,7 +37,7 @@ public class AxisTick implements IChartPart, IHideable {
   protected Axis axis;
 
   /** the axisticklabels */
-  private AxisTickLabels axisTickLabels;
+  protected AxisTickLabels axisTickLabels;
 
   /** the axistickmarks */
   private AxisTickMarks axisTickMarks;

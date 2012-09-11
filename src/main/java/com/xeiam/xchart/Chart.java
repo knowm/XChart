@@ -16,6 +16,7 @@
 package com.xeiam.xchart;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
@@ -257,18 +258,18 @@ public class Chart {
 
   public void setAxisTicksVisible(boolean isVisible) {
 
-    this.axisPair.getXAxis().getAxisTick().setVisible(isVisible);
-    this.axisPair.getYAxis().getAxisTick().setVisible(isVisible);
+    this.axisPair.getXAxis().axisTick.setVisible(isVisible);
+    this.axisPair.getYAxis().axisTick.setVisible(isVisible);
   }
 
   public void setXAxisTicksVisible(boolean isVisible) {
 
-    this.axisPair.getXAxis().getAxisTick().setVisible(isVisible);
+    this.axisPair.getXAxis().axisTick.setVisible(isVisible);
   }
 
   public void setYAxisTicksVisible(boolean isVisible) {
 
-    this.axisPair.getYAxis().getAxisTick().setVisible(isVisible);
+    this.axisPair.getYAxis().axisTick.setVisible(isVisible);
   }
 
   public void setChartGridlinesVisible(boolean isVisible) {
@@ -304,5 +305,27 @@ public class Chart {
   public void setChartFontColor(Color color) {
 
     this.fontColor = color;
+  }
+
+  public void setChartTitleFont(Font font) {
+
+    this.chartTitle.font = font;
+  }
+
+  public void setChartLegendFont(Font font) {
+
+    this.chartLegend.font = font;
+  }
+
+  public void setAxisLabelsFont(Font font) {
+
+    this.axisPair.xAxis.axisTitle.font = font;
+    this.axisPair.yAxis.axisTitle.font = font;
+  }
+
+  public void setChartTickLabelsFont(Font font) {
+
+    this.axisPair.xAxis.axisTick.axisTickLabels.font = font;
+    this.axisPair.yAxis.axisTick.axisTickLabels.font = font;
   }
 }

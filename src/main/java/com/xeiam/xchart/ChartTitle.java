@@ -38,7 +38,7 @@ public class ChartTitle implements IHideable {
   protected boolean isVisible = false; // default to false
 
   /** the font */
-  private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 14); // default font
+  protected Font font;
 
   /** the bounds */
   private Rectangle bounds;
@@ -46,9 +46,10 @@ public class ChartTitle implements IHideable {
   /**
    * Constructor
    */
-  public ChartTitle(Chart pChart) {
+  public ChartTitle(Chart chart) {
 
-    this.chart = pChart;
+    this.chart = chart;
+    font = new Font(Font.SANS_SERIF, Font.BOLD, 14); // default font
   }
 
   public void setText(String text) {

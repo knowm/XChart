@@ -55,7 +55,7 @@ public class Plot implements IChartPart {
     bounds = new Rectangle();
 
     // calculate bounds
-    int xOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getX() + chart.getAxisPair().getYAxis().getBounds().getWidth() + (chart.getAxisPair().getYAxis().getAxisTick().isVisible ? (Plot.PLOT_PADDING + 1) : 0));
+    int xOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getX() + chart.getAxisPair().getYAxis().getBounds().getWidth() + (chart.getAxisPair().getYAxis().axisTick.isVisible ? (Plot.PLOT_PADDING + 1) : 0));
     int yOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getY());
     int width = (int) chart.getAxisPair().getXAxis().getBounds().getWidth();
     int height = (int) chart.getAxisPair().getYAxis().getBounds().getHeight();

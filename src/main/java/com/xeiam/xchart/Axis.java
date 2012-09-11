@@ -42,10 +42,10 @@ public class Axis implements IChartPart {
   private AxisType axisType;
 
   /** the axis title */
-  private AxisTitle axisTitle;
+  protected AxisTitle axisTitle;
 
   /** the axis tick */
-  private AxisTick axisTick;
+  protected AxisTick axisTick;
 
   /** the axis direction */
   private Direction direction;
@@ -148,11 +148,6 @@ public class Axis implements IChartPart {
     this.axisTitle = axisTitle;
   }
 
-  public AxisTick getAxisTick() {
-
-    return axisTick;
-  }
-
   public BigDecimal getMin() {
 
     return min;
@@ -181,7 +176,7 @@ public class Axis implements IChartPart {
       // Axis tick labels
       double axisTickLabelsHeight = 0.0;
       if (axisTick.isVisible) {
-        TextLayout textLayout = new TextLayout("0", axisTick.getAxisTickLabels().getFont(), new FontRenderContext(null, true, false));
+        TextLayout textLayout = new TextLayout("0", axisTick.getAxisTickLabels().font, new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         axisTickLabelsHeight = rectangle.getHeight() + AxisTick.AXIS_TICK_PADDING + AxisTickMarks.TICK_LENGTH + Plot.PLOT_PADDING;
       }
@@ -233,7 +228,7 @@ public class Axis implements IChartPart {
       // calculate paint zone
       // |____________________|
 
-      int xOffset = (int) (axisPair.getYAxis().getBounds().getWidth() + (axisPair.getYAxis().getAxisTick().isVisible ? Plot.PLOT_PADDING : 0) + Chart.CHART_PADDING);
+      int xOffset = (int) (axisPair.getYAxis().getBounds().getWidth() + (axisPair.getYAxis().axisTick.isVisible ? Plot.PLOT_PADDING : 0) + Chart.CHART_PADDING);
       int yOffset = (int) (axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight());
       int width = (int) (axisPair.chart.getWidth() - axisPair.getYAxis().getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (axisPair.chart.getLegend().isVisible ? 3 : 2) * Chart.CHART_PADDING);
       int height = this.getSizeHint();

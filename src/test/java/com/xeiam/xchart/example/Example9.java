@@ -16,6 +16,7 @@
 package com.xeiam.xchart.example;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,6 +66,11 @@ public class Example9 {
     chart.setChartLegendBackgroundColor(Color.PINK);
     chart.setChartBordersColor(Color.GREEN);
     chart.setChartFontColor(Color.MAGENTA);
+    chart.setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
+    chart.setChartLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
+    chart.setAxisLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
+    chart.setChartTickLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
+    chart.setChartTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
 
     Series series = chart.addDateSeries("Fake Data", xData, yData);
     series.setLineColor(SeriesColor.BLUE);

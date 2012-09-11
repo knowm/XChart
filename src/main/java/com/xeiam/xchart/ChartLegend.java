@@ -41,7 +41,7 @@ public class ChartLegend implements IHideable {
   protected boolean isVisible = true; // default to true
 
   /** the font */
-  private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 11); // default font
+  protected Font font;
 
   /** the background color */
   private Color backgroundColor;
@@ -56,6 +56,7 @@ public class ChartLegend implements IHideable {
 
     this.chart = chart;
     backgroundColor = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
+    font = new Font(Font.SANS_SERIF, Font.PLAIN, 11); // default font
   }
 
   @Override

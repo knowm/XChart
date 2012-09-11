@@ -81,7 +81,7 @@ public class PlotSurface implements IChartPart, IHideable {
     // paint grid lines
     if (isVisible) {
       // horizontal
-      List<Integer> yAxisTickLocations = chart.getAxisPair().getYAxis().getAxisTick().getTickLocations();
+      List<Integer> yAxisTickLocations = chart.getAxisPair().getYAxis().axisTick.getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         int tickLocation = yAxisTickLocations.get(i);
@@ -93,7 +93,7 @@ public class PlotSurface implements IChartPart, IHideable {
       }
 
       // vertical
-      List<Integer> xAxisTickLocations = chart.getAxisPair().getXAxis().getAxisTick().getTickLocations();
+      List<Integer> xAxisTickLocations = chart.getAxisPair().getXAxis().axisTick.getTickLocations();
       for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
         int tickLocation = xAxisTickLocations.get(i);
