@@ -32,6 +32,8 @@ import com.xeiam.xchart.series.markers.Marker;
  */
 public class ChartLegend implements IHideable {
 
+  private final int LEGEND_PADDING = 10;
+
   /** the chart */
   private Chart chart;
 
@@ -41,16 +43,8 @@ public class ChartLegend implements IHideable {
   /** the font */
   private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 11); // default font
 
-  /** the border color */
-  private Color border = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default border color
-
   /** the background color */
-  private Color background = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
-
-  /** the foreground color */
-  private Color foreground = ChartColor.getAWTColor(ChartColor.BLACK); // default foreground color
-
-  private final int LEGEND_PADDING = 10;
+  private Color backgroundColor;
 
   /** the bounds */
   private Rectangle bounds;
@@ -58,9 +52,10 @@ public class ChartLegend implements IHideable {
   /**
    * Constructor
    */
-  public ChartLegend(Chart pChart) {
+  public ChartLegend(Chart chart) {
 
-    this.chart = pChart;
+    this.chart = chart;
+    backgroundColor = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
   }
 
   @Override
@@ -109,9 +104,9 @@ public class ChartLegend implements IHideable {
       int xOffset = chart.getWidth() - legendBoxWidth - Chart.CHART_PADDING;
       int yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getTitle().getBounds().getY() + chart.getTitle().getBounds().getHeight());
 
-      g.setColor(border);
+      g.setColor(chart.bordersColor);
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
-      g.setColor(background);
+      g.setColor(backgroundColor);
       g.fillRect(xOffset + 1, yOffset + 1, legendBoxWidth - 1, legendBoxHeight - 1);
 
       // Draw legend content inside legend box
@@ -132,7 +127,7 @@ public class ChartLegend implements IHideable {
         }
 
         // paint series name
-        g.setColor(foreground);
+        g.setColor(chart.fontColor);
         TextLayout layout = new TextLayout(series.getName(), font, new FontRenderContext(null, true, false));
         layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + LEGEND_PADDING), (starty + Marker.SIZE));
         starty = starty + legendTextContentMaxHeight + LEGEND_PADDING;
@@ -150,6 +145,14 @@ public class ChartLegend implements IHideable {
   public Rectangle getBounds() {
 
     return bounds;
+  }
+
+  /**
+   * @param backgroundColor the backgroundColor to set
+   */
+  public void setBackgroundColor(Color backgroundColor) {
+
+    this.backgroundColor = backgroundColor;
   }
 
 }

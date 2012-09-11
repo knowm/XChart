@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -29,16 +28,10 @@ import com.xeiam.xchart.interfaces.IChartPart;
  */
 public class AxisTickLabels implements IChartPart {
 
-  /** the axis */
-  private Axis axis;
-
   private AxisTick axisTick;
 
   /** the font */
   private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 12); // default font
-
-  /** the foreground color */
-  private Color foreground = ChartColor.getAWTColor(ChartColor.DARK_GREY);// default foreground color
 
   /** the bounds */
   private Rectangle bounds;
@@ -48,9 +41,8 @@ public class AxisTickLabels implements IChartPart {
    * 
    * @param axis the axis
    */
-  protected AxisTickLabels(Axis axis, AxisTick axisTick) {
+  protected AxisTickLabels(AxisTick axisTick) {
 
-    this.axis = axis;
     this.axisTick = axisTick;
   }
 
@@ -70,12 +62,12 @@ public class AxisTickLabels implements IChartPart {
 
     bounds = new Rectangle();
 
-    g.setColor(foreground);
+    g.setColor(axisTick.axis.axisPair.chart.fontColor);
 
-    if (axis.getDirection() == Axis.Direction.Y) { // Y-Axis
+    if (axisTick.axis.getDirection() == Axis.Direction.Y) { // Y-Axis
 
-      int xOffset = (int) (axis.getAxisTitle().getBounds().getX() + axis.getAxisTitle().getBounds().getWidth());
-      int yOffset = (int) (axis.getPaintZone().getY());
+      int xOffset = (int) (axisTick.axis.getAxisTitle().getBounds().getX() + axisTick.axis.getAxisTitle().getBounds().getWidth());
+      int yOffset = (int) (axisTick.axis.getPaintZone().getY());
       int maxTickLabelWidth = 0;
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
@@ -86,7 +78,7 @@ public class AxisTickLabels implements IChartPart {
         // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
         TextLayout layout = new TextLayout(tickLabel, font, frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
-        layout.draw(g, xOffset, (int) (yOffset + axis.getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
+        layout.draw(g, xOffset, (int) (yOffset + axisTick.axis.getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
         if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
           maxTickLabelWidth = (int) tickLabelBounds.getWidth();
@@ -94,14 +86,14 @@ public class AxisTickLabels implements IChartPart {
       }
 
       // bounds
-      bounds = new Rectangle(xOffset, yOffset, maxTickLabelWidth, (int) axis.getPaintZone().getHeight());
+      bounds = new Rectangle(xOffset, yOffset, maxTickLabelWidth, (int) axisTick.axis.getPaintZone().getHeight());
       // g.setColor(Color.blue);
       // g.draw(bounds);
 
     } else { // X-Axis
 
-      int xOffset = (int) (axis.getPaintZone().getX());
-      int yOffset = (int) (axis.getAxisTitle().getBounds().getY());
+      int xOffset = (int) (axisTick.axis.getPaintZone().getX());
+      int yOffset = (int) (axisTick.axis.getAxisTitle().getBounds().getY());
       int maxTickLabelHeight = 0;
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
@@ -119,7 +111,7 @@ public class AxisTickLabels implements IChartPart {
       }
 
       // bounds
-      bounds = new Rectangle(xOffset, yOffset - maxTickLabelHeight, (int) axis.getPaintZone().getWidth(), maxTickLabelHeight);
+      bounds = new Rectangle(xOffset, yOffset - maxTickLabelHeight, (int) axisTick.axis.getPaintZone().getWidth(), maxTickLabelHeight);
       // g.setColor(Color.blue);
       // g.draw(bounds);
 

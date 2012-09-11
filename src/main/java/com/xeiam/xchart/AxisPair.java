@@ -34,7 +34,7 @@ import com.xeiam.xchart.series.Series;
 public class AxisPair implements IChartPart {
 
   /** the chart */
-  private Chart chart;
+  protected Chart chart;
 
   private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
 
@@ -53,8 +53,8 @@ public class AxisPair implements IChartPart {
     this.chart = chart;
 
     // add axes
-    xAxis = new Axis(chart, this, Axis.Direction.X);
-    yAxis = new Axis(chart, this, Axis.Direction.Y);
+    xAxis = new Axis(this, Axis.Direction.X);
+    yAxis = new Axis(this, Axis.Direction.Y);
   }
 
   /**

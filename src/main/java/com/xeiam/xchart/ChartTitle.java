@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -40,9 +39,6 @@ public class ChartTitle implements IHideable {
 
   /** the font */
   private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 14); // default font
-
-  /** the foreground color */
-  private Color foreground = ChartColor.getAWTColor(ChartColor.DARK_GREY); // default foreground color
 
   /** the bounds */
   private Rectangle bounds;
@@ -88,7 +84,7 @@ public class ChartTitle implements IHideable {
       // g.setColor(Color.green);
       // g.draw(bounds);
 
-      g.setColor(foreground);
+      g.setColor(chart.fontColor);
       textLayout.draw(g, xOffset, yOffset);
     }
 

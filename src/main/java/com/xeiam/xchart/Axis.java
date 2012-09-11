@@ -35,14 +35,11 @@ public class Axis implements IChartPart {
     NUMBER, DATE;
   }
 
-  /** the chart */
-  private Chart chart;
+  /** the axisPair */
+  protected AxisPair axisPair;
 
   /** the seriesType */
   private AxisType axisType;
-
-  /** the axisPair */
-  private AxisPair axisPair;
 
   /** the axis title */
   private AxisTitle axisTitle;
@@ -79,9 +76,8 @@ public class Axis implements IChartPart {
    * @param direction the axis direction (X or Y)
    * @param chart the chart
    */
-  public Axis(Chart chart, AxisPair axisPair, Direction direction) {
+  public Axis(AxisPair axisPair, Direction direction) {
 
-    this.chart = chart;
     this.axisPair = axisPair;
     this.direction = direction;
 
@@ -214,7 +210,7 @@ public class Axis implements IChartPart {
       int xOffset = Chart.CHART_PADDING;
       int yOffset = (int) (axisPair.getChartTitleBounds().getY() + axisPair.getChartTitleBounds().getHeight() + Chart.CHART_PADDING);
       int width = 80; // arbitrary, final width depends on Axis tick labels
-      int height = chart.getHeight() - yOffset - axisPair.getXAxis().getSizeHint() - Chart.CHART_PADDING;
+      int height = axisPair.chart.getHeight() - yOffset - axisPair.getXAxis().getSizeHint() - Chart.CHART_PADDING;
       Rectangle yAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -239,7 +235,7 @@ public class Axis implements IChartPart {
 
       int xOffset = (int) (axisPair.getYAxis().getBounds().getWidth() + (axisPair.getYAxis().getAxisTick().isVisible ? Plot.PLOT_PADDING : 0) + Chart.CHART_PADDING);
       int yOffset = (int) (axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight());
-      int width = (int) (chart.getWidth() - axisPair.getYAxis().getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (chart.getLegend().isVisible ? 3 : 2) * Chart.CHART_PADDING);
+      int width = (int) (axisPair.chart.getWidth() - axisPair.getYAxis().getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (axisPair.chart.getLegend().isVisible ? 3 : 2) * Chart.CHART_PADDING);
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = xAxisRectangle;

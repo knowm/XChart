@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
@@ -33,6 +34,9 @@ public class Chart {
 
   private int width;
   private int height;
+  private Color backgroundColor;
+  protected Color bordersColor;
+  protected Color fontColor;
 
   protected final static int CHART_PADDING = 10;
 
@@ -51,6 +55,9 @@ public class Chart {
 
     this.width = width;
     this.height = height;
+    backgroundColor = ChartColor.getAWTColor(ChartColor.GREY);
+    bordersColor = ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    fontColor = ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
   /**
@@ -75,7 +82,7 @@ public class Chart {
     }
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-    g.setColor(ChartColor.getAWTColor(ChartColor.GREY));
+    g.setColor(backgroundColor);
     g.fillRect(0, 0, width, height);
 
     chartTitle.paint(g);
@@ -267,5 +274,35 @@ public class Chart {
   public void setChartGridlinesVisible(boolean isVisible) {
 
     this.plot.getPlotSurface().setVisible(isVisible);
+  }
+
+  public void setChartBackgroundColor(Color color) {
+
+    this.backgroundColor = color;
+  }
+
+  public void setChartForegroundColor(Color color) {
+
+    this.plot.getPlotSurface().setForegroundColor(color);
+  }
+
+  public void setChartGridLinesColor(Color color) {
+
+    this.plot.getPlotSurface().setGridLinesColor(color);
+  }
+
+  public void setChartLegendBackgroundColor(Color color) {
+
+    this.chartLegend.setBackgroundColor(color);
+  }
+
+  public void setChartBordersColor(Color color) {
+
+    this.bordersColor = color;
+  }
+
+  public void setChartFontColor(Color color) {
+
+    this.fontColor = color;
   }
 }

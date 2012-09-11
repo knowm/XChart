@@ -25,9 +25,6 @@ public enum ChartColor {
   /** BLACK */
   BLACK(new Color(0, 0, 0)),
 
-  /** WHITE */
-  WHITE(new Color(255, 255, 255)),
-
   /** DARK_GREY */
   DARK_GREY(new Color(22, 22, 22)),
 
@@ -35,7 +32,10 @@ public enum ChartColor {
   GREY(new Color(200, 200, 200)),
 
   /** LIGHT_GREY */
-  LIGHT_GREY(new Color(252, 252, 252));
+  LIGHT_GREY(new Color(252, 252, 252)),
+
+  /** WHITE */
+  WHITE(new Color(255, 255, 255));
 
   Color color;
 
@@ -45,7 +45,7 @@ public enum ChartColor {
    * @param chartColor
    * @return
    */
-  protected static Color getAWTColor(ChartColor chartColor) {
+  public static Color getAWTColor(ChartColor chartColor) {
 
     return chartColor.color;
   }

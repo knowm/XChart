@@ -33,11 +33,11 @@ public class PlotSurface implements IChartPart, IHideable {
 
   private Plot plot;
 
-  /** the foreground color */
-  private Color foreground = ChartColor.getAWTColor(ChartColor.GREY); // default foreground color
+  /** the gridLines Color */
+  private Color gridLinesColor;
 
   /** the background color */
-  private Color background = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
+  private Color foregroundColor;
 
   /** the line style */
   private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
@@ -55,6 +55,8 @@ public class PlotSurface implements IChartPart, IHideable {
 
     this.chart = chart;
     this.plot = plot;
+    gridLinesColor = ChartColor.getAWTColor(ChartColor.GREY); // default gridLines color
+    foregroundColor = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default foreground Color color
   }
 
   @Override
@@ -68,12 +70,12 @@ public class PlotSurface implements IChartPart, IHideable {
 
     Rectangle bounds = plot.getBounds();
 
-    // paint background
+    // paint foreground
     Rectangle backgroundRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(background);
+    g.setColor(foregroundColor);
     g.fill(backgroundRectangle);
     Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(ChartColor.getAWTColor(ChartColor.DARK_GREY));
+    g.setColor(chart.bordersColor);
     g.draw(borderRectangle);
 
     // paint grid lines
@@ -84,7 +86,7 @@ public class PlotSurface implements IChartPart, IHideable {
 
         int tickLocation = yAxisTickLocations.get(i);
 
-        g.setColor(foreground);
+        g.setColor(gridLinesColor);
         g.setStroke(stroke);
         // System.out.println("bounds.getY()= " + bounds.getY());
         g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2), (int) (bounds.getY() + bounds.getHeight() - tickLocation));
@@ -96,7 +98,7 @@ public class PlotSurface implements IChartPart, IHideable {
 
         int tickLocation = xAxisTickLocations.get(i);
 
-        g.setColor(foreground);
+        g.setColor(gridLinesColor);
         g.setStroke(stroke);
 
         g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
@@ -108,6 +110,22 @@ public class PlotSurface implements IChartPart, IHideable {
   public void setVisible(boolean isVisible) {
 
     this.isVisible = isVisible;
-
   }
+
+  /**
+   * @param gridLinesColor the gridLinesColor to set
+   */
+  public void setGridLinesColor(Color gridLinesColor) {
+
+    this.gridLinesColor = gridLinesColor;
+  }
+
+  /**
+   * @param foregroundColor the foregroundColor to set
+   */
+  public void setForegroundColor(Color foregroundColor) {
+
+    this.foregroundColor = foregroundColor;
+  }
+
 }

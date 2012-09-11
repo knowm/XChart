@@ -142,7 +142,7 @@ public class PlotContent implements IChartPart {
 
         // paint errorbar
         if (errorBars != null) {
-          g.setColor(ChartColor.getAWTColor(ChartColor.DARK_GREY));
+          g.setColor(plot.chart.bordersColor);
           g.setStroke(SeriesLineStyle.getBasicStroke(SeriesLineStyle.SOLID));
           int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
           int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));

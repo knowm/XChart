@@ -34,7 +34,7 @@ import com.xeiam.xchart.interfaces.IHideable;
 public class AxisTick implements IChartPart, IHideable {
 
   /** the axis */
-  private Axis axis;
+  protected Axis axis;
 
   /** the axisticklabels */
   private AxisTickLabels axisTickLabels;
@@ -80,8 +80,8 @@ public class AxisTick implements IChartPart, IHideable {
   protected AxisTick(Axis axis) {
 
     this.axis = axis;
-    axisTickLabels = new AxisTickLabels(axis, this);
-    axisTickMarks = new AxisTickMarks(axis, this);
+    axisTickLabels = new AxisTickLabels(this);
+    axisTickMarks = new AxisTickMarks(this);
 
   }
 

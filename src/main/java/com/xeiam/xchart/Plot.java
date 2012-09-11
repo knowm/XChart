@@ -25,7 +25,7 @@ import com.xeiam.xchart.interfaces.IChartPart;
  */
 public class Plot implements IChartPart {
 
-  private Chart chart;
+  protected Chart chart;
 
   private PlotSurface plotSurface;
 

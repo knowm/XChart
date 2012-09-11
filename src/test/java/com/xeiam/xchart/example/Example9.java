@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.example;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,10 +24,15 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.ChartColor;
+import com.xeiam.xchart.series.Series;
+import com.xeiam.xchart.series.SeriesColor;
+import com.xeiam.xchart.series.SeriesLineStyle;
+import com.xeiam.xchart.series.SeriesMarker;
 import com.xeiam.xchart.swing.SwingWrapper;
 
 /**
- * Create a chart with a Date x-axis
+ * Create a chart with a Date x-axis and extensive chart customization
  * 
  * @author timmolter
  */
@@ -52,9 +58,19 @@ public class Example9 {
     chart.setChartTitle("Sample Chart with Date X-Axis");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.setChartGridlinesVisible(false);
     chart.setXAxisTicksVisible(false);
-    chart.addDateSeries("Fake Data", xData, yData);
+    chart.setChartForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));
+    chart.setChartGridLinesColor(new Color(255, 255, 255));
+    chart.setChartBackgroundColor(Color.WHITE);
+    chart.setChartLegendBackgroundColor(Color.PINK);
+    chart.setChartBordersColor(Color.GREEN);
+    chart.setChartFontColor(Color.MAGENTA);
+
+    Series series = chart.addDateSeries("Fake Data", xData, yData);
+    series.setLineColor(SeriesColor.BLUE);
+    series.setMarkerColor(Color.ORANGE);
+    series.setMarker(SeriesMarker.CIRCLE);
+    series.setLineStyle(SeriesLineStyle.SOLID);
 
     new SwingWrapper(chart).displayChart();
   }
