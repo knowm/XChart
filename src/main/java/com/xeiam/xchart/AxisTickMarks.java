@@ -27,13 +27,14 @@ import com.xeiam.xchart.interfaces.IChartPart;
  */
 public class AxisTickMarks implements IChartPart {
 
+  /** the tick length */
+  public static final int TICK_LENGTH = 3;
+
+  /** parent */
   private AxisTick axisTick;
 
   /** the line style */
   private Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
-
-  /** the tick length */
-  public static final int TICK_LENGTH = 3;
 
   /** the bounds */
   private Rectangle bounds;
@@ -44,7 +45,7 @@ public class AxisTickMarks implements IChartPart {
    * @param axis
    * @param axisTick
    */
-  public AxisTickMarks(AxisTick axisTick) {
+  protected AxisTickMarks(AxisTick axisTick) {
 
     this.axisTick = axisTick;
   }
@@ -62,15 +63,15 @@ public class AxisTickMarks implements IChartPart {
 
     g.setColor(axisTick.axis.axisPair.chart.bordersColor);
 
-    if (axisTick.axis.getDirection() == Axis.Direction.Y) { // Y-Axis
+    if (axisTick.axis.direction == Axis.Direction.Y) { // Y-Axis
 
-      int xOffset = (int) (axisTick.getAxisTickLabels().getBounds().getX() + axisTick.getAxisTickLabels().getBounds().getWidth() + AxisTick.AXIS_TICK_PADDING);
+      int xOffset = (int) (axisTick.axisTickLabels.getBounds().getX() + axisTick.axisTickLabels.getBounds().getWidth() + AxisTick.AXIS_TICK_PADDING);
       int yOffset = (int) (axisTick.axis.getPaintZone().getY());
 
       // tick marks
-      for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+      for (int i = 0; i < axisTick.tickLabels.size(); i++) {
 
-        int tickLocation = axisTick.getTickLocations().get(i);
+        int tickLocation = axisTick.tickLocations.get(i);
 
         g.setColor(axisTick.axis.axisPair.chart.bordersColor);
         g.setStroke(stroke);
@@ -89,12 +90,12 @@ public class AxisTickMarks implements IChartPart {
     } else { // X-Axis
 
       int xOffset = (int) (axisTick.axis.getPaintZone().getX());
-      int yOffset = (int) (axisTick.getAxisTickLabels().getBounds().getY() - AxisTick.AXIS_TICK_PADDING);
+      int yOffset = (int) (axisTick.axisTickLabels.getBounds().getY() - AxisTick.AXIS_TICK_PADDING);
 
       // tick marks
-      for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+      for (int i = 0; i < axisTick.tickLabels.size(); i++) {
 
-        int tickLocation = axisTick.getTickLocations().get(i);
+        int tickLocation = axisTick.tickLocations.get(i);
 
         g.setColor(axisTick.axis.axisPair.chart.bordersColor);
         g.setStroke(stroke);

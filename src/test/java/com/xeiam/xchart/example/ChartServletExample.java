@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
-import com.xeiam.xchart.io.ServletEncoder;
+import com.xeiam.xchart.ServletEncoder;
 
 /**
  * Generates, stores, and serves charts

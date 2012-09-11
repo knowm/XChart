@@ -13,34 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.io;
+package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-
-import com.xeiam.xchart.Chart;
 
 /**
  * @author timmolter
  */
-public class ServletEncoder {
+public class BitmapEncoder {
 
   /**
-   * Streams a chart as a PNG file
+   * Saves a chart as a PNG file
    * 
-   * @param out
    * @param chart
+   * @param pFileName
    */
-  public static void streamPNG(ServletOutputStream out, Chart chart) throws Exception {
+  public static void savePNG(Chart chart, String pFileName) throws Exception {
 
-    BufferedImage lBufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
+    BufferedImage lBufferedImage = new BufferedImage(chart.width, chart.height, BufferedImage.TYPE_INT_RGB);
     Graphics2D lGraphics2D = lBufferedImage.createGraphics();
     chart.paint(lGraphics2D);
 
+    // Save chart as PNG
+    OutputStream out = new FileOutputStream(pFileName);
     ImageIO.write(lBufferedImage, "png", out);
     out.close();
   }
+
 }

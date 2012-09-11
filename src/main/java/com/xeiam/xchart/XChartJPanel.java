@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.swing;
+package com.xeiam.xchart;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
-
-import com.xeiam.xchart.Chart;
 
 /**
  * @author timmolter
@@ -48,6 +46,6 @@ public class XChartJPanel extends JPanel {
   @Override
   public Dimension getPreferredSize() {
 
-    return new Dimension(chart.getWidth(), chart.getHeight());
+    return new Dimension(chart.width, chart.height);
   }
 }

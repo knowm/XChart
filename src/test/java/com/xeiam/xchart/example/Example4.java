@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
-import com.xeiam.xchart.swing.SwingWrapper;
+import com.xeiam.xchart.SwingWrapper;
 
 /**
  * Create a chart matrix

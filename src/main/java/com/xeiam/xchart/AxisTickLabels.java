@@ -28,6 +28,7 @@ import com.xeiam.xchart.interfaces.IChartPart;
  */
 public class AxisTickLabels implements IChartPart {
 
+  /** parent */
   private AxisTick axisTick;
 
   /** the font */
@@ -60,15 +61,15 @@ public class AxisTickLabels implements IChartPart {
 
     g.setColor(axisTick.axis.axisPair.chart.fontColor);
 
-    if (axisTick.axis.getDirection() == Axis.Direction.Y) { // Y-Axis
+    if (axisTick.axis.direction == Axis.Direction.Y) { // Y-Axis
 
       int xOffset = (int) (axisTick.axis.getAxisTitle().getBounds().getX() + axisTick.axis.getAxisTitle().getBounds().getWidth());
       int yOffset = (int) (axisTick.axis.getPaintZone().getY());
       int maxTickLabelWidth = 0;
-      for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+      for (int i = 0; i < axisTick.tickLabels.size(); i++) {
 
-        String tickLabel = axisTick.getTickLabels().get(i);
-        int tickLocation = axisTick.getTickLocations().get(i);
+        String tickLabel = axisTick.tickLabels.get(i);
+        int tickLocation = axisTick.tickLocations.get(i);
 
         FontRenderContext frc = g.getFontRenderContext();
         // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
@@ -91,10 +92,10 @@ public class AxisTickLabels implements IChartPart {
       int xOffset = (int) (axisTick.axis.getPaintZone().getX());
       int yOffset = (int) (axisTick.axis.getAxisTitle().getBounds().getY());
       int maxTickLabelHeight = 0;
-      for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+      for (int i = 0; i < axisTick.tickLabels.size(); i++) {
 
-        String tickLabel = axisTick.getTickLabels().get(i);
-        int tickLocation = axisTick.getTickLocations().get(i);
+        String tickLabel = axisTick.tickLabels.get(i);
+        int tickLocation = axisTick.tickLocations.get(i);
 
         FontRenderContext frc = g.getFontRenderContext();
         TextLayout layout = new TextLayout(tickLabel, font, frc);

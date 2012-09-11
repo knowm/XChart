@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.swing.SwingWrapper;
+import com.xeiam.xchart.SwingWrapper;
 
 /**
  * Creates a simple charts using Longs as inputs

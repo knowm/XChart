@@ -19,11 +19,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.SeriesColor;
 import com.xeiam.xchart.series.SeriesLineStyle;
 import com.xeiam.xchart.series.SeriesMarker;
-import com.xeiam.xchart.swing.SwingWrapper;
 
 /**
  * Embed a Chart in a simple Swing application

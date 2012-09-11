@@ -31,7 +31,7 @@ public class AxisTitle implements IHideable {
 
   protected final static int AXIS_TITLE_PADDING = 10;
 
-  /** the chart */
+  /** parent */
   private Axis axis;
 
   /** the title text */
@@ -51,7 +51,7 @@ public class AxisTitle implements IHideable {
    * 
    * @param axis the axis
    */
-  public AxisTitle(Axis axis) {
+  protected AxisTitle(Axis axis) {
 
     this.axis = axis;
     font = new Font(Font.SANS_SERIF, Font.BOLD, 12); // default font
@@ -96,7 +96,7 @@ public class AxisTitle implements IHideable {
 
     g.setColor(axis.axisPair.chart.fontColor);
 
-    if (axis.getDirection() == Axis.Direction.Y) {
+    if (axis.direction == Axis.Direction.Y) {
       if (isVisible) {
 
         FontRenderContext frc = g.getFontRenderContext();

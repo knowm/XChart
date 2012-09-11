@@ -28,8 +28,8 @@ import com.xeiam.xchart.interfaces.IHideable;
  */
 public class ChartTitle implements IHideable {
 
-  /** the chart */
-  protected Chart chart;
+  /** parent */
+  private Chart chart;
 
   /** the title text */
   protected String text = ""; // default to ""
@@ -52,7 +52,7 @@ public class ChartTitle implements IHideable {
     font = new Font(Font.SANS_SERIF, Font.BOLD, 14); // default font
   }
 
-  public void setText(String text) {
+  protected void setText(String text) {
 
     if (text.trim().equalsIgnoreCase("")) {
       this.isVisible = false;
@@ -78,7 +78,7 @@ public class ChartTitle implements IHideable {
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout textLayout = new TextLayout(text, font, frc);
       Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-      int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
+      int xOffset = (int) ((chart.width - rectangle.getWidth()) / 2.0);
       int yOffset = (int) ((isVisible ? (Chart.CHART_PADDING - rectangle.getY()) : 0));
 
       bounds = new Rectangle(xOffset, yOffset + (isVisible ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (isVisible ? rectangle.getHeight() : 0));

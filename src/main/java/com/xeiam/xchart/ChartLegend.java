@@ -34,7 +34,7 @@ public class ChartLegend implements IHideable {
 
   private final int LEGEND_PADDING = 10;
 
-  /** the chart */
+  /** parent */
   private Chart chart;
 
   /** the visibility state of legend */
@@ -44,7 +44,7 @@ public class ChartLegend implements IHideable {
   protected Font font;
 
   /** the background color */
-  private Color backgroundColor;
+  protected Color backgroundColor;
 
   /** the bounds */
   private Rectangle bounds;
@@ -72,7 +72,7 @@ public class ChartLegend implements IHideable {
 
     if (isVisible) {
 
-      Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
+      Map<Integer, Series> seriesMap = chart.axisPair.seriesMap;
 
       // determine legend text content max width
       int legendTextContentMaxWidth = 0;
@@ -102,8 +102,8 @@ public class ChartLegend implements IHideable {
       // Draw Legend Box
       int legendBoxWidth = legendContentWidth + 2 * LEGEND_PADDING;
       int legendBoxHeight = legendContentHeight + 2 * LEGEND_PADDING;
-      int xOffset = chart.getWidth() - legendBoxWidth - Chart.CHART_PADDING;
-      int yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getTitle().getBounds().getY() + chart.getTitle().getBounds().getHeight());
+      int xOffset = chart.width - legendBoxWidth - Chart.CHART_PADDING;
+      int yOffset = (int) ((chart.height - legendBoxHeight) / 2.0 + chart.chartTitle.getBounds().getY() + chart.chartTitle.getBounds().getHeight());
 
       g.setColor(chart.bordersColor);
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
@@ -146,14 +146,6 @@ public class ChartLegend implements IHideable {
   public Rectangle getBounds() {
 
     return bounds;
-  }
-
-  /**
-   * @param backgroundColor the backgroundColor to set
-   */
-  public void setBackgroundColor(Color backgroundColor) {
-
-    this.backgroundColor = backgroundColor;
   }
 
 }

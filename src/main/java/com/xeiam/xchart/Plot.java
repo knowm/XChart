@@ -25,22 +25,23 @@ import com.xeiam.xchart.interfaces.IChartPart;
  */
 public class Plot implements IChartPart {
 
+  /** parent */
   protected Chart chart;
 
-  private PlotSurface plotSurface;
+  protected PlotSurface plotSurface;
 
-  private PlotContent plotContent;
+  protected PlotContent plotContent;
 
   public static final int PLOT_PADDING = 3;
 
   /** the bounds */
   private Rectangle bounds;
 
-  public Plot(Chart chart) {
+  protected Plot(Chart chart) {
 
     this.chart = chart;
-    this.plotSurface = new PlotSurface(chart, this);
-    this.plotContent = new PlotContent(chart, this);
+    this.plotSurface = new PlotSurface(this);
+    this.plotContent = new PlotContent(this);
   }
 
   @Override
@@ -55,10 +56,10 @@ public class Plot implements IChartPart {
     bounds = new Rectangle();
 
     // calculate bounds
-    int xOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getX() + chart.getAxisPair().getYAxis().getBounds().getWidth() + (chart.getAxisPair().getYAxis().axisTick.isVisible ? (Plot.PLOT_PADDING + 1) : 0));
-    int yOffset = (int) (chart.getAxisPair().getYAxis().getBounds().getY());
-    int width = (int) chart.getAxisPair().getXAxis().getBounds().getWidth();
-    int height = (int) chart.getAxisPair().getYAxis().getBounds().getHeight();
+    int xOffset = (int) (chart.axisPair.yAxis.getBounds().getX() + chart.axisPair.yAxis.getBounds().getWidth() + (chart.axisPair.yAxis.axisTick.isVisible ? (Plot.PLOT_PADDING + 1) : 0));
+    int yOffset = (int) (chart.axisPair.yAxis.getBounds().getY());
+    int width = (int) chart.axisPair.xAxis.getBounds().getWidth();
+    int height = (int) chart.axisPair.yAxis.getBounds().getHeight();
     bounds = new Rectangle(xOffset, yOffset, width, height);
     // g.setColor(Color.green);
     // g.draw(bounds);
@@ -66,14 +67,6 @@ public class Plot implements IChartPart {
     plotSurface.paint(g);
     plotContent.paint(g);
 
-  }
-
-  /**
-   * @return the plotSurface
-   */
-  public PlotSurface getPlotSurface() {
-
-    return plotSurface;
   }
 
 }

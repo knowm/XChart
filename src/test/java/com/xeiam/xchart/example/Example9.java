@@ -26,11 +26,11 @@ import java.util.Date;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartColor;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.SeriesColor;
 import com.xeiam.xchart.series.SeriesLineStyle;
 import com.xeiam.xchart.series.SeriesMarker;
-import com.xeiam.xchart.swing.SwingWrapper;
 
 /**
  * Create a chart with a Date x-axis and extensive chart customization

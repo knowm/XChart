@@ -16,7 +16,7 @@
 package com.xeiam.xchart.example;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.swing.SwingWrapper;
+import com.xeiam.xchart.SwingWrapper;
 
 /**
  * Plot vertical and horizontal lines

@@ -35,11 +35,11 @@ public class Axis implements IChartPart {
     NUMBER, DATE;
   }
 
-  /** the axisPair */
+  /** parent */
   protected AxisPair axisPair;
 
-  /** the seriesType */
-  private AxisType axisType;
+  /** the axisType */
+  protected AxisType axisType;
 
   /** the axis title */
   protected AxisTitle axisTitle;
@@ -48,11 +48,11 @@ public class Axis implements IChartPart {
   protected AxisTick axisTick;
 
   /** the axis direction */
-  private Direction direction;
+  protected Direction direction;
 
-  private BigDecimal min = null;
+  protected BigDecimal min = null;
 
-  private BigDecimal max = null;
+  protected BigDecimal max = null;
 
   /** the bounds */
   private Rectangle bounds;
@@ -61,7 +61,7 @@ public class Axis implements IChartPart {
   private Rectangle paintZone;
 
   /** An axis direction */
-  public enum Direction {
+  protected enum Direction {
 
     /** the constant to represent X axis */
     X,
@@ -76,7 +76,7 @@ public class Axis implements IChartPart {
    * @param direction the axis direction (X or Y)
    * @param chart the chart
    */
-  public Axis(AxisPair axisPair, Direction direction) {
+  protected Axis(AxisPair axisPair, Direction direction) {
 
     this.axisPair = axisPair;
     this.direction = direction;
@@ -89,7 +89,7 @@ public class Axis implements IChartPart {
    * @param min
    * @param max
    */
-  public void addMinMax(BigDecimal min, BigDecimal max) {
+  protected void addMinMax(BigDecimal min, BigDecimal max) {
 
     // System.out.println(min);
     // System.out.println(max);
@@ -104,22 +104,12 @@ public class Axis implements IChartPart {
     // System.out.println(this.max);
   }
 
-  public void setAxisType(AxisType axisType) {
+  protected void setAxisType(AxisType axisType) {
 
     if (this.axisType != null && this.axisType != axisType) {
       throw new IllegalArgumentException("Date and Number Axes cannot be mixed on the same chart!! ");
     }
     this.axisType = axisType;
-  }
-
-  public AxisType getAxisType() {
-
-    return axisType;
-  }
-
-  public Direction getDirection() {
-
-    return direction;
   }
 
   @Override
@@ -128,7 +118,7 @@ public class Axis implements IChartPart {
     return bounds;
   }
 
-  public Rectangle getPaintZone() {
+  protected Rectangle getPaintZone() {
 
     return paintZone;
   }
@@ -138,30 +128,20 @@ public class Axis implements IChartPart {
     return axisTitle;
   }
 
-  public void setAxisTitle(String title) {
+  protected void setAxisTitle(String title) {
 
     this.axisTitle.setText(title);
   }
 
-  public void setAxisTitle(AxisTitle axisTitle) {
+  protected void setAxisTitle(AxisTitle axisTitle) {
 
     this.axisTitle = axisTitle;
-  }
-
-  public BigDecimal getMin() {
-
-    return min;
-  }
-
-  public BigDecimal getMax() {
-
-    return max;
   }
 
   /**
    * @return
    */
-  public int getSizeHint() {
+  protected int getSizeHint() {
 
     if (direction == Direction.X) { // X-Axis
 
@@ -176,7 +156,7 @@ public class Axis implements IChartPart {
       // Axis tick labels
       double axisTickLabelsHeight = 0.0;
       if (axisTick.isVisible) {
-        TextLayout textLayout = new TextLayout("0", axisTick.getAxisTickLabels().font, new FontRenderContext(null, true, false));
+        TextLayout textLayout = new TextLayout("0", axisTick.axisTickLabels.font, new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         axisTickLabelsHeight = rectangle.getHeight() + AxisTick.AXIS_TICK_PADDING + AxisTickMarks.TICK_LENGTH + Plot.PLOT_PADDING;
       }
@@ -205,7 +185,7 @@ public class Axis implements IChartPart {
       int xOffset = Chart.CHART_PADDING;
       int yOffset = (int) (axisPair.getChartTitleBounds().getY() + axisPair.getChartTitleBounds().getHeight() + Chart.CHART_PADDING);
       int width = 80; // arbitrary, final width depends on Axis tick labels
-      int height = axisPair.chart.getHeight() - yOffset - axisPair.getXAxis().getSizeHint() - Chart.CHART_PADDING;
+      int height = axisPair.chart.height - yOffset - axisPair.xAxis.getSizeHint() - Chart.CHART_PADDING;
       Rectangle yAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -228,9 +208,9 @@ public class Axis implements IChartPart {
       // calculate paint zone
       // |____________________|
 
-      int xOffset = (int) (axisPair.getYAxis().getBounds().getWidth() + (axisPair.getYAxis().axisTick.isVisible ? Plot.PLOT_PADDING : 0) + Chart.CHART_PADDING);
-      int yOffset = (int) (axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight());
-      int width = (int) (axisPair.chart.getWidth() - axisPair.getYAxis().getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (axisPair.chart.getLegend().isVisible ? 3 : 2) * Chart.CHART_PADDING);
+      int xOffset = (int) (axisPair.yAxis.getBounds().getWidth() + (axisPair.yAxis.axisTick.isVisible ? Plot.PLOT_PADDING : 0) + Chart.CHART_PADDING);
+      int yOffset = (int) (axisPair.yAxis.getBounds().getY() + axisPair.yAxis.getBounds().getHeight());
+      int width = (int) (axisPair.chart.width - axisPair.yAxis.getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (axisPair.chart.chartLegend.isVisible ? 3 : 2) * Chart.CHART_PADDING);
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = xAxisRectangle;

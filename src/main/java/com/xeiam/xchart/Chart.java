@@ -33,18 +33,18 @@ import com.xeiam.xchart.series.SeriesMarker;
  */
 public class Chart {
 
-  private int width;
-  private int height;
+  protected int width;
+  protected int height;
   private Color backgroundColor;
   protected Color bordersColor;
   protected Color fontColor;
 
   protected final static int CHART_PADDING = 10;
 
-  private ChartTitle chartTitle = new ChartTitle(this);
-  private ChartLegend chartLegend = new ChartLegend(this);
-  private AxisPair axisPair = new AxisPair(this);
-  private Plot plot = new Plot(this);
+  protected ChartTitle chartTitle = new ChartTitle(this);
+  protected ChartLegend chartLegend = new ChartLegend(this);
+  protected AxisPair axisPair = new AxisPair(this);
+  protected Plot plot = new Plot(this);
 
   /**
    * Constructor
@@ -64,7 +64,7 @@ public class Chart {
   /**
    * @param g
    */
-  public void paint(Graphics2D g, int width, int height) {
+  protected void paint(Graphics2D g, int width, int height) {
 
     this.width = width;
     this.height = height;
@@ -75,10 +75,10 @@ public class Chart {
   /**
    * @param g
    */
-  public void paint(Graphics2D g) {
+  protected void paint(Graphics2D g) {
 
     // Sanity check
-    if (axisPair.getSeriesMap().isEmpty()) {
+    if (axisPair.seriesMap.isEmpty()) {
       throw new RuntimeException("No series defined for Chart!!!");
     }
 
@@ -98,38 +98,6 @@ public class Chart {
     SeriesLineStyle.resetId();
     SeriesMarker.resetId();
 
-  }
-
-  // GETTERS & SETTERS
-
-  public int getWidth() {
-
-    return width;
-  }
-
-  public int getHeight() {
-
-    return height;
-  }
-
-  protected ChartTitle getTitle() {
-
-    return chartTitle;
-  }
-
-  protected ChartLegend getLegend() {
-
-    return chartLegend;
-  }
-
-  protected AxisPair getAxisPair() {
-
-    return axisPair;
-  }
-
-  protected Plot getPlot() {
-
-    return plot;
   }
 
   // PUBLIC SETTERS
@@ -220,12 +188,12 @@ public class Chart {
 
   public void setXAxisTitle(String title) {
 
-    this.axisPair.getXAxis().setAxisTitle(title);
+    this.axisPair.xAxis.setAxisTitle(title);
   }
 
   public void setYAxisTitle(String title) {
 
-    this.axisPair.getYAxis().setAxisTitle(title);
+    this.axisPair.yAxis.setAxisTitle(title);
   }
 
   // ChartPart visibility ////////////////////////////////
@@ -237,18 +205,18 @@ public class Chart {
 
   public void setAxisTitlesVisible(boolean isVisible) {
 
-    this.axisPair.getXAxis().getAxisTitle().setVisible(isVisible);
-    this.axisPair.getYAxis().getAxisTitle().setVisible(isVisible);
+    this.axisPair.xAxis.getAxisTitle().setVisible(isVisible);
+    this.axisPair.yAxis.getAxisTitle().setVisible(isVisible);
   }
 
   public void setXAxisTitleVisible(boolean isVisible) {
 
-    this.axisPair.getXAxis().getAxisTitle().setVisible(isVisible);
+    this.axisPair.xAxis.getAxisTitle().setVisible(isVisible);
   }
 
   public void setYAxisTitleVisible(boolean isVisible) {
 
-    this.axisPair.getYAxis().getAxisTitle().setVisible(isVisible);
+    this.axisPair.yAxis.getAxisTitle().setVisible(isVisible);
   }
 
   public void setChartLegendVisible(boolean isVisible) {
@@ -258,23 +226,23 @@ public class Chart {
 
   public void setAxisTicksVisible(boolean isVisible) {
 
-    this.axisPair.getXAxis().axisTick.setVisible(isVisible);
-    this.axisPair.getYAxis().axisTick.setVisible(isVisible);
+    this.axisPair.xAxis.axisTick.setVisible(isVisible);
+    this.axisPair.yAxis.axisTick.setVisible(isVisible);
   }
 
   public void setXAxisTicksVisible(boolean isVisible) {
 
-    this.axisPair.getXAxis().axisTick.setVisible(isVisible);
+    this.axisPair.xAxis.axisTick.setVisible(isVisible);
   }
 
   public void setYAxisTicksVisible(boolean isVisible) {
 
-    this.axisPair.getYAxis().axisTick.setVisible(isVisible);
+    this.axisPair.yAxis.axisTick.setVisible(isVisible);
   }
 
   public void setChartGridlinesVisible(boolean isVisible) {
 
-    this.plot.getPlotSurface().setVisible(isVisible);
+    this.plot.plotSurface.setVisible(isVisible);
   }
 
   public void setChartBackgroundColor(Color color) {
@@ -284,17 +252,17 @@ public class Chart {
 
   public void setChartForegroundColor(Color color) {
 
-    this.plot.getPlotSurface().setForegroundColor(color);
+    this.plot.plotSurface.setForegroundColor(color);
   }
 
   public void setChartGridLinesColor(Color color) {
 
-    this.plot.getPlotSurface().setGridLinesColor(color);
+    this.plot.plotSurface.setGridLinesColor(color);
   }
 
   public void setChartLegendBackgroundColor(Color color) {
 
-    this.chartLegend.setBackgroundColor(color);
+    this.chartLegend.backgroundColor = color;
   }
 
   public void setChartBordersColor(Color color) {

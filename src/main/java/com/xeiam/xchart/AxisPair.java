@@ -33,24 +33,25 @@ import com.xeiam.xchart.series.Series;
  */
 public class AxisPair implements IChartPart {
 
-  /** the chart */
+  /** parent */
   protected Chart chart;
 
-  private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
+  protected Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
 
-  int seriesCount = 0;
+  private int seriesCount;
 
-  Axis xAxis;
-  Axis yAxis;
+  protected Axis xAxis;
+  protected Axis yAxis;
 
   /**
    * Constructor.
    * 
    * @param chart the chart
    */
-  public AxisPair(Chart chart) {
+  protected AxisPair(Chart chart) {
 
     this.chart = chart;
+    seriesCount = 0;
 
     // add axes
     xAxis = new Axis(this, Axis.Direction.X);
@@ -62,7 +63,7 @@ public class AxisPair implements IChartPart {
    * @param xData
    * @param yData
    */
-  public <T> Series addSeries(String seriesName, Collection<T> xData, Collection<Number> yData, Collection<Number> errorBars) {
+  protected <T> Series addSeries(String seriesName, Collection<T> xData, Collection<Number> yData, Collection<Number> errorBars) {
 
     // Sanity checks
     if (seriesName == null) {
@@ -89,7 +90,7 @@ public class AxisPair implements IChartPart {
         xAxis.setAxisType(AxisType.DATE);
       }
       yAxis.setAxisType(AxisType.NUMBER);
-      series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars);
+      series = new Series(seriesName, xData, xAxis.axisType, yData, yAxis.axisType, errorBars);
     } else { // generate xData
       Collection<Number> generatedXData = new ArrayList<Number>();
       for (int i = 1; i < yData.size(); i++) {
@@ -97,7 +98,7 @@ public class AxisPair implements IChartPart {
       }
       xAxis.setAxisType(AxisType.NUMBER);
       yAxis.setAxisType(AxisType.NUMBER);
-      series = new Series(seriesName, generatedXData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars);
+      series = new Series(seriesName, generatedXData, xAxis.axisType, yData, yAxis.axisType, errorBars);
     }
 
     // Sanity check
@@ -117,38 +118,23 @@ public class AxisPair implements IChartPart {
     return series;
   }
 
-  protected Axis getXAxis() {
-
-    return xAxis;
-  }
-
-  protected Axis getYAxis() {
-
-    return yAxis;
-  }
-
   protected Rectangle getChartTitleBounds() {
 
-    return chart.getTitle().getBounds();
+    return chart.chartTitle.getBounds();
   }
 
   protected Rectangle getChartLegendBounds() {
 
-    return chart.getLegend().getBounds();
+    return chart.chartLegend.getBounds();
   }
 
-  protected Map<Integer, Series> getSeriesMap() {
-
-    return seriesMap;
-  }
-
-  public static int getTickSpace(int workingSpace) {
+  protected static int getTickSpace(int workingSpace) {
 
     int tickSpace = (int) (workingSpace * 0.95);
     return tickSpace;
   }
 
-  public static int getMargin(int workingSpace, int tickSpace) {
+  protected static int getMargin(int workingSpace, int tickSpace) {
 
     int marginSpace = workingSpace - tickSpace;
     int margin = (int) (marginSpace / 2.0);

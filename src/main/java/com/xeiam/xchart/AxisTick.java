@@ -33,28 +33,28 @@ import com.xeiam.xchart.interfaces.IHideable;
  */
 public class AxisTick implements IChartPart, IHideable {
 
-  /** the axis */
+  /** the default tick mark step hint */
+  private static final int DEFAULT_TICK_MARK_STEP_HINT = 64;
+
+  /** the padding between the tick labels and the tick marks */
+  protected final static int AXIS_TICK_PADDING = 4;
+
+  /** parent */
   protected Axis axis;
 
   /** the axisticklabels */
   protected AxisTickLabels axisTickLabels;
 
   /** the axistickmarks */
-  private AxisTickMarks axisTickMarks;
+  protected AxisTickMarks axisTickMarks;
 
   /** the arraylist of tick label position in pixels */
-  private List<Integer> tickLocations;
+  protected List<Integer> tickLocations;
 
-  /** the arraylist of tick label vales */
-  private List<String> tickLabels;
+  /** the arraylist of tick label values */
+  protected List<String> tickLabels;
 
   private int workingSpace;
-
-  /** the default tick mark step hint */
-  private static final int DEFAULT_TICK_MARK_STEP_HINT = 64;
-
-  /** the padding between the tick labels and the tick marks */
-  protected final static int AXIS_TICK_PADDING = 4;
 
   /** the normal format for tick labels */
   private Format normalFormat = new DecimalFormat("#.###########");
@@ -85,35 +85,10 @@ public class AxisTick implements IChartPart, IHideable {
 
   }
 
-  public AxisTickLabels getAxisTickLabels() {
-
-    return axisTickLabels;
-  }
-
-  public AxisTickMarks getAxisTickMarks() {
-
-    return axisTickMarks;
-  }
-
-  public List<String> getTickLabels() {
-
-    return tickLabels;
-  }
-
-  public List<Integer> getTickLocations() {
-
-    return tickLocations;
-  }
-
   @Override
   public Rectangle getBounds() {
 
     return bounds;
-  }
-
-  protected int getWorkingSpace() {
-
-    return this.workingSpace;
   }
 
   @Override
@@ -121,7 +96,7 @@ public class AxisTick implements IChartPart, IHideable {
 
     bounds = new Rectangle();
 
-    if (axis.getDirection() == Axis.Direction.Y) {
+    if (axis.direction == Axis.Direction.Y) {
       workingSpace = (int) axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
       // System.out.println("workingspace= " + workingSpace);
     } else {
@@ -142,7 +117,7 @@ public class AxisTick implements IChartPart, IHideable {
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      if (axis.getDirection() == Axis.Direction.Y) {
+      if (axis.direction == Axis.Direction.Y) {
         bounds = new Rectangle((int) axisTickLabels.getBounds().getX(), (int) (axisTickLabels.getBounds().getY()),
             (int) (axisTickLabels.getBounds().getWidth() + AXIS_TICK_PADDING + axisTickMarks.getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
         // g.setColor(Color.red);
@@ -173,12 +148,12 @@ public class AxisTick implements IChartPart, IHideable {
     int margin = AxisPair.getMargin(workingSpace, tickSpace);
 
     // a check if all axis data are the exact same values
-    if (axis.getMax() == axis.getMin()) {
-      tickLabels.add(format(axis.getMax()));
+    if (axis.max == axis.min) {
+      tickLabels.add(format(axis.max));
       tickLocations.add((int) (margin + tickSpace / 2.0));
     } else {
 
-      final BigDecimal MIN = new BigDecimal(axis.getMin().doubleValue());
+      final BigDecimal MIN = new BigDecimal(axis.min.doubleValue());
       BigDecimal firstPosition;
       BigDecimal gridStep = getGridStep(tickSpace);
 
@@ -189,11 +164,11 @@ public class AxisTick implements IChartPart, IHideable {
         firstPosition = MIN.subtract(MIN.remainder(gridStep)).add(gridStep);
       }
 
-      for (BigDecimal b = firstPosition; b.compareTo(axis.getMax()) <= 0; b = b.add(gridStep)) {
+      for (BigDecimal b = firstPosition; b.compareTo(axis.max) <= 0; b = b.add(gridStep)) {
 
         // System.out.println("b= " + b);
         tickLabels.add(format(b));
-        int tickLabelPosition = (int) (margin + ((b.subtract(axis.getMin())).doubleValue() / (axis.getMax().subtract(axis.getMin())).doubleValue() * tickSpace));
+        int tickLabelPosition = (int) (margin + ((b.subtract(axis.min)).doubleValue() / (axis.max.subtract(axis.min)).doubleValue() * tickSpace));
         // System.out.println("tickLabelPosition= " + tickLabelPosition);
 
         tickLocations.add(tickLabelPosition);
@@ -203,9 +178,9 @@ public class AxisTick implements IChartPart, IHideable {
 
   private BigDecimal getGridStep(int tickSpace) {
 
-    double length = Math.abs(axis.getMax().subtract(axis.getMin()).doubleValue());
+    double length = Math.abs(axis.max.subtract(axis.min).doubleValue());
     // System.out.println(axis.getMax());
-    // System.out.println(axis.getMin());
+    // System.out.println(axis.min);
     // System.out.println(length);
     double gridStepHint = length / tickSpace * DEFAULT_TICK_MARK_STEP_HINT;
 
@@ -265,7 +240,7 @@ public class AxisTick implements IChartPart, IHideable {
 
   private String format(BigDecimal value) {
 
-    if (axis.getAxisType() == AxisType.NUMBER) {
+    if (axis.axisType == AxisType.NUMBER) {
       if (Math.abs(value.doubleValue()) < 9999 && Math.abs(value.doubleValue()) > .0001 || value.doubleValue() == 0) {
         return normalFormat.format(value.doubleValue());
       } else {

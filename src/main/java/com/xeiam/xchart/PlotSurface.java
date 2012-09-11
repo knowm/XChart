@@ -29,8 +29,7 @@ import com.xeiam.xchart.interfaces.IHideable;
  */
 public class PlotSurface implements IChartPart, IHideable {
 
-  private Chart chart;
-
+  /** parent */
   private Plot plot;
 
   /** the gridLines Color */
@@ -40,7 +39,7 @@ public class PlotSurface implements IChartPart, IHideable {
   private Color foregroundColor;
 
   /** the line style */
-  private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
+  private BasicStroke stroke;
 
   /** the visibility state of PlotSurface */
   protected boolean isVisible = true; // default to true
@@ -51,12 +50,12 @@ public class PlotSurface implements IChartPart, IHideable {
    * @param chart
    * @param plot
    */
-  public PlotSurface(Chart chart, Plot plot) {
+  protected PlotSurface(Plot plot) {
 
-    this.chart = chart;
     this.plot = plot;
     gridLinesColor = ChartColor.getAWTColor(ChartColor.GREY); // default gridLines color
     foregroundColor = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default foreground Color color
+    stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
   }
 
   @Override
@@ -75,13 +74,13 @@ public class PlotSurface implements IChartPart, IHideable {
     g.setColor(foregroundColor);
     g.fill(backgroundRectangle);
     Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(chart.bordersColor);
+    g.setColor(plot.chart.bordersColor);
     g.draw(borderRectangle);
 
     // paint grid lines
     if (isVisible) {
       // horizontal
-      List<Integer> yAxisTickLocations = chart.getAxisPair().getYAxis().axisTick.getTickLocations();
+      List<Integer> yAxisTickLocations = plot.chart.axisPair.yAxis.axisTick.tickLocations;
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         int tickLocation = yAxisTickLocations.get(i);
@@ -93,7 +92,7 @@ public class PlotSurface implements IChartPart, IHideable {
       }
 
       // vertical
-      List<Integer> xAxisTickLocations = chart.getAxisPair().getXAxis().axisTick.getTickLocations();
+      List<Integer> xAxisTickLocations = plot.chart.axisPair.xAxis.axisTick.tickLocations;
       for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
         int tickLocation = xAxisTickLocations.get(i);

@@ -18,8 +18,8 @@ package com.xeiam.xchart.example;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.io.BitmapEncoder;
 
 /**
  * Creates a simple charts and saves it as a PNG image file.

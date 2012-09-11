@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.swing;
+package com.xeiam.xchart;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.xeiam.xchart.Chart;
 
 /**
  * @author timmolter
