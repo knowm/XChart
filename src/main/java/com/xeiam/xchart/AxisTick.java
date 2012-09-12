@@ -57,13 +57,12 @@ public class AxisTick implements IChartPart, IHideable {
   private int workingSpace;
 
   /** the normal format for tick labels */
-  private Format normalFormat = new DecimalFormat("#.###########");
+  private Format normalFormat;
 
   /** the scientific format for tick labels */
-  private Format scientificFormat = new DecimalFormat("0.###E0");
+  private Format scientificFormat;
 
-  // private SimpleDateFormat simpleDateformat = new SimpleDateFormat("dd.MM.yyyy");
-  private SimpleDateFormat simpleDateformat = new SimpleDateFormat("MM-dd");
+  private SimpleDateFormat simpleDateformat;
 
   /** the bounds */
   private Rectangle bounds;
@@ -72,9 +71,8 @@ public class AxisTick implements IChartPart, IHideable {
   protected boolean isVisible = true; // default to true
 
   /**
-   * Constructor.
+   * Constructor
    * 
-   * @param chart the chart
    * @param axis the axis
    */
   protected AxisTick(Axis axis) {
@@ -82,6 +80,10 @@ public class AxisTick implements IChartPart, IHideable {
     this.axis = axis;
     axisTickLabels = new AxisTickLabels(this);
     axisTickMarks = new AxisTickMarks(this);
+
+    normalFormat = new DecimalFormat("#.###########");
+    scientificFormat = new DecimalFormat("0.###E0");
+    simpleDateformat = new SimpleDateFormat("MM-dd");
 
   }
 

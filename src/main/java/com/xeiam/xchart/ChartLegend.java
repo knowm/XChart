@@ -51,6 +51,8 @@ public class ChartLegend implements IHideable {
 
   /**
    * Constructor
+   * 
+   * @param chart
    */
   public ChartLegend(Chart chart) {
 

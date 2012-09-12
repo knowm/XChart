@@ -40,7 +40,7 @@ public class AxisTickLabels implements IChartPart {
   /**
    * Constructor
    * 
-   * @param axis the axis
+   * @param axisTick
    */
   protected AxisTickLabels(AxisTick axisTick) {
 

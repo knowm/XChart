@@ -47,7 +47,6 @@ public class PlotSurface implements IChartPart, IHideable {
   /**
    * Constructor
    * 
-   * @param chart
    * @param plot
    */
   protected PlotSurface(Plot plot) {

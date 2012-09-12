@@ -42,7 +42,6 @@ public class AxisTickMarks implements IChartPart {
   /**
    * Constructor
    * 
-   * @param axis
    * @param axisTick
    */
   protected AxisTickMarks(AxisTick axisTick) {

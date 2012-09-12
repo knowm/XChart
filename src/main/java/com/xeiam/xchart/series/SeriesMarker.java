@@ -26,7 +26,6 @@ import com.xeiam.xchart.series.markers.Square;
 import com.xeiam.xchart.series.markers.TriangleDown;
 import com.xeiam.xchart.series.markers.TriangleUp;
 
-
 /**
  * @author timmolter
  */

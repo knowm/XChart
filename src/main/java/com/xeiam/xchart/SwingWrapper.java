@@ -22,7 +22,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 /**
  * @author timmolter
  */
@@ -43,11 +42,9 @@ public class SwingWrapper {
   }
 
   /**
-   * Constructor - The number of rows and columns will be calculated automatically
+   * Constructor - The number of rows and columns will be calculated automatically Constructor
    * 
    * @param charts
-   * @param numRows
-   * @param numColumns
    */
   public SwingWrapper(List<Chart> charts) {
 

@@ -45,6 +45,8 @@ public class ChartTitle implements IHideable {
 
   /**
    * Constructor
+   * 
+   * @param chart
    */
   public ChartTitle(Chart chart) {
 

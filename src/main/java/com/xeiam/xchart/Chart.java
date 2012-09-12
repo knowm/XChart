@@ -49,8 +49,8 @@ public class Chart {
   /**
    * Constructor
    * 
-   * @param pWidth
-   * @param pHeight
+   * @param width
+   * @param height
    */
   public Chart(int width, int height) {
 
