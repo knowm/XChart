@@ -57,12 +57,13 @@ public class AxisTick implements IChartPart, IHideable {
   private int workingSpace;
 
   /** the normal format for tick labels */
-  private Format normalFormat;
+  protected Format normalFormat;
 
   /** the scientific format for tick labels */
-  private Format scientificFormat;
+  protected Format scientificFormat;
 
-  private SimpleDateFormat simpleDateformat;
+  /** the format for Date tick labels */
+  protected SimpleDateFormat simpleDateformat;
 
   /** the bounds */
   private Rectangle bounds;
@@ -81,7 +82,7 @@ public class AxisTick implements IChartPart, IHideable {
     axisTickLabels = new AxisTickLabels(this);
     axisTickMarks = new AxisTickMarks(this);
 
-    normalFormat = new DecimalFormat("#.###########");
+    normalFormat = new DecimalFormat("#.###");
     scientificFormat = new DecimalFormat("0.###E0");
     simpleDateformat = new SimpleDateFormat("MM-dd");
 
@@ -243,7 +244,7 @@ public class AxisTick implements IChartPart, IHideable {
   private String format(BigDecimal value) {
 
     if (axis.axisType == AxisType.NUMBER) {
-      if (Math.abs(value.doubleValue()) < 9999 && Math.abs(value.doubleValue()) > .0001 || value.doubleValue() == 0) {
+      if (Math.abs(value.doubleValue()) <= 9999 && Math.abs(value.doubleValue()) > .0001 || value.doubleValue() == 0) {
         return normalFormat.format(value.doubleValue());
       } else {
         return scientificFormat.format(value.doubleValue());

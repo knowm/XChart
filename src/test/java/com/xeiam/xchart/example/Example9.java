@@ -59,7 +59,6 @@ public class Example9 {
     chart.setChartTitle("Sample Chart with Date X-Axis");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.setXAxisTicksVisible(false);
     chart.setChartForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));
     chart.setChartGridLinesColor(new Color(255, 255, 255));
     chart.setChartBackgroundColor(Color.WHITE);
@@ -71,6 +70,8 @@ public class Example9 {
     chart.setAxisLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.setChartTickLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.setChartTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
+    chart.setDateFormatter("yyyy-MM-dd");
+    chart.setDecmialFormatter("#.000");
 
     Series series = chart.addDateSeries("Fake Data", xData, yData);
     series.setLineColor(SeriesColor.BLUE);

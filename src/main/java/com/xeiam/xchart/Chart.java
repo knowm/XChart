@@ -19,6 +19,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -296,4 +298,31 @@ public class Chart {
     this.axisPair.xAxis.axisTick.axisTickLabels.font = font;
     this.axisPair.yAxis.axisTick.axisTickLabels.font = font;
   }
+
+  /**
+   * @param pattern - the pattern describing the date and time format
+   */
+  public void setDateFormatter(String pattern) {
+
+    this.axisPair.xAxis.axisTick.simpleDateformat = new SimpleDateFormat(pattern);
+  }
+
+  /**
+   * @param pattern - the pattern describing the decimal format
+   */
+  public void setDecmialFormatter(String pattern) {
+
+    this.axisPair.xAxis.axisTick.normalFormat = new DecimalFormat(pattern);
+    this.axisPair.yAxis.axisTick.normalFormat = new DecimalFormat(pattern);
+  }
+
+  /**
+   * @param pattern - the pattern describing the scientific notation format
+   */
+  public void setDecmialScientificFormatter(String pattern) {
+
+    this.axisPair.xAxis.axisTick.scientificFormat = new DecimalFormat(pattern);
+    this.axisPair.yAxis.axisTick.scientificFormat = new DecimalFormat(pattern);
+  }
+
 }
