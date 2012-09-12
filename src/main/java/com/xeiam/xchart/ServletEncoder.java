@@ -17,6 +17,7 @@ package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -27,12 +28,20 @@ import javax.servlet.ServletOutputStream;
 public class ServletEncoder {
 
   /**
+   * Constructor - Private constructor to prevent instantiation
+   */
+  private ServletEncoder() {
+
+  }
+
+  /**
    * Streams a chart as a PNG file
    * 
    * @param out
    * @param chart
+   * @throws IOException
    */
-  public static void streamPNG(ServletOutputStream out, Chart chart) throws Exception {
+  public static void streamPNG(ServletOutputStream out, Chart chart) throws IOException {
 
     BufferedImage lBufferedImage = new BufferedImage(chart.width, chart.height, BufferedImage.TYPE_INT_RGB);
     Graphics2D lGraphics2D = lBufferedImage.createGraphics();

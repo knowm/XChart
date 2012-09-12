@@ -18,6 +18,7 @@ package com.xeiam.xchart;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
@@ -28,12 +29,20 @@ import javax.imageio.ImageIO;
 public class BitmapEncoder {
 
   /**
+   * Constructor - Private constructor to prevent instantiation
+   */
+  private BitmapEncoder() {
+
+  }
+
+  /**
    * Saves a chart as a PNG file
    * 
    * @param chart
    * @param pFileName
+   * @throws IOException
    */
-  public static void savePNG(Chart chart, String pFileName) throws Exception {
+  public static void savePNG(Chart chart, String pFileName) throws IOException {
 
     BufferedImage lBufferedImage = new BufferedImage(chart.width, chart.height, BufferedImage.TYPE_INT_RGB);
     Graphics2D lGraphics2D = lBufferedImage.createGraphics();
