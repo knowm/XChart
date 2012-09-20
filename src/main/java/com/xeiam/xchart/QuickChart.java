@@ -59,7 +59,7 @@ public class QuickChart {
     Chart chart = new Chart(400, 280);
 
     // Customize Chart
-    chart.setChartTitle(chartTitle);
+    chart.setTitle(chartTitle);
     chart.setXAxisTitle(xTitle);
     chart.setYAxisTitle(yTitle);
 
@@ -69,7 +69,7 @@ public class QuickChart {
       if (seriesNames != null) {
         series = chart.addSeries(seriesNames[i], xData, yData[i]);
       } else {
-        chart.setChartLegendVisible(false);
+        chart.setLegendVisible(false);
         series = chart.addSeries(" " + i, xData, yData[i]);
       }
       series.setMarker(SeriesMarker.NONE);

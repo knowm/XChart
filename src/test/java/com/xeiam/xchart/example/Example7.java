@@ -35,7 +35,7 @@ public class Example7 {
 
     // Create Chart
     Chart chart = new Chart(700, 500);
-    chart.setChartTitle("Sample Chart");
+    chart.setTitle("Sample Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.addSeries("y(x)", xData, yData);

@@ -19,11 +19,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 
 import com.xeiam.xchart.series.Series;
 import com.xeiam.xchart.series.SeriesColor;
@@ -44,7 +43,7 @@ public class Chart {
   protected final static int CHART_PADDING = 10;
 
   protected ChartTitle chartTitle = new ChartTitle(this);
-  protected ChartLegend chartLegend = new ChartLegend(this);
+  protected Legend chartLegend = new Legend(this);
   protected AxisPair axisPair = new AxisPair(this);
   protected Plot plot = new Plot(this);
 
@@ -183,7 +182,7 @@ public class Chart {
     return axisPair.addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
   }
 
-  public void setChartTitle(String title) {
+  public void setTitle(String title) {
 
     this.chartTitle.setText(title);
   }
@@ -200,7 +199,7 @@ public class Chart {
 
   // ChartPart visibility ////////////////////////////////
 
-  public void setChartTitleVisible(boolean isVisible) {
+  public void setTitleVisible(boolean isVisible) {
 
     this.chartTitle.setVisible(isVisible);
   }
@@ -221,7 +220,7 @@ public class Chart {
     this.axisPair.yAxis.getAxisTitle().setVisible(isVisible);
   }
 
-  public void setChartLegendVisible(boolean isVisible) {
+  public void setLegendVisible(boolean isVisible) {
 
     this.chartLegend.setVisible(isVisible);
   }
@@ -242,47 +241,52 @@ public class Chart {
     this.axisPair.yAxis.axisTick.setVisible(isVisible);
   }
 
-  public void setChartGridlinesVisible(boolean isVisible) {
+  public void setGridlinesVisible(boolean isVisible) {
 
     this.plot.plotSurface.setVisible(isVisible);
   }
 
-  public void setChartBackgroundColor(Color color) {
+  public void setBackgroundColor(Color color) {
 
     this.backgroundColor = color;
   }
 
-  public void setChartForegroundColor(Color color) {
+  public void setForegroundColor(Color color) {
 
     this.plot.plotSurface.setForegroundColor(color);
   }
 
-  public void setChartGridLinesColor(Color color) {
+  public void setGridLinesColor(Color color) {
 
     this.plot.plotSurface.setGridLinesColor(color);
   }
 
-  public void setChartLegendBackgroundColor(Color color) {
+  public void setLegendBackgroundColor(Color color) {
 
     this.chartLegend.backgroundColor = color;
   }
 
-  public void setChartBordersColor(Color color) {
+  /**
+   * Sets the color of the plot border, legend border, tick marks, and error bars
+   * 
+   * @param color
+   */
+  public void setLinesColor(Color color) {
 
     this.bordersColor = color;
   }
 
-  public void setChartFontColor(Color color) {
+  public void setFontColor(Color color) {
 
     this.fontColor = color;
   }
 
-  public void setChartTitleFont(Font font) {
+  public void setTitleFont(Font font) {
 
     this.chartTitle.font = font;
   }
 
-  public void setChartLegendFont(Font font) {
+  public void setLegendFont(Font font) {
 
     this.chartLegend.font = font;
   }
@@ -293,7 +297,7 @@ public class Chart {
     this.axisPair.yAxis.axisTitle.font = font;
   }
 
-  public void setChartTickLabelsFont(Font font) {
+  public void setTickLabelsFont(Font font) {
 
     this.axisPair.xAxis.axisTick.axisTickLabels.font = font;
     this.axisPair.yAxis.axisTick.axisTickLabels.font = font;
@@ -304,7 +308,7 @@ public class Chart {
    */
   public void setDateFormatter(String pattern) {
 
-    this.axisPair.xAxis.axisTick.simpleDateformat = new SimpleDateFormat(pattern);
+    this.axisPair.xAxis.axisTick.datePattern = pattern;
   }
 
   /**
@@ -312,8 +316,8 @@ public class Chart {
    */
   public void setDecmialFormatter(String pattern) {
 
-    this.axisPair.xAxis.axisTick.normalFormat = new DecimalFormat(pattern);
-    this.axisPair.yAxis.axisTick.normalFormat = new DecimalFormat(pattern);
+    this.axisPair.xAxis.axisTick.normalDecimalPattern = pattern;
+    this.axisPair.yAxis.axisTick.normalDecimalPattern = pattern;
   }
 
   /**
@@ -321,8 +325,17 @@ public class Chart {
    */
   public void setDecmialScientificFormatter(String pattern) {
 
-    this.axisPair.xAxis.axisTick.scientificFormat = new DecimalFormat(pattern);
-    this.axisPair.yAxis.axisTick.scientificFormat = new DecimalFormat(pattern);
+    this.axisPair.xAxis.axisTick.scientificDecimalPattern = pattern;
+    this.axisPair.yAxis.axisTick.scientificDecimalPattern = pattern;
+  }
+
+  /**
+   * @param locale - the locale to use when drawing the chart
+   */
+  public void setLocale(Locale locale) {
+
+    this.axisPair.xAxis.axisTick.locale = locale;
+    this.axisPair.yAxis.axisTick.locale = locale;
   }
 
 }

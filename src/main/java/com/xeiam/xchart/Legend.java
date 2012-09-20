@@ -30,7 +30,7 @@ import com.xeiam.xchart.series.markers.Marker;
 /**
  * @author timmolter
  */
-public class ChartLegend implements IHideable {
+public class Legend implements IHideable {
 
   private static final int LEGEND_PADDING = 10;
 
@@ -54,7 +54,7 @@ public class ChartLegend implements IHideable {
    * 
    * @param chart
    */
-  public ChartLegend(Chart chart) {
+  public Legend(Chart chart) {
 
     this.chart = chart;
     backgroundColor = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color

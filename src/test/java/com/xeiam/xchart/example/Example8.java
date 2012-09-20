@@ -49,8 +49,8 @@ public class Example8 {
     Chart chart = new Chart(600, 400);
 
     // Customize Chart
-    chart.setChartTitleVisible(false);
-    chart.setChartLegendVisible(false);
+    chart.setTitleVisible(false);
+    chart.setLegendVisible(false);
     chart.setAxisTitlesVisible(false);
 
     // Series 1

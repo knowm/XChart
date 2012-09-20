@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartColor;
@@ -56,22 +57,23 @@ public class Example9 {
     }
 
     // Customize Chart
-    chart.setChartTitle("Sample Chart with Date X-Axis");
+    chart.setTitle("Sample Chart with Date X-Axis");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.setChartForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));
-    chart.setChartGridLinesColor(new Color(255, 255, 255));
-    chart.setChartBackgroundColor(Color.WHITE);
-    chart.setChartLegendBackgroundColor(Color.PINK);
-    chart.setChartBordersColor(Color.GREEN);
-    chart.setChartFontColor(Color.MAGENTA);
-    chart.setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
-    chart.setChartLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
+    chart.setForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));
+    chart.setGridLinesColor(new Color(255, 255, 255));
+    chart.setBackgroundColor(Color.WHITE);
+    chart.setLegendBackgroundColor(Color.PINK);
+    chart.setLinesColor(Color.GREEN);
+    chart.setFontColor(Color.MAGENTA);
+    chart.setTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
+    chart.setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.setAxisLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
-    chart.setChartTickLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
-    chart.setChartTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
-    chart.setDateFormatter("yyyy-MM-dd");
+    chart.setTickLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
+    chart.setTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
+    chart.setDateFormatter("dd-MMM");
     chart.setDecmialFormatter("#.000");
+    chart.setLocale(Locale.GERMAN);
 
     Series series = chart.addDateSeries("Fake Data", xData, yData);
     series.setLineColor(SeriesColor.BLUE);

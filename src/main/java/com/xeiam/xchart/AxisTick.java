@@ -19,10 +19,11 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.Format;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import com.xeiam.xchart.Axis.AxisType;
 import com.xeiam.xchart.interfaces.IChartPart;
@@ -56,14 +57,12 @@ public class AxisTick implements IChartPart, IHideable {
 
   private int workingSpace;
 
-  /** the normal format for tick labels */
-  protected Format normalFormat;
+  /** the Locale for Date tick labels */
+  protected Locale locale;
 
-  /** the scientific format for tick labels */
-  protected Format scientificFormat;
-
-  /** the format for Date tick labels */
-  protected SimpleDateFormat simpleDateformat;
+  protected String normalDecimalPattern;
+  protected String scientificDecimalPattern;
+  protected String datePattern;
 
   /** the bounds */
   private Rectangle bounds;
@@ -82,9 +81,11 @@ public class AxisTick implements IChartPart, IHideable {
     axisTickLabels = new AxisTickLabels(this);
     axisTickMarks = new AxisTickMarks(this);
 
-    normalFormat = new DecimalFormat("#.###");
-    scientificFormat = new DecimalFormat("0.###E0");
-    simpleDateformat = new SimpleDateFormat("MM-dd");
+    // formatting
+    locale = Locale.getDefault();
+    normalDecimalPattern = "#.###";
+    scientificDecimalPattern = "0.###E0";
+    datePattern = "HHmmss";
 
   }
 
@@ -244,13 +245,29 @@ public class AxisTick implements IChartPart, IHideable {
   private String format(BigDecimal value) {
 
     if (axis.axisType == AxisType.NUMBER) {
+
+      NumberFormat nf = NumberFormat.getNumberInstance(locale);
+
       if (Math.abs(value.doubleValue()) <= 9999 && Math.abs(value.doubleValue()) > .0001 || value.doubleValue() == 0) {
+
+        DecimalFormat normalFormat = (DecimalFormat) nf;
+        normalFormat.applyPattern(normalDecimalPattern);
         return normalFormat.format(value.doubleValue());
+
       } else {
+
+        DecimalFormat scientificFormat = (DecimalFormat) nf;
+        scientificFormat.applyPattern(scientificDecimalPattern);
         return scientificFormat.format(value.doubleValue());
+
       }
     } else {
+
+      // TODO set this more intelligently
+      SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, locale);
+      simpleDateformat.applyPattern(datePattern);
       return simpleDateformat.format(value.longValueExact());
+
     }
 
   }

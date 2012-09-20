@@ -45,7 +45,7 @@ public class Example3 {
       }
 
       // Customize Chart
-      chart.setChartTitle("Sample Chart");
+      chart.setTitle("Sample Chart");
       chart.setXAxisTitle("X");
       chart.setYAxisTitle("Y");
 
