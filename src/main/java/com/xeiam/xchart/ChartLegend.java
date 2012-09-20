@@ -32,7 +32,7 @@ import com.xeiam.xchart.series.markers.Marker;
  */
 public class ChartLegend implements IHideable {
 
-  private final int LEGEND_PADDING = 10;
+  private static final int LEGEND_PADDING = 10;
 
   /** parent */
   private Chart chart;

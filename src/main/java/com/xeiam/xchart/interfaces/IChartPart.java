@@ -19,6 +19,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 /**
+ * All components of a chart that need to be painted should implement this interface
+ * 
  * @author timmolter
  */
 public interface IChartPart {

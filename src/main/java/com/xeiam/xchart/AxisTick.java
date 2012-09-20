@@ -156,15 +156,15 @@ public class AxisTick implements IChartPart, IHideable {
       tickLocations.add((int) (margin + tickSpace / 2.0));
     } else {
 
-      final BigDecimal MIN = new BigDecimal(axis.min.doubleValue());
+      final BigDecimal min = new BigDecimal(axis.min.doubleValue());
       BigDecimal firstPosition;
       BigDecimal gridStep = getGridStep(tickSpace);
 
-      double xyz = MIN.remainder(gridStep).doubleValue();
+      double xyz = min.remainder(gridStep).doubleValue();
       if (xyz <= 0.0) {
-        firstPosition = MIN.subtract(MIN.remainder(gridStep));
+        firstPosition = min.subtract(min.remainder(gridStep));
       } else {
-        firstPosition = MIN.subtract(MIN.remainder(gridStep)).add(gridStep);
+        firstPosition = min.subtract(min.remainder(gridStep)).add(gridStep);
       }
 
       for (BigDecimal b = firstPosition; b.compareTo(axis.max) <= 0; b = b.add(gridStep)) {

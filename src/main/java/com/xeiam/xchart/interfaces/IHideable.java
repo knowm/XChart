@@ -7,7 +7,7 @@
 package com.xeiam.xchart.interfaces;
 
 /**
- * Chart Legend interface
+ * ChartParts that can be set visible or not should implement this interface
  * 
  * @author timmolter
  */

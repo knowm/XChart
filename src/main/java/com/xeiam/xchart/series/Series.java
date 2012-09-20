@@ -65,10 +65,12 @@ public class Series {
   /**
    * Constructor
    * 
-   * @param <?>
    * @param name
    * @param xData
+   * @param xAxisType
    * @param yData
+   * @param yAxisType
+   * @param errorBars
    */
   public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<Number> yData, AxisType yAxisType, Collection<Number> errorBars) {
 
