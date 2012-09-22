@@ -22,7 +22,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Creates a simple charts using Longs as inputs
+ * Creates a simple Chart using Longs as X-Axis data
  * 
  * @author timmolter
  */

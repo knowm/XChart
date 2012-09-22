@@ -34,7 +34,7 @@ import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Create a chart with a Date x-axis and extensive chart customization
+ * Create a Chart with a Date x-axis and extensive chart customization
  * 
  * @author timmolter
  */

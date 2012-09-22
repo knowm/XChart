@@ -23,7 +23,7 @@ import com.xeiam.xchart.QuickChart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Create a chart matrix
+ * Create a Chart matrix
  * 
  * @author timmolter
  */

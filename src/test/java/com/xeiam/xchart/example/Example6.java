@@ -19,7 +19,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Create chart with single point
+ * Create Chart with single point
  * 
  * @author timmolter
  */
