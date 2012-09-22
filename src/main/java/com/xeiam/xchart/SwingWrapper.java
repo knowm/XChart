@@ -23,6 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
+ * A convenience class used to display a Chart in a barebones Swing application
+ * 
  * @author timmolter
  */
 public class SwingWrapper {
@@ -83,7 +85,7 @@ public class SwingWrapper {
         // Create and set up the window.
         JFrame frame = new JFrame("XChart");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel chartPanel = new XChartJPanel(charts.get(0));
+        JPanel chartPanel = new XChartPanel(charts.get(0));
         frame.add(chartPanel);
 
         // Display the window.
@@ -112,7 +114,7 @@ public class SwingWrapper {
 
         for (Chart chart : charts) {
           if (chart != null) {
-            JPanel chartPanel = new XChartJPanel(chart);
+            JPanel chartPanel = new XChartPanel(chart);
             frame.add(chartPanel);
           } else {
             JPanel chartPanel = new JPanel();

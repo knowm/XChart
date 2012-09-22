@@ -18,6 +18,8 @@ package com.xeiam.xchart;
 import java.awt.Color;
 
 /**
+ * Pre-defined Colors used for various Chart Elements
+ * 
  * @author timmolter
  */
 public enum ChartColor {

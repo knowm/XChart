@@ -24,27 +24,29 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
-import com.xeiam.xchart.series.Series;
-import com.xeiam.xchart.series.SeriesColor;
-import com.xeiam.xchart.series.SeriesLineStyle;
-import com.xeiam.xchart.series.SeriesMarker;
+import com.xeiam.xchart.internal.chartpart.AxisPair;
+import com.xeiam.xchart.internal.chartpart.ChartTitle;
+import com.xeiam.xchart.internal.chartpart.Legend;
+import com.xeiam.xchart.internal.chartpart.Plot;
 
 /**
+ * An XChart Chart
+ * 
  * @author timmolter
  */
 public class Chart {
 
-  protected int width;
-  protected int height;
+  public int width;
+  public int height;
   private Color backgroundColor;
-  protected Color bordersColor;
-  protected Color fontColor;
+  public Color bordersColor;
+  public Color fontColor;
 
-  protected final static int CHART_PADDING = 10;
+  public final static int CHART_PADDING = 10;
 
-  protected ChartTitle chartTitle = new ChartTitle(this);
-  protected Legend chartLegend = new Legend(this);
-  protected AxisPair axisPair = new AxisPair(this);
+  public ChartTitle chartTitle = new ChartTitle(this);
+  public Legend chartLegend = new Legend(this);
+  public AxisPair axisPair = new AxisPair(this);
   protected Plot plot = new Plot(this);
 
   /**

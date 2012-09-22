@@ -23,6 +23,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 
 /**
+ * A helper class to be used in conjuction with a Servlet for streaming a Chart to an HTTP client
+ * 
  * @author timmolter
  */
 public class ServletEncoder {

@@ -15,11 +15,8 @@
  */
 package com.xeiam.xchart;
 
-import com.xeiam.xchart.series.Series;
-import com.xeiam.xchart.series.SeriesMarker;
-
 /**
- * A convenience class for making Charts with one line of code.
+ * A convenience class for making Charts with one line of code
  * 
  * @author timmolter
  */

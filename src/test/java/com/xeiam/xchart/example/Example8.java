@@ -19,11 +19,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesColor;
+import com.xeiam.xchart.SeriesLineStyle;
+import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
-import com.xeiam.xchart.series.Series;
-import com.xeiam.xchart.series.SeriesColor;
-import com.xeiam.xchart.series.SeriesLineStyle;
-import com.xeiam.xchart.series.SeriesMarker;
 
 /**
  * Create a Chart with error bars

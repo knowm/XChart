@@ -130,6 +130,9 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludePackageNames>com.xeiam.xchart.internal.*</excludePackageNames>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

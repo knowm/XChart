@@ -22,7 +22,7 @@ import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
 
 /**
- * Creates a simple charts and saves it as a PNG image file.
+ * Creates a simple Chart and saves it as a PNG and JPEG image file.
  * 
  * @author timmolter
  */
@@ -41,6 +41,7 @@ public class Example1 {
     chart.addSeries("y(x)", xData, yData);
 
     BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
+    BitmapEncoder.saveJPG(chart, "./Sample_Chart.jpg", 0.95f);
 
   }
 
