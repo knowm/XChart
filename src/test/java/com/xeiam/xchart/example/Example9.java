@@ -68,9 +68,9 @@ public class Example9 {
     chart.setFontColor(Color.MAGENTA);
     chart.setTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
-    chart.setAxisLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
-    chart.setTickLabelsFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
-    chart.setTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
+    chart.setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
+    chart.setTickLabelFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
+    chart.setTickLabelFont(new Font(Font.SERIF, Font.PLAIN, 11));
     chart.setDateFormatter("dd-MMM");
     chart.setDecmialFormatter("#.000");
     chart.setLocale(Locale.GERMAN);

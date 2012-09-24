@@ -293,13 +293,13 @@ public class Chart {
     this.chartLegend.font = font;
   }
 
-  public void setAxisLabelsFont(Font font) {
+  public void setAxisTitleFont(Font font) {
 
     this.axisPair.xAxis.axisTitle.font = font;
     this.axisPair.yAxis.axisTitle.font = font;
   }
 
-  public void setTickLabelsFont(Font font) {
+  public void setTickLabelFont(Font font) {
 
     this.axisPair.xAxis.axisTick.axisTickLabels.font = font;
     this.axisPair.yAxis.axisTick.axisTickLabels.font = font;
