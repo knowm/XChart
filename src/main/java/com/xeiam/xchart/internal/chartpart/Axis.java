@@ -129,11 +129,6 @@ public class Axis implements IChartPart {
     return axisTitle;
   }
 
-  public void setAxisTitle(String title) {
-
-    this.axisTitle.setText(title);
-  }
-
   protected void setAxisTitle(AxisTitle axisTitle) {
 
     this.axisTitle = axisTitle;

@@ -191,12 +191,12 @@ public class Chart {
 
   public void setXAxisTitle(String title) {
 
-    this.axisPair.xAxis.setAxisTitle(title);
+    this.axisPair.xAxis.axisTitle.setText(title);
   }
 
   public void setYAxisTitle(String title) {
 
-    this.axisPair.yAxis.setAxisTitle(title);
+    this.axisPair.yAxis.axisTitle.setText(title);
   }
 
   // ChartPart visibility ////////////////////////////////
