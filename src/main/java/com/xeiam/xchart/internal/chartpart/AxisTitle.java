@@ -33,7 +33,7 @@ public class AxisTitle implements IChartPart, IHideable {
   protected final static int AXIS_TITLE_PADDING = 10;
 
   /** parent */
-  private Axis axis;
+  private final Axis axis;
 
   /** the title text */
   protected String text = ""; // default to ""
@@ -48,7 +48,7 @@ public class AxisTitle implements IChartPart, IHideable {
   private Rectangle bounds;
 
   /**
-   * Constructor.
+   * Constructor
    * 
    * @param axis the axis
    */
@@ -63,7 +63,7 @@ public class AxisTitle implements IChartPart, IHideable {
     return text;
   }
 
-  protected void setText(String text) {
+  public void setText(String text) {
 
     if (text.trim().equalsIgnoreCase("")) {
       this.isVisible = false;
@@ -105,7 +105,14 @@ public class AxisTitle implements IChartPart, IHideable {
         Rectangle nonRotatedRectangle = nonRotatedTextLayout.getPixelBounds(null, 0, 0);
         // System.out.println(nonRotatedRectangle);
 
-        TextLayout rotatedTextLayout = new TextLayout(text, font.deriveFont(AffineTransform.getRotateInstance(Math.PI / -2.0, 0, 0)), frc);
+        AffineTransform at = new AffineTransform();
+        // Tx.translate(anchorx, anchory); // S3: final translation
+        double theta = Math.PI / -2.0;
+        at.rotate(theta); // S2: rotate around anchor
+        // Tx.translate(-anchorx, -anchory); // S1: translate anchor to origin
+        Font derivedFont = font.deriveFont(at);
+        TextLayout rotatedTextLayout = new TextLayout(text, derivedFont, frc);
+        // TextLayout rotatedTextLayout = new TextLayout(text, font.deriveFont(AffineTransform.getRotateInstance(Math.PI / -2.0, 0, 0)), frc);
         // Rectangle rotatedRectangle = rotatedTextLayout.getPixelBounds(null, 0, 0);
         // System.out.println(rotatedRectangle);
 
