@@ -29,7 +29,7 @@ import com.xeiam.xchart.internal.interfaces.IChartPart;
 public class AxisTickLabels implements IChartPart {
 
   /** parent */
-  private AxisTick axisTick;
+  private final AxisTick axisTick;
 
   /** the font */
   public Font font;
@@ -58,6 +58,7 @@ public class AxisTickLabels implements IChartPart {
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
+    g.setFont(font);
 
     g.setColor(axisTick.axis.axisPair.chart.fontColor);
 

@@ -96,6 +96,7 @@ public class AxisTitle implements IChartPart, IHideable {
     bounds = new Rectangle();
 
     g.setColor(axis.axisPair.chart.fontColor);
+    g.setFont(font);
 
     if (axis.direction == Axis.Direction.Y) {
       if (isVisible) {
@@ -105,20 +106,28 @@ public class AxisTitle implements IChartPart, IHideable {
         Rectangle nonRotatedRectangle = nonRotatedTextLayout.getPixelBounds(null, 0, 0);
         // System.out.println(nonRotatedRectangle);
 
-        AffineTransform at = new AffineTransform();
-        // Tx.translate(anchorx, anchory); // S3: final translation
-        double theta = Math.PI / -2.0;
-        at.rotate(theta); // S2: rotate around anchor
-        // Tx.translate(-anchorx, -anchory); // S1: translate anchor to origin
-        Font derivedFont = font.deriveFont(at);
-        TextLayout rotatedTextLayout = new TextLayout(text, derivedFont, frc);
-        // TextLayout rotatedTextLayout = new TextLayout(text, font.deriveFont(AffineTransform.getRotateInstance(Math.PI / -2.0, 0, 0)), frc);
-        // Rectangle rotatedRectangle = rotatedTextLayout.getPixelBounds(null, 0, 0);
-        // System.out.println(rotatedRectangle);
+        // ///////////////////////////////////////////////
 
+        // AffineTransform at = new AffineTransform();
+        // // Tx.translate(anchorx, anchory); // S3: final translation
+        // double theta = Math.PI / -2.0;
+        // at.rotate(theta); // S2: rotate around anchor
+        // // Tx.translate(-anchorx, -anchory); // S1: translate anchor to origin
+        // Font derivedFont = font.deriveFont(at);
+        // TextLayout rotatedTextLayout = new TextLayout(text, derivedFont, frc);
+        // // TextLayout rotatedTextLayout = new TextLayout(text, font.deriveFont(AffineTransform.getRotateInstance(Math.PI / -2.0, 0, 0)), frc);
+        // // Rectangle rotatedRectangle = rotatedTextLayout.getPixelBounds(null, 0, 0);
+        // // System.out.println(rotatedRectangle);
+        //
         int xOffset = (int) (axis.getPaintZone().getX() + nonRotatedRectangle.getHeight());
         int yOffset = (int) ((axis.getPaintZone().getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + axis.getPaintZone().getY());
-        rotatedTextLayout.draw(g, xOffset, yOffset);
+        AffineTransform orig = g.getTransform();
+        g.transform(AffineTransform.getRotateInstance(Math.PI / -2.0, xOffset, yOffset));
+        g.drawString(text, xOffset, yOffset);
+        // rotatedTextLayout.draw(g, xOffset, yOffset);
+
+        // ///////////////////////////////////////////////
+        g.setTransform(orig);
 
         // bounds
         bounds = new Rectangle((int) (xOffset - nonRotatedRectangle.getHeight()), (int) (yOffset - nonRotatedRectangle.getWidth()), (int) nonRotatedRectangle.getHeight() + AXIS_TITLE_PADDING,

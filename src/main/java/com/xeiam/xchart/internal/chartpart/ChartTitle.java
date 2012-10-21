@@ -31,7 +31,7 @@ import com.xeiam.xchart.internal.interfaces.IHideable;
 public class ChartTitle implements IChartPart, IHideable {
 
   /** parent */
-  private Chart chart;
+  private final Chart chart;
 
   /** the title text */
   protected String text = ""; // default to ""
@@ -76,6 +76,7 @@ public class ChartTitle implements IChartPart, IHideable {
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
+    g.setFont(font);
 
     if (isVisible) {
 

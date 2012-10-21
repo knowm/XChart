@@ -38,7 +38,7 @@ public class Legend implements IChartPart, IHideable {
   private static final int LEGEND_PADDING = 10;
 
   /** parent */
-  private Chart chart;
+  private final Chart chart;
 
   /** the visibility state of legend */
   protected boolean isVisible = true; // default to true
@@ -74,6 +74,7 @@ public class Legend implements IChartPart, IHideable {
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
+    g.setFont(font);
 
     if (isVisible) {
 
