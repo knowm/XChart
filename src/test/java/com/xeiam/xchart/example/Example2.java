@@ -50,7 +50,6 @@ public class Example2 {
     // Customize Chart
     chart.setTitleVisible(false);
     chart.setLegendVisible(false);
-    chart.setAxisTitlesVisible(false);
 
     // Series 1
     Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);

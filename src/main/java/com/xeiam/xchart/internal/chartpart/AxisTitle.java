@@ -81,7 +81,11 @@ public class AxisTitle implements IChartPart, IHideable {
   @Override
   public void setVisible(boolean isVisible) {
 
-    this.isVisible = isVisible;
+    if (!text.trim().equalsIgnoreCase("")) {
+      this.isVisible = isVisible;
+    } else {
+      // don't allow a set to true if text is empty!
+    }
   }
 
   @Override
