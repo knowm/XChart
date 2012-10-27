@@ -85,6 +85,7 @@ public class AxisTitle implements IChartPart, IHideable {
       this.isVisible = isVisible;
     } else {
       // don't allow a set to true if text is empty!
+      this.isVisible = false; // set to false for good measure
     }
   }
 
