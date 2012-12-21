@@ -83,7 +83,7 @@ public class AxisTick implements IChartPart, IHideable {
 
     // formatting
     locale = Locale.getDefault();
-    normalDecimalPattern = "#.###";
+    normalDecimalPattern = "#.####";
     scientificDecimalPattern = "0.###E0";
     datePattern = "HHmmss";
 

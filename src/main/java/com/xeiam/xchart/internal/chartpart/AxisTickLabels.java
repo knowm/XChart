@@ -70,6 +70,7 @@ public class AxisTickLabels implements IChartPart {
       for (int i = 0; i < axisTick.tickLabels.size(); i++) {
 
         String tickLabel = axisTick.tickLabels.get(i);
+        // System.out.println(tickLabel);
         int tickLocation = axisTick.tickLocations.get(i);
 
         FontRenderContext frc = g.getFontRenderContext();
