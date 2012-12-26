@@ -248,7 +248,7 @@ public class AxisTick implements IChartPart, IHideable {
 
       NumberFormat nf = NumberFormat.getNumberInstance(locale);
 
-      if (Math.abs(value.doubleValue()) <= 9999 && Math.abs(value.doubleValue()) > .0001 || value.doubleValue() == 0) {
+      if (Math.abs(value.doubleValue()) <= 9999 && Math.abs(value.doubleValue()) > .001 || value.doubleValue() == 0) {
 
         DecimalFormat normalFormat = (DecimalFormat) nf;
         normalFormat.applyPattern(normalDecimalPattern);
