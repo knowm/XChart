@@ -83,8 +83,8 @@ public class AxisTick implements IChartPart, IHideable {
 
     // formatting
     locale = Locale.getDefault();
-    normalDecimalPattern = "#.####";
-    scientificDecimalPattern = "0.###E0";
+    normalDecimalPattern = "#.###";
+    scientificDecimalPattern = "0.##E0";
     datePattern = "HHmmss";
 
   }
@@ -248,7 +248,7 @@ public class AxisTick implements IChartPart, IHideable {
 
       NumberFormat nf = NumberFormat.getNumberInstance(locale);
 
-      if (Math.abs(value.doubleValue()) <= 9999 && Math.abs(value.doubleValue()) > .001 || value.doubleValue() == 0) {
+      if (Math.abs(value.doubleValue()) <= 9999 && Math.abs(value.doubleValue()) > .01 || value.doubleValue() == 0) {
 
         DecimalFormat normalFormat = (DecimalFormat) nf;
         normalFormat.applyPattern(normalDecimalPattern);
