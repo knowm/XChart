@@ -17,14 +17,10 @@ Non-Maven
 ---------
 Download Jar: http://xeiam.com/xchart.jsp
 
-The XChart release artifacts are hosted on Maven Central. Otherwise if you need the latest snapshots, they are hosted at oss.sonatype.org. Add the following repository to your pom.xml file.
+Maven
+-----
+The XChart release artifacts are hosted on Maven Central.
 
-    <repository>
-      <id>xchart-snapshot</id>
-      <snapshots/>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </repository>
-  
 Add this dependency to your pom.xml file:
 
     <dependency>
@@ -32,6 +28,14 @@ Add this dependency to your pom.xml file:
       <artifactId>xchart</artifactId>
       <version>1.2.1</version>
     </dependency>
+
+For snapshots, add the following repository to your pom.xml file.
+
+    <repository>
+      <id>xchart-snapshot</id>
+      <snapshots/>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
 
 Building
 ===============
