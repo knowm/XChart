@@ -28,7 +28,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>1.2.1</version>
+      <version>1.2.2.SNAPSHOT</version>
     </dependency>
 
 For snapshots, add the following repository to your pom.xml file:
