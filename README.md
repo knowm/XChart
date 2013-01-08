@@ -17,24 +17,15 @@ Non-Maven
 ---------
 Download Jar: http://xeiam.com/xchart.jsp
 
-Maven
------
-The XChart artifacts are currently hosted on the Xeiam Nexus repository here:
+The XChart release artifacts are hosted on Maven Central. Otherwise if you need the latest snapshots, they are hosted at oss.sonatype.org. Add the following repository to your pom.xml file.
 
-    <repositories>
-      <repository>
-        <id>xchange-release</id>
-        <releases/>
-        <url>http://nexus.xeiam.com/content/repositories/releases</url>
-      </repository>
-      <repository>
-        <id>xchange-snapshot</id>
-        <snapshots/>
-        <url>http://nexus.xeiam.com/content/repositories/snapshots/</url>
-      </repository>
-    </repositories>
+    <repository>
+      <id>xchart-snapshot</id>
+      <snapshots/>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
   
-Add this to dependencies in pom.xml:
+Add this dependency to your pom.xml file:
 
     <dependency>
       <groupId>com.xeiam</groupId>
@@ -46,3 +37,7 @@ Building
 ===============
 mvn clean package  
 mvn javadoc:javadoc  
+
+Donations
+===============
+17dQktcAmU4urXz7tGk2sbuiCqykm3WLs6
