@@ -126,7 +126,7 @@ public class Chart {
    * @param seriesName
    * @param xData Collection<Number>
    * @param yData Collection<Number>
-   * @return
+   * @return A Series object that you can set properties on
    */
   public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
 
@@ -144,7 +144,7 @@ public class Chart {
    * @param seriesName
    * @param xData double[]
    * @param yData double[]
-   * @return
+   * @return A Series object that you can set properties on
    */
   public Series addSeries(String seriesName, double[] xData, double[] yData) {
 
@@ -158,7 +158,7 @@ public class Chart {
    * @param xData
    * @param yData
    * @param errorBars
-   * @return
+   * @return A Series object that you can set properties on
    */
   public Series addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
 

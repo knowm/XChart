@@ -25,7 +25,6 @@ import javax.swing.JPanel;
  * A Swing JPanel that contains a Chart
  * 
  * @author timmolter
- * @create Sep 9, 2012
  */
 public class XChartPanel extends JPanel {
 

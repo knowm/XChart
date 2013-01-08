@@ -81,7 +81,7 @@ public enum SeriesLineStyle {
    * Get an AWT Stroke
    * 
    * @param seriesMarker
-   * @return
+   * @return an AWT Stroke
    */
   protected static BasicStroke getBasicStroke(SeriesLineStyle seriesMarker) {
 
@@ -89,9 +89,9 @@ public enum SeriesLineStyle {
   }
 
   /**
-   * Gets the next Stroke
+   * Gets the next BasicStroke
    * 
-   * @return
+   * @return the next BasicStroke
    */
   protected static BasicStroke getNextBasicStroke() {
 

@@ -44,7 +44,7 @@
 	</ciManagement>
 
 	<dependencies>
-	<!-- only needed if using XCharts as part of a webapp -->
+		<!-- only needed if using XCharts as part of a webapp -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -143,5 +143,10 @@
 			</build>
 		</profile>
 	</profiles>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
 
 </project>
