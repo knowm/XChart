@@ -37,7 +37,7 @@
 	<scm>
 		<connection>scm:git:git@github.com:timmolter/XChart.git</connection>
 		<developerConnection>scm:git:git@github.com:timmolter/XChart.git</developerConnection>
-		<url>https://github.com/timmolter/XChart</url>
+		<url>git@github.com:timmolter/XChart.git</url>
 	</scm>
 	<ciManagement>
 		<url>http://ci.xeiam.com/</url>
