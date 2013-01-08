@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
+import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.interfaces.IHideable;
 
@@ -34,8 +35,11 @@ import com.xeiam.xchart.internal.interfaces.IHideable;
  */
 public class AxisTick implements IChartPart, IHideable {
 
-  /** the default tick mark step hint */
-  private static final int DEFAULT_TICK_MARK_STEP_HINT = 64;
+  /** the default tick mark step hint for x axis */
+  private static final int DEFAULT_TICK_MARK_STEP_HINT_X = 74;
+
+  /** the default tick mark step hint for y axis */
+  private static final int DEFAULT_TICK_MARK_STEP_HINT_Y = 44;
 
   /** the padding between the tick labels and the tick marks */
   protected final static int AXIS_TICK_PADDING = 4;
@@ -83,7 +87,7 @@ public class AxisTick implements IChartPart, IHideable {
 
     // formatting
     locale = Locale.getDefault();
-    normalDecimalPattern = "#.###";
+    normalDecimalPattern = "#.####";
     scientificDecimalPattern = "0.##E0";
     datePattern = "HHmmss";
 
@@ -122,12 +126,13 @@ public class AxisTick implements IChartPart, IHideable {
       axisTickMarks.paint(g);
 
       if (axis.direction == Axis.Direction.Y) {
-        bounds = new Rectangle((int) axisTickLabels.getBounds().getX(), (int) (axisTickLabels.getBounds().getY()),
-            (int) (axisTickLabels.getBounds().getWidth() + AXIS_TICK_PADDING + axisTickMarks.getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
+        bounds = new Rectangle((int) axisTickLabels.getBounds().getX(), (int) (axisTickLabels.getBounds().getY()), (int) (axisTickLabels.getBounds().getWidth() + AXIS_TICK_PADDING + axisTickMarks
+            .getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
         // g.setColor(Color.red);
         // g.draw(bounds);
       } else {
-        bounds = new Rectangle((int) axisTickMarks.getBounds().getX(), (int) (axisTickMarks.getBounds().getY()), (int) axisTickLabels.getBounds().getWidth(), (int) (axisTickMarks.getBounds().getHeight()
+        bounds = new Rectangle((int) axisTickMarks.getBounds().getX(), (int) (axisTickMarks.getBounds().getY()), (int) axisTickLabels.getBounds().getWidth(), (int) (axisTickMarks.getBounds()
+            .getHeight()
             + AXIS_TICK_PADDING + axisTickLabels.getBounds().getHeight()));
         // g.setColor(Color.red);
         // g.draw(bounds);
@@ -186,7 +191,8 @@ public class AxisTick implements IChartPart, IHideable {
     // System.out.println(axis.getMax());
     // System.out.println(axis.min);
     // System.out.println(length);
-    double gridStepHint = length / tickSpace * DEFAULT_TICK_MARK_STEP_HINT;
+    int tickMarkSpaceHint = (axis.direction == Direction.X ? DEFAULT_TICK_MARK_STEP_HINT_X : DEFAULT_TICK_MARK_STEP_HINT_Y);
+    double gridStepHint = length / tickSpace * tickMarkSpaceHint;
 
     // gridStepHint --> mantissa * 10 ** exponent
     // e.g. 724.1 --> 7.241 * 10 ** 2
