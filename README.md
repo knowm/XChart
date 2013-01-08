@@ -10,6 +10,8 @@ your Swing, Java EE, and Java SE applications. If you're looking for
 a Java charting API that is easy to use and does not need every feature
 under the sun, XChart is for you.
 
+If you have any feature request, please post them [here](https://github.com/timmolter/XChart/issues).
+
 Getting Started
 ===============
 
@@ -21,7 +23,7 @@ Maven
 -----
 The XChart release artifacts are hosted on Maven Central.
 
-Add this dependency to your pom.xml file:
+Add the XChart library as a dependency to your pom.xml file:
 
     <dependency>
       <groupId>com.xeiam</groupId>
@@ -29,7 +31,7 @@ Add this dependency to your pom.xml file:
       <version>1.2.1</version>
     </dependency>
 
-For snapshots, add the following repository to your pom.xml file.
+For snapshots, add the following repository to your pom.xml file:
 
     <repository>
       <id>xchart-snapshot</id>
