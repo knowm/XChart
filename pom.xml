@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<name>XChart</name>
@@ -20,14 +21,11 @@
 		<developer>
 			<name>Tim Molter</name>
 		</developer>
-		<developer>
-			<name>Alex Nugent</name>
-		</developer>
 	</developers>
 	<licenses>
 		<license>
-			<name>Apache 2</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 			<comments>A business-friendly OSS license</comments>
 		</license>
@@ -37,50 +35,21 @@
 		<url>https://github.com/timmolter/XChart/issues</url>
 	</issueManagement>
 	<scm>
+		<connection>scm:git:git@github.com:timmolter/XChart.git</connection>
+		<developerConnection>scm:git:git@github.com:timmolter/XChart.git</developerConnection>
 		<url>https://github.com/timmolter/XChart</url>
 	</scm>
 	<ciManagement>
 		<url>http://ci.xeiam.com/</url>
 	</ciManagement>
-	<distributionManagement>
-		<snapshotRepository>
-			<id>xeiam_oss.snapshots</id>
-			<name>Nexus Snapshots Repo</name>
-			<url>http://nexus.xeiam.com/content/repositories/snapshots/</url>
-		</snapshotRepository>
-		<repository>
-			<id>xeiam_oss.releases</id>
-			<name>Nexus Release Repo</name>
-			<url>http://nexus.xeiam.com/content/repositories/releases/</url>
-		</repository>
-	</distributionManagement>
 
 	<dependencies>
+	<!-- only needed if using XCharts as part of a webapp -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
-		</dependency>
-		<!-- test -->
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-library</artifactId>
-			<version>1.3</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<!-- dep leaves out hamcrest classes -->
-			<artifactId>junit-dep</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.hamcrest</groupId>
-					<artifactId>hamcrest-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 
@@ -131,5 +100,48 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>xeiam_oss.sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>xeiam_oss.sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<downloadUrl>https://oss.sonatype.org/content/groups/public/com/xeiam/xchart</downloadUrl>
+	</distributionManagement>
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
