@@ -27,7 +27,7 @@ import javax.servlet.ServletOutputStream;
  * 
  * @author timmolter
  */
-public class ServletEncoder {
+public final class ServletEncoder {
 
   /**
    * Constructor - Private constructor to prevent instantiation

@@ -35,7 +35,7 @@ import javax.imageio.stream.FileImageOutputStream;
  * 
  * @author timmolter
  */
-public class BitmapEncoder {
+public final class BitmapEncoder {
 
   /**
    * Constructor - Private constructor to prevent instantiation
