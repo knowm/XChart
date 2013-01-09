@@ -10,7 +10,10 @@ your Swing, Java EE, and Java SE applications. If you're looking for
 a Java charting API that is easy to use and does not need every feature
 under the sun, XChart is for you.
 
-If you have any feature request, please post them [here](https://github.com/timmolter/XChart/issues).
+Bugs
+===============
+
+Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).
 
 Getting Started
 ===============
