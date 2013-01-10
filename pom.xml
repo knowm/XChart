@@ -42,16 +42,6 @@
 		<url>http://ci.xeiam.com/</url>
 	</ciManagement>
 
-	<dependencies>
-		<!-- only needed if using XCharts as part of a webapp -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<plugins>
 			<!-- Ensure compilation is done under Java 6 in all environments -->
