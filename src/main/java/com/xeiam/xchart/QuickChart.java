@@ -15,20 +15,34 @@
  */
 package com.xeiam.xchart;
 
+import java.util.Collection;
+
 /**
  * A convenience class for making Charts with one line of code
  * 
  * @author timmolter
  */
-public class QuickChart {
+public final class QuickChart {
+
+  private final static int WIDTH = 600;
+  private final static int HEIGHT = 400;
 
   /**
-   * @param chartTitle
-   * @param xTitle
-   * @param yTitle
-   * @param seriesName
-   * @param xData
-   * @param yData
+   * private Constructor
+   */
+  private QuickChart() {
+
+  }
+
+  /**
+   * Creates a Chart with default style
+   * 
+   * @param chartTitle the Chart title
+   * @param xTitle The X-Axis title
+   * @param yTitle The Y-Axis title
+   * @param seriesNames The name of the series
+   * @param xData An array containing the X-Axis data
+   * @param yData An array containing Y-Axis data
    * @return a Chart Object
    */
   public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, double[] xData, double[] yData) {
@@ -42,18 +56,20 @@ public class QuickChart {
   }
 
   /**
-   * @param chartTitle
-   * @param xTitle
-   * @param yTitle
-   * @param seriesNames
-   * @param xData
-   * @param yData
+   * Creates a Chart with multiple Series for the same X-Axis data with default style
+   * 
+   * @param chartTitle the Chart title
+   * @param xTitle The X-Axis title
+   * @param yTitle The Y-Axis title
+   * @param seriesNames An array of the name of the multiple series
+   * @param xData An array containing the X-Axis data
+   * @param yData An array of double arrays containing multiple Y-Axis data
    * @return a Chart Object
    */
   public static Chart getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
 
     // Create Chart
-    Chart chart = new Chart(400, 280);
+    Chart chart = new Chart(WIDTH, HEIGHT);
 
     // Customize Chart
     chart.setTitle(chartTitle);
@@ -73,6 +89,34 @@ public class QuickChart {
     }
 
     return chart;
+  }
+
+  /**
+   * Creates a Chart with default style
+   * 
+   * @param chartTitle the Chart title
+   * @param xTitle The X-Axis title
+   * @param yTitle The Y-Axis title
+   * @param seriesNames The name of the series
+   * @param xData A Collection containing the X-Axis data
+   * @param yData A Collection containing Y-Axis data
+   * @return a Chart Object
+   */
+  public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, Collection<Number> xData, Collection<Number> yData) {
+
+    // Create Chart
+    Chart chart = new Chart(WIDTH, HEIGHT);
+
+    // Customize Chart
+    chart.setTitle(chartTitle);
+    chart.setXAxisTitle(xTitle);
+    chart.setYAxisTitle(yTitle);
+
+    Series series = chart.addSeries(seriesName, xData, yData);
+    series.setMarker(SeriesMarker.NONE);
+
+    return chart;
+
   }
 
 }
