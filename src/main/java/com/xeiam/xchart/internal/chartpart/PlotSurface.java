@@ -88,7 +88,8 @@ public class PlotSurface implements IChartPart, IHideable {
         g.setColor(gridLinesColor);
         g.setStroke(stroke);
         // System.out.println("bounds.getY()= " + bounds.getY());
-        g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2), (int) (bounds.getY() + bounds.getHeight() - tickLocation));
+        g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2),
+            (int) (bounds.getY() + bounds.getHeight() - tickLocation));
       }
 
       // vertical
