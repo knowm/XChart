@@ -66,8 +66,10 @@ public class Chart {
 
   /**
    * @param g
+   * @param width
+   * @param height
    */
-  protected void paint(Graphics2D g, int width, int height) {
+  public void paint(Graphics2D g, int width, int height) {
 
     this.width = width;
     this.height = height;
@@ -78,7 +80,7 @@ public class Chart {
   /**
    * @param g
    */
-  protected void paint(Graphics2D g) {
+  public void paint(Graphics2D g) {
 
     // Sanity check
     if (axisPair.seriesMap.isEmpty()) {
