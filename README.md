@@ -1,13 +1,11 @@
-Description
-===============
+# Description
 XChart is a light-weight and convenient library for plotting data.
 
 Its focus is on simplicity and ease-of-use, requiring only two lines of code to save or display a basic default chart.
 
 Usage is very simple: Create a Chart instance, add a series of data to it, and either save it or display it.
 
-Example
-===============
+# Example
 
     double[] xData = new double[] { 0.0, 1.0, 2.0 };
     double[] yData = new double[] { 2.0, 1.0, 0.0 };
@@ -23,8 +21,7 @@ Example
     
 Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.jsp), [download the thing](http://xeiam.com/xchart_changelog.jsp) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
-Features
-===============
+# Features
 * no additional dependencies
 * ~50KB Jar
 * line charts
@@ -34,14 +31,11 @@ Features
 * multiple series
 * extensive customization
 
-Getting Started
-===============
-Non-Maven
----------
+# Getting Started
+## Non-Maven
 Download Jar: http://xeiam.com/xchart.jsp
 
-Maven
------
+## Maven
 The XChart release artifacts are hosted on Maven Central.
 
 Add the XChart library as a dependency to your pom.xml file:
@@ -66,15 +60,12 @@ For snapshots, add the following to your pom.xml file:
       <version>1.2.2-SNAPSHOT</version>
     </dependency>
 
-Building
-===============
+# Building
 mvn clean package  
 mvn javadoc:javadoc  
 
-Bugs
-===============
+# Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).
 
-Donations
-===============
+# Donations
 17dQktcAmU4urXz7tGk2sbuiCqykm3WLs6
