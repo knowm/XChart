@@ -1,3 +1,6 @@
+# XChart
+A Simple Charting Library for Java
+
 # Description
 XChart is a light-weight and convenient library for plotting data.
 
