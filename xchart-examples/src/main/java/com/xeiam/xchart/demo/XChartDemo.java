@@ -85,7 +85,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
     Dimension minimumSize = new Dimension(100, 125);
     treeView.setMinimumSize(minimumSize);
-    splitPane.setDividerLocation(100);
     splitPane.setPreferredSize(new Dimension(700, 700));
 
     // Add the split pane to this panel.
