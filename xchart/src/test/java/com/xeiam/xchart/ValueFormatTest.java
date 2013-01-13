@@ -50,7 +50,7 @@ public class ValueFormatTest {
     String stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
     assertThat(stringValue, equalTo("1"));
 
-    value = new BigDecimal("1000");
+    value = new BigDecimal(1000L);
     stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
     assertThat(stringValue, equalTo("1000"));
 
@@ -58,7 +58,7 @@ public class ValueFormatTest {
     stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
     assertThat(stringValue, equalTo("9999"));
 
-    value = new BigDecimal("20000");
+    value = new BigDecimal(20000L);
     stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
     assertThat(stringValue, equalTo("2E4"));
 
@@ -116,44 +116,44 @@ public class ValueFormatTest {
   public void testDateFormatting() {
 
     // ms
-    BigDecimal value = new BigDecimal("1358108105531");
-    BigDecimal min = new BigDecimal("1358108105100");
-    BigDecimal max = new BigDecimal("1358108105900");
+    BigDecimal value = new BigDecimal(1358108105531L);
+    BigDecimal min = new BigDecimal(1358108105100L);
+    BigDecimal max = new BigDecimal(1358108105900L);
     String stringValue = AxisValueFormatterUtil.formatDateValue(value, min, max, null, locale);
     assertThat(stringValue, equalTo("05:531"));
 
     // sec
-    value = new BigDecimal("1358108105000");
-    min = new BigDecimal("1358108101000");
-    max = new BigDecimal("1358108109000");
+    value = new BigDecimal(1358108105000L);
+    min = new BigDecimal(1358108101000L);
+    max = new BigDecimal(1358108109000L);
     stringValue = AxisValueFormatterUtil.formatDateValue(value, min, max, null, locale);
     assertThat(stringValue, equalTo("15:05"));
 
     // min
-    value = new BigDecimal("1358111750000");
-    min = new BigDecimal("1358111690000");
-    max = new BigDecimal("1358111870000");
+    value = new BigDecimal(1358111750000L);
+    min = new BigDecimal(1358111690000L);
+    max = new BigDecimal(1358111870000L);
     stringValue = AxisValueFormatterUtil.formatDateValue(value, min, max, null, locale);
     assertThat(stringValue, equalTo("22:15"));
 
     // hour
-    value = new BigDecimal("1358111870000");
-    min = new BigDecimal("1358101070000");
-    max = new BigDecimal("1358115470000");
+    value = new BigDecimal(1358111870000L);
+    min = new BigDecimal(1358101070000L);
+    max = new BigDecimal(1358115470000L);
     stringValue = AxisValueFormatterUtil.formatDateValue(value, min, max, null, locale);
     assertThat(stringValue, equalTo("13:22"));
 
     // day
-    value = new BigDecimal("1358112317000");
-    min = new BigDecimal("1357939517000");
-    max = new BigDecimal("1358285117000");
+    value = new BigDecimal(1358112317000L);
+    min = new BigDecimal(1357939517000L);
+    max = new BigDecimal(1358285117000L);
     stringValue = AxisValueFormatterUtil.formatDateValue(value, min, max, null, locale);
     assertThat(stringValue, equalTo("Sun"));
 
     // week
-    value = new BigDecimal("1358112317000");
-    min = new BigDecimal("1357075517000");
-    max = new BigDecimal("1359149117000");
+    value = new BigDecimal(1358112317000L);
+    min = new BigDecimal(1357075517000L);
+    max = new BigDecimal(1359149117000L);
     stringValue = AxisValueFormatterUtil.formatDateValue(value, min, max, null, locale);
     assertThat(stringValue, equalTo("Jan-13"));
 
