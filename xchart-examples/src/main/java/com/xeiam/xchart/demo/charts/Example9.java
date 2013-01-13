@@ -71,7 +71,7 @@ public class Example9 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setTitle("Sample Chart with Date X-Axis");
+    chart.setTitle("Sample Chart Extensive Cusomization");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.setForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));

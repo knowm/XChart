@@ -53,7 +53,7 @@ public class Example3 implements ExampleChart {
       }
 
       // Customize Chart
-      chart.setTitle("Sample Chart");
+      chart.setTitle("Example3");
       chart.setXAxisTitle("X");
       chart.setYAxisTitle("Y");
 
