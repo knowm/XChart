@@ -108,10 +108,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
       chartPanel = new XChartPanel(chartInfo.getExampleChart());
       splitPane.setBottomComponent(chartPanel);
     }
-    // tree branch node
-    else {
-      // do nothing
-    }
   }
 
   private void createNodes(DefaultMutableTreeNode top) {
