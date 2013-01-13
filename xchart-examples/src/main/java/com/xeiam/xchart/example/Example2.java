@@ -27,7 +27,7 @@ import com.xeiam.xchart.SwingWrapper;
  * 
  * @author timmolter
  */
-public class Example4 {
+public class Example2 {
 
   public static void main(String[] args) {
 

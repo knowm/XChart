@@ -19,7 +19,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Plot vertical and horizontal lines
+ * Vertical and horizontal lines
  * 
  * @author timmolter
  */

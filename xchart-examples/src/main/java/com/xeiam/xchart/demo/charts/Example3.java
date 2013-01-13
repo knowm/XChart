@@ -22,7 +22,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Create multiple curves on one Chart
+ * Multiple curves on one Chart
  * 
  * @author timmolter
  */

@@ -26,7 +26,7 @@ import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Create a Chart with error bars
+ * Error bars
  * 
  * @author timmolter
  */

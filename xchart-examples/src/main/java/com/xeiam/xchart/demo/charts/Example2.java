@@ -26,7 +26,7 @@ import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Embed a Chart in a simple Swing application
+ * Sine wave with customized series style
  * 
  * @author timmolter
  */

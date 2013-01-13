@@ -30,7 +30,6 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.xeiam.xchart.XChartPanel;
 import com.xeiam.xchart.demo.charts.Example10;
-import com.xeiam.xchart.demo.charts.Example11;
 import com.xeiam.xchart.demo.charts.Example2;
 import com.xeiam.xchart.demo.charts.Example3;
 import com.xeiam.xchart.demo.charts.Example5;
@@ -87,7 +86,7 @@ public class ChartDemo extends JPanel implements TreeSelectionListener {
     Dimension minimumSize = new Dimension(100, 125);
     treeView.setMinimumSize(minimumSize);
     splitPane.setDividerLocation(100);
-    splitPane.setPreferredSize(new Dimension(800, 800));
+    splitPane.setPreferredSize(new Dimension(700, 700));
 
     // Add the split pane to this panel.
     add(splitPane);
@@ -127,35 +126,32 @@ public class ChartDemo extends JPanel implements TreeSelectionListener {
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example10", new Example10().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example10 - Scientific notation formatting", new Example10().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example11", new Example11().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example2 - Customized series style", new Example2().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example2", new Example2().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example3 - Multiple curves on one Chart", new Example3().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example3", new Example3().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example5", new Example5().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example6", new Example6().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example5 - Vertical and horizontal lines", new Example5().getChart()));
     category.add(chart);
 
     // Second category
-    category = new DefaultMutableTreeNode("Other Charts");
+    category = new DefaultMutableTreeNode("More Charts");
     top.add(category);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example7", new Example7().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example6 - Single point", new Example6().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example8", new Example8().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example7 - Longs as X-Axis data", new Example7().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example9", new Example9().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example8 - Error bars", new Example8().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example9 - Extensive chart customization", new Example9().getChart()));
     category.add(chart);
 
   }
