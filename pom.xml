@@ -7,7 +7,7 @@
 	<artifactId>xchart-parent</artifactId>
 	<version>1.3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>XChart</name>
+	<name>XChart Parent</name>
 	<description>Basic Charts for Java Applications</description>
 	<url>http://xeiam.com/xchart.jsp</url>
 	<inceptionYear>2011</inceptionYear>
