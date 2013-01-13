@@ -48,7 +48,7 @@
 	</ciManagement>
 
 	<modules>
-		<module>xchart-core</module>
+		<module>xchart</module>
 		<module>xchart-examples</module>
 	</modules>
 
