@@ -55,7 +55,7 @@ public enum SeriesColor {
   CYAN(9, new Color(0, 255, 255)),
 
   /** BROWN */
-  BROWN(10, new Color(150, 74, 0)),
+  BROWN(10, new Color(102, 56, 10)),
 
   /** BLACK */
   BLACK(11, new Color(0, 0, 0));

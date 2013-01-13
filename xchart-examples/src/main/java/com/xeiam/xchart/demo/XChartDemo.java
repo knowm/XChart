@@ -32,6 +32,7 @@ import com.xeiam.xchart.XChartPanel;
 import com.xeiam.xchart.demo.charts.Example10;
 import com.xeiam.xchart.demo.charts.Example2;
 import com.xeiam.xchart.demo.charts.Example3;
+import com.xeiam.xchart.demo.charts.Example4;
 import com.xeiam.xchart.demo.charts.Example5;
 import com.xeiam.xchart.demo.charts.Example6;
 import com.xeiam.xchart.demo.charts.Example7;
@@ -128,6 +129,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("Example3 - Multiple curves on one Chart", new Example3().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example4 - Date Axis", new Example4().getChart()));
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("Example5 - Vertical and horizontal lines", new Example5().getChart()));

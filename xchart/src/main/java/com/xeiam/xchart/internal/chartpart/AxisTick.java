@@ -18,9 +18,6 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +26,7 @@ import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.interfaces.IHideable;
+import com.xeiam.xchart.internal.misc.AxisValueFormatterUtil;
 
 /**
  * An axis tick.
@@ -64,9 +62,9 @@ public class AxisTick implements IChartPart, IHideable {
   /** the Locale for Date tick labels */
   public Locale locale;
 
-  public String normalDecimalPattern;
-  public String scientificDecimalPattern;
-  public String datePattern;
+  public String normalDecimalPattern = null;
+  public String scientificDecimalPattern = null;
+  public String datePattern = null;
 
   /** the bounds */
   private Rectangle bounds;
@@ -84,12 +82,6 @@ public class AxisTick implements IChartPart, IHideable {
     this.axis = axis;
     axisTickLabels = new AxisTickLabels(this);
     axisTickMarks = new AxisTickMarks(this);
-
-    // formatting
-    locale = Locale.getDefault();
-    normalDecimalPattern = "#.####";
-    scientificDecimalPattern = "0.##E0";
-    datePattern = "HHmmss";
 
   }
 
@@ -248,32 +240,21 @@ public class AxisTick implements IChartPart, IHideable {
     return value;
   }
 
+  /**
+   * Format the number
+   * 
+   * @param value The number to be formatted
+   * @return The formatted number in String form
+   */
   private String format(BigDecimal value) {
 
     if (axis.axisType == AxisType.NUMBER) {
 
-      NumberFormat nf = NumberFormat.getNumberInstance(locale);
+      return AxisValueFormatterUtil.formatNumber(value, normalDecimalPattern, scientificDecimalPattern, locale);
 
-      if (Math.abs(value.doubleValue()) <= 9999 && Math.abs(value.doubleValue()) > .01 || value.doubleValue() == 0) {
-
-        DecimalFormat normalFormat = (DecimalFormat) nf;
-        normalFormat.applyPattern(normalDecimalPattern);
-        return normalFormat.format(value.doubleValue());
-
-      } else {
-
-        DecimalFormat scientificFormat = (DecimalFormat) nf;
-        scientificFormat.applyPattern(scientificDecimalPattern);
-        return scientificFormat.format(value.doubleValue());
-
-      }
     } else {
 
-      // TODO set this more intelligently
-      SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, locale);
-      simpleDateformat.applyPattern(datePattern);
-      return simpleDateformat.format(value.longValueExact());
-
+      return AxisValueFormatterUtil.formatDateValue(value, axis.min, axis.max, datePattern, locale);
     }
 
   }
