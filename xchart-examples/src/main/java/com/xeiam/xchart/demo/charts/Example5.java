@@ -13,31 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.example;
+package com.xeiam.xchart.demo.charts;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Create Chart with single point
+ * Plot vertical and horizontal lines
  * 
  * @author timmolter
  */
-public class Example6 {
+public class Example5 implements ExampleChart {
 
   public static void main(String[] args) {
 
+    ExampleChart exampleChart = new Example10();
+    Chart chart = exampleChart.getChart();
+    new SwingWrapper(chart).displayChart();
+  }
+
+  @Override
+  public Chart getChart() {
+
     // Create Chart
-    Chart chart = new Chart(700, 500);
+    Chart chart = new Chart(800, 600);
 
     // Customize Chart
     chart.setTitle("Sample Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
 
-    chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
+    chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
+    chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
 
-    new SwingWrapper(chart).displayChart();
+    return chart;
   }
 
 }

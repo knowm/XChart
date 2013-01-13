@@ -13,35 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.example;
-
-import java.util.Arrays;
-import java.util.Collection;
+package com.xeiam.xchart.demo.charts;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Creates a simple Chart using Longs as X-Axis data
+ * Create Chart with single point
  * 
  * @author timmolter
  */
-public class Example7 {
+public class Example6 implements ExampleChart {
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
 
-    Collection<Number> xData = Arrays.asList(new Number[] { 12228120L, 12228984L, 12229848L, 12230712L, 12231576L, 12232440L, 12233304L, 12234168L, 12235032L, 12235896L });
-    Collection<Number> yData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0 });
+    ExampleChart exampleChart = new Example10();
+    Chart chart = exampleChart.getChart();
+    new SwingWrapper(chart).displayChart();
+  }
+
+  @Override
+  public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(700, 500);
+    Chart chart = new Chart(800, 600);
+
+    // Customize Chart
     chart.setTitle("Sample Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.addSeries("y(x)", xData, yData);
 
-    new SwingWrapper(chart).displayChart();
+    chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
 
+    return chart;
   }
 
 }

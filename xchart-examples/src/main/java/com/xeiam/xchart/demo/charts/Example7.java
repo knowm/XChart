@@ -13,32 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.example;
+package com.xeiam.xchart.demo.charts;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Plot vertical and horizontal lines
+ * Creates a simple Chart using Longs as X-Axis data
  * 
  * @author timmolter
  */
-public class Example5 {
+public class Example7 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    // Create Chart
-    Chart chart = new Chart(700, 500);
+    ExampleChart exampleChart = new Example10();
+    Chart chart = exampleChart.getChart();
+    new SwingWrapper(chart).displayChart();
+  }
 
-    // Customize Chart
+  @Override
+  public Chart getChart() {
+
+    Collection<Number> xData = Arrays.asList(new Number[] { 12228120L, 12228984L, 12229848L, 12230712L, 12231576L, 12232440L, 12233304L, 12234168L, 12235032L, 12235896L });
+    Collection<Number> yData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0 });
+
+    // Create Chart
+    Chart chart = new Chart(800, 600);
     chart.setTitle("Sample Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
+    chart.addSeries("y(x)", xData, yData);
 
-    chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
-    chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
-
-    new SwingWrapper(chart).displayChart();
+    return chart;
   }
 
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.example;
+package com.xeiam.xchart.demo.charts;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,9 +28,17 @@ import com.xeiam.xchart.SwingWrapper;
  * 
  * @author timmolter
  */
-public class Example10 {
+public class Example10 implements ExampleChart {
 
   public static void main(String[] args) {
+
+    ExampleChart exampleChart = new Example10();
+    Chart chart = exampleChart.getChart();
+    new SwingWrapper(chart).displayChart();
+  }
+
+  @Override
+  public Chart getChart() {
 
     // data
     Number[] xDataArray = new Number[] { 0.0, 0.03139525976465669, 0.06266661678215213, 0.0936906572928623, 0.1243449435824274, 0.1545084971874737, 0.184062276342339, 0.21288964578253636,
@@ -73,6 +81,6 @@ public class Example10 {
     Series series1 = chart.addSeries("data", xData, yData);
     series1.setMarker(SeriesMarker.NONE);
 
-    new SwingWrapper(chart).displayChart();
+    return chart;
   }
 }
