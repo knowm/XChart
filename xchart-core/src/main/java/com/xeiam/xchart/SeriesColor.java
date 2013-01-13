@@ -16,9 +16,6 @@
 package com.xeiam.xchart;
 
 import java.awt.Color;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Pre-defined Colors used for Series Lines and Markers
@@ -61,58 +58,55 @@ public enum SeriesColor {
   BROWN(10, new Color(150, 74, 0)),
 
   /** BLACK */
-  BLACK(11, new Color(0, 0, 0)),
+  BLACK(11, new Color(0, 0, 0));
 
-  /** RANDOM */
-  RANDOM(12, new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)));
+  /** The index */
+  private int index;
 
-  int id;
-  Color color;
-
-  private static int nextId = 0;
-
-  private static final Map<Integer, SeriesColor> idLookup = new HashMap<Integer, SeriesColor>();
-  static {
-    for (SeriesColor seriesColor : EnumSet.allOf(SeriesColor.class)) {
-      idLookup.put(seriesColor.getId(), seriesColor);
-    }
-  }
-
-  private Integer getId() {
-
-    return id;
-  }
-
-  protected static void resetId() {
-
-    nextId = 0;
-  }
-
-  protected static Color getAWTColor(SeriesColor seriesColor) {
-
-    return seriesColor.color;
-  }
-
-  protected static Color getNextAWTColor() {
-
-    SeriesColor seriesColor = idLookup.get(nextId);
-    if (seriesColor == null) {
-      // rotate thru from beginning
-      resetId();
-    }
-    return idLookup.get(nextId++).color;
-  }
+  /** The AWT Color */
+  private Color color;
 
   /**
    * Constructor
    * 
-   * @param id
+   * @param index
    * @param color
    */
-  private SeriesColor(int id, Color color) {
+  private SeriesColor(int index, Color color) {
 
-    this.id = id;
+    this.index = index;
     this.color = color;
+  }
+
+  /**
+   * Gets the SeriesColor's index
+   * 
+   * @return
+   */
+  public Integer getIndex() {
+
+    return index;
+  }
+
+  /**
+   * Gets the SeriesColor's AWT Color
+   * 
+   * @return the AWT Color
+   */
+  public Color getColor() {
+
+    return color;
+  }
+
+  /**
+   * get the AWT Color given a SeriesColor
+   * 
+   * @param seriesColor
+   * @return the AWT Color
+   */
+  public Color getAWTColor(SeriesColor seriesColor) {
+
+    return seriesColor.color;
   }
 
 }

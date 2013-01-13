@@ -43,7 +43,7 @@ import com.xeiam.xchart.demo.charts.Example9;
  * 
  * @author timmolter
  */
-public class ChartDemo extends JPanel implements TreeSelectionListener {
+public class XChartDemo extends JPanel implements TreeSelectionListener {
 
   /** The main split frame */
   private JSplitPane splitPane;
@@ -57,7 +57,7 @@ public class ChartDemo extends JPanel implements TreeSelectionListener {
   /**
    * Constructor
    */
-  public ChartDemo() {
+  public XChartDemo() {
 
     super(new GridLayout(1, 0));
 
@@ -166,7 +166,7 @@ public class ChartDemo extends JPanel implements TreeSelectionListener {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // Add content to the window.
-    frame.add(new ChartDemo());
+    frame.add(new XChartDemo());
 
     // Display the window.
     frame.pack();

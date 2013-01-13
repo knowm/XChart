@@ -24,6 +24,7 @@ import java.util.Iterator;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.markers.Marker;
+import com.xeiam.xchart.internal.misc.SeriesColorMarkerLineStyle;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
@@ -74,12 +75,17 @@ public class Series {
    * @param yAxisType
    * @param errorBars
    */
-  public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<Number> yData, AxisType yAxisType, Collection<Number> errorBars) {
+  public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<Number> yData, AxisType yAxisType, Collection<Number> errorBars, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
 
     this.name = name;
     this.xData = xData;
     this.yData = yData;
     this.errorBars = errorBars;
+
+    strokeColor = seriesColorMarkerLineStyle.getColor();
+    markerColor = seriesColorMarkerLineStyle.getColor();
+    marker = seriesColorMarkerLineStyle.getMarker();
+    stroke = seriesColorMarkerLineStyle.getStroke();
 
     // xData
     BigDecimal[] xMinMax = findMinMax(xData, xAxisType);
@@ -97,13 +103,6 @@ public class Series {
     yMax = yMinMax[1];
     // System.out.println(yMin);
     // System.out.println(yMax);
-
-    Color color = SeriesColor.getNextAWTColor();
-    strokeColor = color;
-    markerColor = color;
-
-    marker = SeriesMarker.getNextMarker();
-    stroke = SeriesLineStyle.getNextBasicStroke();
 
   }
 
@@ -178,7 +177,7 @@ public class Series {
 
   public void setLineColor(SeriesColor lineColor) {
 
-    strokeColor = SeriesColor.getAWTColor(lineColor);
+    strokeColor = lineColor.getColor();
   }
 
   public void setLineColor(java.awt.Color lineColor) {
@@ -186,16 +185,26 @@ public class Series {
     strokeColor = lineColor;
   }
 
+  /**
+   * Sets the marker for the series
+   * 
+   * @param marker
+   */
   public void setMarker(SeriesMarker marker) {
 
-    this.marker = SeriesMarker.getMarker(marker);
+    this.marker = marker.getMarker();
   }
 
-  public void setMarkerColor(SeriesColor lineColor) {
+  public void setMarkerColor(SeriesColor markerColor) {
 
-    this.markerColor = SeriesColor.getAWTColor(lineColor);
+    this.markerColor = markerColor.getColor();
   }
 
+  /**
+   * Sets the marker color for the series
+   * 
+   * @param lineColor
+   */
   public void setMarkerColor(java.awt.Color lineColor) {
 
     this.markerColor = lineColor;

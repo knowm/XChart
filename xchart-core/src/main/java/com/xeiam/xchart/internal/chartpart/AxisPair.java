@@ -28,6 +28,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
+import com.xeiam.xchart.internal.misc.SeriesColorMarkerLineStyleCycler;
 
 /**
  * @author timmolter
@@ -44,10 +45,12 @@ public class AxisPair implements IChartPart {
   public Axis xAxis;
   public Axis yAxis;
 
+  public SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler();
+
   /**
-   * Constructor.
+   * Constructor
    * 
-   * @param chart the chart
+   * @param the parent chart
    */
   public AxisPair(Chart chart) {
 
@@ -91,15 +94,15 @@ public class AxisPair implements IChartPart {
         xAxis.setAxisType(AxisType.DATE);
       }
       yAxis.setAxisType(AxisType.NUMBER);
-      series = new Series(seriesName, xData, xAxis.axisType, yData, yAxis.axisType, errorBars);
+      series = new Series(seriesName, xData, xAxis.axisType, yData, yAxis.axisType, errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     } else { // generate xData
       Collection<Number> generatedXData = new ArrayList<Number>();
-      for (int i = 1; i < yData.size(); i++) {
+      for (int i = 1; i < yData.size() + 1; i++) {
         generatedXData.add(i);
       }
       xAxis.setAxisType(AxisType.NUMBER);
       yAxis.setAxisType(AxisType.NUMBER);
-      series = new Series(seriesName, generatedXData, xAxis.axisType, yData, yAxis.axisType, errorBars);
+      series = new Series(seriesName, generatedXData, xAxis.axisType, yData, yAxis.axisType, errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     }
 
     // Sanity check
@@ -129,12 +132,25 @@ public class AxisPair implements IChartPart {
     return chart.chartLegend.getBounds();
   }
 
+  /**
+   * Gets the percentage of working space allowed for tick marks
+   * 
+   * @param workingSpace
+   * @return
+   */
   protected static int getTickSpace(int workingSpace) {
 
     return (int) (workingSpace * 0.95);
   }
 
-  protected static int getMargin(int workingSpace, int tickSpace) {
+  /**
+   * Gets the offset for the beginning of the tick marks
+   * 
+   * @param workingSpace
+   * @param tickSpace
+   * @return
+   */
+  protected static int getTickStartOffset(int workingSpace, int tickSpace) {
 
     int marginSpace = workingSpace - tickSpace;
     return (int) (marginSpace / 2.0);

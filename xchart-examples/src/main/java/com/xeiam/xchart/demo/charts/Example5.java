@@ -27,7 +27,7 @@ public class Example5 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example10();
+    ExampleChart exampleChart = new Example5();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }

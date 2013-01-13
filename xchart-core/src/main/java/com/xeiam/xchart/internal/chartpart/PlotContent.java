@@ -64,11 +64,11 @@ public class PlotContent implements IChartPart {
 
       // X-Axis
       int xTickSpace = AxisPair.getTickSpace((int) bounds.getWidth());
-      int xLeftMargin = AxisPair.getMargin((int) bounds.getWidth(), xTickSpace);
+      int xLeftMargin = AxisPair.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
       // Y-Axis
       int yTickSpace = AxisPair.getTickSpace((int) bounds.getHeight());
-      int yTopMargin = AxisPair.getMargin((int) bounds.getHeight(), yTickSpace);
+      int yTopMargin = AxisPair.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
       // data points
       Collection<?> xData = series.xData;

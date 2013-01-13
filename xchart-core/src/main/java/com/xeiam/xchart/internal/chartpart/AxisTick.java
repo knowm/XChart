@@ -154,7 +154,7 @@ public class AxisTick implements IChartPart, IHideable {
     int tickSpace = AxisPair.getTickSpace(workingSpace);
     // System.out.println("tickSpace= " + tickSpace);
 
-    int margin = AxisPair.getMargin(workingSpace, tickSpace);
+    int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace);
 
     // a check if all axis data are the exact same values
     if (axis.max == axis.min) {

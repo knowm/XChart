@@ -97,12 +97,6 @@ public class Chart {
     plot.paint(g);
 
     g.dispose();
-
-    // reset static Ids
-    SeriesColor.resetId();
-    SeriesLineStyle.resetId();
-    SeriesMarker.resetId();
-
   }
 
   // PUBLIC SETTERS

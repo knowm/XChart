@@ -16,9 +16,6 @@
 package com.xeiam.xchart;
 
 import java.awt.BasicStroke;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Pre-defined Line Styles used for Series Lines
@@ -42,39 +39,42 @@ public enum SeriesLineStyle {
   /** DOT_DOT */
   DOT_DOT(3, new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 1.0f, 1.0f }, 0.0f));
 
-  int id;
+  /** The index */
+  private int index;
 
-  BasicStroke basicStroke;
-
-  private static int nextId = 0;
+  /** The basicStroke */
+  private BasicStroke basicStroke;
 
   /**
    * Constructor
    * 
-   * @param id
-   * @param color
+   * @param index
+   * @param basicStroke
    */
-  private SeriesLineStyle(int id, BasicStroke basicStroke) {
+  private SeriesLineStyle(int index, BasicStroke basicStroke) {
 
-    this.id = id;
+    this.index = index;
     this.basicStroke = basicStroke;
   }
 
-  private static final Map<Integer, SeriesLineStyle> idLookup = new HashMap<Integer, SeriesLineStyle>();
-  static {
-    for (SeriesLineStyle seriesLineStyle : EnumSet.allOf(SeriesLineStyle.class)) {
-      idLookup.put(seriesLineStyle.getId(), seriesLineStyle);
-    }
+  /**
+   * Gets the SeriesLineStyle's index
+   * 
+   * @return
+   */
+  public Integer getIndex() {
+
+    return index;
   }
 
-  private Integer getId() {
+  /**
+   * Gets the SeriesLineStyle's BasicStroke
+   * 
+   * @return the BasicStroke
+   */
+  public BasicStroke getBasicStroke() {
 
-    return id;
-  }
-
-  protected static void resetId() {
-
-    nextId = 0;
+    return basicStroke;
   }
 
   /**
@@ -86,21 +86,6 @@ public enum SeriesLineStyle {
   protected static BasicStroke getBasicStroke(SeriesLineStyle seriesMarker) {
 
     return seriesMarker.basicStroke;
-  }
-
-  /**
-   * Gets the next BasicStroke
-   * 
-   * @return the next BasicStroke
-   */
-  protected static BasicStroke getNextBasicStroke() {
-
-    SeriesLineStyle seriesLineStyle = idLookup.get(nextId);
-    if (seriesLineStyle == null) {
-      // rotate thru from beginning
-      resetId();
-    }
-    return idLookup.get(nextId++).basicStroke;
   }
 
 }

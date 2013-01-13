@@ -30,7 +30,7 @@ public class Example3 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example10();
+    ExampleChart exampleChart = new Example3();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }

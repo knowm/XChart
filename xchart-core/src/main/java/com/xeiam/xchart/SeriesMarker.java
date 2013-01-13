@@ -15,10 +15,6 @@
  */
 package com.xeiam.xchart;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.xeiam.xchart.internal.markers.Circle;
 import com.xeiam.xchart.internal.markers.Diamond;
 import com.xeiam.xchart.internal.markers.Marker;
@@ -51,52 +47,42 @@ public enum SeriesMarker {
   /** TRIANGLE_UP */
   TRIANGLE_UP(4, new TriangleUp());
 
-  int id;
-  Marker marker;
-  private static int nextId = 0;
+  /** The index */
+  private int index;
 
-  private static final Map<Integer, SeriesMarker> idLookup = new HashMap<Integer, SeriesMarker>();
-  static {
-    for (SeriesMarker seriesMarker : EnumSet.allOf(SeriesMarker.class)) {
-      idLookup.put(seriesMarker.getId(), seriesMarker);
-    }
-  }
-
-  private Integer getId() {
-
-    return id;
-  }
-
-  protected static void resetId() {
-
-    nextId = 0;
-  }
-
-  protected static Marker getMarker(SeriesMarker seriesMarker) {
-
-    return seriesMarker.marker;
-  }
-
-  protected static Marker getNextMarker() {
-
-    SeriesMarker seriesMarker = idLookup.get(nextId);
-    if (seriesMarker == null) {
-      // rotate thru from beginning
-      resetId();
-    }
-    return idLookup.get(nextId++).marker;
-  }
+  /** The Marker */
+  private Marker marker;
 
   /**
    * Constructor
    * 
-   * @param id
-   * @param color
+   * @param index
+   * @param marker
    */
-  private SeriesMarker(int id, Marker marker) {
+  private SeriesMarker(int index, Marker marker) {
 
-    this.id = id;
+    this.index = index;
     this.marker = marker;
+  }
+
+  /**
+   * Gets the SeriesMarker index
+   * 
+   * @return
+   */
+  public Integer getIndex() {
+
+    return index;
+  }
+
+  /**
+   * Gets the SeriesMarker marker
+   * 
+   * @return
+   */
+  public Marker getMarker() {
+
+    return marker;
   }
 
 }

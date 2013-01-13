@@ -34,7 +34,7 @@ public class Example8 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example10();
+    ExampleChart exampleChart = new Example8();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
