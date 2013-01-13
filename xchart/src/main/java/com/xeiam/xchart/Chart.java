@@ -102,26 +102,38 @@ public class Chart {
   // PUBLIC SETTERS
 
   /**
+   * Add a Date series to the chart
+   * 
    * @param seriesName
-   * @param xData
-   * @param yData
+   * @param xData the X-Axis data
+   * @param yData the Y-Axis data
+   * @return A Series object that you can set properties on
    */
   public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData) {
 
     return axisPair.addSeries(seriesName, xData, yData, null);
   }
 
+  /**
+   * Add a Date series to the chart with error bars
+   * 
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param yData the Y-Axis data
+   * @param errorBars the error bar data
+   * @return A Series object that you can set properties on
+   */
   public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData, Collection<Number> errorBars) {
 
     return axisPair.addSeries(seriesName, xData, yData, errorBars);
   }
 
   /**
-   * Add series data as Collection<Number>
+   * Add a Number series to the chart using Collection<Number>
    * 
    * @param seriesName
-   * @param xData Collection<Number>
-   * @param yData Collection<Number>
+   * @param xData the X-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
@@ -129,17 +141,26 @@ public class Chart {
     return axisPair.addSeries(seriesName, xData, yData, null);
   }
 
+  /**
+   * Add a Number series to the chart using Collection<Number> with error bars
+   * 
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param yData the Y-Axis data
+   * @param errorBars the error bar data
+   * @return A Series object that you can set properties on
+   */
   public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData, Collection<Number> errorBars) {
 
     return axisPair.addSeries(seriesName, xData, yData, errorBars);
   }
 
   /**
-   * Convenience Method - Add series data as double arrays
+   * Add a series to the chart using double arrays
    * 
    * @param seriesName
-   * @param xData double[]
-   * @param yData double[]
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public Series addSeries(String seriesName, double[] xData, double[] yData) {
@@ -148,12 +169,12 @@ public class Chart {
   }
 
   /**
-   * Convenience Method - Add series data as double arrays with errorbars
+   * Add a series to the chart using double arrays with error bars
    * 
    * @param seriesName
-   * @param xData
-   * @param yData
-   * @param errorBars
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
+   * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
   public Series addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
@@ -180,16 +201,31 @@ public class Chart {
     return axisPair.addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
   }
 
+  /**
+   * Set the chart title
+   * 
+   * @param title
+   */
   public void setTitle(String title) {
 
     this.chartTitle.setText(title);
   }
 
+  /**
+   * Set the x-axis title
+   * 
+   * @param title
+   */
   public void setXAxisTitle(String title) {
 
     this.axisPair.xAxis.axisTitle.setText(title);
   }
 
+  /**
+   * Set the y-axis title
+   * 
+   * @param title
+   */
   public void setYAxisTitle(String title) {
 
     this.axisPair.yAxis.axisTitle.setText(title);
@@ -197,68 +233,133 @@ public class Chart {
 
   // ChartPart visibility ////////////////////////////////
 
+  /**
+   * Set the chart title visibility
+   * 
+   * @param isVisible
+   */
   public void setTitleVisible(boolean isVisible) {
 
     this.chartTitle.setVisible(isVisible);
   }
 
+  /**
+   * Set the x- and y-axis titles visibility
+   * 
+   * @param isVisible
+   */
   public void setAxisTitlesVisible(boolean isVisible) {
 
     this.axisPair.xAxis.getAxisTitle().setVisible(isVisible);
     this.axisPair.yAxis.getAxisTitle().setVisible(isVisible);
   }
 
+  /**
+   * Set the x-axis title visibility
+   * 
+   * @param isVisible
+   */
   public void setXAxisTitleVisible(boolean isVisible) {
 
     this.axisPair.xAxis.getAxisTitle().setVisible(isVisible);
   }
 
+  /**
+   * Set the y-axis title visibility
+   * 
+   * @param isVisible
+   */
   public void setYAxisTitleVisible(boolean isVisible) {
 
     this.axisPair.yAxis.getAxisTitle().setVisible(isVisible);
   }
 
+  /**
+   * Set the chart legend visibility
+   * 
+   * @param isVisible
+   */
   public void setLegendVisible(boolean isVisible) {
 
     this.chartLegend.setVisible(isVisible);
   }
 
+  /**
+   * Set the x- and y-axis tick marks and labels visibility
+   * 
+   * @param isVisible
+   */
   public void setAxisTicksVisible(boolean isVisible) {
 
     this.axisPair.xAxis.axisTick.setVisible(isVisible);
     this.axisPair.yAxis.axisTick.setVisible(isVisible);
   }
 
+  /**
+   * Set the x-axis tick marks and labels visibility
+   * 
+   * @param isVisible
+   */
   public void setXAxisTicksVisible(boolean isVisible) {
 
     this.axisPair.xAxis.axisTick.setVisible(isVisible);
   }
 
+  /**
+   * Set the y-axis tick marks and labels visibility
+   * 
+   * @param isVisible
+   */
   public void setYAxisTicksVisible(boolean isVisible) {
 
     this.axisPair.yAxis.axisTick.setVisible(isVisible);
   }
 
+  /**
+   * Set the chart grid lines visibility
+   * 
+   * @param isVisible
+   */
   public void setGridlinesVisible(boolean isVisible) {
 
     this.plot.plotSurface.setVisible(isVisible);
   }
 
+  /**
+   * Set the chart background color - the part around the edge of the chart
+   * 
+   * @param color
+   */
   public void setBackgroundColor(Color color) {
 
     this.backgroundColor = color;
   }
 
+  /**
+   * Set the chart foreground color - the part the series are drawn on
+   * 
+   * @param color
+   */
   public void setForegroundColor(Color color) {
 
     this.plot.plotSurface.setForegroundColor(color);
   }
 
+  /**
+   * Set the chart grid lines color
+   * 
+   * @param color
+   */
   public void setGridLinesColor(Color color) {
 
     this.plot.plotSurface.setGridLinesColor(color);
   }
 
+  /**
+   * Set the chart legend color
+   * 
+   * @param color
+   */
   public void setLegendBackgroundColor(Color color) {
 
     this.chartLegend.backgroundColor = color;
@@ -274,27 +375,52 @@ public class Chart {
     this.bordersColor = color;
   }
 
+  /**
+   * Set the chart font color
+   * 
+   * @param color
+   */
   public void setFontColor(Color color) {
 
     this.fontColor = color;
   }
 
+  /**
+   * Set the chart title font
+   * 
+   * @param font
+   */
   public void setTitleFont(Font font) {
 
     this.chartTitle.font = font;
   }
 
+  /**
+   * Set the chart legend font
+   * 
+   * @param font
+   */
   public void setLegendFont(Font font) {
 
     this.chartLegend.font = font;
   }
 
+  /**
+   * Set the x- and y-axis title font
+   * 
+   * @param font
+   */
   public void setAxisTitleFont(Font font) {
 
     this.axisPair.xAxis.axisTitle.font = font;
     this.axisPair.yAxis.axisTitle.font = font;
   }
 
+  /**
+   * Set the x- and y-axis tick label font
+   * 
+   * @param font
+   */
   public void setTickLabelFont(Font font) {
 
     this.axisPair.xAxis.axisTick.axisTickLabels.font = font;
@@ -302,6 +428,8 @@ public class Chart {
   }
 
   /**
+   * Set the String formatter for Data x-axis
+   * 
    * @param pattern - the pattern describing the date and time format
    */
   public void setDateFormatter(String pattern) {
@@ -310,6 +438,8 @@ public class Chart {
   }
 
   /**
+   * Set the decimal formatter for all tick labels
+   * 
    * @param pattern - the pattern describing the decimal format
    */
   public void setDecmialFormatter(String pattern) {
@@ -319,6 +449,8 @@ public class Chart {
   }
 
   /**
+   * Set the scientific notation formatter for all tick labels
+   * 
    * @param pattern - the pattern describing the scientific notation format
    */
   public void setDecmialScientificFormatter(String pattern) {
@@ -328,6 +460,8 @@ public class Chart {
   }
 
   /**
+   * Set the locale to use for rendering the chart
+   * 
    * @param locale - the locale to use when drawing the chart
    */
   public void setLocale(Locale locale) {

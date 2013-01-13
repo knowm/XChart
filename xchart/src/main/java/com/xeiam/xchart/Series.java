@@ -165,49 +165,74 @@ public class Series {
     return new BigDecimal[] { min, max };
   }
 
-  public void setLineStyle(SeriesLineStyle lineStyle) {
+  /**
+   * Set the line style of the series
+   * 
+   * @param seriesLineStyle
+   */
+  public void setLineStyle(SeriesLineStyle seriesLineStyle) {
 
-    stroke = SeriesLineStyle.getBasicStroke(lineStyle);
+    stroke = SeriesLineStyle.getBasicStroke(seriesLineStyle);
   }
 
-  public void setLineStyle(BasicStroke lineStyle) {
+  /**
+   * Set the line style of the series
+   * 
+   * @param basicStroke
+   */
+  public void setLineStyle(BasicStroke basicStroke) {
 
-    stroke = lineStyle;
+    stroke = basicStroke;
   }
 
-  public void setLineColor(SeriesColor lineColor) {
+  /**
+   * Set the line color of the series
+   * 
+   * @param seriesColor
+   */
+  public void setLineColor(SeriesColor seriesColor) {
 
-    strokeColor = lineColor.getColor();
+    strokeColor = seriesColor.getColor();
   }
 
-  public void setLineColor(java.awt.Color lineColor) {
+  /**
+   * Set the line color of the series
+   * 
+   * @param color
+   */
+  public void setLineColor(java.awt.Color color) {
 
-    strokeColor = lineColor;
+    strokeColor = color;
   }
 
   /**
    * Sets the marker for the series
    * 
-   * @param marker
+   * @param seriesMarker
    */
-  public void setMarker(SeriesMarker marker) {
+  public void setMarker(SeriesMarker seriesMarker) {
 
-    this.marker = marker.getMarker();
-  }
-
-  public void setMarkerColor(SeriesColor markerColor) {
-
-    this.markerColor = markerColor.getColor();
+    this.marker = seriesMarker.getMarker();
   }
 
   /**
    * Sets the marker color for the series
    * 
-   * @param lineColor
+   * @param seriesColor
    */
-  public void setMarkerColor(java.awt.Color lineColor) {
+  public void setMarkerColor(SeriesColor seriesColor) {
 
-    this.markerColor = lineColor;
+    this.markerColor = seriesColor.getColor();
+  }
+
+  /**
+   * Sets the marker color for the series
+   * 
+   * @param color
+   */
+  public void setMarkerColor(java.awt.Color color) {
+
+    this.markerColor = color;
   }
 
 }
