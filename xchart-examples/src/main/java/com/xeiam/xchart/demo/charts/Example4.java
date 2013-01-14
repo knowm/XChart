@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.TimeZone;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
@@ -67,6 +68,7 @@ public class Example4 implements ExampleChart {
     chart.setTitle("Example4");
     chart.setXAxisTitle("time of day");
     chart.setYAxisTitle("gigawatts");
+    chart.setTimezone(TimeZone.getTimeZone("UTC"));
 
     Series series = chart.addDateSeries("value", xData, yData);
 

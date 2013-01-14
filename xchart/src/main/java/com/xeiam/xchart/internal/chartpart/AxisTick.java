@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
@@ -59,8 +60,11 @@ public class AxisTick implements IChartPart, IHideable {
 
   private int workingSpace;
 
-  /** the Locale for Date tick labels */
+  /** the Locale for tick labels */
   public Locale locale;
+
+  /** the TimeZone for Date tick labels */
+  public TimeZone timezone;
 
   public String normalDecimalPattern = null;
   public String scientificDecimalPattern = null;
@@ -254,7 +258,7 @@ public class AxisTick implements IChartPart, IHideable {
 
     } else {
 
-      return AxisValueFormatterUtil.formatDateValue(value, axis.min, axis.max, datePattern, locale);
+      return AxisValueFormatterUtil.formatDateValue(value, axis.min, axis.max, datePattern, locale, timezone);
     }
 
   }

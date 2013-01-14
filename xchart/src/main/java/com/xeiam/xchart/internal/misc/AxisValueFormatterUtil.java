@@ -26,6 +26,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author timmolter
@@ -36,14 +38,15 @@ public class AxisValueFormatterUtil {
   private static final String SCIENTIFIC_DECIMAL_PATTERN = "0.##E0";
   private static final String DATE_PATTERN = "HHmmss";
   private static final Locale LOCALE = Locale.getDefault();
+  private static final TimeZone TIMEZONE = TimeZone.getDefault();
 
-  private static final BigDecimal SEC_SCALE = new BigDecimal(1000L);
-  private static final BigDecimal MIN_SCALE = new BigDecimal(1000L * 60);
-  private static final BigDecimal HOUR_SCALE = new BigDecimal(1000L * 60 * 60);
-  private static final BigDecimal DAY_SCALE = new BigDecimal(1000L * 60 * 60 * 24);
-  private static final BigDecimal WEEK_SCALE = new BigDecimal(1000L * 60 * 60 * 24 * 7);
-  private static final BigDecimal MONTH_SCALE = new BigDecimal(1000L * 60 * 60 * 24 * 31);
-  private static final BigDecimal YEAR_SCALE = new BigDecimal(1000L * 60 * 60 * 24 * 365);
+  private static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(1L);
+  private static final long MIN_SCALE = TimeUnit.MINUTES.toMillis(1L);
+  private static final long HOUR_SCALE = TimeUnit.HOURS.toMillis(1L);
+  private static final long DAY_SCALE = TimeUnit.DAYS.toMillis(1L);
+  private static final long WEEK_SCALE = TimeUnit.DAYS.toMillis(1L) * 7;
+  private static final long MONTH_SCALE = TimeUnit.DAYS.toMillis(1L) * 31;
+  private static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
 
   /**
    * Constructor
@@ -93,27 +96,27 @@ public class AxisValueFormatterUtil {
    * @param localeOverride
    * @return the formatted date value as a String
    */
-  public static String formatDateValue(BigDecimal value, BigDecimal min, BigDecimal max, String datePatternOverride, Locale localeOverride) {
+  public static String formatDateValue(BigDecimal value, BigDecimal min, BigDecimal max, String datePatternOverride, Locale localeOverride, TimeZone timeZoneOverride) {
 
     // intelligently set datepattern if none is given
     String datePattern = datePatternOverride;
     if (datePatternOverride == null) {
       datePattern = DATE_PATTERN;
-      BigDecimal diff = max.subtract(min);
+      long diff = max.subtract(min).longValue();
 
-      if (diff.compareTo(SEC_SCALE) == -1) {
+      if (diff < SEC_SCALE) {
         datePattern = "ss:S";
-      } else if (diff.compareTo(MIN_SCALE) == -1) {
+      } else if (diff < MIN_SCALE) {
         datePattern = "mm:ss";
-      } else if (diff.compareTo(HOUR_SCALE) == -1) {
+      } else if (diff < HOUR_SCALE) {
         datePattern = "HH:mm";
-      } else if (diff.compareTo(DAY_SCALE) == -1) {
-        datePattern = "dd:HH";
-      } else if (diff.compareTo(WEEK_SCALE) == -1) {
+      } else if (diff < DAY_SCALE) {
+        datePattern = "EEE HH:mm";
+      } else if (diff < WEEK_SCALE) {
         datePattern = "EEE";
-      } else if (diff.compareTo(MONTH_SCALE) == -1) {
+      } else if (diff < MONTH_SCALE) {
         datePattern = "MMM-dd";
-      } else if (diff.compareTo(YEAR_SCALE) == -1) {
+      } else if (diff < YEAR_SCALE) {
         datePattern = "yyyy:MMM";
       } else {
         datePattern = "yyyy";
@@ -122,9 +125,9 @@ public class AxisValueFormatterUtil {
     }
 
     SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, localeOverride == null ? LOCALE : localeOverride);
+    simpleDateformat.setTimeZone(timeZoneOverride == null ? TIMEZONE : timeZoneOverride);
     simpleDateformat.applyPattern(datePattern);
     return simpleDateformat.format(value.longValueExact());
 
   }
-
 }

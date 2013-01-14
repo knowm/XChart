@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.internal.chartpart.ChartTitle;
@@ -462,12 +463,23 @@ public class Chart {
   /**
    * Set the locale to use for rendering the chart
    * 
-   * @param locale - the locale to use when drawing the chart
+   * @param locale - the locale to use when formatting Strings and dates for the axis tick labels
    */
   public void setLocale(Locale locale) {
 
     this.axisPair.xAxis.axisTick.locale = locale;
     this.axisPair.yAxis.axisTick.locale = locale;
+  }
+
+  /**
+   * Set the timezone to use for formatting Date axis tick labels
+   * 
+   * @param timezone the timezone to use when formatting date data
+   */
+  public void setTimezone(TimeZone timezone) {
+
+    this.axisPair.xAxis.axisTick.timezone = timezone;
+    this.axisPair.yAxis.axisTick.timezone = timezone;
   }
 
 }
