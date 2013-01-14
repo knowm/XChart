@@ -70,7 +70,7 @@ public class AxisValueFormatterUtil {
 
     BigDecimal absoluteValue = value.abs();
 
-    if (absoluteValue.compareTo(new BigDecimal("10000")) == -1 && absoluteValue.compareTo(new BigDecimal(".0001")) == 1 || absoluteValue.equals(new BigDecimal("0.0"))) {
+    if (absoluteValue.compareTo(new BigDecimal("10000")) == -1 && absoluteValue.compareTo(new BigDecimal(".0001")) == 1 || BigDecimal.ZERO.compareTo(value) == 0) {
 
       DecimalFormat normalFormat = (DecimalFormat) numberFormat;
       normalFormat.applyPattern(normalDecimalPatternOverride == null ? NORMAL_DECIMAL_PATTERN : normalDecimalPatternOverride);

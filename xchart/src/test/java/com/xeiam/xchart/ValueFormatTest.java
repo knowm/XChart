@@ -78,6 +78,14 @@ public class ValueFormatTest {
     stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
     assertThat(stringValue, equalTo("1E-4"));
 
+    value = new BigDecimal("0.0");
+    stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
+    assertThat(stringValue, equalTo("0"));
+
+    value = new BigDecimal("0");
+    stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
+    assertThat(stringValue, equalTo("0"));
+
     // other case
 
     // TODO handle these cases better
