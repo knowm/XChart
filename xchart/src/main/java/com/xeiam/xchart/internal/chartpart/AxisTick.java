@@ -188,6 +188,10 @@ public class AxisTick implements IChartPart, IHideable {
     // System.out.println(axis.min);
     // System.out.println(length);
     int tickMarkSpaceHint = (axis.direction == Direction.X ? DEFAULT_TICK_MARK_STEP_HINT_X : DEFAULT_TICK_MARK_STEP_HINT_Y);
+    // for very short plots, squeeze some more ticks in than normal
+    if (axis.direction == Direction.Y && tickSpace < 160) {
+      tickMarkSpaceHint = 25;
+    }
     double gridStepHint = length / tickSpace * tickMarkSpaceHint;
 
     // gridStepHint --> mantissa * 10 ** exponent

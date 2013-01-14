@@ -122,7 +122,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example10 - Scientific notation formatting", new Example10().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example10 - Manual Data", new Example10().getChart()));
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("Example2 - Customized series style", new Example2().getChart()));
