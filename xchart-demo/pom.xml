@@ -14,7 +14,7 @@
 	<version>1.3.0-SNAPSHOT</version>
 
 	<name>XChart Demo</name>
-	<description>A demonstration of various charts using XChart</description>
+	<description>A Swing App demonstration of various charts using XChart</description>
 
 	<dependencies>
 		<dependency>
