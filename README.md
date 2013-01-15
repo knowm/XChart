@@ -60,7 +60,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.3.1-SNAPSHOT</version>
     </dependency>
 
 ## Building
