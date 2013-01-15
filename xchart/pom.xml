@@ -14,7 +14,6 @@
 	<version>1.3.0-SNAPSHOT</version>
 
 	<name>XChart</name>
-	<description>
-    </description>
+	<description>The core XChart library</description>
 
 </project>

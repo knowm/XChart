@@ -29,7 +29,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.xeiam.xchart.XChartPanel;
-import com.xeiam.xchart.demo.charts.Example10;
+import com.xeiam.xchart.demo.charts.Example1;
 import com.xeiam.xchart.demo.charts.Example2;
 import com.xeiam.xchart.demo.charts.Example3;
 import com.xeiam.xchart.demo.charts.Example4;
@@ -77,7 +77,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     JScrollPane treeView = new JScrollPane(tree);
 
     // Create Chart Panel
-    chartPanel = new XChartPanel(new Example10().getChart());
+    chartPanel = new XChartPanel(new Example1().getChart());
 
     // Add the scroll panes to a split pane.
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -111,6 +111,11 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     }
   }
 
+  /**
+   * Create the tree
+   * 
+   * @param top
+   */
   private void createNodes(DefaultMutableTreeNode top) {
 
     // categories
@@ -122,7 +127,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example10 - Manual Data", new Example10().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example1 - Manual Data", new Example1().getChart()));
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("Example2 - Customized series style", new Example2().getChart()));

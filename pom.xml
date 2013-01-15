@@ -49,7 +49,7 @@
 
 	<modules>
 		<module>xchart</module>
-		<module>xchart-examples</module>
+		<module>xchart-demo</module>
 	</modules>
 
 	<dependencies>

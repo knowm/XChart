@@ -24,15 +24,15 @@ import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Embed a Chart in a simple Swing application
+ * Manual Data
  * 
  * @author timmolter
  */
-public class Example10 implements ExampleChart {
+public class Example1 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example10();
+    ExampleChart exampleChart = new Example1();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -74,7 +74,7 @@ public class Example10 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // Customize Chart
-    chart.setTitle("Example10");
+    chart.setTitle("Example1");
     chart.setTitleVisible(false);
     chart.setLegendVisible(false);
 
