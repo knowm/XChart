@@ -74,9 +74,17 @@ public class ValueFormatTest {
     stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
     assertThat(stringValue, equalTo("0.001"));
 
+    value = new BigDecimal("0.0012");
+    stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
+    assertThat(stringValue, equalTo("0.0012"));
+
     value = new BigDecimal("0.0001");
     stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
     assertThat(stringValue, equalTo("1E-4"));
+
+    value = new BigDecimal(".00012");
+    stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
+    assertThat(stringValue, equalTo("1.2E-4"));
 
     value = new BigDecimal("0.0");
     stringValue = AxisValueFormatterUtil.formatNumber(value, null, null, locale);
