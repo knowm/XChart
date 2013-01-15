@@ -125,7 +125,6 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
-<!-- 					<goals>deploy</goals> -->
 					<autoversionsubmodules>true</autoversionsubmodules>
 				</configuration>
 			</plugin>
