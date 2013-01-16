@@ -65,7 +65,11 @@ For snapshots, add the following to your pom.xml file:
 
 ## Building
 mvn clean package  
-mvn javadoc:javadoc  
+mvn javadoc:aggregate  
+
+## Running Demo
+    cd /path/to/xchart-demo/jar/
+    java -cp xchart-demo-1.3.0.jar:xchart-1.3.0.jar com.xeiam.xchart.demo.XChartDemo
 
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
