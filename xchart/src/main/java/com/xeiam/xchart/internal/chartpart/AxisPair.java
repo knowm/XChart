@@ -55,7 +55,6 @@ public class AxisPair implements IChartPart {
   public AxisPair(Chart chart) {
 
     this.chart = chart;
-    seriesCount = 0;
 
     // add axes
     xAxis = new Axis(this, Axis.Direction.X);
