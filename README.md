@@ -25,18 +25,18 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
 Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.jsp), [download the thing](http://xeiam.com/xchart_changelog.jsp) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
 ## Features
-* no additional dependencies
+* No additional dependencies
 * ~50KB Jar
-* line charts
-* scatter charts
-* error bars
+* Line charts
+* Scatter charts
+* Error bars
 * Date x-axis
-* multiple series
-* extensive customization
+* Multiple series
+* Extensive customization
 
 ## Getting Started
 ### Non-Maven
-Download Jar: http://xeiam.com/xchart.jsp
+Download Jar: http://xeiam.com/xchart_changelog.jsp
 
 ### Maven
 The XChart release artifacts are hosted on Maven Central.
@@ -44,9 +44,9 @@ The XChart release artifacts are hosted on Maven Central.
 Add the XChart library as a dependency to your pom.xml file:
 
     <dependency>
-      <groupId>com.xeiam</groupId>
-      <artifactId>xchart</artifactId>
-      <version>1.3.0</version>
+        <groupId>com.xeiam.xchart</groupId>
+        <artifactId>xchart</artifactId>
+        <version>1.3.0</version>
     </dependency>
 
 For snapshots, add the following to your pom.xml file:
