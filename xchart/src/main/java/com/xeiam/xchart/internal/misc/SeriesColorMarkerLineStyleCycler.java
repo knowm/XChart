@@ -62,14 +62,16 @@ public class SeriesColorMarkerLineStyleCycler {
 
     // 2. Marker
     for (SeriesMarker seriesMarker : EnumSet.allOf(SeriesMarker.class)) {
-      if (seriesMarker.getIndex() >= 0) { // skip Marker.NONE
+      if (seriesMarker.getIndex() >= 0) { // skip SeriesMarker.NONE
         seriesMarkerMap.put(seriesMarker.getIndex(), seriesMarker);
       }
     }
 
     // 3. Stroke
     for (SeriesLineStyle seriesLineStyle : EnumSet.allOf(SeriesLineStyle.class)) {
-      seriesLineStyleMap.put(seriesLineStyle.getIndex(), seriesLineStyle);
+      if (seriesLineStyle.getIndex() >= 0) { // skip SeriesLineStyle.NONE
+        seriesLineStyleMap.put(seriesLineStyle.getIndex(), seriesLineStyle);
+      }
     }
   }
 
