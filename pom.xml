@@ -130,6 +130,7 @@
 		</repository>
 		<downloadUrl>https://oss.sonatype.org/content/groups/public/com/xeiam/xchart</downloadUrl>
 	</distributionManagement>
+
 	<profiles>
 		<profile>
 			<id>release-sign-artifacts</id>

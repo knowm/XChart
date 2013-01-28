@@ -52,7 +52,7 @@ Add the XChart library as a dependency to your pom.xml file:
 For snapshots, add the following to your pom.xml file:
 
     <repository>
-      <id>xchart-snapshot</id>
+      <id>sonatype-oss-snapshot</id>
       <snapshots/>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
