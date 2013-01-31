@@ -66,6 +66,20 @@ public class Chart {
   }
 
   /**
+   * Constructor
+   * 
+   * @param chartBuilder
+   */
+  public Chart(ChartBuilder chartBuilder) {
+
+    this(chartBuilder.width, chartBuilder.height);
+    setTitle(chartBuilder.title);
+    setXAxisTitle(chartBuilder.xAxisTitle);
+    setYAxisTitle(chartBuilder.yAxisTitle);
+    setLegendVisible(chartBuilder.isLegendVisible);
+  }
+
+  /**
    * @param g
    * @param width
    * @param height

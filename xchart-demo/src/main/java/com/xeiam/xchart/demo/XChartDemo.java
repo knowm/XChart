@@ -31,6 +31,7 @@ import javax.swing.tree.TreeSelectionModel;
 import com.xeiam.xchart.XChartPanel;
 import com.xeiam.xchart.demo.charts.Example1;
 import com.xeiam.xchart.demo.charts.Example10;
+import com.xeiam.xchart.demo.charts.Example11;
 import com.xeiam.xchart.demo.charts.Example2;
 import com.xeiam.xchart.demo.charts.Example3;
 import com.xeiam.xchart.demo.charts.Example4;
@@ -160,6 +161,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("Example10 - Plots Hundreds of Series on One Plot", new Example10().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("Example11 - Using ChartBuilder to Make a Chart", new Example11().getChart()));
     category.add(chart);
 
   }
