@@ -46,7 +46,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>com.xeiam.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>1.3.0</version>
+        <version>1.3.1</version>
     </dependency>
 
 For snapshots, add the following to your pom.xml file:
@@ -60,7 +60,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>1.3.1-SNAPSHOT</version>
+      <version>1.3.2-SNAPSHOT</version>
     </dependency>
 
 ## Building
@@ -69,7 +69,7 @@ mvn javadoc:aggregate
 
 ## Running Demo
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-1.3.0.jar:xchart-1.3.0.jar com.xeiam.xchart.demo.XChartDemo
+    java -cp xchart-demo-1.3.1.jar:xchart-1.3.1.jar com.xeiam.xchart.demo.XChartDemo
 
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
