@@ -250,16 +250,6 @@ public class Chart {
   // ChartPart visibility ////////////////////////////////
 
   /**
-   * Set the chart title visibility
-   * 
-   * @param isVisible
-   */
-  public void setTitleVisible(boolean isVisible) {
-
-    this.chartTitle.setVisible(isVisible);
-  }
-
-  /**
    * Set the x- and y-axis titles visibility
    * 
    * @param isVisible
@@ -369,16 +359,6 @@ public class Chart {
   public void setLegendBackgroundColor(Color color) {
 
     this.chartLegend.backgroundColor = color;
-  }
-
-  /**
-   * Set the chart title font
-   * 
-   * @param font
-   */
-  public void setTitleFont(Font font) {
-
-    styleManager.setTitleFont(font);
   }
 
   /**

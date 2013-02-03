@@ -55,4 +55,10 @@ public class XChartTheme implements Theme {
     return new Font(Font.SANS_SERIF, Font.BOLD, 14);
   }
 
+  @Override
+  public boolean isChartTitleVisible() {
+
+    return false;
+  }
+
 }

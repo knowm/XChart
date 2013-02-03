@@ -11,6 +11,7 @@ package com.xeiam.xchart.internal.interfaces;
  * 
  * @author timmolter
  */
+// TODO get rid of this after theme refactor is done
 public interface IHideable extends IChartPart {
 
   public void setVisible(boolean isVisible);

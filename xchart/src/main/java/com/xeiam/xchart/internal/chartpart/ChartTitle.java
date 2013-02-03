@@ -35,9 +35,6 @@ public class ChartTitle implements IChartPart, IHideable {
   /** the title text */
   protected String text = ""; // default to ""
 
-  /** the visibility state of title */
-  protected boolean isVisible = false; // default to false
-
   /** the bounds */
   private Rectangle bounds;
 
@@ -54,9 +51,9 @@ public class ChartTitle implements IChartPart, IHideable {
   public void setText(String text) {
 
     if (text.trim().equalsIgnoreCase("")) {
-      this.isVisible = false;
+      chart.getStyleManager().setChartTitleVisible(false);
     } else {
-      this.isVisible = true;
+      chart.getStyleManager().setChartTitleVisible(true);
     }
     this.text = text;
   }
@@ -64,7 +61,6 @@ public class ChartTitle implements IChartPart, IHideable {
   @Override
   public void setVisible(boolean isVisible) {
 
-    this.isVisible = isVisible;
   }
 
   @Override
@@ -73,15 +69,16 @@ public class ChartTitle implements IChartPart, IHideable {
     bounds = new Rectangle();
     g.setFont(chart.getStyleManager().getChartTitleFont());
 
-    if (isVisible) {
+    if (chart.getStyleManager().isChartTitleVisible()) {
 
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout textLayout = new TextLayout(text, chart.getStyleManager().getChartTitleFont(), frc);
       Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
       int xOffset = (int) ((chart.width - rectangle.getWidth()) / 2.0);
-      int yOffset = (int) ((isVisible ? (Chart.CHART_PADDING - rectangle.getY()) : 0));
+      int yOffset = (int) ((chart.getStyleManager().isChartTitleVisible() ? (Chart.CHART_PADDING - rectangle.getY()) : 0));
 
-      bounds = new Rectangle(xOffset, yOffset + (isVisible ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (isVisible ? rectangle.getHeight() : 0));
+      bounds = new Rectangle(xOffset, yOffset + (chart.getStyleManager().isChartTitleVisible() ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (chart.getStyleManager()
+          .isChartTitleVisible() ? rectangle.getHeight() : 0));
       // g.setColor(Color.green);
       // g.draw(bounds);
 

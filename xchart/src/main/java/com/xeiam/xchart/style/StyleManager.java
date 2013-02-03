@@ -41,6 +41,8 @@ public class StyleManager {
 
   private Font chartTitleFont;
 
+  private boolean isChartTitleVisible;
+
   /**
    * Constructor
    */
@@ -55,6 +57,7 @@ public class StyleManager {
     chartBordersColor = theme.getChartBordersColor();
     chartFontColor = theme.getChartFontColor();
     chartTitleFont = theme.getChartTitleFont();
+    isChartTitleVisible = theme.isChartTitleVisible();
   }
 
   /**
@@ -130,6 +133,21 @@ public class StyleManager {
   public Font getChartTitleFont() {
 
     return chartTitleFont;
+  }
+
+  /**
+   * Set the chart title visibility
+   * 
+   * @param isVisible
+   */
+  public void setChartTitleVisible(boolean isChartTitleVisible) {
+
+    this.isChartTitleVisible = isChartTitleVisible;
+  }
+
+  public boolean isChartTitleVisible() {
+
+    return isChartTitleVisible;
   }
 
   // Chart Legend ///////////////////////////////

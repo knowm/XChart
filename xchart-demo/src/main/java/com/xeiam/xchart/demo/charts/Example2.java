@@ -56,7 +56,7 @@ public class Example2 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // Customize Chart
-    chart.setTitleVisible(false);
+    chart.getStyleManager().setChartTitleVisible(false);
     chart.setLegendVisible(false);
 
     // Series 1

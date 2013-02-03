@@ -29,12 +29,18 @@ import java.awt.Font;
  */
 public interface Theme {
 
+  // Chart Style ///////////////////////////////
+
   public Color getChartBackgroundColor();
 
   public Color getChartBordersColor();
 
   public Color getChartFontColor();
 
+  // Chart Title ///////////////////////////////
+
   public Font getChartTitleFont();
+
+  public boolean isChartTitleVisible();
 
 }

@@ -80,7 +80,7 @@ public class Example9 implements ExampleChart {
     chart.setLegendBackgroundColor(Color.PINK);
     chart.getStyleManager().setChartBordersColor(Color.GREEN);
     chart.getStyleManager().setChartFontColor(Color.MAGENTA);
-    chart.setTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
+    chart.getStyleManager().setTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.setTickLabelFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
