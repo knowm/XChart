@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
@@ -39,9 +38,6 @@ public class ChartTitle implements IChartPart, IHideable {
   /** the visibility state of title */
   protected boolean isVisible = false; // default to false
 
-  /** the font */
-  public Font font;
-
   /** the bounds */
   private Rectangle bounds;
 
@@ -53,7 +49,6 @@ public class ChartTitle implements IChartPart, IHideable {
   public ChartTitle(Chart chart) {
 
     this.chart = chart;
-    font = new Font(Font.SANS_SERIF, Font.BOLD, 14); // default font
   }
 
   public void setText(String text) {
@@ -76,12 +71,12 @@ public class ChartTitle implements IChartPart, IHideable {
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
-    g.setFont(font);
+    g.setFont(chart.getStyleManager().getChartTitleFont());
 
     if (isVisible) {
 
       FontRenderContext frc = g.getFontRenderContext();
-      TextLayout textLayout = new TextLayout(text, font, frc);
+      TextLayout textLayout = new TextLayout(text, chart.getStyleManager().getChartTitleFont(), frc);
       Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
       int xOffset = (int) ((chart.width - rectangle.getWidth()) / 2.0);
       int yOffset = (int) ((isVisible ? (Chart.CHART_PADDING - rectangle.getY()) : 0));
@@ -90,7 +85,7 @@ public class ChartTitle implements IChartPart, IHideable {
       // g.setColor(Color.green);
       // g.draw(bounds);
 
-      g.setColor(chart.getStyleManager().getFontColor());
+      g.setColor(chart.getStyleManager().getChartFontColor());
       textLayout.draw(g, xOffset, yOffset);
     }
 

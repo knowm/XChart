@@ -60,7 +60,7 @@ public class AxisTickLabels implements IChartPart {
     bounds = new Rectangle();
     g.setFont(font);
 
-    g.setColor(axisTick.axis.axisPair.chart.getStyleManager().getFontColor());
+    g.setColor(axisTick.axis.axisPair.chart.getStyleManager().getChartFontColor());
 
     if (axisTick.axis.direction == Axis.Direction.Y) { // Y-Axis
 

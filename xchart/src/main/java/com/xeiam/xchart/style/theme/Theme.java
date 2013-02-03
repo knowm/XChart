@@ -22,6 +22,7 @@
 package com.xeiam.xchart.style.theme;
 
 import java.awt.Color;
+import java.awt.Font;
 
 /**
  * @author timmolter
@@ -33,5 +34,7 @@ public interface Theme {
   public Color getChartBordersColor();
 
   public Color getChartFontColor();
+
+  public Font getChartTitleFont();
 
 }

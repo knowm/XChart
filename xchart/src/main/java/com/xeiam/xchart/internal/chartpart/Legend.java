@@ -111,7 +111,7 @@ public class Legend implements IChartPart, IHideable {
       int xOffset = chart.width - legendBoxWidth - Chart.CHART_PADDING;
       int yOffset = (int) ((chart.height - legendBoxHeight) / 2.0 + chart.chartTitle.getBounds().getY() + chart.chartTitle.getBounds().getHeight());
 
-      g.setColor(chart.getStyleManager().getBordersColor());
+      g.setColor(chart.getStyleManager().getChartBordersColor());
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
       g.setColor(backgroundColor);
       g.fillRect(xOffset + 1, yOffset + 1, legendBoxWidth - 1, legendBoxHeight - 1);
@@ -134,7 +134,7 @@ public class Legend implements IChartPart, IHideable {
         }
 
         // paint series name
-        g.setColor(chart.getStyleManager().getFontColor());
+        g.setColor(chart.getStyleManager().getChartFontColor());
         TextLayout layout = new TextLayout(series.name, font, new FontRenderContext(null, true, false));
         layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + LEGEND_PADDING), (starty + Marker.SIZE));
         starty = starty + legendTextContentMaxHeight + LEGEND_PADDING;

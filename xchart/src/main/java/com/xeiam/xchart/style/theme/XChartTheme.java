@@ -22,6 +22,7 @@
 package com.xeiam.xchart.style.theme;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import com.xeiam.xchart.style.ChartColor;
 
@@ -46,6 +47,12 @@ public class XChartTheme implements Theme {
   public Color getChartFontColor() {
 
     return ChartColor.getAWTColor(ChartColor.BLACK);
+  }
+
+  @Override
+  public Font getChartTitleFont() {
+
+    return new Font(Font.SANS_SERIF, Font.BOLD, 14);
   }
 
 }

@@ -76,10 +76,10 @@ public class Example9 implements ExampleChart {
     chart.setYAxisTitle("Y");
     chart.setForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));
     chart.setGridLinesColor(new Color(255, 255, 255));
-    chart.getStyleManager().setBackgroundColor(Color.WHITE);
+    chart.getStyleManager().setChartBackgroundColor(Color.WHITE);
     chart.setLegendBackgroundColor(Color.PINK);
-    chart.getStyleManager().setBordersColor(Color.GREEN);
-    chart.getStyleManager().setFontColor(Color.MAGENTA);
+    chart.getStyleManager().setChartBordersColor(Color.GREEN);
+    chart.getStyleManager().setChartFontColor(Color.MAGENTA);
     chart.setTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));

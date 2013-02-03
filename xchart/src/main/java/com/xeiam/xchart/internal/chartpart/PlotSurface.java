@@ -74,7 +74,7 @@ public class PlotSurface implements IChartPart, IHideable {
     g.setColor(foregroundColor);
     g.fill(backgroundRectangle);
     Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(plot.chart.getStyleManager().getBordersColor());
+    g.setColor(plot.chart.getStyleManager().getChartBordersColor());
     g.draw(borderRectangle);
 
     // paint grid lines

@@ -145,7 +145,7 @@ public class PlotContent implements IChartPart {
 
         // paint errorbar
         if (errorBars != null) {
-          g.setColor(plot.chart.getStyleManager().getBordersColor());
+          g.setColor(plot.chart.getStyleManager().getChartBordersColor());
           g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
           int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
           int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));

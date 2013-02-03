@@ -100,7 +100,7 @@ public class AxisTitle implements IChartPart, IHideable {
 
     bounds = new Rectangle();
 
-    g.setColor(axis.axisPair.chart.getStyleManager().getFontColor());
+    g.setColor(axis.axisPair.chart.getStyleManager().getChartFontColor());
     g.setFont(font);
 
     if (axis.direction == Axis.Direction.Y) {

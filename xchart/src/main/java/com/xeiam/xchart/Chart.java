@@ -104,7 +104,7 @@ public class Chart {
     }
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-    g.setColor(styleManager.getBackgroundColor());
+    g.setColor(styleManager.getChartBackgroundColor());
     g.fillRect(0, 0, width, height);
 
     chartTitle.paint(g);
@@ -378,7 +378,7 @@ public class Chart {
    */
   public void setTitleFont(Font font) {
 
-    this.chartTitle.font = font;
+    styleManager.setTitleFont(font);
   }
 
   /**

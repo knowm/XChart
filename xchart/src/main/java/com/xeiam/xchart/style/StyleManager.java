@@ -22,6 +22,7 @@
 package com.xeiam.xchart.style;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import com.xeiam.xchart.style.theme.Theme;
 import com.xeiam.xchart.style.theme.XChartTheme;
@@ -31,20 +32,29 @@ import com.xeiam.xchart.style.theme.XChartTheme;
  */
 public class StyleManager {
 
+  /** the default Theme */
   private Theme theme = new XChartTheme();
 
-  private Color backgroundColor;
-  public Color bordersColor;
-  public Color fontColor;
+  private Color chartBackgroundColor;
+  public Color chartBordersColor;
+  public Color chartFontColor;
+
+  private Font chartTitleFont;
 
   /**
    * Constructor
    */
   public StyleManager() {
 
-    backgroundColor = theme.getChartBackgroundColor();
-    bordersColor = theme.getChartBordersColor();
-    fontColor = theme.getChartFontColor();
+    setAllStyles();
+  }
+
+  private void setAllStyles() {
+
+    chartBackgroundColor = theme.getChartBackgroundColor();
+    chartBordersColor = theme.getChartBordersColor();
+    chartFontColor = theme.getChartFontColor();
+    chartTitleFont = theme.getChartTitleFont();
   }
 
   /**
@@ -55,16 +65,24 @@ public class StyleManager {
   public void setTheme(Theme theme) {
 
     this.theme = theme;
+    setAllStyles();
   }
+
+  // Chart Style ///////////////////////////////
 
   /**
    * Set the chart background color - the part around the edge of the chart
    * 
    * @param color
    */
-  public void setBackgroundColor(Color backgroundColor) {
+  public void setChartBackgroundColor(Color color) {
 
-    this.backgroundColor = backgroundColor;
+    this.chartBackgroundColor = color;
+  }
+
+  public Color getChartBackgroundColor() {
+
+    return chartBackgroundColor;
   }
 
   /**
@@ -72,9 +90,14 @@ public class StyleManager {
    * 
    * @param color
    */
-  public void setBordersColor(Color bordersColor) {
+  public void setChartBordersColor(Color color) {
 
-    this.bordersColor = bordersColor;
+    this.chartBordersColor = color;
+  }
+
+  public Color getChartBordersColor() {
+
+    return chartBordersColor;
   }
 
   /**
@@ -82,24 +105,34 @@ public class StyleManager {
    * 
    * @param color
    */
-  public void setFontColor(Color fontColor) {
+  public void setChartFontColor(Color color) {
 
-    this.fontColor = fontColor;
+    this.chartFontColor = color;
   }
 
-  public Color getBackgroundColor() {
+  public Color getChartFontColor() {
 
-    return backgroundColor;
+    return chartFontColor;
   }
 
-  public Color getBordersColor() {
+  // Chart Title ///////////////////////////////
 
-    return bordersColor;
+  /**
+   * Set the chart title font
+   * 
+   * @param font
+   */
+  public void setTitleFont(Font font) {
+
+    this.chartTitleFont = font;
   }
 
-  public Color getFontColor() {
+  public Font getChartTitleFont() {
 
-    return fontColor;
+    return chartTitleFont;
   }
+
+  // Chart Legend ///////////////////////////////
+  // Chart Title ///////////////////////////////
 
 }
