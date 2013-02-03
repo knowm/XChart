@@ -91,7 +91,7 @@ public class ChartLegend implements IChartPart, IHideable {
       // Draw Legend Box
       int legendBoxWidth = legendContentWidth + 2 * chart.getStyleManager().getChartLegendPadding();
       int legendBoxHeight = legendContentHeight + 2 * chart.getStyleManager().getChartLegendPadding();
-      int xOffset = chart.width - legendBoxWidth - Chart.CHART_PADDING;
+      int xOffset = chart.width - legendBoxWidth - chart.getStyleManager().getChartPadding();
       int yOffset = (int) ((chart.height - legendBoxHeight) / 2.0 + chart.chartTitle.getBounds().getY() + chart.chartTitle.getBounds().getHeight());
 
       g.setColor(chart.getStyleManager().getChartBordersColor());

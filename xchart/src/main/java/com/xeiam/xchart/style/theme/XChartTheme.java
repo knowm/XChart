@@ -51,6 +51,12 @@ public class XChartTheme implements Theme {
     return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
+  @Override
+  public int getChartPadding() {
+
+    return 10;
+  }
+
   // Chart Title ///////////////////////////////
 
   @Override

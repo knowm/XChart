@@ -38,6 +38,7 @@ public class StyleManager {
   private Color chartBackgroundColor;
   public Color chartBordersColor;
   public Color chartFontColor;
+  private int chartPadding;
 
   private Font chartTitleFont;
   private boolean isChartTitleVisible;
@@ -61,6 +62,7 @@ public class StyleManager {
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartBordersColor = theme.getChartBordersColor();
     chartFontColor = theme.getChartFontColor();
+    chartPadding = theme.getChartPadding();
     // chart title
     chartTitleFont = theme.getChartTitleFont();
     isChartTitleVisible = theme.isChartTitleVisible();
@@ -127,6 +129,21 @@ public class StyleManager {
   public Color getChartFontColor() {
 
     return chartFontColor;
+  }
+
+  /**
+   * Set the chart padding
+   * 
+   * @param chartPadding
+   */
+  public void setChartPadding(int chartPadding) {
+
+    this.chartPadding = chartPadding;
+  }
+
+  public int getChartPadding() {
+
+    return chartPadding;
   }
 
   // Chart Title ///////////////////////////////

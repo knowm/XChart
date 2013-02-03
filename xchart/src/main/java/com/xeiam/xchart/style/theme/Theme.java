@@ -37,6 +37,8 @@ public interface Theme {
 
   public Color getChartFontColor();
 
+  public int getChartPadding();
+
   // Chart Title ///////////////////////////////
 
   public Font getChartTitleFont();

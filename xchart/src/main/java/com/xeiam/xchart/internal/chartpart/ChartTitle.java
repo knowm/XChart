@@ -75,7 +75,7 @@ public class ChartTitle implements IChartPart, IHideable {
       TextLayout textLayout = new TextLayout(text, chart.getStyleManager().getChartTitleFont(), frc);
       Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
       int xOffset = (int) ((chart.width - rectangle.getWidth()) / 2.0);
-      int yOffset = (int) ((chart.getStyleManager().isChartTitleVisible() ? (Chart.CHART_PADDING - rectangle.getY()) : 0));
+      int yOffset = (int) ((chart.getStyleManager().isChartTitleVisible() ? (chart.getStyleManager().getChartPadding() - rectangle.getY()) : 0));
 
       bounds = new Rectangle(xOffset, yOffset + (chart.getStyleManager().isChartTitleVisible() ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (chart.getStyleManager()
           .isChartTitleVisible() ? rectangle.getHeight() : 0));

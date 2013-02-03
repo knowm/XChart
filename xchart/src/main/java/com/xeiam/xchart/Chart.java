@@ -45,8 +45,6 @@ public class Chart {
 
   private StyleManager styleManager = new StyleManager();
 
-  public final static int CHART_PADDING = 10;
-
   // Chart Parts
   public ChartTitle chartTitle = new ChartTitle(this);
   public ChartLegend chartLegend = new ChartLegend(this);

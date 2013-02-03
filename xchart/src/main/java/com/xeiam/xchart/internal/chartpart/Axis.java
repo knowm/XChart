@@ -21,7 +21,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.math.BigDecimal;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 
 /**
@@ -178,10 +177,10 @@ public class Axis implements IChartPart {
       // |
       // |
       // ----
-      int xOffset = Chart.CHART_PADDING;
-      int yOffset = (int) (axisPair.getChartTitleBounds().getY() + axisPair.getChartTitleBounds().getHeight() + Chart.CHART_PADDING);
+      int xOffset = axisPair.chart.getStyleManager().getChartPadding();
+      int yOffset = (int) (axisPair.getChartTitleBounds().getY() + axisPair.getChartTitleBounds().getHeight() + axisPair.chart.getStyleManager().getChartPadding());
       int width = 80; // arbitrary, final width depends on Axis tick labels
-      int height = axisPair.chart.height - yOffset - axisPair.xAxis.getSizeHint() - Chart.CHART_PADDING;
+      int height = axisPair.chart.height - yOffset - axisPair.xAxis.getSizeHint() - axisPair.chart.getStyleManager().getChartPadding();
       Rectangle yAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -204,10 +203,10 @@ public class Axis implements IChartPart {
       // calculate paint zone
       // |____________________|
 
-      int xOffset = (int) (axisPair.yAxis.getBounds().getWidth() + (axisPair.yAxis.axisTick.isVisible ? Plot.PLOT_PADDING : 0) + Chart.CHART_PADDING);
+      int xOffset = (int) (axisPair.yAxis.getBounds().getWidth() + (axisPair.yAxis.axisTick.isVisible ? Plot.PLOT_PADDING : 0) + axisPair.chart.getStyleManager().getChartPadding());
       int yOffset = (int) (axisPair.yAxis.getBounds().getY() + axisPair.yAxis.getBounds().getHeight());
       int width = (int) (axisPair.chart.width - axisPair.yAxis.getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (axisPair.chart.getStyleManager().isChartLegendVisisble() ? 3 : 2)
-          * Chart.CHART_PADDING);
+          * axisPair.chart.getStyleManager().getChartPadding());
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = xAxisRectangle;
