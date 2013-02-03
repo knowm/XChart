@@ -25,7 +25,7 @@ import java.util.TimeZone;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
-import com.xeiam.xchart.appearance.Series;
+import com.xeiam.xchart.style.Series;
 
 /**
  * Date Axis

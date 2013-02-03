@@ -21,9 +21,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import com.xeiam.xchart.appearance.ChartColor;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.interfaces.IHideable;
+import com.xeiam.xchart.style.ChartColor;
 
 /**
  * @author timmolter

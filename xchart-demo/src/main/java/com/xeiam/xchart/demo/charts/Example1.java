@@ -20,8 +20,8 @@ import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
-import com.xeiam.xchart.appearance.Series;
-import com.xeiam.xchart.appearance.SeriesMarker;
+import com.xeiam.xchart.style.Series;
+import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Manual Data

@@ -25,12 +25,13 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.xeiam.xchart.appearance.Series;
-import com.xeiam.xchart.appearance.StyleManager;
 import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.internal.chartpart.ChartTitle;
 import com.xeiam.xchart.internal.chartpart.Legend;
 import com.xeiam.xchart.internal.chartpart.Plot;
+import com.xeiam.xchart.style.Series;
+import com.xeiam.xchart.style.StyleManager;
+import com.xeiam.xchart.style.theme.Theme;
 
 /**
  * An XChart Chart
@@ -474,6 +475,17 @@ public class Chart {
   public StyleManager getStyleManager() {
 
     return styleManager;
+  }
+
+  /**
+   * Set the theme the Chart's style manager should use
+   * 
+   * @param theme
+   */
+  public void setTheme(Theme theme) {
+
+    styleManager.setTheme(theme);
+
   }
 
 }

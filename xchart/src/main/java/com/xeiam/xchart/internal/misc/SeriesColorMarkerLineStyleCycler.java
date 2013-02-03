@@ -25,9 +25,9 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.xeiam.xchart.appearance.SeriesColor;
-import com.xeiam.xchart.appearance.SeriesLineStyle;
-import com.xeiam.xchart.appearance.SeriesMarker;
+import com.xeiam.xchart.style.SeriesColor;
+import com.xeiam.xchart.style.SeriesLineStyle;
+import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Cycles through the different colors, markers, and strokes in a predetermined way

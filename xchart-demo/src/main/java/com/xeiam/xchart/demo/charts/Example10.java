@@ -17,10 +17,10 @@ package com.xeiam.xchart.demo.charts;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
-import com.xeiam.xchart.appearance.Series;
-import com.xeiam.xchart.appearance.SeriesColor;
-import com.xeiam.xchart.appearance.SeriesLineStyle;
-import com.xeiam.xchart.appearance.SeriesMarker;
+import com.xeiam.xchart.style.Series;
+import com.xeiam.xchart.style.SeriesColor;
+import com.xeiam.xchart.style.SeriesLineStyle;
+import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Plots Hundreds of Series on One Plot

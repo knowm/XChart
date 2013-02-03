@@ -25,10 +25,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.appearance.Series;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.misc.SeriesColorMarkerLineStyleCycler;
+import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter

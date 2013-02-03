@@ -24,11 +24,11 @@ import java.awt.font.TextLayout;
 import java.util.Map;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.appearance.ChartColor;
-import com.xeiam.xchart.appearance.Series;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.interfaces.IHideable;
 import com.xeiam.xchart.internal.markers.Marker;
+import com.xeiam.xchart.style.ChartColor;
+import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter

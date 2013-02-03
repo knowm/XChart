@@ -19,14 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.appearance;
+package com.xeiam.xchart.style;
 
 import java.awt.Color;
+
+import com.xeiam.xchart.style.theme.Theme;
+import com.xeiam.xchart.style.theme.XChartTheme;
 
 /**
  * @author timmolter
  */
 public class StyleManager {
+
+  private Theme theme = new XChartTheme();
 
   private Color backgroundColor;
   public Color bordersColor;
@@ -37,9 +42,19 @@ public class StyleManager {
    */
   public StyleManager() {
 
-    backgroundColor = ChartColor.getAWTColor(ChartColor.GREY);
-    bordersColor = ChartColor.getAWTColor(ChartColor.DARK_GREY);
-    fontColor = ChartColor.getAWTColor(ChartColor.BLACK);
+    backgroundColor = theme.getChartBackgroundColor();
+    bordersColor = theme.getChartBordersColor();
+    fontColor = theme.getChartFontColor();
+  }
+
+  /**
+   * Set the theme the style manager should use
+   * 
+   * @param theme
+   */
+  public void setTheme(Theme theme) {
+
+    this.theme = theme;
   }
 
   /**

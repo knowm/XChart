@@ -24,9 +24,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.xeiam.xchart.appearance.Series;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
+import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter
