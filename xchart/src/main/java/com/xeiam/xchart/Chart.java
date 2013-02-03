@@ -16,7 +16,6 @@
 package com.xeiam.xchart;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
@@ -26,8 +25,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import com.xeiam.xchart.internal.chartpart.AxisPair;
-import com.xeiam.xchart.internal.chartpart.ChartLegend;
 import com.xeiam.xchart.internal.chartpart.ChartTitle;
+import com.xeiam.xchart.internal.chartpart.Legend;
 import com.xeiam.xchart.internal.chartpart.Plot;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.StyleManager;
@@ -47,7 +46,7 @@ public class Chart {
 
   // Chart Parts
   public ChartTitle chartTitle = new ChartTitle(this);
-  public ChartLegend chartLegend = new ChartLegend(this);
+  public Legend chartLegend = new Legend(this);
   public AxisPair axisPair = new AxisPair(this);
   protected Plot plot = new Plot(this);
 
@@ -75,7 +74,7 @@ public class Chart {
     setTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
-    styleManager.setChartLegendVisible(chartBuilder.isLegendVisible);
+    styleManager.setLegendVisible(chartBuilder.isLegendVisible);
   }
 
   /**
@@ -232,6 +231,11 @@ public class Chart {
    */
   public void setXAxisTitle(String title) {
 
+    if (title == null || title.trim().equalsIgnoreCase("")) {
+      styleManager.setxAxisTitleVisible(false);
+    } else {
+      styleManager.setxAxisTitleVisible(true);
+    }
     this.axisPair.xAxis.axisTitle.setText(title);
   }
 
@@ -242,72 +246,15 @@ public class Chart {
    */
   public void setYAxisTitle(String title) {
 
+    if (title == null || title.trim().equalsIgnoreCase("")) {
+      styleManager.setyAxisTitleVisible(false);
+    } else {
+      styleManager.setyAxisTitleVisible(true);
+    }
     this.axisPair.yAxis.axisTitle.setText(title);
   }
 
   // ChartPart visibility ////////////////////////////////
-
-  /**
-   * Set the x- and y-axis titles visibility
-   * 
-   * @param isVisible
-   */
-  public void setAxisTitlesVisible(boolean isVisible) {
-
-    this.axisPair.xAxis.getAxisTitle().setVisible(isVisible);
-    this.axisPair.yAxis.getAxisTitle().setVisible(isVisible);
-  }
-
-  /**
-   * Set the x-axis title visibility
-   * 
-   * @param isVisible
-   */
-  public void setXAxisTitleVisible(boolean isVisible) {
-
-    this.axisPair.xAxis.getAxisTitle().setVisible(isVisible);
-  }
-
-  /**
-   * Set the y-axis title visibility
-   * 
-   * @param isVisible
-   */
-  public void setYAxisTitleVisible(boolean isVisible) {
-
-    this.axisPair.yAxis.getAxisTitle().setVisible(isVisible);
-  }
-
-  /**
-   * Set the x- and y-axis tick marks and labels visibility
-   * 
-   * @param isVisible
-   */
-  public void setAxisTicksVisible(boolean isVisible) {
-
-    this.axisPair.xAxis.axisTick.setVisible(isVisible);
-    this.axisPair.yAxis.axisTick.setVisible(isVisible);
-  }
-
-  /**
-   * Set the x-axis tick marks and labels visibility
-   * 
-   * @param isVisible
-   */
-  public void setXAxisTicksVisible(boolean isVisible) {
-
-    this.axisPair.xAxis.axisTick.setVisible(isVisible);
-  }
-
-  /**
-   * Set the y-axis tick marks and labels visibility
-   * 
-   * @param isVisible
-   */
-  public void setYAxisTicksVisible(boolean isVisible) {
-
-    this.axisPair.yAxis.axisTick.setVisible(isVisible);
-  }
 
   /**
    * Set the chart grid lines visibility
@@ -337,28 +284,6 @@ public class Chart {
   public void setGridLinesColor(Color color) {
 
     this.plot.plotSurface.setGridLinesColor(color);
-  }
-
-  /**
-   * Set the x- and y-axis title font
-   * 
-   * @param font
-   */
-  public void setAxisTitleFont(Font font) {
-
-    this.axisPair.xAxis.axisTitle.font = font;
-    this.axisPair.yAxis.axisTitle.font = font;
-  }
-
-  /**
-   * Set the x- and y-axis tick label font
-   * 
-   * @param font
-   */
-  public void setTickLabelFont(Font font) {
-
-    this.axisPair.xAxis.axisTick.axisTickLabels.font = font;
-    this.axisPair.yAxis.axisTick.axisTickLabels.font = font;
   }
 
   /**

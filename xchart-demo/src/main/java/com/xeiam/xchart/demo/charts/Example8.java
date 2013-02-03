@@ -58,8 +58,8 @@ public class Example8 implements ExampleChart {
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setChartLegendVisible(false);
-    chart.setAxisTitlesVisible(false);
+    chart.getStyleManager().setLegendVisible(false);
+    chart.getStyleManager().setAxisTitlesVisible(false);
 
     // Series 1
     Series series1 = chart.addSeries("10^(-x)", xData1, yData1, errorBars);

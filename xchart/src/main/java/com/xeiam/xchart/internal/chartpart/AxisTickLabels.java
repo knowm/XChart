@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
@@ -31,9 +30,6 @@ public class AxisTickLabels implements IChartPart {
   /** parent */
   private final AxisTick axisTick;
 
-  /** the font */
-  public Font font;
-
   /** the bounds */
   private Rectangle bounds;
 
@@ -45,7 +41,6 @@ public class AxisTickLabels implements IChartPart {
   protected AxisTickLabels(AxisTick axisTick) {
 
     this.axisTick = axisTick;
-    font = new Font(Font.SANS_SERIF, Font.BOLD, 12); // default font
   }
 
   @Override
@@ -58,7 +53,7 @@ public class AxisTickLabels implements IChartPart {
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
-    g.setFont(font);
+    g.setFont(axisTick.axis.axisPair.chart.getStyleManager().getAxisTicksFont());
 
     g.setColor(axisTick.axis.axisPair.chart.getStyleManager().getChartFontColor());
 
@@ -75,7 +70,7 @@ public class AxisTickLabels implements IChartPart {
 
         FontRenderContext frc = g.getFontRenderContext();
         // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
-        TextLayout layout = new TextLayout(tickLabel, font, frc);
+        TextLayout layout = new TextLayout(tickLabel, axisTick.axis.axisPair.chart.getStyleManager().getAxisTicksFont(), frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
         layout.draw(g, xOffset, (int) (yOffset + axisTick.axis.getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
@@ -100,7 +95,7 @@ public class AxisTickLabels implements IChartPart {
         int tickLocation = axisTick.tickLocations.get(i);
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout layout = new TextLayout(tickLabel, font, frc);
+        TextLayout layout = new TextLayout(tickLabel, axisTick.axis.axisPair.chart.getStyleManager().getAxisTicksFont(), frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
         layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
 

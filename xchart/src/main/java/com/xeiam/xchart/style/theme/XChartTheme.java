@@ -74,27 +74,63 @@ public class XChartTheme implements Theme {
   // Chart Legend ///////////////////////////////
 
   @Override
-  public Font getChartLegendFont() {
+  public Font getLegendFont() {
 
     return new Font(Font.SANS_SERIF, Font.PLAIN, 11);
   }
 
   @Override
-  public boolean isChartLegendVisible() {
+  public boolean isLegendVisible() {
 
     return true;
   }
 
   @Override
-  public Color getChartLegendBackgroundColor() {
+  public Color getLegendBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
   }
 
   @Override
-  public int getChartLegendPadding() {
+  public int getLegendPadding() {
 
     return 10;
+  }
+
+  @Override
+  public boolean isXAxisTitleVisible() {
+
+    return false;
+  }
+
+  @Override
+  public boolean isYAxisTitleVisible() {
+
+    return false;
+  }
+
+  @Override
+  public Font getAxisTitleFont() {
+
+    return new Font(Font.SANS_SERIF, Font.BOLD, 12);
+  }
+
+  @Override
+  public boolean isXAxisTicksVisible() {
+
+    return true;
+  }
+
+  @Override
+  public boolean isYAxisTicksVisible() {
+
+    return true;
+  }
+
+  @Override
+  public Font getAxisTicksFont() {
+
+    return new Font(Font.SANS_SERIF, Font.BOLD, 12);
   }
 
 }

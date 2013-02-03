@@ -52,10 +52,10 @@ public class AxisTick implements IChartPart, IHideable {
   /** the axistickmarks */
   protected AxisTickMarks axisTickMarks;
 
-  /** the arraylist of tick label position in pixels */
+  /** the List of tick label position in pixels */
   protected List<Integer> tickLocations;
 
-  /** the arraylist of tick label values */
+  /** the List of tick label values */
   protected List<String> tickLabels;
 
   private int workingSpace;
@@ -74,16 +74,17 @@ public class AxisTick implements IChartPart, IHideable {
   private Rectangle bounds;
 
   /** the visibility state of axistick */
-  protected boolean isVisible = true; // default to true
+  private boolean isVisible = true; // default to true
 
   /**
    * Constructor
    * 
    * @param axis the axis
    */
-  protected AxisTick(Axis axis) {
+  protected AxisTick(Axis axis, boolean isVisible) {
 
     this.axis = axis;
+    this.isVisible = isVisible;
     axisTickLabels = new AxisTickLabels(this);
     axisTickMarks = new AxisTickMarks(this);
 
@@ -270,6 +271,6 @@ public class AxisTick implements IChartPart, IHideable {
   @Override
   public void setVisible(boolean isVisible) {
 
-    this.isVisible = isVisible;
+    // this.isVisible = isVisible;
   }
 }

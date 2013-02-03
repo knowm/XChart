@@ -47,12 +47,26 @@ public interface Theme {
 
   // Chart Legend ///////////////////////////////
 
-  public Font getChartLegendFont();
+  public Font getLegendFont();
 
-  public boolean isChartLegendVisible();
+  public boolean isLegendVisible();
 
-  public Color getChartLegendBackgroundColor();
+  public Color getLegendBackgroundColor();
 
-  public int getChartLegendPadding();
+  public int getLegendPadding();
+
+  // Chart Axes ///////////////////////////////
+
+  public boolean isXAxisTitleVisible();
+
+  public boolean isYAxisTitleVisible();
+
+  public Font getAxisTitleFont();
+
+  public boolean isXAxisTicksVisible();
+
+  public boolean isYAxisTicksVisible();
+
+  public Font getAxisTicksFont();
 
 }

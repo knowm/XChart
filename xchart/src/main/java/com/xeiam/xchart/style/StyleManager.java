@@ -43,10 +43,17 @@ public class StyleManager {
   private Font chartTitleFont;
   private boolean isChartTitleVisible;
 
-  private boolean isChartLegendVisisble;
-  private Color chartLegendBackgroundColor;
-  private Font chartLegendFont;
-  private int chartLegendPadding;
+  private boolean isLegendVisible;
+  private Color legendBackgroundColor;
+  private Font legendFont;
+  private int legendPadding;
+
+  private boolean xAxisTitleVisible;
+  private boolean yAxisTitleVisible;
+  private Font axisTitleFont;
+  private boolean xAxisTicksVisible;
+  private boolean yAxisTicksVisible;
+  private Font axisTicksFont;
 
   /**
    * Constructor
@@ -66,11 +73,18 @@ public class StyleManager {
     // chart title
     chartTitleFont = theme.getChartTitleFont();
     isChartTitleVisible = theme.isChartTitleVisible();
-    // chart legend
-    isChartLegendVisisble = theme.isChartLegendVisible();
-    chartLegendBackgroundColor = theme.getChartLegendBackgroundColor();
-    chartLegendFont = theme.getChartLegendFont();
-    chartLegendPadding = theme.getChartLegendPadding();
+    // legend
+    isLegendVisible = theme.isLegendVisible();
+    legendBackgroundColor = theme.getLegendBackgroundColor();
+    legendFont = theme.getLegendFont();
+    legendPadding = theme.getLegendPadding();
+    // axes
+    xAxisTitleVisible = theme.isXAxisTitleVisible();
+    yAxisTitleVisible = theme.isYAxisTitleVisible();
+    axisTitleFont = theme.getAxisTitleFont();
+    xAxisTicksVisible = theme.isXAxisTicksVisible();
+    yAxisTicksVisible = theme.isYAxisTicksVisible();
+    axisTicksFont = theme.getAxisTicksFont();
   }
 
   /**
@@ -153,9 +167,9 @@ public class StyleManager {
    * 
    * @param font
    */
-  public void setTitleFont(Font font) {
+  public void setChartTitleFont(Font chartTitleFont) {
 
-    this.chartTitleFont = font;
+    this.chartTitleFont = chartTitleFont;
   }
 
   public Font getChartTitleFont() {
@@ -185,14 +199,14 @@ public class StyleManager {
    * 
    * @param color
    */
-  public void setChartLegendBackgroundColor(Color color) {
+  public void setLegendBackgroundColor(Color color) {
 
-    this.chartLegendBackgroundColor = color;
+    this.legendBackgroundColor = color;
   }
 
-  public Color getChartLegendBackgroundColor() {
+  public Color getLegendBackgroundColor() {
 
-    return chartLegendBackgroundColor;
+    return legendBackgroundColor;
   }
 
   /**
@@ -200,46 +214,162 @@ public class StyleManager {
    * 
    * @param font
    */
-  public void setChartLegendFont(Font font) {
+  public void setLegendFont(Font font) {
 
-    this.chartLegendFont = font;
+    this.legendFont = font;
   }
 
-  public Font getChartLegendFont() {
+  public Font getLegendFont() {
 
-    return chartLegendFont;
+    return legendFont;
   }
 
   /**
    * Set the chart legend visibility
    * 
-   * @param isChartLegendVisisble
+   * @param isLegendVisible
    */
-  public void setChartLegendVisible(boolean isChartLegendVisisble) {
+  public void setLegendVisible(boolean isLegendVisible) {
 
-    this.isChartLegendVisisble = isChartLegendVisisble;
+    this.isLegendVisible = isLegendVisible;
   }
 
-  public boolean isChartLegendVisisble() {
+  public boolean isLegendVisible() {
 
-    return isChartLegendVisisble;
+    return isLegendVisible;
   }
 
   /**
    * Set the chart legend padding
    * 
-   * @param chartLegendPadding
+   * @param legendPadding
    */
-  public void setChartLegendPadding(int chartLegendPadding) {
+  public void setLegendPadding(int legendPadding) {
 
-    this.chartLegendPadding = chartLegendPadding;
+    this.legendPadding = legendPadding;
   }
 
-  public int getChartLegendPadding() {
+  public int getLegendPadding() {
 
-    return chartLegendPadding;
+    return legendPadding;
   }
 
-  // Chart Title ///////////////////////////////
+  // Chart Axes ///////////////////////////////
+
+  /**
+   * Set the x-axis title visibility
+   * 
+   * @param isVisible
+   */
+  public void setxAxisTitleVisible(boolean xAxisTitleVisible) {
+
+    this.xAxisTitleVisible = xAxisTitleVisible;
+  }
+
+  public boolean isxAxisTitleVisible() {
+
+    return xAxisTitleVisible;
+  }
+
+  /**
+   * Set the y-axis title visibility
+   * 
+   * @param isVisible
+   */
+  public void setyAxisTitleVisible(boolean yAxisTitleVisible) {
+
+    this.yAxisTitleVisible = yAxisTitleVisible;
+  }
+
+  public boolean isyAxisTitleVisible() {
+
+    return yAxisTitleVisible;
+  }
+
+  /**
+   * Set the x- and y-axis titles visibility
+   * 
+   * @param isVisible
+   */
+  public void setAxisTitlesVisible(boolean isVisible) {
+
+    this.xAxisTitleVisible = isVisible;
+    this.yAxisTitleVisible = isVisible;
+
+  }
+
+  /**
+   * Set the x- and y-axis title font
+   * 
+   * @param axisTitleFont
+   */
+  public void setAxisTitleFont(Font axisTitleFont) {
+
+    this.axisTitleFont = axisTitleFont;
+  }
+
+  public Font getAxisTitleFont() {
+
+    return axisTitleFont;
+  }
+
+  /**
+   * Set the x-axis tick marks and labels visibility
+   * 
+   * @param isVisible
+   */
+
+  public void setxAxisTicksVisible(boolean xAxisTicksVisible) {
+
+    this.xAxisTicksVisible = xAxisTicksVisible;
+  }
+
+  public boolean isxAxisTicksVisible() {
+
+    return xAxisTicksVisible;
+  }
+
+  /**
+   * Set the y-axis tick marks and labels visibility
+   * 
+   * @param isVisible
+   */
+
+  public void setyAxisTicksVisible(boolean yAxisTicksVisible) {
+
+    this.yAxisTicksVisible = yAxisTicksVisible;
+  }
+
+  public boolean isyAxisTicksVisible() {
+
+    return yAxisTicksVisible;
+  }
+
+  /**
+   * Set the x- and y-axis tick marks and labels visibility
+   * 
+   * @param isVisible
+   */
+  public void setAxisTicksVisible(boolean isVisible) {
+
+    this.xAxisTicksVisible = isVisible;
+    this.yAxisTicksVisible = isVisible;
+
+  }
+
+  /**
+   * Set the x- and y-axis tick label font
+   * 
+   * @param foxAxisTicksFontnt
+   */
+  public void setAxisTicksFont(Font axisTicksFont) {
+
+    this.axisTicksFont = axisTicksFont;
+  }
+
+  public Font getAxisTicksFont() {
+
+    return axisTicksFont;
+  }
 
 }

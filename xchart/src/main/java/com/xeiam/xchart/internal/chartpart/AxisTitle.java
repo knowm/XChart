@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
@@ -38,12 +37,6 @@ public class AxisTitle implements IChartPart, IHideable {
   /** the title text */
   protected String text = ""; // default to ""
 
-  /** the visibility state of title */
-  protected boolean isVisible = false; // default to false, set true if text is set
-
-  /** the font */
-  public Font font;
-
   /** the bounds */
   private Rectangle bounds;
 
@@ -52,10 +45,9 @@ public class AxisTitle implements IChartPart, IHideable {
    * 
    * @param axis the axis
    */
-  protected AxisTitle(Axis axis) {
+  protected AxisTitle(Axis axis, boolean isVisible) {
 
     this.axis = axis;
-    font = new Font(Font.SANS_SERIF, Font.BOLD, 12); // default font
   }
 
   protected String getText() {
@@ -65,28 +57,12 @@ public class AxisTitle implements IChartPart, IHideable {
 
   public void setText(String text) {
 
-    if (text.trim().equalsIgnoreCase("")) {
-      this.isVisible = false;
-    } else {
-      this.isVisible = true;
-    }
     this.text = text;
-  }
-
-  protected Font getFont() {
-
-    return font;
   }
 
   @Override
   public void setVisible(boolean isVisible) {
 
-    if (!text.trim().equalsIgnoreCase("")) {
-      this.isVisible = isVisible;
-    } else {
-      // don't allow a set to true if text is empty!
-      this.isVisible = false; // set to false for good measure
-    }
   }
 
   @Override
@@ -101,13 +77,13 @@ public class AxisTitle implements IChartPart, IHideable {
     bounds = new Rectangle();
 
     g.setColor(axis.axisPair.chart.getStyleManager().getChartFontColor());
-    g.setFont(font);
+    g.setFont(axis.axisPair.chart.getStyleManager().getAxisTitleFont());
 
     if (axis.direction == Axis.Direction.Y) {
-      if (isVisible) {
+      if (axis.axisPair.chart.getStyleManager().isyAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout nonRotatedTextLayout = new TextLayout(text, font, frc);
+        TextLayout nonRotatedTextLayout = new TextLayout(text, axis.axisPair.chart.getStyleManager().getAxisTitleFont(), frc);
         Rectangle nonRotatedRectangle = nonRotatedTextLayout.getPixelBounds(null, 0, 0);
         // System.out.println(nonRotatedRectangle);
 
@@ -145,10 +121,10 @@ public class AxisTitle implements IChartPart, IHideable {
 
     } else {
 
-      if (isVisible) {
+      if (axis.axisPair.chart.getStyleManager().isxAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout textLayout = new TextLayout(text, font, frc);
+        TextLayout textLayout = new TextLayout(text, axis.axisPair.chart.getStyleManager().getAxisTitleFont(), frc);
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         // System.out.println(rectangle);
 
