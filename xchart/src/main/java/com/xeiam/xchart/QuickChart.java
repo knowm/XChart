@@ -85,7 +85,7 @@ public final class QuickChart {
       if (seriesNames != null) {
         series = chart.addSeries(seriesNames[i], xData, yData[i]);
       } else {
-        chart.setLegendVisible(false);
+        chart.getStyleManager().setChartLegendVisible(false);
         series = chart.addSeries(" " + i, xData, yData[i]);
       }
       series.setMarker(SeriesMarker.NONE);

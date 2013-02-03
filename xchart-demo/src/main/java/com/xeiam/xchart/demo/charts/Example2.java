@@ -57,7 +57,7 @@ public class Example2 implements ExampleChart {
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
-    chart.setLegendVisible(false);
+    chart.getStyleManager().setChartLegendVisible(false);
 
     // Series 1
     Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);

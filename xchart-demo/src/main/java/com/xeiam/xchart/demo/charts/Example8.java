@@ -58,7 +58,7 @@ public class Example8 implements ExampleChart {
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
-    chart.setLegendVisible(false);
+    chart.getStyleManager().setChartLegendVisible(false);
     chart.setAxisTitlesVisible(false);
 
     // Series 1

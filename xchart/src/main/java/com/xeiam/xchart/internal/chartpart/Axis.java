@@ -206,7 +206,8 @@ public class Axis implements IChartPart {
 
       int xOffset = (int) (axisPair.yAxis.getBounds().getWidth() + (axisPair.yAxis.axisTick.isVisible ? Plot.PLOT_PADDING : 0) + Chart.CHART_PADDING);
       int yOffset = (int) (axisPair.yAxis.getBounds().getY() + axisPair.yAxis.getBounds().getHeight());
-      int width = (int) (axisPair.chart.width - axisPair.yAxis.getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (axisPair.chart.chartLegend.isVisible ? 3 : 2) * Chart.CHART_PADDING);
+      int width = (int) (axisPair.chart.width - axisPair.yAxis.getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (axisPair.chart.getStyleManager().isChartLegendVisisble() ? 3 : 2)
+          * Chart.CHART_PADDING);
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = xAxisRectangle;

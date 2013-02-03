@@ -26,8 +26,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import com.xeiam.xchart.internal.chartpart.AxisPair;
+import com.xeiam.xchart.internal.chartpart.ChartLegend;
 import com.xeiam.xchart.internal.chartpart.ChartTitle;
-import com.xeiam.xchart.internal.chartpart.Legend;
 import com.xeiam.xchart.internal.chartpart.Plot;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.StyleManager;
@@ -49,7 +49,7 @@ public class Chart {
 
   // Chart Parts
   public ChartTitle chartTitle = new ChartTitle(this);
-  public Legend chartLegend = new Legend(this);
+  public ChartLegend chartLegend = new ChartLegend(this);
   public AxisPair axisPair = new AxisPair(this);
   protected Plot plot = new Plot(this);
 
@@ -77,7 +77,7 @@ public class Chart {
     setTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
-    setLegendVisible(chartBuilder.isLegendVisible);
+    styleManager.setChartLegendVisible(chartBuilder.isLegendVisible);
   }
 
   /**
@@ -281,16 +281,6 @@ public class Chart {
   }
 
   /**
-   * Set the chart legend visibility
-   * 
-   * @param isVisible
-   */
-  public void setLegendVisible(boolean isVisible) {
-
-    this.chartLegend.setVisible(isVisible);
-  }
-
-  /**
    * Set the x- and y-axis tick marks and labels visibility
    * 
    * @param isVisible
@@ -349,26 +339,6 @@ public class Chart {
   public void setGridLinesColor(Color color) {
 
     this.plot.plotSurface.setGridLinesColor(color);
-  }
-
-  /**
-   * Set the chart legend color
-   * 
-   * @param color
-   */
-  public void setLegendBackgroundColor(Color color) {
-
-    this.chartLegend.backgroundColor = color;
-  }
-
-  /**
-   * Set the chart legend font
-   * 
-   * @param font
-   */
-  public void setLegendFont(Font font) {
-
-    this.chartLegend.font = font;
   }
 
   /**

@@ -15,8 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
@@ -27,27 +25,15 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.interfaces.IHideable;
 import com.xeiam.xchart.internal.markers.Marker;
-import com.xeiam.xchart.style.ChartColor;
 import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter
  */
-public class Legend implements IChartPart, IHideable {
-
-  private static final int LEGEND_PADDING = 10;
+public class ChartLegend implements IChartPart, IHideable {
 
   /** parent */
   private final Chart chart;
-
-  /** the visibility state of legend */
-  protected boolean isVisible = true; // default to true
-
-  /** the font */
-  public Font font;
-
-  /** the background color */
-  public Color backgroundColor;
 
   /** the bounds */
   private Rectangle bounds;
@@ -57,26 +43,23 @@ public class Legend implements IChartPart, IHideable {
    * 
    * @param chart
    */
-  public Legend(Chart chart) {
+  public ChartLegend(Chart chart) {
 
     this.chart = chart;
-    backgroundColor = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default background color
-    font = new Font(Font.SANS_SERIF, Font.PLAIN, 11); // default font
   }
 
   @Override
   public void setVisible(boolean isVisible) {
 
-    this.isVisible = isVisible;
   }
 
   @Override
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
-    g.setFont(font);
+    g.setFont(chart.getStyleManager().getChartLegendFont());
 
-    if (isVisible) {
+    if (chart.getStyleManager().isChartLegendVisisble()) {
 
       Map<Integer, Series> seriesMap = chart.axisPair.seriesMap;
 
@@ -86,7 +69,7 @@ public class Legend implements IChartPart, IHideable {
 
       for (Integer seriesId : seriesMap.keySet()) {
         Series series = seriesMap.get(seriesId);
-        TextLayout textLayout = new TextLayout(series.name, font, new FontRenderContext(null, true, false));
+        TextLayout textLayout = new TextLayout(series.name, chart.getStyleManager().getChartLegendFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         // System.out.println(rectangle);
         if (rectangle.getWidth() > legendTextContentMaxWidth) {
@@ -100,25 +83,25 @@ public class Legend implements IChartPart, IHideable {
       // determine legend content height
       int legendContentHeight = 0;
       int maxContentHeight = Math.max(legendTextContentMaxHeight, Marker.SIZE);
-      legendContentHeight = maxContentHeight * seriesMap.size() + LEGEND_PADDING * (seriesMap.size() - 1);
+      legendContentHeight = maxContentHeight * seriesMap.size() + chart.getStyleManager().getChartLegendPadding() * (seriesMap.size() - 1);
 
       // determine legend content width
-      int legendContentWidth = (int) (3.0 * Marker.SIZE + LEGEND_PADDING + legendTextContentMaxWidth);
+      int legendContentWidth = (int) (3.0 * Marker.SIZE + chart.getStyleManager().getChartLegendPadding() + legendTextContentMaxWidth);
 
       // Draw Legend Box
-      int legendBoxWidth = legendContentWidth + 2 * LEGEND_PADDING;
-      int legendBoxHeight = legendContentHeight + 2 * LEGEND_PADDING;
+      int legendBoxWidth = legendContentWidth + 2 * chart.getStyleManager().getChartLegendPadding();
+      int legendBoxHeight = legendContentHeight + 2 * chart.getStyleManager().getChartLegendPadding();
       int xOffset = chart.width - legendBoxWidth - Chart.CHART_PADDING;
       int yOffset = (int) ((chart.height - legendBoxHeight) / 2.0 + chart.chartTitle.getBounds().getY() + chart.chartTitle.getBounds().getHeight());
 
       g.setColor(chart.getStyleManager().getChartBordersColor());
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
-      g.setColor(backgroundColor);
+      g.setColor(chart.getStyleManager().getChartLegendBackgroundColor());
       g.fillRect(xOffset + 1, yOffset + 1, legendBoxWidth - 1, legendBoxHeight - 1);
 
       // Draw legend content inside legend box
-      int startx = xOffset + LEGEND_PADDING;
-      int starty = yOffset + LEGEND_PADDING;
+      int startx = xOffset + chart.getStyleManager().getChartLegendPadding();
+      int starty = yOffset + chart.getStyleManager().getChartLegendPadding();
       for (Integer seriesId : seriesMap.keySet()) {
         Series series = seriesMap.get(seriesId);
         // paint line
@@ -135,9 +118,9 @@ public class Legend implements IChartPart, IHideable {
 
         // paint series name
         g.setColor(chart.getStyleManager().getChartFontColor());
-        TextLayout layout = new TextLayout(series.name, font, new FontRenderContext(null, true, false));
-        layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + LEGEND_PADDING), (starty + Marker.SIZE));
-        starty = starty + legendTextContentMaxHeight + LEGEND_PADDING;
+        TextLayout layout = new TextLayout(series.name, chart.getStyleManager().getChartLegendFont(), new FontRenderContext(null, true, false));
+        layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + chart.getStyleManager().getChartLegendPadding()), (starty + Marker.SIZE));
+        starty = starty + legendTextContentMaxHeight + chart.getStyleManager().getChartLegendPadding();
       }
 
       // bounds

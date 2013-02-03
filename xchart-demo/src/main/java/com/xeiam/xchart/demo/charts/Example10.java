@@ -46,7 +46,7 @@ public class Example10 implements ExampleChart {
     chart.setTitle("Example10");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.setLegendVisible(false);
+    chart.getStyleManager().setChartLegendVisible(false);
 
     for (int i = 0; i < 200; i++) {
       Series series = chart.addSeries("", new double[] { Math.random(), Math.random() }, new double[] { Math.random(), Math.random() });

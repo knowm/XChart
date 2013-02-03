@@ -31,6 +31,8 @@ import com.xeiam.xchart.style.ChartColor;
  */
 public class XChartTheme implements Theme {
 
+  // Chart Style ///////////////////////////////
+
   @Override
   public Color getChartBackgroundColor() {
 
@@ -49,6 +51,8 @@ public class XChartTheme implements Theme {
     return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
+  // Chart Title ///////////////////////////////
+
   @Override
   public Font getChartTitleFont() {
 
@@ -59,6 +63,32 @@ public class XChartTheme implements Theme {
   public boolean isChartTitleVisible() {
 
     return false;
+  }
+
+  // Chart Legend ///////////////////////////////
+
+  @Override
+  public Font getChartLegendFont() {
+
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 11);
+  }
+
+  @Override
+  public boolean isChartLegendVisible() {
+
+    return true;
+  }
+
+  @Override
+  public Color getChartLegendBackgroundColor() {
+
+    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+  }
+
+  @Override
+  public int getChartLegendPadding() {
+
+    return 10;
   }
 
 }

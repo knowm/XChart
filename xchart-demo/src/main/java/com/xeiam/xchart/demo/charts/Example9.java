@@ -77,11 +77,11 @@ public class Example9 implements ExampleChart {
     chart.setForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));
     chart.setGridLinesColor(new Color(255, 255, 255));
     chart.getStyleManager().setChartBackgroundColor(Color.WHITE);
-    chart.setLegendBackgroundColor(Color.PINK);
+    chart.getStyleManager().setChartLegendBackgroundColor(Color.PINK);
     chart.getStyleManager().setChartBordersColor(Color.GREEN);
     chart.getStyleManager().setChartFontColor(Color.MAGENTA);
     chart.getStyleManager().setTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
-    chart.setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
+    chart.getStyleManager().setChartLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.setTickLabelFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.setTickLabelFont(new Font(Font.SERIF, Font.PLAIN, 11));

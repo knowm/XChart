@@ -43,4 +43,14 @@ public interface Theme {
 
   public boolean isChartTitleVisible();
 
+  // Chart Legend ///////////////////////////////
+
+  public Font getChartLegendFont();
+
+  public boolean isChartLegendVisible();
+
+  public Color getChartLegendBackgroundColor();
+
+  public int getChartLegendPadding();
+
 }

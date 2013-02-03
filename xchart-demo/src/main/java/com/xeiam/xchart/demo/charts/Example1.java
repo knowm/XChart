@@ -76,7 +76,7 @@ public class Example1 implements ExampleChart {
     // Customize Chart
     chart.setTitle("Example1");
     chart.getStyleManager().setChartTitleVisible(false);
-    chart.setLegendVisible(false);
+    chart.getStyleManager().setChartLegendVisible(false);
 
     // Series 1
     Series series1 = chart.addSeries("data", xData, yData);

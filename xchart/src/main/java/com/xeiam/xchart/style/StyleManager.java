@@ -40,8 +40,12 @@ public class StyleManager {
   public Color chartFontColor;
 
   private Font chartTitleFont;
-
   private boolean isChartTitleVisible;
+
+  private boolean isChartLegendVisisble;
+  private Color chartLegendBackgroundColor;
+  private Font chartLegendFont;
+  private int chartLegendPadding;
 
   /**
    * Constructor
@@ -53,11 +57,18 @@ public class StyleManager {
 
   private void setAllStyles() {
 
+    // chart
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartBordersColor = theme.getChartBordersColor();
     chartFontColor = theme.getChartFontColor();
+    // chart title
     chartTitleFont = theme.getChartTitleFont();
     isChartTitleVisible = theme.isChartTitleVisible();
+    // chart legend
+    isChartLegendVisisble = theme.isChartLegendVisible();
+    chartLegendBackgroundColor = theme.getChartLegendBackgroundColor();
+    chartLegendFont = theme.getChartLegendFont();
+    chartLegendPadding = theme.getChartLegendPadding();
   }
 
   /**
@@ -151,6 +162,67 @@ public class StyleManager {
   }
 
   // Chart Legend ///////////////////////////////
+
+  /**
+   * Set the chart legend color
+   * 
+   * @param color
+   */
+  public void setChartLegendBackgroundColor(Color color) {
+
+    this.chartLegendBackgroundColor = color;
+  }
+
+  public Color getChartLegendBackgroundColor() {
+
+    return chartLegendBackgroundColor;
+  }
+
+  /**
+   * Set the chart legend font
+   * 
+   * @param font
+   */
+  public void setChartLegendFont(Font font) {
+
+    this.chartLegendFont = font;
+  }
+
+  public Font getChartLegendFont() {
+
+    return chartLegendFont;
+  }
+
+  /**
+   * Set the chart legend visibility
+   * 
+   * @param isChartLegendVisisble
+   */
+  public void setChartLegendVisible(boolean isChartLegendVisisble) {
+
+    this.isChartLegendVisisble = isChartLegendVisisble;
+  }
+
+  public boolean isChartLegendVisisble() {
+
+    return isChartLegendVisisble;
+  }
+
+  /**
+   * Set the chart legend padding
+   * 
+   * @param chartLegendPadding
+   */
+  public void setChartLegendPadding(int chartLegendPadding) {
+
+    this.chartLegendPadding = chartLegendPadding;
+  }
+
+  public int getChartLegendPadding() {
+
+    return chartLegendPadding;
+  }
+
   // Chart Title ///////////////////////////////
 
 }
