@@ -17,6 +17,9 @@ package com.xeiam.xchart;
 
 import java.util.Collection;
 
+import com.xeiam.xchart.appearance.Series;
+import com.xeiam.xchart.appearance.SeriesMarker;
+
 /**
  * A convenience class for making Charts with one line of code
  * 

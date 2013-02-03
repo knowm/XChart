@@ -90,7 +90,7 @@ public class ChartTitle implements IChartPart, IHideable {
       // g.setColor(Color.green);
       // g.draw(bounds);
 
-      g.setColor(chart.fontColor);
+      g.setColor(chart.getStyleManager().getFontColor());
       textLayout.draw(g, xOffset, yOffset);
     }
 

@@ -24,8 +24,8 @@ import java.awt.font.TextLayout;
 import java.util.Map;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.ChartColor;
-import com.xeiam.xchart.Series;
+import com.xeiam.xchart.appearance.ChartColor;
+import com.xeiam.xchart.appearance.Series;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.interfaces.IHideable;
 import com.xeiam.xchart.internal.markers.Marker;
@@ -111,7 +111,7 @@ public class Legend implements IChartPart, IHideable {
       int xOffset = chart.width - legendBoxWidth - Chart.CHART_PADDING;
       int yOffset = (int) ((chart.height - legendBoxHeight) / 2.0 + chart.chartTitle.getBounds().getY() + chart.chartTitle.getBounds().getHeight());
 
-      g.setColor(chart.bordersColor);
+      g.setColor(chart.getStyleManager().getBordersColor());
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
       g.setColor(backgroundColor);
       g.fillRect(xOffset + 1, yOffset + 1, legendBoxWidth - 1, legendBoxHeight - 1);
@@ -134,7 +134,7 @@ public class Legend implements IChartPart, IHideable {
         }
 
         // paint series name
-        g.setColor(chart.fontColor);
+        g.setColor(chart.getStyleManager().getFontColor());
         TextLayout layout = new TextLayout(series.name, font, new FontRenderContext(null, true, false));
         layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + LEGEND_PADDING), (starty + Marker.SIZE));
         starty = starty + legendTextContentMaxHeight + LEGEND_PADDING;

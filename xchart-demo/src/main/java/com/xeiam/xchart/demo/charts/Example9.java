@@ -26,12 +26,12 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.ChartColor;
-import com.xeiam.xchart.Series;
-import com.xeiam.xchart.SeriesColor;
-import com.xeiam.xchart.SeriesLineStyle;
-import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.appearance.ChartColor;
+import com.xeiam.xchart.appearance.Series;
+import com.xeiam.xchart.appearance.SeriesColor;
+import com.xeiam.xchart.appearance.SeriesLineStyle;
+import com.xeiam.xchart.appearance.SeriesMarker;
 
 /**
  * Extensive chart customization
@@ -76,10 +76,10 @@ public class Example9 implements ExampleChart {
     chart.setYAxisTitle("Y");
     chart.setForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));
     chart.setGridLinesColor(new Color(255, 255, 255));
-    chart.setBackgroundColor(Color.WHITE);
+    chart.getStyleManager().setBackgroundColor(Color.WHITE);
     chart.setLegendBackgroundColor(Color.PINK);
-    chart.setLinesColor(Color.GREEN);
-    chart.setFontColor(Color.MAGENTA);
+    chart.getStyleManager().setBordersColor(Color.GREEN);
+    chart.getStyleManager().setFontColor(Color.MAGENTA);
     chart.setTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));

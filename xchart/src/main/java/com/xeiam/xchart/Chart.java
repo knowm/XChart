@@ -25,6 +25,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.xeiam.xchart.appearance.Series;
+import com.xeiam.xchart.appearance.StyleManager;
 import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.internal.chartpart.ChartTitle;
 import com.xeiam.xchart.internal.chartpart.Legend;
@@ -39,12 +41,12 @@ public class Chart {
 
   public int width;
   public int height;
-  private Color backgroundColor;
-  public Color bordersColor;
-  public Color fontColor;
+
+  private StyleManager styleManager = new StyleManager();
 
   public final static int CHART_PADDING = 10;
 
+  // Chart Parts
   public ChartTitle chartTitle = new ChartTitle(this);
   public Legend chartLegend = new Legend(this);
   public AxisPair axisPair = new AxisPair(this);
@@ -60,9 +62,7 @@ public class Chart {
 
     this.width = width;
     this.height = height;
-    backgroundColor = ChartColor.getAWTColor(ChartColor.GREY);
-    bordersColor = ChartColor.getAWTColor(ChartColor.DARK_GREY);
-    fontColor = ChartColor.getAWTColor(ChartColor.BLACK);
+
   }
 
   /**
@@ -103,7 +103,7 @@ public class Chart {
     }
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-    g.setColor(backgroundColor);
+    g.setColor(styleManager.getBackgroundColor());
     g.fillRect(0, 0, width, height);
 
     chartTitle.paint(g);
@@ -341,16 +341,6 @@ public class Chart {
   }
 
   /**
-   * Set the chart background color - the part around the edge of the chart
-   * 
-   * @param color
-   */
-  public void setBackgroundColor(Color color) {
-
-    this.backgroundColor = color;
-  }
-
-  /**
    * Set the chart foreground color - the part the series are drawn on
    * 
    * @param color
@@ -378,26 +368,6 @@ public class Chart {
   public void setLegendBackgroundColor(Color color) {
 
     this.chartLegend.backgroundColor = color;
-  }
-
-  /**
-   * Sets the color of the plot border, legend border, tick marks, and error bars
-   * 
-   * @param color
-   */
-  public void setLinesColor(Color color) {
-
-    this.bordersColor = color;
-  }
-
-  /**
-   * Set the chart font color
-   * 
-   * @param color
-   */
-  public void setFontColor(Color color) {
-
-    this.fontColor = color;
   }
 
   /**
@@ -494,6 +464,16 @@ public class Chart {
 
     this.axisPair.xAxis.axisTick.timezone = timezone;
     this.axisPair.yAxis.axisTick.timezone = timezone;
+  }
+
+  /**
+   * Gets the Chart's style manager, which can be used to customize the Chart's appearance
+   * 
+   * @return the style manager
+   */
+  public StyleManager getStyleManager() {
+
+    return styleManager;
   }
 
 }

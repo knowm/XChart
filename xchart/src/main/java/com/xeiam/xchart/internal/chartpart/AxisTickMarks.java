@@ -60,7 +60,7 @@ public class AxisTickMarks implements IChartPart {
 
     bounds = new Rectangle();
 
-    g.setColor(axisTick.axis.axisPair.chart.bordersColor);
+    g.setColor(axisTick.axis.axisPair.chart.getStyleManager().getBordersColor());
 
     if (axisTick.axis.direction == Axis.Direction.Y) { // Y-Axis
 
@@ -72,7 +72,7 @@ public class AxisTickMarks implements IChartPart {
 
         int tickLocation = axisTick.tickLocations.get(i);
 
-        g.setColor(axisTick.axis.axisPair.chart.bordersColor);
+        g.setColor(axisTick.axis.axisPair.chart.getStyleManager().getBordersColor());
         g.setStroke(stroke);
 
         g.drawLine(xOffset, yOffset + (int) (axisTick.axis.getPaintZone().getHeight() - tickLocation), xOffset + TICK_LENGTH, yOffset + (int) (axisTick.axis.getPaintZone().getHeight() - tickLocation));
@@ -96,7 +96,7 @@ public class AxisTickMarks implements IChartPart {
 
         int tickLocation = axisTick.tickLocations.get(i);
 
-        g.setColor(axisTick.axis.axisPair.chart.bordersColor);
+        g.setColor(axisTick.axis.axisPair.chart.getStyleManager().getBordersColor());
         g.setStroke(stroke);
 
         g.drawLine(xOffset + tickLocation, yOffset, xOffset + tickLocation, yOffset - TICK_LENGTH);

@@ -21,7 +21,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import com.xeiam.xchart.ChartColor;
+import com.xeiam.xchart.appearance.ChartColor;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.interfaces.IHideable;
 
@@ -74,7 +74,7 @@ public class PlotSurface implements IChartPart, IHideable {
     g.setColor(foregroundColor);
     g.fill(backgroundRectangle);
     Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(plot.chart.bordersColor);
+    g.setColor(plot.chart.getStyleManager().getBordersColor());
     g.draw(borderRectangle);
 
     // paint grid lines
