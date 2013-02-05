@@ -29,8 +29,6 @@ import com.xeiam.xchart.internal.interfaces.IHideable;
  */
 public class AxisTitle implements IChartPart, IHideable {
 
-  protected final static int AXIS_TITLE_PADDING = 10;
-
   /** parent */
   private final Axis axis;
 
@@ -111,8 +109,8 @@ public class AxisTitle implements IChartPart, IHideable {
         g.setTransform(orig);
 
         // bounds
-        bounds = new Rectangle((int) (xOffset - nonRotatedRectangle.getHeight()), (int) (yOffset - nonRotatedRectangle.getWidth()), (int) nonRotatedRectangle.getHeight() + AXIS_TITLE_PADDING,
-            (int) nonRotatedRectangle.getWidth());
+        bounds = new Rectangle((int) (xOffset - nonRotatedRectangle.getHeight()), (int) (yOffset - nonRotatedRectangle.getWidth()), (int) nonRotatedRectangle.getHeight()
+            + axis.axisPair.chart.getStyleManager().getAxisTitlePadding(), (int) nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
       } else {
@@ -133,7 +131,8 @@ public class AxisTitle implements IChartPart, IHideable {
 
         textLayout.draw(g, xOffset, (float) (yOffset - rectangle.getY()));
 
-        bounds = new Rectangle(xOffset, yOffset - AXIS_TITLE_PADDING, (int) rectangle.getWidth(), (int) rectangle.getHeight() + AXIS_TITLE_PADDING);
+        bounds = new Rectangle(xOffset, yOffset - axis.axisPair.chart.getStyleManager().getAxisTitlePadding(), (int) rectangle.getWidth(), (int) rectangle.getHeight()
+            + axis.axisPair.chart.getStyleManager().getAxisTitlePadding());
         // g.setColor(Color.blue);
         // g.draw(bounds);
 

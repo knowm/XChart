@@ -144,7 +144,7 @@ public class Axis implements IChartPart {
       if (axisPair.chart.getStyleManager().isxAxisTitleVisible()) {
         TextLayout textLayout = new TextLayout(axisTitle.getText(), axisTick.axis.axisPair.chart.getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-        titleHeight = rectangle.getHeight() + AxisTitle.AXIS_TITLE_PADDING;
+        titleHeight = rectangle.getHeight() + axisTick.axis.axisPair.chart.getStyleManager().getAxisTitlePadding();
       }
 
       // Axis tick labels
@@ -152,7 +152,8 @@ public class Axis implements IChartPart {
       if (axisPair.chart.getStyleManager().isxAxisTicksVisible()) {
         TextLayout textLayout = new TextLayout("0", axisTick.axis.axisPair.chart.getStyleManager().getAxisTicksFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-        axisTickLabelsHeight = rectangle.getHeight() + AxisTick.AXIS_TICK_PADDING + AxisTickMarks.TICK_LENGTH + Plot.PLOT_PADDING;
+        axisTickLabelsHeight = rectangle.getHeight() + axisPair.chart.getStyleManager().getAxisTickPadding() + axisPair.chart.getStyleManager().getAxisTickMarkLength()
+            + axisPair.chart.getStyleManager().getPlotPadding();
       }
       return (int) (titleHeight + axisTickLabelsHeight);
     } else { // Y-Axis
@@ -202,8 +203,8 @@ public class Axis implements IChartPart {
       // calculate paint zone
       // |____________________|
 
-      int xOffset = (int) (axisPair.yAxis.getBounds().getWidth() + (axisPair.chart.getStyleManager().isyAxisTicksVisible() ? Plot.PLOT_PADDING : 0) + axisPair.chart.getStyleManager()
-          .getChartPadding());
+      int xOffset = (int) (axisPair.yAxis.getBounds().getWidth() + (axisPair.chart.getStyleManager().isyAxisTicksVisible() ? axisPair.chart.getStyleManager().getPlotPadding() : 0) + axisPair.chart
+          .getStyleManager().getChartPadding());
       int yOffset = (int) (axisPair.yAxis.getBounds().getY() + axisPair.yAxis.getBounds().getHeight());
       int width = (int) (axisPair.chart.width - axisPair.yAxis.getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (axisPair.chart.getStyleManager().isLegendVisible() ? 3 : 2)
           * axisPair.chart.getStyleManager().getChartPadding());

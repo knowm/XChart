@@ -69,4 +69,14 @@ public interface Theme {
 
   public Font getAxisTicksFont();
 
+  public int getAxisTickMarkLength();
+
+  public int getAxisTickPadding();
+
+  public boolean isAxisTicksLineVisible();
+
+  public int getAxisTitlePadding();
+
+  public int getPlotPadding();
+
 }

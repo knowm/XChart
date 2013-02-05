@@ -54,6 +54,11 @@ public class StyleManager {
   private boolean xAxisTicksVisible;
   private boolean yAxisTicksVisible;
   private Font axisTicksFont;
+  private int axisTickMarkLength;
+  private int axisTickPadding;
+  private boolean isAxisTicksLineVisible;
+  private int plotPadding;
+  private int axisTitlePadding;
 
   /**
    * Constructor
@@ -85,6 +90,11 @@ public class StyleManager {
     xAxisTicksVisible = theme.isXAxisTicksVisible();
     yAxisTicksVisible = theme.isYAxisTicksVisible();
     axisTicksFont = theme.getAxisTicksFont();
+    axisTickMarkLength = theme.getAxisTickMarkLength();
+    axisTickPadding = theme.getAxisTickPadding();
+    isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
+    plotPadding = theme.getPlotPadding();
+    axisTitlePadding = theme.getAxisTitlePadding();
   }
 
   /**
@@ -372,4 +382,78 @@ public class StyleManager {
     return axisTicksFont;
   }
 
+  /**
+   * set the axis tick mark length
+   * 
+   * @param axisTickMarkLength
+   */
+  public void setAxisTickMarkLength(int axisTickMarkLength) {
+
+    this.axisTickMarkLength = axisTickMarkLength;
+  }
+
+  public int getAxisTickMarkLength() {
+
+    return axisTickMarkLength;
+  }
+
+  /**
+   * the padding between the tick labels and the tick marks
+   * 
+   * @param axisTickPadding
+   */
+  public void setAxisTickPadding(int axisTickPadding) {
+
+    this.axisTickPadding = axisTickPadding;
+  }
+
+  public int getAxisTickPadding() {
+
+    return axisTickPadding;
+  }
+
+  /**
+   * sets the visibility of the line parallel to the plot edges that go along with the tick marks
+   * 
+   * @param isAxisTicksLineVisible
+   */
+  public void setAxisTicksLineVisible(boolean isAxisTicksLineVisible) {
+
+    this.isAxisTicksLineVisible = isAxisTicksLineVisible;
+  }
+
+  public boolean isAxisTicksLineVisible() {
+
+    return isAxisTicksLineVisible;
+  }
+
+  /**
+   * sets the pading between the tick marks and the plot area
+   * 
+   * @param plotPadding
+   */
+  public void setPlotPadding(int plotPadding) {
+
+    this.plotPadding = plotPadding;
+  }
+
+  public int getPlotPadding() {
+
+    return plotPadding;
+  }
+
+  /**
+   * sets the padding between the axis title and the tick labels
+   * 
+   * @param axisTitlePadding
+   */
+  public void setAxisTitlePadding(int axisTitlePadding) {
+
+    this.axisTitlePadding = axisTitlePadding;
+  }
+
+  public int getAxisTitlePadding() {
+
+    return axisTitlePadding;
+  }
 }

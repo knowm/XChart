@@ -133,4 +133,33 @@ public class XChartTheme implements Theme {
     return new Font(Font.SANS_SERIF, Font.BOLD, 12);
   }
 
+  @Override
+  public int getAxisTickMarkLength() {
+
+    return 3;
+  }
+
+  @Override
+  public int getAxisTickPadding() {
+
+    return 4;
+  }
+
+  @Override
+  public boolean isAxisTicksLineVisible() {
+
+    return true;
+  }
+
+  @Override
+  public int getPlotPadding() {
+
+    return 3;
+  }
+
+  @Override
+  public int getAxisTitlePadding() {
+
+    return 10;
+  }
 }
