@@ -34,7 +34,7 @@ public class ChartTitle implements ChartPart {
   private Rectangle bounds;
 
   /** the title text */
-  protected String text = ""; // default to ""
+  private String text = ""; // default to ""
 
   /**
    * Constructor

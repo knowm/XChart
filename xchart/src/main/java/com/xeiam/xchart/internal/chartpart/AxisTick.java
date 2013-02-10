@@ -20,8 +20,6 @@ import java.awt.Rectangle;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
@@ -39,31 +37,21 @@ public class AxisTick implements ChartPart {
   private static final int DEFAULT_TICK_MARK_STEP_HINT_Y = 44;
 
   /** parent */
-  protected Axis axis;
+  private Axis axis;
 
   /** the axisticklabels */
-  public AxisTickLabels axisTickLabels;
+  private AxisTickLabels axisTickLabels;
 
   /** the axistickmarks */
-  protected AxisTickMarks axisTickMarks;
+  private AxisTickMarks axisTickMarks;
 
   /** the List of tick label position in pixels */
-  protected List<Integer> tickLocations;
+  private List<Integer> tickLocations;
 
   /** the List of tick label values */
-  protected List<String> tickLabels;
+  private List<String> tickLabels;
 
   private int workingSpace;
-
-  /** the Locale for tick labels */
-  public Locale locale;
-
-  /** the TimeZone for Date tick labels */
-  public TimeZone timezone;
-
-  public String normalDecimalPattern = null;
-  public String scientificDecimalPattern = null;
-  public String datePattern = null;
 
   /** the bounds */
   private Rectangle bounds;
@@ -96,7 +84,7 @@ public class AxisTick implements ChartPart {
 
     bounds = new Rectangle();
 
-    if (axis.direction == Axis.Direction.Y) {
+    if (axis.getDirection() == Axis.Direction.Y) {
       workingSpace = (int) axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
       // System.out.println("workingspace= " + workingSpace);
     } else {
@@ -117,7 +105,7 @@ public class AxisTick implements ChartPart {
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      if (axis.direction == Axis.Direction.Y) {
+      if (axis.getDirection() == Axis.Direction.Y) {
         bounds = new Rectangle((int) axisTickLabels.getBounds().getX(), (int) (axisTickLabels.getBounds().getY()), (int) (axisTickLabels.getBounds().getWidth()
             + getChart().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
         // g.setColor(Color.red);
@@ -149,12 +137,12 @@ public class AxisTick implements ChartPart {
     int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace);
 
     // a check if all axis data are the exact same values
-    if (axis.max == axis.min) {
-      tickLabels.add(format(axis.max));
+    if (axis.getMax() == axis.getMin()) {
+      tickLabels.add(format(axis.getMax()));
       tickLocations.add((int) (margin + tickSpace / 2.0));
     } else {
 
-      final BigDecimal min = new BigDecimal(axis.min.doubleValue());
+      final BigDecimal min = new BigDecimal(axis.getMin().doubleValue());
       BigDecimal firstPosition;
       BigDecimal gridStep = getGridStep(tickSpace);
 
@@ -165,11 +153,11 @@ public class AxisTick implements ChartPart {
         firstPosition = min.subtract(min.remainder(gridStep)).add(gridStep);
       }
 
-      for (BigDecimal b = firstPosition; b.compareTo(axis.max) <= 0; b = b.add(gridStep)) {
+      for (BigDecimal b = firstPosition; b.compareTo(axis.getMax()) <= 0; b = b.add(gridStep)) {
 
         // System.out.println("b= " + b);
         tickLabels.add(format(b));
-        int tickLabelPosition = (int) (margin + ((b.subtract(axis.min)).doubleValue() / (axis.max.subtract(axis.min)).doubleValue() * tickSpace));
+        int tickLabelPosition = (int) (margin + ((b.subtract(axis.getMin())).doubleValue() / (axis.getMax().subtract(axis.getMin())).doubleValue() * tickSpace));
         // System.out.println("tickLabelPosition= " + tickLabelPosition);
 
         tickLocations.add(tickLabelPosition);
@@ -179,13 +167,13 @@ public class AxisTick implements ChartPart {
 
   private BigDecimal getGridStep(int tickSpace) {
 
-    double length = Math.abs(axis.max.subtract(axis.min).doubleValue());
+    double length = Math.abs(axis.getMax().subtract(axis.getMin()).doubleValue());
     // System.out.println(axis.getMax());
     // System.out.println(axis.min);
     // System.out.println(length);
-    int tickMarkSpaceHint = (axis.direction == Direction.X ? DEFAULT_TICK_MARK_STEP_HINT_X : DEFAULT_TICK_MARK_STEP_HINT_Y);
+    int tickMarkSpaceHint = (axis.getDirection() == Direction.X ? DEFAULT_TICK_MARK_STEP_HINT_X : DEFAULT_TICK_MARK_STEP_HINT_Y);
     // for very short plots, squeeze some more ticks in than normal
-    if (axis.direction == Direction.Y && tickSpace < 160) {
+    if (axis.getDirection() == Direction.Y && tickSpace < 160) {
       tickMarkSpaceHint = 25;
     }
     double gridStepHint = length / tickSpace * tickMarkSpaceHint;
@@ -252,13 +240,13 @@ public class AxisTick implements ChartPart {
    */
   private String format(BigDecimal value) {
 
-    if (axis.axisType == AxisType.NUMBER) {
+    if (axis.getAxisType() == AxisType.NUMBER) {
 
       return getChart().getValueFormatter().formatNumber(value);
 
     } else {
 
-      return getChart().getValueFormatter().formatDateValue(value, axis.min, axis.max);
+      return getChart().getValueFormatter().formatDateValue(value, axis.getMin(), axis.getMax());
     }
 
   }
@@ -267,5 +255,27 @@ public class AxisTick implements ChartPart {
   public Chart getChart() {
 
     return axis.getChart();
+  }
+
+  // Getters /////////////////////////////////////////////////
+
+  public List<Integer> getTickLocations() {
+
+    return tickLocations;
+  }
+
+  public List<String> getTickLabels() {
+
+    return tickLabels;
+  }
+
+  public Axis getAxis() {
+
+    return axis;
+  }
+
+  public AxisTickLabels getAxisTickLabels() {
+
+    return axisTickLabels;
   }
 }

@@ -32,7 +32,7 @@ public class AxisTitle implements ChartPart {
   private final Axis axis;
 
   /** the title text */
-  public String text = ""; // default to ""
+  private String text = ""; // default to ""
 
   /** the bounds */
   private Rectangle bounds;
@@ -61,7 +61,7 @@ public class AxisTitle implements ChartPart {
     g.setColor(getChart().getStyleManager().getChartFontColor());
     g.setFont(getChart().getStyleManager().getAxisTitleFont());
 
-    if (axis.direction == Axis.Direction.Y) {
+    if (axis.getDirection() == Axis.Direction.Y) {
       if (getChart().getStyleManager().isyAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
@@ -133,5 +133,17 @@ public class AxisTitle implements ChartPart {
   public Chart getChart() {
 
     return axis.getChart();
+  }
+
+  // Getters /////////////////////////////////////////////////
+
+  public String getText() {
+
+    return text;
+  }
+
+  public void setText(String text) {
+
+    this.text = text;
   }
 }

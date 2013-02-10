@@ -37,7 +37,7 @@ public class PlotContent implements ChartPart {
   /** parent */
   private Plot plot;
 
-  Stroke errorBarStroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  private final Stroke errorBarStroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /**
    * Constructor
@@ -60,7 +60,7 @@ public class PlotContent implements ChartPart {
 
     Rectangle bounds = plot.getBounds();
 
-    Map<Integer, Series> seriesMap = getChart().getAxisPair().seriesMap;
+    Map<Integer, Series> seriesMap = getChart().getAxisPair().getSeriesMap();
     for (Integer seriesId : seriesMap.keySet()) {
 
       Series series = seriesMap.get(seriesId);
@@ -75,11 +75,11 @@ public class PlotContent implements ChartPart {
 
       // data points
       Collection<?> xData = series.xData;
-      BigDecimal xMin = getChart().getAxisPair().xAxis.min;
-      BigDecimal xMax = getChart().getAxisPair().xAxis.max;
+      BigDecimal xMin = getChart().getAxisPair().getxAxis().getMin();
+      BigDecimal xMax = getChart().getAxisPair().getxAxis().getMax();
       Collection<Number> yData = series.yData;
-      BigDecimal yMin = getChart().getAxisPair().yAxis.min;
-      BigDecimal yMax = getChart().getAxisPair().yAxis.max;
+      BigDecimal yMin = getChart().getAxisPair().getyAxis().getMin();
+      BigDecimal yMax = getChart().getAxisPair().getyAxis().getMax();
       Collection<Number> errorBars = series.errorBars;
 
       int previousX = Integer.MIN_VALUE;
@@ -94,10 +94,10 @@ public class PlotContent implements ChartPart {
       while (xItr.hasNext()) {
 
         BigDecimal x = null;
-        if (getChart().getAxisPair().xAxis.axisType == AxisType.NUMBER) {
+        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.NUMBER) {
           x = new BigDecimal(((Number) xItr.next()).doubleValue());
         }
-        if (getChart().getAxisPair().xAxis.axisType == AxisType.DATE) {
+        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.DATE) {
           x = new BigDecimal(((Date) xItr.next()).getTime());
           // System.out.println(x);
         }

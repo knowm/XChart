@@ -54,7 +54,7 @@ public class Legend implements ChartPart {
 
     if (chart.getStyleManager().isLegendVisible()) {
 
-      Map<Integer, Series> seriesMap = chart.getAxisPair().seriesMap;
+      Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
 
       // determine legend text content max width
       int legendTextContentMaxWidth = 0;

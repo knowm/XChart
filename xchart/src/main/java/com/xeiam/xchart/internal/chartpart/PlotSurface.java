@@ -18,6 +18,7 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.util.List;
 
 import com.xeiam.xchart.Chart;
@@ -31,7 +32,7 @@ public class PlotSurface implements ChartPart {
   private Plot plot;
 
   /** the line style */
-  private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
+  private final Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
 
   /**
    * Constructor
@@ -66,7 +67,7 @@ public class PlotSurface implements ChartPart {
     if (getChart().getStyleManager().isPlotGridLinesVisible()) {
 
       // horizontal
-      List<Integer> yAxisTickLocations = getChart().getAxisPair().yAxis.axisTick.tickLocations;
+      List<Integer> yAxisTickLocations = getChart().getAxisPair().getyAxis().getAxisTick().getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         int tickLocation = yAxisTickLocations.get(i);
@@ -79,7 +80,7 @@ public class PlotSurface implements ChartPart {
       }
 
       // vertical
-      List<Integer> xAxisTickLocations = getChart().getAxisPair().xAxis.axisTick.tickLocations;
+      List<Integer> xAxisTickLocations = getChart().getAxisPair().getxAxis().getAxisTick().getTickLocations();
       for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
         int tickLocation = xAxisTickLocations.get(i);

@@ -36,23 +36,23 @@ public class Axis implements ChartPart {
   }
 
   /** parent */
-  protected AxisPair axisPair;
+  private AxisPair axisPair;
 
   /** the axisType */
-  protected AxisType axisType;
+  private AxisType axisType;
 
   /** the axis title */
-  public AxisTitle axisTitle;
+  private AxisTitle axisTitle;
 
   /** the axis tick */
-  public AxisTick axisTick;
+  private AxisTick axisTick;
 
   /** the axis direction */
-  protected Direction direction;
+  private Direction direction;
 
-  protected BigDecimal min = null;
+  private BigDecimal min = null;
 
-  protected BigDecimal max = null;
+  private BigDecimal max = null;
 
   /** the bounds */
   private Rectangle bounds;
@@ -117,21 +117,6 @@ public class Axis implements ChartPart {
     return bounds;
   }
 
-  protected Rectangle getPaintZone() {
-
-    return paintZone;
-  }
-
-  public AxisTitle getAxisTitle() {
-
-    return axisTitle;
-  }
-
-  protected void setAxisTitle(AxisTitle axisTitle) {
-
-    this.axisTitle = axisTitle;
-  }
-
   /**
    * @return
    */
@@ -142,15 +127,15 @@ public class Axis implements ChartPart {
       // Axis title
       double titleHeight = 0.0;
       if (getChart().getStyleManager().isxAxisTitleVisible()) {
-        TextLayout textLayout = new TextLayout(axisTitle.text, axisTick.axis.getChart().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
+        TextLayout textLayout = new TextLayout(axisTitle.getText(), getChart().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-        titleHeight = rectangle.getHeight() + axisTick.axis.getChart().getStyleManager().getAxisTitlePadding();
+        titleHeight = rectangle.getHeight() + getChart().getStyleManager().getAxisTitlePadding();
       }
 
       // Axis tick labels
       double axisTickLabelsHeight = 0.0;
       if (getChart().getStyleManager().isxAxisTicksVisible()) {
-        TextLayout textLayout = new TextLayout("0", axisTick.axis.getChart().getStyleManager().getAxisTicksFont(), new FontRenderContext(null, true, false));
+        TextLayout textLayout = new TextLayout("0", getChart().getStyleManager().getAxisTicksFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         axisTickLabelsHeight = rectangle.getHeight() + getChart().getStyleManager().getAxisTickPadding() + getChart().getStyleManager().getAxisTickMarkLength()
             + getChart().getStyleManager().getPlotPadding();
@@ -178,9 +163,9 @@ public class Axis implements ChartPart {
       // |
       // ----
       int xOffset = getChart().getStyleManager().getChartPadding();
-      int yOffset = (int) (axisPair.getChartTitleBounds().getY() + axisPair.getChartTitleBounds().getHeight() + getChart().getStyleManager().getChartPadding());
+      int yOffset = (int) (getChart().getChartTitle().getBounds().getY() + getChart().getChartTitle().getBounds().getHeight() + getChart().getStyleManager().getChartPadding());
       int width = 80; // arbitrary, final width depends on Axis tick labels
-      int height = getChart().height - yOffset - axisPair.xAxis.getSizeHint() - getChart().getStyleManager().getChartPadding();
+      int height = getChart().height - yOffset - axisPair.getxAxis().getSizeHint() - getChart().getStyleManager().getChartPadding();
       Rectangle yAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -203,10 +188,10 @@ public class Axis implements ChartPart {
       // calculate paint zone
       // |____________________|
 
-      int xOffset = (int) (axisPair.yAxis.getBounds().getWidth() + (getChart().getStyleManager().isyAxisTicksVisible() ? getChart().getStyleManager().getPlotPadding() : 0) + getChart()
+      int xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChart().getStyleManager().isyAxisTicksVisible() ? getChart().getStyleManager().getPlotPadding() : 0) + getChart()
           .getStyleManager().getChartPadding());
-      int yOffset = (int) (axisPair.yAxis.getBounds().getY() + axisPair.yAxis.getBounds().getHeight());
-      int width = (int) (getChart().width - axisPair.yAxis.getBounds().getWidth() - axisPair.getChartLegendBounds().getWidth() - (getChart().getStyleManager().isLegendVisible() ? 3 : 2)
+      int yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight());
+      int width = (int) (getChart().width - axisPair.getyAxis().getBounds().getWidth() - getChart().getChartLegend().getBounds().getWidth() - (getChart().getStyleManager().isLegendVisible() ? 3 : 2)
           * getChart().getStyleManager().getChartPadding());
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
@@ -233,5 +218,47 @@ public class Axis implements ChartPart {
   public Chart getChart() {
 
     return axisPair.getChart();
+  }
+
+  // Getters /////////////////////////////////////////////////
+
+  public AxisType getAxisType() {
+
+    return axisType;
+  }
+
+  public BigDecimal getMax() {
+
+    return max;
+  }
+
+  public BigDecimal getMin() {
+
+    return min;
+  }
+
+  public AxisTick getAxisTick() {
+
+    return axisTick;
+  }
+
+  public Direction getDirection() {
+
+    return direction;
+  }
+
+  protected Rectangle getPaintZone() {
+
+    return paintZone;
+  }
+
+  public AxisTitle getAxisTitle() {
+
+    return axisTitle;
+  }
+
+  protected void setAxisTitle(AxisTitle axisTitle) {
+
+    this.axisTitle = axisTitle;
   }
 }

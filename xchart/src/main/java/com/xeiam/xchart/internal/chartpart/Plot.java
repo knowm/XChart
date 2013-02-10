@@ -31,9 +31,9 @@ public class Plot implements ChartPart {
   /** the bounds */
   private Rectangle bounds;
 
-  protected PlotSurface plotSurface;
+  private PlotSurface plotSurface;
 
-  protected PlotContent plotContent;
+  private PlotContent plotContent;
 
   /**
    * Constructor
@@ -59,11 +59,11 @@ public class Plot implements ChartPart {
     bounds = new Rectangle();
 
     // calculate bounds
-    int xOffset = (int) (chart.getAxisPair().yAxis.getBounds().getX() + chart.getAxisPair().yAxis.getBounds().getWidth() + (chart.getStyleManager().isyAxisTicksVisible() ? (chart.getStyleManager()
-        .getPlotPadding() + 1) : 0));
-    int yOffset = (int) (chart.getAxisPair().yAxis.getBounds().getY());
-    int width = (int) chart.getAxisPair().xAxis.getBounds().getWidth();
-    int height = (int) chart.getAxisPair().yAxis.getBounds().getHeight();
+    int xOffset = (int) (chart.getAxisPair().getyAxis().getBounds().getX() + chart.getAxisPair().getyAxis().getBounds().getWidth() + (chart.getStyleManager().isyAxisTicksVisible() ? (chart
+        .getStyleManager().getPlotPadding() + 1) : 0));
+    int yOffset = (int) (chart.getAxisPair().getyAxis().getBounds().getY());
+    int width = (int) chart.getAxisPair().getxAxis().getBounds().getWidth();
+    int height = (int) chart.getAxisPair().getyAxis().getBounds().getHeight();
     bounds = new Rectangle(xOffset, yOffset, width, height);
     // g.setColor(Color.green);
     // g.draw(bounds);

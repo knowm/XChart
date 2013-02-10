@@ -95,7 +95,7 @@ public class Chart {
   public void paint(Graphics2D g) {
 
     // Sanity check
-    if (axisPair.seriesMap.isEmpty()) {
+    if (axisPair.getSeriesMap().isEmpty()) {
       throw new RuntimeException("No series defined for Chart!!!");
     }
 
@@ -235,7 +235,7 @@ public class Chart {
     } else {
       styleManager.setxAxisTitleVisible(true);
     }
-    this.axisPair.xAxis.axisTitle.text = title;
+    this.axisPair.getxAxis().getAxisTitle().setText(title);
   }
 
   /**
@@ -250,7 +250,7 @@ public class Chart {
     } else {
       styleManager.setyAxisTitleVisible(true);
     }
-    this.axisPair.yAxis.axisTitle.text = title;
+    this.axisPair.getyAxis().getAxisTitle().setText(title);
   }
 
   /**

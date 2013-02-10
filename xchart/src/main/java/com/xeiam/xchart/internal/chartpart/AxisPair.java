@@ -37,14 +37,14 @@ public class AxisPair implements ChartPart {
   /** parent */
   private final Chart chart;
 
-  public Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
+  private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
 
   private int seriesCount;
 
-  public Axis xAxis;
-  public Axis yAxis;
+  private Axis xAxis;
+  private Axis yAxis;
 
-  public SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler();
+  private SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler();
 
   /**
    * Constructor
@@ -92,7 +92,7 @@ public class AxisPair implements ChartPart {
         xAxis.setAxisType(AxisType.DATE);
       }
       yAxis.setAxisType(AxisType.NUMBER);
-      series = new Series(seriesName, xData, xAxis.axisType, yData, yAxis.axisType, errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
+      series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     } else { // generate xData
       Collection<Number> generatedXData = new ArrayList<Number>();
       for (int i = 1; i < yData.size() + 1; i++) {
@@ -100,7 +100,7 @@ public class AxisPair implements ChartPart {
       }
       xAxis.setAxisType(AxisType.NUMBER);
       yAxis.setAxisType(AxisType.NUMBER);
-      series = new Series(seriesName, generatedXData, xAxis.axisType, yData, yAxis.axisType, errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
+      series = new Series(seriesName, generatedXData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     }
 
     // Sanity check
@@ -120,17 +120,43 @@ public class AxisPair implements ChartPart {
     return series;
   }
 
-  // TODO remove
-  protected Rectangle getChartTitleBounds() {
+  @Override
+  public void paint(Graphics2D g) {
 
-    return chart.getChartTitle().getBounds();
+    yAxis.paint(g);
+    xAxis.paint(g);
   }
 
-  // TODO remove
-  protected Rectangle getChartLegendBounds() {
+  @Override
+  public Rectangle getBounds() {
 
-    return chart.getChartLegend().getBounds();
+    return null; // should never be called
   }
+
+  @Override
+  public Chart getChart() {
+
+    return chart;
+  }
+
+  // Getters /////////////////////////////////////////////////
+
+  public Map<Integer, Series> getSeriesMap() {
+
+    return seriesMap;
+  }
+
+  public Axis getxAxis() {
+
+    return xAxis;
+  }
+
+  public Axis getyAxis() {
+
+    return yAxis;
+  }
+
+  // Helper Methods ///////////////
 
   /**
    * Gets the percentage of working space allowed for tick marks
@@ -154,25 +180,6 @@ public class AxisPair implements ChartPart {
 
     int marginSpace = workingSpace - tickSpace;
     return (int) (marginSpace / 2.0);
-  }
-
-  @Override
-  public void paint(Graphics2D g) {
-
-    yAxis.paint(g);
-    xAxis.paint(g);
-  }
-
-  @Override
-  public Rectangle getBounds() {
-
-    return null; // should never be called
-  }
-
-  @Override
-  public Chart getChart() {
-
-    return chart;
   }
 
 }
