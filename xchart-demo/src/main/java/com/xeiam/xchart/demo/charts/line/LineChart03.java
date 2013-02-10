@@ -24,8 +24,6 @@ import com.xeiam.xchart.SwingWrapper;
 
 /**
  * Multiple curves on one Chart
- * 
- * @author timmolter
  */
 public class LineChart03 implements ExampleChart {
 

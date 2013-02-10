@@ -28,8 +28,6 @@ import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Error bars
- * 
- * @author timmolter
  */
 public class LineChart08 implements ExampleChart {
 

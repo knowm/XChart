@@ -53,9 +53,9 @@ public class AxisTickLabels implements ChartPart {
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
-    g.setFont(getChart().getStyleManager().getAxisTicksFont());
+    g.setFont(getChart().getStyleManager().getAxisTickLabelsFont());
 
-    g.setColor(getChart().getStyleManager().getChartFontColor());
+    g.setColor(getChart().getStyleManager().getAxisTickLabelsColor());
 
     if (axisTick.getAxis().getDirection() == Axis.Direction.Y) { // Y-Axis
 
@@ -70,7 +70,7 @@ public class AxisTickLabels implements ChartPart {
 
         FontRenderContext frc = g.getFontRenderContext();
         // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
-        TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTicksFont(), frc);
+        TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
         layout.draw(g, xOffset, (int) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
@@ -95,7 +95,7 @@ public class AxisTickLabels implements ChartPart {
         int tickLocation = axisTick.getTickLocations().get(i);
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTicksFont(), frc);
+        TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
         layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
 

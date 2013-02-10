@@ -33,8 +33,6 @@ import com.xeiam.xchart.style.SeriesMarker;
  * <ul>
  * <li>Customizing the series style properties</li>
  * </ul>
- * 
- * @author timmolter
  */
 public class LineChart02 implements ExampleChart {
 

@@ -23,6 +23,7 @@ package com.xeiam.xchart.style.theme;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Stroke;
 
 /**
  * @author timmolter
@@ -32,8 +33,6 @@ public interface Theme {
   // Chart Style ///////////////////////////////
 
   public Color getChartBackgroundColor();
-
-  public Color getChartBordersColor();
 
   public Color getChartFontColor();
 
@@ -45,6 +44,12 @@ public interface Theme {
 
   public boolean isChartTitleVisible();
 
+  public Color getChartTitleBackgroundColor();
+
+  public Color getChartTitleBorderColor();
+
+  public int getChartTitlePadding();
+
   // Chart Legend ///////////////////////////////
 
   public Font getLegendFont();
@@ -52,6 +57,8 @@ public interface Theme {
   public boolean isLegendVisible();
 
   public Color getLegendBackgroundColor();
+
+  public Color getLegendBorderColor();
 
   public int getLegendPadding();
 
@@ -67,11 +74,17 @@ public interface Theme {
 
   public boolean isYAxisTicksVisible();
 
-  public Font getAxisTicksFont();
+  public Font getAxisTickLabelsFont();
 
   public int getAxisTickMarkLength();
 
   public int getAxisTickPadding();
+
+  public Color getAxisTickMarksColor();
+
+  public Stroke getAxisTickMarksStroke();
+
+  public Color getAxisTickLabelsColor();
 
   public boolean isAxisTicksLineVisible();
 
@@ -85,7 +98,13 @@ public interface Theme {
 
   public Color getPlotBackgroundColor();
 
+  public Color getPlotBorderColor();
+
+  public boolean isPlotBorderVisible();
+
   public Color getPlotGridLinesColor();
+
+  public Stroke getPlotGridLinesStroke();
 
   // Error Bars ///////////////////////////////
 

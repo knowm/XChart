@@ -25,8 +25,6 @@ import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Plots Hundreds of Series on One Plot
- * 
- * @author timmolter
  */
 public class LineChart10 implements ExampleChart {
 

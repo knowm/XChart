@@ -13,32 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.example;
+package com.xeiam.xchart.chart;
 
 import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.LineChart;
+import com.xeiam.xchart.QuickChart;
+import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Creates a simple Chart and saves it as a PNG and JPEG image file.
+ * Creates a simple Chart using {@link com.xeiam.xchart.QuickChart}
  * 
  * @author timmolter
  */
-public class Example1 {
+public class Example0 {
 
   public static void main(String[] args) throws Exception {
 
+    double[] xData = new double[] { 0.0, 1.0, 2.0 };
     double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
     // Create Chart
-    Chart chart = new LineChart(500, 400);
-    chart.setChartTitle("Sample Chart");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
-    chart.addSeries("y(x)", null, yData);
+    Chart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
 
+    // Show it
+    new SwingWrapper(chart).displayChart();
+
+    // Save it
     BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
-    BitmapEncoder.saveJPG(chart, "./Sample_Chart.jpg", 0.95f);
 
   }
 }

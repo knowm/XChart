@@ -31,14 +31,14 @@ import com.xeiam.xchart.style.ChartColor;
 /**
  * @author timmolter
  */
-public class XChartTheme implements Theme {
+public class GGPlot2Theme implements Theme {
 
   // Chart Style ///////////////////////////////
 
   @Override
   public Color getChartBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
@@ -58,7 +58,7 @@ public class XChartTheme implements Theme {
   @Override
   public Font getChartTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.BOLD, 14);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
   }
 
   @Override
@@ -90,7 +90,7 @@ public class XChartTheme implements Theme {
   @Override
   public Font getLegendFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 11);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
   }
 
   @Override
@@ -103,13 +103,12 @@ public class XChartTheme implements Theme {
   public Color getLegendBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.WHITE);
-
   }
 
   @Override
   public Color getLegendBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
@@ -135,7 +134,7 @@ public class XChartTheme implements Theme {
   @Override
   public Font getAxisTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.BOLD, 12);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
   }
 
   @Override
@@ -153,49 +152,50 @@ public class XChartTheme implements Theme {
   @Override
   public Font getAxisTickLabelsFont() {
 
-    return new Font(Font.SANS_SERIF, Font.BOLD, 12);
+    return new Font(Font.SANS_SERIF, Font.BOLD, 13);
   }
 
   @Override
   public int getAxisTickMarkLength() {
 
-    return 3;
+    return 8;
   }
 
   @Override
   public int getAxisTickPadding() {
 
-    return 4;
+    return 5;
+  }
+
+  @Override
+  public boolean isAxisTicksLineVisible() {
+
+    return false;
+  }
+
+  @Override
+  public int getPlotPadding() {
+
+    return 0;
   }
 
   @Override
   public Color getAxisTickMarksColor() {
 
     return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+
   }
 
   @Override
   public Stroke getAxisTickMarksStroke() {
 
-    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+    return new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
   }
 
   @Override
   public Color getAxisTickLabelsColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
-  }
-
-  @Override
-  public boolean isAxisTicksLineVisible() {
-
-    return true;
-  }
-
-  @Override
-  public int getPlotPadding() {
-
-    return 3;
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
   @Override
@@ -215,31 +215,31 @@ public class XChartTheme implements Theme {
   @Override
   public Color getPlotBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
   }
 
   @Override
   public Color getPlotBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
   public boolean isPlotBorderVisible() {
 
-    return true;
+    return false;
   }
 
   @Override
   public Color getPlotGridLinesColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
+    return new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
   }
 
   // Error Bars ///////////////////////////////

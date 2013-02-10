@@ -30,8 +30,6 @@ import com.xeiam.xchart.style.Series;
 
 /**
  * Date Axis
- * 
- * @author timmolter
  */
 public class LineChart04 implements ExampleChart {
 

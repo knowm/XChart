@@ -139,7 +139,7 @@ public class Axis implements ChartPart {
       // Axis tick labels
       double axisTickLabelsHeight = 0.0;
       if (getChart().getStyleManager().isxAxisTicksVisible()) {
-        TextLayout textLayout = new TextLayout("0", getChart().getStyleManager().getAxisTicksFont(), new FontRenderContext(null, true, false));
+        TextLayout textLayout = new TextLayout("0", getChart().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         axisTickLabelsHeight = rectangle.getHeight() + getChart().getStyleManager().getAxisTickPadding() + getChart().getStyleManager().getAxisTickMarkLength()
             + getChart().getStyleManager().getPlotPadding();
@@ -167,7 +167,7 @@ public class Axis implements ChartPart {
       // |
       // ----
       int xOffset = getChart().getStyleManager().getChartPadding();
-      int yOffset = (int) (getChart().getChartTitle().getBounds().getY() + getChart().getChartTitle().getBounds().getHeight() + getChart().getStyleManager().getChartPadding());
+      int yOffset = getChart().getChartTitle().getSizeHint();
       int width = 80; // arbitrary, final width depends on Axis tick labels
       int height = getChart().getHeight() - yOffset - axisPair.getxAxis().getSizeHint() - getChart().getStyleManager().getChartPadding();
       Rectangle yAxisRectangle = new Rectangle(xOffset, yOffset, width, height);

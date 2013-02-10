@@ -21,8 +21,6 @@ import com.xeiam.xchart.SwingWrapper;
 
 /**
  * Using ChartBuilder to Make a Chart
- * 
- * @author timmolter
  */
 public class LineChart11 implements ExampleChart {
 

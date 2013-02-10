@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
@@ -30,9 +29,6 @@ public class PlotSurface implements ChartPart {
 
   /** parent */
   private Plot plot;
-
-  /** the line style */
-  private final Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
 
   /**
    * Constructor
@@ -59,9 +55,15 @@ public class PlotSurface implements ChartPart {
     Rectangle backgroundRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
     g.setColor(getChart().getStyleManager().getPlotBackgroundColor());
     g.fill(backgroundRectangle);
-    Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(getChart().getStyleManager().getChartBordersColor());
-    g.draw(borderRectangle);
+
+    // paint plot border
+    if (getChart().getStyleManager().isPlotBorderVisible()) {
+      Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
+      g.setColor(getChart().getStyleManager().getPlotBorderColor());
+      g.draw(borderRectangle);
+    }
+
+    Stroke stroke = getChart().getStyleManager().getPlotGridLinesStroke();
 
     // paint grid lines
     if (getChart().getStyleManager().isPlotGridLinesVisible()) {
@@ -88,7 +90,7 @@ public class PlotSurface implements ChartPart {
         g.setColor(getChart().getStyleManager().getPlotGridLinesColor());
         g.setStroke(stroke);
 
-        g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
+        g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY()), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
       }
     }
   }

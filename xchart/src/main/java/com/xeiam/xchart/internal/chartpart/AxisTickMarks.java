@@ -15,10 +15,8 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Stroke;
 
 import com.xeiam.xchart.Chart;
 
@@ -29,9 +27,6 @@ public class AxisTickMarks implements ChartPart {
 
   /** parent */
   private AxisTick axisTick;
-
-  /** the line style */
-  private final Stroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /** the bounds */
   private Rectangle bounds;
@@ -57,7 +52,8 @@ public class AxisTickMarks implements ChartPart {
 
     bounds = new Rectangle();
 
-    g.setColor(getChart().getStyleManager().getChartBordersColor());
+    g.setColor(getChart().getStyleManager().getAxisTickMarksColor());
+    g.setStroke(getChart().getStyleManager().getAxisTickMarksStroke());
 
     if (axisTick.getAxis().getDirection() == Axis.Direction.Y) { // Y-Axis
 
@@ -69,8 +65,8 @@ public class AxisTickMarks implements ChartPart {
 
         int tickLocation = axisTick.getTickLocations().get(i);
 
-        g.setColor(getChart().getStyleManager().getChartBordersColor());
-        g.setStroke(stroke);
+        // g.setColor(getChart().getStyleManager().getChartBordersColor());
+        // g.setStroke(stroke);
 
         g.drawLine(xOffset, yOffset + (int) (axisTick.getAxis().getPaintZone().getHeight() - tickLocation), xOffset + getChart().getStyleManager().getAxisTickMarkLength(), yOffset
             + (int) (axisTick.getAxis().getPaintZone().getHeight() - tickLocation));
@@ -98,8 +94,8 @@ public class AxisTickMarks implements ChartPart {
 
         int tickLocation = axisTick.getTickLocations().get(i);
 
-        g.setColor(getChart().getStyleManager().getChartBordersColor());
-        g.setStroke(stroke);
+        // g.setColor(getChart().getStyleManager().getChartBordersColor());
+        // g.setStroke(stroke);
 
         g.drawLine(xOffset + tickLocation, yOffset, xOffset + tickLocation, yOffset - getChart().getStyleManager().getAxisTickMarkLength());
       }

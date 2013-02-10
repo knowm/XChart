@@ -36,8 +36,6 @@ import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Extensive chart customization
- * 
- * @author timmolter
  */
 public class LineChart09 implements ExampleChart {
 
@@ -72,19 +70,18 @@ public class LineChart09 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("Sample Chart Extensive Cusomization");
+    chart.setChartTitle("Sample Chart With Customization");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.getStyleManager().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
     chart.getStyleManager().setPlotGridLinesColor(new Color(255, 255, 255));
     chart.getStyleManager().setChartBackgroundColor(Color.WHITE);
     chart.getStyleManager().setLegendBackgroundColor(Color.PINK);
-    chart.getStyleManager().setChartBordersColor(Color.GREEN);
     chart.getStyleManager().setChartFontColor(Color.MAGENTA);
     chart.getStyleManager().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.getStyleManager().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
-    chart.getStyleManager().setAxisTicksFont(new Font(Font.SERIF, Font.PLAIN, 11));
+    chart.getStyleManager().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
     chart.getValueFormatter().setDatePattern("dd-MMM");
     chart.getValueFormatter().setNormalDecimalPattern("#.000");
     chart.getValueFormatter().setLocale(Locale.GERMAN);

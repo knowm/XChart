@@ -44,10 +44,10 @@ public abstract class Chart {
   private ValueFormatter valueFormatter = new ValueFormatter();
 
   // Chart Parts
-  private ChartTitle chartTitle = new ChartTitle(this);
   private Legend chartLegend = new Legend(this);
   private AxisPair axisPair = new AxisPair(this);
   private Plot plot = new Plot(this);
+  private ChartTitle chartTitle = new ChartTitle(this);
 
   /**
    * Constructor
@@ -103,10 +103,10 @@ public abstract class Chart {
     g.setColor(styleManager.getChartBackgroundColor());
     g.fillRect(0, 0, width, height);
 
-    chartTitle.paint(g);
     chartLegend.paint(g);
     axisPair.paint(g);
     plot.paint(g);
+    chartTitle.paint(g);
 
     g.dispose();
   }

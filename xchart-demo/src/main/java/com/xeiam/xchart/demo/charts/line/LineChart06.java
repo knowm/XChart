@@ -21,8 +21,6 @@ import com.xeiam.xchart.SwingWrapper;
 
 /**
  * Single point
- * 
- * @author timmolter
  */
 public class LineChart06 implements ExampleChart {
 

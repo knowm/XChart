@@ -13,41 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.line;
-
-import java.util.Arrays;
-import java.util.Collection;
+package com.xeiam.xchart.chart;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Longs as X-Axis data
+ * Single point
+ * 
+ * @author timmolter
  */
-public class LineChart07 implements ExampleChart {
+public class LineChart06 {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart07();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
-  }
-
-  @Override
-  public Chart getChart() {
-
-    Collection<Number> xData = Arrays.asList(new Number[] { 12228120L, 12228984L, 12229848L, 12230712L, 12231576L, 12232440L, 12233304L, 12234168L, 12235032L, 12235896L });
-    Collection<Number> yData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0 });
-
     // Create Chart
     Chart chart = new LineChart(800, 600);
-    chart.setChartTitle("Example7");
+
+    // Customize Chart
+    chart.setChartTitle("LineChart06");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.addSeries("y(x)", xData, yData);
 
-    return chart;
+    chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
+
+    new SwingWrapper(chart).displayChart();
   }
 
 }

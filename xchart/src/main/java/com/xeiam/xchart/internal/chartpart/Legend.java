@@ -85,9 +85,9 @@ public class Legend implements ChartPart {
       int legendBoxWidth = legendContentWidth + 2 * chart.getStyleManager().getLegendPadding();
       int legendBoxHeight = legendContentHeight + 2 * chart.getStyleManager().getLegendPadding();
       int xOffset = chart.getWidth() - legendBoxWidth - chart.getStyleManager().getChartPadding();
-      int yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getChartTitle().getBounds().getY() + chart.getChartTitle().getBounds().getHeight());
+      int yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getChartTitle().getSizeHint());
 
-      g.setColor(chart.getStyleManager().getChartBordersColor());
+      g.setColor(chart.getStyleManager().getLegendBorderColor());
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
       g.setColor(chart.getStyleManager().getLegendBackgroundColor());
       g.fillRect(xOffset + 1, yOffset + 1, legendBoxWidth - 1, legendBoxHeight - 1);

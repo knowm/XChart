@@ -61,6 +61,24 @@ public class ChartTitle implements ChartPart {
     this.text = text;
   }
 
+  /**
+   * get the height of the chart title including the chart padding
+   * 
+   * @return
+   */
+  protected int getSizeHint() {
+
+    if (chart.getStyleManager().isChartTitleVisible()) {
+
+      TextLayout textLayout = new TextLayout(text, chart.getStyleManager().getChartTitleFont(), new FontRenderContext(null, true, false));
+      Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+      int titleHeight = (int) ((chart.getStyleManager().isChartTitleVisible() ? rectangle.getHeight() : 0));
+      return chart.getStyleManager().getChartPadding() + 2 * chart.getStyleManager().getChartTitlePadding() + titleHeight;
+    } else {
+      return chart.getStyleManager().getChartPadding();
+    }
+  }
+
   @Override
   public void paint(Graphics2D g) {
 
@@ -69,14 +87,27 @@ public class ChartTitle implements ChartPart {
 
     if (chart.getStyleManager().isChartTitleVisible()) {
 
+      // create rectangle first for sizing
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout textLayout = new TextLayout(text, chart.getStyleManager().getChartTitleFont(), frc);
       Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-      int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
-      int yOffset = (int) ((chart.getStyleManager().isChartTitleVisible() ? (chart.getStyleManager().getChartPadding() - rectangle.getY()) : 0));
 
-      bounds = new Rectangle(xOffset, yOffset + (chart.getStyleManager().isChartTitleVisible() ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (chart.getStyleManager()
-          .isChartTitleVisible() ? rectangle.getHeight() : 0));
+      // paint the chart title box
+      int chartTitleBoxWidth = (int) chart.getPlot().getBounds().getWidth();
+      int chartTitleBoxHeight = (int) (rectangle.getHeight() + 2 * chart.getStyleManager().getChartTitlePadding());
+      int xOffset = (int) chart.getPlot().getBounds().getX();
+      int yOffset = chart.getStyleManager().getChartPadding();
+
+      g.setColor(chart.getStyleManager().getChartTitleBorderColor());
+      g.drawRect(xOffset - 1, yOffset, chartTitleBoxWidth - 1, chartTitleBoxHeight - 1);
+      g.setColor(chart.getStyleManager().getChartTitleBackgroundColor());
+      g.fillRect(xOffset - 1, yOffset + 1, chartTitleBoxWidth, chartTitleBoxHeight - 1);
+
+      // paint title
+      xOffset = (int) (chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0);
+      yOffset = (int) (chart.getStyleManager().getChartPadding() - rectangle.getY() + chart.getStyleManager().getChartTitlePadding());
+
+      bounds = new Rectangle(xOffset, yOffset + ((int) rectangle.getY()), (int) rectangle.getWidth(), (int) (rectangle.getHeight()));
       // g.setColor(Color.green);
       // g.draw(bounds);
 
@@ -89,7 +120,7 @@ public class ChartTitle implements ChartPart {
   @Override
   public Rectangle getBounds() {
 
-    return bounds;
+    return null; // this should never be needed
   }
 
   @Override

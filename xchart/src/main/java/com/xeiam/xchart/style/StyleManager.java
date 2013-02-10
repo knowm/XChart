@@ -23,6 +23,7 @@ package com.xeiam.xchart.style;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Stroke;
 
 import com.xeiam.xchart.style.theme.Theme;
 import com.xeiam.xchart.style.theme.XChartTheme;
@@ -37,17 +38,20 @@ public class StyleManager {
 
   // Chart Style ///////////////////////////////
   private Color chartBackgroundColor;
-  public Color chartBordersColor;
   public Color chartFontColor;
   private int chartPadding;
 
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
   private boolean isChartTitleVisible;
+  private Color chartTitleBackgroundColor;
+  private Color chartTitleBorderColor;
+  private int chartTitlePadding;
 
   // Chart Legend ///////////////////////////////
   private boolean isLegendVisible;
   private Color legendBackgroundColor;
+  private Color legendBorderColor;
   private Font legendFont;
   private int legendPadding;
 
@@ -57,9 +61,12 @@ public class StyleManager {
   private Font axisTitleFont;
   private boolean xAxisTicksVisible;
   private boolean yAxisTicksVisible;
-  private Font axisTicksFont;
+  private Font axisTickLabelsFont;
   private int axisTickMarkLength;
   private int axisTickPadding;
+  private Color axisTickMarksColor;
+  private Stroke axisTickMarksStroke;
+  private Color axisTickLabelsColor;
   private boolean isAxisTicksLineVisible;
   private int plotPadding;
   private int axisTitlePadding;
@@ -67,7 +74,10 @@ public class StyleManager {
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
   private Color plotBackgroundColor;
+  private Color plotBorderColor;
+  private boolean isPlotBorderVisible;
   private Color plotGridLinesColor;
+  private Stroke plotGridLinesStroke;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -84,17 +94,20 @@ public class StyleManager {
 
     // Chart Style ///////////////////////////////
     chartBackgroundColor = theme.getChartBackgroundColor();
-    chartBordersColor = theme.getChartBordersColor();
     chartFontColor = theme.getChartFontColor();
     chartPadding = theme.getChartPadding();
 
     // Chart Title ///////////////////////////////
     chartTitleFont = theme.getChartTitleFont();
     isChartTitleVisible = theme.isChartTitleVisible();
+    chartTitleBackgroundColor = theme.getChartTitleBackgroundColor();
+    chartTitleBorderColor = theme.getChartTitleBorderColor();
+    chartTitlePadding = theme.getChartTitlePadding();
 
     // legend
     isLegendVisible = theme.isLegendVisible();
     legendBackgroundColor = theme.getLegendBackgroundColor();
+    legendBorderColor = theme.getLegendBorderColor();
     legendFont = theme.getLegendFont();
     legendPadding = theme.getLegendPadding();
 
@@ -104,9 +117,12 @@ public class StyleManager {
     axisTitleFont = theme.getAxisTitleFont();
     xAxisTicksVisible = theme.isXAxisTicksVisible();
     yAxisTicksVisible = theme.isYAxisTicksVisible();
-    axisTicksFont = theme.getAxisTicksFont();
+    axisTickLabelsFont = theme.getAxisTickLabelsFont();
     axisTickMarkLength = theme.getAxisTickMarkLength();
     axisTickPadding = theme.getAxisTickPadding();
+    axisTickMarksColor = theme.getAxisTickMarksColor();
+    axisTickMarksStroke = theme.getAxisTickMarksStroke();
+    axisTickLabelsColor = theme.getAxisTickLabelsColor();
     isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
     plotPadding = theme.getPlotPadding();
     axisTitlePadding = theme.getAxisTitlePadding();
@@ -114,7 +130,10 @@ public class StyleManager {
     // Chart Plot Area ///////////////////////////////
     isPlotGridLinesVisible = theme.isPlotGridLinesVisible();
     plotBackgroundColor = theme.getPlotBackgroundColor();
+    plotBorderColor = theme.getPlotBorderColor();
+    isPlotBorderVisible = theme.isPlotBorderVisible();
     plotGridLinesColor = theme.getPlotGridLinesColor();
+    plotGridLinesStroke = theme.getPlotGridLinesStroke();
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
@@ -149,22 +168,7 @@ public class StyleManager {
   }
 
   /**
-   * Sets the color of the plot border, legend border, tick marks, and error bars
-   * 
-   * @param color
-   */
-  public void setChartBordersColor(Color color) {
-
-    this.chartBordersColor = color;
-  }
-
-  public Color getChartBordersColor() {
-
-    return chartBordersColor;
-  }
-
-  /**
-   * Set the chart font color
+   * Set the chart font color. includes: Chart title, axes label, legend
    * 
    * @param color
    */
@@ -225,10 +229,55 @@ public class StyleManager {
     return isChartTitleVisible;
   }
 
+  /**
+   * set the chart title background color
+   * 
+   * @param chartTitleBackgroundColor
+   */
+  public void setChartTitleBackgroundColor(Color chartTitleBackgroundColor) {
+
+    this.chartTitleBackgroundColor = chartTitleBackgroundColor;
+  }
+
+  public Color getChartTitleBackgroundColor() {
+
+    return chartTitleBackgroundColor;
+  }
+
+  /**
+   * set the chart title border color
+   * 
+   * @param chartTitleBorderColor
+   */
+  public void setChartTitleBorderColor(Color chartTitleBorderColor) {
+
+    this.chartTitleBorderColor = chartTitleBorderColor;
+  }
+
+  public Color getChartTitleBorderColor() {
+
+    return chartTitleBorderColor;
+  }
+
+  /**
+   * set the chart title padding; the space between the chart title and the plot area
+   * 
+   * @param chartTitlePadding
+   */
+  public void setChartTitlePadding(int chartTitlePadding) {
+
+    this.chartTitlePadding = chartTitlePadding;
+  }
+
+  public int getChartTitlePadding() {
+
+    return chartTitlePadding;
+  }
+
   // Chart Legend ///////////////////////////////
 
   /**
-   * Set the chart legend color
+   * Set the chart legend background color
    * 
    * @param color
    */
@@ -240,6 +289,21 @@ public class StyleManager {
   public Color getLegendBackgroundColor() {
 
     return legendBackgroundColor;
+  }
+
+  /**
+   * Set the chart legend border color
+   * 
+   * @return
+   */
+  public Color getLegendBorderColor() {
+
+    return legendBorderColor;
+  }
+
+  public void setLegendBorderColor(Color legendBorderColor) {
+
+    this.legendBorderColor = legendBorderColor;
   }
 
   /**
@@ -395,14 +459,14 @@ public class StyleManager {
    * 
    * @param foxAxisTicksFontnt
    */
-  public void setAxisTicksFont(Font axisTicksFont) {
+  public void setAxisTickLabelsFont(Font axisTicksFont) {
 
-    this.axisTicksFont = axisTicksFont;
+    this.axisTickLabelsFont = axisTicksFont;
   }
 
-  public Font getAxisTicksFont() {
+  public Font getAxisTickLabelsFont() {
 
-    return axisTicksFont;
+    return axisTickLabelsFont;
   }
 
   /**
@@ -421,7 +485,7 @@ public class StyleManager {
   }
 
   /**
-   * the padding between the tick labels and the tick marks
+   * sets the padding between the tick labels and the tick marks
    * 
    * @param axisTickPadding
    */
@@ -433,6 +497,51 @@ public class StyleManager {
   public int getAxisTickPadding() {
 
     return axisTickPadding;
+  }
+
+  /**
+   * sets the axis tick mark color
+   * 
+   * @param axisTickColor
+   */
+  public void setAxisTickMarksColor(Color axisTickColor) {
+
+    this.axisTickMarksColor = axisTickColor;
+  }
+
+  public Color getAxisTickMarksColor() {
+
+    return axisTickMarksColor;
+  }
+
+  /**
+   * sets the axis tick marks Stroke
+   * 
+   * @param axisTickMarksStroke
+   */
+  public void setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
+
+    this.axisTickMarksStroke = axisTickMarksStroke;
+  }
+
+  public Stroke getAxisTickMarksStroke() {
+
+    return axisTickMarksStroke;
+  }
+
+  /**
+   * sets the axis tick label color
+   * 
+   * @param axisTickLabelsColor
+   */
+  public void setAxisTickLabelsColor(Color axisTickLabelsColor) {
+
+    this.axisTickLabelsColor = axisTickLabelsColor;
+  }
+
+  public Color getAxisTickLabelsColor() {
+
+    return axisTickLabelsColor;
   }
 
   /**
@@ -513,6 +622,36 @@ public class StyleManager {
   }
 
   /**
+   * set the plot area's border color
+   * 
+   * @param plotBorderColor
+   */
+  public void setPlotBorderColor(Color plotBorderColor) {
+
+    this.plotBorderColor = plotBorderColor;
+  }
+
+  public Color getPlotBorderColor() {
+
+    return plotBorderColor;
+  }
+
+  /**
+   * sets the visibility of the border around the plot area
+   * 
+   * @param isPlotBorderVisible
+   */
+  public void setPlotBorderVisible(boolean isPlotBorderVisible) {
+
+    this.isPlotBorderVisible = isPlotBorderVisible;
+  }
+
+  public boolean isPlotBorderVisible() {
+
+    return isPlotBorderVisible;
+  }
+
+  /**
    * set the plot area's grid lines color
    * 
    * @param plotGridLinesColor
@@ -525,6 +664,21 @@ public class StyleManager {
   public Color getPlotGridLinesColor() {
 
     return plotGridLinesColor;
+  }
+
+  /**
+   * set the plot area's grid lines Stroke
+   * 
+   * @param plotGridLinesStroke
+   */
+  public void setPlotGridLinesStroke(Stroke plotGridLinesStroke) {
+
+    this.plotGridLinesStroke = plotGridLinesStroke;
+  }
+
+  public Stroke getPlotGridLinesStroke() {
+
+    return plotGridLinesStroke;
   }
 
   // Error Bars ///////////////////////////////
