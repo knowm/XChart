@@ -53,7 +53,7 @@ public final class BitmapEncoder {
    */
   public static void savePNG(Chart chart, String fileName) throws IOException {
 
-    BufferedImage bufferedImage = new BufferedImage(chart.width, chart.height, BufferedImage.TYPE_INT_RGB);
+    BufferedImage bufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
     Graphics2D lGraphics2D = bufferedImage.createGraphics();
     chart.paint(lGraphics2D);
 
@@ -74,7 +74,7 @@ public final class BitmapEncoder {
    */
   public static void saveJPG(Chart chart, String fileName, float quality) throws FileNotFoundException, IOException {
 
-    BufferedImage bufferedImage = new BufferedImage(chart.width, chart.height, BufferedImage.TYPE_INT_RGB);
+    BufferedImage bufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
     Graphics2D lGraphics2D = bufferedImage.createGraphics();
     chart.paint(lGraphics2D);
 

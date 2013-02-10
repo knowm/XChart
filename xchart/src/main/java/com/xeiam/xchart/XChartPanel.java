@@ -75,7 +75,7 @@ public class XChartPanel extends JPanel {
   @Override
   public Dimension getPreferredSize() {
 
-    return new Dimension(chart.width, chart.height);
+    return new Dimension(chart.getWidth(), chart.getHeight());
   }
 
   private class SaveAction extends AbstractAction {

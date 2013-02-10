@@ -72,7 +72,7 @@ public class ChartTitle implements ChartPart {
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout textLayout = new TextLayout(text, chart.getStyleManager().getChartTitleFont(), frc);
       Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-      int xOffset = (int) ((chart.width - rectangle.getWidth()) / 2.0);
+      int xOffset = (int) ((chart.getWidth() - rectangle.getWidth()) / 2.0);
       int yOffset = (int) ((chart.getStyleManager().isChartTitleVisible() ? (chart.getStyleManager().getChartPadding() - rectangle.getY()) : 0));
 
       bounds = new Rectangle(xOffset, yOffset + (chart.getStyleManager().isChartTitleVisible() ? (int) rectangle.getY() : 0), (int) rectangle.getWidth(), (int) (chart.getStyleManager()

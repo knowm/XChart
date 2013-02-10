@@ -165,7 +165,7 @@ public class Axis implements ChartPart {
       int xOffset = getChart().getStyleManager().getChartPadding();
       int yOffset = (int) (getChart().getChartTitle().getBounds().getY() + getChart().getChartTitle().getBounds().getHeight() + getChart().getStyleManager().getChartPadding());
       int width = 80; // arbitrary, final width depends on Axis tick labels
-      int height = getChart().height - yOffset - axisPair.getxAxis().getSizeHint() - getChart().getStyleManager().getChartPadding();
+      int height = getChart().getHeight() - yOffset - axisPair.getxAxis().getSizeHint() - getChart().getStyleManager().getChartPadding();
       Rectangle yAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -191,7 +191,8 @@ public class Axis implements ChartPart {
       int xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChart().getStyleManager().isyAxisTicksVisible() ? getChart().getStyleManager().getPlotPadding() : 0) + getChart()
           .getStyleManager().getChartPadding());
       int yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight());
-      int width = (int) (getChart().width - axisPair.getyAxis().getBounds().getWidth() - getChart().getChartLegend().getBounds().getWidth() - (getChart().getStyleManager().isLegendVisible() ? 3 : 2)
+      int width = (int) (getChart().getWidth() - axisPair.getyAxis().getBounds().getWidth() - getChart().getChartLegend().getBounds().getWidth() - (getChart().getStyleManager().isLegendVisible() ? 3
+          : 2)
           * getChart().getStyleManager().getChartPadding());
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);

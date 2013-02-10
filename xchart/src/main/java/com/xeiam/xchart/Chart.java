@@ -37,8 +37,8 @@ import com.xeiam.xchart.style.theme.Theme;
  */
 public abstract class Chart {
 
-  public int width;
-  public int height;
+  private int width;
+  private int height;
 
   private StyleManager styleManager = new StyleManager();
   private ValueFormatter valueFormatter = new ValueFormatter();
@@ -285,7 +285,7 @@ public abstract class Chart {
   }
 
   /**
-   * for internal useage
+   * for internal usage
    * 
    * @return
    */
@@ -295,7 +295,7 @@ public abstract class Chart {
   }
 
   /**
-   * for internal useage
+   * for internal usage
    * 
    * @return
    */
@@ -305,7 +305,7 @@ public abstract class Chart {
   }
 
   /**
-   * for internal useage
+   * for internal usage
    * 
    * @return
    */
@@ -315,13 +315,23 @@ public abstract class Chart {
   }
 
   /**
-   * for internal useage
+   * for internal usage
    * 
    * @return
    */
   public Plot getPlot() {
 
     return plot;
+  }
+
+  public int getWidth() {
+
+    return width;
+  }
+
+  public int getHeight() {
+
+    return height;
   }
 
 }
