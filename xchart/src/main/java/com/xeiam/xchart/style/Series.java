@@ -32,37 +32,37 @@ import com.xeiam.xchart.internal.markers.Marker;
  */
 public class Series {
 
-  public String name = "";
+  private String name = "";
 
-  public Collection<?> xData;
+  private Collection<?> xData;
 
-  public Collection<Number> yData;
+  private Collection<Number> yData;
 
-  public Collection<Number> errorBars;
-
-  /** the minimum value of axis range */
-  public BigDecimal xMin;
-
-  /** the maximum value of axis range */
-  public BigDecimal xMax;
+  private Collection<Number> errorBars;
 
   /** the minimum value of axis range */
-  public BigDecimal yMin;
+  private BigDecimal xMin;
 
   /** the maximum value of axis range */
-  public BigDecimal yMax;
+  private BigDecimal xMax;
+
+  /** the minimum value of axis range */
+  private BigDecimal yMin;
+
+  /** the maximum value of axis range */
+  private BigDecimal yMax;
 
   /** Line Style */
-  public BasicStroke stroke;
+  private BasicStroke stroke;
 
   /** Line Color */
-  public Color strokeColor;
+  private Color strokeColor;
 
   /** Marker Style */
-  public Marker marker;
+  private Marker marker;
 
   /** Marker Color */
-  public Color markerColor;
+  private Color markerColor;
 
   /**
    * Constructor
@@ -234,4 +234,63 @@ public class Series {
     this.markerColor = color;
   }
 
+  public Collection<?> getxData() {
+
+    return xData;
+  }
+
+  public Collection<Number> getyData() {
+
+    return yData;
+  }
+
+  public Collection<Number> getErrorBars() {
+
+    return errorBars;
+  }
+
+  public BigDecimal getxMin() {
+
+    return xMin;
+  }
+
+  public BigDecimal getxMax() {
+
+    return xMax;
+  }
+
+  public BigDecimal getyMin() {
+
+    return yMin;
+  }
+
+  public BigDecimal getyMax() {
+
+    return yMax;
+  }
+
+  public BasicStroke getStroke() {
+
+    return stroke;
+  }
+
+  public Marker getMarker() {
+
+    return marker;
+  }
+
+  public Color getStrokeColor() {
+
+    return strokeColor;
+  }
+
+  public Color getMarkerColor() {
+
+    return markerColor;
+  }
+
+  public String getName() {
+
+    return name;
+  }
 }

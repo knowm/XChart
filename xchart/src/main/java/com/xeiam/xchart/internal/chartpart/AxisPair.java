@@ -105,17 +105,17 @@ public class AxisPair implements ChartPart {
 
     // Sanity check
     if (xData != null && xData.size() != yData.size()) {
-      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!! ");
+      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
     }
     if (errorBars != null && errorBars.size() != yData.size()) {
-      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!! ");
+      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
     }
 
     seriesMap.put(seriesCount++, series);
 
     // add min/max to axis
-    xAxis.addMinMax(series.xMin, series.xMax);
-    yAxis.addMinMax(series.yMin, series.yMax);
+    xAxis.addMinMax(series.getxMin(), series.getxMax());
+    yAxis.addMinMax(series.getyMin(), series.getyMax());
 
     return series;
   }

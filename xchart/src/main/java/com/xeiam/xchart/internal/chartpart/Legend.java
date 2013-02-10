@@ -62,7 +62,7 @@ public class Legend implements ChartPart {
 
       for (Integer seriesId : seriesMap.keySet()) {
         Series series = seriesMap.get(seriesId);
-        TextLayout textLayout = new TextLayout(series.name, chart.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
+        TextLayout textLayout = new TextLayout(series.getName(), chart.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         // System.out.println(rectangle);
         if (rectangle.getWidth() > legendTextContentMaxWidth) {
@@ -98,20 +98,20 @@ public class Legend implements ChartPart {
       for (Integer seriesId : seriesMap.keySet()) {
         Series series = seriesMap.get(seriesId);
         // paint line
-        if (series.stroke != null) {
-          g.setColor(series.strokeColor);
-          g.setStroke(series.stroke);
+        if (series.getStroke() != null) {
+          g.setColor(series.getStrokeColor());
+          g.setStroke(series.getStroke());
           g.drawLine(startx, starty - Marker.Y_OFFSET, (int) (startx + Marker.SIZE * 3.0), starty - Marker.Y_OFFSET);
         }
         // paint marker
-        if (series.marker != null) {
-          g.setColor(series.markerColor);
-          series.marker.paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty - Marker.Y_OFFSET);
+        if (series.getMarker() != null) {
+          g.setColor(series.getMarkerColor());
+          series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty - Marker.Y_OFFSET);
         }
 
         // paint series name
         g.setColor(chart.getStyleManager().getChartFontColor());
-        TextLayout layout = new TextLayout(series.name, chart.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
+        TextLayout layout = new TextLayout(series.getName(), chart.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
         layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + chart.getStyleManager().getLegendPadding()), (starty + Marker.SIZE));
         starty = starty + legendTextContentMaxHeight + chart.getStyleManager().getLegendPadding();
       }

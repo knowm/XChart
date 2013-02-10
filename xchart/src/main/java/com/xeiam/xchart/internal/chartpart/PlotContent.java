@@ -77,13 +77,13 @@ public class PlotContent implements ChartPart {
       int yTopMargin = AxisPair.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
       // data points
-      Collection<?> xData = series.xData;
+      Collection<?> xData = series.getxData();
       BigDecimal xMin = getChart().getAxisPair().getxAxis().getMin();
       BigDecimal xMax = getChart().getAxisPair().getxAxis().getMax();
-      Collection<Number> yData = series.yData;
+      Collection<Number> yData = series.getyData();
       BigDecimal yMin = getChart().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChart().getAxisPair().getyAxis().getMax();
-      Collection<Number> errorBars = series.errorBars;
+      Collection<Number> errorBars = series.getErrorBars();
 
       int previousX = Integer.MIN_VALUE;
       int previousY = Integer.MIN_VALUE;
@@ -133,10 +133,10 @@ public class PlotContent implements ChartPart {
         // System.out.println(yTransform);
 
         // paint line
-        if (series.stroke != null && !isScatterChart) {
+        if (series.getStroke() != null && !isScatterChart) {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
-            g.setColor(series.strokeColor);
-            g.setStroke(series.stroke);
+            g.setColor(series.getStrokeColor());
+            g.setStroke(series.getStroke());
             g.drawLine(previousX, previousY, xOffset, yOffset);
           }
           previousX = xOffset;
@@ -144,9 +144,9 @@ public class PlotContent implements ChartPart {
         }
 
         // paint marker
-        if (series.marker != null) {
-          g.setColor(series.markerColor);
-          series.marker.paint(g, xOffset, yOffset);
+        if (series.getMarker() != null) {
+          g.setColor(series.getMarkerColor());
+          series.getMarker().paint(g, xOffset, yOffset);
         }
 
         // paint errorbar
