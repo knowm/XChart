@@ -47,6 +47,11 @@ public class ChartTitle implements IChartPart {
     this.chart = chart;
   }
 
+  /**
+   * set the chart title's text
+   * 
+   * @param text
+   */
   public void setText(String text) {
 
     if (text.trim().equalsIgnoreCase("")) {

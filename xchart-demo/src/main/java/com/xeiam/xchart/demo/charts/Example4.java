@@ -65,10 +65,10 @@ public class Example4 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setTitle("Example4");
+    chart.setChartTitle("Example4");
     chart.setXAxisTitle("time of day");
     chart.setYAxisTitle("gigawatts");
-    chart.setTimezone(TimeZone.getTimeZone("UTC"));
+    chart.getValueFormatter().setTimezone(TimeZone.getTimeZone("UTC"));
 
     Series series = chart.addDateSeries("value", xData, yData);
 

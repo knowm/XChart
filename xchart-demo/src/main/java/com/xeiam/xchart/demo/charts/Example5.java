@@ -39,7 +39,7 @@ public class Example5 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // Customize Chart
-    chart.setTitle("Example5");
+    chart.setChartTitle("Example5");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
 

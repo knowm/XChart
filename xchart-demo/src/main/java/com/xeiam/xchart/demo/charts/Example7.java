@@ -43,7 +43,7 @@ public class Example7 implements ExampleChart {
 
     // Create Chart
     Chart chart = new Chart(800, 600);
-    chart.setTitle("Example7");
+    chart.setChartTitle("Example7");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.addSeries("y(x)", xData, yData);

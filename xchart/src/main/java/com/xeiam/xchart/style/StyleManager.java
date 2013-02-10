@@ -66,6 +66,11 @@ public class StyleManager {
 
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
+  private Color plotBackgroundColor;
+  private Color plotGridLinesColor;
+
+  // Error Bars ///////////////////////////////
+  private Color errorBarsColor;
 
   /**
    * Constructor
@@ -108,6 +113,11 @@ public class StyleManager {
 
     // Chart Plot Area ///////////////////////////////
     isPlotGridLinesVisible = theme.isPlotGridLinesVisible();
+    plotBackgroundColor = theme.getPlotBackgroundColor();
+    plotGridLinesColor = theme.getPlotGridLinesColor();
+
+    // Error Bars ///////////////////////////////
+    errorBarsColor = theme.getErrorBarsColor();
   }
 
   /**
@@ -485,5 +495,52 @@ public class StyleManager {
   public boolean isPlotGridLinesVisible() {
 
     return isPlotGridLinesVisible;
+  }
+
+  /**
+   * set the plot area's background color
+   * 
+   * @param plotBackgroundColor
+   */
+  public void setPlotBackgroundColor(Color plotBackgroundColor) {
+
+    this.plotBackgroundColor = plotBackgroundColor;
+  }
+
+  public Color getPlotBackgroundColor() {
+
+    return plotBackgroundColor;
+  }
+
+  /**
+   * set the plot area's grid lines color
+   * 
+   * @param plotGridLinesColor
+   */
+  public void setPlotGridLinesColor(Color plotGridLinesColor) {
+
+    this.plotGridLinesColor = plotGridLinesColor;
+  }
+
+  public Color getPlotGridLinesColor() {
+
+    return plotGridLinesColor;
+  }
+
+  // Error Bars ///////////////////////////////
+
+  /**
+   * Sets the color of the error bars
+   * 
+   * @param errorBarsColor
+   */
+  public void setErrorBarsColor(Color errorBarsColor) {
+
+    this.errorBarsColor = errorBarsColor;
+  }
+
+  public Color getErrorBarsColor() {
+
+    return errorBarsColor;
   }
 }

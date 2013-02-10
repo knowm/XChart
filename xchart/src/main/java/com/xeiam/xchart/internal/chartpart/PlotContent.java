@@ -18,6 +18,7 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -35,6 +36,8 @@ public class PlotContent implements IChartPart {
 
   /** parent */
   private Plot plot;
+
+  Stroke errorBarStroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /**
    * Constructor
@@ -145,8 +148,8 @@ public class PlotContent implements IChartPart {
 
         // paint errorbar
         if (errorBars != null) {
-          g.setColor(plot.chart.getStyleManager().getChartBordersColor());
-          g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+          g.setColor(plot.chart.getStyleManager().getErrorBarsColor());
+          g.setStroke(errorBarStroke);
           int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
           int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
           g.drawLine(xOffset, yOffset + bottom, xOffset, yOffset + top);

@@ -74,7 +74,7 @@ public class Example1 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // Customize Chart
-    chart.setTitle("Example1");
+    chart.setChartTitle("Example1");
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendVisible(false);
 

@@ -75,7 +75,7 @@ public final class QuickChart {
     Chart chart = new Chart(WIDTH, HEIGHT);
 
     // Customize Chart
-    chart.setTitle(chartTitle);
+    chart.setChartTitle(chartTitle);
     chart.setXAxisTitle(xTitle);
     chart.setYAxisTitle(yTitle);
 
@@ -111,7 +111,7 @@ public final class QuickChart {
     Chart chart = new Chart(WIDTH, HEIGHT);
 
     // Customize Chart
-    chart.setTitle(chartTitle);
+    chart.setChartTitle(chartTitle);
     chart.setXAxisTitle(xTitle);
     chart.setYAxisTitle(yTitle);
 

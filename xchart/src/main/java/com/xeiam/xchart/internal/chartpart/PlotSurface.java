@@ -16,13 +16,11 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
 import com.xeiam.xchart.internal.interfaces.IChartPart;
-import com.xeiam.xchart.style.ChartColor;
 
 /**
  * @author timmolter
@@ -32,14 +30,8 @@ public class PlotSurface implements IChartPart {
   /** parent */
   private Plot plot;
 
-  /** the gridLines Color */
-  private Color gridLinesColor;
-
-  /** the background color */
-  private Color foregroundColor;
-
   /** the line style */
-  private BasicStroke stroke;
+  private BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
 
   /**
    * Constructor
@@ -49,9 +41,6 @@ public class PlotSurface implements IChartPart {
   protected PlotSurface(Plot plot) {
 
     this.plot = plot;
-    gridLinesColor = ChartColor.getAWTColor(ChartColor.GREY); // default gridLines color
-    foregroundColor = ChartColor.getAWTColor(ChartColor.LIGHT_GREY); // default foreground Color color
-    stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
   }
 
   @Override
@@ -65,9 +54,9 @@ public class PlotSurface implements IChartPart {
 
     Rectangle bounds = plot.getBounds();
 
-    // paint foreground
+    // paint plot background
     Rectangle backgroundRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(foregroundColor);
+    g.setColor(plot.chart.getStyleManager().getPlotBackgroundColor());
     g.fill(backgroundRectangle);
     Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
     g.setColor(plot.chart.getStyleManager().getChartBordersColor());
@@ -75,13 +64,14 @@ public class PlotSurface implements IChartPart {
 
     // paint grid lines
     if (plot.chart.getStyleManager().isPlotGridLinesVisible()) {
+
       // horizontal
       List<Integer> yAxisTickLocations = plot.chart.axisPair.yAxis.axisTick.tickLocations;
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         int tickLocation = yAxisTickLocations.get(i);
 
-        g.setColor(gridLinesColor);
+        g.setColor(plot.chart.getStyleManager().getPlotGridLinesColor());
         g.setStroke(stroke);
         // System.out.println("bounds.getY()= " + bounds.getY());
         g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2),
@@ -94,28 +84,12 @@ public class PlotSurface implements IChartPart {
 
         int tickLocation = xAxisTickLocations.get(i);
 
-        g.setColor(gridLinesColor);
+        g.setColor(plot.chart.getStyleManager().getPlotGridLinesColor());
         g.setStroke(stroke);
 
         g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
       }
     }
-  }
-
-  /**
-   * @param gridLinesColor the gridLinesColor to set
-   */
-  public void setGridLinesColor(Color gridLinesColor) {
-
-    this.gridLinesColor = gridLinesColor;
-  }
-
-  /**
-   * @param foregroundColor the foregroundColor to set
-   */
-  public void setForegroundColor(Color foregroundColor) {
-
-    this.foregroundColor = foregroundColor;
   }
 
 }

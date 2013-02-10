@@ -76,11 +76,13 @@ public class AxisTickMarks implements IChartPart {
             + (int) (axisTick.axis.getPaintZone().getHeight() - tickLocation));
 
       }
+
       // Line
       if (axisTick.axis.axisPair.chart.getStyleManager().isAxisTicksLineVisible()) {
         g.drawLine(xOffset + axisTick.axis.axisPair.chart.getStyleManager().getAxisTickMarkLength(), yOffset, xOffset + axisTick.axis.axisPair.chart.getStyleManager().getAxisTickMarkLength(), yOffset
             + (int) axisTick.axis.getPaintZone().getHeight());
       }
+
       // bounds
       bounds = new Rectangle(xOffset, yOffset, axisTick.axis.axisPair.chart.getStyleManager().getAxisTickMarkLength(), (int) axisTick.axis.getPaintZone().getHeight());
       // g.setColor(Color.yellow);

@@ -71,11 +71,11 @@ public class Example9 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setTitle("Sample Chart Extensive Cusomization");
+    chart.setChartTitle("Sample Chart Extensive Cusomization");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.setForegroundColor(ChartColor.getAWTColor(ChartColor.GREY));
-    chart.setGridLinesColor(new Color(255, 255, 255));
+    chart.getStyleManager().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
+    chart.getStyleManager().setPlotGridLinesColor(new Color(255, 255, 255));
     chart.getStyleManager().setChartBackgroundColor(Color.WHITE);
     chart.getStyleManager().setLegendBackgroundColor(Color.PINK);
     chart.getStyleManager().setChartBordersColor(Color.GREEN);
@@ -84,9 +84,9 @@ public class Example9 implements ExampleChart {
     chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.getStyleManager().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.getStyleManager().setAxisTicksFont(new Font(Font.SERIF, Font.PLAIN, 11));
-    chart.setDateFormatter("dd-MMM");
-    chart.setDecmialFormatter("#.000");
-    chart.setLocale(Locale.GERMAN);
+    chart.getValueFormatter().setDatePattern("dd-MMM");
+    chart.getValueFormatter().setNormalDecimalPattern("#.000");
+    chart.getValueFormatter().setLocale(Locale.GERMAN);
 
     Series series = chart.addDateSeries("Fake Data", xData, yData);
     series.setLineColor(SeriesColor.BLUE);

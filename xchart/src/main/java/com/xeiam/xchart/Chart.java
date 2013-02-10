@@ -15,14 +15,11 @@
  */
 package com.xeiam.xchart;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.internal.chartpart.ChartTitle;
@@ -30,6 +27,7 @@ import com.xeiam.xchart.internal.chartpart.Legend;
 import com.xeiam.xchart.internal.chartpart.Plot;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.StyleManager;
+import com.xeiam.xchart.style.ValueFormatter;
 import com.xeiam.xchart.style.theme.Theme;
 
 /**
@@ -43,6 +41,7 @@ public class Chart {
   public int height;
 
   private StyleManager styleManager = new StyleManager();
+  private ValueFormatter valueFormatter = new ValueFormatter();
 
   // Chart Parts
   public ChartTitle chartTitle = new ChartTitle(this);
@@ -71,7 +70,7 @@ public class Chart {
   public Chart(ChartBuilder chartBuilder) {
 
     this(chartBuilder.width, chartBuilder.height);
-    setTitle(chartBuilder.title);
+    setChartTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
     styleManager.setLegendVisible(chartBuilder.isLegendVisible);
@@ -219,7 +218,7 @@ public class Chart {
    * 
    * @param title
    */
-  public void setTitle(String title) {
+  public void setChartTitle(String title) {
 
     this.chartTitle.setText(title);
   }
@@ -236,7 +235,7 @@ public class Chart {
     } else {
       styleManager.setxAxisTitleVisible(true);
     }
-    this.axisPair.xAxis.axisTitle.setText(title);
+    this.axisPair.xAxis.axisTitle.text = title;
   }
 
   /**
@@ -251,81 +250,7 @@ public class Chart {
     } else {
       styleManager.setyAxisTitleVisible(true);
     }
-    this.axisPair.yAxis.axisTitle.setText(title);
-  }
-
-  /**
-   * Set the chart foreground color - the part the series are drawn on
-   * 
-   * @param color
-   */
-  public void setForegroundColor(Color color) {
-
-    this.plot.plotSurface.setForegroundColor(color);
-  }
-
-  /**
-   * Set the chart grid lines color
-   * 
-   * @param color
-   */
-  public void setGridLinesColor(Color color) {
-
-    this.plot.plotSurface.setGridLinesColor(color);
-  }
-
-  /**
-   * Set the String formatter for Data x-axis
-   * 
-   * @param pattern - the pattern describing the date and time format
-   */
-  public void setDateFormatter(String pattern) {
-
-    this.axisPair.xAxis.axisTick.datePattern = pattern;
-  }
-
-  /**
-   * Set the decimal formatter for all tick labels
-   * 
-   * @param pattern - the pattern describing the decimal format
-   */
-  public void setDecmialFormatter(String pattern) {
-
-    this.axisPair.xAxis.axisTick.normalDecimalPattern = pattern;
-    this.axisPair.yAxis.axisTick.normalDecimalPattern = pattern;
-  }
-
-  /**
-   * Set the scientific notation formatter for all tick labels
-   * 
-   * @param pattern - the pattern describing the scientific notation format
-   */
-  public void setDecmialScientificFormatter(String pattern) {
-
-    this.axisPair.xAxis.axisTick.scientificDecimalPattern = pattern;
-    this.axisPair.yAxis.axisTick.scientificDecimalPattern = pattern;
-  }
-
-  /**
-   * Set the locale to use for rendering the chart
-   * 
-   * @param locale - the locale to use when formatting Strings and dates for the axis tick labels
-   */
-  public void setLocale(Locale locale) {
-
-    this.axisPair.xAxis.axisTick.locale = locale;
-    this.axisPair.yAxis.axisTick.locale = locale;
-  }
-
-  /**
-   * Set the timezone to use for formatting Date axis tick labels
-   * 
-   * @param timezone the timezone to use when formatting date data
-   */
-  public void setTimezone(TimeZone timezone) {
-
-    this.axisPair.xAxis.axisTick.timezone = timezone;
-    this.axisPair.yAxis.axisTick.timezone = timezone;
+    this.axisPair.yAxis.axisTitle.text = title;
   }
 
   /**
@@ -347,6 +272,16 @@ public class Chart {
 
     styleManager.setTheme(theme);
 
+  }
+
+  /**
+   * Gets the Chart's value formatter, which can be used to customize the formatting of numbers and dates
+   * 
+   * @return
+   */
+  public ValueFormatter getValueFormatter() {
+
+    return valueFormatter;
   }
 
 }

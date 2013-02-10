@@ -32,7 +32,7 @@ public class AxisTitle implements IChartPart {
   private final Axis axis;
 
   /** the title text */
-  protected String text = ""; // default to ""
+  public String text = ""; // default to ""
 
   /** the bounds */
   private Rectangle bounds;
@@ -45,16 +45,6 @@ public class AxisTitle implements IChartPart {
   protected AxisTitle(Axis axis, boolean isVisible) {
 
     this.axis = axis;
-  }
-
-  protected String getText() {
-
-    return text;
-  }
-
-  public void setText(String text) {
-
-    this.text = text;
   }
 
   @Override

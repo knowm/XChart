@@ -43,7 +43,7 @@ public class Example10 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // Customize Chart
-    chart.setTitle("Example10");
+    chart.setChartTitle("Example10");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.getStyleManager().setLegendVisible(false);

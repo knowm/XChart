@@ -172,4 +172,25 @@ public class XChartTheme implements Theme {
 
     return true;
   }
+
+  @Override
+  public Color getPlotBackgroundColor() {
+
+    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+  }
+
+  @Override
+  public Color getPlotGridLinesColor() {
+
+    return ChartColor.getAWTColor(ChartColor.GREY);
+  }
+
+  // Error Bars ///////////////////////////////
+
+  @Override
+  public Color getErrorBarsColor() {
+
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+  }
+
 }

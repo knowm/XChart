@@ -142,7 +142,7 @@ public class Axis implements IChartPart {
       // Axis title
       double titleHeight = 0.0;
       if (axisPair.chart.getStyleManager().isxAxisTitleVisible()) {
-        TextLayout textLayout = new TextLayout(axisTitle.getText(), axisTick.axis.axisPair.chart.getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
+        TextLayout textLayout = new TextLayout(axisTitle.text, axisTick.axis.axisPair.chart.getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         titleHeight = rectangle.getHeight() + axisTick.axis.axisPair.chart.getStyleManager().getAxisTitlePadding();
       }

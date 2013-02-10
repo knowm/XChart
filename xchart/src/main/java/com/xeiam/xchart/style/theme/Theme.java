@@ -83,4 +83,12 @@ public interface Theme {
 
   public boolean isPlotGridLinesVisible();
 
+  public Color getPlotBackgroundColor();
+
+  public Color getPlotGridLinesColor();
+
+  // Error Bars ///////////////////////////////
+
+  public Color getErrorBarsColor();
+
 }

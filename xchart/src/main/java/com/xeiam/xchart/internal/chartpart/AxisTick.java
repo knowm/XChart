@@ -26,7 +26,6 @@ import java.util.TimeZone;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
-import com.xeiam.xchart.internal.misc.AxisValueFormatterUtil;
 
 /**
  * An axis tick
@@ -75,7 +74,8 @@ public class AxisTick implements IChartPart {
   /**
    * Constructor
    * 
-   * @param axis the axis
+   * @param axis
+   * @param isVisible
    */
   protected AxisTick(Axis axis, boolean isVisible) {
 
@@ -83,7 +83,6 @@ public class AxisTick implements IChartPart {
     this.isVisible = isVisible;
     axisTickLabels = new AxisTickLabels(this);
     axisTickMarks = new AxisTickMarks(this);
-
   }
 
   @Override
@@ -255,11 +254,11 @@ public class AxisTick implements IChartPart {
 
     if (axis.axisType == AxisType.NUMBER) {
 
-      return AxisValueFormatterUtil.formatNumber(value, normalDecimalPattern, scientificDecimalPattern, locale);
+      return axis.axisPair.chart.getValueFormatter().formatNumber(value);
 
     } else {
 
-      return AxisValueFormatterUtil.formatDateValue(value, axis.min, axis.max, datePattern, locale, timezone);
+      return axis.axisPair.chart.getValueFormatter().formatDateValue(value, axis.min, axis.max);
     }
 
   }

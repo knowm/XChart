@@ -16,7 +16,7 @@
 package com.xeiam.xchart.demo.charts;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
@@ -44,8 +44,8 @@ public class Example2 implements ExampleChart {
 
     // generates sine data
     int size = 30;
-    Collection<Number> xData1 = new ArrayList<Number>();
-    Collection<Number> yData1 = new ArrayList<Number>();
+    List<Number> xData1 = new ArrayList<Number>();
+    List<Number> yData1 = new ArrayList<Number>();
     for (int i = 0; i <= size; i++) {
       double radians = (Math.PI / (size / 2) * i);
       xData1.add(i - size / 2);
