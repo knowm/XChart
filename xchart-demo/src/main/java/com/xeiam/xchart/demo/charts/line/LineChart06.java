@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
-
-import java.util.ArrayList;
-import java.util.Collection;
+package com.xeiam.xchart.demo.charts.line;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Multiple curves on one Chart
+ * Single point
  * 
  * @author timmolter
  */
-public class Example3 implements ExampleChart {
+public class LineChart06 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example3();
+    ExampleChart exampleChart = new LineChart06();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -39,28 +37,16 @@ public class Example3 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
 
-    for (int i = 1; i <= 14; i++) {
+    // Customize Chart
+    chart.setChartTitle("Example6");
+    chart.setXAxisTitle("X");
+    chart.setYAxisTitle("Y");
 
-      // generates linear data
-      int b = 20;
-      Collection<Number> xData = new ArrayList<Number>();
-      Collection<Number> yData = new ArrayList<Number>();
-      for (int x = 0; x <= b; x++) {
-        xData.add(2 * x - b);
-        yData.add(2 * i * x - i * b);
-      }
+    chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
 
-      // Customize Chart
-      chart.setChartTitle("Example3");
-      chart.setXAxisTitle("X");
-      chart.setYAxisTitle("Y");
-
-      String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
-      chart.addSeries(seriesName, xData, yData);
-
-    }
     return chart;
   }
+
 }

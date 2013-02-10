@@ -72,7 +72,7 @@ public final class QuickChart {
   public static Chart getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
 
     // Create Chart
-    Chart chart = new Chart(WIDTH, HEIGHT);
+    Chart chart = new LineChart(WIDTH, HEIGHT);
 
     // Customize Chart
     chart.setChartTitle(chartTitle);
@@ -108,7 +108,7 @@ public final class QuickChart {
   public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, Collection<Number> xData, Collection<Number> yData) {
 
     // Create Chart
-    Chart chart = new Chart(WIDTH, HEIGHT);
+    Chart chart = new LineChart(WIDTH, HEIGHT);
 
     // Customize Chart
     chart.setChartTitle(chartTitle);

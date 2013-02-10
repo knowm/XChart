@@ -13,26 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.SeriesMarker;
 
 /**
- * Manual Data
+ * Hardcoded Data
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Series data hardcoded, perhaps copied from elsewhere</li>
+ * <li>LineChart without series markers</li>
+ * </ul>
  * 
  * @author timmolter
  */
-public class Example1 implements ExampleChart {
+public class LineChart01 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example1();
+    ExampleChart exampleChart = new LineChart01();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -53,6 +60,7 @@ public class Example1 implements ExampleChart {
         -0.491143625364344, -0.4842915805643152, -0.47552825814757643, -0.4648882429441252, -0.4524135262330092, -0.438153340021931, -0.42216396275100676, -0.4045084971874727, -0.3852566213878937,
         -0.36448431371070455, -0.3422735529643432, -0.31871199487434343, -0.29389262614623524, -0.26791339748949666, -0.2408768370508561, -0.2128896457825349, -0.18406227634233727,
         -0.15450849718747214, -0.12434494358242552, -0.0936906572928606, -0.06266661678215013, -0.03139525976465486, 2.097981369335578E-15 };
+
     Collection<Number> xData = Arrays.asList(xDataArray);
 
     Number[] yDataArray = new Number[] { 0.0, 1.5702142318133935E-5, 3.13688735543879E-5, 4.703341403158832E-5, 6.303295245179154E-5, 8.092859563778825E-5, 1.0594882618710001E-4,
@@ -68,10 +76,11 @@ public class Example1 implements ExampleChart {
         -2.4744573769866404E-4, -2.4122358912925663E-4, -2.3473774775902484E-4, -2.2772135357722773E-4, -2.2006305955750752E-4, -2.1171197663128998E-4, -2.026763153011749E-4, -1.928814887412768E-4,
         -1.8242620113215842E-4, -1.712818057089484E-4, -1.5947175495155755E-4, -1.470534737044005E-4, -1.340464949116753E-4, -1.2051929111759324E-4, -1.0651565202537847E-4, -9.209212285608304E-5,
         -7.730521584738858E-5, -6.221344753211741E-5, -4.687672566856378E-5, -3.135450711247751E-5, -1.5708413280955366E-5, 1.0498035802487025E-18 };
+
     Collection<Number> yData = Arrays.asList(yDataArray);
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
 
     // Customize Chart
     chart.setChartTitle("Example1");

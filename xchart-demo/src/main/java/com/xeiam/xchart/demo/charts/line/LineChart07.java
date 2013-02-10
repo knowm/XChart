@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
@@ -26,11 +27,11 @@ import com.xeiam.xchart.SwingWrapper;
  * 
  * @author timmolter
  */
-public class Example7 implements ExampleChart {
+public class LineChart07 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example7();
+    ExampleChart exampleChart = new LineChart07();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -42,7 +43,7 @@ public class Example7 implements ExampleChart {
     Collection<Number> yData = Arrays.asList(new Number[] { 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0, 1.0, 2.0, 0.0 });
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
     chart.setChartTitle("Example7");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");

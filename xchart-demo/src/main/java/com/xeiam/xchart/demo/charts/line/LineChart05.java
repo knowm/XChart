@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Single point
+ * Vertical and horizontal lines
  * 
  * @author timmolter
  */
-public class Example6 implements ExampleChart {
+public class LineChart05 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example6();
+    ExampleChart exampleChart = new LineChart05();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -36,14 +37,15 @@ public class Example6 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("Example6");
+    chart.setChartTitle("Example5");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
 
-    chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
+    chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
+    chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
 
     return chart;
   }

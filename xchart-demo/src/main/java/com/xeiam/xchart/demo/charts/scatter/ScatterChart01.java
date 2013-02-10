@@ -13,28 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.scatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.ScatterChart;
 import com.xeiam.xchart.SwingWrapper;
-import com.xeiam.xchart.style.Series;
-import com.xeiam.xchart.style.SeriesColor;
-import com.xeiam.xchart.style.SeriesLineStyle;
-import com.xeiam.xchart.style.SeriesMarker;
+import com.xeiam.xchart.demo.charts.line.ExampleChart;
 
 /**
- * Sine wave with customized series style
+ * Gaussian Blob Scatter Plot
  * 
  * @author timmolter
  */
-public class Example2 implements ExampleChart {
+public class ScatterChart01 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example2();
+    ExampleChart exampleChart = new ScatterChart01();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -43,28 +42,24 @@ public class Example2 implements ExampleChart {
   public Chart getChart() {
 
     // generates sine data
-    int size = 30;
-    List<Number> xData1 = new ArrayList<Number>();
-    List<Number> yData1 = new ArrayList<Number>();
-    for (int i = 0; i <= size; i++) {
-      double radians = (Math.PI / (size / 2) * i);
-      xData1.add(i - size / 2);
-      yData1.add(size * Math.sin(radians));
+    List<Number> xData = new ArrayList<Number>();
+    List<Number> yData = new ArrayList<Number>();
+    Random random = new Random();
+    int size = 1000;
+    for (int i = 0; i < size; i++) {
+      xData.add(random.nextGaussian());
+      yData.add(random.nextGaussian());
     }
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new ScatterChart(800, 600);
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendVisible(false);
 
-    // Series 1
-    Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);
-    series1.setLineColor(SeriesColor.PURPLE);
-    series1.setLineStyle(SeriesLineStyle.DASH_DASH);
-    series1.setMarkerColor(SeriesColor.GREEN);
-    series1.setMarker(SeriesMarker.SQUARE);
+    // Series
+    chart.addSeries("Gaussian Blob", xData, yData);
 
     return chart;
   }

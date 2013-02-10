@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.SeriesColor;
@@ -27,11 +28,11 @@ import com.xeiam.xchart.style.SeriesMarker;
  * 
  * @author timmolter
  */
-public class Example10 implements ExampleChart {
+public class LineChart10 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example10();
+    ExampleChart exampleChart = new LineChart10();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -40,7 +41,7 @@ public class Example10 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
 
     // Customize Chart
     chart.setChartTitle("Example10");

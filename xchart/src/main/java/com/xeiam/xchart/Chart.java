@@ -35,7 +35,7 @@ import com.xeiam.xchart.style.theme.Theme;
  * 
  * @author timmolter
  */
-public class Chart {
+public abstract class Chart {
 
   public int width;
   public int height;
@@ -73,7 +73,7 @@ public class Chart {
     setChartTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
-    styleManager.setLegendVisible(chartBuilder.isLegendVisible);
+    setTheme(chartBuilder.theme);
   }
 
   /**

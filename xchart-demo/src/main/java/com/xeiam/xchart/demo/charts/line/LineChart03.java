@@ -13,21 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Vertical and horizontal lines
+ * Multiple curves on one Chart
  * 
  * @author timmolter
  */
-public class Example5 implements ExampleChart {
+public class LineChart03 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example5();
+    ExampleChart exampleChart = new LineChart03();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -36,17 +40,28 @@ public class Example5 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
 
-    // Customize Chart
-    chart.setChartTitle("Example5");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
+    for (int i = 1; i <= 14; i++) {
 
-    chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
-    chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
+      // generates linear data
+      int b = 20;
+      Collection<Number> xData = new ArrayList<Number>();
+      Collection<Number> yData = new ArrayList<Number>();
+      for (int x = 0; x <= b; x++) {
+        xData.add(2 * x - b);
+        yData.add(2 * i * x - i * b);
+      }
 
+      // Customize Chart
+      chart.setChartTitle("Example3");
+      chart.setXAxisTitle("X");
+      chart.setYAxisTitle("Y");
+
+      String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
+      chart.addSeries(seriesName, xData, yData);
+
+    }
     return chart;
   }
-
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
@@ -24,11 +24,11 @@ import com.xeiam.xchart.SwingWrapper;
  * 
  * @author timmolter
  */
-public class Example11 implements ExampleChart {
+public class LineChart11 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example11();
+    ExampleChart exampleChart = new LineChart11();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -37,7 +37,7 @@ public class Example11 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).title("My Title").xAxisTitle("X").yAxisTitle("Y").showLegend(false).build();
+    Chart chart = new ChartBuilder().width(800).height(600).title("My Title").xAxisTitle("X").yAxisTitle("Y").build();
     chart.addSeries("x", new double[] { 1, 2, 5, 7 }, new double[] { -3, 6, 9, 0 });
 
     return chart;

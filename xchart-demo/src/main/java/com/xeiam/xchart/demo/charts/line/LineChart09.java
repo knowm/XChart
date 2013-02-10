@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.ChartColor;
 import com.xeiam.xchart.style.Series;
@@ -38,11 +39,11 @@ import com.xeiam.xchart.style.SeriesMarker;
  * 
  * @author timmolter
  */
-public class Example9 implements ExampleChart {
+public class LineChart09 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example9();
+    ExampleChart exampleChart = new LineChart09();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -51,7 +52,7 @@ public class Example9 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
 
     // generates linear data
     Collection<Date> xData = new ArrayList<Date>();

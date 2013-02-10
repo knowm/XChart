@@ -29,17 +29,18 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.xeiam.xchart.XChartPanel;
-import com.xeiam.xchart.demo.charts.Example1;
-import com.xeiam.xchart.demo.charts.Example10;
-import com.xeiam.xchart.demo.charts.Example11;
-import com.xeiam.xchart.demo.charts.Example2;
-import com.xeiam.xchart.demo.charts.Example3;
-import com.xeiam.xchart.demo.charts.Example4;
-import com.xeiam.xchart.demo.charts.Example5;
-import com.xeiam.xchart.demo.charts.Example6;
-import com.xeiam.xchart.demo.charts.Example7;
-import com.xeiam.xchart.demo.charts.Example8;
-import com.xeiam.xchart.demo.charts.Example9;
+import com.xeiam.xchart.demo.charts.line.LineChart01;
+import com.xeiam.xchart.demo.charts.line.LineChart02;
+import com.xeiam.xchart.demo.charts.line.LineChart03;
+import com.xeiam.xchart.demo.charts.line.LineChart04;
+import com.xeiam.xchart.demo.charts.line.LineChart05;
+import com.xeiam.xchart.demo.charts.line.LineChart06;
+import com.xeiam.xchart.demo.charts.line.LineChart07;
+import com.xeiam.xchart.demo.charts.line.LineChart08;
+import com.xeiam.xchart.demo.charts.line.LineChart09;
+import com.xeiam.xchart.demo.charts.line.LineChart10;
+import com.xeiam.xchart.demo.charts.line.LineChart11;
+import com.xeiam.xchart.demo.charts.scatter.ScatterChart01;
 
 /**
  * Class containing all XChart example charts
@@ -79,7 +80,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     JScrollPane treeView = new JScrollPane(tree);
 
     // Create Chart Panel
-    chartPanel = new XChartPanel(new Example1().getChart());
+    chartPanel = new XChartPanel(new LineChart01().getChart());
 
     // Add the scroll panes to a split pane.
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -129,41 +130,44 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example1 - Manual Data", new Example1().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart01 - Manual Data", new LineChart01().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example2 - Customized series style", new Example2().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart02 - Customized series style", new LineChart02().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example3 - Multiple curves on one Chart", new Example3().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart03 - Multiple curves on one Chart", new LineChart03().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example4 - Date Axis", new Example4().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart04 - Date Axis", new LineChart04().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example5 - Vertical and horizontal lines", new Example5().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart05 - Vertical and horizontal lines", new LineChart05().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart06 - Single point", new LineChart06().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart07 - Longs as X-Axis data", new LineChart07().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart08 - Error bars", new LineChart08().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart09 - Extensive chart customization", new LineChart09().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart10 - Plots Hundreds of Series on One Plot", new LineChart10().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart11 - Using ChartBuilder to Make a Chart", new LineChart11().getChart()));
     category.add(chart);
 
     // Second category
-    category = new DefaultMutableTreeNode("More Charts");
+    category = new DefaultMutableTreeNode("Scatter Charts");
     top.add(category);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example6 - Single point", new Example6().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example7 - Longs as X-Axis data", new Example7().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example8 - Error bars", new Example8().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example9 - Extensive chart customization", new Example9().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example10 - Plots Hundreds of Series on One Plot", new Example10().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("Example11 - Using ChartBuilder to Make a Chart", new Example11().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart01 - Gaussian Blob Scatter Plot", new ScatterChart01().getChart()));
     category.add(chart);
 
   }

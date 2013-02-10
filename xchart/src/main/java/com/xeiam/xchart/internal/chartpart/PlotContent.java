@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.ScatterChart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.style.Series;
 
@@ -57,6 +58,8 @@ public class PlotContent implements ChartPart {
 
   @Override
   public void paint(Graphics2D g) {
+
+    boolean isScatterChart = getChart() instanceof ScatterChart;
 
     Rectangle bounds = plot.getBounds();
 
@@ -130,7 +133,7 @@ public class PlotContent implements ChartPart {
         // System.out.println(yTransform);
 
         // paint line
-        if (series.stroke != null) {
+        if (series.stroke != null && !isScatterChart) {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.strokeColor);
             g.setStroke(series.stroke);

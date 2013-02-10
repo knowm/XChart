@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
 
@@ -32,11 +33,11 @@ import com.xeiam.xchart.style.Series;
  * 
  * @author timmolter
  */
-public class Example4 implements ExampleChart {
+public class LineChart04 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example4();
+    ExampleChart exampleChart = new LineChart04();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -45,7 +46,7 @@ public class Example4 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
 
     // generates linear data
     Collection<Date> xData = new ArrayList<Date>();

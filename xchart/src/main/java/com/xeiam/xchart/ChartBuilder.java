@@ -21,17 +21,32 @@
  */
 package com.xeiam.xchart;
 
+import com.xeiam.xchart.style.theme.Theme;
+import com.xeiam.xchart.style.theme.XChartTheme;
+
 /**
  * @author timmolter
  */
 public class ChartBuilder {
 
+  public enum ChartType {
+
+    Line, Scatter
+  }
+
+  protected ChartType chartType = ChartType.Line;
   protected int width = 800;
   protected int height = 600;
   protected String title = "";
   protected String xAxisTitle = "";
   protected String yAxisTitle = "";
-  protected boolean isLegendVisible = true;
+  protected Theme theme = new XChartTheme();
+
+  public ChartBuilder chartType(ChartType chartType) {
+
+    this.chartType = chartType;
+    return this;
+  }
 
   public ChartBuilder width(int width) {
 
@@ -63,9 +78,9 @@ public class ChartBuilder {
     return this;
   }
 
-  public ChartBuilder showLegend(boolean isLegendVisible) {
+  public ChartBuilder theme(Theme theme) {
 
-    this.isLegendVisible = isLegendVisible;
+    this.theme = theme;
     return this;
   }
 
@@ -76,7 +91,15 @@ public class ChartBuilder {
    */
   public Chart build() {
 
-    return new Chart(this);
+    switch (chartType) {
+    case Line:
+      return new LineChart(this);
+    case Scatter:
+      return new ScatterChart(this);
+    default:
+      return new LineChart(this);
+    }
+
   }
 
 }

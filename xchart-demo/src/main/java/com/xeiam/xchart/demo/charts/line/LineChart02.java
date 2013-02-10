@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts;
+package com.xeiam.xchart.demo.charts.line;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.SeriesColor;
@@ -26,15 +27,20 @@ import com.xeiam.xchart.style.SeriesLineStyle;
 import com.xeiam.xchart.style.SeriesMarker;
 
 /**
- * Error bars
+ * Sine wave with customized series style
+ * <p>
+ * * Demonstrates the following:
+ * <ul>
+ * <li>Customizing the series style properties</li>
+ * </ul>
  * 
  * @author timmolter
  */
-public class Example8 implements ExampleChart {
+public class LineChart02 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new Example8();
+    ExampleChart exampleChart = new LineChart02();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -42,27 +48,25 @@ public class Example8 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    // generates data
-    int size = 10;
-    Collection<Number> xData1 = new ArrayList<Number>();
-    Collection<Number> yData1 = new ArrayList<Number>();
-    Collection<Number> errorBars = new ArrayList<Number>();
+    // generates sine data
+    int size = 30;
+    List<Number> xData1 = new ArrayList<Number>();
+    List<Number> yData1 = new ArrayList<Number>();
     for (int i = 0; i <= size; i++) {
-      xData1.add(i);
-      yData1.add(10 * Math.exp(-i));
-      errorBars.add(Math.random() + .3);
+      double radians = (Math.PI / (size / 2) * i);
+      xData1.add(i - size / 2);
+      yData1.add(size * Math.sin(radians));
     }
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new LineChart(800, 600);
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendVisible(false);
-    chart.getStyleManager().setAxisTitlesVisible(false);
 
     // Series 1
-    Series series1 = chart.addSeries("10^(-x)", xData1, yData1, errorBars);
+    Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);
     series1.setLineColor(SeriesColor.PURPLE);
     series1.setLineStyle(SeriesLineStyle.DASH_DASH);
     series1.setMarkerColor(SeriesColor.GREEN);
