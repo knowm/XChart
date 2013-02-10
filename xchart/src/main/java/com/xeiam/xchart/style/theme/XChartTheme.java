@@ -97,6 +97,8 @@ public class XChartTheme implements Theme {
     return 10;
   }
 
+  // Chart Axes ///////////////////////////////
+
   @Override
   public boolean isXAxisTitleVisible() {
 
@@ -161,5 +163,13 @@ public class XChartTheme implements Theme {
   public int getAxisTitlePadding() {
 
     return 10;
+  }
+
+  // Chart Plot Area ///////////////////////////////
+
+  @Override
+  public boolean isPlotGridLinesVisible() {
+
+    return true;
   }
 }

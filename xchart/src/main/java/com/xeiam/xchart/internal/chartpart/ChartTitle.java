@@ -22,12 +22,11 @@ import java.awt.font.TextLayout;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
-import com.xeiam.xchart.internal.interfaces.IHideable;
 
 /**
  * Chart Title
  */
-public class ChartTitle implements IChartPart, IHideable {
+public class ChartTitle implements IChartPart {
 
   /** parent */
   private final Chart chart;
@@ -56,11 +55,6 @@ public class ChartTitle implements IChartPart, IHideable {
       chart.getStyleManager().setChartTitleVisible(true);
     }
     this.text = text;
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-
   }
 
   @Override

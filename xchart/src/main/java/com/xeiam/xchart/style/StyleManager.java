@@ -35,19 +35,23 @@ public class StyleManager {
   /** the default Theme */
   private Theme theme = new XChartTheme();
 
+  // Chart Style ///////////////////////////////
   private Color chartBackgroundColor;
   public Color chartBordersColor;
   public Color chartFontColor;
   private int chartPadding;
 
+  // Chart Title ///////////////////////////////
   private Font chartTitleFont;
   private boolean isChartTitleVisible;
 
+  // Chart Legend ///////////////////////////////
   private boolean isLegendVisible;
   private Color legendBackgroundColor;
   private Font legendFont;
   private int legendPadding;
 
+  // Chart Axes ///////////////////////////////
   private boolean xAxisTitleVisible;
   private boolean yAxisTitleVisible;
   private Font axisTitleFont;
@@ -60,6 +64,9 @@ public class StyleManager {
   private int plotPadding;
   private int axisTitlePadding;
 
+  // Chart Plot Area ///////////////////////////////
+  private boolean isPlotGridLinesVisible;
+
   /**
    * Constructor
    */
@@ -70,19 +77,22 @@ public class StyleManager {
 
   private void setAllStyles() {
 
-    // chart
+    // Chart Style ///////////////////////////////
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartBordersColor = theme.getChartBordersColor();
     chartFontColor = theme.getChartFontColor();
     chartPadding = theme.getChartPadding();
-    // chart title
+
+    // Chart Title ///////////////////////////////
     chartTitleFont = theme.getChartTitleFont();
     isChartTitleVisible = theme.isChartTitleVisible();
+
     // legend
     isLegendVisible = theme.isLegendVisible();
     legendBackgroundColor = theme.getLegendBackgroundColor();
     legendFont = theme.getLegendFont();
     legendPadding = theme.getLegendPadding();
+
     // axes
     xAxisTitleVisible = theme.isXAxisTitleVisible();
     yAxisTitleVisible = theme.isYAxisTitleVisible();
@@ -95,6 +105,9 @@ public class StyleManager {
     isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
     plotPadding = theme.getPlotPadding();
     axisTitlePadding = theme.getAxisTitlePadding();
+
+    // Chart Plot Area ///////////////////////////////
+    isPlotGridLinesVisible = theme.isPlotGridLinesVisible();
   }
 
   /**
@@ -455,5 +468,22 @@ public class StyleManager {
   public int getAxisTitlePadding() {
 
     return axisTitlePadding;
+  }
+
+  // Chart Plot Area ///////////////////////////////
+
+  /**
+   * sets the visibility of the gridlines on the plot area
+   * 
+   * @param isPlotGridLinesVisible
+   */
+  public void setPlotGridLinesVisible(boolean isPlotGridLinesVisible) {
+
+    this.isPlotGridLinesVisible = isPlotGridLinesVisible;
+  }
+
+  public boolean isPlotGridLinesVisible() {
+
+    return isPlotGridLinesVisible;
   }
 }

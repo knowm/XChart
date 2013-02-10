@@ -26,13 +26,12 @@ import java.util.TimeZone;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
-import com.xeiam.xchart.internal.interfaces.IHideable;
 import com.xeiam.xchart.internal.misc.AxisValueFormatterUtil;
 
 /**
  * An axis tick
  */
-public class AxisTick implements IChartPart, IHideable {
+public class AxisTick implements IChartPart {
 
   /** the default tick mark step hint for x axis */
   private static final int DEFAULT_TICK_MARK_STEP_HINT_X = 74;
@@ -265,9 +264,4 @@ public class AxisTick implements IChartPart, IHideable {
 
   }
 
-  @Override
-  public void setVisible(boolean isVisible) {
-
-    // this.isVisible = isVisible;
-  }
 }

@@ -254,18 +254,6 @@ public class Chart {
     this.axisPair.yAxis.axisTitle.setText(title);
   }
 
-  // ChartPart visibility ////////////////////////////////
-
-  /**
-   * Set the chart grid lines visibility
-   * 
-   * @param isVisible
-   */
-  public void setGridlinesVisible(boolean isVisible) {
-
-    this.plot.plotSurface.setVisible(isVisible);
-  }
-
   /**
    * Set the chart foreground color - the part the series are drawn on
    * 

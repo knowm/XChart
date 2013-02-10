@@ -79,4 +79,8 @@ public interface Theme {
 
   public int getPlotPadding();
 
+  // Chart Plot Area ///////////////////////////////
+
+  public boolean isPlotGridLinesVisible();
+
 }

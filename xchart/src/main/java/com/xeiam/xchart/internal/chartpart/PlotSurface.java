@@ -22,13 +22,12 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import com.xeiam.xchart.internal.interfaces.IChartPart;
-import com.xeiam.xchart.internal.interfaces.IHideable;
 import com.xeiam.xchart.style.ChartColor;
 
 /**
  * @author timmolter
  */
-public class PlotSurface implements IChartPart, IHideable {
+public class PlotSurface implements IChartPart {
 
   /** parent */
   private Plot plot;
@@ -41,9 +40,6 @@ public class PlotSurface implements IChartPart, IHideable {
 
   /** the line style */
   private BasicStroke stroke;
-
-  /** the visibility state of PlotSurface */
-  protected boolean isVisible = true; // default to true
 
   /**
    * Constructor
@@ -78,7 +74,7 @@ public class PlotSurface implements IChartPart, IHideable {
     g.draw(borderRectangle);
 
     // paint grid lines
-    if (isVisible) {
+    if (plot.chart.getStyleManager().isPlotGridLinesVisible()) {
       // horizontal
       List<Integer> yAxisTickLocations = plot.chart.axisPair.yAxis.axisTick.tickLocations;
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
@@ -104,12 +100,6 @@ public class PlotSurface implements IChartPart, IHideable {
         g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
       }
     }
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-
-    this.isVisible = isVisible;
   }
 
   /**

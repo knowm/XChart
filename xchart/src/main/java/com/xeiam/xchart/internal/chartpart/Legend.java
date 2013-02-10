@@ -23,14 +23,13 @@ import java.util.Map;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.interfaces.IChartPart;
-import com.xeiam.xchart.internal.interfaces.IHideable;
 import com.xeiam.xchart.internal.markers.Marker;
 import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter
  */
-public class Legend implements IChartPart, IHideable {
+public class Legend implements IChartPart {
 
   /** parent */
   private final Chart chart;
@@ -46,11 +45,6 @@ public class Legend implements IChartPart, IHideable {
   public Legend(Chart chart) {
 
     this.chart = chart;
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-
   }
 
   @Override

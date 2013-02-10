@@ -22,12 +22,11 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 
 import com.xeiam.xchart.internal.interfaces.IChartPart;
-import com.xeiam.xchart.internal.interfaces.IHideable;
 
 /**
  * AxisTitle
  */
-public class AxisTitle implements IChartPart, IHideable {
+public class AxisTitle implements IChartPart {
 
   /** parent */
   private final Axis axis;
@@ -56,11 +55,6 @@ public class AxisTitle implements IChartPart, IHideable {
   public void setText(String text) {
 
     this.text = text;
-  }
-
-  @Override
-  public void setVisible(boolean isVisible) {
-
   }
 
   @Override
