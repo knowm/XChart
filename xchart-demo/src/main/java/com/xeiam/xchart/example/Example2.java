@@ -19,8 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.QuickChart;
+import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.style.Series;
+import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Create a Chart matrix
@@ -36,7 +38,11 @@ public class Example2 {
     List<Chart> charts = new ArrayList<Chart>();
 
     for (int i = 0; i < numCharts; i++) {
-      charts.add(QuickChart.getChart("" + i, "X", "Y", null, null, getRandomWalk(1000)));
+      Chart chart = new ChartBuilder().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
+      chart.setyAxisMinMax(-10, 10);
+      Series series = chart.addSeries("" + i, null, getRandomWalk(200));
+      series.setMarker(SeriesMarker.NONE);
+      charts.add(chart);
     }
     new SwingWrapper(charts).displayChartMatrix();
   }
