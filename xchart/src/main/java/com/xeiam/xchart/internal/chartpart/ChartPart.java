@@ -13,20 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.internal.interfaces;
+package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+
+import com.xeiam.xchart.Chart;
 
 /**
  * All components of a chart that need to be painted should implement this interface
  * 
  * @author timmolter
  */
-public interface IChartPart {
+public interface ChartPart {
 
   public Rectangle getBounds();
 
   public void paint(final Graphics2D g);
+
+  public Chart getChart();
 
 }

@@ -23,14 +23,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
-import com.xeiam.xchart.internal.interfaces.IChartPart;
 
 /**
  * An axis tick
  */
-public class AxisTick implements IChartPart {
+public class AxisTick implements ChartPart {
 
   /** the default tick mark step hint for x axis */
   private static final int DEFAULT_TICK_MARK_STEP_HINT_X = 74;
@@ -119,13 +119,13 @@ public class AxisTick implements IChartPart {
 
       if (axis.direction == Axis.Direction.Y) {
         bounds = new Rectangle((int) axisTickLabels.getBounds().getX(), (int) (axisTickLabels.getBounds().getY()), (int) (axisTickLabels.getBounds().getWidth()
-            + axis.axisPair.chart.getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
+            + getChart().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
         // g.setColor(Color.red);
         // g.draw(bounds);
       } else {
         bounds = new Rectangle((int) axisTickMarks.getBounds().getX(), (int) (axisTickMarks.getBounds().getY()), (int) axisTickLabels.getBounds().getWidth(), (int) (axisTickMarks.getBounds()
             .getHeight()
-            + axis.axisPair.chart.getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()));
+            + getChart().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()));
         // g.setColor(Color.red);
         // g.draw(bounds);
       }
@@ -254,13 +254,18 @@ public class AxisTick implements IChartPart {
 
     if (axis.axisType == AxisType.NUMBER) {
 
-      return axis.axisPair.chart.getValueFormatter().formatNumber(value);
+      return getChart().getValueFormatter().formatNumber(value);
 
     } else {
 
-      return axis.axisPair.chart.getValueFormatter().formatDateValue(value, axis.min, axis.max);
+      return getChart().getValueFormatter().formatDateValue(value, axis.min, axis.max);
     }
 
   }
 
+  @Override
+  public Chart getChart() {
+
+    return axis.getChart();
+  }
 }

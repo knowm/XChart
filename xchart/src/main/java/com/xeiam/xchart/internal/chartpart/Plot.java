@@ -19,23 +19,27 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.internal.interfaces.IChartPart;
 
 /**
  * @author timmolter
  */
-public class Plot implements IChartPart {
+public class Plot implements ChartPart {
 
   /** parent */
-  protected Chart chart;
-
-  public PlotSurface plotSurface;
-
-  protected PlotContent plotContent;
+  private final Chart chart;
 
   /** the bounds */
   private Rectangle bounds;
 
+  protected PlotSurface plotSurface;
+
+  protected PlotContent plotContent;
+
+  /**
+   * Constructor
+   * 
+   * @param chart
+   */
   public Plot(Chart chart) {
 
     this.chart = chart;
@@ -55,11 +59,11 @@ public class Plot implements IChartPart {
     bounds = new Rectangle();
 
     // calculate bounds
-    int xOffset = (int) (chart.axisPair.yAxis.getBounds().getX() + chart.axisPair.yAxis.getBounds().getWidth() + (chart.getStyleManager().isyAxisTicksVisible() ? (chart.getStyleManager()
+    int xOffset = (int) (chart.getAxisPair().yAxis.getBounds().getX() + chart.getAxisPair().yAxis.getBounds().getWidth() + (chart.getStyleManager().isyAxisTicksVisible() ? (chart.getStyleManager()
         .getPlotPadding() + 1) : 0));
-    int yOffset = (int) (chart.axisPair.yAxis.getBounds().getY());
-    int width = (int) chart.axisPair.xAxis.getBounds().getWidth();
-    int height = (int) chart.axisPair.yAxis.getBounds().getHeight();
+    int yOffset = (int) (chart.getAxisPair().yAxis.getBounds().getY());
+    int width = (int) chart.getAxisPair().xAxis.getBounds().getWidth();
+    int height = (int) chart.getAxisPair().yAxis.getBounds().getHeight();
     bounds = new Rectangle(xOffset, yOffset, width, height);
     // g.setColor(Color.green);
     // g.draw(bounds);
@@ -69,4 +73,9 @@ public class Plot implements IChartPart {
 
   }
 
+  @Override
+  public Chart getChart() {
+
+    return chart;
+  }
 }

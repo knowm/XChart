@@ -26,17 +26,16 @@ import java.util.Map;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
-import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.misc.SeriesColorMarkerLineStyleCycler;
 import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter
  */
-public class AxisPair implements IChartPart {
+public class AxisPair implements ChartPart {
 
   /** parent */
-  protected Chart chart;
+  private final Chart chart;
 
   public Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
 
@@ -121,14 +120,16 @@ public class AxisPair implements IChartPart {
     return series;
   }
 
+  // TODO remove
   protected Rectangle getChartTitleBounds() {
 
-    return chart.chartTitle.getBounds();
+    return chart.getChartTitle().getBounds();
   }
 
+  // TODO remove
   protected Rectangle getChartLegendBounds() {
 
-    return chart.chartLegend.getBounds();
+    return chart.getChartLegend().getBounds();
   }
 
   /**
@@ -166,6 +167,12 @@ public class AxisPair implements IChartPart {
   public Rectangle getBounds() {
 
     return null; // should never be called
+  }
+
+  @Override
+  public Chart getChart() {
+
+    return chart;
   }
 
 }

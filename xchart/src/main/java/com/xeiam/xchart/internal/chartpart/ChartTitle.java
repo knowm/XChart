@@ -21,21 +21,20 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.internal.interfaces.IChartPart;
 
 /**
  * Chart Title
  */
-public class ChartTitle implements IChartPart {
+public class ChartTitle implements ChartPart {
 
   /** parent */
   private final Chart chart;
 
-  /** the title text */
-  protected String text = ""; // default to ""
-
   /** the bounds */
   private Rectangle bounds;
+
+  /** the title text */
+  protected String text = ""; // default to ""
 
   /**
    * Constructor
@@ -91,5 +90,11 @@ public class ChartTitle implements IChartPart {
   public Rectangle getBounds() {
 
     return bounds;
+  }
+
+  @Override
+  public Chart getChart() {
+
+    return chart;
   }
 }

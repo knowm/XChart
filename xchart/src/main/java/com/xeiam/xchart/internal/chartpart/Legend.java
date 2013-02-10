@@ -22,14 +22,13 @@ import java.awt.font.TextLayout;
 import java.util.Map;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.internal.markers.Marker;
 import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter
  */
-public class Legend implements IChartPart {
+public class Legend implements ChartPart {
 
   /** parent */
   private final Chart chart;
@@ -55,7 +54,7 @@ public class Legend implements IChartPart {
 
     if (chart.getStyleManager().isLegendVisible()) {
 
-      Map<Integer, Series> seriesMap = chart.axisPair.seriesMap;
+      Map<Integer, Series> seriesMap = chart.getAxisPair().seriesMap;
 
       // determine legend text content max width
       int legendTextContentMaxWidth = 0;
@@ -86,7 +85,7 @@ public class Legend implements IChartPart {
       int legendBoxWidth = legendContentWidth + 2 * chart.getStyleManager().getLegendPadding();
       int legendBoxHeight = legendContentHeight + 2 * chart.getStyleManager().getLegendPadding();
       int xOffset = chart.width - legendBoxWidth - chart.getStyleManager().getChartPadding();
-      int yOffset = (int) ((chart.height - legendBoxHeight) / 2.0 + chart.chartTitle.getBounds().getY() + chart.chartTitle.getBounds().getHeight());
+      int yOffset = (int) ((chart.height - legendBoxHeight) / 2.0 + chart.getChartTitle().getBounds().getY() + chart.getChartTitle().getBounds().getHeight());
 
       g.setColor(chart.getStyleManager().getChartBordersColor());
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
@@ -129,6 +128,12 @@ public class Legend implements IChartPart {
   public Rectangle getBounds() {
 
     return bounds;
+  }
+
+  @Override
+  public Chart getChart() {
+
+    return chart;
   }
 
 }

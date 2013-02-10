@@ -44,10 +44,10 @@ public class Chart {
   private ValueFormatter valueFormatter = new ValueFormatter();
 
   // Chart Parts
-  public ChartTitle chartTitle = new ChartTitle(this);
-  public Legend chartLegend = new Legend(this);
-  public AxisPair axisPair = new AxisPair(this);
-  protected Plot plot = new Plot(this);
+  private ChartTitle chartTitle = new ChartTitle(this);
+  private Legend chartLegend = new Legend(this);
+  private AxisPair axisPair = new AxisPair(this);
+  private Plot plot = new Plot(this);
 
   /**
    * Constructor
@@ -282,6 +282,46 @@ public class Chart {
   public ValueFormatter getValueFormatter() {
 
     return valueFormatter;
+  }
+
+  /**
+   * for internal useage
+   * 
+   * @return
+   */
+  public ChartTitle getChartTitle() {
+
+    return chartTitle;
+  }
+
+  /**
+   * for internal useage
+   * 
+   * @return
+   */
+  public Legend getChartLegend() {
+
+    return chartLegend;
+  }
+
+  /**
+   * for internal useage
+   * 
+   * @return
+   */
+  public AxisPair getAxisPair() {
+
+    return axisPair;
+  }
+
+  /**
+   * for internal useage
+   * 
+   * @return
+   */
+  public Plot getPlot() {
+
+    return plot;
   }
 
 }

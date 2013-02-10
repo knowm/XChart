@@ -20,12 +20,12 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import com.xeiam.xchart.internal.interfaces.IChartPart;
+import com.xeiam.xchart.Chart;
 
 /**
  * @author timmolter
  */
-public class PlotSurface implements IChartPart {
+public class PlotSurface implements ChartPart {
 
   /** parent */
   private Plot plot;
@@ -56,22 +56,22 @@ public class PlotSurface implements IChartPart {
 
     // paint plot background
     Rectangle backgroundRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(plot.chart.getStyleManager().getPlotBackgroundColor());
+    g.setColor(getChart().getStyleManager().getPlotBackgroundColor());
     g.fill(backgroundRectangle);
     Rectangle borderRectangle = new Rectangle((int) bounds.getX() - 1, (int) bounds.getY(), (int) (bounds.getWidth()), (int) bounds.getHeight());
-    g.setColor(plot.chart.getStyleManager().getChartBordersColor());
+    g.setColor(getChart().getStyleManager().getChartBordersColor());
     g.draw(borderRectangle);
 
     // paint grid lines
-    if (plot.chart.getStyleManager().isPlotGridLinesVisible()) {
+    if (getChart().getStyleManager().isPlotGridLinesVisible()) {
 
       // horizontal
-      List<Integer> yAxisTickLocations = plot.chart.axisPair.yAxis.axisTick.tickLocations;
+      List<Integer> yAxisTickLocations = getChart().getAxisPair().yAxis.axisTick.tickLocations;
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         int tickLocation = yAxisTickLocations.get(i);
 
-        g.setColor(plot.chart.getStyleManager().getPlotGridLinesColor());
+        g.setColor(getChart().getStyleManager().getPlotGridLinesColor());
         g.setStroke(stroke);
         // System.out.println("bounds.getY()= " + bounds.getY());
         g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2),
@@ -79,17 +79,23 @@ public class PlotSurface implements IChartPart {
       }
 
       // vertical
-      List<Integer> xAxisTickLocations = plot.chart.axisPair.xAxis.axisTick.tickLocations;
+      List<Integer> xAxisTickLocations = getChart().getAxisPair().xAxis.axisTick.tickLocations;
       for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
         int tickLocation = xAxisTickLocations.get(i);
 
-        g.setColor(plot.chart.getStyleManager().getPlotGridLinesColor());
+        g.setColor(getChart().getStyleManager().getPlotGridLinesColor());
         g.setStroke(stroke);
 
         g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + 1), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
       }
     }
+  }
+
+  @Override
+  public Chart getChart() {
+
+    return plot.getChart();
   }
 
 }

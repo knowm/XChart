@@ -21,12 +21,12 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 
-import com.xeiam.xchart.internal.interfaces.IChartPart;
+import com.xeiam.xchart.Chart;
 
 /**
  * AxisTitle
  */
-public class AxisTitle implements IChartPart {
+public class AxisTitle implements ChartPart {
 
   /** parent */
   private final Axis axis;
@@ -58,14 +58,14 @@ public class AxisTitle implements IChartPart {
 
     bounds = new Rectangle();
 
-    g.setColor(axis.axisPair.chart.getStyleManager().getChartFontColor());
-    g.setFont(axis.axisPair.chart.getStyleManager().getAxisTitleFont());
+    g.setColor(getChart().getStyleManager().getChartFontColor());
+    g.setFont(getChart().getStyleManager().getAxisTitleFont());
 
     if (axis.direction == Axis.Direction.Y) {
-      if (axis.axisPair.chart.getStyleManager().isyAxisTitleVisible()) {
+      if (getChart().getStyleManager().isyAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout nonRotatedTextLayout = new TextLayout(text, axis.axisPair.chart.getStyleManager().getAxisTitleFont(), frc);
+        TextLayout nonRotatedTextLayout = new TextLayout(text, getChart().getStyleManager().getAxisTitleFont(), frc);
         Rectangle nonRotatedRectangle = nonRotatedTextLayout.getPixelBounds(null, 0, 0);
         // System.out.println(nonRotatedRectangle);
 
@@ -94,7 +94,7 @@ public class AxisTitle implements IChartPart {
 
         // bounds
         bounds = new Rectangle((int) (xOffset - nonRotatedRectangle.getHeight()), (int) (yOffset - nonRotatedRectangle.getWidth()), (int) nonRotatedRectangle.getHeight()
-            + axis.axisPair.chart.getStyleManager().getAxisTitlePadding(), (int) nonRotatedRectangle.getWidth());
+            + getChart().getStyleManager().getAxisTitlePadding(), (int) nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
       } else {
@@ -103,10 +103,10 @@ public class AxisTitle implements IChartPart {
 
     } else {
 
-      if (axis.axisPair.chart.getStyleManager().isxAxisTitleVisible()) {
+      if (getChart().getStyleManager().isxAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout textLayout = new TextLayout(text, axis.axisPair.chart.getStyleManager().getAxisTitleFont(), frc);
+        TextLayout textLayout = new TextLayout(text, getChart().getStyleManager().getAxisTitleFont(), frc);
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         // System.out.println(rectangle);
 
@@ -115,8 +115,8 @@ public class AxisTitle implements IChartPart {
 
         textLayout.draw(g, xOffset, (float) (yOffset - rectangle.getY()));
 
-        bounds = new Rectangle(xOffset, yOffset - axis.axisPair.chart.getStyleManager().getAxisTitlePadding(), (int) rectangle.getWidth(), (int) rectangle.getHeight()
-            + axis.axisPair.chart.getStyleManager().getAxisTitlePadding());
+        bounds = new Rectangle(xOffset, yOffset - getChart().getStyleManager().getAxisTitlePadding(), (int) rectangle.getWidth(), (int) rectangle.getHeight()
+            + getChart().getStyleManager().getAxisTitlePadding());
         // g.setColor(Color.blue);
         // g.draw(bounds);
 
@@ -127,5 +127,11 @@ public class AxisTitle implements IChartPart {
 
       }
     }
+  }
+
+  @Override
+  public Chart getChart() {
+
+    return axis.getChart();
   }
 }

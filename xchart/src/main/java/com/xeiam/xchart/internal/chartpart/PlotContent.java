@@ -25,14 +25,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
-import com.xeiam.xchart.internal.interfaces.IChartPart;
 import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter
  */
-public class PlotContent implements IChartPart {
+public class PlotContent implements ChartPart {
 
   /** parent */
   private Plot plot;
@@ -60,7 +60,7 @@ public class PlotContent implements IChartPart {
 
     Rectangle bounds = plot.getBounds();
 
-    Map<Integer, Series> seriesMap = plot.chart.axisPair.seriesMap;
+    Map<Integer, Series> seriesMap = getChart().getAxisPair().seriesMap;
     for (Integer seriesId : seriesMap.keySet()) {
 
       Series series = seriesMap.get(seriesId);
@@ -75,11 +75,11 @@ public class PlotContent implements IChartPart {
 
       // data points
       Collection<?> xData = series.xData;
-      BigDecimal xMin = plot.chart.axisPair.xAxis.min;
-      BigDecimal xMax = plot.chart.axisPair.xAxis.max;
+      BigDecimal xMin = getChart().getAxisPair().xAxis.min;
+      BigDecimal xMax = getChart().getAxisPair().xAxis.max;
       Collection<Number> yData = series.yData;
-      BigDecimal yMin = plot.chart.axisPair.yAxis.min;
-      BigDecimal yMax = plot.chart.axisPair.yAxis.max;
+      BigDecimal yMin = getChart().getAxisPair().yAxis.min;
+      BigDecimal yMax = getChart().getAxisPair().yAxis.max;
       Collection<Number> errorBars = series.errorBars;
 
       int previousX = Integer.MIN_VALUE;
@@ -94,10 +94,10 @@ public class PlotContent implements IChartPart {
       while (xItr.hasNext()) {
 
         BigDecimal x = null;
-        if (plot.chart.axisPair.xAxis.axisType == AxisType.NUMBER) {
+        if (getChart().getAxisPair().xAxis.axisType == AxisType.NUMBER) {
           x = new BigDecimal(((Number) xItr.next()).doubleValue());
         }
-        if (plot.chart.axisPair.xAxis.axisType == AxisType.DATE) {
+        if (getChart().getAxisPair().xAxis.axisType == AxisType.DATE) {
           x = new BigDecimal(((Date) xItr.next()).getTime());
           // System.out.println(x);
         }
@@ -148,7 +148,7 @@ public class PlotContent implements IChartPart {
 
         // paint errorbar
         if (errorBars != null) {
-          g.setColor(plot.chart.getStyleManager().getErrorBarsColor());
+          g.setColor(getChart().getStyleManager().getErrorBarsColor());
           g.setStroke(errorBarStroke);
           int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
           int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
@@ -160,6 +160,12 @@ public class PlotContent implements IChartPart {
 
     }
 
+  }
+
+  @Override
+  public Chart getChart() {
+
+    return plot.getChart();
   }
 
 }

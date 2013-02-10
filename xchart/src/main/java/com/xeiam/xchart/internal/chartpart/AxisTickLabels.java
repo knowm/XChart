@@ -20,12 +20,12 @@ import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 
-import com.xeiam.xchart.internal.interfaces.IChartPart;
+import com.xeiam.xchart.Chart;
 
 /**
  * Axis tick labels
  */
-public class AxisTickLabels implements IChartPart {
+public class AxisTickLabels implements ChartPart {
 
   /** parent */
   private final AxisTick axisTick;
@@ -53,9 +53,9 @@ public class AxisTickLabels implements IChartPart {
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
-    g.setFont(axisTick.axis.axisPair.chart.getStyleManager().getAxisTicksFont());
+    g.setFont(getChart().getStyleManager().getAxisTicksFont());
 
-    g.setColor(axisTick.axis.axisPair.chart.getStyleManager().getChartFontColor());
+    g.setColor(getChart().getStyleManager().getChartFontColor());
 
     if (axisTick.axis.direction == Axis.Direction.Y) { // Y-Axis
 
@@ -70,7 +70,7 @@ public class AxisTickLabels implements IChartPart {
 
         FontRenderContext frc = g.getFontRenderContext();
         // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
-        TextLayout layout = new TextLayout(tickLabel, axisTick.axis.axisPair.chart.getStyleManager().getAxisTicksFont(), frc);
+        TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTicksFont(), frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
         layout.draw(g, xOffset, (int) (yOffset + axisTick.axis.getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
@@ -95,7 +95,7 @@ public class AxisTickLabels implements IChartPart {
         int tickLocation = axisTick.tickLocations.get(i);
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout layout = new TextLayout(tickLabel, axisTick.axis.axisPair.chart.getStyleManager().getAxisTicksFont(), frc);
+        TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTicksFont(), frc);
         Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
         layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
 
@@ -111,5 +111,11 @@ public class AxisTickLabels implements IChartPart {
 
     }
 
+  }
+
+  @Override
+  public Chart getChart() {
+
+    return axisTick.getChart();
   }
 }
