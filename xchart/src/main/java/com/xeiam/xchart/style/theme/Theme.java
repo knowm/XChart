@@ -25,6 +25,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
+import com.xeiam.xchart.style.StyleManager.LegendPosition;
+
 /**
  * @author timmolter
  */
@@ -61,6 +63,8 @@ public interface Theme {
   public Color getLegendBorderColor();
 
   public int getLegendPadding();
+
+  public LegendPosition getLegendPosition();
 
   // Chart Axes ///////////////////////////////
 

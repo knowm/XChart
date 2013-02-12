@@ -52,7 +52,7 @@ public class LineChart03 implements ExampleChart {
       }
 
       // Customize Chart
-      chart.setChartTitle("Example3");
+      chart.setChartTitle("LineChart03");
       chart.setXAxisTitle("X");
       chart.setYAxisTitle("Y");
 

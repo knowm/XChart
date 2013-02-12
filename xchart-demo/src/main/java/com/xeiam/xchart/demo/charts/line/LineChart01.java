@@ -83,7 +83,7 @@ public class LineChart01 implements ExampleChart {
     Chart chart = new LineChart(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("Example1");
+    chart.setChartTitle("LineChart01");
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendVisible(false);
 

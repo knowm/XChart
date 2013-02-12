@@ -38,7 +38,7 @@ public class LineChart06 implements ExampleChart {
     Chart chart = new LineChart(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("Example6");
+    chart.setChartTitle("LineChart06");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
 

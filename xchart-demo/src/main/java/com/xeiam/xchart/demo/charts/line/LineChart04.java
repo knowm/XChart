@@ -27,6 +27,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
+import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * Date Axis
@@ -64,10 +65,11 @@ public class LineChart04 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("Example4");
+    chart.setChartTitle("LineChart04");
     chart.setXAxisTitle("time of day");
     chart.setYAxisTitle("gigawatts");
     chart.getValueFormatter().setTimezone(TimeZone.getTimeZone("UTC"));
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
 
     Series series = chart.addDateSeries("value", xData, yData);
 

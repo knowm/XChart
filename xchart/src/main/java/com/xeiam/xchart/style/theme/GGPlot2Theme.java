@@ -27,6 +27,7 @@ import java.awt.Font;
 import java.awt.Stroke;
 
 import com.xeiam.xchart.style.ChartColor;
+import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
@@ -115,6 +116,12 @@ public class GGPlot2Theme implements Theme {
   public int getLegendPadding() {
 
     return 10;
+  }
+
+  @Override
+  public LegendPosition getLegendPosition() {
+
+    return LegendPosition.OutsideW;
   }
 
   // Chart Axes ///////////////////////////////

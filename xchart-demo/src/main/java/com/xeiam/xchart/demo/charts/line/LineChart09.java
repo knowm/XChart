@@ -70,7 +70,7 @@ public class LineChart09 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("Sample Chart With Customization");
+    chart.setChartTitle("LineChart09");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.getStyleManager().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));

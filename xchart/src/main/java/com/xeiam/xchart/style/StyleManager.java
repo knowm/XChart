@@ -33,6 +33,10 @@ import com.xeiam.xchart.style.theme.XChartTheme;
  */
 public class StyleManager {
 
+  public enum LegendPosition {
+    OutsideW, InsideNW, InsideNE, InsideSE, InsideSW
+  }
+
   /** the default Theme */
   private Theme theme = new XChartTheme();
 
@@ -54,6 +58,7 @@ public class StyleManager {
   private Color legendBorderColor;
   private Font legendFont;
   private int legendPadding;
+  private LegendPosition legendPosition;
 
   // Chart Axes ///////////////////////////////
   private boolean xAxisTitleVisible;
@@ -110,6 +115,7 @@ public class StyleManager {
     legendBorderColor = theme.getLegendBorderColor();
     legendFont = theme.getLegendFont();
     legendPadding = theme.getLegendPadding();
+    legendPosition = theme.getLegendPosition();
 
     // axes
     xAxisTitleVisible = theme.isXAxisTitleVisible();
@@ -349,6 +355,21 @@ public class StyleManager {
   public int getLegendPadding() {
 
     return legendPadding;
+  }
+
+  /**
+   * sets the legend position
+   * 
+   * @param legendPosition
+   */
+  public void setLegendPosition(LegendPosition legendPosition) {
+
+    this.legendPosition = legendPosition;
+  }
+
+  public LegendPosition getLegendPosition() {
+
+    return legendPosition;
   }
 
   // Chart Axes ///////////////////////////////

@@ -22,6 +22,7 @@ import java.awt.font.TextLayout;
 import java.math.BigDecimal;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * Axis
@@ -195,8 +196,13 @@ public class Axis implements ChartPart {
       int xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChart().getStyleManager().isyAxisTicksVisible() ? getChart().getStyleManager().getPlotPadding() : 0) + getChart()
           .getStyleManager().getChartPadding());
       int yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight());
-      int width = (int) (getChart().getWidth() - axisPair.getyAxis().getBounds().getWidth() - getChart().getChartLegend().getBounds().getWidth() - (getChart().getStyleManager().isLegendVisible() ? 3
-          : 2)
+
+      int chartLegendWidth = 0;
+      if (getChart().getStyleManager().getLegendPosition() == LegendPosition.OutsideW) {
+        chartLegendWidth = getChart().getChartLegend().getSizeHint()[0];
+      }
+
+      int width = (int) (getChart().getWidth() - axisPair.getyAxis().getBounds().getWidth() - chartLegendWidth - (getChart().getStyleManager().isLegendVisible() ? 3 : 2)
           * getChart().getStyleManager().getChartPadding());
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);

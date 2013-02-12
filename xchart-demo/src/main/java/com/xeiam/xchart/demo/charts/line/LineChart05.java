@@ -47,7 +47,7 @@ public class LineChart05 implements ExampleChart {
     // new LineChart(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("Example5");
+    chart.setChartTitle("LineChart05");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
 

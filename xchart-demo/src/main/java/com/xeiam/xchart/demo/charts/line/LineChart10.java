@@ -42,7 +42,7 @@ public class LineChart10 implements ExampleChart {
     Chart chart = new LineChart(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("Example10");
+    chart.setChartTitle("LineChart10");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.getStyleManager().setLegendVisible(false);

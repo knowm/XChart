@@ -42,7 +42,7 @@ public class LineChart07 implements ExampleChart {
 
     // Create Chart
     Chart chart = new LineChart(800, 600);
-    chart.setChartTitle("Example7");
+    chart.setChartTitle("LineChart07");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.addSeries("y(x)", xData, yData);

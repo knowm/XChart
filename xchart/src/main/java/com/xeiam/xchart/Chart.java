@@ -103,10 +103,10 @@ public abstract class Chart {
     g.setColor(styleManager.getChartBackgroundColor());
     g.fillRect(0, 0, width, height);
 
-    chartLegend.paint(g);
     axisPair.paint(g);
     plot.paint(g);
     chartTitle.paint(g);
+    chartLegend.paint(g);
 
     g.dispose();
   }

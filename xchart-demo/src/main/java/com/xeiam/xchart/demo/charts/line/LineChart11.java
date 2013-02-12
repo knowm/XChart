@@ -35,7 +35,7 @@ public class LineChart11 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).title("My Title").xAxisTitle("X").yAxisTitle("Y").build();
+    Chart chart = new ChartBuilder().width(800).height(600).title("LineChart11").xAxisTitle("X").yAxisTitle("Y").build();
     chart.addSeries("x", new double[] { 1, 2, 5, 7 }, new double[] { -3, 6, 9, 0 });
 
     return chart;

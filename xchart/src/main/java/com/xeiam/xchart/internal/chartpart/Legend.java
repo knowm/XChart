@@ -30,6 +30,8 @@ import com.xeiam.xchart.style.Series;
  */
 public class Legend implements ChartPart {
 
+  private static final int LEGEND_MARGIN = 6;
+
   /** parent */
   private final Chart chart;
 
@@ -46,11 +48,12 @@ public class Legend implements ChartPart {
     this.chart = chart;
   }
 
-  @Override
-  public void paint(Graphics2D g) {
-
-    bounds = new Rectangle();
-    g.setFont(chart.getStyleManager().getLegendFont());
+  /**
+   * get the width of the chart legend
+   * 
+   * @return
+   */
+  protected int[] getSizeHint() {
 
     if (chart.getStyleManager().isLegendVisible()) {
 
@@ -84,8 +87,54 @@ public class Legend implements ChartPart {
       // Draw Legend Box
       int legendBoxWidth = legendContentWidth + 2 * chart.getStyleManager().getLegendPadding();
       int legendBoxHeight = legendContentHeight + 2 * chart.getStyleManager().getLegendPadding();
-      int xOffset = chart.getWidth() - legendBoxWidth - chart.getStyleManager().getChartPadding();
-      int yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getChartTitle().getSizeHint());
+      return new int[] { legendBoxWidth, legendBoxHeight, legendTextContentMaxHeight };
+    } else {
+      return new int[] { 0, 0, 0 };
+    }
+  }
+
+  @Override
+  public void paint(Graphics2D g) {
+
+    bounds = new Rectangle();
+    g.setFont(chart.getStyleManager().getLegendFont());
+
+    if (chart.getStyleManager().isLegendVisible()) {
+
+      Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
+
+      int legendBoxWidth = getSizeHint()[0];
+      int legendBoxHeight = getSizeHint()[1];
+      int legendTextContentMaxHeight = getSizeHint()[2];
+
+      // legend draw position
+      int xOffset = 0;
+      int yOffset = 0;
+      switch (chart.getStyleManager().getLegendPosition()) {
+      case OutsideW:
+        xOffset = chart.getWidth() - legendBoxWidth - chart.getStyleManager().getChartPadding();
+        yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getChartTitle().getSizeHint());
+        break;
+      case InsideNW:
+        xOffset = (int) (chart.getPlot().getBounds().getX() + LEGEND_MARGIN);
+        yOffset = (int) (chart.getPlot().getBounds().getY() + LEGEND_MARGIN);
+        break;
+      case InsideNE:
+        xOffset = (int) (chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - legendBoxWidth - LEGEND_MARGIN);
+        yOffset = (int) (chart.getPlot().getBounds().getY() + LEGEND_MARGIN);
+        break;
+      case InsideSE:
+        xOffset = (int) (chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - legendBoxWidth - LEGEND_MARGIN);
+        yOffset = (int) (chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - legendBoxHeight - LEGEND_MARGIN);
+        break;
+      case InsideSW:
+        xOffset = (int) (chart.getPlot().getBounds().getX() + LEGEND_MARGIN);
+        yOffset = (int) (chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - legendBoxHeight - LEGEND_MARGIN);
+        break;
+
+      default:
+        break;
+      }
 
       g.setColor(chart.getStyleManager().getLegendBorderColor());
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
