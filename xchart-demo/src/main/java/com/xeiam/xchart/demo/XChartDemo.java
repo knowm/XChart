@@ -29,6 +29,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.xeiam.xchart.XChartPanel;
+import com.xeiam.xchart.demo.charts.area.AreaChart01;
 import com.xeiam.xchart.demo.charts.line.LineChart01;
 import com.xeiam.xchart.demo.charts.line.LineChart02;
 import com.xeiam.xchart.demo.charts.line.LineChart03;
@@ -167,7 +168,14 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category = new DefaultMutableTreeNode("Scatter Charts");
     top.add(category);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart01 - Gaussian Blob Scatter Plot", new ScatterChart01().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart01 - Gaussian Blob", new ScatterChart01().getChart()));
+    category.add(chart);
+
+    // Second category
+    category = new DefaultMutableTreeNode("Area Charts");
+    top.add(category);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("AreaChart01 - 3-Series", new AreaChart01().getChart()));
     category.add(chart);
 
   }

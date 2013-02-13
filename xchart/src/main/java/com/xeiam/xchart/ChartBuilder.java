@@ -31,7 +31,7 @@ public class ChartBuilder {
 
   public enum ChartType {
 
-    Line, Scatter
+    Line, Scatter, Area
   }
 
   protected ChartType chartType = ChartType.Line;
@@ -96,6 +96,8 @@ public class ChartBuilder {
       return new LineChart(this);
     case Scatter:
       return new ScatterChart(this);
+    case Area:
+      return new AreaChart(this);
     default:
       return new LineChart(this);
     }

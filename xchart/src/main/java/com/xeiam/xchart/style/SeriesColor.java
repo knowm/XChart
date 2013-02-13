@@ -25,40 +25,40 @@ import java.awt.Color;
 public enum SeriesColor {
 
   /** BLUE */
-  BLUE(0, new Color(0, 55, 255)),
+  BLUE(0, new Color(0, 55, 255, 180)),
 
   /** ORANGE */
-  ORANGE(1, new Color(255, 172, 0)),
+  ORANGE(1, new Color(255, 172, 0, 180)),
 
   /** PURPLE */
-  PURPLE(2, new Color(128, 0, 255)),
+  PURPLE(2, new Color(128, 0, 255, 180)),
 
   /** GREEN */
-  GREEN(3, new Color(0, 205, 0)),
+  GREEN(3, new Color(0, 205, 0, 180)),
 
   /** RED */
-  RED(4, new Color(205, 0, 0)),
+  RED(4, new Color(205, 0, 0, 180)),
 
   /** YELLOW */
-  YELLOW(5, new Color(255, 215, 0)),
+  YELLOW(5, new Color(255, 215, 0, 180)),
 
   /** MAGENTA */
-  MAGENTA(6, new Color(255, 0, 255)),
+  MAGENTA(6, new Color(255, 0, 255, 180)),
 
   /** PINK */
-  PINK(7, new Color(255, 166, 201)),
+  PINK(7, new Color(255, 166, 201, 180)),
 
   /** LIGHT_GREY */
-  LIGHT_GREY(8, new Color(207, 207, 207)),
+  LIGHT_GREY(8, new Color(207, 207, 207, 180)),
 
   /** CYAN */
-  CYAN(9, new Color(0, 255, 255)),
+  CYAN(9, new Color(0, 255, 255, 180)),
 
   /** BROWN */
-  BROWN(10, new Color(102, 56, 10)),
+  BROWN(10, new Color(102, 56, 10, 180)),
 
   /** BLACK */
-  BLACK(11, new Color(0, 0, 0));
+  BLACK(11, new Color(0, 0, 0, 180));
 
   /** The index */
   private int index;

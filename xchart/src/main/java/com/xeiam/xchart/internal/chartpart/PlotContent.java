@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.xeiam.xchart.AreaChart;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ScatterChart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
@@ -60,6 +61,7 @@ public class PlotContent implements ChartPart {
   public void paint(Graphics2D g) {
 
     boolean isScatterChart = getChart() instanceof ScatterChart;
+    boolean isAreaChart = getChart() instanceof AreaChart;
 
     Rectangle bounds = plot.getBounds();
 
@@ -112,23 +114,21 @@ public class PlotContent implements ChartPart {
           eb = ebItr.next().doubleValue();
         }
 
-        // int xTransform = (int) (xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace));
         int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
-        // int yTransform = (int) (bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace));
-        int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+        int yBottomOfArea = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
 
-        // a check if all y data are the exact same values
+        // a check if all x data are the exact same values
         if (Math.abs(xMax.subtract(xMin).doubleValue()) / 5 == 0.0) {
           xTransform = (int) (bounds.getWidth() / 2.0);
         }
 
         // a check if all y data are the exact same values
         if (Math.abs(yMax.subtract(yMin).doubleValue()) / 5 == 0.0) {
-          yTransform = (int) (bounds.getHeight() / 2.0);
+          yBottomOfArea = (int) (bounds.getHeight() / 2.0);
         }
 
         int xOffset = (int) (bounds.getX() + xTransform - 1);
-        int yOffset = (int) (bounds.getY() + yTransform);
+        int yOffset = (int) (bounds.getY() + yBottomOfArea);
         // System.out.println(yOffset);
         // System.out.println(yTransform);
 
@@ -139,9 +139,20 @@ public class PlotContent implements ChartPart {
             g.setStroke(series.getStroke());
             g.drawLine(previousX, previousY, xOffset, yOffset);
           }
-          previousX = xOffset;
-          previousY = yOffset;
+
         }
+
+        // paint area
+        if (isAreaChart) {
+          if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+            g.setColor(series.getStrokeColor());
+            yBottomOfArea = (int) (bounds.getY() + bounds.getHeight() - yTopMargin + 1);
+            g.fillPolygon(new int[] { previousX, xOffset, xOffset, previousX }, new int[] { previousY, yOffset, yBottomOfArea, yBottomOfArea }, 4);
+          }
+        }
+
+        previousX = xOffset;
+        previousY = yOffset;
 
         // paint marker
         if (series.getMarker() != null) {

@@ -31,6 +31,11 @@ import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * Date Axis
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Date-tyoe X Axis Data
+ * <li>Placing legend inside northwest corner of plot area
  */
 public class LineChart04 implements ExampleChart {
 

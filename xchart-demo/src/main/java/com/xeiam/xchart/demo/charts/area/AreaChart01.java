@@ -13,27 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.scatter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+package com.xeiam.xchart.demo.charts.area;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.ScatterChart;
+import com.xeiam.xchart.ChartBuilder;
+import com.xeiam.xchart.ChartBuilder.ChartType;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.line.ExampleChart;
+import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
- * Gaussian Blob
+ * 3-Series
  * 
  * @author timmolter
  */
-public class ScatterChart01 implements ExampleChart {
+public class AreaChart01 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new ScatterChart01();
+    ExampleChart exampleChart = new AreaChart01();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -41,24 +39,15 @@ public class ScatterChart01 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    List<Number> xData = new ArrayList<Number>();
-    List<Number> yData = new ArrayList<Number>();
-    Random random = new Random();
-    int size = 1000;
-    for (int i = 0; i < size; i++) {
-      xData.add(random.nextGaussian());
-      yData.add(random.nextGaussian());
-    }
-
     // Create Chart
-    Chart chart = new ScatterChart(800, 600);
+    Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title("LineChart11").xAxisTitle("X").yAxisTitle("Y").build();
+    chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });
+    chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
+    chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setLegendVisible(false);
-
-    // Series
-    chart.addSeries("Gaussian Blob", xData, yData);
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
 
     return chart;
   }

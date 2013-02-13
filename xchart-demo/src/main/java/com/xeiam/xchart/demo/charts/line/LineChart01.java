@@ -29,9 +29,8 @@ import com.xeiam.xchart.style.SeriesMarker;
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>Series data hardcoded, perhaps copied from elsewhere</li>
- * <li>LineChart without series markers</li>
- * </ul>
+ * <li>Series data hardcoded, perhaps copied from elsewhere
+ * <li>LineChart without series markers
  * 
  * @author timmolter
  */
