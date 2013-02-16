@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.internal.chartpart.gridstep;
+package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -30,11 +30,11 @@ import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.style.StyleManager;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimla axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
  * 
  * @author timmolter
  */
-public class DecimalGridStep implements GridStep {
+public class LogarithmicAxisTickCalculator implements AxisTickCalculator {
 
   /** the default tick mark step hint for x axis */
   private static final int DEFAULT_TICK_MARK_STEP_HINT_X = 74;
@@ -65,8 +65,9 @@ public class DecimalGridStep implements GridStep {
    * @param workingSpace
    * @param minValue
    * @param maxValue
+   * @param styleManager
    */
-  public DecimalGridStep(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public LogarithmicAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
@@ -74,10 +75,10 @@ public class DecimalGridStep implements GridStep {
     this.maxValue = maxValue;
     this.styleManager = styleManager;
 
-    go();
+    calculate();
   }
 
-  private void go() {
+  private void calculate() {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {

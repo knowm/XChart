@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.internal.chartpart.gridstep;
+package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;

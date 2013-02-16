@@ -30,8 +30,8 @@ import java.util.TimeZone;
 
 import org.junit.Test;
 
-import com.xeiam.xchart.internal.chartpart.gridstep.DateFormatter;
-import com.xeiam.xchart.internal.chartpart.gridstep.DecimalFormatter;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateFormatter;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.DecimalFormatter;
 
 /**
  * @author timmolter

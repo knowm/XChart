@@ -25,8 +25,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
-import com.xeiam.xchart.internal.chartpart.gridstep.DateFormatter;
-import com.xeiam.xchart.internal.chartpart.gridstep.DecimalFormatter;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateFormatter;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.DecimalFormatter;
 import com.xeiam.xchart.style.theme.Theme;
 import com.xeiam.xchart.style.theme.XChartTheme;
 

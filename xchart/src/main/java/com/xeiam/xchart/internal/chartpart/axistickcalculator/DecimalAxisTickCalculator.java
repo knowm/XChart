@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.internal.chartpart.gridstep;
+package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -30,9 +30,11 @@ import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.style.StyleManager;
 
 /**
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
+ * 
  * @author timmolter
  */
-public class DateGridStep implements GridStep {
+public class DecimalAxisTickCalculator implements AxisTickCalculator {
 
   /** the default tick mark step hint for x axis */
   private static final int DEFAULT_TICK_MARK_STEP_HINT_X = 74;
@@ -63,8 +65,9 @@ public class DateGridStep implements GridStep {
    * @param workingSpace
    * @param minValue
    * @param maxValue
+   * @param styleManager
    */
-  public DateGridStep(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public DecimalAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
@@ -72,14 +75,14 @@ public class DateGridStep implements GridStep {
     this.maxValue = maxValue;
     this.styleManager = styleManager;
 
-    go();
+    calculate();
   }
 
-  private void go() {
+  private void calculate() {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(styleManager.getDateFormatter().formatDateValue(maxValue, maxValue, maxValue));
+      tickLabels.add(styleManager.getDecimalFormatter().formatNumber(maxValue));
       tickLocations.add((int) (workingSpace / 2.0));
       return;
     }
@@ -98,7 +101,7 @@ public class DateGridStep implements GridStep {
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
 
-      tickLabels.add(styleManager.getDateFormatter().formatDateValue(tickPosition, minValue, maxValue));
+      tickLabels.add(styleManager.getDecimalFormatter().formatNumber(tickPosition));
       // here we convert tickPosition finally to plot space, i.e. pixels
       int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
       tickLocations.add(tickLabelPosition);
