@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
 
@@ -60,7 +59,7 @@ public class NoBug {
   public static void main(String[] args) {
 
     for (int i = 0; i < 4; i++) {
-      Chart chart = new LineChart(700, 500);
+      Chart chart = new Chart(700, 500);
       plot(chart, i);
       new SwingWrapper(chart).displayChart();
     }

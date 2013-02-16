@@ -33,7 +33,13 @@ import com.xeiam.xchart.style.theme.XChartTheme;
  */
 public class StyleManager {
 
+  public enum ChartType {
+
+    Line, Scatter, Area, Bar
+  }
+
   public enum LegendPosition {
+
     OutsideW, InsideNW, InsideNE, InsideSE, InsideSW
   }
 
@@ -41,6 +47,7 @@ public class StyleManager {
   private Theme theme = new XChartTheme();
 
   // Chart Style ///////////////////////////////
+  private ChartType chartType;
   private Color chartBackgroundColor;
   public Color chartFontColor;
   private int chartPadding;
@@ -98,6 +105,7 @@ public class StyleManager {
   private void setAllStyles() {
 
     // Chart Style ///////////////////////////////
+    chartType = ChartType.Line;
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
     chartPadding = theme.getChartPadding();
@@ -157,6 +165,21 @@ public class StyleManager {
   }
 
   // Chart Style ///////////////////////////////
+
+  /**
+   * sets the Chart Type
+   * 
+   * @param chartType
+   */
+  public void setChartType(ChartType chartType) {
+
+    this.chartType = chartType;
+  }
+
+  public ChartType getChartType() {
+
+    return chartType;
+  }
 
   /**
    * Set the chart background color - the part around the edge of the chart

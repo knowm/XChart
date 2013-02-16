@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
@@ -38,7 +37,7 @@ public class LineChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new LineChart(800, 600);
+    Chart chart = new Chart(800, 600);
 
     for (int i = 1; i <= 14; i++) {
 

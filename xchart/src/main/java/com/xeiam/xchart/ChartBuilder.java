@@ -21,6 +21,7 @@
  */
 package com.xeiam.xchart;
 
+import com.xeiam.xchart.style.StyleManager.ChartType;
 import com.xeiam.xchart.style.theme.Theme;
 import com.xeiam.xchart.style.theme.XChartTheme;
 
@@ -28,11 +29,6 @@ import com.xeiam.xchart.style.theme.XChartTheme;
  * @author timmolter
  */
 public class ChartBuilder {
-
-  public enum ChartType {
-
-    Line, Scatter, Area
-  }
 
   protected ChartType chartType = ChartType.Line;
   protected int width = 800;
@@ -91,16 +87,7 @@ public class ChartBuilder {
    */
   public Chart build() {
 
-    switch (chartType) {
-    case Line:
-      return new LineChart(this);
-    case Scatter:
-      return new ScatterChart(this);
-    case Area:
-      return new AreaChart(this);
-    default:
-      return new LineChart(this);
-    }
+    return new Chart(this);
 
   }
 

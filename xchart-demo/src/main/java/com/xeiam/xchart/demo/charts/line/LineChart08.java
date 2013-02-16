@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.SeriesColor;
@@ -53,7 +52,7 @@ public class LineChart08 implements ExampleChart {
     }
 
     // Create Chart
-    Chart chart = new LineChart(800, 600);
+    Chart chart = new Chart(800, 600);
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);

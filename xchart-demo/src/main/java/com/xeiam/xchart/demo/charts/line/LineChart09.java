@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.ChartColor;
 import com.xeiam.xchart.style.Series;
@@ -50,7 +49,7 @@ public class LineChart09 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new LineChart(800, 600);
+    Chart chart = new Chart(800, 600);
 
     // generates linear data
     Collection<Date> xData = new ArrayList<Date>();

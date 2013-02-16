@@ -17,9 +17,9 @@ package com.xeiam.xchart.demo.charts.area;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
-import com.xeiam.xchart.ChartBuilder.ChartType;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.line.ExampleChart;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
@@ -40,7 +40,7 @@ public class AreaChart01 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title("LineChart11").xAxisTitle("X").yAxisTitle("Y").build();
+    Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title("AreaChart01").xAxisTitle("X").yAxisTitle("Y").build();
     chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });
     chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
     chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });

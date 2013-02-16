@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.ScatterChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.line.ExampleChart;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * Gaussian Blob
@@ -51,7 +51,8 @@ public class ScatterChart01 implements ExampleChart {
     }
 
     // Create Chart
-    Chart chart = new ScatterChart(800, 600);
+    Chart chart = new Chart(800, 600);
+    chart.getStyleManager().setChartType(ChartType.Scatter);
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);

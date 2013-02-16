@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.SeriesMarker;
@@ -79,7 +78,7 @@ public class LineChart01 implements ExampleChart {
     Collection<Number> yData = Arrays.asList(yDataArray);
 
     // Create Chart
-    Chart chart = new LineChart(800, 600);
+    Chart chart = new Chart(800, 600);
 
     // Customize Chart
     chart.setChartTitle("LineChart01");

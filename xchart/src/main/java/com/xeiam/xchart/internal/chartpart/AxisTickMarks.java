@@ -87,6 +87,7 @@ public class AxisTickMarks implements ChartPart {
     } else { // X-Axis
 
       int xOffset = (int) (axisTick.getAxis().getPaintZone().getX());
+      // int yOffset = (int) (axisTick.getAxisTickLabels().getBounds().getY() - getChart().getStyleManager().getAxisTickPadding());
       int yOffset = (int) (axisTick.getAxisTickLabels().getBounds().getY() - getChart().getStyleManager().getAxisTickPadding());
 
       // tick marks

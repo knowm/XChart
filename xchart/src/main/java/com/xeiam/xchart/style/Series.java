@@ -120,10 +120,10 @@ public class Series {
 
       BigDecimal bigDecimal = null;
 
-      if (axisType == AxisType.NUMBER) {
+      if (axisType == AxisType.Number) {
         bigDecimal = new BigDecimal(((Number) dataPoint).toString());
 
-      } else if (axisType == AxisType.DATE) {
+      } else if (axisType == AxisType.Date) {
         Date date = (Date) dataPoint;
         bigDecimal = new BigDecimal(date.getTime());
       }

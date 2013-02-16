@@ -19,34 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart;
+package com.xeiam.xchart.unit;
+
+import java.math.BigDecimal;
+
+import org.junit.Test;
+
+import com.xeiam.xchart.internal.chartpart.Axis.Direction;
+import com.xeiam.xchart.internal.chartpart.gridstep.DecimalGridStep;
 
 /**
- * A Scatter Chart is a contains series with no lines drawn between the points
- * 
  * @author timmolter
  */
-public class LineChart extends Chart {
+public class DecimalGridStepTest {
 
-  /**
-   * Constructor
-   * 
-   * @param width
-   * @param height
-   */
-  public LineChart(int width, int height) {
+  @Test
+  public void testDateOneMinuteTimespan() {
 
-    super(width, height);
+    DecimalGridStep decimalGridStep = new DecimalGridStep();
+    BigDecimal gridStep = decimalGridStep.getGridStepForDecimal(Direction.X, 30, 600);
+    System.out.println("gridStep= " + gridStep);
+    BigDecimal first = decimalGridStep.getFirstPosition(new BigDecimal(-15), gridStep);
+    System.out.println("first= " + first);
 
   }
 
-  /**
-   * Constructor
-   * 
-   * @param chartBuilder
-   */
-  public LineChart(ChartBuilder chartBuilder) {
-
-    super(chartBuilder);
-  }
 }

@@ -33,7 +33,7 @@ public class Axis implements ChartPart {
 
   public enum AxisType {
 
-    NUMBER, DATE;
+    Number, Date, Logarithmic;
   }
 
   /** parent */
@@ -66,7 +66,7 @@ public class Axis implements ChartPart {
   private Rectangle paintZone;
 
   /** An axis direction */
-  protected enum Direction {
+  public enum Direction {
 
     /** the constant to represent X axis */
     X,

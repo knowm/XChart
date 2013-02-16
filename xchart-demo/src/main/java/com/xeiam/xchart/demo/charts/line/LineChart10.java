@@ -16,7 +16,6 @@
 package com.xeiam.xchart.demo.charts.line;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.LineChart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.SeriesColor;
@@ -39,7 +38,7 @@ public class LineChart10 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new LineChart(800, 600);
+    Chart chart = new Chart(800, 600);
 
     // Customize Chart
     chart.setChartTitle("LineChart10");

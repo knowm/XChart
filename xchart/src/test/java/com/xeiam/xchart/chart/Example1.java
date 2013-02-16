@@ -17,7 +17,6 @@ package com.xeiam.xchart.chart;
 
 import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.LineChart;
 
 /**
  * Creates a simple Chart and saves it as a PNG and JPEG image file.
@@ -31,7 +30,7 @@ public class Example1 {
     double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
     // Create Chart
-    Chart chart = new LineChart(500, 400);
+    Chart chart = new Chart(500, 400);
     chart.setChartTitle("Sample Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");

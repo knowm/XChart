@@ -19,32 +19,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart;
+package com.xeiam.xchart.demo.charts.bar;
+
+import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.ChartBuilder;
+import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.demo.charts.line.ExampleChart;
+import com.xeiam.xchart.style.StyleManager.ChartType;
+import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
  */
-public class AreaChart extends Chart {
+public class BarChart01 implements ExampleChart {
 
-  /**
-   * Constructor
-   * 
-   * @param width
-   * @param height
-   */
-  public AreaChart(int width, int height) {
+  public static void main(String[] args) {
 
-    super(width, height);
-
+    ExampleChart exampleChart = new BarChart01();
+    Chart chart = exampleChart.getChart();
+    new SwingWrapper(chart).displayChart();
   }
 
-  /**
-   * Constructor
-   * 
-   * @param chartBuilder
-   */
-  public AreaChart(ChartBuilder chartBuilder) {
+  @Override
+  public Chart getChart() {
 
-    super(chartBuilder);
+    // Create Chart
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart01").xAxisTitle("X").yAxisTitle("Y").build();
+    chart.addSeries("a", new double[] { 0, 1, 2, 3, 4 }, new double[] { -3, 5, 9, 6, 5 });
+
+    // Customize Chart
+    chart.getStyleManager().setChartTitleVisible(false);
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+
+    return chart;
   }
 }

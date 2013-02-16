@@ -25,11 +25,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.xeiam.xchart.AreaChart;
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.ScatterChart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.style.Series;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * @author timmolter
@@ -59,9 +58,6 @@ public class PlotContent implements ChartPart {
 
   @Override
   public void paint(Graphics2D g) {
-
-    boolean isScatterChart = getChart() instanceof ScatterChart;
-    boolean isAreaChart = getChart() instanceof AreaChart;
 
     Rectangle bounds = plot.getBounds();
 
@@ -99,10 +95,10 @@ public class PlotContent implements ChartPart {
       while (xItr.hasNext()) {
 
         BigDecimal x = null;
-        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.NUMBER) {
+        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
           x = new BigDecimal(((Number) xItr.next()).doubleValue());
         }
-        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.DATE) {
+        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
           x = new BigDecimal(((Date) xItr.next()).getTime());
           // System.out.println(x);
         }
@@ -133,17 +129,16 @@ public class PlotContent implements ChartPart {
         // System.out.println(yTransform);
 
         // paint line
-        if (series.getStroke() != null && !isScatterChart) {
+        if (series.getStroke() != null && getChart().getStyleManager().getChartType() != ChartType.Scatter && getChart().getStyleManager().getChartType() != ChartType.Bar) {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.getStrokeColor());
             g.setStroke(series.getStroke());
             g.drawLine(previousX, previousY, xOffset, yOffset);
           }
-
         }
 
         // paint area
-        if (isAreaChart) {
+        if (getChart().getStyleManager().getChartType() == ChartType.Area) {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.getStrokeColor());
             yBottomOfArea = (int) (bounds.getY() + bounds.getHeight() - yTopMargin + 1);
@@ -151,11 +146,21 @@ public class PlotContent implements ChartPart {
           }
         }
 
+        // paint bar
+        int halfWidth = 24;
+        if (getChart().getStyleManager().getChartType() == ChartType.Bar) {
+          g.setColor(series.getStrokeColor());
+          yBottomOfArea = (int) (bounds.getY() + bounds.getHeight() - yTopMargin + 1);
+          g.fillPolygon(new int[] { xOffset - halfWidth, xOffset + halfWidth, xOffset + halfWidth, xOffset - halfWidth }, new int[] { yOffset, yOffset, yBottomOfArea, yBottomOfArea }, 4);
+          g.setStroke(series.getStroke());
+          g.drawPolygon(new int[] { xOffset - halfWidth, xOffset + halfWidth, xOffset + halfWidth, xOffset - halfWidth }, new int[] { yOffset, yOffset, yBottomOfArea, yBottomOfArea }, 4);
+        }
+
         previousX = xOffset;
         previousY = yOffset;
 
         // paint marker
-        if (series.getMarker() != null) {
+        if (series.getMarker() != null && getChart().getStyleManager().getChartType() != ChartType.Bar) {
           g.setColor(series.getMarkerColor());
           series.getMarker().paint(g, xOffset, yOffset);
         }
