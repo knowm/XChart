@@ -19,24 +19,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.unit;
+package com.xeiam.xchart.internal.chartpart.gridstep;
 
-import org.junit.Test;
+import java.util.List;
 
 /**
  * @author timmolter
  */
-public class DecimalGridStepTest {
+public interface GridStep {
 
-  @Test
-  public void testDateOneMinuteTimespan() {
+  public List<Integer> getTickLocations();
 
-    // DecimalGridStep decimalGridStep = new DecimalGridStep();
-    // BigDecimal gridStep = decimalGridStep.getGridStepForDecimal(Direction.X, 30, 600);
-    // System.out.println("gridStep= " + gridStep);
-    // BigDecimal first = decimalGridStep.getFirstPosition(new BigDecimal(-15), gridStep);
-    // System.out.println("first= " + first);
-
-  }
+  public List<String> getTickLabels();
 
 }

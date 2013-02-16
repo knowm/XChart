@@ -25,6 +25,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
+import com.xeiam.xchart.internal.chartpart.gridstep.DateFormatter;
+import com.xeiam.xchart.internal.chartpart.gridstep.DecimalFormatter;
 import com.xeiam.xchart.style.theme.Theme;
 import com.xeiam.xchart.style.theme.XChartTheme;
 
@@ -94,6 +96,11 @@ public class StyleManager {
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
 
+  // Formatting ////////////////////////////////
+
+  private DecimalFormatter decimalFormatter;
+  private DateFormatter dateFormatter;
+
   /**
    * Constructor
    */
@@ -151,6 +158,10 @@ public class StyleManager {
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
+
+    // Formatting ////////////////////////////////
+    decimalFormatter = new DecimalFormatter();
+    dateFormatter = new DateFormatter();
   }
 
   /**
@@ -741,4 +752,17 @@ public class StyleManager {
 
     return errorBarsColor;
   }
+
+  // Formatting ////////////////////////////////
+
+  public DecimalFormatter getDecimalFormatter() {
+
+    return decimalFormatter;
+  }
+
+  public DateFormatter getDateFormatter() {
+
+    return dateFormatter;
+  }
+
 }

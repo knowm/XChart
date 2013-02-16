@@ -30,7 +30,8 @@ import java.util.TimeZone;
 
 import org.junit.Test;
 
-import com.xeiam.xchart.style.ValueFormatter;
+import com.xeiam.xchart.internal.chartpart.gridstep.DateFormatter;
+import com.xeiam.xchart.internal.chartpart.gridstep.DecimalFormatter;
 
 /**
  * @author timmolter
@@ -42,7 +43,7 @@ public class ValueFormatterTest {
   @Test
   public void testNumberFormatting() {
 
-    ValueFormatter axisTickLabelFormatter = new ValueFormatter();
+    DecimalFormatter axisTickLabelFormatter = new DecimalFormatter();
 
     // big
     axisTickLabelFormatter.setLocale(locale);
@@ -135,7 +136,7 @@ public class ValueFormatterTest {
   @Test
   public void testDateFormatting() {
 
-    ValueFormatter axisTickLabelFormatter = new ValueFormatter();
+    DateFormatter axisTickLabelFormatter = new DateFormatter();
 
     TimeZone timeZone = TimeZone.getTimeZone("UTC");
 

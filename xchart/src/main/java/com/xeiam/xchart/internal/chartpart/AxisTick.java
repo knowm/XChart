@@ -20,6 +20,10 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
+import com.xeiam.xchart.internal.chartpart.gridstep.DateGridStep;
+import com.xeiam.xchart.internal.chartpart.gridstep.DecimalGridStep;
+import com.xeiam.xchart.internal.chartpart.gridstep.GridStep;
 
 /**
  * An axis tick
@@ -41,7 +45,7 @@ public class AxisTick implements ChartPart {
   /** the visibility state of axistick */
   private boolean isVisible = true; // default to true
 
-  AxisTickComputer axisTickComputer;
+  GridStep gridStep = null;
 
   /**
    * Constructor
@@ -77,7 +81,21 @@ public class AxisTick implements ChartPart {
       // System.out.println("workingspace= " + workingSpace);
     }
 
-    axisTickComputer = new AxisTickComputer(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getValueFormatter(), axis.getAxisType());
+    // ////////////////////////
+
+    if (axis.getAxisType() == AxisType.Number) {
+
+      gridStep = new DecimalGridStep(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+
+    } else if (axis.getAxisType() == AxisType.Date) {
+
+      gridStep = new DateGridStep(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+
+    } else if (axis.getAxisType() == AxisType.Logarithmic) {
+
+    }
+
+    // /////////////////////////
 
     if (isVisible) {
 
@@ -120,11 +138,11 @@ public class AxisTick implements ChartPart {
 
   public List<Integer> getTickLocations() {
 
-    return axisTickComputer.getTickLocations();
+    return gridStep.getTickLocations();
   }
 
   public List<String> getTickLabels() {
 
-    return axisTickComputer.getTickLabels();
+    return gridStep.getTickLabels();
   }
 }

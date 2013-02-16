@@ -30,11 +30,9 @@ import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.style.StyleManager;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimla axes
- * 
  * @author timmolter
  */
-public class DecimalGridStep implements GridStep {
+public class DateGridStep implements GridStep {
 
   /** the default tick mark step hint for x axis */
   private static final int DEFAULT_TICK_MARK_STEP_HINT_X = 74;
@@ -66,7 +64,7 @@ public class DecimalGridStep implements GridStep {
    * @param minValue
    * @param maxValue
    */
-  public DecimalGridStep(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public DateGridStep(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
@@ -81,7 +79,7 @@ public class DecimalGridStep implements GridStep {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(styleManager.getDecimalFormatter().formatNumber(maxValue));
+      tickLabels.add(styleManager.getDateFormatter().formatDateValue(maxValue, maxValue, maxValue));
       tickLocations.add((int) (workingSpace / 2.0));
       return;
     }
@@ -100,7 +98,7 @@ public class DecimalGridStep implements GridStep {
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
 
-      tickLabels.add(styleManager.getDecimalFormatter().formatNumber(tickPosition));
+      tickLabels.add(styleManager.getDateFormatter().formatDateValue(tickPosition, minValue, maxValue));
       // here we convert tickPosition finally to plot space, i.e. pixels
       int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
       tickLocations.add(tickLabelPosition);

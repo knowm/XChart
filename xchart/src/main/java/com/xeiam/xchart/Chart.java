@@ -27,7 +27,6 @@ import com.xeiam.xchart.internal.chartpart.Legend;
 import com.xeiam.xchart.internal.chartpart.Plot;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.StyleManager;
-import com.xeiam.xchart.style.ValueFormatter;
 import com.xeiam.xchart.style.theme.Theme;
 
 /**
@@ -41,7 +40,6 @@ public class Chart {
   private int height;
 
   private StyleManager styleManager = new StyleManager();
-  private ValueFormatter valueFormatter = new ValueFormatter();
 
   // Chart Parts
   private Legend chartLegend = new Legend(this);
@@ -273,16 +271,6 @@ public class Chart {
 
     styleManager.setTheme(theme);
 
-  }
-
-  /**
-   * Gets the Chart's value formatter, which can be used to customize the formatting of numbers and dates
-   * 
-   * @return
-   */
-  public ValueFormatter getValueFormatter() {
-
-    return valueFormatter;
   }
 
   /**

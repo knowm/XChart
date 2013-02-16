@@ -164,7 +164,7 @@ public class AxisPair implements ChartPart {
    * @param workingSpace
    * @return
    */
-  protected static int getTickSpace(int workingSpace) {
+  public static int getTickSpace(int workingSpace) {
 
     return (int) (workingSpace * 0.95);
   }
@@ -176,7 +176,7 @@ public class AxisPair implements ChartPart {
    * @param tickSpace
    * @return
    */
-  protected static int getTickStartOffset(int workingSpace, int tickSpace) {
+  public static int getTickStartOffset(int workingSpace, int tickSpace) {
 
     int marginSpace = workingSpace - tickSpace;
     return (int) (marginSpace / 2.0);

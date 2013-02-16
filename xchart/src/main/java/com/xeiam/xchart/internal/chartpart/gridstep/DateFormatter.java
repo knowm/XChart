@@ -19,11 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.style;
+package com.xeiam.xchart.internal.chartpart.gridstep;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -32,10 +30,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author timmolter
  */
-public class ValueFormatter {
+public class DateFormatter {
 
-  private String normalDecimalPattern;
-  private String scientificDecimalPattern;
   private String datePattern;
   private Locale locale;
   private TimeZone timezone;
@@ -51,41 +47,11 @@ public class ValueFormatter {
   /**
    * Constructor
    */
-  public ValueFormatter() {
+  public DateFormatter() {
 
-    normalDecimalPattern = "#.####";
-    scientificDecimalPattern = "0.##E0";
     datePattern = "HHmmss";
     locale = Locale.getDefault();
     timezone = TimeZone.getDefault();
-  }
-
-  /**
-   * Format a number value, if the override patterns are null, it uses defaults
-   * 
-   * @param value
-   * @return
-   */
-  public String formatNumber(BigDecimal value) {
-
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
-
-    BigDecimal absoluteValue = value.abs();
-
-    if (absoluteValue.compareTo(new BigDecimal("10000.000001")) == -1 && absoluteValue.compareTo(new BigDecimal(".0009999999")) == 1 || BigDecimal.ZERO.compareTo(value) == 0) {
-
-      DecimalFormat normalFormat = (DecimalFormat) numberFormat;
-      normalFormat.applyPattern(normalDecimalPattern);
-      return normalFormat.format(value);
-
-    } else {
-
-      DecimalFormat scientificFormat = (DecimalFormat) numberFormat;
-      scientificFormat.applyPattern(scientificDecimalPattern);
-      return scientificFormat.format(value);
-
-    }
-
   }
 
   /**
@@ -97,6 +63,8 @@ public class ValueFormatter {
    * @return
    */
   public String formatDateValue(BigDecimal value, BigDecimal min, BigDecimal max) {
+
+    // TODO check if min and max are the same, then calculate this differently
 
     // intelligently set date pattern if none is given
     long diff = max.subtract(min).longValue();
@@ -124,26 +92,6 @@ public class ValueFormatter {
     simpleDateformat.applyPattern(datePattern);
     return simpleDateformat.format(value.longValueExact());
 
-  }
-
-  /**
-   * Set the decimal formatter for all tick labels
-   * 
-   * @param pattern - the pattern describing the decimal format
-   */
-  public void setNormalDecimalPattern(String normalDecimalPattern) {
-
-    this.normalDecimalPattern = normalDecimalPattern;
-  }
-
-  /**
-   * Set the scientific notation formatter for all tick labels
-   * 
-   * @param pattern - the pattern describing the scientific notation format
-   */
-  public void setScientificDecimalPattern(String scientificDecimalPattern) {
-
-    this.scientificDecimalPattern = scientificDecimalPattern;
   }
 
   /**

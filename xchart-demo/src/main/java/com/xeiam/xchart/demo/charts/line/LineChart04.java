@@ -72,7 +72,7 @@ public class LineChart04 implements ExampleChart {
     chart.setChartTitle("LineChart04");
     chart.setXAxisTitle("time of day");
     chart.setYAxisTitle("gigawatts");
-    chart.getValueFormatter().setTimezone(TimeZone.getTimeZone("UTC"));
+    chart.getStyleManager().getDateFormatter().setTimezone(TimeZone.getTimeZone("UTC"));
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
 
     Series series = chart.addDateSeries("value", xData, yData);

@@ -81,9 +81,9 @@ public class LineChart09 implements ExampleChart {
     chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.getStyleManager().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.getStyleManager().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
-    chart.getValueFormatter().setDatePattern("dd-MMM");
-    chart.getValueFormatter().setNormalDecimalPattern("#.000");
-    chart.getValueFormatter().setLocale(Locale.GERMAN);
+    chart.getStyleManager().getDateFormatter().setDatePattern("dd-MMM");
+    chart.getStyleManager().getDecimalFormatter().setNormalDecimalPattern("#.000");
+    chart.getStyleManager().getDateFormatter().setLocale(Locale.GERMAN);
 
     Series series = chart.addDateSeries("Fake Data", xData, yData);
     series.setLineColor(SeriesColor.BLUE);
