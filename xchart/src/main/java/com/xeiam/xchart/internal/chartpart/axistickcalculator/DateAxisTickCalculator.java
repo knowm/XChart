@@ -22,9 +22,12 @@
 package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
+import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.style.StyleManager;
 
 /**
@@ -33,6 +36,14 @@ import com.xeiam.xchart.style.StyleManager;
  * @author timmolter
  */
 public class DateAxisTickCalculator extends AxisTickCalculator {
+
+  public static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(1L);
+  public static final long MIN_SCALE = TimeUnit.MINUTES.toMillis(1L);
+  public static final long HOUR_SCALE = TimeUnit.HOURS.toMillis(1L);
+  public static final long DAY_SCALE = TimeUnit.DAYS.toMillis(1L);
+  public static final long WEEK_SCALE = TimeUnit.DAYS.toMillis(1L) * 7;
+  public static final long MONTH_SCALE = TimeUnit.DAYS.toMillis(1L) * 31;
+  public static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
 
   /**
    * Constructor
@@ -46,7 +57,35 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
   public DateAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
+    calculate();
+  }
 
+  private void calculate() {
+
+    // a check if all axis data are the exact same values
+    if (minValue == maxValue) {
+      tickLabels.add(formatDateValue(maxValue, maxValue, maxValue));
+      tickLocations.add((int) (workingSpace / 2.0));
+      return;
+    }
+
+    // tick space - a percentage of the working space available for ticks, i.e. 95%
+    int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space
+
+    // where the tick should begin in the working space in pixels
+    int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+
+    BigDecimal gridStep = getGridStep(tickSpace);
+    BigDecimal firstPosition = getFirstPosition(minValue, gridStep);
+
+    // generate all tickLabels and tickLocations from the first to last position
+    for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
+
+      tickLabels.add(formatDateValue(tickPosition, minValue, maxValue));
+      // here we convert tickPosition finally to plot space, i.e. pixels
+      int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
+      tickLocations.add(tickLabelPosition);
+    }
   }
 
   /**
@@ -61,67 +100,21 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
     // the span of the data
     double span = Math.abs(maxValue.subtract(minValue).doubleValue()); // in data space
 
-    int tickMarkSpaceHint = (axisDirection == Direction.X ? DEFAULT_TICK_MARK_STEP_HINT_X : DEFAULT_TICK_MARK_STEP_HINT_Y);
+    double gridStepHint = span / tickSpace * DEFAULT_TICK_MARK_STEP_HINT_X;
 
-    // for very short plots, squeeze some more ticks in than normal
-    if (axisDirection == Direction.Y && tickSpace < 160) {
-      tickMarkSpaceHint = 25;
-    }
-
-    double gridStepHint = span / tickSpace * tickMarkSpaceHint;
-
-    // gridStepHint --> significand * 10 ** exponent
-    // e.g. 724.1 --> 7.241 * 10 ** 2
-    double significand = gridStepHint;
-    int exponent = 0;
-    if (significand == 0) {
-      exponent = 1;
-    } else if (significand < 1) {
-      while (significand < 1) {
-        significand *= 10.0;
-        exponent--;
-      }
-    } else {
-      while (significand >= 10) {
-        significand /= 10.0;
-        exponent++;
-      }
-    }
-
-    // calculate the grid step with hint.
     BigDecimal gridStep;
-    if (significand > 7.5) {
-      // gridStep = 10.0 * 10 ** exponent
-      gridStep = BigDecimal.TEN.multiply(pow(10, exponent));
-    } else if (significand > 3.5) {
-      // gridStep = 5.0 * 10 ** exponent
-      gridStep = new BigDecimal(new Double(5).toString()).multiply(pow(10, exponent));
-    } else if (significand > 1.5) {
-      // gridStep = 2.0 * 10 ** exponent
-      gridStep = new BigDecimal(new Double(2).toString()).multiply(pow(10, exponent));
+    if (span < SEC_SCALE) {
+      // decimal
+      gridStep = getGridStepDecimal(gridStepHint);
+
     } else {
-      // gridStep = 1.0 * 10 ** exponent
-      gridStep = pow(10, exponent);
+
+      // date
+      gridStep = getGridStepDecimal(gridStepHint);
+
     }
+
     return gridStep;
-  }
-
-  /**
-   * Calculates the value of the first argument raised to the power of the second argument.
-   * 
-   * @param base the base
-   * @param exponent the exponent
-   * @return the value <tt>a<sup>b</sup></tt> in <tt>BigDecimal</tt>
-   */
-  private BigDecimal pow(double base, int exponent) {
-
-    BigDecimal value;
-    if (exponent > 0) {
-      value = new BigDecimal(new Double(base).toString()).pow(exponent);
-    } else {
-      value = BigDecimal.ONE.divide(new BigDecimal(new Double(base).toString()).pow(-exponent));
-    }
-    return value;
   }
 
   @Override
@@ -134,6 +127,47 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
       firstPosition = min.subtract(min.remainder(gridStep)).add(gridStep);
     }
     return firstPosition;
+  }
+
+  /**
+   * Format a date value
+   * 
+   * @param value
+   * @param min
+   * @param max
+   * @return
+   */
+  public String formatDateValue(BigDecimal value, BigDecimal min, BigDecimal max) {
+
+    String datePattern;
+    // TODO check if min and max are the same, then calculate this differently
+
+    // intelligently set date pattern if none is given
+    long diff = max.subtract(min).longValue();
+
+    if (diff < SEC_SCALE) {
+      datePattern = "ss:S";
+    } else if (diff < MIN_SCALE) {
+      datePattern = "mm:ss";
+    } else if (diff < HOUR_SCALE) {
+      datePattern = "HH:mm";
+    } else if (diff < DAY_SCALE) {
+      datePattern = "EEE HH:mm";
+    } else if (diff < WEEK_SCALE) {
+      datePattern = "EEE";
+    } else if (diff < MONTH_SCALE) {
+      datePattern = "MMM-dd";
+    } else if (diff < YEAR_SCALE) {
+      datePattern = "yyyy:MMM";
+    } else {
+      datePattern = "yyyy";
+    }
+
+    SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styleManager.getLocale());
+    simpleDateformat.setTimeZone(styleManager.getTimezone());
+    simpleDateformat.applyPattern(datePattern);
+
+    return simpleDateformat.format(value.longValueExact());
   }
 
   @Override

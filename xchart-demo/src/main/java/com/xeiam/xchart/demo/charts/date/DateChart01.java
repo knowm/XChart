@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.line;
+package com.xeiam.xchart.demo.charts.date;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -25,22 +25,15 @@ import java.util.TimeZone;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.demo.charts.line.ExampleChart;
 import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
-/**
- * Date Axis
- * <p>
- * Demonstrates the following:
- * <ul>
- * <li>Date-tyoe X Axis Data
- * <li>Placing legend inside northwest corner of plot area
- */
-public class LineChart04 implements ExampleChart {
+public class DateChart01 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart04();
+    ExampleChart exampleChart = new DateChart01();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -55,12 +48,12 @@ public class LineChart04 implements ExampleChart {
     Collection<Date> xData = new ArrayList<Date>();
     Collection<Number> yData = new ArrayList<Number>();
 
-    DateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH");
+    DateFormat sdf = new SimpleDateFormat("ss:S");
     Date date = null;
     for (int i = 1; i <= 10; i++) {
 
       try {
-        date = sdf.parse("2012.12.22." + (10 + i));
+        date = sdf.parse("31:" + (100 * i));
       } catch (ParseException e) {
         e.printStackTrace();
       }
@@ -69,15 +62,13 @@ public class LineChart04 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("LineChart04");
-    chart.setXAxisTitle("time of day");
-    chart.setYAxisTitle("gigawatts");
-    chart.getStyleManager().getDateFormatter().setTimezone(TimeZone.getTimeZone("UTC"));
+    chart.setChartTitle("DateChart01");
+    chart.getStyleManager().setTimezone(TimeZone.getTimeZone("UTC"));
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
 
     Series series = chart.addDateSeries("value", xData, yData);
 
     return chart;
-  }
 
+  }
 }

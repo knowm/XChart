@@ -24,9 +24,9 @@ package com.xeiam.xchart.style;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
+import java.util.Locale;
+import java.util.TimeZone;
 
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateFormatter;
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberFormatter;
 import com.xeiam.xchart.style.theme.Theme;
 import com.xeiam.xchart.style.theme.XChartTheme;
 
@@ -97,9 +97,11 @@ public class StyleManager {
   private Color errorBarsColor;
 
   // Formatting ////////////////////////////////
-
-  private NumberFormatter decimalFormatter;
-  private DateFormatter dateFormatter;
+  private String datePattern;
+  private Locale locale;
+  private TimeZone timezone;
+  private String normalDecimalPattern;
+  private String scientificDecimalPattern;
 
   /**
    * Constructor
@@ -160,8 +162,11 @@ public class StyleManager {
     errorBarsColor = theme.getErrorBarsColor();
 
     // Formatting ////////////////////////////////
-    decimalFormatter = new NumberFormatter();
-    dateFormatter = new DateFormatter();
+    datePattern = "HHmmss";
+    locale = Locale.getDefault();
+    timezone = TimeZone.getDefault();
+    normalDecimalPattern = "#.####";
+    scientificDecimalPattern = "0.##E0";
   }
 
   /**
@@ -755,14 +760,78 @@ public class StyleManager {
 
   // Formatting ////////////////////////////////
 
-  public NumberFormatter getDecimalFormatter() {
+  /**
+   * Set the String formatter for Data x-axis
+   * 
+   * @param pattern - the pattern describing the date and time format
+   */
+  public void setDatePattern(String datePattern) {
 
-    return decimalFormatter;
+    this.datePattern = datePattern;
   }
 
-  public DateFormatter getDateFormatter() {
+  public String getDatePattern() {
 
-    return dateFormatter;
+    return datePattern;
   }
 
+  /**
+   * Set the locale to use for rendering the chart
+   * 
+   * @param locale - the locale to use when formatting Strings and dates for the axis tick labels
+   */
+  public void setLocale(Locale locale) {
+
+    this.locale = locale;
+  }
+
+  public Locale getLocale() {
+
+    return locale;
+  }
+
+  /**
+   * Set the timezone to use for formatting Date axis tick labels
+   * 
+   * @param timezone the timezone to use when formatting date data
+   */
+  public void setTimezone(TimeZone timezone) {
+
+    this.timezone = timezone;
+  }
+
+  public TimeZone getTimezone() {
+
+    return timezone;
+  }
+
+  /**
+   * Set the decimal formatter for all tick labels
+   * 
+   * @param pattern - the pattern describing the decimal format
+   */
+  public void setNormalDecimalPattern(String normalDecimalPattern) {
+
+    this.normalDecimalPattern = normalDecimalPattern;
+  }
+
+  public String getNormalDecimalPattern() {
+
+    return normalDecimalPattern;
+  }
+
+  /**
+   * Set the scientific notation formatter for all tick labels
+   * 
+   * @param pattern - the pattern describing the scientific notation format
+   */
+  public void setScientificDecimalPattern(String scientificDecimalPattern) {
+
+    this.scientificDecimalPattern = scientificDecimalPattern;
+  }
+
+  public String getScientificDecimalPattern() {
+
+    return scientificDecimalPattern;
+  }
 }

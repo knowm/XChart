@@ -33,7 +33,6 @@ import com.xeiam.xchart.demo.charts.area.AreaChart01;
 import com.xeiam.xchart.demo.charts.line.LineChart01;
 import com.xeiam.xchart.demo.charts.line.LineChart02;
 import com.xeiam.xchart.demo.charts.line.LineChart03;
-import com.xeiam.xchart.demo.charts.line.LineChart04;
 import com.xeiam.xchart.demo.charts.line.LineChart05;
 import com.xeiam.xchart.demo.charts.line.LineChart06;
 import com.xeiam.xchart.demo.charts.line.LineChart07;
@@ -138,9 +137,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("LineChart03 - Multiple curves on one Chart", new LineChart03().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart04 - Date Axis", new LineChart04().getChart()));
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("LineChart05 - Vertical and horizontal lines", new LineChart05().getChart()));
