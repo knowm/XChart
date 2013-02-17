@@ -31,7 +31,7 @@ import java.util.TimeZone;
 import org.junit.Test;
 
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateFormatter;
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.DecimalFormatter;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberFormatter;
 
 /**
  * @author timmolter
@@ -43,7 +43,7 @@ public class ValueFormatterTest {
   @Test
   public void testNumberFormatting() {
 
-    DecimalFormatter axisTickLabelFormatter = new DecimalFormatter();
+    NumberFormatter axisTickLabelFormatter = new NumberFormatter();
 
     // big
     axisTickLabelFormatter.setLocale(locale);

@@ -29,7 +29,7 @@ import java.util.Locale;
 /**
  * @author timmolter
  */
-public class DecimalFormatter {
+public class NumberFormatter {
 
   private String normalDecimalPattern;
   private String scientificDecimalPattern;
@@ -39,7 +39,7 @@ public class DecimalFormatter {
   /**
    * Constructor
    */
-  public DecimalFormatter() {
+  public NumberFormatter() {
 
     normalDecimalPattern = "#.####";
     scientificDecimalPattern = "0.##E0";

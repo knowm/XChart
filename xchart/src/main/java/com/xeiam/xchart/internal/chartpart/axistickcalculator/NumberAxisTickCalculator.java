@@ -22,11 +22,9 @@
 package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
 
+import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
-import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.style.StyleManager;
 
 /**
@@ -34,29 +32,7 @@ import com.xeiam.xchart.style.StyleManager;
  * 
  * @author timmolter
  */
-public class DecimalAxisTickCalculator implements AxisTickCalculator {
-
-  /** the default tick mark step hint for x axis */
-  private static final int DEFAULT_TICK_MARK_STEP_HINT_X = 74;
-
-  /** the default tick mark step hint for y axis */
-  private static final int DEFAULT_TICK_MARK_STEP_HINT_Y = 44;
-
-  /** the List of tick label position in pixels */
-  private List<Integer> tickLocations = new LinkedList<Integer>();;
-
-  /** the List of tick label values */
-  private List<String> tickLabels = new LinkedList<String>();
-
-  private final Direction axisDirection;
-
-  private final int workingSpace;
-
-  private final BigDecimal minValue;
-
-  private final BigDecimal maxValue;
-
-  private final StyleManager styleManager;
+public class NumberAxisTickCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
@@ -67,45 +43,9 @@ public class DecimalAxisTickCalculator implements AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public DecimalAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public NumberAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
-    this.axisDirection = axisDirection;
-    this.workingSpace = workingSpace;
-    this.minValue = minValue;
-    this.maxValue = maxValue;
-    this.styleManager = styleManager;
-
-    calculate();
-  }
-
-  private void calculate() {
-
-    // a check if all axis data are the exact same values
-    if (minValue == maxValue) {
-      tickLabels.add(styleManager.getDecimalFormatter().formatNumber(maxValue));
-      tickLocations.add((int) (workingSpace / 2.0));
-      return;
-    }
-
-    // tick space - a percentage of the working space available for ticks, i.e. 95%
-    int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space
-    System.out.println("tickSpace= " + tickSpace);
-
-    // where the tick should begin in the working space in pixels
-    int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
-
-    BigDecimal gridStep = getGridStepForDecimal(tickSpace);
-
-    BigDecimal firstPosition = getFirstPosition(minValue, gridStep);
-
-    // generate all tickLabels and tickLocations from the first to last position
-    for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
-
-      tickLabels.add(styleManager.getDecimalFormatter().formatNumber(tickPosition));
-      // here we convert tickPosition finally to plot space, i.e. pixels
-      int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
-      tickLocations.add(tickLabelPosition);
-    }
+    super(axisDirection, workingSpace, minValue, maxValue, styleManager);
   }
 
   /**
@@ -114,7 +54,8 @@ public class DecimalAxisTickCalculator implements AxisTickCalculator {
    * @param tickSpace in plot space
    * @return
    */
-  private BigDecimal getGridStepForDecimal(int tickSpace) {
+  @Override
+  public BigDecimal getGridStep(int tickSpace) {
 
     // the span of the data
     double span = Math.abs(maxValue.subtract(minValue).doubleValue()); // in data space
@@ -182,7 +123,8 @@ public class DecimalAxisTickCalculator implements AxisTickCalculator {
     return value;
   }
 
-  private BigDecimal getFirstPosition(final BigDecimal min, BigDecimal gridStep) {
+  @Override
+  public BigDecimal getFirstPosition(final BigDecimal min, BigDecimal gridStep) {
 
     BigDecimal firstPosition;
     if (min.remainder(gridStep).doubleValue() <= 0.0) {
@@ -194,15 +136,9 @@ public class DecimalAxisTickCalculator implements AxisTickCalculator {
   }
 
   @Override
-  public List<Integer> getTickLocations() {
+  public AxisType getAxisType() {
 
-    return tickLocations;
-  }
-
-  @Override
-  public List<String> getTickLabels() {
-
-    return tickLabels;
+    return AxisType.Number;
   }
 
 }

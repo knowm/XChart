@@ -26,7 +26,7 @@ import java.awt.Font;
 import java.awt.Stroke;
 
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateFormatter;
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.DecimalFormatter;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberFormatter;
 import com.xeiam.xchart.style.theme.Theme;
 import com.xeiam.xchart.style.theme.XChartTheme;
 
@@ -98,7 +98,7 @@ public class StyleManager {
 
   // Formatting ////////////////////////////////
 
-  private DecimalFormatter decimalFormatter;
+  private NumberFormatter decimalFormatter;
   private DateFormatter dateFormatter;
 
   /**
@@ -160,7 +160,7 @@ public class StyleManager {
     errorBarsColor = theme.getErrorBarsColor();
 
     // Formatting ////////////////////////////////
-    decimalFormatter = new DecimalFormatter();
+    decimalFormatter = new NumberFormatter();
     dateFormatter = new DateFormatter();
   }
 
@@ -755,7 +755,7 @@ public class StyleManager {
 
   // Formatting ////////////////////////////////
 
-  public DecimalFormatter getDecimalFormatter() {
+  public NumberFormatter getDecimalFormatter() {
 
     return decimalFormatter;
   }

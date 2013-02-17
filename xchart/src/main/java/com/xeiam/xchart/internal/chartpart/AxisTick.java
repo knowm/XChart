@@ -23,8 +23,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.AxisTickCalculator;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateAxisTickCalculator;
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.DecimalAxisTickCalculator;
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.LogarithmicAxisTickCalculator;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberAxisTickCalculator;
 
 /**
  * An axis tick
@@ -84,16 +83,18 @@ public class AxisTick implements ChartPart {
 
     if (axis.getAxisType() == AxisType.Number) {
 
-      gridStep = new DecimalAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+      gridStep = new NumberAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
 
     } else if (axis.getAxisType() == AxisType.Date) {
 
       gridStep = new DateAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
 
-    } else if (axis.getAxisType() == AxisType.Logarithmic) {
-
-      gridStep = new LogarithmicAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
     }
+
+    // if (getChart().getStyleManager()) {
+    //
+    // gridStep = new LogarithmicAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+    // }
 
     if (isVisible) {
 

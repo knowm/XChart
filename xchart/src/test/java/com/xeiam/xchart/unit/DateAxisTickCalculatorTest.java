@@ -21,22 +21,34 @@
  */
 package com.xeiam.xchart.unit;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
+
+import com.xeiam.xchart.internal.chartpart.Axis.Direction;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateAxisTickCalculator;
+import com.xeiam.xchart.style.StyleManager;
 
 /**
  * @author timmolter
  */
-public class DecimalGridStepTest {
+public class DateAxisTickCalculatorTest {
 
   @Test
   public void testDateOneMinuteTimespan() {
 
-    // DecimalGridStep decimalGridStep = new DecimalGridStep();
-    // BigDecimal gridStep = decimalGridStep.getGridStepForDecimal(Direction.X, 30, 600);
-    // System.out.println("gridStep= " + gridStep);
-    // BigDecimal first = decimalGridStep.getFirstPosition(new BigDecimal(-15), gridStep);
-    // System.out.println("first= " + first);
+    DateAxisTickCalculator decimalAxisTickCalculator = new DateAxisTickCalculator(Direction.X, 600, new BigDecimal(1361110661000L), new BigDecimal(1361110721000L), new StyleManager());
 
+    List<String> tickLabels = decimalAxisTickCalculator.getTickLabels();
+    System.out.println(Arrays.toString(tickLabels.toArray()));
+    // assertThat(tickLabels.size(), equalTo(7));
+    // assertThat(tickLabels.get(0), equalTo("-15"));
+
+    // List<Integer> tickLocations = decimalAxisTickCalculator.getTickLocations();
+    // System.out.println(Arrays.toString(tickLocations.toArray()));
+    // assertThat(tickLocations.size(), equalTo(7));
+    // assertThat(tickLocations.get(0), equalTo(15));
   }
-
 }
