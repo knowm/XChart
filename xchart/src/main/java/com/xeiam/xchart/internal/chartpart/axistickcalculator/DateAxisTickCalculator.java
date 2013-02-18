@@ -37,13 +37,13 @@ import com.xeiam.xchart.style.StyleManager;
  */
 public class DateAxisTickCalculator extends AxisTickCalculator {
 
-  public static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(1L);
-  public static final long MIN_SCALE = TimeUnit.MINUTES.toMillis(1L);
-  public static final long HOUR_SCALE = TimeUnit.HOURS.toMillis(1L);
-  public static final long DAY_SCALE = TimeUnit.DAYS.toMillis(1L);
-  public static final long WEEK_SCALE = TimeUnit.DAYS.toMillis(1L) * 7;
-  public static final long MONTH_SCALE = TimeUnit.DAYS.toMillis(1L) * 31;
-  public static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
+  public static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(2L);
+  public static final long MIN_SCALE = TimeUnit.MINUTES.toMillis(2L);
+  public static final long HOUR_SCALE = TimeUnit.HOURS.toMillis(2L);
+  public static final long DAY_SCALE = TimeUnit.DAYS.toMillis(2L);
+  public static final long WEEK_SCALE = TimeUnit.DAYS.toMillis(2L) * 7;
+  public static final long MONTH_SCALE = TimeUnit.DAYS.toMillis(2L) * 31;
+  public static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(2L) * 365;
 
   /**
    * Constructor
@@ -146,7 +146,7 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
     long diff = max.subtract(min).longValue();
 
     if (diff < SEC_SCALE) {
-      datePattern = "ss:S";
+      datePattern = "ss.SSS";
     } else if (diff < MIN_SCALE) {
       datePattern = "mm:ss";
     } else if (diff < HOUR_SCALE) {

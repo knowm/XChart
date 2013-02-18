@@ -29,11 +29,11 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.line.ExampleChart;
 import com.xeiam.xchart.style.Series;
 
-public class DateChart01 implements ExampleChart {
+public class DateChart02 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new DateChart01();
+    ExampleChart exampleChart = new DateChart02();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -44,18 +44,17 @@ public class DateChart01 implements ExampleChart {
     // Create Chart
     Chart chart = new Chart(800, 600);
 
-    Random random = new Random();
-
     // generates linear data
     Collection<Date> xData = new ArrayList<Date>();
     Collection<Number> yData = new ArrayList<Number>();
 
-    DateFormat sdf = new SimpleDateFormat("ss.S");
+    Random random = new Random();
+
+    DateFormat sdf = new SimpleDateFormat("mm:ss.SSS");
     Date date = null;
     for (int i = 1; i <= 14; i++) {
-
       try {
-        date = sdf.parse("31." + (100 * i + random.nextInt(20)));
+        date = sdf.parse("23:" + (5 * i + random.nextInt(2)) + "." + random.nextInt(1000));
       } catch (ParseException e) {
         e.printStackTrace();
       }
@@ -64,7 +63,7 @@ public class DateChart01 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("DateChart01");
+    chart.setChartTitle("DateChart02");
     chart.getStyleManager().setLegendVisible(false);
     Series series = chart.addDateSeries("value", xData, yData);
     System.out.println(Arrays.toString(xData.toArray()));
