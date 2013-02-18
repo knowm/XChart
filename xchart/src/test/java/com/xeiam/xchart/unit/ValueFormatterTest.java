@@ -151,7 +151,7 @@ public class ValueFormatterTest {
     BigDecimal min = new BigDecimal(1358108105100L);
     BigDecimal max = new BigDecimal(1358108105900L);
     String stringValue = dateAxisTickCalculator.formatDateValue(value, min, max);
-    assertThat(stringValue, equalTo("05:531"));
+    assertThat(stringValue, equalTo("05.531"));
 
     // sec
     value = new BigDecimal(1358108105000L);
