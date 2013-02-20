@@ -29,15 +29,15 @@ import com.xeiam.xchart.demo.charts.line.ExampleChart;
 import com.xeiam.xchart.style.Series;
 
 /**
- * Minute scale
+ * Day scale
  * 
  * @author timmolter
  */
-public class DateChart03 implements ExampleChart {
+public class DateChart05 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new DateChart03();
+    ExampleChart exampleChart = new DateChart05();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -54,11 +54,11 @@ public class DateChart03 implements ExampleChart {
 
     Random random = new Random();
 
-    DateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+    DateFormat sdf = new SimpleDateFormat("MM-dd");
     Date date = null;
     for (int i = 1; i <= 14; i++) {
       try {
-        date = sdf.parse("08:" + (5 * i + random.nextInt(2)) + ":" + (random.nextInt(2)) + "." + random.nextInt(1000));
+        date = sdf.parse("02-" + (6 * i + random.nextInt(2)));
       } catch (ParseException e) {
         e.printStackTrace();
       }
@@ -67,7 +67,7 @@ public class DateChart03 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("DateChart03");
+    chart.setChartTitle("DateChart05");
     chart.getStyleManager().setLegendVisible(false);
     Series series = chart.addDateSeries("value", xData, yData);
 

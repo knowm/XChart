@@ -30,6 +30,13 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.xeiam.xchart.XChartPanel;
 import com.xeiam.xchart.demo.charts.area.AreaChart01;
+import com.xeiam.xchart.demo.charts.date.DateChart01;
+import com.xeiam.xchart.demo.charts.date.DateChart02;
+import com.xeiam.xchart.demo.charts.date.DateChart03;
+import com.xeiam.xchart.demo.charts.date.DateChart04;
+import com.xeiam.xchart.demo.charts.date.DateChart05;
+import com.xeiam.xchart.demo.charts.date.DateChart06;
+import com.xeiam.xchart.demo.charts.date.DateChart07;
 import com.xeiam.xchart.demo.charts.line.LineChart01;
 import com.xeiam.xchart.demo.charts.line.LineChart02;
 import com.xeiam.xchart.demo.charts.line.LineChart03;
@@ -160,18 +167,43 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     chart = new DefaultMutableTreeNode(new ChartInfo("LineChart11 - Using ChartBuilder to Make a Chart", new LineChart11().getChart()));
     category.add(chart);
 
-    // Second category
+    // Scatter category
     category = new DefaultMutableTreeNode("Scatter Charts");
     top.add(category);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart01 - Gaussian Blob", new ScatterChart01().getChart()));
     category.add(chart);
 
-    // Second category
+    // Area category
     category = new DefaultMutableTreeNode("Area Charts");
     top.add(category);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("AreaChart01 - 3-Series", new AreaChart01().getChart()));
+    category.add(chart);
+
+    // Date category
+    category = new DefaultMutableTreeNode("Date Charts");
+    top.add(category);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("DateChart01 - Millisecond Scale", new DateChart01().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("DateChart02 - Second Scale", new DateChart02().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("DateChart03 - Minute Scale", new DateChart03().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("DateChart04 - Hour Scale", new DateChart04().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("DateChart05 - Day Scale", new DateChart05().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("DateChart06 - Month Scale", new DateChart06().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("DateChart07 - Year Scale", new DateChart07().getChart()));
     category.add(chart);
 
   }

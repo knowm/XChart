@@ -23,6 +23,9 @@ package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
@@ -37,13 +40,16 @@ import com.xeiam.xchart.style.StyleManager;
  */
 public class DateAxisTickCalculator extends AxisTickCalculator {
 
-  public static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(2L);
-  public static final long MIN_SCALE = TimeUnit.MINUTES.toMillis(2L);
-  public static final long HOUR_SCALE = TimeUnit.HOURS.toMillis(2L);
-  public static final long DAY_SCALE = TimeUnit.DAYS.toMillis(2L);
-  public static final long WEEK_SCALE = TimeUnit.DAYS.toMillis(2L) * 7;
-  public static final long MONTH_SCALE = TimeUnit.DAYS.toMillis(2L) * 31;
-  public static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(2L) * 365;
+  public static final long MILLIS_SCALE = TimeUnit.MILLISECONDS.toMillis(1L);
+  public static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(1L);
+  public static final long MIN_SCALE = TimeUnit.MINUTES.toMillis(1L);
+  public static final long HOUR_SCALE = TimeUnit.HOURS.toMillis(1L);
+  public static final long DAY_SCALE = TimeUnit.DAYS.toMillis(1L);
+  public static final long MONTH_SCALE = TimeUnit.DAYS.toMillis(1L) * 31;
+  public static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
+
+  private Map<Long, int[]> validTickStepsMap;
+  private long timeUnit;
 
   /**
    * Constructor
@@ -57,6 +63,15 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
   public DateAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
+
+    validTickStepsMap = new TreeMap<Long, int[]>();
+    validTickStepsMap.put(MILLIS_SCALE, new int[] { 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000 });
+    validTickStepsMap.put(SEC_SCALE, new int[] { 1, 2, 5, 10, 15, 20, 30, 60 });
+    validTickStepsMap.put(MIN_SCALE, new int[] { 1, 2, 3, 5, 10, 15, 20, 30, 60 });
+    validTickStepsMap.put(HOUR_SCALE, new int[] { 1, 2, 4, 6, 12, 24 });
+    validTickStepsMap.put(DAY_SCALE, new int[] { 1, 2, 3, 5, 10, 15, 31 });
+    validTickStepsMap.put(MONTH_SCALE, new int[] { 1, 2, 3, 4, 6, 12 });
+    validTickStepsMap.put(YEAR_SCALE, new int[] { 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000 });
     calculate();
   }
 
@@ -64,7 +79,7 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(formatDateValue(maxValue, maxValue, maxValue));
+      tickLabels.add(formatDateValue(maxValue));
       tickLocations.add((int) (workingSpace / 2.0));
       return;
     }
@@ -81,7 +96,7 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
 
-      tickLabels.add(formatDateValue(tickPosition, minValue, maxValue));
+      tickLabels.add(formatDateValue(tickPosition));
       // here we convert tickPosition finally to plot space, i.e. pixels
       int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
       tickLocations.add(tickLabelPosition);
@@ -98,20 +113,18 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
   public BigDecimal getGridStep(int tickSpace) {
 
     // the span of the data
-    double span = Math.abs(maxValue.subtract(minValue).doubleValue()); // in data space
+    long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
 
-    double gridStepHint = span / tickSpace * DEFAULT_TICK_MARK_STEP_HINT_X;
+    long gridStepHint = (long) (span / (double) tickSpace * DEFAULT_TICK_MARK_STEP_HINT_X);
 
-    BigDecimal gridStep;
-    if (span < SEC_SCALE) {
-      // decimal
-      gridStep = getGridStepDecimal(gridStepHint);
-
-    } else {
-
-      // date
-      gridStep = getGridStepDecimal(gridStepHint);
-
+    timeUnit = getTimeUnit(gridStepHint);
+    BigDecimal gridStep = null;
+    int[] steps = validTickStepsMap.get(timeUnit);
+    for (int i = 0; i < steps.length - 1; i++) {
+      if (gridStepHint < (timeUnit * steps[i] + timeUnit * steps[i + 1]) / 2.0) {
+        gridStep = new BigDecimal(timeUnit * steps[i]);
+        break;
+      }
     }
 
     return gridStep;
@@ -129,6 +142,21 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
     return firstPosition;
   }
 
+  private long getTimeUnit(long gridStepHint) {
+
+    for (Entry<Long, int[]> entry : validTickStepsMap.entrySet()) {
+
+      long groupMagnitude = entry.getKey();
+      int[] steps = entry.getValue();
+      long validTickStepMagnitude = (long) ((groupMagnitude * steps[steps.length - 2] + groupMagnitude * steps[steps.length - 1]) / 2.0);
+      if (gridStepHint < validTickStepMagnitude) {
+        return groupMagnitude;
+      }
+    }
+
+    return YEAR_SCALE;
+  }
+
   /**
    * Format a date value
    * 
@@ -137,28 +165,23 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
    * @param max
    * @return
    */
-  public String formatDateValue(BigDecimal value, BigDecimal min, BigDecimal max) {
+  public String formatDateValue(BigDecimal value) {
 
     String datePattern;
-    // TODO check if min and max are the same, then calculate this differently
 
     // intelligently set date pattern if none is given
-    long diff = max.subtract(min).longValue();
-
-    if (diff < SEC_SCALE) {
+    if (timeUnit == MILLIS_SCALE) {
       datePattern = "ss.SSS";
-    } else if (diff < MIN_SCALE) {
+    } else if (timeUnit == SEC_SCALE) {
       datePattern = "mm:ss";
-    } else if (diff < HOUR_SCALE) {
+    } else if (timeUnit == MIN_SCALE) {
       datePattern = "HH:mm";
-    } else if (diff < DAY_SCALE) {
-      datePattern = "EEE HH:mm";
-    } else if (diff < WEEK_SCALE) {
-      datePattern = "EEE";
-    } else if (diff < MONTH_SCALE) {
-      datePattern = "MMM-dd";
-    } else if (diff < YEAR_SCALE) {
-      datePattern = "yyyy:MMM";
+    } else if (timeUnit == HOUR_SCALE) {
+      datePattern = "dd-HH";
+    } else if (timeUnit == DAY_SCALE) {
+      datePattern = "MM-dd";
+    } else if (timeUnit == MONTH_SCALE) {
+      datePattern = "yyyy-MM";
     } else {
       datePattern = "yyyy";
     }

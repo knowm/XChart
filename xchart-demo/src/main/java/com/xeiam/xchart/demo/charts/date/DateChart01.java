@@ -19,7 +19,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
@@ -29,6 +28,11 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.line.ExampleChart;
 import com.xeiam.xchart.style.Series;
 
+/**
+ * Millisecond scale
+ * 
+ * @author timmolter
+ */
 public class DateChart01 implements ExampleChart {
 
   public static void main(String[] args) {
@@ -67,7 +71,6 @@ public class DateChart01 implements ExampleChart {
     chart.setChartTitle("DateChart01");
     chart.getStyleManager().setLegendVisible(false);
     Series series = chart.addDateSeries("value", xData, yData);
-    System.out.println(Arrays.toString(xData.toArray()));
 
     return chart;
 
