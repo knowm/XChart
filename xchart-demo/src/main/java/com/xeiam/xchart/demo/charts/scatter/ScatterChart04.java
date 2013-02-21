@@ -13,27 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.line;
+package com.xeiam.xchart.demo.charts.scatter;
 
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-import com.xeiam.xchart.style.SeriesColor;
-import com.xeiam.xchart.style.SeriesLineStyle;
 import com.xeiam.xchart.style.SeriesMarker;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
- * Error bars
+ * Error Bars
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Error Bars
+ * <li>Using ChartBuilder to Make a Chart
+ * <li>List<Number> data sets
+ * <li>Setting Series Marker and Marker Color
  */
-public class LineChart08 implements ExampleChart {
+public class ScatterChart04 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart08();
+    ExampleChart exampleChart = new ScatterChart04();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -43,9 +51,9 @@ public class LineChart08 implements ExampleChart {
 
     // generates data
     int size = 10;
-    Collection<Number> xData1 = new ArrayList<Number>();
-    Collection<Number> yData1 = new ArrayList<Number>();
-    Collection<Number> errorBars = new ArrayList<Number>();
+    List<Number> xData1 = new ArrayList<Number>();
+    List<Number> yData1 = new ArrayList<Number>();
+    List<Number> errorBars = new ArrayList<Number>();
     for (int i = 0; i <= size; i++) {
       xData1.add(i);
       yData1.add(10 * Math.exp(-i));
@@ -53,19 +61,17 @@ public class LineChart08 implements ExampleChart {
     }
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new ChartBuilder().width(800).height(600).title("ScatterChart04").xAxisTitle("X").yAxisTitle("Y").chartType(ChartType.Scatter).build();
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendVisible(false);
     chart.getStyleManager().setAxisTitlesVisible(false);
 
-    // Series 1
-    Series series1 = chart.addSeries("10^(-x)", xData1, yData1, errorBars);
-    series1.setLineColor(SeriesColor.PURPLE);
-    series1.setLineStyle(SeriesLineStyle.DASH_DASH);
-    series1.setMarkerColor(SeriesColor.GREEN);
-    series1.setMarker(SeriesMarker.SQUARE);
+    // Series
+    Series series = chart.addSeries("10^(-x)", xData1, yData1, errorBars);
+    series.setMarkerColor(Color.RED);
+    series.setMarker(SeriesMarker.SQUARE);
 
     return chart;
   }

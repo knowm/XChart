@@ -13,20 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.line;
+package com.xeiam.xchart.demo.charts.theme;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
+import com.xeiam.xchart.style.theme.GGPlot2Theme;
 
 /**
- * Single point
+ * GGPlot2 Theme
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Building a Chart with ChartBuilder
+ * <li>Applying the GGPlot2 Theme to the Chart
+ * <li>Vertical and Horizontal Lines
  */
-public class LineChart06 implements ExampleChart {
+public class ThemeChart02 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart06();
+    ExampleChart exampleChart = new ThemeChart02();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -35,14 +43,10 @@ public class LineChart06 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new ChartBuilder().width(800).height(600).theme(new GGPlot2Theme()).title("ThemeChart02").xAxisTitle("X").yAxisTitle("Y").build();
 
-    // Customize Chart
-    chart.setChartTitle("LineChart06");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
-
-    chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
+    chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
+    chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
 
     return chart;
   }

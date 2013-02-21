@@ -13,28 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.line;
+package com.xeiam.xchart.demo.charts.theme;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-import com.xeiam.xchart.style.theme.GGPlot2Theme;
 
 /**
- * GGPlot2 Theme
- * <p>
- * Demonstrates the following:
- * <ul>
- * <li>Building a Chart with ChartBuilder</li>
- * <li>Applying the GGPlot2 Theme to the Chart</li>
- * </ul>
+ * Default XChart Theme
  */
-public class LineChart05 implements ExampleChart {
+public class ThemeChart01 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart05();
+    ExampleChart exampleChart = new ThemeChart01();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -43,19 +38,28 @@ public class LineChart05 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).theme(new GGPlot2Theme()).build();
+    Chart chart = new Chart(800, 600);
 
-    // new LineChart(800, 600);
+    for (int i = 1; i <= 14; i++) {
 
-    // Customize Chart
-    chart.setChartTitle("LineChart05");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
+      // generates linear data
+      int b = 20;
+      Collection<Number> xData = new ArrayList<Number>();
+      Collection<Number> yData = new ArrayList<Number>();
+      for (int x = 0; x <= b; x++) {
+        xData.add(2 * x - b);
+        yData.add(2 * i * x - i * b);
+      }
 
-    chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
-    chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
+      // Customize Chart
+      chart.setChartTitle("ThemeChart01");
+      chart.setXAxisTitle("X");
+      chart.setYAxisTitle("Y");
 
+      String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
+      chart.addSeries(seriesName, xData, yData);
+
+    }
     return chart;
   }
-
 }

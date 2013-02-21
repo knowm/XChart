@@ -31,8 +31,7 @@ import com.xeiam.xchart.style.SeriesMarker;
  * <p>
  * * Demonstrates the following:
  * <ul>
- * <li>Customizing the series style properties</li>
- * </ul>
+ * <li>Customizing the series style properties
  */
 public class LineChart02 implements ExampleChart {
 

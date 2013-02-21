@@ -39,16 +39,14 @@ import com.xeiam.xchart.demo.charts.date.DateChart06;
 import com.xeiam.xchart.demo.charts.date.DateChart07;
 import com.xeiam.xchart.demo.charts.line.LineChart01;
 import com.xeiam.xchart.demo.charts.line.LineChart02;
-import com.xeiam.xchart.demo.charts.line.LineChart03;
-import com.xeiam.xchart.demo.charts.line.LineChart05;
-import com.xeiam.xchart.demo.charts.line.LineChart06;
-import com.xeiam.xchart.demo.charts.line.LineChart07;
-import com.xeiam.xchart.demo.charts.line.LineChart08;
 import com.xeiam.xchart.demo.charts.line.LineChart09;
 import com.xeiam.xchart.demo.charts.line.LineChart10;
-import com.xeiam.xchart.demo.charts.line.LineChart11;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart01;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart02;
+import com.xeiam.xchart.demo.charts.scatter.ScatterChart03;
+import com.xeiam.xchart.demo.charts.scatter.ScatterChart04;
+import com.xeiam.xchart.demo.charts.theme.ThemeChart01;
+import com.xeiam.xchart.demo.charts.theme.ThemeChart02;
 
 /**
  * Class containing all XChart example charts
@@ -88,7 +86,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     JScrollPane treeView = new JScrollPane(tree);
 
     // Create Chart Panel
-    chartPanel = new XChartPanel(new LineChart01().getChart());
+    chartPanel = new XChartPanel(new AreaChart01().getChart());
 
     // Add the scroll panes to a split pane.
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -138,25 +136,10 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart01 - Manual Data", new LineChart01().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart01 -  Logarithmic Y-Axis", new LineChart01().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart02 - Customized series style", new LineChart02().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart03 - Multiple curves on one Chart", new LineChart03().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart05 - Vertical and horizontal lines", new LineChart05().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart06 - Single point", new LineChart06().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart07 - Longs as X-Axis data", new LineChart07().getChart()));
-    category.add(chart);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart08 - Error bars", new LineChart08().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart02 - Customized Series Style", new LineChart02().getChart()));
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("LineChart09 - Extensive chart customization", new LineChart09().getChart()));
@@ -165,16 +148,20 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     chart = new DefaultMutableTreeNode(new ChartInfo("LineChart10 - Plots Hundreds of Series on One Plot", new LineChart10().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart11 - Using ChartBuilder to Make a Chart", new LineChart11().getChart()));
-    category.add(chart);
-
     // Scatter category
     category = new DefaultMutableTreeNode("Scatter Charts");
     top.add(category);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart01 - Gaussian Blob", new ScatterChart01().getChart()));
     category.add(chart);
+
     chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart02 - Logarithmic Data", new ScatterChart02().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart03 - Single point", new ScatterChart03().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart04 - Error Bars", new ScatterChart04().getChart()));
     category.add(chart);
 
     // Area category
@@ -182,6 +169,16 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     top.add(category);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("AreaChart01 - 3-Series", new AreaChart01().getChart()));
+    category.add(chart);
+
+    // Theme category
+    category = new DefaultMutableTreeNode("Chart Themes");
+    top.add(category);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("ThemeChart01 - Default XChart Theme", new ThemeChart01().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("ThemeChart01 - GGPlot2 Theme", new ThemeChart02().getChart()));
     category.add(chart);
 
     // Date category

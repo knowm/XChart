@@ -68,14 +68,16 @@ public class AxisTickLabels implements ChartPart {
         // System.out.println(tickLabel);
         int tickLocation = axisTick.getTickLocations().get(i);
 
-        FontRenderContext frc = g.getFontRenderContext();
-        // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
-        TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
-        Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
-        layout.draw(g, xOffset, (int) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
+        if (tickLabel != null) { // some are null for logarithmic axes
+          FontRenderContext frc = g.getFontRenderContext();
+          // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
+          TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
+          Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
+          layout.draw(g, xOffset, (int) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
-        if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
-          maxTickLabelWidth = (int) tickLabelBounds.getWidth();
+          if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
+            maxTickLabelWidth = (int) tickLabelBounds.getWidth();
+          }
         }
       }
 
@@ -94,8 +96,8 @@ public class AxisTickLabels implements ChartPart {
         String tickLabel = axisTick.getTickLabels().get(i);
         int tickLocation = axisTick.getTickLocations().get(i);
 
-        FontRenderContext frc = g.getFontRenderContext();
         if (tickLabel != null) { // some are null for logarithmic axes
+          FontRenderContext frc = g.getFontRenderContext();
           TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
           Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
           layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
