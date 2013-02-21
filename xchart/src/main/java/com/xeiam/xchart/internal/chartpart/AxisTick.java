@@ -23,6 +23,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.AxisTickCalculator;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateAxisTickCalculator;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.LogarithmicAxisTickCalculator;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberAxisTickCalculator;
 
 /**
@@ -81,7 +82,15 @@ public class AxisTick implements ChartPart {
       // System.out.println("workingspace= " + workingSpace);
     }
 
-    if (axis.getAxisType() == AxisType.Number) {
+    if (axis.getDirection() == Axis.Direction.X && getChart().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+
+      gridStep = new LogarithmicAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+
+    } else if (axis.getDirection() == Axis.Direction.Y && getChart().getStyleManager().isYAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+
+      gridStep = new LogarithmicAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+
+    } else if (axis.getAxisType() == AxisType.Number) {
 
       gridStep = new NumberAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
 

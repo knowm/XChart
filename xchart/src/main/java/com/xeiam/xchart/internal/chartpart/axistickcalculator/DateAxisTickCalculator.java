@@ -28,7 +28,6 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.style.StyleManager;
@@ -109,8 +108,7 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
    * @param tickSpace in plot space
    * @return
    */
-  @Override
-  public BigDecimal getGridStep(int tickSpace) {
+  private BigDecimal getGridStep(int tickSpace) {
 
     // the span of the data
     long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
@@ -128,18 +126,6 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
     }
 
     return gridStep;
-  }
-
-  @Override
-  public BigDecimal getFirstPosition(final BigDecimal min, BigDecimal gridStep) {
-
-    BigDecimal firstPosition;
-    if (min.remainder(gridStep).doubleValue() <= 0.0) {
-      firstPosition = min.subtract(min.remainder(gridStep));
-    } else {
-      firstPosition = min.subtract(min.remainder(gridStep)).add(gridStep);
-    }
-    return firstPosition;
   }
 
   private long getTimeUnit(long gridStepHint) {
@@ -191,12 +177,6 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
     simpleDateformat.applyPattern(datePattern);
 
     return simpleDateformat.format(value.longValueExact());
-  }
-
-  @Override
-  public AxisType getAxisType() {
-
-    return AxisType.Date;
   }
 
 }

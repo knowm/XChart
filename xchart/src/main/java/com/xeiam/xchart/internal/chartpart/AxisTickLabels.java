@@ -95,12 +95,14 @@ public class AxisTickLabels implements ChartPart {
         int tickLocation = axisTick.getTickLocations().get(i);
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
-        Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
-        layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
+        if (tickLabel != null) { // some are null for logarithmic axes
+          TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
+          Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
+          layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
 
-        if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
-          maxTickLabelHeight = (int) tickLabelBounds.getHeight();
+          if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
+            maxTickLabelHeight = (int) tickLabelBounds.getHeight();
+          }
         }
       }
 

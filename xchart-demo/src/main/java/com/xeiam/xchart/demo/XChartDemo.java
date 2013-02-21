@@ -48,6 +48,7 @@ import com.xeiam.xchart.demo.charts.line.LineChart09;
 import com.xeiam.xchart.demo.charts.line.LineChart10;
 import com.xeiam.xchart.demo.charts.line.LineChart11;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart01;
+import com.xeiam.xchart.demo.charts.scatter.ScatterChart02;
 
 /**
  * Class containing all XChart example charts
@@ -172,6 +173,8 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     top.add(category);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart01 - Gaussian Blob", new ScatterChart01().getChart()));
+    category.add(chart);
+    chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart02 - Logarithmic Data", new ScatterChart02().getChart()));
     category.add(chart);
 
     // Area category

@@ -18,6 +18,7 @@ package com.xeiam.xchart.demo.charts.line;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.demo.charts.ExampleChart;
 import com.xeiam.xchart.style.theme.GGPlot2Theme;
 
 /**

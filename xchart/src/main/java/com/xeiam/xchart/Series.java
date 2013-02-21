@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.style;
+package com.xeiam.xchart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -24,6 +24,10 @@ import java.util.Iterator;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.markers.Marker;
+import com.xeiam.xchart.style.SeriesColor;
+import com.xeiam.xchart.style.SeriesColorMarkerLineStyle;
+import com.xeiam.xchart.style.SeriesLineStyle;
+import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart

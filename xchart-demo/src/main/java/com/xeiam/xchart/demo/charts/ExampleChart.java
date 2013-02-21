@@ -19,12 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.demo.charts.line;
+package com.xeiam.xchart.demo.charts;
 
 import com.xeiam.xchart.Chart;
 
-/**
- */
 public interface ExampleChart {
 
   public Chart getChart();

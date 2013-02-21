@@ -84,6 +84,8 @@ public class StyleManager {
   private boolean isAxisTicksLineVisible;
   private int plotPadding;
   private int axisTitlePadding;
+  private boolean isXAxisLogarithmic;
+  private boolean isYAxisLogarithmic;
 
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
@@ -149,6 +151,8 @@ public class StyleManager {
     isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
     plotPadding = theme.getPlotPadding();
     axisTitlePadding = theme.getAxisTitlePadding();
+    isXAxisLogarithmic = false;
+    isYAxisLogarithmic = false;
 
     // Chart Plot Area ///////////////////////////////
     isPlotGridLinesVisible = theme.isPlotGridLinesVisible();
@@ -647,6 +651,36 @@ public class StyleManager {
   public int getAxisTitlePadding() {
 
     return axisTitlePadding;
+  }
+
+  /**
+   * sets the X-Axis to be rendered with a logarithmic scale or not
+   * 
+   * @param isXAxisLogarithmic
+   */
+  public void setXAxisLogarithmic(boolean isXAxisLogarithmic) {
+
+    this.isXAxisLogarithmic = isXAxisLogarithmic;
+  }
+
+  public boolean isXAxisLogarithmic() {
+
+    return isXAxisLogarithmic;
+  }
+
+  /**
+   * sets the Y-Axis to be rendered with a logarithmic scale or not
+   * 
+   * @param isYAxisLogarithmic
+   */
+  public void setYAxisLogarithmic(boolean isYAxisLogarithmic) {
+
+    this.isYAxisLogarithmic = isYAxisLogarithmic;
+  }
+
+  public boolean isYAxisLogarithmic() {
+
+    return isYAxisLogarithmic;
   }
 
   // Chart Plot Area ///////////////////////////////

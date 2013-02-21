@@ -26,8 +26,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
-import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
@@ -78,9 +78,17 @@ public class PlotContent implements ChartPart {
       Collection<?> xData = series.getxData();
       BigDecimal xMin = getChart().getAxisPair().getxAxis().getMin();
       BigDecimal xMax = getChart().getAxisPair().getxAxis().getMax();
+      if (getChart().getStyleManager().isXAxisLogarithmic()) {
+        xMin = new BigDecimal(Math.log10(xMin.doubleValue()));
+        xMax = new BigDecimal(Math.log10(xMax.doubleValue()));
+      }
       Collection<Number> yData = series.getyData();
       BigDecimal yMin = getChart().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChart().getAxisPair().getyAxis().getMax();
+      if (getChart().getStyleManager().isYAxisLogarithmic()) {
+        yMin = new BigDecimal(Math.log10(yMin.doubleValue()));
+        yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
+      }
       Collection<Number> errorBars = series.getErrorBars();
 
       int previousX = Integer.MIN_VALUE;
@@ -103,7 +111,16 @@ public class PlotContent implements ChartPart {
           // System.out.println(x);
         }
 
+        if (getChart().getStyleManager().isXAxisLogarithmic()) {
+          x = new BigDecimal(Math.log10(x.doubleValue()));
+        }
+
         BigDecimal y = new BigDecimal(yItr.next().doubleValue());
+
+        if (getChart().getStyleManager().isYAxisLogarithmic()) {
+          y = new BigDecimal(Math.log10(y.doubleValue()));
+        }
+
         // System.out.println(y);
         double eb = 0.0;
         if (errorBars != null) {

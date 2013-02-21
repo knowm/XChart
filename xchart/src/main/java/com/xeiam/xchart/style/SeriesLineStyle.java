@@ -83,7 +83,7 @@ public enum SeriesLineStyle {
    * @param seriesMarker
    * @return an AWT Stroke
    */
-  protected static BasicStroke getBasicStroke(SeriesLineStyle seriesMarker) {
+  public static BasicStroke getBasicStroke(SeriesLineStyle seriesMarker) {
 
     return seriesMarker.basicStroke;
   }

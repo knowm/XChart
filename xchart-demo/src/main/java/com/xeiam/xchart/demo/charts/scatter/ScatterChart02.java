@@ -13,25 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.area;
+package com.xeiam.xchart.demo.charts.scatter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 import com.xeiam.xchart.style.StyleManager.ChartType;
 import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
- * 3-Series
+ * Logarithmic Data
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Scatter chart
+ * <li>Logarithmic X-Axis
+ * <li>Place legend at Inside-NW position
  * 
  * @author timmolter
  */
-public class AreaChart01 implements ExampleChart {
+public class ScatterChart02 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new AreaChart01();
+    ExampleChart exampleChart = new ScatterChart02();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -39,15 +48,27 @@ public class AreaChart01 implements ExampleChart {
   @Override
   public Chart getChart() {
 
+    List<Number> xData = new ArrayList<Number>();
+    List<Number> yData = new ArrayList<Number>();
+    Random random = new Random();
+    int size = 400;
+    for (int i = 0; i < size; i++) {
+      double nextRandom = random.nextDouble();
+      xData.add(Math.pow(10, nextRandom * 10));
+      yData.add(nextRandom + random.nextDouble());
+    }
+
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title("AreaChart01").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });
-    chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
-    chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
+    Chart chart = new Chart(800, 600);
+    chart.setChartTitle("Logarithmic Data");
+    chart.getStyleManager().setChartType(ChartType.Scatter);
+    chart.getStyleManager().setXAxisLogarithmic(true);
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+
+    // Series
+    chart.addSeries("logarithmic data", xData, yData);
 
     return chart;
   }

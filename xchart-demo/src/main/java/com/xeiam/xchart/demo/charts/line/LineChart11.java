@@ -18,6 +18,7 @@ package com.xeiam.xchart.demo.charts.line;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Using ChartBuilder to Make a Chart

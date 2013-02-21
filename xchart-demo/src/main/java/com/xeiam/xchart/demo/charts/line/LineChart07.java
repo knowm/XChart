@@ -20,6 +20,7 @@ import java.util.Collection;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Longs as X-Axis data

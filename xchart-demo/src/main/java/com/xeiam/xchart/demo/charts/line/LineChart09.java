@@ -26,9 +26,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.demo.charts.ExampleChart;
 import com.xeiam.xchart.style.ChartColor;
-import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.SeriesColor;
 import com.xeiam.xchart.style.SeriesLineStyle;
 import com.xeiam.xchart.style.SeriesMarker;

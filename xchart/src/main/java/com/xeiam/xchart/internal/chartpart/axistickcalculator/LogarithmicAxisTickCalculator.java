@@ -23,12 +23,12 @@ package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
 
-import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
+import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.style.StyleManager;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for logarithmic axes
  * 
  * @author timmolter
  */
@@ -46,98 +46,56 @@ public class LogarithmicAxisTickCalculator extends AxisTickCalculator {
   public LogarithmicAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
+    calculate();
   }
 
-  /**
-   * Determine the grid step for the data set given the space in pixels allocated for the axis
-   * 
-   * @param tickSpace in plot space
-   * @return
-   */
-  @Override
-  public BigDecimal getGridStep(int tickSpace) {
+  private void calculate() {
 
-    // the span of the data
-    double span = Math.abs(maxValue.subtract(minValue).doubleValue()); // in data space
-
-    int tickMarkSpaceHint = (axisDirection == Direction.X ? DEFAULT_TICK_MARK_STEP_HINT_X : DEFAULT_TICK_MARK_STEP_HINT_Y);
-
-    // for very short plots, squeeze some more ticks in than normal
-    if (axisDirection == Direction.Y && tickSpace < 160) {
-      tickMarkSpaceHint = 25;
+    // a check if all axis data are the exact same values
+    if (minValue == maxValue) {
+      tickLabels.add(formatNumber(maxValue));
+      tickLocations.add((int) (workingSpace / 2.0));
+      return;
     }
 
-    double gridStepHint = span / tickSpace * tickMarkSpaceHint;
+    // tick space - a percentage of the working space available for ticks, i.e. 95%
+    int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space
 
-    // gridStepHint --> significand * 10 ** exponent
-    // e.g. 724.1 --> 7.241 * 10 ** 2
-    double significand = gridStepHint;
-    int exponent = 0;
-    if (significand == 0) {
-      exponent = 1;
-    } else if (significand < 1) {
-      while (significand < 1) {
-        significand *= 10.0;
-        exponent--;
+    // where the tick should begin in the working space in pixels
+    int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+
+    int logMin = (int) Math.floor(Math.log10(minValue.doubleValue()));
+    int logMax = (int) Math.ceil(Math.log10(maxValue.doubleValue()));
+
+    final BigDecimal min = new BigDecimal(minValue.doubleValue());
+    BigDecimal tickStep = pow(10, logMin - 1);
+
+    BigDecimal firstPosition = getFirstPosition(minValue, tickStep);
+
+    for (int i = logMin; i <= logMax; i++) { // for each decade
+
+      for (BigDecimal j = firstPosition; j.doubleValue() <= pow(10, i).doubleValue(); j = j.add(tickStep)) {
+
+        // System.out.println(Math.log10(j.doubleValue()) % 1);
+
+        if (j.doubleValue() > maxValue.doubleValue()) {
+          break;
+        }
+
+        // only add labels for the decades
+        if (Math.log10(j.doubleValue()) % 1 == 0.0) {
+          tickLabels.add(formatNumber(j));
+        } else {
+          tickLabels.add(null);
+        }
+
+        // add all the tick marks though
+        int tickLabelPosition = (int) (margin + (Math.log10(j.doubleValue()) - Math.log10(min.doubleValue())) / (Math.log10(maxValue.doubleValue()) - Math.log10(min.doubleValue())) * tickSpace);
+        tickLocations.add(tickLabelPosition);
       }
-    } else {
-      while (significand >= 10) {
-        significand /= 10.0;
-        exponent++;
-      }
+      tickStep = tickStep.multiply(pow(10, 1));
+      firstPosition = tickStep.add(pow(10, i));
     }
-
-    // calculate the grid step with hint.
-    BigDecimal gridStep;
-    if (significand > 7.5) {
-      // gridStep = 10.0 * 10 ** exponent
-      gridStep = BigDecimal.TEN.multiply(pow(10, exponent));
-    } else if (significand > 3.5) {
-      // gridStep = 5.0 * 10 ** exponent
-      gridStep = new BigDecimal(new Double(5).toString()).multiply(pow(10, exponent));
-    } else if (significand > 1.5) {
-      // gridStep = 2.0 * 10 ** exponent
-      gridStep = new BigDecimal(new Double(2).toString()).multiply(pow(10, exponent));
-    } else {
-      // gridStep = 1.0 * 10 ** exponent
-      gridStep = pow(10, exponent);
-    }
-    return gridStep;
   }
 
-  /**
-   * Calculates the value of the first argument raised to the power of the second argument.
-   * 
-   * @param base the base
-   * @param exponent the exponent
-   * @return the value <tt>a<sup>b</sup></tt> in <tt>BigDecimal</tt>
-   */
-  private BigDecimal pow(double base, int exponent) {
-
-    BigDecimal value;
-    if (exponent > 0) {
-      value = new BigDecimal(new Double(base).toString()).pow(exponent);
-    } else {
-      value = BigDecimal.ONE.divide(new BigDecimal(new Double(base).toString()).pow(-exponent));
-    }
-    return value;
-  }
-
-  @Override
-  public BigDecimal getFirstPosition(final BigDecimal min, BigDecimal gridStep) {
-
-    BigDecimal firstPosition;
-    if (min.remainder(gridStep).doubleValue() <= 0.0) {
-      firstPosition = min.subtract(min.remainder(gridStep));
-    } else {
-      firstPosition = min.subtract(min.remainder(gridStep)).add(gridStep);
-    }
-    return firstPosition;
-  }
-
-  @Override
-  public AxisType getAxisType() {
-
-    return AxisType.Number;
-  }
 }

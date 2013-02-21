@@ -23,7 +23,6 @@ package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
 
-import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.style.StyleManager;
@@ -84,8 +83,7 @@ public class NumberAxisTickCalculator extends AxisTickCalculator {
    * @param tickSpace in plot space
    * @return
    */
-  @Override
-  public BigDecimal getGridStep(int tickSpace) {
+  private BigDecimal getGridStep(int tickSpace) {
 
     // the span of the data
     double span = Math.abs(maxValue.subtract(minValue).doubleValue()); // in data space
@@ -133,42 +131,6 @@ public class NumberAxisTickCalculator extends AxisTickCalculator {
       gridStep = pow(10, exponent);
     }
     return gridStep;
-  }
-
-  /**
-   * Calculates the value of the first argument raised to the power of the second argument.
-   * 
-   * @param base the base
-   * @param exponent the exponent
-   * @return the value <tt>a<sup>b</sup></tt> in <tt>BigDecimal</tt>
-   */
-  private BigDecimal pow(double base, int exponent) {
-
-    BigDecimal value;
-    if (exponent > 0) {
-      value = new BigDecimal(new Double(base).toString()).pow(exponent);
-    } else {
-      value = BigDecimal.ONE.divide(new BigDecimal(new Double(base).toString()).pow(-exponent));
-    }
-    return value;
-  }
-
-  @Override
-  public BigDecimal getFirstPosition(final BigDecimal min, BigDecimal gridStep) {
-
-    BigDecimal firstPosition;
-    if (min.remainder(gridStep).doubleValue() <= 0.0) {
-      firstPosition = min.subtract(min.remainder(gridStep));
-    } else {
-      firstPosition = min.subtract(min.remainder(gridStep)).add(gridStep);
-    }
-    return firstPosition;
-  }
-
-  @Override
-  public AxisType getAxisType() {
-
-    return AxisType.Number;
   }
 
 }

@@ -22,8 +22,8 @@ import java.awt.font.TextLayout;
 import java.util.Map;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.markers.Marker;
-import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter

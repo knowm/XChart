@@ -24,9 +24,9 @@ import java.util.Date;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SwingWrapper;
-import com.xeiam.xchart.demo.charts.line.ExampleChart;
-import com.xeiam.xchart.style.Series;
+import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Month scale

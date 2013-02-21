@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SwingWrapper;
-import com.xeiam.xchart.style.Series;
 
 /**
  * @author timmolter

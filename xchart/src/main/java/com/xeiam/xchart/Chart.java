@@ -25,7 +25,6 @@ import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.internal.chartpart.ChartTitle;
 import com.xeiam.xchart.internal.chartpart.Legend;
 import com.xeiam.xchart.internal.chartpart.Plot;
-import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.StyleManager;
 import com.xeiam.xchart.style.theme.Theme;
 

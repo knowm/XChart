@@ -17,7 +17,6 @@ package com.xeiam.xchart;
 
 import java.util.Collection;
 
-import com.xeiam.xchart.style.Series;
 import com.xeiam.xchart.style.SeriesMarker;
 
 /**
