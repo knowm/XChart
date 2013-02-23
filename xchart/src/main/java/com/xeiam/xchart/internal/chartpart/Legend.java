@@ -97,7 +97,7 @@ public class Legend implements ChartPart {
       // Draw Legend Box
       int legendBoxWidth = legendContentWidth + 2 * chart.getStyleManager().getLegendPadding();
       int legendBoxHeight = legendContentHeight + 2 * chart.getStyleManager().getLegendPadding();
-      return new int[] { legendBoxWidth, legendBoxHeight, legendTextContentMaxHeight };
+      return new int[] { legendBoxWidth, legendBoxHeight, maxContentHeight };
     } else {
       return new int[] { 0, 0, 0 };
     }
@@ -115,7 +115,7 @@ public class Legend implements ChartPart {
 
       int legendBoxWidth = getSizeHint()[0];
       int legendBoxHeight = getSizeHint()[1];
-      int legendTextContentMaxHeight = getSizeHint()[2];
+      int maxContentHeight = getSizeHint()[2];
 
       // legend draw position
       int xOffset = 0;
@@ -162,12 +162,12 @@ public class Legend implements ChartPart {
           if (series.getStroke() != null) {
             g.setColor(series.getStrokeColor());
             g.setStroke(series.getStroke());
-            g.drawLine(startx, starty - Marker.Y_OFFSET, (int) (startx + Marker.SIZE * 3.0), starty - Marker.Y_OFFSET);
+            g.drawLine(startx, starty + (int) (maxContentHeight / 2.0), (int) (startx + Marker.SIZE * 3.0), starty + (int) (maxContentHeight / 2.0));
           }
           // paint marker
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
-            series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty - Marker.Y_OFFSET);
+            series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty + (int) (maxContentHeight / 2.0));
           }
         } else {
           // paint box
@@ -176,7 +176,6 @@ public class Legend implements ChartPart {
             g.fillPolygon(new int[] { startx, startx + BOX_SIZE, startx + BOX_SIZE, startx }, new int[] { starty, starty, starty + BOX_SIZE, starty + BOX_SIZE }, 4);
             g.setStroke(series.getStroke());
             g.drawPolygon(new int[] { startx, startx + BOX_SIZE, startx + BOX_SIZE, startx }, new int[] { starty, starty, starty + BOX_SIZE, starty + BOX_SIZE }, 4);
-
           }
         }
 
@@ -184,13 +183,12 @@ public class Legend implements ChartPart {
         g.setColor(chart.getStyleManager().getChartFontColor());
         TextLayout layout = new TextLayout(series.getName(), chart.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
         if (getChart().getStyleManager().getChartType() != ChartType.Bar) {
-          layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + chart.getStyleManager().getLegendPadding()),
-              (int) (starty + (Marker.SIZE + chart.getStyleManager().getLegendPadding()) / 2.0));
-          starty = starty + legendTextContentMaxHeight + chart.getStyleManager().getLegendPadding();
+          layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + chart.getStyleManager().getLegendPadding()), starty
+              + (int) ((maxContentHeight + layout.getPixelBounds(null, 0, 0).getHeight()) / 2.0));
         } else {
-          layout.draw(g, startx + BOX_SIZE + chart.getStyleManager().getLegendPadding(), (int) (starty + (BOX_SIZE + chart.getStyleManager().getLegendPadding()) / 2.0));
-          starty = starty + legendTextContentMaxHeight + chart.getStyleManager().getLegendPadding();
+          layout.draw(g, startx + BOX_SIZE + chart.getStyleManager().getLegendPadding(), starty + (int) ((maxContentHeight + layout.getPixelBounds(null, 0, 0).getHeight()) / 2.0));
         }
+        starty = starty + maxContentHeight + chart.getStyleManager().getLegendPadding();
       }
 
       // bounds
