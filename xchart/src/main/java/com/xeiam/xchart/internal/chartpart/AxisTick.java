@@ -100,11 +100,6 @@ public class AxisTick implements ChartPart {
 
     }
 
-    // if (getChart().getStyleManager()) {
-    //
-    // gridStep = new LogarithmicAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
-    // }
-
     if (isVisible) {
 
       axisTickLabels.paint(g);

@@ -38,7 +38,7 @@ public class PlotContent implements ChartPart {
   /** parent */
   private Plot plot;
 
-  private final Stroke errorBarStroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  private final Stroke errorBarStroke = new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /**
    * Constructor

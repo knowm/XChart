@@ -24,6 +24,7 @@ import java.util.Map;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.markers.Marker;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * @author timmolter
@@ -31,6 +32,7 @@ import com.xeiam.xchart.internal.markers.Marker;
 public class Legend implements ChartPart {
 
   private static final int LEGEND_MARGIN = 6;
+  private static final int BOX_SIZE = 20;
 
   /** parent */
   private final Chart chart;
@@ -77,13 +79,21 @@ public class Legend implements ChartPart {
       }
 
       // determine legend content height
-      int legendContentHeight = 0;
-      int maxContentHeight = Math.max(legendTextContentMaxHeight, Marker.SIZE);
-      legendContentHeight = maxContentHeight * seriesMap.size() + chart.getStyleManager().getLegendPadding() * (seriesMap.size() - 1);
+      int maxContentHeight = 0;
+      if (getChart().getStyleManager().getChartType() != ChartType.Bar) {
+        maxContentHeight = Math.max(legendTextContentMaxHeight, Marker.SIZE);
+      } else {
+        maxContentHeight = Math.max(legendTextContentMaxHeight, BOX_SIZE);
+      }
+      int legendContentHeight = maxContentHeight * seriesMap.size() + chart.getStyleManager().getLegendPadding() * (seriesMap.size() - 1);
 
       // determine legend content width
-      int legendContentWidth = (int) (3.0 * Marker.SIZE + chart.getStyleManager().getLegendPadding() + legendTextContentMaxWidth);
-
+      int legendContentWidth = 0;
+      if (getChart().getStyleManager().getChartType() != ChartType.Bar) {
+        legendContentWidth = (int) (3.0 * Marker.SIZE + chart.getStyleManager().getLegendPadding() + legendTextContentMaxWidth);
+      } else {
+        legendContentWidth = BOX_SIZE + chart.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
+      }
       // Draw Legend Box
       int legendBoxWidth = legendContentWidth + 2 * chart.getStyleManager().getLegendPadding();
       int legendBoxHeight = legendContentHeight + 2 * chart.getStyleManager().getLegendPadding();
@@ -146,23 +156,41 @@ public class Legend implements ChartPart {
       int starty = yOffset + chart.getStyleManager().getLegendPadding();
       for (Integer seriesId : seriesMap.keySet()) {
         Series series = seriesMap.get(seriesId);
-        // paint line
-        if (series.getStroke() != null) {
-          g.setColor(series.getStrokeColor());
-          g.setStroke(series.getStroke());
-          g.drawLine(startx, starty - Marker.Y_OFFSET, (int) (startx + Marker.SIZE * 3.0), starty - Marker.Y_OFFSET);
-        }
-        // paint marker
-        if (series.getMarker() != null) {
-          g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty - Marker.Y_OFFSET);
+
+        if (getChart().getStyleManager().getChartType() != ChartType.Bar) {
+          // paint line
+          if (series.getStroke() != null) {
+            g.setColor(series.getStrokeColor());
+            g.setStroke(series.getStroke());
+            g.drawLine(startx, starty - Marker.Y_OFFSET, (int) (startx + Marker.SIZE * 3.0), starty - Marker.Y_OFFSET);
+          }
+          // paint marker
+          if (series.getMarker() != null) {
+            g.setColor(series.getMarkerColor());
+            series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty - Marker.Y_OFFSET);
+          }
+        } else {
+          // paint box
+          if (series.getStroke() != null) {
+            g.setColor(series.getStrokeColor());
+            g.fillPolygon(new int[] { startx, startx + BOX_SIZE, startx + BOX_SIZE, startx }, new int[] { starty, starty, starty + BOX_SIZE, starty + BOX_SIZE }, 4);
+            g.setStroke(series.getStroke());
+            g.drawPolygon(new int[] { startx, startx + BOX_SIZE, startx + BOX_SIZE, startx }, new int[] { starty, starty, starty + BOX_SIZE, starty + BOX_SIZE }, 4);
+
+          }
         }
 
         // paint series name
         g.setColor(chart.getStyleManager().getChartFontColor());
         TextLayout layout = new TextLayout(series.getName(), chart.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
-        layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + chart.getStyleManager().getLegendPadding()), (starty + Marker.SIZE));
-        starty = starty + legendTextContentMaxHeight + chart.getStyleManager().getLegendPadding();
+        if (getChart().getStyleManager().getChartType() != ChartType.Bar) {
+          layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + chart.getStyleManager().getLegendPadding()),
+              (int) (starty + (Marker.SIZE + chart.getStyleManager().getLegendPadding()) / 2.0));
+          starty = starty + legendTextContentMaxHeight + chart.getStyleManager().getLegendPadding();
+        } else {
+          layout.draw(g, startx + BOX_SIZE + chart.getStyleManager().getLegendPadding(), (int) (starty + (BOX_SIZE + chart.getStyleManager().getLegendPadding()) / 2.0));
+          starty = starty + legendTextContentMaxHeight + chart.getStyleManager().getLegendPadding();
+        }
       }
 
       // bounds

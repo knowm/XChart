@@ -21,6 +21,7 @@ import java.awt.Stroke;
 import java.util.List;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * @author timmolter
@@ -82,15 +83,18 @@ public class PlotSurface implements ChartPart {
       }
 
       // vertical
-      List<Integer> xAxisTickLocations = getChart().getAxisPair().getxAxis().getAxisTick().getTickLocations();
-      for (int i = 0; i < xAxisTickLocations.size(); i++) {
+      if (getChart().getStyleManager().getChartType() != ChartType.Bar) {
 
-        int tickLocation = xAxisTickLocations.get(i);
+        List<Integer> xAxisTickLocations = getChart().getAxisPair().getxAxis().getAxisTick().getTickLocations();
+        for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
-        g.setColor(getChart().getStyleManager().getPlotGridLinesColor());
-        g.setStroke(stroke);
+          int tickLocation = xAxisTickLocations.get(i);
 
-        g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY()), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
+          g.setColor(getChart().getStyleManager().getPlotGridLinesColor());
+          g.setStroke(stroke);
+
+          g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY()), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
+        }
       }
     }
   }
