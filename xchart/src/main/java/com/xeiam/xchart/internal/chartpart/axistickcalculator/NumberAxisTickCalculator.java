@@ -34,6 +34,8 @@ import com.xeiam.xchart.style.StyleManager;
  */
 public class NumberAxisTickCalculator extends AxisTickCalculator {
 
+  NumberFormatter numberFormatter = null;
+
   /**
    * Constructor
    * 
@@ -46,6 +48,7 @@ public class NumberAxisTickCalculator extends AxisTickCalculator {
   public NumberAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
+    numberFormatter = new NumberFormatter(styleManager);
     calculate();
   }
 
@@ -53,7 +56,7 @@ public class NumberAxisTickCalculator extends AxisTickCalculator {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(formatNumber(maxValue));
+      tickLabels.add(numberFormatter.formatNumber(maxValue));
       tickLocations.add((int) (workingSpace / 2.0));
       return;
     }
@@ -70,7 +73,7 @@ public class NumberAxisTickCalculator extends AxisTickCalculator {
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
 
-      tickLabels.add(formatNumber(tickPosition));
+      tickLabels.add(numberFormatter.formatNumber(tickPosition));
       // here we convert tickPosition finally to plot space, i.e. pixels
       int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
       tickLocations.add(tickLabelPosition);

@@ -38,13 +38,13 @@ public class Chart {
   private int width;
   private int height;
 
-  private StyleManager styleManager = new StyleManager();
+  private final StyleManager styleManager;
 
   // Chart Parts
-  private Legend chartLegend = new Legend(this);
-  private AxisPair axisPair = new AxisPair(this);
-  private Plot plot = new Plot(this);
-  private ChartTitle chartTitle = new ChartTitle(this);
+  private Legend chartLegend;
+  private AxisPair axisPair;
+  private Plot plot;
+  private ChartTitle chartTitle;
 
   /**
    * Constructor
@@ -54,6 +54,11 @@ public class Chart {
    */
   public Chart(int width, int height) {
 
+    styleManager = new StyleManager();
+    chartLegend = new Legend(this);
+    axisPair = new AxisPair(this);
+    plot = new Plot(this);
+    chartTitle = new ChartTitle(this);
     this.width = width;
     this.height = height;
 
@@ -67,10 +72,10 @@ public class Chart {
   public Chart(ChartBuilder chartBuilder) {
 
     this(chartBuilder.width, chartBuilder.height);
+    setTheme(chartBuilder.theme);
     setChartTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
-    setTheme(chartBuilder.theme);
     getStyleManager().setChartType(chartBuilder.chartType);
   }
 
@@ -228,11 +233,6 @@ public class Chart {
    */
   public void setXAxisTitle(String title) {
 
-    if (title == null || title.trim().equalsIgnoreCase("")) {
-      styleManager.setxAxisTitleVisible(false);
-    } else {
-      styleManager.setxAxisTitleVisible(true);
-    }
     this.axisPair.getxAxis().getAxisTitle().setText(title);
   }
 
@@ -269,7 +269,6 @@ public class Chart {
   public void setTheme(Theme theme) {
 
     styleManager.setTheme(theme);
-
   }
 
   /**

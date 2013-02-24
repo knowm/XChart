@@ -36,11 +36,11 @@ import com.xeiam.xchart.style.StyleManager.ChartType;
  * <li>Positive and negative values
  * <li>Multiple series
  */
-public class BarChart04 implements ExampleChart {
+public class BarChart05 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new BarChart04();
+    ExampleChart exampleChart = new BarChart05();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -49,9 +49,9 @@ public class BarChart04 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart04").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.addSeries("a", new double[] { 10, 20, 30, 40 }, new double[] { 40, 30, 20, 60 });
-    chart.addSeries("b", new double[] { 10, 20, 30, 40 }, new double[] { 50, 10, 20, 40 });
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart05").xAxisTitle("X").yAxisTitle("Y").build();
+    chart.addSeries("a", new double[] { 10, 20, 30, 40 }, new double[] { -40, 30, 20, 60 });
+    chart.addSeries("b", new double[] { 10, 20, 30, 40 }, new double[] { 50, 10, -20, 40 });
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);

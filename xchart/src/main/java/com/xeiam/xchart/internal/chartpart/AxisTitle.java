@@ -144,6 +144,11 @@ public class AxisTitle implements ChartPart {
 
   public void setText(String text) {
 
+    if (text == null || text.trim().equalsIgnoreCase("")) {
+      getChart().getStyleManager().setxAxisTitleVisible(false);
+    } else {
+      getChart().getStyleManager().setxAxisTitleVisible(true);
+    }
     this.text = text;
   }
 }

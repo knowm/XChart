@@ -22,8 +22,6 @@
 package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -95,34 +93,6 @@ public abstract class AxisTickCalculator {
     } else {
       return BigDecimal.ONE.divide(new BigDecimal(base).pow(-exponent));
     }
-  }
-
-  /**
-   * Format a number value, if the override patterns are null, it uses defaults
-   * 
-   * @param value
-   * @return
-   */
-  public String formatNumber(BigDecimal value) {
-
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
-
-    BigDecimal absoluteValue = value.abs();
-
-    if (absoluteValue.compareTo(new BigDecimal("10000.000001")) == -1 && absoluteValue.compareTo(new BigDecimal(".0009999999")) == 1 || BigDecimal.ZERO.compareTo(value) == 0) {
-
-      DecimalFormat normalFormat = (DecimalFormat) numberFormat;
-      normalFormat.applyPattern(styleManager.getNormalDecimalPattern());
-      return normalFormat.format(value);
-
-    } else {
-
-      DecimalFormat scientificFormat = (DecimalFormat) numberFormat;
-      scientificFormat.applyPattern(styleManager.getScientificDecimalPattern());
-      return scientificFormat.format(value);
-
-    }
-
   }
 
   BigDecimal getFirstPosition(BigDecimal gridStep) {

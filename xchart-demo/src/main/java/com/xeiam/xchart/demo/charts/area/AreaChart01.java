@@ -46,7 +46,6 @@ public class AreaChart01 implements ExampleChart {
     chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
 
     return chart;

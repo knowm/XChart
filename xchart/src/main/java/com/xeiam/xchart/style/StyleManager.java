@@ -266,7 +266,7 @@ public class StyleManager {
   /**
    * Set the chart title visibility
    * 
-   * @param isVisible
+   * @param isChartTitleVisible
    */
   public void setChartTitleVisible(boolean isChartTitleVisible) {
 

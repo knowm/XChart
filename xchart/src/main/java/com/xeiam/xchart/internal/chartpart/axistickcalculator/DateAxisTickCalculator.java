@@ -22,11 +22,6 @@
 package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-import java.util.concurrent.TimeUnit;
 
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.internal.chartpart.AxisPair;
@@ -39,16 +34,7 @@ import com.xeiam.xchart.style.StyleManager;
  */
 public class DateAxisTickCalculator extends AxisTickCalculator {
 
-  public static final long MILLIS_SCALE = TimeUnit.MILLISECONDS.toMillis(1L);
-  public static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(1L);
-  public static final long MIN_SCALE = TimeUnit.MINUTES.toMillis(1L);
-  public static final long HOUR_SCALE = TimeUnit.HOURS.toMillis(1L);
-  public static final long DAY_SCALE = TimeUnit.DAYS.toMillis(1L);
-  public static final long MONTH_SCALE = TimeUnit.DAYS.toMillis(1L) * 31;
-  public static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
-
-  private Map<Long, int[]> validTickStepsMap;
-  private long timeUnit;
+  DateFormatter dateFormatter;
 
   /**
    * Constructor
@@ -62,15 +48,7 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
   public DateAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
-
-    validTickStepsMap = new TreeMap<Long, int[]>();
-    validTickStepsMap.put(MILLIS_SCALE, new int[] { 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000 });
-    validTickStepsMap.put(SEC_SCALE, new int[] { 1, 2, 5, 10, 15, 20, 30, 60 });
-    validTickStepsMap.put(MIN_SCALE, new int[] { 1, 2, 3, 5, 10, 15, 20, 30, 60 });
-    validTickStepsMap.put(HOUR_SCALE, new int[] { 1, 2, 4, 6, 12, 24 });
-    validTickStepsMap.put(DAY_SCALE, new int[] { 1, 2, 3, 5, 10, 15, 31 });
-    validTickStepsMap.put(MONTH_SCALE, new int[] { 1, 2, 3, 4, 6, 12 });
-    validTickStepsMap.put(YEAR_SCALE, new int[] { 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000 });
+    dateFormatter = new DateFormatter(styleManager);
     calculate();
   }
 
@@ -78,7 +56,7 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(formatDateValue(maxValue));
+      tickLabels.add(dateFormatter.formatDate(maxValue));
       tickLocations.add((int) (workingSpace / 2.0));
       return;
     }
@@ -95,7 +73,7 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
 
-      tickLabels.add(formatDateValue(tickPosition));
+      tickLabels.add(dateFormatter.formatDate(tickPosition));
       // here we convert tickPosition finally to plot space, i.e. pixels
       int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
       tickLocations.add(tickLabelPosition);
@@ -115,9 +93,9 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
 
     long gridStepHint = (long) (span / (double) tickSpace * DEFAULT_TICK_MARK_STEP_HINT_X);
 
-    timeUnit = getTimeUnit(gridStepHint);
+    long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     BigDecimal gridStep = null;
-    int[] steps = validTickStepsMap.get(timeUnit);
+    int[] steps = dateFormatter.getValidTickStepsMap().get(timeUnit);
     for (int i = 0; i < steps.length - 1; i++) {
       if (gridStepHint < (timeUnit * steps[i] + timeUnit * steps[i + 1]) / 2.0) {
         gridStep = new BigDecimal(timeUnit * steps[i]);
@@ -126,57 +104,6 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
     }
 
     return gridStep;
-  }
-
-  private long getTimeUnit(long gridStepHint) {
-
-    for (Entry<Long, int[]> entry : validTickStepsMap.entrySet()) {
-
-      long groupMagnitude = entry.getKey();
-      int[] steps = entry.getValue();
-      long validTickStepMagnitude = (long) ((groupMagnitude * steps[steps.length - 2] + groupMagnitude * steps[steps.length - 1]) / 2.0);
-      if (gridStepHint < validTickStepMagnitude) {
-        return groupMagnitude;
-      }
-    }
-
-    return YEAR_SCALE;
-  }
-
-  /**
-   * Format a date value
-   * 
-   * @param value
-   * @param min
-   * @param max
-   * @return
-   */
-  public String formatDateValue(BigDecimal value) {
-
-    String datePattern;
-
-    // intelligently set date pattern if none is given
-    if (timeUnit == MILLIS_SCALE) {
-      datePattern = "ss.SSS";
-    } else if (timeUnit == SEC_SCALE) {
-      datePattern = "mm:ss";
-    } else if (timeUnit == MIN_SCALE) {
-      datePattern = "HH:mm";
-    } else if (timeUnit == HOUR_SCALE) {
-      datePattern = "dd-HH";
-    } else if (timeUnit == DAY_SCALE) {
-      datePattern = "MM-dd";
-    } else if (timeUnit == MONTH_SCALE) {
-      datePattern = "yyyy-MM";
-    } else {
-      datePattern = "yyyy";
-    }
-
-    SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styleManager.getLocale());
-    simpleDateformat.setTimeZone(styleManager.getTimezone());
-    simpleDateformat.applyPattern(datePattern);
-
-    return simpleDateformat.format(value.longValueExact());
   }
 
 }

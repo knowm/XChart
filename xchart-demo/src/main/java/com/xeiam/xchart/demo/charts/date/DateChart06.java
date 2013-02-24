@@ -48,7 +48,7 @@ public class DateChart06 implements ExampleChart {
     // Create Chart
     Chart chart = new Chart(800, 600);
 
-    // generates linear data
+    // generate data
     Collection<Date> xData = new ArrayList<Date>();
     Collection<Number> yData = new ArrayList<Number>();
 

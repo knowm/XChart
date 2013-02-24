@@ -21,6 +21,14 @@
  */
 package com.xeiam.xchart.demo.charts.bar;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Random;
+
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
@@ -32,7 +40,7 @@ import com.xeiam.xchart.style.StyleManager.ChartType;
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>Number categories
+ * <li>Date categories
  * <li>All negative values
  * <li>Single series
  */
@@ -49,11 +57,24 @@ public class BarChart02 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart01").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.addSeries("a", new double[] { 10, 20, 30, 40 }, new double[] { -40, -30, -20, -60 });
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
 
-    // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
+    Collection<Date> xData = new ArrayList<Date>();
+    Collection<Number> yData = new ArrayList<Number>();
+
+    Random random = new Random();
+    DateFormat sdf = new SimpleDateFormat("yyyy");
+    Date date = null;
+    for (int i = 1; i <= 8; i++) {
+      try {
+        date = sdf.parse("" + (2000 + i));
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+      xData.add(date);
+      yData.add(random.nextInt(i) + 1);
+    }
+    chart.addDateSeries("Model 77", xData, yData);
 
     return chart;
   }

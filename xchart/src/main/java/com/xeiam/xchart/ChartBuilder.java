@@ -30,13 +30,13 @@ import com.xeiam.xchart.style.theme.XChartTheme;
  */
 public class ChartBuilder {
 
-  protected ChartType chartType = ChartType.Line;
-  protected int width = 800;
-  protected int height = 600;
-  protected String title = "";
-  protected String xAxisTitle = "";
-  protected String yAxisTitle = "";
-  protected Theme theme = new XChartTheme();
+  ChartType chartType = ChartType.Line;
+  int width = 800;
+  int height = 600;
+  String title = "";
+  String xAxisTitle = "";
+  String yAxisTitle = "";
+  Theme theme = new XChartTheme();
 
   public ChartBuilder chartType(ChartType chartType) {
 

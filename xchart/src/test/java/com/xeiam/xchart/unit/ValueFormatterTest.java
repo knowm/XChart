@@ -29,8 +29,7 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.xeiam.xchart.internal.chartpart.Axis.Direction;
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberAxisTickCalculator;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberFormatter;
 import com.xeiam.xchart.style.StyleManager;
 
 /**
@@ -44,59 +43,59 @@ public class ValueFormatterTest {
   public void testNumberFormatting() {
 
     StyleManager styleManager = new StyleManager();
-    NumberAxisTickCalculator numberAxisTickCalculator = new NumberAxisTickCalculator(Direction.X, 1000, new BigDecimal(10), new BigDecimal(90), styleManager);
+    NumberFormatter numberFormatter = new NumberFormatter(styleManager);
 
     // big
     styleManager.setLocale(locale);
 
     BigDecimal value = new BigDecimal("1");
-    String stringValue = numberAxisTickCalculator.formatNumber(value);
+    String stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("1"));
 
     value = new BigDecimal(1000L);
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("1000"));
 
     value = new BigDecimal("9999");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("9999"));
 
     value = new BigDecimal(20000L);
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("2E4"));
 
     value = new BigDecimal("200.23");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("200.23"));
 
     // small
 
     value = new BigDecimal("0.01");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("0.01"));
 
     value = new BigDecimal("0.001");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("0.001"));
 
     value = new BigDecimal("0.0012");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("0.0012"));
 
     value = new BigDecimal("0.0001");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("1E-4"));
 
     value = new BigDecimal(".00012");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("1.2E-4"));
 
     value = new BigDecimal("0.0");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("0"));
 
     value = new BigDecimal("0");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("0"));
 
     // other case
@@ -115,21 +114,21 @@ public class ValueFormatterTest {
     styleManager.setLocale(Locale.GERMANY);
 
     value = new BigDecimal("0.01");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("0,01"));
 
     value = new BigDecimal("200.23");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("200,23"));
 
     styleManager.setNormalDecimalPattern("#.#");
     value = new BigDecimal("200.23");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("200,2"));
 
     styleManager.setScientificDecimalPattern("0.#E0");
     value = new BigDecimal("2009764.23");
-    stringValue = numberAxisTickCalculator.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(value);
     assertThat(stringValue, equalTo("2E6"));
 
   }

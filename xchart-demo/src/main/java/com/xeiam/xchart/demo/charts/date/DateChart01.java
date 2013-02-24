@@ -50,7 +50,7 @@ public class DateChart01 implements ExampleChart {
 
     Random random = new Random();
 
-    // generates linear data
+    // generate data
     Collection<Date> xData = new ArrayList<Date>();
     Collection<Number> yData = new ArrayList<Number>();
 

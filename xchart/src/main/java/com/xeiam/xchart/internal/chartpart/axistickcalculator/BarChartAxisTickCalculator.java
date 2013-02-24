@@ -90,9 +90,21 @@ public class BarChartAxisTickCalculator extends AxisTickCalculator {
     int firstPosition = (int) (gridStep / 2.0);
 
     // generate all tickLabels and tickLocations from the first to last position
+    NumberFormatter numberFormatter = null;
+    DateFormatter dateFormatter = null;
+
+    if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+      numberFormatter = new NumberFormatter(styleManager);
+    } else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+      dateFormatter = new DateFormatter(chart.getStyleManager());
+    }
     int counter = 0;
     for (BigDecimal category : categories) {
-      tickLabels.add(formatNumber(category));
+      if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+        tickLabels.add(numberFormatter.formatNumber(category));
+      } else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+        tickLabels.add(dateFormatter.formatDate(category));
+      }
       int tickLabelPosition = margin + firstPosition + gridStep * counter++;
       tickLocations.add(tickLabelPosition);
     }

@@ -34,6 +34,8 @@ import com.xeiam.xchart.style.StyleManager;
  */
 public class LogarithmicAxisTickCalculator extends AxisTickCalculator {
 
+  NumberFormatter numberFormatter = null;
+
   /**
    * Constructor
    * 
@@ -46,6 +48,7 @@ public class LogarithmicAxisTickCalculator extends AxisTickCalculator {
   public LogarithmicAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
+    numberFormatter = new NumberFormatter(styleManager);
     calculate();
   }
 
@@ -53,7 +56,7 @@ public class LogarithmicAxisTickCalculator extends AxisTickCalculator {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(formatNumber(maxValue));
+      tickLabels.add(numberFormatter.formatNumber(maxValue));
       tickLocations.add((int) (workingSpace / 2.0));
       return;
     }
@@ -84,7 +87,7 @@ public class LogarithmicAxisTickCalculator extends AxisTickCalculator {
 
         // only add labels for the decades
         if (Math.log10(j.doubleValue()) % 1 == 0.0) {
-          tickLabels.add(formatNumber(j));
+          tickLabels.add(numberFormatter.formatNumber(j));
         } else {
           tickLabels.add(null);
         }

@@ -30,8 +30,8 @@ public class ChartTitle implements ChartPart {
   /** parent */
   private final Chart chart;
 
-  /** the bounds */
-  private Rectangle bounds;
+  // /** the bounds */
+  // private Rectangle bounds;
 
   /** the title text */
   private String text = ""; // default to ""
@@ -82,7 +82,7 @@ public class ChartTitle implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    bounds = new Rectangle();
+    // bounds = new Rectangle();
     g.setFont(chart.getStyleManager().getChartTitleFont());
 
     if (chart.getStyleManager().isChartTitleVisible()) {
@@ -107,7 +107,7 @@ public class ChartTitle implements ChartPart {
       xOffset = (int) (chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0);
       yOffset = (int) (chart.getStyleManager().getChartPadding() - rectangle.getY() + chart.getStyleManager().getChartTitlePadding());
 
-      bounds = new Rectangle(xOffset, yOffset + ((int) rectangle.getY()), (int) rectangle.getWidth(), (int) (rectangle.getHeight()));
+      // bounds = new Rectangle(xOffset, yOffset + ((int) rectangle.getY()), (int) rectangle.getWidth(), (int) (rectangle.getHeight()));
       // g.setColor(Color.green);
       // g.draw(bounds);
 

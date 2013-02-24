@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
@@ -48,7 +47,7 @@ public class DateChart07 implements ExampleChart {
     // Create Chart
     Chart chart = new Chart(800, 600);
 
-    // generates linear data
+    // generate data
     Collection<Date> xData = new ArrayList<Date>();
     Collection<Number> yData = new ArrayList<Number>();
 
@@ -69,7 +68,7 @@ public class DateChart07 implements ExampleChart {
     // Customize Chart
     chart.setChartTitle("DateChart06");
     chart.getStyleManager().setLegendVisible(false);
-    Series series = chart.addDateSeries("value", xData, yData);
+    chart.addDateSeries("value", xData, yData);
 
     return chart;
 
