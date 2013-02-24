@@ -130,6 +130,8 @@ public class Series {
       } else if (axisType == AxisType.Date) {
         Date date = (Date) dataPoint;
         bigDecimal = new BigDecimal(date.getTime());
+      } else if (axisType == AxisType.String) {
+        return new BigDecimal[] { null, null };
       }
       if (min == null || bigDecimal.compareTo(min) < 0) {
         min = bigDecimal;

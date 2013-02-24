@@ -20,7 +20,14 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
+ * 
+ */
+/**
  * Single point
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Single point
  */
 public class ScatterChart03 implements ExampleChart {
 
@@ -38,7 +45,7 @@ public class ScatterChart03 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("ScatterChart03");
+    chart.setChartTitle("Single Point");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
 

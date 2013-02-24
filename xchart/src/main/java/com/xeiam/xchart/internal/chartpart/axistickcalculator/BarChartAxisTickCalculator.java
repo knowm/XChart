@@ -65,20 +65,20 @@ public class BarChartAxisTickCalculator extends AxisTickCalculator {
     int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
 
     // get all categories
-    Set<BigDecimal> categories = new TreeSet<BigDecimal>();
+    Set<Object> categories = new TreeSet<Object>();
     Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
     for (Integer seriesId : seriesMap.keySet()) {
 
       Series series = seriesMap.get(seriesId);
       Iterator<?> xItr = series.getxData().iterator();
       while (xItr.hasNext()) {
-        BigDecimal x = null;
+        Object x = null;
         if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
           x = new BigDecimal(((Number) xItr.next()).doubleValue());
-        }
-        if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+        } else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
           x = new BigDecimal(((Date) xItr.next()).getTime());
-          // System.out.println(x);
+        } else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
+          x = xItr.next();
         }
         categories.add(x);
       }
@@ -99,11 +99,16 @@ public class BarChartAxisTickCalculator extends AxisTickCalculator {
       dateFormatter = new DateFormatter(chart.getStyleManager());
     }
     int counter = 0;
-    for (BigDecimal category : categories) {
+    for (Object category : categories) {
       if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
-        tickLabels.add(numberFormatter.formatNumber(category));
+        tickLabels.add(numberFormatter.formatNumber((BigDecimal) category));
       } else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
-        tickLabels.add(dateFormatter.formatDate(category));
+        long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
+        long gridStepHint = (long) (span / (double) tickSpace * DEFAULT_TICK_MARK_STEP_HINT_X);
+        long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
+        tickLabels.add(dateFormatter.formatDate((BigDecimal) category, timeUnit));
+      } else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
+        tickLabels.add(category.toString());
       }
       int tickLabelPosition = margin + firstPosition + gridStep * counter++;
       tickLocations.add(tickLabelPosition);

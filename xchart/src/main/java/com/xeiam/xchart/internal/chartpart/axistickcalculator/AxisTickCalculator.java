@@ -70,7 +70,7 @@ public abstract class AxisTickCalculator {
     // override min/max value for bar charts' Y-Axis
     BigDecimal overrideMinValue = minValue;
     BigDecimal overrideMaxValue = maxValue;
-    if (styleManager.getChartType() == ChartType.Bar) { // this is the Y-Axis for a bar chart
+    if (styleManager.getChartType() == ChartType.Bar && axisDirection == Direction.Y) { // this is the Y-Axis for a bar chart
       if (minValue.compareTo(BigDecimal.ZERO) > 0 && maxValue.compareTo(BigDecimal.ZERO) > 0) {
         overrideMinValue = BigDecimal.ZERO;
       }

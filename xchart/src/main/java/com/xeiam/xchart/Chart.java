@@ -117,6 +117,19 @@ public class Chart {
   // PUBLIC SETTERS
 
   /**
+   * Add a Category series to the chart
+   * 
+   * @param seriesName
+   * @param xData
+   * @param yData
+   * @return
+   */
+  public Series addCategorySeries(String seriesName, Collection<String> xData, Collection<Number> yData) {
+
+    return axisPair.addSeries(seriesName, xData, yData, null);
+  }
+
+  /**
    * Add a Date series to the chart
    * 
    * @param seriesName

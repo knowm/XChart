@@ -90,6 +90,8 @@ public class AxisPair implements ChartPart {
         xAxis.setAxisType(AxisType.Number);
       } else if (dataPoint instanceof Date) {
         xAxis.setAxisType(AxisType.Date);
+      } else if (dataPoint instanceof String) {
+        xAxis.setAxisType(AxisType.String);
       }
       yAxis.setAxisType(AxisType.Number);
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());

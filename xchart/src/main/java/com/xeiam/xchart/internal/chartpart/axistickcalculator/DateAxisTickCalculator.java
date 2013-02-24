@@ -54,39 +54,11 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
 
   private void calculate() {
 
-    // a check if all axis data are the exact same values
-    if (minValue == maxValue) {
-      tickLabels.add(dateFormatter.formatDate(maxValue));
-      tickLocations.add((int) (workingSpace / 2.0));
-      return;
-    }
-
     // tick space - a percentage of the working space available for ticks, i.e. 95%
     int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
-
-    BigDecimal gridStep = getGridStep(tickSpace);
-    BigDecimal firstPosition = getFirstPosition(gridStep);
-
-    // generate all tickLabels and tickLocations from the first to last position
-    for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
-
-      tickLabels.add(dateFormatter.formatDate(tickPosition));
-      // here we convert tickPosition finally to plot space, i.e. pixels
-      int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
-      tickLocations.add(tickLabelPosition);
-    }
-  }
-
-  /**
-   * Determine the grid step for the data set given the space in pixels allocated for the axis
-   * 
-   * @param tickSpace in plot space
-   * @return
-   */
-  private BigDecimal getGridStep(int tickSpace) {
 
     // the span of the data
     long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
@@ -103,7 +75,16 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
       }
     }
 
-    return gridStep;
+    BigDecimal firstPosition = getFirstPosition(gridStep);
+
+    // generate all tickLabels and tickLocations from the first to last position
+    for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
+
+      tickLabels.add(dateFormatter.formatDate(tickPosition, timeUnit));
+      // here we convert tickPosition finally to plot space, i.e. pixels
+      int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
+      tickLocations.add(tickLabelPosition);
+    }
   }
 
 }

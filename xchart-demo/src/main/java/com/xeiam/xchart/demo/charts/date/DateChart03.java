@@ -24,12 +24,12 @@ import java.util.Date;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.Series;
+import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * Minute scale
+ * Minute Scale
  * 
  * @author timmolter
  */
@@ -46,7 +46,8 @@ public class DateChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart chart = new ChartBuilder().width(800).height(600).title("Minute Scale").build();
+    chart.getStyleManager().setLegendVisible(false);
 
     // generate data
     Collection<Date> xData = new ArrayList<Date>();
@@ -66,10 +67,7 @@ public class DateChart03 implements ExampleChart {
       yData.add(Math.random() * i);
     }
 
-    // Customize Chart
-    chart.setChartTitle("DateChart03");
-    chart.getStyleManager().setLegendVisible(false);
-    Series series = chart.addDateSeries("value", xData, yData);
+    chart.addDateSeries("blah", xData, yData);
 
     return chart;
 

@@ -19,7 +19,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -27,7 +26,6 @@ import java.util.TreeSet;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
-import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 
 /**
  * @author timmolter
@@ -70,7 +68,6 @@ public class PlotContentBarChart extends PlotContent {
     }
     int numBars = categories.size();
     int gridStep = (int) (xTickSpace / (double) numBars);
-    int firstPosition = (int) (gridStep / 2.0);
 
     // plot series
     int seriesCounter = 0;
@@ -91,29 +88,13 @@ public class PlotContentBarChart extends PlotContent {
       }
 
       Iterator<?> categoryItr = categories.iterator();
-      Iterator<?> xItr = xData.iterator();
       Iterator<Number> yItr = yData.iterator();
 
       int barCounter = 0;
       while (categoryItr.hasNext()) {
 
-        // BigDecimal category = null;
-        // if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
-        // category = new BigDecimal(((Number) categoryItr.next()).doubleValue());
-        // }
-        // if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
-        // category = new BigDecimal(((Date) categoryItr.next()).getTime());
-        // }
-
         if (xData.contains(categoryItr.next())) {
 
-          BigDecimal x = null;
-          if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
-            x = new BigDecimal(((Number) xItr.next()).doubleValue());
-          }
-          if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
-            x = new BigDecimal(((Date) xItr.next()).getTime());
-          }
           BigDecimal y = new BigDecimal(yItr.next().doubleValue());
           int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
           int yOffset = (int) (bounds.getY() + yTransform);

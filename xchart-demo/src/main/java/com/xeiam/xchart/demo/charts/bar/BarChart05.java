@@ -21,6 +21,9 @@
  */
 package com.xeiam.xchart.demo.charts.bar;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
@@ -32,7 +35,7 @@ import com.xeiam.xchart.style.theme.GGPlot2Theme;
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>Number categories
+ * <li>String categories
  * <li>Positive and negative values
  * <li>Multiple series
  */
@@ -49,12 +52,10 @@ public class BarChart05 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Temperature vs. Length").xAxisTitle("Length").yAxisTitle("Temperature").theme(new GGPlot2Theme()).build();
-    chart.addSeries("fish", new double[] { 10, 20, 30, 40 }, new double[] { -40, 30, 20, 60 });
-    chart.addSeries("worms", new double[] { 10, 20, 30, 40 }, new double[] { 50, 10, -20, 40 });
-
-    // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Temperature vs. Color").xAxisTitle("Color").yAxisTitle("Temperature").theme(new GGPlot2Theme()).build();
+    // List<Number> data = ;
+    chart.addCategorySeries("fish", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow" })), new ArrayList<Number>(Arrays.asList(new Number[] { -40, 30, 20, 60 })));
+    chart.addCategorySeries("worms", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow" })), new ArrayList<Number>(Arrays.asList(new Number[] { 50, 10, -20, 40 })));
 
     return chart;
   }

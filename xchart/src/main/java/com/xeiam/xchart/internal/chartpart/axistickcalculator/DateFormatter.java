@@ -44,7 +44,6 @@ public class DateFormatter {
   public static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
 
   private Map<Long, int[]> validTickStepsMap;
-  private long timeUnit;
 
   private final StyleManager styleManager;
 
@@ -87,7 +86,7 @@ public class DateFormatter {
    * @param max
    * @return
    */
-  String formatDate(BigDecimal value) {
+  String formatDate(BigDecimal value, long timeUnit) {
 
     String datePattern;
 
