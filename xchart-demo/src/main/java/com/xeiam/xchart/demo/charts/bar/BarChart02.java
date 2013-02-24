@@ -43,6 +43,7 @@ import com.xeiam.xchart.style.StyleManager.ChartType;
  * <li>Date categories
  * <li>All negative values
  * <li>Single series
+ * <li>No horizontal plot gridlines
  */
 public class BarChart02 implements ExampleChart {
 
@@ -75,6 +76,7 @@ public class BarChart02 implements ExampleChart {
       yData.add(random.nextInt(i) + 1);
     }
     chart.addDateSeries("Model 77", xData, yData);
+    chart.getStyleManager().setPlotGridLinesVisible(false);
 
     return chart;
   }

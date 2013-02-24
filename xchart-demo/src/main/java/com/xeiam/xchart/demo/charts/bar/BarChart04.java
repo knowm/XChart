@@ -28,13 +28,14 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
- * Basic Bar Chart
+ * Missing Point in Series
  * <p>
  * Demonstrates the following:
  * <ul>
  * <li>Number categories
- * <li>Positive and negative values
+ * <li>Positive values
  * <li>Multiple series
+ * <li>Missing point in series
  */
 public class BarChart04 implements ExampleChart {
 
@@ -49,12 +50,9 @@ public class BarChart04 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart04").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.addSeries("a", new double[] { 10, 20, 30, 40 }, new double[] { 40, 30, 20, 60 });
-    chart.addSeries("b", new double[] { 10, 20, 30, 40 }, new double[] { 50, 10, 20, 40 });
-
-    // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
+    chart.addSeries("male", new double[] { 10, 20, 30, 50 }, new double[] { 40, 30, 20, 60 });
+    chart.addSeries("female", new double[] { 10, 20, 30, 40, 50 }, new double[] { 50, 10, 20, 40, 35 });
 
     return chart;
   }

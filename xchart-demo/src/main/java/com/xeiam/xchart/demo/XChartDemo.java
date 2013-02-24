@@ -34,6 +34,7 @@ import com.xeiam.xchart.demo.charts.bar.BarChart01;
 import com.xeiam.xchart.demo.charts.bar.BarChart02;
 import com.xeiam.xchart.demo.charts.bar.BarChart03;
 import com.xeiam.xchart.demo.charts.bar.BarChart04;
+import com.xeiam.xchart.demo.charts.bar.BarChart05;
 import com.xeiam.xchart.demo.charts.date.DateChart01;
 import com.xeiam.xchart.demo.charts.date.DateChart02;
 import com.xeiam.xchart.demo.charts.date.DateChart03;
@@ -181,7 +182,10 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     chart = new DefaultMutableTreeNode(new ChartInfo("BarChart03 - Basic Bar Chart", new BarChart03().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart04 - Basic Bar Chart", new BarChart04().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart04 - Missing Point in Series", new BarChart04().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart05 - Basic Bar Chart", new BarChart05().getChart()));
     category.add(chart);
 
     // Area category

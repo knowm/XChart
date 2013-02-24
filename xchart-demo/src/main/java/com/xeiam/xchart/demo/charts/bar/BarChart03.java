@@ -49,11 +49,8 @@ public class BarChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart03").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.addSeries("a", new double[] { 10, 20, 30, 40 }, new double[] { 40, -30, -20, -60 });
-
-    // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score vs. Age").xAxisTitle("Age").yAxisTitle("Score").build();
+    chart.addSeries("males", new double[] { 10, 20, 30, 40 }, new double[] { 40, -30, -20, -60 });
 
     return chart;
   }

@@ -51,11 +51,10 @@ public class BarChart01 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart01").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.addSeries("a", new double[] { 0, 1, 2, 3, 4 }, new double[] { 4, 5, 9, 6, 5 });
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histgram").xAxisTitle("Score").yAxisTitle("Number").build();
+    chart.addSeries("test 1", new double[] { 0, 1, 2, 3, 4 }, new double[] { 4, 5, 9, 6, 5 });
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
 
     return chart;

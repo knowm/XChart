@@ -58,21 +58,14 @@ public class PlotContentBarChart extends PlotContent {
     int yTopMargin = AxisPair.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     // get all categories
-    Set<BigDecimal> categories = new TreeSet<BigDecimal>();
+    Set<Object> categories = new TreeSet<Object>();
     Map<Integer, Series> seriesMap = getChart().getAxisPair().getSeriesMap();
     for (Integer seriesId : seriesMap.keySet()) {
 
       Series series = seriesMap.get(seriesId);
       Iterator<?> xItr = series.getxData().iterator();
       while (xItr.hasNext()) {
-        BigDecimal x = null;
-        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
-          x = new BigDecimal(((Number) xItr.next()).doubleValue());
-        }
-        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
-          x = new BigDecimal(((Date) xItr.next()).getTime());
-        }
-        categories.add(x);
+        categories.add(xItr.next());
       }
     }
     int numBars = categories.size();
@@ -97,21 +90,30 @@ public class PlotContentBarChart extends PlotContent {
         yMax = BigDecimal.ZERO;
       }
 
+      Iterator<?> categoryItr = categories.iterator();
       Iterator<?> xItr = xData.iterator();
       Iterator<Number> yItr = yData.iterator();
 
       int barCounter = 0;
-      while (xItr.hasNext()) {
-        BigDecimal x = null;
-        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
-          x = new BigDecimal(((Number) xItr.next()).doubleValue());
-        }
-        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
-          x = new BigDecimal(((Date) xItr.next()).getTime());
-        }
+      while (categoryItr.hasNext()) {
 
-        if (categories.contains(x)) {
+        // BigDecimal category = null;
+        // if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+        // category = new BigDecimal(((Number) categoryItr.next()).doubleValue());
+        // }
+        // if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+        // category = new BigDecimal(((Date) categoryItr.next()).getTime());
+        // }
 
+        if (xData.contains(categoryItr.next())) {
+
+          BigDecimal x = null;
+          if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+            x = new BigDecimal(((Number) xItr.next()).doubleValue());
+          }
+          if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+            x = new BigDecimal(((Date) xItr.next()).getTime());
+          }
           BigDecimal y = new BigDecimal(yItr.next().doubleValue());
           int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
           int yOffset = (int) (bounds.getY() + yTransform);
@@ -125,6 +127,8 @@ public class PlotContentBarChart extends PlotContent {
           int xOffset = (int) (bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin);
           g.setColor(series.getStrokeColor());
           g.fillPolygon(new int[] { xOffset, xOffset + barWidth, xOffset + barWidth, xOffset }, new int[] { yOffset, yOffset, zeroOffset, zeroOffset }, 4);
+        } else {
+          barCounter++;
         }
       }
       seriesCounter++;

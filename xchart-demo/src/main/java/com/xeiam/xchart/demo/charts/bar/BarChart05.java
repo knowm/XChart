@@ -26,9 +26,9 @@ import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 import com.xeiam.xchart.style.StyleManager.ChartType;
+import com.xeiam.xchart.style.theme.GGPlot2Theme;
 
 /**
- * Basic Bar Chart
  * <p>
  * Demonstrates the following:
  * <ul>
@@ -49,9 +49,9 @@ public class BarChart05 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart05").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.addSeries("a", new double[] { 10, 20, 30, 40 }, new double[] { -40, 30, 20, 60 });
-    chart.addSeries("b", new double[] { 10, 20, 30, 40 }, new double[] { 50, 10, -20, 40 });
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Temperature vs. Length").xAxisTitle("Length").yAxisTitle("Temperature").theme(new GGPlot2Theme()).build();
+    chart.addSeries("fish", new double[] { 10, 20, 30, 40 }, new double[] { -40, 30, 20, 60 });
+    chart.addSeries("worms", new double[] { 10, 20, 30, 40 }, new double[] { 50, 10, -20, 40 });
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
