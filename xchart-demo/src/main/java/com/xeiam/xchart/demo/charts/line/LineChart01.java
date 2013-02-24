@@ -28,7 +28,7 @@ import com.xeiam.xchart.style.StyleManager.LegendPosition;
 /**
  * Logarithmic Y-Axis
  * <p>
- * * Demonstrates the following:
+ * Demonstrates the following:
  * <ul>
  * <li>Logarithmic Y-Axis
  * <li>Building a Chart with ChartBuilder

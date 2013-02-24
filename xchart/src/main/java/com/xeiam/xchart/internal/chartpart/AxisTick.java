@@ -22,9 +22,11 @@ import java.util.List;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.AxisTickCalculator;
+import com.xeiam.xchart.internal.chartpart.axistickcalculator.BarChartAxisTickCalculator;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateAxisTickCalculator;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.LogarithmicAxisTickCalculator;
 import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberAxisTickCalculator;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * An axis tick
@@ -82,7 +84,11 @@ public class AxisTick implements ChartPart {
       // System.out.println("workingspace= " + workingSpace);
     }
 
-    if (axis.getDirection() == Axis.Direction.X && getChart().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+    if (axis.getDirection() == Axis.Direction.X && getChart().getStyleManager().getChartType() == ChartType.Bar) {
+
+      gridStep = new BarChartAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart());
+
+    } else if (axis.getDirection() == Axis.Direction.X && getChart().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
 
       gridStep = new LogarithmicAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
 

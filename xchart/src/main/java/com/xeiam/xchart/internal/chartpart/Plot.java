@@ -19,6 +19,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * @author timmolter
@@ -44,7 +45,7 @@ public class Plot implements ChartPart {
 
     this.chart = chart;
     this.plotSurface = new PlotSurface(this);
-    this.plotContent = new PlotContent(this);
+
   }
 
   @Override
@@ -69,6 +70,11 @@ public class Plot implements ChartPart {
     // g.draw(bounds);
 
     plotSurface.paint(g);
+    if (getChart().getStyleManager().getChartType() == ChartType.Bar) {
+      this.plotContent = new PlotContentBarChart(this);
+    } else {
+      this.plotContent = new PlotContentLineChart(this);
+    }
     plotContent.paint(g);
 
   }

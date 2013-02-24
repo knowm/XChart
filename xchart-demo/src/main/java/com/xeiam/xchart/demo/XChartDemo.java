@@ -30,6 +30,10 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.xeiam.xchart.XChartPanel;
 import com.xeiam.xchart.demo.charts.area.AreaChart01;
+import com.xeiam.xchart.demo.charts.bar.BarChart01;
+import com.xeiam.xchart.demo.charts.bar.BarChart02;
+import com.xeiam.xchart.demo.charts.bar.BarChart03;
+import com.xeiam.xchart.demo.charts.bar.BarChart04;
 import com.xeiam.xchart.demo.charts.date.DateChart01;
 import com.xeiam.xchart.demo.charts.date.DateChart02;
 import com.xeiam.xchart.demo.charts.date.DateChart03;
@@ -162,6 +166,22 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("ScatterChart04 - Error Bars", new ScatterChart04().getChart()));
+    category.add(chart);
+
+    // Bar category
+    category = new DefaultMutableTreeNode("Bar Charts");
+    top.add(category);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart01 - Basic Bar Chart", new BarChart01().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart02 - Basic Bar Chart", new BarChart02().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart03 - Basic Bar Chart", new BarChart03().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart04 - Basic Bar Chart", new BarChart04().getChart()));
     category.add(chart);
 
     // Area category

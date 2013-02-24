@@ -65,7 +65,7 @@ public class NumberAxisTickCalculator extends AxisTickCalculator {
     int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
 
     BigDecimal gridStep = getGridStep(tickSpace);
-    BigDecimal firstPosition = getFirstPosition(minValue, gridStep);
+    BigDecimal firstPosition = getFirstPosition(gridStep);
 
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {

@@ -22,17 +22,24 @@
 package com.xeiam.xchart.internal.chartpart.axistickcalculator;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
+import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
+import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.internal.chartpart.AxisPair;
-import com.xeiam.xchart.style.StyleManager;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for logarithmic axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
  * 
  * @author timmolter
  */
-public class LogarithmicAxisTickCalculator extends AxisTickCalculator {
+public class BarChartAxisTickCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
@@ -43,20 +50,13 @@ public class LogarithmicAxisTickCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public LogarithmicAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public BarChartAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, Chart chart) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, styleManager);
-    calculate();
+    super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
+    calculate(chart);
   }
 
-  private void calculate() {
-
-    // a check if all axis data are the exact same values
-    if (minValue == maxValue) {
-      tickLabels.add(formatNumber(maxValue));
-      tickLocations.add((int) (workingSpace / 2.0));
-      return;
-    }
+  private void calculate(Chart chart) {
 
     // tick space - a percentage of the working space available for ticks, i.e. 95%
     int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space
@@ -64,37 +64,37 @@ public class LogarithmicAxisTickCalculator extends AxisTickCalculator {
     // where the tick should begin in the working space in pixels
     int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
 
-    int logMin = (int) Math.floor(Math.log10(minValue.doubleValue()));
-    int logMax = (int) Math.ceil(Math.log10(maxValue.doubleValue()));
+    // get all categories
+    Set<BigDecimal> categories = new TreeSet<BigDecimal>();
+    Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
+    for (Integer seriesId : seriesMap.keySet()) {
 
-    final BigDecimal min = new BigDecimal(minValue.doubleValue());
-    BigDecimal tickStep = pow(10, logMin - 1);
-
-    BigDecimal firstPosition = getFirstPosition(tickStep);
-
-    for (int i = logMin; i <= logMax; i++) { // for each decade
-
-      for (BigDecimal j = firstPosition; j.doubleValue() <= pow(10, i).doubleValue(); j = j.add(tickStep)) {
-
-        // System.out.println(Math.log10(j.doubleValue()) % 1);
-
-        if (j.doubleValue() > maxValue.doubleValue()) {
-          break;
+      Series series = seriesMap.get(seriesId);
+      Iterator<?> xItr = series.getxData().iterator();
+      while (xItr.hasNext()) {
+        BigDecimal x = null;
+        if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+          x = new BigDecimal(((Number) xItr.next()).doubleValue());
         }
-
-        // only add labels for the decades
-        if (Math.log10(j.doubleValue()) % 1 == 0.0) {
-          tickLabels.add(formatNumber(j));
-        } else {
-          tickLabels.add(null);
+        if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+          x = new BigDecimal(((Date) xItr.next()).getTime());
+          // System.out.println(x);
         }
-
-        // add all the tick marks though
-        int tickLabelPosition = (int) (margin + (Math.log10(j.doubleValue()) - Math.log10(min.doubleValue())) / (Math.log10(maxValue.doubleValue()) - Math.log10(min.doubleValue())) * tickSpace);
-        tickLocations.add(tickLabelPosition);
+        categories.add(x);
       }
-      tickStep = tickStep.multiply(pow(10, 1));
-      firstPosition = tickStep.add(pow(10, i));
+    }
+
+    int numCategories = categories.size();
+
+    int gridStep = (int) (tickSpace / (double) numCategories);
+    int firstPosition = (int) (gridStep / 2.0);
+
+    // generate all tickLabels and tickLocations from the first to last position
+    int counter = 0;
+    for (BigDecimal category : categories) {
+      tickLabels.add(formatNumber(category));
+      int tickLabelPosition = margin + firstPosition + gridStep * counter++;
+      tickLocations.add(tickLabelPosition);
     }
   }
 

@@ -29,6 +29,7 @@ import java.util.List;
 
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 import com.xeiam.xchart.style.StyleManager;
+import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * @author timmolter
@@ -68,10 +69,22 @@ public abstract class AxisTickCalculator {
    */
   public AxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
+    // override min/max value for bar charts' Y-Axis
+    BigDecimal overrideMinValue = minValue;
+    BigDecimal overrideMaxValue = maxValue;
+    if (styleManager.getChartType() == ChartType.Bar) { // this is the Y-Axis for a bar chart
+      if (minValue.compareTo(BigDecimal.ZERO) > 0 && maxValue.compareTo(BigDecimal.ZERO) > 0) {
+        overrideMinValue = BigDecimal.ZERO;
+      }
+      if (minValue.compareTo(BigDecimal.ZERO) < 0 && maxValue.compareTo(BigDecimal.ZERO) < 0) {
+        overrideMaxValue = BigDecimal.ZERO;
+      }
+    }
+
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
-    this.minValue = minValue;
-    this.maxValue = maxValue;
+    this.minValue = overrideMinValue;
+    this.maxValue = overrideMaxValue;
     this.styleManager = styleManager;
   }
 
@@ -112,13 +125,13 @@ public abstract class AxisTickCalculator {
 
   }
 
-  BigDecimal getFirstPosition(final BigDecimal min, BigDecimal gridStep) {
+  BigDecimal getFirstPosition(BigDecimal gridStep) {
 
     BigDecimal firstPosition;
-    if (min.remainder(gridStep).doubleValue() <= 0.0) {
-      firstPosition = min.subtract(min.remainder(gridStep));
+    if (minValue.remainder(gridStep).doubleValue() <= 0.0) {
+      firstPosition = minValue.subtract(minValue.remainder(gridStep));
     } else {
-      firstPosition = min.subtract(min.remainder(gridStep)).add(gridStep);
+      firstPosition = minValue.subtract(minValue.remainder(gridStep)).add(gridStep);
     }
     return firstPosition;
   }

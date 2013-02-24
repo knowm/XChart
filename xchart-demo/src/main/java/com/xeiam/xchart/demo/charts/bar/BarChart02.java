@@ -26,7 +26,6 @@ import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 import com.xeiam.xchart.style.StyleManager.ChartType;
-import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * Basic Bar Chart
@@ -34,15 +33,14 @@ import com.xeiam.xchart.style.StyleManager.LegendPosition;
  * Demonstrates the following:
  * <ul>
  * <li>Number categories
- * <li>All positive values
+ * <li>All negative values
  * <li>Single series
- * <li>Place legend at Inside-NW position
  */
-public class BarChart01 implements ExampleChart {
+public class BarChart02 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new BarChart01();
+    ExampleChart exampleChart = new BarChart02();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -52,11 +50,10 @@ public class BarChart01 implements ExampleChart {
 
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("BarChart01").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.addSeries("a", new double[] { 0, 1, 2, 3, 4 }, new double[] { 4, 5, 9, 6, 5 });
+    chart.addSeries("a", new double[] { 10, 20, 30, 40 }, new double[] { -40, -30, -20, -60 });
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
 
     return chart;
   }

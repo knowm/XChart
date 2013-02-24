@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
@@ -94,7 +95,7 @@ public class Legend implements ChartPart {
       } else {
         legendContentWidth = BOX_SIZE + chart.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
       }
-      // Draw Legend Box
+      // Legend Box
       int legendBoxWidth = legendContentWidth + 2 * chart.getStyleManager().getLegendPadding();
       int legendBoxHeight = legendContentHeight + 2 * chart.getStyleManager().getLegendPadding();
       return new int[] { legendBoxWidth, legendBoxHeight, maxContentHeight };
@@ -145,7 +146,7 @@ public class Legend implements ChartPart {
       default:
         break;
       }
-
+      g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
       g.setColor(chart.getStyleManager().getLegendBorderColor());
       g.drawRect(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
       g.setColor(chart.getStyleManager().getLegendBackgroundColor());
@@ -170,12 +171,12 @@ public class Legend implements ChartPart {
             series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), starty + (int) (maxContentHeight / 2.0));
           }
         } else {
-          // paint box
+          // paint little box
           if (series.getStroke() != null) {
             g.setColor(series.getStrokeColor());
             g.fillPolygon(new int[] { startx, startx + BOX_SIZE, startx + BOX_SIZE, startx }, new int[] { starty, starty, starty + BOX_SIZE, starty + BOX_SIZE }, 4);
-            g.setStroke(series.getStroke());
-            g.drawPolygon(new int[] { startx, startx + BOX_SIZE, startx + BOX_SIZE, startx }, new int[] { starty, starty, starty + BOX_SIZE, starty + BOX_SIZE }, 4);
+            // g.setStroke(series.getStroke());
+            // g.drawPolygon(new int[] { startx, startx + BOX_SIZE, startx + BOX_SIZE, startx }, new int[] { starty, starty, starty + BOX_SIZE, starty + BOX_SIZE }, 4);
           }
         }
 
