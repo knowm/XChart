@@ -203,7 +203,7 @@ public class Axis implements ChartPart {
       }
 
       int width = (int) (getChart().getWidth() - axisPair.getyAxis().getBounds().getWidth() - chartLegendWidth - (getChart().getStyleManager().isLegendVisible() ? 3 : 2)
-          * getChart().getStyleManager().getChartPadding());
+          * getChart().getStyleManager().getChartPadding() - getChart().getStyleManager().getPlotPadding());
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = xAxisRectangle;

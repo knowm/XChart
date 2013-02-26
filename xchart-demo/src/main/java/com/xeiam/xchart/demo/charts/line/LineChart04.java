@@ -26,11 +26,11 @@ import com.xeiam.xchart.style.SeriesMarker;
 /**
  * Plots Hundreds of Series on One Plot
  */
-public class LineChart10 implements ExampleChart {
+public class LineChart04 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart10();
+    ExampleChart exampleChart = new LineChart04();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -42,7 +42,7 @@ public class LineChart10 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("LineChart10");
+    chart.setChartTitle("LineChart04");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.getStyleManager().setLegendVisible(false);

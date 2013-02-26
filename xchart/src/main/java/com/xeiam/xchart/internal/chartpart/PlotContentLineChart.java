@@ -64,14 +64,14 @@ public class PlotContentLineChart extends PlotContent {
       Collection<?> xData = series.getxData();
       BigDecimal xMin = getChart().getAxisPair().getxAxis().getMin();
       BigDecimal xMax = getChart().getAxisPair().getxAxis().getMax();
-      if (getChart().getStyleManager().isXAxisLogarithmic()) {
+      if (getChart().getStyleManager().isxAxisLogarithmic()) {
         xMin = new BigDecimal(Math.log10(xMin.doubleValue()));
         xMax = new BigDecimal(Math.log10(xMax.doubleValue()));
       }
       Collection<Number> yData = series.getyData();
       BigDecimal yMin = getChart().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChart().getAxisPair().getyAxis().getMax();
-      if (getChart().getStyleManager().isYAxisLogarithmic()) {
+      if (getChart().getStyleManager().isyAxisLogarithmic()) {
         yMin = new BigDecimal(Math.log10(yMin.doubleValue()));
         yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
       }
@@ -97,13 +97,13 @@ public class PlotContentLineChart extends PlotContent {
           // System.out.println(x);
         }
 
-        if (getChart().getStyleManager().isXAxisLogarithmic()) {
+        if (getChart().getStyleManager().isxAxisLogarithmic()) {
           x = new BigDecimal(Math.log10(x.doubleValue()));
         }
 
         BigDecimal y = new BigDecimal(yItr.next().doubleValue());
 
-        if (getChart().getStyleManager().isYAxisLogarithmic()) {
+        if (getChart().getStyleManager().isyAxisLogarithmic()) {
           y = new BigDecimal(Math.log10(y.doubleValue()));
         }
 

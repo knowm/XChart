@@ -33,15 +33,16 @@ import com.xeiam.xchart.style.ChartColor;
 import com.xeiam.xchart.style.SeriesColor;
 import com.xeiam.xchart.style.SeriesLineStyle;
 import com.xeiam.xchart.style.SeriesMarker;
+import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
- * Extensive chart customization
+ * Extensive Chart Customization
  */
-public class LineChart09 implements ExampleChart {
+public class LineChart03 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart09();
+    ExampleChart exampleChart = new LineChart03();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -70,7 +71,7 @@ public class LineChart09 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("LineChart09");
+    chart.setChartTitle("LineChart03");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.getStyleManager().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
@@ -78,12 +79,18 @@ public class LineChart09 implements ExampleChart {
     chart.getStyleManager().setChartBackgroundColor(Color.WHITE);
     chart.getStyleManager().setLegendBackgroundColor(Color.PINK);
     chart.getStyleManager().setChartFontColor(Color.MAGENTA);
+    chart.getStyleManager().setChartTitleBackgroundColor(new Color(0, 222, 0));
+    chart.getStyleManager().setPlotGridLinesVisible(false);
+    chart.getStyleManager().setAxisTickPadding(20);
+    chart.getStyleManager().setAxisTickMarkLength(15);
+    chart.getStyleManager().setPlotPadding(20);
     chart.getStyleManager().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
     chart.getStyleManager().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.getStyleManager().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
     chart.getStyleManager().setDatePattern("dd-MMM");
-    chart.getStyleManager().setNormalDecimalPattern("#.000");
+    chart.getStyleManager().setNormalDecimalPattern("#0.000");
     chart.getStyleManager().setLocale(Locale.GERMAN);
 
     Series series = chart.addDateSeries("Fake Data", xData, yData);

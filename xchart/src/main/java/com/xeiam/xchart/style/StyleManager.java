@@ -166,7 +166,7 @@ public class StyleManager {
     errorBarsColor = theme.getErrorBarsColor();
 
     // Formatting ////////////////////////////////
-    datePattern = "HHmmss";
+    datePattern = null; // if not null, this override pattern will be used
     locale = Locale.getDefault();
     timezone = TimeZone.getDefault();
     normalDecimalPattern = "#.####";
@@ -656,14 +656,14 @@ public class StyleManager {
   /**
    * sets the X-Axis to be rendered with a logarithmic scale or not
    * 
-   * @param isXAxisLogarithmic
+   * @param isxAxisLogarithmic
    */
-  public void setXAxisLogarithmic(boolean isXAxisLogarithmic) {
+  public void setxAxisLogarithmic(boolean isxAxisLogarithmic) {
 
-    this.isXAxisLogarithmic = isXAxisLogarithmic;
+    this.isXAxisLogarithmic = isxAxisLogarithmic;
   }
 
-  public boolean isXAxisLogarithmic() {
+  public boolean isxAxisLogarithmic() {
 
     return isXAxisLogarithmic;
   }
@@ -671,14 +671,14 @@ public class StyleManager {
   /**
    * sets the Y-Axis to be rendered with a logarithmic scale or not
    * 
-   * @param isYAxisLogarithmic
+   * @param isyAxisLogarithmic
    */
-  public void setYAxisLogarithmic(boolean isYAxisLogarithmic) {
+  public void setyAxisLogarithmic(boolean isyAxisLogarithmic) {
 
-    this.isYAxisLogarithmic = isYAxisLogarithmic;
+    this.isYAxisLogarithmic = isyAxisLogarithmic;
   }
 
-  public boolean isYAxisLogarithmic() {
+  public boolean isyAxisLogarithmic() {
 
     return isYAxisLogarithmic;
   }

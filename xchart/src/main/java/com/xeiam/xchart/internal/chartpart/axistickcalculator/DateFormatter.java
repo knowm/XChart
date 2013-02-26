@@ -90,21 +90,25 @@ public class DateFormatter {
 
     String datePattern;
 
-    // intelligently set date pattern if none is given
-    if (timeUnit == MILLIS_SCALE) {
-      datePattern = "ss.SSS";
-    } else if (timeUnit == SEC_SCALE) {
-      datePattern = "mm:ss";
-    } else if (timeUnit == MIN_SCALE) {
-      datePattern = "HH:mm";
-    } else if (timeUnit == HOUR_SCALE) {
-      datePattern = "dd-HH";
-    } else if (timeUnit == DAY_SCALE) {
-      datePattern = "MM-dd";
-    } else if (timeUnit == MONTH_SCALE) {
-      datePattern = "yyyy-MM";
+    if (styleManager.getDatePattern() == null) {
+      // intelligently set date pattern if none is given
+      if (timeUnit == MILLIS_SCALE) {
+        datePattern = "ss.SSS";
+      } else if (timeUnit == SEC_SCALE) {
+        datePattern = "mm:ss";
+      } else if (timeUnit == MIN_SCALE) {
+        datePattern = "HH:mm";
+      } else if (timeUnit == HOUR_SCALE) {
+        datePattern = "dd-HH";
+      } else if (timeUnit == DAY_SCALE) {
+        datePattern = "MM-dd";
+      } else if (timeUnit == MONTH_SCALE) {
+        datePattern = "yyyy-MM";
+      } else {
+        datePattern = "yyyy";
+      }
     } else {
-      datePattern = "yyyy";
+      datePattern = styleManager.getDatePattern();
     }
 
     SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styleManager.getLocale());
