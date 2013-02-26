@@ -52,7 +52,7 @@ public class ThemeChart01 implements ExampleChart {
       }
 
       // Customize Chart
-      chart.setChartTitle("ThemeChart01");
+      chart.setChartTitle("XChartTheme");
       chart.setXAxisTitle("X");
       chart.setYAxisTitle("Y");
 

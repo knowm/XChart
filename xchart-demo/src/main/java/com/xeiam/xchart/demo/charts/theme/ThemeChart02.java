@@ -43,7 +43,7 @@ public class ThemeChart02 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).theme(new GGPlot2Theme()).title("ThemeChart02").xAxisTitle("X").yAxisTitle("Y").build();
+    Chart chart = new ChartBuilder().width(800).height(600).theme(new GGPlot2Theme()).title("GGPlot2Theme").xAxisTitle("X").yAxisTitle("Y").build();
 
     chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
     chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });

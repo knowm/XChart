@@ -137,6 +137,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     // leaves
     DefaultMutableTreeNode chart = null;
 
+    // Area category
+    category = new DefaultMutableTreeNode("Area Charts");
+    top.add(category);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("AreaChart01 - 3-Series", new AreaChart01().getChart()));
+    category.add(chart);
+
     // First category
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
@@ -186,13 +193,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("BarChart05 - Basic Bar Chart", new BarChart05().getChart()));
-    category.add(chart);
-
-    // Area category
-    category = new DefaultMutableTreeNode("Area Charts");
-    top.add(category);
-
-    chart = new DefaultMutableTreeNode(new ChartInfo("AreaChart01 - 3-Series", new AreaChart01().getChart()));
     category.add(chart);
 
     // Theme category
