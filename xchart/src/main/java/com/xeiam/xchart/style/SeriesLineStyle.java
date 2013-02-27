@@ -28,16 +28,16 @@ public enum SeriesLineStyle {
   NONE(-1, null),
 
   /** SOLID */
-  SOLID(0, new BasicStroke(2.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER)),
+  SOLID(0, new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)),
 
   /** DASH_DOT */
-  DASH_DOT(1, new BasicStroke(2.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, new float[] { 3.0f, 1.0f }, 0.0f)),
+  DASH_DOT(1, new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] { 3.0f, 1.0f }, 0.0f)),
 
   /** DASH_DASH */
-  DASH_DASH(2, new BasicStroke(2.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f)),
+  DASH_DASH(2, new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f)),
 
   /** DOT_DOT */
-  DOT_DOT(3, new BasicStroke(2.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.0f, new float[] { 1.0f, 1.0f }, 0.0f));
+  DOT_DOT(3, new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] { 1.0f, 1.0f }, 0.0f));
 
   /** The index */
   private int index;
