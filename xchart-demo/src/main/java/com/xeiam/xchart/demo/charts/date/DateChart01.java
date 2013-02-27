@@ -25,13 +25,18 @@ import java.util.Random;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
+import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
+import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Millisecond Scale
- * 
- * @author timmolter
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Millisecond Scale
+ * <li>Series with no Markers
  */
 public class DateChart01 implements ExampleChart {
 
@@ -68,7 +73,8 @@ public class DateChart01 implements ExampleChart {
       yData.add(Math.random() * i);
     }
 
-    chart.addDateSeries("blah", xData, yData);
+    Series series = chart.addDateSeries("blah", xData, yData);
+    series.setMarker(SeriesMarker.NONE);
 
     return chart;
 

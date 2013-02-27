@@ -153,8 +153,10 @@ public class PlotContentLineChart extends PlotContent {
         previousY = yOffset;
 
         // paint marker
-        g.setColor(series.getMarkerColor());
-        series.getMarker().paint(g, xOffset, yOffset);
+        if (series.getMarker() != null) {
+          g.setColor(series.getMarkerColor());
+          series.getMarker().paint(g, xOffset, yOffset);
+        }
 
         // paint errorbar
         if (errorBars != null) {
