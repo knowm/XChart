@@ -23,6 +23,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 import com.xeiam.xchart.style.StyleManager.ChartType;
+import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * Gaussian Blob
@@ -56,8 +57,7 @@ public class ScatterChart01 implements ExampleChart {
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setLegendVisible(false);
-
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSW);
     // Series
     chart.addSeries("Gaussian Blob", xData, yData);
 

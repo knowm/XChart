@@ -159,12 +159,14 @@ public class Legend implements ChartPart {
         Series series = seriesMap.get(seriesId);
 
         if (getChart().getStyleManager().getChartType() != ChartType.Bar) {
+
           // paint line
-          if (series.getStroke() != null) {
+          if (getChart().getStyleManager().getChartType() != ChartType.Scatter && series.getStroke() != null) {
             g.setColor(series.getStrokeColor());
             g.setStroke(series.getStroke());
             g.drawLine(startx, starty + (int) (maxContentHeight / 2.0), (int) (startx + Marker.SIZE * 3.0), starty + (int) (maxContentHeight / 2.0));
           }
+
           // paint marker
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
