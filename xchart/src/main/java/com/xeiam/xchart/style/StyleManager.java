@@ -86,6 +86,10 @@ public class StyleManager {
   private int axisTitlePadding;
   private boolean isXAxisLogarithmic;
   private boolean isYAxisLogarithmic;
+  private Double xAxisMin;
+  private Double xAxisMax;
+  private Double yAxisMin;
+  private Double yAxisMax;
 
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
@@ -153,6 +157,10 @@ public class StyleManager {
     axisTitlePadding = theme.getAxisTitlePadding();
     isXAxisLogarithmic = false;
     isYAxisLogarithmic = false;
+    xAxisMin = null;
+    xAxisMax = null;
+    yAxisMin = null;
+    yAxisMax = null;
 
     // Chart Plot Area ///////////////////////////////
     isPlotGridLinesVisible = theme.isPlotGridLinesVisible();
@@ -658,12 +666,12 @@ public class StyleManager {
    * 
    * @param isxAxisLogarithmic
    */
-  public void setxAxisLogarithmic(boolean isxAxisLogarithmic) {
+  public void setXAxisLogarithmic(boolean isXAxisLogarithmic) {
 
-    this.isXAxisLogarithmic = isxAxisLogarithmic;
+    this.isXAxisLogarithmic = isXAxisLogarithmic;
   }
 
-  public boolean isxAxisLogarithmic() {
+  public boolean isXAxisLogarithmic() {
 
     return isXAxisLogarithmic;
   }
@@ -673,14 +681,54 @@ public class StyleManager {
    * 
    * @param isyAxisLogarithmic
    */
-  public void setyAxisLogarithmic(boolean isyAxisLogarithmic) {
+  public void setYAxisLogarithmic(boolean isYAxisLogarithmic) {
 
-    this.isYAxisLogarithmic = isyAxisLogarithmic;
+    this.isYAxisLogarithmic = isYAxisLogarithmic;
   }
 
-  public boolean isyAxisLogarithmic() {
+  public boolean isYAxisLogarithmic() {
 
     return isYAxisLogarithmic;
+  }
+
+  public void setxAxisMin(double xAxisMin) {
+
+    this.xAxisMin = xAxisMin;
+  }
+
+  public Double getxAxisMin() {
+
+    return xAxisMin;
+  }
+
+  public void setxAxisMax(double xAxisMax) {
+
+    this.xAxisMax = xAxisMax;
+  }
+
+  public Double getxAxisMax() {
+
+    return xAxisMax;
+  }
+
+  public void setyAxisMin(double yAxisMin) {
+
+    this.yAxisMin = yAxisMin;
+  }
+
+  public Double getyAxisMin() {
+
+    return yAxisMin;
+  }
+
+  public void setyAxisMax(double yAxisMax) {
+
+    this.yAxisMax = yAxisMax;
+  }
+
+  public Double getyAxisMax() {
+
+    return yAxisMax;
   }
 
   // Chart Plot Area ///////////////////////////////

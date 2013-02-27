@@ -88,11 +88,11 @@ public class AxisTick implements ChartPart {
 
       gridStep = new BarChartAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart());
 
-    } else if (axis.getDirection() == Axis.Direction.X && getChart().getStyleManager().isxAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+    } else if (axis.getDirection() == Axis.Direction.X && getChart().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
 
       gridStep = new LogarithmicAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
 
-    } else if (axis.getDirection() == Axis.Direction.Y && getChart().getStyleManager().isyAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+    } else if (axis.getDirection() == Axis.Direction.Y && getChart().getStyleManager().isYAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
 
       gridStep = new LogarithmicAxisTickCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
 

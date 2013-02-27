@@ -62,7 +62,7 @@ public class ScatterChart02 implements ExampleChart {
     Chart chart = new Chart(800, 600);
     chart.setChartTitle("Logarithmic Data");
     chart.getStyleManager().setChartType(ChartType.Scatter);
-    chart.getStyleManager().setxAxisLogarithmic(true);
+    chart.getStyleManager().setXAxisLogarithmic(true);
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);

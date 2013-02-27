@@ -78,6 +78,19 @@ public abstract class AxisTickCalculator {
         overrideMaxValue = BigDecimal.ZERO;
       }
     }
+    // override min and maxValue if specified
+    if (axisDirection == Direction.X && styleManager.getxAxisMin() != null) {
+      overrideMinValue = new BigDecimal(styleManager.getxAxisMin());
+    }
+    if (axisDirection == Direction.Y && styleManager.getyAxisMin() != null) {
+      overrideMinValue = new BigDecimal(styleManager.getyAxisMin());
+    }
+    if (axisDirection == Direction.X && styleManager.getxAxisMax() != null) {
+      overrideMaxValue = new BigDecimal(styleManager.getxAxisMax());
+    }
+    if (axisDirection == Direction.Y && styleManager.getyAxisMax() != null) {
+      overrideMaxValue = new BigDecimal(styleManager.getyAxisMax());
+    }
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;

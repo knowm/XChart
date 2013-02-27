@@ -284,30 +284,6 @@ public class Chart {
     styleManager.setTheme(theme);
   }
 
-  /**
-   * Set the min and max value of the X axis
-   * 
-   * @param min
-   * @param max
-   */
-  public void setxAxisMinMax(double min, double max) {
-
-    axisPair.getxAxis().setMinOverride(min);
-    axisPair.getxAxis().setMaxOverride(max);
-  }
-
-  /**
-   * Set the min and max value of the Y axis
-   * 
-   * @param min
-   * @param max
-   */
-  public void setyAxisMinMax(double min, double max) {
-
-    axisPair.getyAxis().setMinOverride(min);
-    axisPair.getyAxis().setMaxOverride(max);
-  }
-
   // / Internal /////////////////////////////////////////
 
   /**

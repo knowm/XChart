@@ -51,8 +51,10 @@ public class NoBug {
     }
     String seriesName = "series " + n;
     Series series = chart.addSeries(seriesName, x, y);
-    chart.setxAxisMinMax(0, 1);
-    chart.setyAxisMinMax(-5, 5);
+    chart.getStyleManager().setxAxisMin(0);
+    chart.getStyleManager().setxAxisMax(1);
+    chart.getStyleManager().setyAxisMin(-5);
+    chart.getStyleManager().setyAxisMax(5);
     return seriesName;
   }
 

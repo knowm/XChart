@@ -64,17 +64,32 @@ public class PlotContentLineChart extends PlotContent {
       Collection<?> xData = series.getxData();
       BigDecimal xMin = getChart().getAxisPair().getxAxis().getMin();
       BigDecimal xMax = getChart().getAxisPair().getxAxis().getMax();
-      if (getChart().getStyleManager().isxAxisLogarithmic()) {
+      if (getChart().getStyleManager().isXAxisLogarithmic()) {
         xMin = new BigDecimal(Math.log10(xMin.doubleValue()));
         xMax = new BigDecimal(Math.log10(xMax.doubleValue()));
       }
       Collection<Number> yData = series.getyData();
       BigDecimal yMin = getChart().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChart().getAxisPair().getyAxis().getMax();
-      if (getChart().getStyleManager().isyAxisLogarithmic()) {
+      if (getChart().getStyleManager().isYAxisLogarithmic()) {
         yMin = new BigDecimal(Math.log10(yMin.doubleValue()));
         yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
       }
+
+      // override min and maxValue if specified
+      if (getChart().getStyleManager().getxAxisMin() != null) {
+        xMin = new BigDecimal(getChart().getStyleManager().getxAxisMin());
+      }
+      if (getChart().getStyleManager().getyAxisMin() != null) {
+        yMin = new BigDecimal(getChart().getStyleManager().getyAxisMin());
+      }
+      if (getChart().getStyleManager().getxAxisMax() != null) {
+        xMin = new BigDecimal(getChart().getStyleManager().getxAxisMax());
+      }
+      if (getChart().getStyleManager().getyAxisMax() != null) {
+        yMax = new BigDecimal(getChart().getStyleManager().getyAxisMax());
+      }
+
       Collection<Number> errorBars = series.getErrorBars();
 
       int previousX = Integer.MIN_VALUE;
@@ -97,13 +112,13 @@ public class PlotContentLineChart extends PlotContent {
           // System.out.println(x);
         }
 
-        if (getChart().getStyleManager().isxAxisLogarithmic()) {
+        if (getChart().getStyleManager().isXAxisLogarithmic()) {
           x = new BigDecimal(Math.log10(x.doubleValue()));
         }
 
         BigDecimal y = new BigDecimal(yItr.next().doubleValue());
 
-        if (getChart().getStyleManager().isyAxisLogarithmic()) {
+        if (getChart().getStyleManager().isYAxisLogarithmic()) {
           y = new BigDecimal(Math.log10(y.doubleValue()));
         }
 

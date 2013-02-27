@@ -39,7 +39,8 @@ public class Example2 {
 
     for (int i = 0; i < numCharts; i++) {
       Chart chart = new ChartBuilder().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
-      chart.setyAxisMinMax(-10, 10);
+      chart.getStyleManager().setyAxisMin(-10);
+      chart.getStyleManager().setyAxisMax(10);
       Series series = chart.addSeries("" + i, null, getRandomWalk(200));
       series.setMarker(SeriesMarker.NONE);
       charts.add(chart);

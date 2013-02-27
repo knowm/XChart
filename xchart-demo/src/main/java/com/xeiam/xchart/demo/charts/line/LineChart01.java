@@ -60,7 +60,7 @@ public class LineChart01 implements ExampleChart {
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setyAxisLogarithmic(true);
+    chart.getStyleManager().setYAxisLogarithmic(true);
 
     // Series
     Series series = chart.addSeries("10^x", xData1, yData1);

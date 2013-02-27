@@ -86,7 +86,13 @@ public class PlotContentBarChart extends PlotContent {
       } else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
         yMax = BigDecimal.ZERO;
       }
-
+      // override min and maxValue if specified
+      if (getChart().getStyleManager().getyAxisMin() != null) {
+        yMin = new BigDecimal(getChart().getStyleManager().getyAxisMin());
+      }
+      if (getChart().getStyleManager().getyAxisMax() != null) {
+        yMax = new BigDecimal(getChart().getStyleManager().getyAxisMax());
+      }
       Iterator<?> categoryItr = categories.iterator();
       Iterator<Number> yItr = yData.iterator();
 
@@ -99,7 +105,7 @@ public class PlotContentBarChart extends PlotContent {
           int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
           int yOffset = (int) (bounds.getY() + yTransform);
 
-          int zeroTransform = (int) (bounds.getHeight() - (yTopMargin + (BigDecimal.ZERO.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace));
+          int zeroTransform = (int) (bounds.getHeight() - (yTopMargin + (yMin.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace));
           int zeroOffset = (int) (bounds.getY() + zeroTransform);
 
           // paint bar

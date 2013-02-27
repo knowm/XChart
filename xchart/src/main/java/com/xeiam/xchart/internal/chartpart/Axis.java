@@ -55,10 +55,6 @@ public class Axis implements ChartPart {
 
   private BigDecimal max = null;
 
-  private BigDecimal minOverride = null;
-
-  private BigDecimal maxOverride = null;
-
   /** the bounds */
   private Rectangle bounds;
 
@@ -240,31 +236,12 @@ public class Axis implements ChartPart {
 
   public BigDecimal getMin() {
 
-    if (minOverride == null) {
-      return min;
-    } else {
-      return minOverride;
-    }
-
+    return min;
   }
 
   public BigDecimal getMax() {
 
-    if (maxOverride == null) {
-      return max;
-    } else {
-      return maxOverride;
-    }
-  }
-
-  public BigDecimal getMinOverride() {
-
-    return minOverride;
-  }
-
-  public BigDecimal getMaxOverride() {
-
-    return maxOverride;
+    return max;
   }
 
   public AxisTick getAxisTick() {
@@ -292,13 +269,4 @@ public class Axis implements ChartPart {
     this.axisTitle = axisTitle;
   }
 
-  public void setMinOverride(double minOverride) {
-
-    this.minOverride = new BigDecimal(minOverride);
-  }
-
-  public void setMaxOverride(double maxOverride) {
-
-    this.maxOverride = new BigDecimal(maxOverride);
-  }
 }
