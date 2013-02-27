@@ -124,7 +124,7 @@ public class Legend implements ChartPart {
       switch (chart.getStyleManager().getLegendPosition()) {
       case OutsideW:
         xOffset = chart.getWidth() - legendBoxWidth - chart.getStyleManager().getChartPadding();
-        yOffset = (int) ((chart.getHeight() - legendBoxHeight) / 2.0 + chart.getChartTitle().getSizeHint());
+        yOffset = (int) (chart.getPlot().getBounds().getY() + (chart.getPlot().getBounds().getHeight() - legendBoxHeight) / 2.0);
         break;
       case InsideNW:
         xOffset = (int) (chart.getPlot().getBounds().getX() + LEGEND_MARGIN);
