@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
@@ -30,8 +31,8 @@ public class ChartTitle implements ChartPart {
   /** parent */
   private final Chart chart;
 
-  // /** the bounds */
-  // private Rectangle bounds;
+  /** the bounds */
+  private Rectangle bounds;
 
   /** the title text */
   private String text = ""; // default to ""
@@ -98,6 +99,7 @@ public class ChartTitle implements ChartPart {
       int xOffset = (int) chart.getPlot().getBounds().getX();
       int yOffset = chart.getStyleManager().getChartPadding();
 
+      g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
       g.setColor(chart.getStyleManager().getChartTitleBorderColor());
       g.drawRect(xOffset - 1, yOffset, chartTitleBoxWidth - 1, chartTitleBoxHeight - 1);
       g.setColor(chart.getStyleManager().getChartTitleBackgroundColor());
