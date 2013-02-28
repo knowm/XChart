@@ -102,10 +102,18 @@ public class PlotContentBarChart extends PlotContent {
         if (xData.contains(categoryItr.next())) {
 
           BigDecimal y = new BigDecimal(yItr.next().doubleValue());
-          int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+          BigDecimal yTop = new BigDecimal(y.doubleValue());
+          if (yTop.compareTo(yMax) > 0) {
+            yTop = yMax;
+          }
+          int yTransform = (int) (bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
           int yOffset = (int) (bounds.getY() + yTransform);
 
-          int zeroTransform = (int) (bounds.getHeight() - (yTopMargin + (yMin.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace));
+          BigDecimal yBottom = new BigDecimal(y.doubleValue());
+          if (yBottom.compareTo(yMin) > 0) {
+            yBottom = yMin;
+          }
+          int zeroTransform = (int) (bounds.getHeight() - (yTopMargin + (yBottom.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace));
           int zeroOffset = (int) (bounds.getY() + zeroTransform);
 
           // paint bar
