@@ -130,13 +130,13 @@ public class XChartTheme implements Theme {
   @Override
   public boolean isXAxisTitleVisible() {
 
-    return false;
+    return true;
   }
 
   @Override
   public boolean isYAxisTitleVisible() {
 
-    return false;
+    return true;
   }
 
   @Override

@@ -55,8 +55,8 @@ public class BarChart04 implements ExampleChart {
     chart.addSeries("male", new double[] { 10, 20, 30, 50 }, new double[] { 40, 30, 20, 60 });
     chart.addSeries("female", new double[] { 10, 20, 30, 40, 50 }, new double[] { 50, 10, 20, 40, 35 });
 
-    chart.getStyleManager().setyAxisMin(5);
-    chart.getStyleManager().setyAxisMax(70);
+    chart.getStyleManager().setYAxisMin(5);
+    chart.getStyleManager().setYAxisMax(70);
 
     return chart;
   }

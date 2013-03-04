@@ -86,11 +86,11 @@ public class PlotContentBarChart extends PlotContent {
         yMax = BigDecimal.ZERO;
       }
       // override min and maxValue if specified
-      if (getChartPainter().getStyleManager().getyAxisMin() != null) {
-        yMin = new BigDecimal(getChartPainter().getStyleManager().getyAxisMin());
+      if (getChartPainter().getStyleManager().getYAxisMin() != null) {
+        yMin = new BigDecimal(getChartPainter().getStyleManager().getYAxisMin());
       }
-      if (getChartPainter().getStyleManager().getyAxisMax() != null) {
-        yMax = new BigDecimal(getChartPainter().getStyleManager().getyAxisMax());
+      if (getChartPainter().getStyleManager().getYAxisMax() != null) {
+        yMax = new BigDecimal(getChartPainter().getStyleManager().getYAxisMax());
       }
       Iterator<?> categoryItr = categories.iterator();
       Iterator<Number> yItr = yData.iterator();

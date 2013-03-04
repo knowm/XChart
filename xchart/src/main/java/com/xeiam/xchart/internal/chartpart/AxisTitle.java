@@ -60,7 +60,7 @@ public class AxisTitle implements ChartPart {
     g.setFont(getChartPainter().getStyleManager().getAxisTitleFont());
 
     if (axis.getDirection() == Axis.Direction.Y) {
-      if (getChartPainter().getStyleManager().isyAxisTitleVisible()) {
+      if (text != null && !text.trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isYAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
         TextLayout nonRotatedTextLayout = new TextLayout(text, getChartPainter().getStyleManager().getAxisTitleFont(), frc);
@@ -101,7 +101,7 @@ public class AxisTitle implements ChartPart {
 
     } else {
 
-      if (getChartPainter().getStyleManager().isxAxisTitleVisible()) {
+      if (text != null && !text.trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
         TextLayout textLayout = new TextLayout(text, getChartPainter().getStyleManager().getAxisTitleFont(), frc);
@@ -142,11 +142,6 @@ public class AxisTitle implements ChartPart {
 
   public void setText(String text) {
 
-    if (text == null || text.trim().equalsIgnoreCase("")) {
-      getChartPainter().getStyleManager().setxAxisTitleVisible(false);
-    } else {
-      getChartPainter().getStyleManager().setxAxisTitleVisible(true);
-    }
     this.text = text;
   }
 }

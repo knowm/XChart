@@ -129,13 +129,13 @@ public class GGPlot2Theme implements Theme {
   @Override
   public boolean isXAxisTitleVisible() {
 
-    return false;
+    return true;
   }
 
   @Override
   public boolean isYAxisTitleVisible() {
 
-    return false;
+    return true;
   }
 
   @Override

@@ -80,8 +80,8 @@ public class Axis implements ChartPart {
 
     this.axisPair = axisPair;
     this.direction = direction;
-    axisTitle = new AxisTitle(this, direction == Direction.X ? getChartPainter().getStyleManager().isxAxisTitleVisible() : getChartPainter().getStyleManager().isyAxisTitleVisible());
-    axisTick = new AxisTick(this, direction == Direction.X ? getChartPainter().getStyleManager().isxAxisTicksVisible() : getChartPainter().getStyleManager().isyAxisTicksVisible());
+    axisTitle = new AxisTitle(this, direction == Direction.X ? getChartPainter().getStyleManager().isXAxisTitleVisible() : getChartPainter().getStyleManager().isYAxisTitleVisible());
+    axisTick = new AxisTick(this, direction == Direction.X ? getChartPainter().getStyleManager().isXAxisTicksVisible() : getChartPainter().getStyleManager().isYAxisTicksVisible());
   }
 
   /**
@@ -126,7 +126,7 @@ public class Axis implements ChartPart {
 
       // Axis title
       double titleHeight = 0.0;
-      if (getChartPainter().getStyleManager().isxAxisTitleVisible()) {
+      if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
         TextLayout textLayout = new TextLayout(axisTitle.getText(), getChartPainter().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         titleHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTitlePadding();
@@ -134,7 +134,7 @@ public class Axis implements ChartPart {
 
       // Axis tick labels
       double axisTickLabelsHeight = 0.0;
-      if (getChartPainter().getStyleManager().isxAxisTicksVisible()) {
+      if (getChartPainter().getStyleManager().isXAxisTicksVisible()) {
         TextLayout textLayout = new TextLayout("0", getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
         Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
         axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength()
@@ -177,7 +177,7 @@ public class Axis implements ChartPart {
 
       xOffset = (int) paintZone.getX();
       yOffset = (int) paintZone.getY();
-      width = (int) (getChartPainter().getStyleManager().isyAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + (int) axisTick.getBounds().getWidth();
+      width = (int) (getChartPainter().getStyleManager().isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + (int) axisTick.getBounds().getWidth();
       height = (int) paintZone.getHeight();
       bounds = new Rectangle(xOffset, yOffset, width, height);
       // g.setColor(Color.yellow);
@@ -188,7 +188,7 @@ public class Axis implements ChartPart {
       // calculate paint zone
       // |____________________|
 
-      int xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isyAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0) + getChartPainter()
+      int xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0) + getChartPainter()
           .getStyleManager().getChartPadding());
       int yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight());
 
@@ -211,7 +211,7 @@ public class Axis implements ChartPart {
       xOffset = (int) paintZone.getX();
       yOffset = (int) paintZone.getY();
       width = (int) paintZone.getWidth();
-      height = (int) ((getChartPainter().getStyleManager().isxAxisTitleVisible() ? axisTitle.getBounds().getHeight() : 0) + (int) axisTick.getBounds().getHeight());
+      height = (int) ((getChartPainter().getStyleManager().isXAxisTitleVisible() ? axisTitle.getBounds().getHeight() : 0) + (int) axisTick.getBounds().getHeight());
       bounds = new Rectangle(xOffset, yOffset, width, height);
       bounds = new Rectangle(xOffset, yOffset, width, height);
       // g.setColor(Color.yellow);

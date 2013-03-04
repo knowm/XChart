@@ -455,12 +455,12 @@ public class StyleManager {
    * 
    * @param isVisible
    */
-  public void setxAxisTitleVisible(boolean xAxisTitleVisible) {
+  public void setXAxisTitleVisible(boolean xAxisTitleVisible) {
 
     this.xAxisTitleVisible = xAxisTitleVisible;
   }
 
-  public boolean isxAxisTitleVisible() {
+  public boolean isXAxisTitleVisible() {
 
     return xAxisTitleVisible;
   }
@@ -470,12 +470,12 @@ public class StyleManager {
    * 
    * @param isVisible
    */
-  public void setyAxisTitleVisible(boolean yAxisTitleVisible) {
+  public void setYAxisTitleVisible(boolean yAxisTitleVisible) {
 
     this.yAxisTitleVisible = yAxisTitleVisible;
   }
 
-  public boolean isyAxisTitleVisible() {
+  public boolean isYAxisTitleVisible() {
 
     return yAxisTitleVisible;
   }
@@ -513,12 +513,12 @@ public class StyleManager {
    * @param isVisible
    */
 
-  public void setxAxisTicksVisible(boolean xAxisTicksVisible) {
+  public void setXAxisTicksVisible(boolean xAxisTicksVisible) {
 
     this.xAxisTicksVisible = xAxisTicksVisible;
   }
 
-  public boolean isxAxisTicksVisible() {
+  public boolean isXAxisTicksVisible() {
 
     return xAxisTicksVisible;
   }
@@ -529,12 +529,12 @@ public class StyleManager {
    * @param isVisible
    */
 
-  public void setyAxisTicksVisible(boolean yAxisTicksVisible) {
+  public void setYAxisTicksVisible(boolean yAxisTicksVisible) {
 
     this.yAxisTicksVisible = yAxisTicksVisible;
   }
 
-  public boolean isyAxisTicksVisible() {
+  public boolean isYAxisTicksVisible() {
 
     return yAxisTicksVisible;
   }
@@ -716,7 +716,7 @@ public class StyleManager {
     return isYAxisLogarithmic;
   }
 
-  public void setxAxisMin(double xAxisMin) {
+  public void setXAxisMin(double xAxisMin) {
 
     this.xAxisMin = xAxisMin;
   }
@@ -726,7 +726,7 @@ public class StyleManager {
     return xAxisMin;
   }
 
-  public void setxAxisMax(double xAxisMax) {
+  public void setXAxisMax(double xAxisMax) {
 
     this.xAxisMax = xAxisMax;
   }
@@ -736,22 +736,22 @@ public class StyleManager {
     return xAxisMax;
   }
 
-  public void setyAxisMin(double yAxisMin) {
+  public void setYAxisMin(double yAxisMin) {
 
     this.yAxisMin = yAxisMin;
   }
 
-  public Double getyAxisMin() {
+  public Double getYAxisMin() {
 
     return yAxisMin;
   }
 
-  public void setyAxisMax(double yAxisMax) {
+  public void setYAxisMax(double yAxisMax) {
 
     this.yAxisMax = yAxisMax;
   }
 
-  public Double getyAxisMax() {
+  public Double getYAxisMax() {
 
     return yAxisMax;
   }

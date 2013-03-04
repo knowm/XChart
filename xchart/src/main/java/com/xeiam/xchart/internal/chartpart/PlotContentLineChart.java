@@ -80,14 +80,14 @@ public class PlotContentLineChart extends PlotContent {
       if (getChartPainter().getStyleManager().getxAxisMin() != null) {
         xMin = new BigDecimal(getChartPainter().getStyleManager().getxAxisMin());
       }
-      if (getChartPainter().getStyleManager().getyAxisMin() != null) {
-        yMin = new BigDecimal(getChartPainter().getStyleManager().getyAxisMin());
+      if (getChartPainter().getStyleManager().getYAxisMin() != null) {
+        yMin = new BigDecimal(getChartPainter().getStyleManager().getYAxisMin());
       }
       if (getChartPainter().getStyleManager().getxAxisMax() != null) {
         xMin = new BigDecimal(getChartPainter().getStyleManager().getxAxisMax());
       }
-      if (getChartPainter().getStyleManager().getyAxisMax() != null) {
-        yMax = new BigDecimal(getChartPainter().getStyleManager().getyAxisMax());
+      if (getChartPainter().getStyleManager().getYAxisMax() != null) {
+        yMax = new BigDecimal(getChartPainter().getStyleManager().getYAxisMax());
       }
 
       Collection<Number> errorBars = series.getErrorBars();
