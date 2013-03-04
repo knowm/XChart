@@ -21,6 +21,9 @@
  */
 package com.xeiam.xchart.unit;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -28,8 +31,8 @@ import java.util.List;
 import org.junit.Test;
 
 import com.xeiam.xchart.StyleManager;
-import com.xeiam.xchart.internal.chartpart.AxisTickDateCalculator;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
+import com.xeiam.xchart.internal.chartpart.AxisTickDateCalculator;
 
 /**
  * @author timmolter
@@ -43,12 +46,12 @@ public class DateAxisTickCalculatorTest {
 
     List<String> tickLabels = decimalAxisTickCalculator.getTickLabels();
     System.out.println(Arrays.toString(tickLabels.toArray()));
-    // assertThat(tickLabels.size(), equalTo(7));
-    // assertThat(tickLabels.get(0), equalTo("-15"));
+    assertThat(tickLabels.size(), equalTo(6));
+    assertThat(tickLabels.get(0), equalTo("17:50"));
 
-    // List<Integer> tickLocations = decimalAxisTickCalculator.getTickLocations();
-    // System.out.println(Arrays.toString(tickLocations.toArray()));
-    // assertThat(tickLocations.size(), equalTo(7));
-    // assertThat(tickLocations.get(0), equalTo(15));
+    List<Integer> tickLocations = decimalAxisTickCalculator.getTickLocations();
+    System.out.println(Arrays.toString(tickLocations.toArray()));
+    assertThat(tickLocations.size(), equalTo(6));
+    assertThat(tickLocations.get(0), equalTo(100));
   }
 }

@@ -35,7 +35,7 @@ import com.xeiam.xchart.internal.chartpart.NumberFormatter;
 /**
  * @author timmolter
  */
-public class ValueFormatterTest {
+public class NumberFormatterTest {
 
   private final Locale locale = Locale.US;
 

@@ -64,7 +64,7 @@ public class DateFormatter {
     validTickStepsMap.put(YEAR_SCALE, new int[] { 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000 });
   }
 
-  long getTimeUnit(long gridStepHint) {
+  public long getTimeUnit(long gridStepHint) {
 
     for (Entry<Long, int[]> entry : validTickStepsMap.entrySet()) {
 
@@ -86,7 +86,7 @@ public class DateFormatter {
    * @param max
    * @return
    */
-  String formatDate(BigDecimal value, long timeUnit) {
+  public String formatDate(BigDecimal value, long timeUnit) {
 
     String datePattern;
 
