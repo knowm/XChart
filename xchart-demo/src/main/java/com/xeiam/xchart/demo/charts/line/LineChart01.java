@@ -20,7 +20,6 @@ import java.util.List;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
-import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 import com.xeiam.xchart.style.StyleManager.LegendPosition;
@@ -47,11 +46,11 @@ public class LineChart01 implements ExampleChart {
   public Chart getChart() {
 
     // generates Log data
-    List<Number> xData1 = new ArrayList<Number>();
-    List<Number> yData1 = new ArrayList<Number>();
-    for (int i = 0; i <= 10; i++) {
-      xData1.add(i);
-      yData1.add(Math.pow(10, i));
+    List<Number> xData = new ArrayList<Number>();
+    List<Number> yData = new ArrayList<Number>();
+    for (int i = -3; i <= 3; i++) {
+      xData.add(i);
+      yData.add(Math.pow(10, i) - 1);
     }
 
     // Create Chart
@@ -63,7 +62,7 @@ public class LineChart01 implements ExampleChart {
     chart.getStyleManager().setYAxisLogarithmic(true);
 
     // Series
-    Series series = chart.addSeries("10^x", xData1, yData1);
+    chart.addSeries("10^x", xData, yData);
 
     return chart;
   }

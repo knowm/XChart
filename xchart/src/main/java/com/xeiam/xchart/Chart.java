@@ -17,6 +17,7 @@ package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -97,9 +98,15 @@ public class Chart {
    */
   public void paint(Graphics2D g) {
 
-    // Sanity check
+    // Sanity checks
     if (axisPair.getSeriesMap().isEmpty()) {
       throw new RuntimeException("No series defined for Chart!!!");
+    }
+    if (getStyleManager().isXAxisLogarithmic() && axisPair.getxAxis().getMin().compareTo(BigDecimal.ZERO) <= 0) {
+      throw new IllegalArgumentException("Series data cannot be less or equal to zero for a logarithmic X-Axis!!!");
+    }
+    if (getStyleManager().isYAxisLogarithmic() && axisPair.getyAxis().getMin().compareTo(BigDecimal.ZERO) <= 0) {
+      throw new IllegalArgumentException("Series data cannot be less or equal to zero for a logarithmic Y-Axis!!!");
     }
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
