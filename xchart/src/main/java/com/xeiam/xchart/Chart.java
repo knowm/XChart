@@ -16,16 +16,11 @@
 package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import com.xeiam.xchart.internal.chartpart.AxisPair;
-import com.xeiam.xchart.internal.chartpart.ChartTitle;
-import com.xeiam.xchart.internal.chartpart.Legend;
-import com.xeiam.xchart.internal.chartpart.Plot;
+import com.xeiam.xchart.internal.chartpart.ChartPainter;
 import com.xeiam.xchart.internal.style.Theme;
 
 /**
@@ -35,16 +30,7 @@ import com.xeiam.xchart.internal.style.Theme;
  */
 public class Chart {
 
-  private int width;
-  private int height;
-
-  private final StyleManager styleManager;
-
-  // Chart Parts
-  private Legend chartLegend;
-  private AxisPair axisPair;
-  private Plot plot;
-  private ChartTitle chartTitle;
+  private final ChartPainter chartPainter;
 
   /**
    * Constructor
@@ -54,14 +40,7 @@ public class Chart {
    */
   public Chart(int width, int height) {
 
-    styleManager = new StyleManager();
-    chartLegend = new Legend(this);
-    axisPair = new AxisPair(this);
-    plot = new Plot(this);
-    chartTitle = new ChartTitle(this);
-    this.width = width;
-    this.height = height;
-
+    chartPainter = new ChartPainter(width, height);
   }
 
   /**
@@ -86,41 +65,18 @@ public class Chart {
    */
   public void paint(Graphics2D g, int width, int height) {
 
-    this.width = width;
-    this.height = height;
-
-    paint(g);
+    chartPainter.paint(g, width, height);
   }
 
   /**
    * @param g
+   * @param width
+   * @param height
    */
   public void paint(Graphics2D g) {
 
-    // Sanity checks
-    if (axisPair.getSeriesMap().isEmpty()) {
-      throw new RuntimeException("No series defined for Chart!!!");
-    }
-    if (getStyleManager().isXAxisLogarithmic() && axisPair.getxAxis().getMin().compareTo(BigDecimal.ZERO) <= 0) {
-      throw new IllegalArgumentException("Series data cannot be less or equal to zero for a logarithmic X-Axis!!!");
-    }
-    if (getStyleManager().isYAxisLogarithmic() && axisPair.getyAxis().getMin().compareTo(BigDecimal.ZERO) <= 0) {
-      throw new IllegalArgumentException("Series data cannot be less or equal to zero for a logarithmic Y-Axis!!!");
-    }
-
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-    g.setColor(styleManager.getChartBackgroundColor());
-    g.fillRect(0, 0, width, height);
-
-    axisPair.paint(g);
-    plot.paint(g);
-    chartTitle.paint(g);
-    chartLegend.paint(g);
-
-    g.dispose();
+    chartPainter.paint(g);
   }
-
-  // PUBLIC SETTERS
 
   /**
    * Add a Category series to the chart
@@ -132,7 +88,7 @@ public class Chart {
    */
   public Series addCategorySeries(String seriesName, Collection<String> xData, Collection<Number> yData) {
 
-    return axisPair.addSeries(seriesName, xData, yData, null);
+    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
   }
 
   /**
@@ -145,7 +101,7 @@ public class Chart {
    */
   public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData) {
 
-    return axisPair.addSeries(seriesName, xData, yData, null);
+    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
   }
 
   /**
@@ -159,7 +115,7 @@ public class Chart {
    */
   public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData, Collection<Number> errorBars) {
 
-    return axisPair.addSeries(seriesName, xData, yData, errorBars);
+    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
   }
 
   /**
@@ -172,7 +128,7 @@ public class Chart {
    */
   public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
 
-    return axisPair.addSeries(seriesName, xData, yData, null);
+    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
   }
 
   /**
@@ -186,7 +142,7 @@ public class Chart {
    */
   public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData, Collection<Number> errorBars) {
 
-    return axisPair.addSeries(seriesName, xData, yData, errorBars);
+    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
   }
 
   /**
@@ -232,7 +188,7 @@ public class Chart {
       }
     }
 
-    return axisPair.addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
+    return chartPainter.getAxisPair().addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
   }
 
   /**
@@ -242,7 +198,7 @@ public class Chart {
    */
   public void setChartTitle(String title) {
 
-    this.chartTitle.setText(title);
+    chartPainter.getChartTitle().setText(title);
   }
 
   /**
@@ -252,7 +208,7 @@ public class Chart {
    */
   public void setXAxisTitle(String title) {
 
-    this.axisPair.getxAxis().getAxisTitle().setText(title);
+    chartPainter.getAxisPair().getxAxis().getAxisTitle().setText(title);
   }
 
   /**
@@ -263,11 +219,11 @@ public class Chart {
   public void setYAxisTitle(String title) {
 
     if (title == null || title.trim().equalsIgnoreCase("")) {
-      styleManager.setyAxisTitleVisible(false);
+      chartPainter.getStyleManager().setyAxisTitleVisible(false);
     } else {
-      styleManager.setyAxisTitleVisible(true);
+      chartPainter.getStyleManager().setyAxisTitleVisible(true);
     }
-    this.axisPair.getyAxis().getAxisTitle().setText(title);
+    chartPainter.getAxisPair().getyAxis().getAxisTitle().setText(title);
   }
 
   /**
@@ -277,7 +233,7 @@ public class Chart {
    */
   public StyleManager getStyleManager() {
 
-    return styleManager;
+    return chartPainter.getStyleManager();
   }
 
   /**
@@ -287,59 +243,17 @@ public class Chart {
    */
   public void setTheme(Theme theme) {
 
-    styleManager.setTheme(theme);
-  }
-
-  // / Internal /////////////////////////////////////////
-
-  /**
-   * for internal usage
-   * 
-   * @return
-   */
-  public ChartTitle getChartTitle() {
-
-    return chartTitle;
-  }
-
-  /**
-   * for internal usage
-   * 
-   * @return
-   */
-  public Legend getChartLegend() {
-
-    return chartLegend;
-  }
-
-  /**
-   * for internal usage
-   * 
-   * @return
-   */
-  public AxisPair getAxisPair() {
-
-    return axisPair;
-  }
-
-  /**
-   * for internal usage
-   * 
-   * @return
-   */
-  public Plot getPlot() {
-
-    return plot;
+    chartPainter.getStyleManager().setTheme(theme);
   }
 
   public int getWidth() {
 
-    return width;
+    return chartPainter.getWidth();
   }
 
   public int getHeight() {
 
-    return height;
+    return chartPainter.getHeight();
   }
 
 }

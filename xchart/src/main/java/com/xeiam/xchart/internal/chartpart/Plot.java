@@ -18,7 +18,6 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.StyleManager.ChartType;
 
 /**
@@ -27,7 +26,7 @@ import com.xeiam.xchart.StyleManager.ChartType;
 public class Plot implements ChartPart {
 
   /** parent */
-  private final Chart chart;
+  private final ChartPainter chartPainter;
 
   /** the bounds */
   private Rectangle bounds;
@@ -39,11 +38,11 @@ public class Plot implements ChartPart {
   /**
    * Constructor
    * 
-   * @param chart
+   * @param chartPainter
    */
-  public Plot(Chart chart) {
+  public Plot(ChartPainter chartPainter) {
 
-    this.chart = chart;
+    this.chartPainter = chartPainter;
     this.plotSurface = new PlotSurface(this);
 
   }
@@ -60,17 +59,17 @@ public class Plot implements ChartPart {
     bounds = new Rectangle();
 
     // calculate bounds
-    int xOffset = (int) (chart.getAxisPair().getyAxis().getBounds().getX() + chart.getAxisPair().getyAxis().getBounds().getWidth() + (chart.getStyleManager().isyAxisTicksVisible() ? (chart
-        .getStyleManager().getPlotPadding() + 1) : 0));
-    int yOffset = (int) (chart.getAxisPair().getyAxis().getBounds().getY());
-    int width = (int) chart.getAxisPair().getxAxis().getBounds().getWidth();
-    int height = (int) chart.getAxisPair().getyAxis().getBounds().getHeight();
+    int xOffset = (int) (chartPainter.getAxisPair().getyAxis().getBounds().getX() + chartPainter.getAxisPair().getyAxis().getBounds().getWidth() + (chartPainter.getStyleManager()
+        .isyAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding() + 1) : 0));
+    int yOffset = (int) (chartPainter.getAxisPair().getyAxis().getBounds().getY());
+    int width = (int) chartPainter.getAxisPair().getxAxis().getBounds().getWidth();
+    int height = (int) chartPainter.getAxisPair().getyAxis().getBounds().getHeight();
     bounds = new Rectangle(xOffset, yOffset, width, height);
     // g.setColor(Color.green);
     // g.draw(bounds);
 
     plotSurface.paint(g);
-    if (getChart().getStyleManager().getChartType() == ChartType.Bar) {
+    if (getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
       this.plotContent = new PlotContentBarChart(this);
     } else {
       this.plotContent = new PlotContentLineChart(this);
@@ -80,8 +79,8 @@ public class Plot implements ChartPart {
   }
 
   @Override
-  public Chart getChart() {
+  public ChartPainter getChartPainter() {
 
-    return chart;
+    return chartPainter;
   }
 }

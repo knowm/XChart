@@ -19,8 +19,6 @@ import java.awt.BasicStroke;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 
-import com.xeiam.xchart.Chart;
-
 /**
  * @author timmolter
  */
@@ -48,9 +46,9 @@ public abstract class PlotContent implements ChartPart {
   }
 
   @Override
-  public Chart getChart() {
+  public ChartPainter getChartPainter() {
 
-    return plot.getChart();
+    return plot.getChartPainter();
   }
 
 }

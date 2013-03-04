@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -35,7 +34,7 @@ import com.xeiam.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 public class AxisPair implements ChartPart {
 
   /** parent */
-  private final Chart chart;
+  private final ChartPainter chartPainter;
 
   private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
 
@@ -49,11 +48,11 @@ public class AxisPair implements ChartPart {
   /**
    * Constructor
    * 
-   * @param the parent chart
+   * @param the parent chartPainter
    */
-  public AxisPair(Chart chart) {
+  public AxisPair(ChartPainter chartPainter) {
 
-    this.chart = chart;
+    this.chartPainter = chartPainter;
 
     // add axes
     xAxis = new Axis(this, Axis.Direction.X);
@@ -136,9 +135,9 @@ public class AxisPair implements ChartPart {
   }
 
   @Override
-  public Chart getChart() {
+  public ChartPainter getChartPainter() {
 
-    return chart;
+    return chartPainter;
   }
 
   // Getters /////////////////////////////////////////////////

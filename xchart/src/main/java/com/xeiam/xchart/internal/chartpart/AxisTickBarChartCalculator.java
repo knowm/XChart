@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
@@ -49,13 +48,13 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickBarChartCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, Chart chart) {
+  public AxisTickBarChartCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, ChartPainter chart) {
 
     super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
     calculate(chart);
   }
 
-  private void calculate(Chart chart) {
+  private void calculate(ChartPainter chart) {
 
     // tick space - a percentage of the working space available for ticks, i.e. 95%
     int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space

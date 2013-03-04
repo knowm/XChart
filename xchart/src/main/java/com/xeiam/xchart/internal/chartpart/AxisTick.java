@@ -19,7 +19,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.List;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 
@@ -79,25 +78,25 @@ public class AxisTick implements ChartPart {
       // System.out.println("workingspace= " + workingSpace);
     }
 
-    if (axis.getDirection() == Axis.Direction.X && getChart().getStyleManager().getChartType() == ChartType.Bar) {
+    if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
 
-      gridStep = new AxisTickBarChartCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart());
+      gridStep = new AxisTickBarChartCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter());
 
-    } else if (axis.getDirection() == Axis.Direction.X && getChart().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+    } else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
 
-      gridStep = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+      gridStep = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
 
-    } else if (axis.getDirection() == Axis.Direction.Y && getChart().getStyleManager().isYAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+    } else if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
 
-      gridStep = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+      gridStep = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
 
     } else if (axis.getAxisType() == AxisType.Number) {
 
-      gridStep = new AxisTickNumericalCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+      gridStep = new AxisTickNumericalCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
 
     } else if (axis.getAxisType() == AxisType.Date) {
 
-      gridStep = new AxisTickDateCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChart().getStyleManager());
+      gridStep = new AxisTickDateCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
 
     }
 
@@ -108,13 +107,13 @@ public class AxisTick implements ChartPart {
 
       if (axis.getDirection() == Axis.Direction.Y) {
         bounds = new Rectangle((int) axisTickLabels.getBounds().getX(), (int) (axisTickLabels.getBounds().getY()), (int) (axisTickLabels.getBounds().getWidth()
-            + getChart().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
+            + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth()), (int) (axisTickMarks.getBounds().getHeight()));
         // g.setColor(Color.red);
         // g.draw(bounds);
       } else {
         bounds = new Rectangle((int) axisTickMarks.getBounds().getX(), (int) (axisTickMarks.getBounds().getY()), (int) axisTickLabels.getBounds().getWidth(), (int) (axisTickMarks.getBounds()
             .getHeight()
-            + getChart().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()));
+            + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()));
         // g.setColor(Color.red);
         // g.draw(bounds);
       }
@@ -123,9 +122,9 @@ public class AxisTick implements ChartPart {
   }
 
   @Override
-  public Chart getChart() {
+  public ChartPainter getChartPainter() {
 
-    return axis.getChart();
+    return axis.getChartPainter();
   }
 
   // Getters /////////////////////////////////////////////////

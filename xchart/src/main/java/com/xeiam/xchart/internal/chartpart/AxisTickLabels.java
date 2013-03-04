@@ -20,8 +20,6 @@ import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 
-import com.xeiam.xchart.Chart;
-
 /**
  * Axis tick labels
  */
@@ -53,9 +51,9 @@ public class AxisTickLabels implements ChartPart {
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle();
-    g.setFont(getChart().getStyleManager().getAxisTickLabelsFont());
+    g.setFont(getChartPainter().getStyleManager().getAxisTickLabelsFont());
 
-    g.setColor(getChart().getStyleManager().getAxisTickLabelsColor());
+    g.setColor(getChartPainter().getStyleManager().getAxisTickLabelsColor());
 
     if (axisTick.getAxis().getDirection() == Axis.Direction.Y) { // Y-Axis
 
@@ -71,7 +69,7 @@ public class AxisTickLabels implements ChartPart {
         if (tickLabel != null) { // some are null for logarithmic axes
           FontRenderContext frc = g.getFontRenderContext();
           // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
-          TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
+          TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
           Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
           layout.draw(g, xOffset, (int) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
@@ -98,7 +96,7 @@ public class AxisTickLabels implements ChartPart {
 
         if (tickLabel != null) { // some are null for logarithmic axes
           FontRenderContext frc = g.getFontRenderContext();
-          TextLayout layout = new TextLayout(tickLabel, getChart().getStyleManager().getAxisTickLabelsFont(), frc);
+          TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
           Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
           layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
 
@@ -118,8 +116,8 @@ public class AxisTickLabels implements ChartPart {
   }
 
   @Override
-  public Chart getChart() {
+  public ChartPainter getChartPainter() {
 
-    return axisTick.getChart();
+    return axisTick.getChartPainter();
   }
 }

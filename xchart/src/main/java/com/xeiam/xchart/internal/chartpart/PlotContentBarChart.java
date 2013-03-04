@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 
 /**
@@ -57,7 +56,7 @@ public class PlotContentBarChart extends PlotContent {
 
     // get all categories
     Set<Object> categories = new TreeSet<Object>();
-    Map<Integer, Series> seriesMap = getChart().getAxisPair().getSeriesMap();
+    Map<Integer, Series> seriesMap = getChartPainter().getAxisPair().getSeriesMap();
     for (Integer seriesId : seriesMap.keySet()) {
 
       Series series = seriesMap.get(seriesId);
@@ -79,19 +78,19 @@ public class PlotContentBarChart extends PlotContent {
       Collection<?> xData = series.getxData();
 
       Collection<Number> yData = series.getyData();
-      BigDecimal yMin = getChart().getAxisPair().getyAxis().getMin();
-      BigDecimal yMax = getChart().getAxisPair().getyAxis().getMax();
+      BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
+      BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
       if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
         yMin = BigDecimal.ZERO;
       } else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
         yMax = BigDecimal.ZERO;
       }
       // override min and maxValue if specified
-      if (getChart().getStyleManager().getyAxisMin() != null) {
-        yMin = new BigDecimal(getChart().getStyleManager().getyAxisMin());
+      if (getChartPainter().getStyleManager().getyAxisMin() != null) {
+        yMin = new BigDecimal(getChartPainter().getStyleManager().getyAxisMin());
       }
-      if (getChart().getStyleManager().getyAxisMax() != null) {
-        yMax = new BigDecimal(getChart().getStyleManager().getyAxisMax());
+      if (getChartPainter().getStyleManager().getyAxisMax() != null) {
+        yMax = new BigDecimal(getChartPainter().getStyleManager().getyAxisMax());
       }
       Iterator<?> categoryItr = categories.iterator();
       Iterator<Number> yItr = yData.iterator();
@@ -132,9 +131,9 @@ public class PlotContentBarChart extends PlotContent {
   }
 
   @Override
-  public Chart getChart() {
+  public ChartPainter getChartPainter() {
 
-    return plot.getChart();
+    return plot.getChartPainter();
   }
 
 }

@@ -55,39 +55,39 @@ public class PlotContentLineChart extends PlotContent {
     int yTickSpace = AxisPair.getTickSpace((int) bounds.getHeight());
     int yTopMargin = AxisPair.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
-    Map<Integer, Series> seriesMap = getChart().getAxisPair().getSeriesMap();
+    Map<Integer, Series> seriesMap = getChartPainter().getAxisPair().getSeriesMap();
     for (Integer seriesId : seriesMap.keySet()) {
 
       Series series = seriesMap.get(seriesId);
 
       // data points
       Collection<?> xData = series.getxData();
-      BigDecimal xMin = getChart().getAxisPair().getxAxis().getMin();
-      BigDecimal xMax = getChart().getAxisPair().getxAxis().getMax();
-      if (getChart().getStyleManager().isXAxisLogarithmic()) {
+      BigDecimal xMin = getChartPainter().getAxisPair().getxAxis().getMin();
+      BigDecimal xMax = getChartPainter().getAxisPair().getxAxis().getMax();
+      if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
         xMin = new BigDecimal(Math.log10(xMin.doubleValue()));
         xMax = new BigDecimal(Math.log10(xMax.doubleValue()));
       }
       Collection<Number> yData = series.getyData();
-      BigDecimal yMin = getChart().getAxisPair().getyAxis().getMin();
-      BigDecimal yMax = getChart().getAxisPair().getyAxis().getMax();
-      if (getChart().getStyleManager().isYAxisLogarithmic()) {
+      BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
+      BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
+      if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
         yMin = new BigDecimal(Math.log10(yMin.doubleValue()));
         yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
       }
 
       // override min and maxValue if specified
-      if (getChart().getStyleManager().getxAxisMin() != null) {
-        xMin = new BigDecimal(getChart().getStyleManager().getxAxisMin());
+      if (getChartPainter().getStyleManager().getxAxisMin() != null) {
+        xMin = new BigDecimal(getChartPainter().getStyleManager().getxAxisMin());
       }
-      if (getChart().getStyleManager().getyAxisMin() != null) {
-        yMin = new BigDecimal(getChart().getStyleManager().getyAxisMin());
+      if (getChartPainter().getStyleManager().getyAxisMin() != null) {
+        yMin = new BigDecimal(getChartPainter().getStyleManager().getyAxisMin());
       }
-      if (getChart().getStyleManager().getxAxisMax() != null) {
-        xMin = new BigDecimal(getChart().getStyleManager().getxAxisMax());
+      if (getChartPainter().getStyleManager().getxAxisMax() != null) {
+        xMin = new BigDecimal(getChartPainter().getStyleManager().getxAxisMax());
       }
-      if (getChart().getStyleManager().getyAxisMax() != null) {
-        yMax = new BigDecimal(getChart().getStyleManager().getyAxisMax());
+      if (getChartPainter().getStyleManager().getyAxisMax() != null) {
+        yMax = new BigDecimal(getChartPainter().getStyleManager().getyAxisMax());
       }
 
       Collection<Number> errorBars = series.getErrorBars();
@@ -104,21 +104,21 @@ public class PlotContentLineChart extends PlotContent {
       while (xItr.hasNext()) {
 
         BigDecimal x = null;
-        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+        if (getChartPainter().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
           x = new BigDecimal(((Number) xItr.next()).doubleValue());
         }
-        if (getChart().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+        if (getChartPainter().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
           x = new BigDecimal(((Date) xItr.next()).getTime());
           // System.out.println(x);
         }
 
-        if (getChart().getStyleManager().isXAxisLogarithmic()) {
+        if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
           x = new BigDecimal(Math.log10(x.doubleValue()));
         }
 
         BigDecimal y = new BigDecimal(yItr.next().doubleValue());
 
-        if (getChart().getStyleManager().isYAxisLogarithmic()) {
+        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
           y = new BigDecimal(Math.log10(y.doubleValue()));
         }
 
@@ -147,7 +147,7 @@ public class PlotContentLineChart extends PlotContent {
         // System.out.println(yTransform);
 
         // paint line
-        if (series.getStroke() != null && getChart().getStyleManager().getChartType() != ChartType.Scatter) {
+        if (series.getStroke() != null && getChartPainter().getStyleManager().getChartType() != ChartType.Scatter) {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.getStrokeColor());
             g.setStroke(series.getStroke());
@@ -156,7 +156,7 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         // paint area
-        if (getChart().getStyleManager().getChartType() == ChartType.Area) {
+        if (getChartPainter().getStyleManager().getChartType() == ChartType.Area) {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.getStrokeColor());
             int yBottomOfArea = (int) (bounds.getY() + bounds.getHeight() - yTopMargin + 1);
@@ -175,7 +175,7 @@ public class PlotContentLineChart extends PlotContent {
 
         // paint errorbar
         if (errorBars != null) {
-          g.setColor(getChart().getStyleManager().getErrorBarsColor());
+          g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
           g.setStroke(errorBarStroke);
           int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
           int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
