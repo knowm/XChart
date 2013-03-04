@@ -27,9 +27,9 @@ import java.util.Arrays;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.StyleManager.ChartTheme;
+import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-import com.xeiam.xchart.style.StyleManager.ChartType;
-import com.xeiam.xchart.style.theme.GGPlot2Theme;
 
 /**
  * <p>
@@ -52,7 +52,7 @@ public class BarChart05 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Temperature vs. Color").xAxisTitle("Color").yAxisTitle("Temperature").theme(new GGPlot2Theme()).build();
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Temperature vs. Color").xAxisTitle("Color").yAxisTitle("Temperature").theme(ChartTheme.GGPlot2).build();
     // List<Number> data = ;
     chart.addCategorySeries("fish", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow" })), new ArrayList<Number>(Arrays.asList(new Number[] { -40, 30, 20, 60 })));
     chart.addCategorySeries("worms", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow" })), new ArrayList<Number>(Arrays.asList(new Number[] { 50, 10, -20, 40 })));

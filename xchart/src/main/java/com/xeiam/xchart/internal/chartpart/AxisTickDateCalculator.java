@@ -19,20 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.internal.chartpart.axistickcalculator;
+package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 
+import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
-import com.xeiam.xchart.internal.chartpart.AxisPair;
-import com.xeiam.xchart.style.StyleManager;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for date axes
  * 
  * @author timmolter
  */
-public class DateAxisTickCalculator extends AxisTickCalculator {
+public class AxisTickDateCalculator extends AxisTickCalculator {
 
   DateFormatter dateFormatter;
 
@@ -45,7 +44,7 @@ public class DateAxisTickCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public DateAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public AxisTickDateCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     dateFormatter = new DateFormatter(styleManager);

@@ -21,7 +21,7 @@ import java.awt.Stroke;
 import java.util.List;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.style.StyleManager.ChartType;
+import com.xeiam.xchart.StyleManager.ChartType;
 
 /**
  * @author timmolter

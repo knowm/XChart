@@ -19,11 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.style;
+package com.xeiam.xchart.internal.style;
 
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.xeiam.xchart.SeriesColor;
+import com.xeiam.xchart.SeriesLineStyle;
+import com.xeiam.xchart.SeriesMarker;
 
 /**
  * Cycles through the different colors, markers, and strokes in a predetermined way

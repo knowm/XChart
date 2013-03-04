@@ -27,7 +27,7 @@ import java.util.Map;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
-import com.xeiam.xchart.style.SeriesColorMarkerLineStyleCycler;
+import com.xeiam.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 
 /**
  * @author timmolter

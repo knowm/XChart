@@ -29,8 +29,8 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberFormatter;
-import com.xeiam.xchart.style.StyleManager;
+import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.internal.chartpart.NumberFormatter;
 
 /**
  * @author timmolter

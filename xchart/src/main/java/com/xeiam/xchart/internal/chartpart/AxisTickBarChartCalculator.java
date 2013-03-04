@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.internal.chartpart.axistickcalculator;
+package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -32,14 +32,13 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
-import com.xeiam.xchart.internal.chartpart.AxisPair;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
  * 
  * @author timmolter
  */
-public class BarChartAxisTickCalculator extends AxisTickCalculator {
+public class AxisTickBarChartCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
@@ -50,7 +49,7 @@ public class BarChartAxisTickCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public BarChartAxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, Chart chart) {
+  public AxisTickBarChartCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, Chart chart) {
 
     super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
     calculate(chart);

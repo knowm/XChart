@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.style;
+package com.xeiam.xchart;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -27,8 +27,9 @@ import java.awt.Stroke;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.xeiam.xchart.style.theme.Theme;
-import com.xeiam.xchart.style.theme.XChartTheme;
+import com.xeiam.xchart.internal.style.GGPlot2Theme;
+import com.xeiam.xchart.internal.style.Theme;
+import com.xeiam.xchart.internal.style.XChartTheme;
 
 /**
  * @author timmolter
@@ -43,6 +44,11 @@ public class StyleManager {
   public enum LegendPosition {
 
     OutsideW, InsideNW, InsideNE, InsideSE, InsideSW
+  }
+
+  public enum ChartTheme {
+
+    XChart, GGPlot2
   }
 
   /** the default Theme */
@@ -190,6 +196,25 @@ public class StyleManager {
 
     this.theme = theme;
     setAllStyles();
+  }
+
+  /**
+   * Set the ChartTheme the style manager should use
+   * 
+   * @param theme
+   */
+  public void setChartTheme(ChartTheme chartTheme) {
+
+    if (chartTheme == ChartTheme.XChart) {
+      setTheme(new XChartTheme());
+    } else if (chartTheme == ChartTheme.GGPlot2) {
+      setTheme(new GGPlot2Theme());
+    }
+  }
+
+  public Theme getTheme() {
+
+    return theme;
   }
 
   // Chart Style ///////////////////////////////

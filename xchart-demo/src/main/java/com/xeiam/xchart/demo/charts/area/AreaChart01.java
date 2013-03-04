@@ -18,9 +18,9 @@ package com.xeiam.xchart.demo.charts.area;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.StyleManager.ChartType;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-import com.xeiam.xchart.style.StyleManager.ChartType;
-import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * 3-Series

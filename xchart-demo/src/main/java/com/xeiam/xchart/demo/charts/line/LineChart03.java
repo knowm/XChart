@@ -26,14 +26,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.ChartColor;
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesColor;
+import com.xeiam.xchart.SeriesLineStyle;
+import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-import com.xeiam.xchart.style.ChartColor;
-import com.xeiam.xchart.style.SeriesColor;
-import com.xeiam.xchart.style.SeriesLineStyle;
-import com.xeiam.xchart.style.SeriesMarker;
-import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * Extensive Chart Customization

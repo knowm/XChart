@@ -22,10 +22,10 @@ import java.util.List;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-import com.xeiam.xchart.style.SeriesMarker;
-import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * Error Bars

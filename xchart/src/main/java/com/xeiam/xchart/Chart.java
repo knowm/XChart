@@ -26,8 +26,7 @@ import com.xeiam.xchart.internal.chartpart.AxisPair;
 import com.xeiam.xchart.internal.chartpart.ChartTitle;
 import com.xeiam.xchart.internal.chartpart.Legend;
 import com.xeiam.xchart.internal.chartpart.Plot;
-import com.xeiam.xchart.style.StyleManager;
-import com.xeiam.xchart.style.theme.Theme;
+import com.xeiam.xchart.internal.style.Theme;
 
 /**
  * An XChart Chart
@@ -73,7 +72,7 @@ public class Chart {
   public Chart(ChartBuilder chartBuilder) {
 
     this(chartBuilder.width, chartBuilder.height);
-    setTheme(chartBuilder.theme);
+    getStyleManager().setChartTheme(chartBuilder.chartTheme);
     setChartTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);

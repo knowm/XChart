@@ -26,9 +26,9 @@ import java.util.Random;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-import com.xeiam.xchart.style.SeriesMarker;
 
 /**
  * Millisecond Scale

@@ -21,8 +21,8 @@ import java.util.List;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-import com.xeiam.xchart.style.StyleManager.LegendPosition;
 
 /**
  * Logarithmic Y-Axis
@@ -50,7 +50,7 @@ public class LineChart01 implements ExampleChart {
     List<Number> yData = new ArrayList<Number>();
     for (int i = -3; i <= 3; i++) {
       xData.add(i);
-      yData.add(Math.pow(10, i) - 1);
+      yData.add(Math.pow(10, i));
     }
 
     // Create Chart

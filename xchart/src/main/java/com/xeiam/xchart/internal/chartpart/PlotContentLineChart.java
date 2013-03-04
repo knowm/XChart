@@ -24,8 +24,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
-import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * @author timmolter

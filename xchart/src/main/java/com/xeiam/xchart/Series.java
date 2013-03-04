@@ -24,10 +24,7 @@ import java.util.Iterator;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.markers.Marker;
-import com.xeiam.xchart.style.SeriesColor;
-import com.xeiam.xchart.style.SeriesColorMarkerLineStyle;
-import com.xeiam.xchart.style.SeriesLineStyle;
-import com.xeiam.xchart.style.SeriesMarker;
+import com.xeiam.xchart.internal.style.SeriesColorMarkerLineStyle;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart

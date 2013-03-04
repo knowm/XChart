@@ -22,7 +22,7 @@ import java.awt.font.TextLayout;
 import java.math.BigDecimal;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.style.StyleManager.LegendPosition;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 
 /**
  * Axis

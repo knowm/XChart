@@ -21,9 +21,8 @@
  */
 package com.xeiam.xchart;
 
-import com.xeiam.xchart.style.StyleManager.ChartType;
-import com.xeiam.xchart.style.theme.Theme;
-import com.xeiam.xchart.style.theme.XChartTheme;
+import com.xeiam.xchart.StyleManager.ChartTheme;
+import com.xeiam.xchart.StyleManager.ChartType;
 
 /**
  * @author timmolter
@@ -36,7 +35,7 @@ public class ChartBuilder {
   String title = "";
   String xAxisTitle = "";
   String yAxisTitle = "";
-  Theme theme = new XChartTheme();
+  ChartTheme chartTheme = ChartTheme.XChart;
 
   public ChartBuilder chartType(ChartType chartType) {
 
@@ -74,9 +73,9 @@ public class ChartBuilder {
     return this;
   }
 
-  public ChartBuilder theme(Theme theme) {
+  public ChartBuilder theme(ChartTheme chartTheme) {
 
-    this.theme = theme;
+    this.chartTheme = chartTheme;
     return this;
   }
 

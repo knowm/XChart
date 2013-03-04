@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.style;
+package com.xeiam.xchart.internal.style;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

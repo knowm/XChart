@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.internal.chartpart.axistickcalculator;
+package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -28,7 +28,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-import com.xeiam.xchart.style.StyleManager;
+import com.xeiam.xchart.StyleManager;
 
 /**
  * @author timmolter

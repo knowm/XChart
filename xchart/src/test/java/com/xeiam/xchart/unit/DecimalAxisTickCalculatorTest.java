@@ -30,9 +30,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.internal.chartpart.AxisTickNumericalCalculator;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.NumberAxisTickCalculator;
-import com.xeiam.xchart.style.StyleManager;
 
 /**
  * @author timmolter
@@ -42,7 +42,7 @@ public class DecimalAxisTickCalculatorTest {
   @Test
   public void testDateOneMinuteTimespan() {
 
-    NumberAxisTickCalculator decimalAxisTickCalculator = new NumberAxisTickCalculator(Direction.X, 600, new BigDecimal(-15), new BigDecimal(15), new StyleManager());
+    AxisTickNumericalCalculator decimalAxisTickCalculator = new AxisTickNumericalCalculator(Direction.X, 600, new BigDecimal(-15), new BigDecimal(15), new StyleManager());
 
     List<String> tickLabels = decimalAxisTickCalculator.getTickLabels();
     System.out.println(Arrays.toString(tickLabels.toArray()));

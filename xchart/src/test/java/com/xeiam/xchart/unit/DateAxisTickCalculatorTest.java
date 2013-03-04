@@ -27,9 +27,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.internal.chartpart.AxisTickDateCalculator;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
-import com.xeiam.xchart.internal.chartpart.axistickcalculator.DateAxisTickCalculator;
-import com.xeiam.xchart.style.StyleManager;
 
 /**
  * @author timmolter
@@ -39,7 +39,7 @@ public class DateAxisTickCalculatorTest {
   @Test
   public void testDateOneMinuteTimespan() {
 
-    DateAxisTickCalculator decimalAxisTickCalculator = new DateAxisTickCalculator(Direction.X, 600, new BigDecimal(1361110661000L), new BigDecimal(1361110721000L), new StyleManager());
+    AxisTickDateCalculator decimalAxisTickCalculator = new AxisTickDateCalculator(Direction.X, 600, new BigDecimal(1361110661000L), new BigDecimal(1361110721000L), new StyleManager());
 
     List<String> tickLabels = decimalAxisTickCalculator.getTickLabels();
     System.out.println(Arrays.toString(tickLabels.toArray()));

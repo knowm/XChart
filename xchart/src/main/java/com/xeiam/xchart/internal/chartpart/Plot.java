@@ -19,7 +19,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.style.StyleManager.ChartType;
+import com.xeiam.xchart.StyleManager.ChartType;
 
 /**
  * @author timmolter

@@ -19,15 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.internal.chartpart.axistickcalculator;
+package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
-import com.xeiam.xchart.style.StyleManager;
-import com.xeiam.xchart.style.StyleManager.ChartType;
 
 /**
  * @author timmolter

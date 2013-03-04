@@ -19,13 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.xeiam.xchart.style.theme;
+package com.xeiam.xchart.internal.style;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
-import com.xeiam.xchart.style.StyleManager.LegendPosition;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
