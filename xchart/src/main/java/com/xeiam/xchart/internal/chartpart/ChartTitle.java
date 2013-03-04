@@ -91,17 +91,21 @@ public class ChartTitle implements ChartPart {
       TextLayout textLayout = new TextLayout(text, chartPainter.getStyleManager().getChartTitleFont(), frc);
       Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
 
-      // paint the chart title box
-      int chartTitleBoxWidth = (int) chartPainter.getPlot().getBounds().getWidth();
-      int chartTitleBoxHeight = (int) (rectangle.getHeight() + 2 * chartPainter.getStyleManager().getChartTitlePadding());
       int xOffset = (int) chartPainter.getPlot().getBounds().getX();
       int yOffset = chartPainter.getStyleManager().getChartPadding();
 
-      g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-      g.setColor(chartPainter.getStyleManager().getChartTitleBorderColor());
-      g.drawRect(xOffset - 1, yOffset, chartTitleBoxWidth - 1, chartTitleBoxHeight - 1);
-      g.setColor(chartPainter.getStyleManager().getChartTitleBackgroundColor());
-      g.fillRect(xOffset - 1, yOffset + 1, chartTitleBoxWidth, chartTitleBoxHeight - 1);
+      if (chartPainter.getStyleManager().isChartTitleBoxVisible()) {
+
+        // paint the chart title box
+        int chartTitleBoxWidth = (int) chartPainter.getPlot().getBounds().getWidth();
+        int chartTitleBoxHeight = (int) (rectangle.getHeight() + 2 * chartPainter.getStyleManager().getChartTitlePadding());
+
+        g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+        g.setColor(chartPainter.getStyleManager().getChartTitleBoxBorderColor());
+        g.drawRect(xOffset - 1, yOffset, chartTitleBoxWidth, chartTitleBoxHeight);
+        g.setColor(chartPainter.getStyleManager().getChartTitleBoxBackgroundColor());
+        g.fillRect(xOffset, yOffset + 1, chartTitleBoxWidth - 1, chartTitleBoxHeight - 1);
+      }
 
       // paint title
       xOffset = (int) (chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0);

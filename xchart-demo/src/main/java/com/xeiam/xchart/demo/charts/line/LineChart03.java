@@ -31,8 +31,8 @@ import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SeriesColor;
 import com.xeiam.xchart.SeriesLineStyle;
 import com.xeiam.xchart.SeriesMarker;
-import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.StyleManager.LegendPosition;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
@@ -79,7 +79,9 @@ public class LineChart03 implements ExampleChart {
     chart.getStyleManager().setChartBackgroundColor(Color.WHITE);
     chart.getStyleManager().setLegendBackgroundColor(Color.PINK);
     chart.getStyleManager().setChartFontColor(Color.MAGENTA);
-    chart.getStyleManager().setChartTitleBackgroundColor(new Color(0, 222, 0));
+    chart.getStyleManager().setChartTitleBoxBackgroundColor(new Color(0, 222, 0));
+    chart.getStyleManager().setChartTitleBoxVisible(true);
+    chart.getStyleManager().setChartTitleBoxBorderColor(Color.BLACK);
     chart.getStyleManager().setPlotGridLinesVisible(false);
     chart.getStyleManager().setAxisTickPadding(20);
     chart.getStyleManager().setAxisTickMarkLength(15);
@@ -101,5 +103,4 @@ public class LineChart03 implements ExampleChart {
 
     return chart;
   }
-
 }

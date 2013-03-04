@@ -63,8 +63,9 @@ public class StyleManager {
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
   private boolean isChartTitleVisible;
-  private Color chartTitleBackgroundColor;
-  private Color chartTitleBorderColor;
+  private boolean isChartTitleBoxVisible;
+  private Color chartTitleBoxBackgroundColor;
+  private Color chartTitleBoxBorderColor;
   private int chartTitlePadding;
 
   // Chart Legend ///////////////////////////////
@@ -134,8 +135,9 @@ public class StyleManager {
     // Chart Title ///////////////////////////////
     chartTitleFont = theme.getChartTitleFont();
     isChartTitleVisible = theme.isChartTitleVisible();
-    chartTitleBackgroundColor = theme.getChartTitleBackgroundColor();
-    chartTitleBorderColor = theme.getChartTitleBorderColor();
+    isChartTitleBoxVisible = theme.isChartTitleBoxVisible();
+    chartTitleBoxBackgroundColor = theme.getChartTitleBoxBackgroundColor();
+    chartTitleBoxBorderColor = theme.getChartTitleBoxBorderColor();
     chartTitlePadding = theme.getChartTitlePadding();
 
     // legend
@@ -312,33 +314,48 @@ public class StyleManager {
   }
 
   /**
-   * set the chart title background color
+   * Set the chart title box visibility
    * 
-   * @param chartTitleBackgroundColor
+   * @param isChartTitleBoxVisible
    */
-  public void setChartTitleBackgroundColor(Color chartTitleBackgroundColor) {
+  public void setChartTitleBoxVisible(boolean isChartTitleBoxVisible) {
 
-    this.chartTitleBackgroundColor = chartTitleBackgroundColor;
+    this.isChartTitleBoxVisible = isChartTitleBoxVisible;
   }
 
-  public Color getChartTitleBackgroundColor() {
+  public boolean isChartTitleBoxVisible() {
 
-    return chartTitleBackgroundColor;
+    return isChartTitleBoxVisible;
   }
 
   /**
-   * set the chart title border color
+   * set the chart title box background color
    * 
-   * @param chartTitleBorderColor
+   * @param chartTitleBoxBackgroundColor
    */
-  public void setChartTitleBorderColor(Color chartTitleBorderColor) {
+  public void setChartTitleBoxBackgroundColor(Color chartTitleBoxBackgroundColor) {
 
-    this.chartTitleBorderColor = chartTitleBorderColor;
+    this.chartTitleBoxBackgroundColor = chartTitleBoxBackgroundColor;
   }
 
-  public Color getChartTitleBorderColor() {
+  public Color getChartTitleBoxBackgroundColor() {
 
-    return chartTitleBorderColor;
+    return chartTitleBoxBackgroundColor;
+  }
+
+  /**
+   * set the chart title box border color
+   * 
+   * @param chartTitleBoxBorderColor
+   */
+  public void setChartTitleBoxBorderColor(Color chartTitleBoxBorderColor) {
+
+    this.chartTitleBoxBorderColor = chartTitleBoxBorderColor;
+  }
+
+  public Color getChartTitleBoxBorderColor() {
+
+    return chartTitleBoxBorderColor;
   }
 
   /**

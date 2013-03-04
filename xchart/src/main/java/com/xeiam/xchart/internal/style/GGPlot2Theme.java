@@ -69,13 +69,19 @@ public class GGPlot2Theme implements Theme {
   }
 
   @Override
-  public Color getChartTitleBackgroundColor() {
+  public boolean isChartTitleBoxVisible() {
+
+    return true;
+  }
+
+  @Override
+  public Color getChartTitleBoxBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.GREY);
   }
 
   @Override
-  public Color getChartTitleBorderColor() {
+  public Color getChartTitleBoxBorderColor() {
 
     return ChartColor.getAWTColor(ChartColor.GREY);
   }

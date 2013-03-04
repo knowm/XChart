@@ -46,9 +46,11 @@ public interface Theme {
 
   public boolean isChartTitleVisible();
 
-  public Color getChartTitleBackgroundColor();
+  public boolean isChartTitleBoxVisible();
 
-  public Color getChartTitleBorderColor();
+  public Color getChartTitleBoxBackgroundColor();
+
+  public Color getChartTitleBoxBorderColor();
 
   public int getChartTitlePadding();
 
