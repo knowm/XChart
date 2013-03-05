@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.chart;
+package com.xeiam.xchart.standalone;
 
 import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
@@ -21,9 +21,7 @@ import com.xeiam.xchart.QuickChart;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Creates a simple Chart using {@link com.xeiam.xchart.QuickChart}
- * 
- * @author timmolter
+ * Creates a simple Chart using QuickChart
  */
 public class Example0 {
 

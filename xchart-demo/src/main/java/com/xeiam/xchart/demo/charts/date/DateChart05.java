@@ -30,8 +30,6 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Day Scale
- * 
- * @author timmolter
  */
 public class DateChart05 implements ExampleChart {
 

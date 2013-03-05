@@ -23,9 +23,13 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * 3-Series
- * 
- * @author timmolter
+ * Area Chart with 3 series
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Area Chart
+ * <li>Place legend at Inside-NW position
+ * <li>ChartBuilder
  */
 public class AreaChart01 implements ExampleChart {
 

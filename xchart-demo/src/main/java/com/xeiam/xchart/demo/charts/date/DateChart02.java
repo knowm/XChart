@@ -30,8 +30,6 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Second Scale
- * 
- * @author timmolter
  */
 public class DateChart02 implements ExampleChart {
 

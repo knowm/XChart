@@ -30,8 +30,6 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Year scale
- * 
- * @author timmolter
  */
 public class DateChart07 implements ExampleChart {
 

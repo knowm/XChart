@@ -30,8 +30,6 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Minute Scale
- * 
- * @author timmolter
  */
 public class DateChart03 implements ExampleChart {
 

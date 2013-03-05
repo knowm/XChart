@@ -26,13 +26,20 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 
 ## Features
 * No additional dependencies
-* ~50KB Jar
+* ~85KB Jar
 * Line charts
 * Scatter charts
+* Area Charts
+* Bar Charts
 * Error bars
-* Date x-axis
+* Logarithmic axes
+* Date and category X-Axis
 * Multiple series
 * Extensive customization
+* Themes
+* Right-click, Save-As...
+* User-defined axes range
+* Custom legend placement
 
 ## Getting Started
 ### Non-Maven
@@ -46,7 +53,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>com.xeiam.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>1.3.1</version>
+        <version>2.0.0</version>
     </dependency>
 
 For snapshots, add the following to your pom.xml file:
@@ -60,7 +67,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>1.3.2-SNAPSHOT</version>
+      <version>2.0.1-SNAPSHOT</version>
     </dependency>
 
 ## Building
@@ -69,7 +76,7 @@ mvn javadoc:aggregate
 
 ## Running Demo
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-1.3.1.jar:xchart-1.3.1.jar com.xeiam.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.0.0.jar:xchart-2.0.0.jar com.xeiam.xchart.demo.XChartDemo
 
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  

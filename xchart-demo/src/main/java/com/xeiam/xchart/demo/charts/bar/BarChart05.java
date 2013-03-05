@@ -26,12 +26,13 @@ import java.util.Arrays;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
-import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.StyleManager.ChartTheme;
 import com.xeiam.xchart.StyleManager.ChartType;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
+ * Multiple series Bar Chart
  * <p>
  * Demonstrates the following:
  * <ul>

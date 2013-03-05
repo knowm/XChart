@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.StyleManager.LegendPosition;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
@@ -58,6 +58,7 @@ public class ScatterChart01 implements ExampleChart {
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideSW);
+
     // Series
     chart.addSeries("Gaussian Blob", xData, yData);
 

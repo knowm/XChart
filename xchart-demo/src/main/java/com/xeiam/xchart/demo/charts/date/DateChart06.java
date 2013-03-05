@@ -30,8 +30,6 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Month scale
- * 
- * @author timmolter
  */
 public class DateChart06 implements ExampleChart {
 
