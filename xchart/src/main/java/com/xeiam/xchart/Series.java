@@ -77,6 +77,9 @@ public class Series {
    */
   public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<Number> yData, AxisType yAxisType, Collection<Number> errorBars, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
 
+    if (name == null || name.length() < 1) {
+      throw new IllegalArgumentException("Series name cannot be null or zero-length!!!");
+    }
     this.name = name;
     this.xData = xData;
     this.yData = yData;

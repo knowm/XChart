@@ -64,32 +64,34 @@ public class PlotContentLineChart extends PlotContent {
       Collection<?> xData = series.getxData();
       BigDecimal xMin = getChartPainter().getAxisPair().getxAxis().getMin();
       BigDecimal xMax = getChartPainter().getAxisPair().getxAxis().getMax();
-      if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
-        xMin = new BigDecimal(Math.log10(xMin.doubleValue()));
-        xMax = new BigDecimal(Math.log10(xMax.doubleValue()));
-      }
+
       Collection<Number> yData = series.getyData();
       BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
-      if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
-        yMin = new BigDecimal(Math.log10(yMin.doubleValue()));
-        yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
-      }
 
       // override min and maxValue if specified
-      if (getChartPainter().getStyleManager().getxAxisMin() != null) {
-        xMin = new BigDecimal(getChartPainter().getStyleManager().getxAxisMin());
+      if (getChartPainter().getStyleManager().getXAxisMin() != null) {
+        xMin = new BigDecimal(getChartPainter().getStyleManager().getXAxisMin());
       }
       if (getChartPainter().getStyleManager().getYAxisMin() != null) {
         yMin = new BigDecimal(getChartPainter().getStyleManager().getYAxisMin());
       }
-      if (getChartPainter().getStyleManager().getxAxisMax() != null) {
-        xMin = new BigDecimal(getChartPainter().getStyleManager().getxAxisMax());
+      if (getChartPainter().getStyleManager().getXAxisMax() != null) {
+        xMax = new BigDecimal(getChartPainter().getStyleManager().getXAxisMax());
       }
       if (getChartPainter().getStyleManager().getYAxisMax() != null) {
         yMax = new BigDecimal(getChartPainter().getStyleManager().getYAxisMax());
       }
 
+      // logarithmic
+      if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
+        xMin = new BigDecimal(Math.log10(xMin.doubleValue()));
+        xMax = new BigDecimal(Math.log10(xMax.doubleValue()));
+      }
+      if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+        yMin = new BigDecimal(Math.log10(yMin.doubleValue()));
+        yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
+      }
       Collection<Number> errorBars = series.getErrorBars();
 
       int previousX = Integer.MIN_VALUE;

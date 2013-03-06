@@ -738,7 +738,7 @@ public class StyleManager {
     this.xAxisMin = xAxisMin;
   }
 
-  public Double getxAxisMin() {
+  public Double getXAxisMin() {
 
     return xAxisMin;
   }
@@ -748,7 +748,7 @@ public class StyleManager {
     this.xAxisMax = xAxisMax;
   }
 
-  public Double getxAxisMax() {
+  public Double getXAxisMax() {
 
     return xAxisMax;
   }

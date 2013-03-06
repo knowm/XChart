@@ -101,17 +101,11 @@ public class PlotContentBarChart extends PlotContent {
       // figure out the general form of the chart
       int chartForm = 1; // 1=positive, -1=negative, 0=span
       if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
-        // positive chart
-        chartForm = 1;
-        System.out.println("positive chart");
+        chartForm = 1; // positive chart
       } else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
-        // negative chart
-        chartForm = -1;
-        System.out.println("negative chart");
+        chartForm = -1; // negative chart
       } else {
-        // span chart
-        chartForm = 0;
-        System.out.println("span chart");
+        chartForm = 0;// span chart
       }
 
       Iterator<?> categoryItr = categories.iterator();

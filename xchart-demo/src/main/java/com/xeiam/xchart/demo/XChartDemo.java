@@ -46,6 +46,7 @@ import com.xeiam.xchart.demo.charts.line.LineChart01;
 import com.xeiam.xchart.demo.charts.line.LineChart02;
 import com.xeiam.xchart.demo.charts.line.LineChart03;
 import com.xeiam.xchart.demo.charts.line.LineChart04;
+import com.xeiam.xchart.demo.charts.line.LineChart05;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart01;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart02;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart03;
@@ -157,7 +158,10 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     chart = new DefaultMutableTreeNode(new ChartInfo("LineChart03 - Extensive Chart Customization", new LineChart03().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart04 - Plots Hundreds of Series on One Plot", new LineChart04().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart04 - Hundreds of Series on One Plot", new LineChart04().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("LineChart05 - Scatter and Line", new LineChart05().getChart()));
     category.add(chart);
 
     // Scatter category

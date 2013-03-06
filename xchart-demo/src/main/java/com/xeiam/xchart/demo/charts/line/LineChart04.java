@@ -24,7 +24,7 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * Plots Hundreds of Series on One Plot
+ * Hundreds of Series on One Plot
  */
 public class LineChart04 implements ExampleChart {
 
@@ -48,7 +48,7 @@ public class LineChart04 implements ExampleChart {
     chart.getStyleManager().setLegendVisible(false);
 
     for (int i = 0; i < 200; i++) {
-      Series series = chart.addSeries("", new double[] { Math.random(), Math.random() }, new double[] { Math.random(), Math.random() });
+      Series series = chart.addSeries("A", new double[] { Math.random(), Math.random() }, new double[] { Math.random(), Math.random() });
       series.setLineColor(SeriesColor.BLUE);
       series.setLineStyle(SeriesLineStyle.SOLID);
       series.setMarker(SeriesMarker.CIRCLE);
