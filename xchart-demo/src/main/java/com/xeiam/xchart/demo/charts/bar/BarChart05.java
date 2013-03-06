@@ -32,7 +32,7 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * Multiple series Bar Chart
+ * GGPlot2 Theme
  * <p>
  * Demonstrates the following:
  * <ul>

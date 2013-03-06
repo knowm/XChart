@@ -183,16 +183,16 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     chart = new DefaultMutableTreeNode(new ChartInfo("BarChart01 - Basic Bar Chart", new BarChart01().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart02 - Basic Bar Chart", new BarChart02().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart02 - Date Categories", new BarChart02().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart03 - Basic Bar Chart", new BarChart03().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart03 - Positive and Negative", new BarChart03().getChart()));
     category.add(chart);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("BarChart04 - Missing Point in Series", new BarChart04().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart05 - Basic Bar Chart", new BarChart05().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("BarChart05 - GGPlot2 Theme", new BarChart05().getChart()));
     category.add(chart);
 
     // Theme category

@@ -31,12 +31,14 @@ import java.util.Random;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
-import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesColor;
 import com.xeiam.xchart.StyleManager.ChartType;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * Basic Bar Chart
+ * Date Categories
  * <p>
  * Demonstrates the following:
  * <ul>
@@ -44,6 +46,7 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <li>All negative values
  * <li>Single series
  * <li>No horizontal plot gridlines
+ * <li>Change series color
  */
 public class BarChart02 implements ExampleChart {
 
@@ -73,9 +76,10 @@ public class BarChart02 implements ExampleChart {
         e.printStackTrace();
       }
       xData.add(date);
-      yData.add(random.nextInt(i) + 1);
+      yData.add(-1 * ((random.nextInt(i) + 1)));
     }
-    chart.addDateSeries("Model 77", xData, yData);
+    Series series = chart.addDateSeries("Model 77", xData, yData);
+    series.setLineColor(SeriesColor.RED);
     chart.getStyleManager().setPlotGridLinesVisible(false);
 
     return chart;

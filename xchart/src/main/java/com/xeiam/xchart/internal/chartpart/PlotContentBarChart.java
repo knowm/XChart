@@ -80,11 +80,16 @@ public class PlotContentBarChart extends PlotContent {
       Collection<Number> yData = series.getyData();
       BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
+
+      // if min and max positive, set min to zero
       if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
         yMin = BigDecimal.ZERO;
-      } else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
+      }
+      // if min and max negative, set max to zero
+      if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
         yMax = BigDecimal.ZERO;
       }
+
       // override min and maxValue if specified
       if (getChartPainter().getStyleManager().getYAxisMin() != null) {
         yMin = new BigDecimal(getChartPainter().getStyleManager().getYAxisMin());
@@ -92,6 +97,23 @@ public class PlotContentBarChart extends PlotContent {
       if (getChartPainter().getStyleManager().getYAxisMax() != null) {
         yMax = new BigDecimal(getChartPainter().getStyleManager().getYAxisMax());
       }
+
+      // figure out the general form of the chart
+      int chartForm = 1; // 1=positive, -1=negative, 0=span
+      if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
+        // positive chart
+        chartForm = 1;
+        System.out.println("positive chart");
+      } else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
+        // negative chart
+        chartForm = -1;
+        System.out.println("negative chart");
+      } else {
+        // span chart
+        chartForm = 0;
+        System.out.println("span chart");
+      }
+
       Iterator<?> categoryItr = categories.iterator();
       Iterator<Number> yItr = yData.iterator();
 
@@ -101,19 +123,42 @@ public class PlotContentBarChart extends PlotContent {
         if (xData.contains(categoryItr.next())) {
 
           BigDecimal y = new BigDecimal(yItr.next().doubleValue());
-          BigDecimal yTop = new BigDecimal(y.doubleValue());
-          if (yTop.compareTo(yMax) > 0) {
-            yTop = yMax;
-          }
-          int yTransform = (int) (bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
-          int yOffset = (int) (bounds.getY() + yTransform);
+          BigDecimal yTop = null;
+          BigDecimal yBottom = null;
 
-          BigDecimal yBottom = new BigDecimal(y.doubleValue());
-          if (yBottom.compareTo(yMin) > 0) {
+          switch (chartForm) {
+          case 1: // positive chart
+            yTop = new BigDecimal(y.doubleValue());
             yBottom = yMin;
+            break;
+          case -1: // negative chart
+            yTop = yMax;
+            yBottom = new BigDecimal(y.doubleValue());
+            break;
+          case 0: // span chart
+            if (y.compareTo(BigDecimal.ZERO) >= 0) { // positive
+              yTop = y;
+              yBottom = BigDecimal.ZERO;
+            } else {
+              yTop = BigDecimal.ZERO;
+              yBottom = y;
+            }
+            break;
+          default:
+            break;
           }
+
+          // if (yTop.compareTo(yMax) > 0) {
+          // yTop = yMax;
+          // }
+          int yTransform = (int) (bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+          int yOffset = (int) (bounds.getY() + yTransform) + 1;
+
+          // if (yBottom.compareTo(yMin) > 0) {
+          // yBottom = yMin;
+          // }
           int zeroTransform = (int) (bounds.getHeight() - (yTopMargin + (yBottom.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace));
-          int zeroOffset = (int) (bounds.getY() + zeroTransform);
+          int zeroOffset = (int) (bounds.getY() + zeroTransform) + 1;
 
           // paint bar
           int barWidth = (int) (gridStep / seriesMap.size() / 1.1);
