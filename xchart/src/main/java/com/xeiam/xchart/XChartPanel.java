@@ -46,6 +46,8 @@ public class XChartPanel extends JPanel {
 
   private final Chart chart;
 
+  private String saveAsString = "Save As...";
+
   /**
    * Constructor
    * 
@@ -62,6 +64,16 @@ public class XChartPanel extends JPanel {
     KeyStroke ctrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlS, "save");
     this.getActionMap().put("save", new SaveAction());
+  }
+
+  /**
+   * Set the "Save As..." String if you want to localize it.
+   * 
+   * @param saveAsString
+   */
+  public void setSaveAsString(String saveAsString) {
+
+    this.saveAsString = saveAsString;
   }
 
   @Override
@@ -194,7 +206,7 @@ public class XChartPanel extends JPanel {
 
     public XChartPanelPopupMenu() {
 
-      saveAsMenuItem = new JMenuItem("Save As...");
+      saveAsMenuItem = new JMenuItem(saveAsString);
       saveAsMenuItem.addMouseListener(new MouseListener() {
 
         @Override
