@@ -32,6 +32,8 @@ import com.xeiam.xchart.internal.style.Theme;
 import com.xeiam.xchart.internal.style.XChartTheme;
 
 /**
+ * The StyleManager is used to manage all things related to styling of the vast number of Chart components
+ * 
  * @author timmolter
  */
 public class StyleManager {

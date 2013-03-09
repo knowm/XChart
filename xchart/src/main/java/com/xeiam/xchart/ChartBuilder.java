@@ -25,6 +25,8 @@ import com.xeiam.xchart.StyleManager.ChartTheme;
 import com.xeiam.xchart.StyleManager.ChartType;
 
 /**
+ * A "Builder" to make creating charts easier
+ * 
  * @author timmolter
  */
 public class ChartBuilder {
