@@ -197,9 +197,23 @@ public class Axis implements ChartPart {
         chartLegendWidth = getChartPainter().getChartLegend().getSizeHint()[0];
       }
 
-      int width = (int) (getChartPainter().getWidth() - axisPair.getyAxis().getBounds().getWidth() - chartLegendWidth - 2 * getChartPainter().getStyleManager().getChartPadding()
-          - getChartPainter().getStyleManager().getPlotPadding() - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? getChartPainter().getStyleManager()
-          .getChartPadding() : 0));
+      int width = (int) (
+
+      getChartPainter().getWidth()
+
+      - axisPair.getyAxis().getBounds().getWidth()
+
+      - chartLegendWidth
+
+      - 2 * getChartPainter().getStyleManager().getChartPadding()
+
+      - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding() + 1) : 0)
+
+      - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+          .getChartPadding() : 0)
+
+      );
+
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = xAxisRectangle;

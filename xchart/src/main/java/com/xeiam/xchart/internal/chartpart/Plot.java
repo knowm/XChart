@@ -63,7 +63,9 @@ public class Plot implements ChartPart {
 
     + chartPainter.getAxisPair().getyAxis().getBounds().getWidth()
 
-    + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding() + 1) : 0));
+    + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding() + 1) : 0)
+
+    );
 
     int yOffset = (int) (chartPainter.getAxisPair().getyAxis().getBounds().getY());
     int width = (int) chartPainter.getAxisPair().getxAxis().getBounds().getWidth();
