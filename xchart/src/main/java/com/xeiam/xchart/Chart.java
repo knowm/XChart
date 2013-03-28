@@ -19,6 +19,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
 
 import com.xeiam.xchart.internal.chartpart.ChartPainter;
 import com.xeiam.xchart.internal.style.Theme;
@@ -254,6 +255,11 @@ public class Chart {
   public int getHeight() {
 
     return chartPainter.getHeight();
+  }
+
+  public Map<Integer, Series> getSeriesMap() {
+
+    return chartPainter.getAxisPair().getSeriesMap();
   }
 
 }
