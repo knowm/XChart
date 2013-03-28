@@ -30,10 +30,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class is used to create a Chart object from a folder containing one or more CSV files. The parent folder's name becomes the title of the chart. Each CSV file in the folder becomes a series on
+ * the chart. the CSV file's name becomes the series' name.
+ * 
  * @author timmolter
  */
 public class CSVImporter {
 
+  /**
+   * @param path2Directory
+   * @param width
+   * @param height
+   * @return
+   */
   public static Chart getChartFromCSVDir(String path2Directory, int width, int height) {
 
     // 1. get the directory, name chart the dir name
@@ -95,8 +104,8 @@ public class CSVImporter {
   /**
    * This method returns the files found in the given directory matching the given regular expression.
    * 
-   * @param dirName - ex. "./images/colors/original/" *make sure you have the '/' on the end
-   * @param regex - ex. ".*.png"
+   * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
+   * @param regex - ex. ".*.csv"
    * @return File[] - an array of files
    */
   public static File[] getAllFiles(String dirName, String regex) {
@@ -119,7 +128,7 @@ public class CSVImporter {
   /**
    * This method returns the Files found in the given directory
    * 
-   * @param dirName - ex. "./images/colors/original/" *make sure you have the '/' on the end
+   * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
    * @return File[] - an array of files
    */
   public static File[] getAllFiles(String dirName) {
