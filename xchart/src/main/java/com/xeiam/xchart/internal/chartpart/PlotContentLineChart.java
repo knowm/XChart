@@ -125,9 +125,9 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         // System.out.println(y);
-        double eb = 0.0;
+        BigDecimal eb = BigDecimal.ZERO;
         if (errorBars != null) {
-          eb = ebItr.next().doubleValue();
+          eb = new BigDecimal(ebItr.next().doubleValue());
         }
 
         int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
@@ -179,11 +179,18 @@ public class PlotContentLineChart extends PlotContent {
         if (errorBars != null) {
           g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
           g.setStroke(errorBarStroke);
-          int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
-          int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
-          g.drawLine(xOffset, yOffset + bottom, xOffset, yOffset + top);
-          g.drawLine(xOffset - 3, yOffset + bottom, xOffset + 3, yOffset + bottom);
-          g.drawLine(xOffset - 3, yOffset + top, xOffset + 3, yOffset + top);
+
+          BigDecimal topValue = y.add(eb);
+          int topEBTransform = (int) (bounds.getHeight() - (yTopMargin + topValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+          int topEBOffset = (int) (bounds.getY() + topEBTransform);
+
+          BigDecimal bottomValue = y.subtract(eb);
+          int bottomEBTransform = (int) (bounds.getHeight() - (yTopMargin + bottomValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+          int bottomEBOffset = (int) (bounds.getY() + bottomEBTransform);
+
+          g.drawLine(xOffset, topEBOffset, xOffset, bottomEBOffset);
+          g.drawLine(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
+          g.drawLine(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
         }
       }
 

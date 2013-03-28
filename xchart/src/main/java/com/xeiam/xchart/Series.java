@@ -106,7 +106,6 @@ public class Series {
     yMax = yMinMax[1];
     // System.out.println(yMin);
     // System.out.println(yMax);
-
   }
 
   /**
