@@ -80,8 +80,8 @@ public class Axis implements ChartPart {
 
     this.axisPair = axisPair;
     this.direction = direction;
-    axisTitle = new AxisTitle(this, direction == Direction.X ? getChartPainter().getStyleManager().isXAxisTitleVisible() : getChartPainter().getStyleManager().isYAxisTitleVisible());
-    axisTick = new AxisTick(this, direction == Direction.X ? getChartPainter().getStyleManager().isXAxisTicksVisible() : getChartPainter().getStyleManager().isYAxisTicksVisible());
+    axisTitle = new AxisTitle(this);
+    axisTick = new AxisTick(this);
   }
 
   /**
@@ -193,12 +193,13 @@ public class Axis implements ChartPart {
       int yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight());
 
       int chartLegendWidth = 0;
-      if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideW) {
+      if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
         chartLegendWidth = getChartPainter().getChartLegend().getSizeHint()[0];
       }
 
-      int width = (int) (getChartPainter().getWidth() - axisPair.getyAxis().getBounds().getWidth() - chartLegendWidth - (getChartPainter().getStyleManager().isLegendVisible() ? 3 : 2)
-          * getChartPainter().getStyleManager().getChartPadding() - getChartPainter().getStyleManager().getPlotPadding());
+      int width = (int) (getChartPainter().getWidth() - axisPair.getyAxis().getBounds().getWidth() - chartLegendWidth - 2 * getChartPainter().getStyleManager().getChartPadding()
+          - getChartPainter().getStyleManager().getPlotPadding() - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? getChartPainter().getStyleManager()
+          .getChartPadding() : 0));
       int height = this.getSizeHint();
       Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = xAxisRectangle;

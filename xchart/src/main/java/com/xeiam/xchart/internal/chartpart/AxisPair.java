@@ -38,7 +38,7 @@ public class AxisPair implements ChartPart {
 
   private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
 
-  private int seriesCount;
+  private int seriesCount = 0;
 
   private Axis xAxis;
   private Axis yAxis;

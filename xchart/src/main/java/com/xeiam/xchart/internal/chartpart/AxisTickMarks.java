@@ -27,7 +27,7 @@ public class AxisTickMarks implements ChartPart {
   private AxisTick axisTick;
 
   /** the bounds */
-  private Rectangle bounds;
+  private Rectangle bounds = new Rectangle();
 
   /**
    * Constructor
@@ -48,12 +48,10 @@ public class AxisTickMarks implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    bounds = new Rectangle();
-
     g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
     g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
 
-    if (axisTick.getAxis().getDirection() == Axis.Direction.Y) { // Y-Axis
+    if (axisTick.getAxis().getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) { // Y-Axis
 
       int xOffset = (int) (axisTick.getAxisTickLabels().getBounds().getX() + axisTick.getAxisTickLabels().getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding());
       int yOffset = (int) (axisTick.getAxis().getPaintZone().getY());
@@ -82,7 +80,7 @@ public class AxisTickMarks implements ChartPart {
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
-    } else { // X-Axis
+    } else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
 
       int xOffset = (int) (axisTick.getAxis().getPaintZone().getX());
       // int yOffset = (int) (axisTick.getAxisTickLabels().getBounds().getY() - getChart().getStyleManager().getAxisTickPadding());

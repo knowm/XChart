@@ -59,8 +59,12 @@ public class Plot implements ChartPart {
     bounds = new Rectangle();
 
     // calculate bounds
-    int xOffset = (int) (chartPainter.getAxisPair().getyAxis().getBounds().getX() + chartPainter.getAxisPair().getyAxis().getBounds().getWidth() + (chartPainter.getStyleManager()
-        .isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding() + 1) : 0));
+    int xOffset = (int) (chartPainter.getAxisPair().getyAxis().getBounds().getX()
+
+    + chartPainter.getAxisPair().getyAxis().getBounds().getWidth()
+
+    + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding() + 1) : 0));
+
     int yOffset = (int) (chartPainter.getAxisPair().getyAxis().getBounds().getY());
     int width = (int) chartPainter.getAxisPair().getxAxis().getBounds().getWidth();
     int height = (int) chartPainter.getAxisPair().getyAxis().getBounds().getHeight();

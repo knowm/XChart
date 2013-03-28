@@ -127,7 +127,7 @@ public class GGPlot2Theme implements Theme {
   @Override
   public LegendPosition getLegendPosition() {
 
-    return LegendPosition.OutsideW;
+    return LegendPosition.OutsideE;
   }
 
   // Chart Axes ///////////////////////////////

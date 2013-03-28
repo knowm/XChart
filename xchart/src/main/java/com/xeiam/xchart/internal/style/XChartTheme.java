@@ -128,7 +128,7 @@ public class XChartTheme implements Theme {
   @Override
   public LegendPosition getLegendPosition() {
 
-    return LegendPosition.OutsideW;
+    return LegendPosition.OutsideE;
   }
 
   // Chart Axes ///////////////////////////////

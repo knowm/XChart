@@ -45,7 +45,7 @@ public class StyleManager {
 
   public enum LegendPosition {
 
-    OutsideW, InsideNW, InsideNE, InsideSE, InsideSW
+    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW
   }
 
   public enum ChartTheme {
@@ -567,7 +567,6 @@ public class StyleManager {
 
     this.xAxisTicksVisible = isVisible;
     this.yAxisTicksVisible = isVisible;
-
   }
 
   /**

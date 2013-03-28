@@ -40,7 +40,7 @@ public class AxisTitle implements ChartPart {
    * 
    * @param axis the axis
    */
-  protected AxisTitle(Axis axis, boolean isVisible) {
+  protected AxisTitle(Axis axis) {
 
     this.axis = axis;
   }
