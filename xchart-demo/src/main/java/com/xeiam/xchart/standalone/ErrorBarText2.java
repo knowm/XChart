@@ -39,13 +39,15 @@ public class ErrorBarText2 {
 
     double[] xData = new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 };
 
-    double[] yData1 = new double[] { 100, 100, 100, 10, 10, 10, 10 };
+    // double[] yData1 = new double[] { 100, 100, 100, 10, 10, 10, 10 };
+    double[] yData1 = new double[] { 100, 100, 100, 60, 10, 10, 10 };
 
-    double[] yData2 = new double[] { 50, 80, 90, 1, 5, 8, 9 };
+    double[] yData2 = new double[] { 150, 120, 110, 112, 19, 12, 11 };
 
-    double[] yData3 = new double[] { 150, 120, 110, 19, 15, 12, 11 };
+    double[] yData3 = new double[] { 50, 80, 90, 8, 1, 8, 9 };
 
-    double[] errdata = new double[] { 1, .699, .301, 2, 1, .699, 0.301 };
+    // double[] errdata = new double[] { 1, .699, .301, 2, 1, .699, 0.301 };
+    double[] errdata = new double[] { 50, 20, 10, 52, 9, 2, 1 };
 
     Chart mychart = new Chart(1200, 800);
 
@@ -54,10 +56,6 @@ public class ErrorBarText2 {
     mychart.getStyleManager().setYAxisMin(.099);
 
     mychart.getStyleManager().setYAxisMax(1000);
-
-    mychart.getStyleManager().setXAxisMin(0);
-
-    mychart.getStyleManager().setXAxisMax(10);
 
     mychart.getStyleManager().setErrorBarsColor(Color.black);
 

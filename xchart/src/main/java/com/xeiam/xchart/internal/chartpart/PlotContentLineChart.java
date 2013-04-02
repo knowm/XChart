@@ -118,17 +118,16 @@ public class PlotContentLineChart extends PlotContent {
           x = new BigDecimal(Math.log10(x.doubleValue()));
         }
 
-        BigDecimal y = new BigDecimal(yItr.next().doubleValue());
-
-        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
-          y = new BigDecimal(Math.log10(y.doubleValue()));
-        }
-
-        // System.out.println(y);
+        BigDecimal yOrig = new BigDecimal(yItr.next().doubleValue());
+        BigDecimal y = null;
         BigDecimal eb = BigDecimal.ZERO;
+
         if (errorBars != null) {
           eb = new BigDecimal(ebItr.next().doubleValue());
         }
+
+        // System.out.println(y);
+        y = new BigDecimal(Math.log10(yOrig.doubleValue()));
 
         int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
         int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
@@ -177,14 +176,28 @@ public class PlotContentLineChart extends PlotContent {
 
         // paint errorbar
         if (errorBars != null) {
+
           g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
           g.setStroke(errorBarStroke);
 
-          BigDecimal topValue = y.add(eb);
+          BigDecimal topValue = null;
+          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+            topValue = yOrig.add(eb);
+            topValue = new BigDecimal(Math.log10(topValue.doubleValue()));
+          } else {
+            topValue = y.add(eb);
+          }
           int topEBTransform = (int) (bounds.getHeight() - (yTopMargin + topValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
           int topEBOffset = (int) (bounds.getY() + topEBTransform);
 
-          BigDecimal bottomValue = y.subtract(eb);
+          BigDecimal bottomValue = null;
+          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+            bottomValue = yOrig.subtract(eb);
+            System.out.println(bottomValue);
+            bottomValue = new BigDecimal(Math.log10(bottomValue.doubleValue()));
+          } else {
+            bottomValue = y.subtract(eb);
+          }
           int bottomEBTransform = (int) (bounds.getHeight() - (yTopMargin + bottomValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
           int bottomEBOffset = (int) (bounds.getY() + bottomEBTransform);
 
