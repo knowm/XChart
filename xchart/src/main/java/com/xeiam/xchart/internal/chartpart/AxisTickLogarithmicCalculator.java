@@ -66,8 +66,25 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     // where the tick should begin in the working space in pixels
     int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
 
+    if (axisDirection == Direction.Y && styleManager.getXAxisMin() == null) {
+
+    }
+
     int logMin = (int) Math.floor(Math.log10(minValue.doubleValue()));
     int logMax = (int) Math.ceil(Math.log10(maxValue.doubleValue()));
+
+    if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
+      logMin = (int) (Math.log10(styleManager.getYAxisMin())); // no floor
+    }
+    if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {
+      logMax = (int) (Math.log10(styleManager.getYAxisMax())); // no floor
+    }
+    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
+      logMin = (int) (Math.log10(styleManager.getXAxisMin())); // no floor
+    }
+    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null) {
+      logMax = (int) (Math.log10(styleManager.getXAxisMax())); // no floor
+    }
 
     final BigDecimal min = new BigDecimal(minValue.doubleValue());
     BigDecimal tickStep = pow(10, logMin - 1);
@@ -99,5 +116,4 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       firstPosition = tickStep.add(pow(10, i));
     }
   }
-
 }
