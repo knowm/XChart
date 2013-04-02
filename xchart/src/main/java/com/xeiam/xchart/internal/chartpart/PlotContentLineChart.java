@@ -193,7 +193,7 @@ public class PlotContentLineChart extends PlotContent {
           BigDecimal bottomValue = null;
           if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
             bottomValue = yOrig.subtract(eb);
-            System.out.println(bottomValue);
+            // System.out.println(bottomValue);
             bottomValue = new BigDecimal(Math.log10(bottomValue.doubleValue()));
           } else {
             bottomValue = y.subtract(eb);

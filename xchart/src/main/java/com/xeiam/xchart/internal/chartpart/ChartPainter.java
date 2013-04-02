@@ -86,8 +86,8 @@ public class ChartPainter {
       throw new IllegalArgumentException("Series data cannot be less or equal to zero for a logarithmic X-Axis!!!");
     }
     if (getStyleManager().isYAxisLogarithmic() && axisPair.getyAxis().getMin().compareTo(BigDecimal.ZERO) <= 0) {
-      System.out.println(axisPair.getyAxis().getMin());
-      // throw new IllegalArgumentException("Series data cannot be less or equal to zero for a logarithmic Y-Axis!!!");
+      // System.out.println(axisPair.getyAxis().getMin());
+      throw new IllegalArgumentException("Series data cannot be less or equal to zero for a logarithmic Y-Axis!!!");
     }
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
