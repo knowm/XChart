@@ -33,7 +33,7 @@ import com.xeiam.xchart.SwingWrapper;
 /**
  * @author timmolter
  */
-public class ErrorBarText2 {
+public class ErrorBarLogTest {
 
   public static void main(String[] args) throws Exception {
 
@@ -53,7 +53,7 @@ public class ErrorBarText2 {
 
     mychart.getStyleManager().setYAxisLogarithmic(true); // set log or linear Y axis
 
-    mychart.getStyleManager().setYAxisMin(.099);
+    mychart.getStyleManager().setYAxisMin(.08);
 
     mychart.getStyleManager().setYAxisMax(1000);
 
