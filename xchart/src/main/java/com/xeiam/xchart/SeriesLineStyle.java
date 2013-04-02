@@ -37,7 +37,7 @@ public enum SeriesLineStyle {
   DASH_DASH(2, new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f)),
 
   /** DOT_DOT */
-  DOT_DOT(3, new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] { 1.0f, 1.0f }, 0.0f));
+  DOT_DOT(3, new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.CAP_ROUND, 10.0f, new float[] { 2.0f }, 0.0f));
 
   /** The index */
   private int index;

@@ -33,36 +33,60 @@ import com.xeiam.xchart.SwingWrapper;
 /**
  * @author timmolter
  */
-public class ErrorBarTest {
+public class ErrorBarText2 {
 
   public static void main(String[] args) throws Exception {
 
     double[] xData = new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 };
-    double[] yData1 = new double[] { 100, 100, 100, 50, 50, 50, 50 };
-    double[] errdata = new double[] { 50, 20, 10, 50, 40, 20, 10 };
 
-    double[] yData2 = new double[] { 50, 80, 90, 0, 10, 30, 40 };
-    double[] yData3 = new double[] { 150, 120, 110, 100, 90, 70, 60 };
+    double[] yData1 = new double[] { 100, 100, 100, 10, 10, 10, 10 };
 
-    Chart mychart = new Chart(900, 700);
-    // mychart.getStyleManager().setYAxisLogarithmic(true); // set log or linear Y axis
-    mychart.getStyleManager().setYAxisMin(0);
-    mychart.getStyleManager().setYAxisMax(150);
+    double[] yData2 = new double[] { 50, 80, 90, 1, 5, 8, 9 };
+
+    double[] yData3 = new double[] { 150, 120, 110, 19, 15, 12, 11 };
+
+    double[] errdata = new double[] { 1, .699, .301, 2, 1, .699, 0.301 };
+
+    Chart mychart = new Chart(1200, 800);
+
+    mychart.getStyleManager().setYAxisLogarithmic(true); // set log or linear Y axis
+
+    mychart.getStyleManager().setYAxisMin(.099);
+
+    mychart.getStyleManager().setYAxisMax(1000);
+
+    mychart.getStyleManager().setXAxisMin(0);
+
+    mychart.getStyleManager().setXAxisMax(10);
+
     mychart.getStyleManager().setErrorBarsColor(Color.black);
+
     Series series1 = mychart.addSeries("Error bar test data", xData, yData1, errdata);
+
     Series series2 = mychart.addSeries("Y+error", xData, yData2);
+
     Series series3 = mychart.addSeries("Y-error", xData, yData3);
+
     series1.setLineStyle(SeriesLineStyle.SOLID);
+
     series1.setMarker(SeriesMarker.DIAMOND);
+
     series1.setMarkerColor(Color.MAGENTA);
+
     series2.setLineStyle(SeriesLineStyle.DASH_DASH);
+
     series2.setMarker(SeriesMarker.NONE);
+
     series2.setLineColor(SeriesColor.RED);
+
     series3.setLineStyle(SeriesLineStyle.DASH_DASH);
+
     series3.setMarker(SeriesMarker.NONE);
+
     series3.setLineColor(SeriesColor.RED);
 
     new SwingWrapper(mychart).displayChart();
+
   }
 
 }

@@ -94,6 +94,8 @@ public interface Theme {
 
   public boolean isAxisTicksLineVisible();
 
+  public boolean isAxisTicksMarksVisible();
+
   public int getAxisTitlePadding();
 
   public int getPlotPadding();
@@ -111,6 +113,8 @@ public interface Theme {
   public Color getPlotGridLinesColor();
 
   public Stroke getPlotGridLinesStroke();
+
+  public boolean isPlotTicksMarksVisible();
 
   // Error Bars ///////////////////////////////
 

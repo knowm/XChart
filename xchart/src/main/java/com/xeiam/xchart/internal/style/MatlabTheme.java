@@ -32,7 +32,7 @@ import com.xeiam.xchart.StyleManager.LegendPosition;
 /**
  * @author timmolter
  */
-public class GGPlot2Theme implements Theme {
+public class MatlabTheme implements Theme {
 
   // Chart Style ///////////////////////////////
 
@@ -59,7 +59,7 @@ public class GGPlot2Theme implements Theme {
   @Override
   public Font getChartTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
+    return new Font(Font.SANS_SERIF, Font.BOLD, 14);
   }
 
   @Override
@@ -71,19 +71,19 @@ public class GGPlot2Theme implements Theme {
   @Override
   public boolean isChartTitleBoxVisible() {
 
-    return true;
+    return false;
   }
 
   @Override
   public Color getChartTitleBoxBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
   public Color getChartTitleBoxBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
@@ -97,7 +97,7 @@ public class GGPlot2Theme implements Theme {
   @Override
   public Font getLegendFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 11);
   }
 
   @Override
@@ -110,12 +110,13 @@ public class GGPlot2Theme implements Theme {
   public Color getLegendBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.WHITE);
+
   }
 
   @Override
   public Color getLegendBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
   @Override
@@ -147,7 +148,7 @@ public class GGPlot2Theme implements Theme {
   @Override
   public Font getAxisTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
   }
 
   @Override
@@ -165,19 +166,37 @@ public class GGPlot2Theme implements Theme {
   @Override
   public Font getAxisTickLabelsFont() {
 
-    return new Font(Font.SANS_SERIF, Font.BOLD, 13);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
   }
 
   @Override
   public int getAxisTickMarkLength() {
 
-    return 8;
+    return 5;
   }
 
   @Override
   public int getAxisTickPadding() {
 
-    return 5;
+    return 4;
+  }
+
+  @Override
+  public Color getAxisTickMarksColor() {
+
+    return ChartColor.getAWTColor(ChartColor.BLACK);
+  }
+
+  @Override
+  public Stroke getAxisTickMarksStroke() {
+
+    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  }
+
+  @Override
+  public Color getAxisTickLabelsColor() {
+
+    return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
   @Override
@@ -189,32 +208,13 @@ public class GGPlot2Theme implements Theme {
   @Override
   public boolean isAxisTicksMarksVisible() {
 
-    return true;
+    return false;
   }
 
   @Override
   public int getPlotPadding() {
 
-    return 0;
-  }
-
-  @Override
-  public Color getAxisTickMarksColor() {
-
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
-
-  }
-
-  @Override
-  public Stroke getAxisTickMarksStroke() {
-
-    return new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
-  }
-
-  @Override
-  public Color getAxisTickLabelsColor() {
-
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return 3;
   }
 
   @Override
@@ -234,37 +234,38 @@ public class GGPlot2Theme implements Theme {
   @Override
   public Color getPlotBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
   public Color getPlotBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
   @Override
   public boolean isPlotBorderVisible() {
 
-    return false;
+    return true;
   }
 
   @Override
   public boolean isPlotTicksMarksVisible() {
 
-    return false;
+    return true;
   }
 
   @Override
   public Color getPlotGridLinesColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+    return new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.CAP_ROUND, 10.0f, new float[] { 1.0f, 2.0f }, 0.0f);
+
   }
 
   // Error Bars ///////////////////////////////
@@ -272,7 +273,7 @@ public class GGPlot2Theme implements Theme {
   @Override
   public Color getErrorBarsColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
 }

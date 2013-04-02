@@ -206,6 +206,12 @@ public class XChartTheme implements Theme {
   }
 
   @Override
+  public boolean isAxisTicksMarksVisible() {
+
+    return true;
+  }
+
+  @Override
   public int getPlotPadding() {
 
     return 3;
@@ -241,6 +247,12 @@ public class XChartTheme implements Theme {
   public boolean isPlotBorderVisible() {
 
     return true;
+  }
+
+  @Override
+  public boolean isPlotTicksMarksVisible() {
+
+    return false;
   }
 
   @Override

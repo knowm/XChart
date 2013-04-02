@@ -53,6 +53,7 @@ import com.xeiam.xchart.demo.charts.scatter.ScatterChart03;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart04;
 import com.xeiam.xchart.demo.charts.theme.ThemeChart01;
 import com.xeiam.xchart.demo.charts.theme.ThemeChart02;
+import com.xeiam.xchart.demo.charts.theme.ThemeChart03;
 
 /**
  * Class containing all XChart example charts
@@ -206,7 +207,10 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     chart = new DefaultMutableTreeNode(new ChartInfo("ThemeChart01 - Default XChart Theme", new ThemeChart01().getChart()));
     category.add(chart);
 
-    chart = new DefaultMutableTreeNode(new ChartInfo("ThemeChart01 - GGPlot2 Theme", new ThemeChart02().getChart()));
+    chart = new DefaultMutableTreeNode(new ChartInfo("ThemeChart02 - GGPlot2 Theme", new ThemeChart02().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("ThemeChart03 - Matlab Theme", new ThemeChart03().getChart()));
     category.add(chart);
 
     // Date category

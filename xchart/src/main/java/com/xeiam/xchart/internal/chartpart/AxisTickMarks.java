@@ -57,18 +57,20 @@ public class AxisTickMarks implements ChartPart {
       int yOffset = (int) (axisTick.getAxis().getPaintZone().getY());
 
       // tick marks
-      for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+      if (getChartPainter().getStyleManager().isAxisTicksMarksVisible()) {
 
-        int tickLocation = axisTick.getTickLocations().get(i);
+        for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
-        // g.setColor(getChart().getStyleManager().getChartBordersColor());
-        // g.setStroke(stroke);
+          int tickLocation = axisTick.getTickLocations().get(i);
 
-        g.drawLine(xOffset, yOffset + (int) (axisTick.getAxis().getPaintZone().getHeight() - tickLocation), xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
-            + (int) (axisTick.getAxis().getPaintZone().getHeight() - tickLocation));
+          // g.setColor(getChart().getStyleManager().getChartBordersColor());
+          // g.setStroke(stroke);
 
+          g.drawLine(xOffset, yOffset + (int) (axisTick.getAxis().getPaintZone().getHeight() - tickLocation), xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
+              + (int) (axisTick.getAxis().getPaintZone().getHeight() - tickLocation));
+
+        }
       }
-
       // Line
       if (getChartPainter().getStyleManager().isAxisTicksLineVisible()) {
         g.drawLine(xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
@@ -87,16 +89,18 @@ public class AxisTickMarks implements ChartPart {
       int yOffset = (int) (axisTick.getAxisTickLabels().getBounds().getY() - getChartPainter().getStyleManager().getAxisTickPadding());
 
       // tick marks
-      for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+      if (getChartPainter().getStyleManager().isAxisTicksMarksVisible()) {
 
-        int tickLocation = axisTick.getTickLocations().get(i);
+        for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
-        // g.setColor(getChart().getStyleManager().getChartBordersColor());
-        // g.setStroke(stroke);
+          int tickLocation = axisTick.getTickLocations().get(i);
 
-        g.drawLine(xOffset + tickLocation, yOffset, xOffset + tickLocation, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength());
+          // g.setColor(getChart().getStyleManager().getChartBordersColor());
+          // g.setStroke(stroke);
+
+          g.drawLine(xOffset + tickLocation, yOffset, xOffset + tickLocation, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength());
+        }
       }
-
       // Line
       if (getChartPainter().getStyleManager().isAxisTicksLineVisible()) {
 

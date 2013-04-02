@@ -17,7 +17,6 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Stroke;
 import java.util.List;
 
 import com.xeiam.xchart.StyleManager.ChartType;
@@ -63,36 +62,63 @@ public class PlotSurface implements ChartPart {
       g.draw(borderRectangle);
     }
 
-    Stroke stroke = getChartPainter().getStyleManager().getPlotGridLinesStroke();
-
-    // paint grid lines
-    if (getChartPainter().getStyleManager().isPlotGridLinesVisible()) {
+    // paint grid lines and or inner plot tics
+    if (getChartPainter().getStyleManager().isPlotGridLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
 
       // horizontal
       List<Integer> yAxisTickLocations = getChartPainter().getAxisPair().getyAxis().getAxisTick().getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         int tickLocation = yAxisTickLocations.get(i);
+        int yOffset = (int) (bounds.getY() + bounds.getHeight() - tickLocation);
 
-        g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
-        g.setStroke(stroke);
-        // System.out.println("bounds.getY()= " + bounds.getY());
-        g.drawLine((int) bounds.getX(), (int) (bounds.getY() + bounds.getHeight() - tickLocation), (int) (bounds.getX() + bounds.getWidth() - 2),
-            (int) (bounds.getY() + bounds.getHeight() - tickLocation));
+        // draw lines
+        if (getChartPainter().getStyleManager().isPlotGridLinesVisible()) {
+
+          g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
+          g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
+          // System.out.println("bounds.getY()= " + bounds.getY());
+          g.drawLine((int) bounds.getX(), yOffset, (int) (bounds.getX() + bounds.getWidth() - 2), yOffset);
+        }
+        // tick marks
+        if (getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
+
+          g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
+          g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
+
+          g.drawLine((int) bounds.getX(), yOffset, (int) bounds.getX() + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset);
+          g.drawLine((int) (bounds.getX() + bounds.getWidth() - 2), yOffset, (int) (bounds.getX() + bounds.getWidth() - 2) - getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset);
+
+        }
       }
 
       // vertical
-      if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
+      if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar
+          && (getChartPainter().getStyleManager().isPlotGridLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible())) {
 
         List<Integer> xAxisTickLocations = getChartPainter().getAxisPair().getxAxis().getAxisTick().getTickLocations();
         for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
           int tickLocation = xAxisTickLocations.get(i);
+          int xOffset = (int) (bounds.getX() + tickLocation - 1);
 
-          g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
-          g.setStroke(stroke);
+          // draw lines
+          if (getChartPainter().getStyleManager().isPlotGridLinesVisible()) {
+            g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
+            g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
 
-          g.drawLine((int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY()), (int) (bounds.getX() + tickLocation - 1), (int) (bounds.getY() + bounds.getHeight() - 1));
+            g.drawLine(xOffset, (int) (bounds.getY()), xOffset, (int) (bounds.getY() + bounds.getHeight() - 1));
+          }
+          // tick marks
+          if (getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
+
+            g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
+            g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
+
+            g.drawLine(xOffset, (int) (bounds.getY()), xOffset, (int) (bounds.getY()) + getChartPainter().getStyleManager().getAxisTickMarkLength());
+            g.drawLine(xOffset, (int) (bounds.getY() + bounds.getHeight() - 1), xOffset, (int) (bounds.getY() + bounds.getHeight() - 1) - getChartPainter().getStyleManager().getAxisTickMarkLength());
+
+          }
         }
       }
     }

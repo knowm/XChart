@@ -28,6 +28,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import com.xeiam.xchart.internal.style.GGPlot2Theme;
+import com.xeiam.xchart.internal.style.MatlabTheme;
 import com.xeiam.xchart.internal.style.Theme;
 import com.xeiam.xchart.internal.style.XChartTheme;
 
@@ -50,7 +51,7 @@ public class StyleManager {
 
   public enum ChartTheme {
 
-    XChart, GGPlot2
+    XChart, GGPlot2, Matlab
   }
 
   /** the default Theme */
@@ -91,6 +92,7 @@ public class StyleManager {
   private Stroke axisTickMarksStroke;
   private Color axisTickLabelsColor;
   private boolean isAxisTicksLineVisible;
+  private boolean isAxisTicksMarksVisible;
   private int plotPadding;
   private int axisTitlePadding;
   private boolean isXAxisLogarithmic;
@@ -105,6 +107,7 @@ public class StyleManager {
   private Color plotBackgroundColor;
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
+  private boolean isPlotTicksMarksVisible;
   private Color plotGridLinesColor;
   private Stroke plotGridLinesStroke;
 
@@ -163,6 +166,7 @@ public class StyleManager {
     axisTickMarksStroke = theme.getAxisTickMarksStroke();
     axisTickLabelsColor = theme.getAxisTickLabelsColor();
     isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
+    isAxisTicksMarksVisible = theme.isAxisTicksMarksVisible();
     plotPadding = theme.getPlotPadding();
     axisTitlePadding = theme.getAxisTitlePadding();
     isXAxisLogarithmic = false;
@@ -177,6 +181,7 @@ public class StyleManager {
     plotBackgroundColor = theme.getPlotBackgroundColor();
     plotBorderColor = theme.getPlotBorderColor();
     isPlotBorderVisible = theme.isPlotBorderVisible();
+    isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
     plotGridLinesColor = theme.getPlotGridLinesColor();
     plotGridLinesStroke = theme.getPlotGridLinesStroke();
 
@@ -213,6 +218,8 @@ public class StyleManager {
       setTheme(new XChartTheme());
     } else if (chartTheme == ChartTheme.GGPlot2) {
       setTheme(new GGPlot2Theme());
+    } else if (chartTheme == ChartTheme.Matlab) {
+      setTheme(new MatlabTheme());
     }
   }
 
@@ -675,7 +682,22 @@ public class StyleManager {
   }
 
   /**
-   * sets the pading between the tick marks and the plot area
+   * sets the visibility of the tick marks
+   * 
+   * @param isAxisTicksMarksVisible
+   */
+  public void setAxisTicksMarksVisible(boolean isAxisTicksMarksVisible) {
+
+    this.isAxisTicksMarksVisible = isAxisTicksMarksVisible;
+  }
+
+  public boolean isAxisTicksMarksVisible() {
+
+    return isAxisTicksMarksVisible;
+  }
+
+  /**
+   * sets the padding between the tick marks and the plot area
    * 
    * @param plotPadding
    */
@@ -834,6 +856,21 @@ public class StyleManager {
   public boolean isPlotBorderVisible() {
 
     return isPlotBorderVisible;
+  }
+
+  /**
+   * sets the visibility of the ticks marks inside the plot area
+   * 
+   * @param isPlotTicksMarksVisible
+   */
+  public void setPlotTicksMarksVisible(boolean isPlotTicksMarksVisible) {
+
+    this.isPlotTicksMarksVisible = isPlotTicksMarksVisible;
+  }
+
+  public boolean isPlotTicksMarksVisible() {
+
+    return isPlotTicksMarksVisible;
   }
 
   /**
