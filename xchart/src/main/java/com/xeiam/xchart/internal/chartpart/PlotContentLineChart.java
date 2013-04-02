@@ -210,9 +210,6 @@ public class PlotContentLineChart extends PlotContent {
           g.drawLine(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
         }
       }
-
     }
-
   }
-
 }

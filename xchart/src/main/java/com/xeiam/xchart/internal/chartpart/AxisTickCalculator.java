@@ -129,8 +129,4 @@ public abstract class AxisTickCalculator {
     return tickLabels;
   }
 
-  // public abstract BigDecimal getGridStep(int tickSpace);
-  //
-  // public abstract BigDecimal getFirstPosition(BigDecimal minValue, BigDecimal gridStep);
-
 }
