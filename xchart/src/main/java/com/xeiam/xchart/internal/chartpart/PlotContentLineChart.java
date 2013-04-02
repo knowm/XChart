@@ -127,7 +127,11 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         // System.out.println(y);
-        y = new BigDecimal(Math.log10(yOrig.doubleValue()));
+        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+          y = new BigDecimal(Math.log10(yOrig.doubleValue()));
+        } else {
+          y = new BigDecimal(yOrig.doubleValue());
+        }
 
         int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
         int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
