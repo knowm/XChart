@@ -62,7 +62,7 @@ public class PlotSurface implements ChartPart {
       g.draw(borderRectangle);
     }
 
-    // paint grid lines and or inner plot tics
+    // paint grid lines and/or inner plot tics
     if (getChartPainter().getStyleManager().isPlotGridLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
 
       // horizontal
