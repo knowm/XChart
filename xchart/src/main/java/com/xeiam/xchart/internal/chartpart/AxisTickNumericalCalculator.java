@@ -24,6 +24,7 @@ package com.xeiam.xchart.internal.chartpart;
 import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
@@ -121,16 +122,16 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     BigDecimal gridStep;
     if (significand > 7.5) {
       // gridStep = 10.0 * 10 ** exponent
-      gridStep = BigDecimal.TEN.multiply(pow(10, exponent));
+      gridStep = BigDecimal.TEN.multiply(Utils.pow(10, exponent));
     } else if (significand > 3.5) {
       // gridStep = 5.0 * 10 ** exponent
-      gridStep = new BigDecimal(new Double(5).toString()).multiply(pow(10, exponent));
+      gridStep = new BigDecimal(new Double(5).toString()).multiply(Utils.pow(10, exponent));
     } else if (significand > 1.5) {
       // gridStep = 2.0 * 10 ** exponent
-      gridStep = new BigDecimal(new Double(2).toString()).multiply(pow(10, exponent));
+      gridStep = new BigDecimal(new Double(2).toString()).multiply(Utils.pow(10, exponent));
     } else {
       // gridStep = 1.0 * 10 ** exponent
-      gridStep = pow(10, exponent);
+      gridStep = Utils.pow(10, exponent);
     }
     return gridStep;
   }

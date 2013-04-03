@@ -27,6 +27,7 @@ import java.util.List;
 
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.StyleManager.ChartType;
+import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
@@ -78,6 +79,12 @@ public abstract class AxisTickCalculator {
         overrideMaxValue = BigDecimal.ZERO;
       }
     }
+
+    if (styleManager.getChartType() == ChartType.Bar && styleManager.isYAxisLogarithmic()) {
+      int logMin = (int) Math.floor(Math.log10(minValue.doubleValue()));
+      overrideMinValue = new BigDecimal(Utils.pow(10, logMin).doubleValue());
+    }
+
     // override min and maxValue if specified
     if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
       overrideMinValue = new BigDecimal(styleManager.getXAxisMin());
@@ -91,21 +98,12 @@ public abstract class AxisTickCalculator {
     if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {
       overrideMaxValue = new BigDecimal(styleManager.getYAxisMax());
     }
-
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
     this.minValue = overrideMinValue;
+    // this.minValue = new BigDecimal(10000);
     this.maxValue = overrideMaxValue;
     this.styleManager = styleManager;
-  }
-
-  BigDecimal pow(double base, int exponent) {
-
-    if (exponent > 0) {
-      return new BigDecimal(base).pow(exponent);
-    } else {
-      return BigDecimal.ONE.divide(new BigDecimal(base).pow(-exponent));
-    }
   }
 
   BigDecimal getFirstPosition(BigDecimal gridStep) {

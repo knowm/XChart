@@ -24,6 +24,7 @@ package com.xeiam.xchart.internal.chartpart;
 import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
@@ -90,8 +91,8 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
     // BigDecimal firstPosition = getFirstPosition(tickStep);
     // System.out.println("firstPosition: " + firstPosition);
-    BigDecimal firstPosition = pow(10, logMin);
-    BigDecimal tickStep = pow(10, logMin - 1);
+    BigDecimal firstPosition = Utils.pow(10, logMin);
+    BigDecimal tickStep = Utils.pow(10, logMin - 1);
 
     for (int i = logMin; i <= logMax; i++) { // for each decade
 
@@ -100,7 +101,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       // System.out.println("i: " + i);
       // System.out.println("pow(10, i).doubleValue(): " + pow(10, i).doubleValue());
 
-      for (BigDecimal j = firstPosition; j.doubleValue() <= pow(10, i).doubleValue(); j = j.add(tickStep)) {
+      for (BigDecimal j = firstPosition; j.doubleValue() <= Utils.pow(10, i).doubleValue(); j = j.add(tickStep)) {
 
         // System.out.println("j: " + j);
         // System.out.println(Math.log10(j.doubleValue()) % 1);
@@ -127,8 +128,8 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
             * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
-      tickStep = tickStep.multiply(pow(10, 1));
-      firstPosition = tickStep.add(pow(10, i));
+      tickStep = tickStep.multiply(Utils.pow(10, 1));
+      firstPosition = tickStep.add(Utils.pow(10, i));
     }
   }
 }

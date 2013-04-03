@@ -93,11 +93,20 @@ public class PlotContentBarChart extends PlotContent {
       // override min and maxValue if specified
       if (getChartPainter().getStyleManager().getYAxisMin() != null) {
         yMin = new BigDecimal(getChartPainter().getStyleManager().getYAxisMin());
+      } else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+        // int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
+        int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
+        // System.out.println("logMin: " + logMin);
+        // System.out.println("min : " + getChartPainter().getAxisPair().getyAxis().getMin().doubleValue());
+        // yMin = new BigDecimal(Math.log10(Utils.pow(10, logMin).doubleValue()));
+        // yMin = new BigDecimal(Utils.pow(10, logMin).doubleValue());
+        yMin = new BigDecimal(logMin);
       }
       if (getChartPainter().getStyleManager().getYAxisMax() != null) {
         yMax = new BigDecimal(getChartPainter().getStyleManager().getYAxisMax());
+      } else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+        yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
       }
-
       // figure out the general form of the chart
       int chartForm = 1; // 1=positive, -1=negative, 0=span
       if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
@@ -107,6 +116,8 @@ public class PlotContentBarChart extends PlotContent {
       } else {
         chartForm = 0;// span chart
       }
+      // System.out.println(yMin);
+      // System.out.println(yMax);
 
       Iterator<?> categoryItr = categories.iterator();
       Iterator<Number> yItr = yData.iterator();
@@ -117,6 +128,11 @@ public class PlotContentBarChart extends PlotContent {
         if (xData.contains(categoryItr.next())) {
 
           BigDecimal y = new BigDecimal(yItr.next().doubleValue());
+          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+            y = new BigDecimal(Math.log10(y.doubleValue()));
+          } else {
+            y = new BigDecimal(y.doubleValue());
+          }
           BigDecimal yTop = null;
           BigDecimal yBottom = null;
 
@@ -142,15 +158,10 @@ public class PlotContentBarChart extends PlotContent {
             break;
           }
 
-          // if (yTop.compareTo(yMax) > 0) {
-          // yTop = yMax;
-          // }
           int yTransform = (int) (bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+
           int yOffset = (int) (bounds.getY() + yTransform) + 1;
 
-          // if (yBottom.compareTo(yMin) > 0) {
-          // yBottom = yMin;
-          // }
           int zeroTransform = (int) (bounds.getHeight() - (yTopMargin + (yBottom.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace));
           int zeroOffset = (int) (bounds.getY() + zeroTransform) + 1;
 
