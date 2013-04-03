@@ -68,8 +68,12 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
     int logMin = (int) Math.floor(Math.log10(minValue.doubleValue()));
     int logMax = (int) Math.ceil(Math.log10(maxValue.doubleValue()));
-    System.out.println("logMin: " + logMin);
-    System.out.println("logMax: " + logMax);
+    // int logMin = (int) Math.log10(minValue.doubleValue());
+    // int logMax = (int) Math.log10(maxValue.doubleValue());
+    // System.out.println("minValue: " + minValue);
+    // System.out.println("maxValue: " + maxValue);
+    // System.out.println("logMin: " + logMin);
+    // System.out.println("logMax: " + logMax);
 
     if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
       logMin = (int) (Math.log10(styleManager.getYAxisMin())); // no floor
@@ -84,19 +88,30 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       logMax = (int) (Math.log10(styleManager.getXAxisMax())); // no floor
     }
 
-    final BigDecimal min = new BigDecimal(minValue.doubleValue());
+    // BigDecimal firstPosition = getFirstPosition(tickStep);
+    // System.out.println("firstPosition: " + firstPosition);
+    BigDecimal firstPosition = pow(10, logMin);
     BigDecimal tickStep = pow(10, logMin - 1);
-
-    BigDecimal firstPosition = getFirstPosition(tickStep);
 
     for (int i = logMin; i <= logMax; i++) { // for each decade
 
+      // System.out.println("tickStep: " + tickStep);
+      // System.out.println("firstPosition: " + firstPosition);
+      // System.out.println("i: " + i);
+      // System.out.println("pow(10, i).doubleValue(): " + pow(10, i).doubleValue());
+
       for (BigDecimal j = firstPosition; j.doubleValue() <= pow(10, i).doubleValue(); j = j.add(tickStep)) {
 
-        System.out.println("j: " + j);
+        // System.out.println("j: " + j);
         // System.out.println(Math.log10(j.doubleValue()) % 1);
 
+        if (j.doubleValue() < minValue.doubleValue()) {
+          // System.out.println("continue");
+          continue;
+        }
+
         if (j.doubleValue() > maxValue.doubleValue()) {
+          // System.out.println("break");
           break;
         }
 
@@ -108,7 +123,8 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
         }
 
         // add all the tick marks though
-        int tickLabelPosition = (int) (margin + (Math.log10(j.doubleValue()) - Math.log10(min.doubleValue())) / (Math.log10(maxValue.doubleValue()) - Math.log10(min.doubleValue())) * tickSpace);
+        int tickLabelPosition = (int) (margin + (Math.log10(j.doubleValue()) - Math.log10(minValue.doubleValue())) / (Math.log10(maxValue.doubleValue()) - Math.log10(minValue.doubleValue()))
+            * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
       tickStep = tickStep.multiply(pow(10, 1));
