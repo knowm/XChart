@@ -157,30 +157,4 @@ public class AxisPair implements ChartPart {
     return yAxis;
   }
 
-  // Helper Methods ///////////////
-
-  /**
-   * Gets the percentage of working space allowed for tick marks
-   * 
-   * @param workingSpace
-   * @return
-   */
-  public static int getTickSpace(int workingSpace) {
-
-    return (int) (workingSpace * 0.95);
-  }
-
-  /**
-   * Gets the offset for the beginning of the tick marks
-   * 
-   * @param workingSpace
-   * @param tickSpace
-   * @return
-   */
-  public static int getTickStartOffset(int workingSpace, int tickSpace) {
-
-    int marginSpace = workingSpace - tickSpace;
-    return (int) (marginSpace / 2.0);
-  }
-
 }

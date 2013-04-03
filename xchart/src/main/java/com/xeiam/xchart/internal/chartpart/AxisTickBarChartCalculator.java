@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
@@ -57,10 +58,10 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
   private void calculate(ChartPainter chart) {
 
     // tick space - a percentage of the working space available for ticks, i.e. 95%
-    int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space
+    int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
 
     // get all categories
     Set<Object> categories = new TreeSet<Object>();

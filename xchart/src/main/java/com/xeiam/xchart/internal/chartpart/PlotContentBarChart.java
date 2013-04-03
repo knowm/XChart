@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.internal.Utils;
 
 /**
  * @author timmolter
@@ -47,12 +48,12 @@ public class PlotContentBarChart extends PlotContent {
     Rectangle bounds = plot.getBounds();
 
     // X-Axis
-    int xTickSpace = AxisPair.getTickSpace((int) bounds.getWidth());
-    int xLeftMargin = AxisPair.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
+    int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
+    int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = AxisPair.getTickSpace((int) bounds.getHeight());
-    int yTopMargin = AxisPair.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
+    int yTickSpace = Utils.getTickSpace((int) bounds.getHeight());
+    int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     // get all categories
     Set<Object> categories = new TreeSet<Object>();

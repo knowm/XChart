@@ -24,6 +24,7 @@ package com.xeiam.xchart.internal.chartpart;
 import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
@@ -54,10 +55,10 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
   private void calculate() {
 
     // tick space - a percentage of the working space available for ticks, i.e. 95%
-    int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space
+    int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
 
     // the span of the data
     long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
