@@ -22,6 +22,7 @@
 package com.xeiam.xchart.standalone;
 
 import com.xeiam.xchart.CSVImporter;
+import com.xeiam.xchart.CSVImporter.DataOrientation;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 
@@ -33,11 +34,10 @@ public class CSVChart {
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChart/", 600, 400);
+    Chart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChart/", DataOrientation.Rows, 600, 400);
 
     // Show it
     new SwingWrapper(chart).displayChart();
 
   }
-
 }

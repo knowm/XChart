@@ -37,13 +37,18 @@ import java.util.List;
  */
 public class CSVImporter {
 
+  public enum DataOrientation {
+
+    Rows, Columns
+  }
+
   /**
    * @param path2Directory
    * @param width
    * @param height
    * @return
    */
-  public static Chart getChartFromCSVDir(String path2Directory, int width, int height) {
+  public static Chart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
 
     // 1. get the directory, name chart the dir name
 
@@ -55,14 +60,19 @@ public class CSVImporter {
     // 3. create a series for each file, naming the series the file name
     for (int i = 0; i < csvFiles.length; i++) {
       File csvFile = csvFiles[i];
-      String[] xAndYData = getSeriesData(csvFile);
+      String[] xAndYData = null;
+      if (dataOrientation == DataOrientation.Rows) {
+        xAndYData = getSeriesDataFromCSVRows(csvFile);
+      } else {
+        xAndYData = getSeriesDataFromCSVColumns(csvFile);
+      }
       chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]));
     }
 
     return chart;
   }
 
-  private static String[] getSeriesData(File csvFile) {
+  private static String[] getSeriesDataFromCSVRows(File csvFile) {
 
     String[] xAndYData = new String[2];
 
@@ -89,12 +99,43 @@ public class CSVImporter {
     return xAndYData;
   }
 
+  private static String[] getSeriesDataFromCSVColumns(File csvFile) {
+
+    String[] xAndYData = new String[2];
+    xAndYData[0] = "";
+    xAndYData[1] = "";
+
+    BufferedReader bufferedReader = null;
+    try {
+      int counter = 0;
+      String line = null;
+      bufferedReader = new BufferedReader(new FileReader(csvFile));
+      while ((line = bufferedReader.readLine()) != null) {
+        xAndYData[0] += line.split(",")[0] + ",";
+        xAndYData[1] += line.split(",")[1] + ",";
+      }
+
+    } catch (Exception e) {
+      System.out.println("Exception while reading csv file: " + e);
+    } finally {
+      if (bufferedReader != null) {
+        try {
+          bufferedReader.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    return xAndYData;
+  }
+
   private static List<Number> getAxisData(String stringData) {
 
     List<Number> axisData = new ArrayList<Number>();
     String[] stringDataArray = stringData.split(",");
     for (int i = 0; i < stringDataArray.length; i++) {
       String dataPoint = stringDataArray[i];
+      System.out.println(dataPoint);
       BigDecimal value = new BigDecimal(dataPoint);
       axisData.add(value);
     }
