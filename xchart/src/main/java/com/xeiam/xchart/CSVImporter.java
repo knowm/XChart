@@ -135,7 +135,6 @@ public class CSVImporter {
     String[] stringDataArray = stringData.split(",");
     for (int i = 0; i < stringDataArray.length; i++) {
       String dataPoint = stringDataArray[i];
-      System.out.println(dataPoint);
       BigDecimal value = new BigDecimal(dataPoint);
       axisData.add(value);
     }
