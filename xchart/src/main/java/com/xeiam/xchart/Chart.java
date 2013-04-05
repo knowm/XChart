@@ -219,11 +219,6 @@ public class Chart {
    */
   public void setYAxisTitle(String title) {
 
-    if (title == null || title.trim().equalsIgnoreCase("")) {
-      chartPainter.getStyleManager().setYAxisTitleVisible(false);
-    } else {
-      chartPainter.getStyleManager().setYAxisTitleVisible(true);
-    }
     chartPainter.getAxisPair().getyAxis().getAxisTitle().setText(title);
   }
 

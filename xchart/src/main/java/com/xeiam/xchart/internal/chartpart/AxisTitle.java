@@ -60,6 +60,7 @@ public class AxisTitle implements ChartPart {
     g.setFont(getChartPainter().getStyleManager().getAxisTitleFont());
 
     if (axis.getDirection() == Axis.Direction.Y) {
+
       if (text != null && !text.trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isYAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();

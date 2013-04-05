@@ -515,7 +515,6 @@ public class StyleManager {
 
     this.xAxisTitleVisible = isVisible;
     this.yAxisTitleVisible = isVisible;
-
   }
 
   /**

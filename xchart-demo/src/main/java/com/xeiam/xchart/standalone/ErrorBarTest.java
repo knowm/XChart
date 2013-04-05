@@ -45,7 +45,6 @@ public class ErrorBarTest {
     double[] yData3 = new double[] { 150, 120, 110, 100, 90, 70, 60 };
 
     Chart mychart = new Chart(900, 700);
-    // mychart.getStyleManager().setYAxisLogarithmic(true); // set log or linear Y axis
     mychart.getStyleManager().setYAxisMin(0);
     mychart.getStyleManager().setYAxisMax(150);
     mychart.getStyleManager().setErrorBarsColor(Color.black);
