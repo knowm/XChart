@@ -21,6 +21,7 @@
  */
 package com.xeiam.xchart.standalone;
 
+import com.xeiam.xchart.CSVExporter;
 import com.xeiam.xchart.CSVImporter;
 import com.xeiam.xchart.CSVImporter.DataOrientation;
 import com.xeiam.xchart.Chart;
@@ -35,6 +36,8 @@ public class CSVChart {
 
     // import chart from a folder containing CSV files
     Chart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChart/", DataOrientation.Rows, 600, 400);
+
+    CSVExporter.writeCSVRows(chart.getSeriesMap().get(0), "./CSV/CSVChartExport/");
 
     // Show it
     new SwingWrapper(chart).displayChart();
