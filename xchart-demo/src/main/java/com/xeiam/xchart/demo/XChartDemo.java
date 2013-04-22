@@ -30,6 +30,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.xeiam.xchart.XChartPanel;
 import com.xeiam.xchart.demo.charts.area.AreaChart01;
+import com.xeiam.xchart.demo.charts.area.AreaChart02;
 import com.xeiam.xchart.demo.charts.bar.BarChart01;
 import com.xeiam.xchart.demo.charts.bar.BarChart02;
 import com.xeiam.xchart.demo.charts.bar.BarChart03;
@@ -144,6 +145,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     top.add(category);
 
     chart = new DefaultMutableTreeNode(new ChartInfo("AreaChart01 - 3-Series", new AreaChart01().getChart()));
+    category.add(chart);
+
+    chart = new DefaultMutableTreeNode(new ChartInfo("AreaChart02 - Null Y-Axis Data Points", new AreaChart02().getChart()));
     category.add(chart);
 
     // First category

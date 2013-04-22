@@ -121,6 +121,10 @@ public class Series {
 
     for (Object dataPoint : data) {
 
+      if (dataPoint == null) {
+        continue;
+      }
+
       BigDecimal bigDecimal = null;
 
       if (axisType == AxisType.Number) {

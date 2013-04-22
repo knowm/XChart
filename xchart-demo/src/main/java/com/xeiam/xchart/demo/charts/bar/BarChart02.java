@@ -33,6 +33,7 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SeriesColor;
+import com.xeiam.xchart.StyleManager.ChartTheme;
 import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
@@ -47,6 +48,7 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <li>Single series
  * <li>No horizontal plot gridlines
  * <li>Change series color
+ * <li>MATLAB Theme
  */
 public class BarChart02 implements ExampleChart {
 
@@ -61,7 +63,7 @@ public class BarChart02 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
+    Chart chart = new ChartBuilder().theme(ChartTheme.Matlab).chartType(ChartType.Bar).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
 
     Collection<Date> xData = new ArrayList<Date>();
     Collection<Number> yData = new ArrayList<Number>();

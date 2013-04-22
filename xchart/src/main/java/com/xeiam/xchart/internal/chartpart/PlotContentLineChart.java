@@ -119,7 +119,11 @@ public class PlotContentLineChart extends PlotContent {
           x = new BigDecimal(Math.log10(x.doubleValue()));
         }
 
-        BigDecimal yOrig = new BigDecimal(yItr.next().doubleValue());
+        Number next = yItr.next();
+        if (next == null) {
+          continue;
+        }
+        BigDecimal yOrig = new BigDecimal(next.doubleValue());
         BigDecimal y = null;
         BigDecimal eb = BigDecimal.ZERO;
 
