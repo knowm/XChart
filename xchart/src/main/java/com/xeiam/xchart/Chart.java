@@ -21,8 +21,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import com.xeiam.xchart.StyleManager.ChartTheme;
 import com.xeiam.xchart.internal.chartpart.ChartPainter;
+import com.xeiam.xchart.internal.style.GGPlot2Theme;
+import com.xeiam.xchart.internal.style.MatlabTheme;
 import com.xeiam.xchart.internal.style.Theme;
+import com.xeiam.xchart.internal.style.XChartTheme;
 
 /**
  * An XChart Chart
@@ -42,6 +46,27 @@ public class Chart {
   public Chart(int width, int height) {
 
     chartPainter = new ChartPainter(width, height);
+
+  }
+
+  /**
+   * Constructor
+   * 
+   * @param width
+   * @param height
+   * @param chartTheme
+   */
+  public Chart(int width, int height, ChartTheme chartTheme) {
+
+    chartPainter = new ChartPainter(width, height);
+
+    if (chartTheme == ChartTheme.XChart) {
+      setTheme(new XChartTheme());
+    } else if (chartTheme == ChartTheme.GGPlot2) {
+      setTheme(new GGPlot2Theme());
+    } else if (chartTheme == ChartTheme.Matlab) {
+      setTheme(new MatlabTheme());
+    }
   }
 
   /**
@@ -51,8 +76,7 @@ public class Chart {
    */
   public Chart(ChartBuilder chartBuilder) {
 
-    this(chartBuilder.width, chartBuilder.height);
-    getStyleManager().setChartTheme(chartBuilder.chartTheme);
+    this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setChartTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);

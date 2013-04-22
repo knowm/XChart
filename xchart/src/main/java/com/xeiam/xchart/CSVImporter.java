@@ -29,6 +29,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xeiam.xchart.StyleManager.ChartTheme;
+
 /**
  * This class is used to create a Chart object from a folder containing one or more CSV files. The parent folder's name becomes the title of the chart. Each CSV file in the folder becomes a series on
  * the chart. the CSV file's name becomes the series' name.
@@ -44,15 +46,21 @@ public class CSVImporter {
 
   /**
    * @param path2Directory
+   * @param dataOrientation
    * @param width
    * @param height
+   * @param chartTheme
    * @return
    */
-  public static Chart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
+  public static Chart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height, ChartTheme chartTheme) {
 
     // 1. get the directory, name chart the dir name
-
-    Chart chart = new Chart(width, height);
+    Chart chart = null;
+    if (chartTheme != null) {
+      chart = new Chart(width, height, chartTheme);
+    } else {
+      chart = new Chart(width, height);
+    }
 
     // 2. get all the csv files in the dir
     File[] csvFiles = getAllFiles(path2Directory, ".*.csv");
@@ -70,6 +78,18 @@ public class CSVImporter {
     }
 
     return chart;
+  }
+
+  /**
+   * @param path2Directory
+   * @param dataOrientation
+   * @param width
+   * @param height
+   * @return
+   */
+  public static Chart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
+
+    return getChartFromCSVDir(path2Directory, dataOrientation, width, height, null);
   }
 
   private static String[] getSeriesDataFromCSVRows(File csvFile) {

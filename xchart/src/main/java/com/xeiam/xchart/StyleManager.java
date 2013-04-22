@@ -27,8 +27,6 @@ import java.awt.Stroke;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.xeiam.xchart.internal.style.GGPlot2Theme;
-import com.xeiam.xchart.internal.style.MatlabTheme;
 import com.xeiam.xchart.internal.style.Theme;
 import com.xeiam.xchart.internal.style.XChartTheme;
 
@@ -201,26 +199,10 @@ public class StyleManager {
    * 
    * @param theme
    */
-  public void setTheme(Theme theme) {
+  protected void setTheme(Theme theme) {
 
     this.theme = theme;
     setAllStyles();
-  }
-
-  /**
-   * Set the ChartTheme the style manager should use
-   * 
-   * @param theme
-   */
-  public void setChartTheme(ChartTheme chartTheme) {
-
-    if (chartTheme == ChartTheme.XChart) {
-      setTheme(new XChartTheme());
-    } else if (chartTheme == ChartTheme.GGPlot2) {
-      setTheme(new GGPlot2Theme());
-    } else if (chartTheme == ChartTheme.Matlab) {
-      setTheme(new MatlabTheme());
-    }
   }
 
   public Theme getTheme() {

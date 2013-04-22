@@ -46,7 +46,6 @@ public class CSVExporter {
         }
       }
     }
-
   }
 
   public static void writeCSVColumns(Series series, String path2Dir) {
