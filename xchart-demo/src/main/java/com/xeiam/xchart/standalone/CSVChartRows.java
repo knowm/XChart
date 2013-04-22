@@ -30,14 +30,14 @@ import com.xeiam.xchart.SwingWrapper;
 /**
  * @author timmolter
  */
-public class CSVChart {
+public class CSVChartRows {
 
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChart/", DataOrientation.Rows, 600, 400);
+    Chart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartRows/", DataOrientation.Rows, 600, 400);
 
-    CSVExporter.writeCSVRows(chart.getSeriesMap().get(0), "./CSV/CSVChartExport/");
+    CSVExporter.writeCSVRows(chart.getSeriesMap().get(0), "./CSV/CSVChartRowsExport/");
 
     // Show it
     new SwingWrapper(chart).displayChart();
