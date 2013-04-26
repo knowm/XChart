@@ -16,9 +16,7 @@
 package com.xeiam.xchart.internal.markers;
 
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import java.awt.geom.Path2D;
 
 /**
  * @author timmolter
@@ -26,30 +24,20 @@ import java.awt.Shape;
 public class Diamond extends Marker {
 
   @Override
-  public void paint(Graphics2D g, int xOffset, int yOffset) {
+  public void paint(Graphics2D g, double xOffset, double yOffset) {
 
     g.setStroke(stroke);
 
-    int[] x = new int[4];
-    int[] y = new int[4];
-    int n = 4;
-
     // Make a diamond
-    int halfSize = (int) (Math.ceil((Marker.SIZE + 3) / 2.0));
-    x[0] = xOffset - halfSize + 0;
-    x[1] = xOffset - halfSize + halfSize;
-    x[2] = (int) (xOffset - halfSize + Marker.SIZE + 3);
-    x[3] = xOffset - halfSize + halfSize;
+    double halfSize = Math.ceil((Marker.SIZE + 3) / 2.0);
 
-    y[0] = 1 + yOffset - halfSize + halfSize;
-    y[1] = (int) (1 + yOffset - halfSize + Marker.SIZE + 3);
-    y[2] = 1 + yOffset - halfSize + halfSize;
-    y[3] = 1 + yOffset - halfSize + 0;
-
-    Shape diamond = new Polygon(x, y, n);
-    g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-    g.fill(diamond);
-    g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_DEFAULT);
+    Path2D.Double path = new Path2D.Double();
+    path.moveTo(xOffset - halfSize, yOffset - halfSize + halfSize);
+    path.lineTo(xOffset - halfSize + halfSize, yOffset - halfSize + Marker.SIZE + 3);
+    path.lineTo(xOffset - halfSize + Marker.SIZE + 3, yOffset - halfSize + halfSize);
+    path.lineTo(xOffset - halfSize + halfSize, yOffset - halfSize);
+    path.closePath();
+    g.fill(path);
 
   }
 

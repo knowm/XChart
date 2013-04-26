@@ -56,10 +56,10 @@ public class Axis implements ChartPart {
   private BigDecimal max = null;
 
   /** the bounds */
-  private Rectangle bounds;
+  private Rectangle2D bounds;
 
   /** the paint zone */
-  private Rectangle paintZone;
+  private Rectangle2D paintZone;
 
   /** An axis direction */
   public enum Direction {
@@ -113,7 +113,7 @@ public class Axis implements ChartPart {
   }
 
   @Override
-  public Rectangle getBounds() {
+  public Rectangle2D getBounds() {
 
     return bounds;
   }
@@ -121,7 +121,7 @@ public class Axis implements ChartPart {
   /**
    * @return
    */
-  protected int getSizeHint() {
+  protected double getSizeHint() {
 
     if (direction == Direction.X) { // X-Axis
 
@@ -140,7 +140,7 @@ public class Axis implements ChartPart {
         Rectangle2D rectangle = textLayout.getBounds();
         axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
       }
-      return (int) (titleHeight + axisTickLabelsHeight);
+      return titleHeight + axisTickLabelsHeight;
     } else { // Y-Axis
       return 0; // We layout the yAxis first depending in the xAxis height hint. We don't care about the yAxis height hint
     }
@@ -162,13 +162,14 @@ public class Axis implements ChartPart {
       // |
       // |
       // ----
-      int xOffset = getChartPainter().getStyleManager().getChartPadding();
-      int yOffset = getChartPainter().getChartTitle().getSizeHint();
-      int width = 80; // arbitrary, final width depends on Axis tick labels
+      double xOffset = getChartPainter().getStyleManager().getChartPadding();
+      double yOffset = getChartPainter().getChartTitle().getSizeHint();
+      double width = 80; // arbitrary, final width depends on Axis tick labels
 
-      int height = getChartPainter().getHeight() - yOffset - axisPair.getxAxis().getSizeHint() - getChartPainter().getStyleManager().getPlotPadding()
+      double height = getChartPainter().getHeight() - yOffset - axisPair.getxAxis().getSizeHint() - getChartPainter().getStyleManager().getPlotPadding()
           - getChartPainter().getStyleManager().getChartPadding();
-      Rectangle yAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
+      Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
+
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
       // g.draw(yAxisRectangle);
@@ -177,11 +178,12 @@ public class Axis implements ChartPart {
       axisTitle.paint(g);
       axisTick.paint(g);
 
-      xOffset = (int) paintZone.getX();
-      yOffset = (int) paintZone.getY();
-      width = (int) (getChartPainter().getStyleManager().isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + (int) axisTick.getBounds().getWidth();
-      height = (int) paintZone.getHeight();
-      bounds = new Rectangle(xOffset, yOffset, width, height);
+      xOffset = paintZone.getX();
+      yOffset = paintZone.getY();
+      width = (getChartPainter().getStyleManager().isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + (int) axisTick.getBounds().getWidth();
+      height = paintZone.getHeight();
+      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
+
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
@@ -190,34 +192,36 @@ public class Axis implements ChartPart {
       // calculate paint zone
       // |____________________|
 
-      int xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0) + getChartPainter()
+      double xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0) + getChartPainter()
           .getStyleManager().getChartPadding());
-      int yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding());
+      double yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding());
 
       double chartLegendWidth = 0;
       if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
         chartLegendWidth = getChartPainter().getChartLegend().getSizeHint()[0];
       }
 
-      int width = (int) (
+      double width =
 
       getChartPainter().getWidth()
 
-      - axisPair.getyAxis().getBounds().getWidth()
+          - axisPair.getyAxis().getBounds().getWidth()
 
-      - chartLegendWidth
+          - chartLegendWidth
 
-      - 2 * getChartPainter().getStyleManager().getChartPadding()
+          - 2
+          * getChartPainter().getStyleManager().getChartPadding()
 
-      - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding() + 1) : 0)
+          - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding() + 1) : 0)
 
-      - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-          .getChartPadding() : 0)
+          - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+              .getChartPadding() : 0)
 
-      );
+      ;
 
-      int height = this.getSizeHint();
-      Rectangle xAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
+      double height = this.getSizeHint();
+      Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
+
       this.paintZone = xAxisRectangle;
       // g.setColor(Color.green);
       // g.draw(xAxisRectangle);
@@ -225,12 +229,11 @@ public class Axis implements ChartPart {
       axisTitle.paint(g);
       axisTick.paint(g);
 
-      xOffset = (int) paintZone.getX();
-      yOffset = (int) paintZone.getY();
-      width = (int) paintZone.getWidth();
-      height = (int) ((getChartPainter().getStyleManager().isXAxisTitleVisible() ? axisTitle.getBounds().getHeight() : 0) + (int) axisTick.getBounds().getHeight());
-      bounds = new Rectangle(xOffset, yOffset, width, height);
-      bounds = new Rectangle(xOffset, yOffset, width, height);
+      xOffset = paintZone.getX();
+      yOffset = paintZone.getY();
+      width = paintZone.getWidth();
+      height = (getChartPainter().getStyleManager().isXAxisTitleVisible() ? axisTitle.getBounds().getHeight() : 0) + (int) axisTick.getBounds().getHeight();
+      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
       // g.setColor(Color.yellow);
       // g.draw(bounds);
     }
@@ -270,7 +273,7 @@ public class Axis implements ChartPart {
     return direction;
   }
 
-  protected Rectangle getPaintZone() {
+  protected Rectangle2D getPaintZone() {
 
     return paintZone;
   }

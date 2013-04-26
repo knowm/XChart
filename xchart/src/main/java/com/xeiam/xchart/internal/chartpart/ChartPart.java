@@ -16,7 +16,7 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 /**
  * All components of a chart that need to be painted should implement this interface
@@ -25,7 +25,7 @@ import java.awt.Rectangle;
  */
 public interface ChartPart {
 
-  public Rectangle getBounds();
+  public Rectangle2D getBounds();
 
   public void paint(final Graphics2D g);
 

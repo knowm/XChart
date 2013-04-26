@@ -34,7 +34,7 @@ public class AxisTitle implements ChartPart {
   private String text = ""; // default to ""
 
   /** the bounds */
-  private Rectangle bounds;
+  private Rectangle2D bounds;
 
   /**
    * Constructor
@@ -47,7 +47,7 @@ public class AxisTitle implements ChartPart {
   }
 
   @Override
-  public Rectangle getBounds() {
+  public Rectangle2D getBounds() {
 
     return bounds;
   }

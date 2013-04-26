@@ -17,7 +17,7 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
@@ -30,11 +30,11 @@ public class ChartTitle implements ChartPart {
   /** parent */
   private final ChartPainter chartPainter;
 
-  /** the bounds */
-  private Rectangle bounds;
-
   /** the title text */
   private String text = ""; // default to ""
+
+  /** the bounds */
+  private Rectangle2D bounds;
 
   /**
    * Constructor
@@ -102,17 +102,19 @@ public class ChartTitle implements ChartPart {
         int chartTitleBoxHeight = (int) (rectangle.getHeight() + 2 * chartPainter.getStyleManager().getChartTitlePadding());
 
         g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-        g.setColor(chartPainter.getStyleManager().getChartTitleBoxBorderColor());
-        g.drawRect(xOffset - 1, yOffset, chartTitleBoxWidth, chartTitleBoxHeight);
+        Shape rect = new Rectangle2D.Double(xOffset, yOffset, chartTitleBoxWidth, chartTitleBoxHeight);
         g.setColor(chartPainter.getStyleManager().getChartTitleBoxBackgroundColor());
-        g.fillRect(xOffset, yOffset + 1, chartTitleBoxWidth - 1, chartTitleBoxHeight - 1);
+        g.fill(rect);
+        g.setColor(chartPainter.getStyleManager().getChartTitleBoxBorderColor());
+        g.draw(rect);
+
       }
 
       // paint title
       xOffset = (int) (chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0);
       yOffset = (int) (chartPainter.getStyleManager().getChartPadding() - rectangle.getY() + chartPainter.getStyleManager().getChartTitlePadding());
 
-      bounds = new Rectangle(xOffset, yOffset + ((int) rectangle.getY()), (int) rectangle.getWidth(), (int) (rectangle.getHeight()));
+      bounds = new Rectangle2D.Double(xOffset, yOffset + rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
       // g.setColor(Color.green);
       // g.draw(bounds);
 
@@ -123,7 +125,7 @@ public class ChartTitle implements ChartPart {
   }
 
   @Override
-  public Rectangle getBounds() {
+  public Rectangle2D getBounds() {
 
     return null; // this should never be needed
   }

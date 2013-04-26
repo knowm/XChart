@@ -16,7 +16,8 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
@@ -45,7 +46,7 @@ public class PlotContentBarChart extends PlotContent {
   @Override
   public void paint(Graphics2D g) {
 
-    Rectangle bounds = plot.getBounds();
+    Rectangle2D bounds = plot.getBounds();
 
     // X-Axis
     int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
@@ -159,19 +160,27 @@ public class PlotContentBarChart extends PlotContent {
             break;
           }
 
-          int yTransform = (int) (bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+          double yTransform = bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
 
-          int yOffset = (int) (bounds.getY() + yTransform) + 1;
+          double yOffset = bounds.getY() + yTransform + 1;
 
-          int zeroTransform = (int) (bounds.getHeight() - (yTopMargin + (yBottom.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace));
-          int zeroOffset = (int) (bounds.getY() + zeroTransform) + 1;
+          double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace);
+          double zeroOffset = bounds.getY() + zeroTransform + 1;
 
           // paint bar
-          int barWidth = (int) (gridStep / seriesMap.size() / 1.1);
-          int barMargin = (int) (gridStep * .05);
-          int xOffset = (int) (bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin);
+          double barWidth = gridStep / seriesMap.size() / 1.1;
+          double barMargin = gridStep * .05;
+          double xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
           g.setColor(series.getStrokeColor());
-          g.fillPolygon(new int[] { xOffset, xOffset + barWidth, xOffset + barWidth, xOffset }, new int[] { yOffset, yOffset, zeroOffset, zeroOffset }, 4);
+
+          Path2D.Double path = new Path2D.Double();
+          path.moveTo(xOffset, yOffset);
+          path.lineTo(xOffset + barWidth, yOffset);
+          path.lineTo(xOffset + barWidth, zeroOffset);
+          path.lineTo(xOffset, zeroOffset);
+          path.closePath();
+          g.fill(path);
+
         } else {
           barCounter++;
         }

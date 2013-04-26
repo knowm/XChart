@@ -16,8 +16,8 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
-import java.awt.Rectangle;
 import java.awt.Stroke;
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author timmolter
@@ -40,7 +40,7 @@ public abstract class PlotContent implements ChartPart {
   }
 
   @Override
-  public Rectangle getBounds() {
+  public Rectangle2D getBounds() {
 
     return plot.getBounds();
   }

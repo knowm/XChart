@@ -23,6 +23,8 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager;
@@ -92,7 +94,8 @@ public class ChartPainter {
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
     g.setColor(styleManager.getChartBackgroundColor());
-    g.fillRect(0, 0, width, height);
+    Shape rect = new Rectangle2D.Double(0, 0, width, height);
+    g.fill(rect);
 
     axisPair.paint(g);
     plot.paint(g);

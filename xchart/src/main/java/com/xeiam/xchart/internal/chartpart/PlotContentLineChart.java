@@ -16,7 +16,10 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -46,7 +49,7 @@ public class PlotContentLineChart extends PlotContent {
   @Override
   public void paint(Graphics2D g) {
 
-    Rectangle bounds = plot.getBounds();
+    Rectangle2D bounds = plot.getBounds();
 
     // X-Axis
     int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
@@ -95,8 +98,8 @@ public class PlotContentLineChart extends PlotContent {
       }
       Collection<Number> errorBars = series.getErrorBars();
 
-      int previousX = Integer.MIN_VALUE;
-      int previousY = Integer.MIN_VALUE;
+      double previousX = Integer.MIN_VALUE;
+      double previousY = Integer.MIN_VALUE;
 
       Iterator<?> xItr = xData.iterator();
       Iterator<Number> yItr = yData.iterator();
@@ -121,6 +124,8 @@ public class PlotContentLineChart extends PlotContent {
 
         Number next = yItr.next();
         if (next == null) {
+          previousX = Integer.MIN_VALUE;
+          previousY = Integer.MIN_VALUE;
           continue;
         }
         BigDecimal yOrig = new BigDecimal(next.doubleValue());
@@ -151,17 +156,19 @@ public class PlotContentLineChart extends PlotContent {
           yTransform = (int) (bounds.getHeight() / 2.0);
         }
 
-        int xOffset = (int) (bounds.getX() + xTransform - 1);
-        int yOffset = (int) (bounds.getY() + yTransform);
+        double xOffset = bounds.getX() + xTransform - 1;
+        double yOffset = bounds.getY() + yTransform;
         // System.out.println(yOffset);
         // System.out.println(yTransform);
 
         // paint line
         if (series.getStroke() != null && getChartPainter().getStyleManager().getChartType() != ChartType.Scatter) {
+
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.getStrokeColor());
             g.setStroke(series.getStroke());
-            g.drawLine(previousX, previousY, xOffset, yOffset);
+            Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
+            g.draw(line);
           }
         }
 
@@ -170,7 +177,14 @@ public class PlotContentLineChart extends PlotContent {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.getStrokeColor());
             int yBottomOfArea = (int) (bounds.getY() + bounds.getHeight() - yTopMargin + 1);
-            g.fillPolygon(new int[] { previousX, xOffset, xOffset, previousX }, new int[] { previousY, yOffset, yBottomOfArea, yBottomOfArea }, 4);
+
+            Path2D.Double path = new Path2D.Double();
+            path.moveTo(previousX, previousY);
+            path.lineTo(xOffset, yOffset);
+            path.lineTo(xOffset, yBottomOfArea);
+            path.lineTo(previousX, yBottomOfArea);
+            path.closePath();
+            g.fill(path);
           }
         }
 
@@ -210,9 +224,12 @@ public class PlotContentLineChart extends PlotContent {
           int bottomEBTransform = (int) (bounds.getHeight() - (yTopMargin + bottomValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
           int bottomEBOffset = (int) (bounds.getY() + bottomEBTransform);
 
-          g.drawLine(xOffset, topEBOffset, xOffset, bottomEBOffset);
-          g.drawLine(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
-          g.drawLine(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
+          Shape line = new Line2D.Double(xOffset, topEBOffset, xOffset, bottomEBOffset);
+          g.draw(line);
+          line = new Line2D.Double(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
+          g.draw(line);
+          line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
+          g.draw(line);
         }
       }
     }

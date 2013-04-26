@@ -17,6 +17,7 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 import com.xeiam.xchart.StyleManager.ChartType;
 
@@ -29,7 +30,7 @@ public class Plot implements ChartPart {
   private final ChartPainter chartPainter;
 
   /** the bounds */
-  private Rectangle bounds;
+  private Rectangle2D bounds;
 
   private PlotSurface plotSurface;
 
@@ -48,7 +49,7 @@ public class Plot implements ChartPart {
   }
 
   @Override
-  public Rectangle getBounds() {
+  public Rectangle2D getBounds() {
 
     return bounds;
   }

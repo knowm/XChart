@@ -23,9 +23,9 @@ package com.xeiam.xchart.demo.charts.bar;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
-import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.StyleManager.LegendPosition;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
@@ -51,7 +51,7 @@ public class BarChart01 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histgram").xAxisTitle("Score").yAxisTitle("Number").build();
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histogram").xAxisTitle("Score").yAxisTitle("Number").build();
     chart.addSeries("test 1", new double[] { 0, 1, 2, 3, 4 }, new double[] { 4, 5, 9, 6, 5 });
 
     // Customize Chart

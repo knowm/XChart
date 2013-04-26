@@ -30,7 +30,7 @@ public class AxisTickLabels implements ChartPart {
   private final AxisTick axisTick;
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle();
+  private Rectangle2D bounds = new Rectangle2D.Double(0, 0, 0, 0);
 
   /**
    * Constructor
@@ -43,7 +43,7 @@ public class AxisTickLabels implements ChartPart {
   }
 
   @Override
-  public Rectangle getBounds() {
+  public Rectangle2D getBounds() {
 
     return bounds;
   }

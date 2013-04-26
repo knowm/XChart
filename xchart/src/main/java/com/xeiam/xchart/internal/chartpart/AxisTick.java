@@ -17,6 +17,7 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import com.xeiam.xchart.StyleManager.ChartType;
@@ -37,7 +38,7 @@ public class AxisTick implements ChartPart {
   private AxisTickMarks axisTickMarks;
 
   /** the bounds */
-  private Rectangle bounds = new Rectangle();;
+  private Rectangle2D bounds = new Rectangle2D.Double(0, 0, 0, 0);
 
   AxisTickCalculator gridStep = null;
 
@@ -54,7 +55,7 @@ public class AxisTick implements ChartPart {
   }
 
   @Override
-  public Rectangle getBounds() {
+  public Rectangle2D getBounds() {
 
     return bounds;
   }

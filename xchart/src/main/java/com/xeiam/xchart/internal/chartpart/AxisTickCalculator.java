@@ -101,7 +101,6 @@ public abstract class AxisTickCalculator {
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
     this.minValue = overrideMinValue;
-    // this.minValue = new BigDecimal(10000);
     this.maxValue = overrideMaxValue;
     this.styleManager = styleManager;
   }
