@@ -16,7 +16,6 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 import com.xeiam.xchart.StyleManager.ChartType;
@@ -57,21 +56,21 @@ public class Plot implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    bounds = new Rectangle();
+    bounds = new Rectangle2D.Double();
 
     // calculate bounds
-    int xOffset = (int) (chartPainter.getAxisPair().getyAxis().getBounds().getX()
+    double xOffset = chartPainter.getAxisPair().getyAxis().getBounds().getX()
 
     + chartPainter.getAxisPair().getyAxis().getBounds().getWidth()
 
     + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding() + 1) : 0)
 
-    );
+    ;
 
-    int yOffset = (int) (chartPainter.getAxisPair().getyAxis().getBounds().getY());
-    int width = (int) chartPainter.getAxisPair().getxAxis().getBounds().getWidth();
-    int height = (int) chartPainter.getAxisPair().getyAxis().getBounds().getHeight();
-    bounds = new Rectangle(xOffset, yOffset, width, height);
+    double yOffset = chartPainter.getAxisPair().getyAxis().getBounds().getY();
+    double width = chartPainter.getAxisPair().getxAxis().getBounds().getWidth();
+    double height = chartPainter.getAxisPair().getyAxis().getBounds().getHeight();
+    bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
     // g.setColor(Color.green);
     // g.draw(bounds);
 

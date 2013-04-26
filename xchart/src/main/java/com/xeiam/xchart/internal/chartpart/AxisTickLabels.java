@@ -16,7 +16,6 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
@@ -30,7 +29,7 @@ public class AxisTickLabels implements ChartPart {
   private final AxisTick axisTick;
 
   /** the bounds */
-  private Rectangle2D bounds = new Rectangle2D.Double(0, 0, 0, 0);
+  private Rectangle2D bounds = new Rectangle2D.Double();
 
   /**
    * Constructor
@@ -57,9 +56,9 @@ public class AxisTickLabels implements ChartPart {
 
     if (axisTick.getAxis().getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) { // Y-Axis
 
-      int xOffset = (int) (axisTick.getAxis().getAxisTitle().getBounds().getX() + axisTick.getAxis().getAxisTitle().getBounds().getWidth());
-      int yOffset = (int) (axisTick.getAxis().getPaintZone().getY());
-      int maxTickLabelWidth = 0;
+      double xOffset = axisTick.getAxis().getAxisTitle().getBounds().getX() + axisTick.getAxis().getAxisTitle().getBounds().getWidth();
+      double yOffset = axisTick.getAxis().getPaintZone().getY();
+      double maxTickLabelWidth = 0;
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
         String tickLabel = axisTick.getTickLabels().get(i);
@@ -71,7 +70,7 @@ public class AxisTickLabels implements ChartPart {
           // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
           TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
           Rectangle2D tickLabelBounds = layout.getBounds();
-          layout.draw(g, xOffset, (int) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
+          layout.draw(g, (float) xOffset, (float) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
           if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
             maxTickLabelWidth = (int) tickLabelBounds.getWidth();
@@ -80,15 +79,15 @@ public class AxisTickLabels implements ChartPart {
       }
 
       // bounds
-      bounds = new Rectangle(xOffset, yOffset, maxTickLabelWidth, (int) axisTick.getAxis().getPaintZone().getHeight());
+      bounds = new Rectangle2D.Double(xOffset, yOffset, maxTickLabelWidth, (int) axisTick.getAxis().getPaintZone().getHeight());
       // g.setColor(Color.blue);
       // g.draw(bounds);
 
     } else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
 
-      int xOffset = (int) (axisTick.getAxis().getPaintZone().getX());
-      int yOffset = (int) (axisTick.getAxis().getAxisTitle().getBounds().getY());
-      int maxTickLabelHeight = 0;
+      double xOffset = (int) (axisTick.getAxis().getPaintZone().getX());
+      double yOffset = (int) (axisTick.getAxis().getAxisTitle().getBounds().getY());
+      double maxTickLabelHeight = 0;
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
         String tickLabel = axisTick.getTickLabels().get(i);
@@ -98,7 +97,7 @@ public class AxisTickLabels implements ChartPart {
           FontRenderContext frc = g.getFontRenderContext();
           TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
           Rectangle2D tickLabelBounds = layout.getBounds();
-          layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
+          layout.draw(g, (float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
 
           if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
             maxTickLabelHeight = (int) tickLabelBounds.getHeight();
@@ -107,7 +106,7 @@ public class AxisTickLabels implements ChartPart {
       }
 
       // bounds
-      bounds = new Rectangle(xOffset, yOffset - maxTickLabelHeight, (int) axisTick.getAxis().getPaintZone().getWidth(), maxTickLabelHeight);
+      bounds = new Rectangle2D.Double(xOffset, yOffset - maxTickLabelHeight, axisTick.getAxis().getPaintZone().getWidth(), maxTickLabelHeight);
       // g.setColor(Color.blue);
       // g.draw(bounds);
 

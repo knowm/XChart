@@ -17,7 +17,6 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
@@ -109,7 +108,7 @@ public class Legend implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    bounds = new Rectangle();
+    bounds = new Rectangle2D.Double();
     g.setFont(chartPainter.getStyleManager().getLegendFont());
 
     if (chartPainter.getStyleManager().isLegendVisible()) {

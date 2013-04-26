@@ -16,7 +16,6 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
@@ -149,8 +148,8 @@ public class Axis implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    paintZone = new Rectangle();
-    bounds = new Rectangle();
+    paintZone = new Rectangle2D.Double();
+    bounds = new Rectangle2D.Double();
 
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis

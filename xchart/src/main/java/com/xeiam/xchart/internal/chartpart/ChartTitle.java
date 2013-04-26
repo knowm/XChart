@@ -82,7 +82,6 @@ public class ChartTitle implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    // bounds = new Rectangle();
     g.setFont(chartPainter.getStyleManager().getChartTitleFont());
 
     if (chartPainter.getStyleManager().isChartTitleVisible()) {

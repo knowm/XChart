@@ -16,7 +16,6 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class AxisTick implements ChartPart {
   private AxisTickMarks axisTickMarks;
 
   /** the bounds */
-  private Rectangle2D bounds = new Rectangle2D.Double(0, 0, 0, 0);
+  private Rectangle2D bounds = new Rectangle2D.Double();
 
   AxisTickCalculator gridStep = null;
 
@@ -99,15 +98,15 @@ public class AxisTick implements ChartPart {
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      bounds = new Rectangle(
+      bounds = new Rectangle2D.Double(
 
-      (int) axisTickLabels.getBounds().getX(),
+      axisTickLabels.getBounds().getX(),
 
-      (int) (axisTickLabels.getBounds().getY()),
+      axisTickLabels.getBounds().getY(),
 
-      (int) (axisTickLabels.getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth()),
+      axisTickLabels.getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
 
-      (int) (axisTickMarks.getBounds().getHeight())
+      axisTickMarks.getBounds().getHeight()
 
       );
 
@@ -119,9 +118,8 @@ public class AxisTick implements ChartPart {
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      bounds = new Rectangle((int) axisTickMarks.getBounds().getX(), (int) (axisTickMarks.getBounds().getY()), (int) axisTickLabels.getBounds().getWidth(), (int) (axisTickMarks.getBounds()
-          .getHeight()
-          + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()));
+      bounds = new Rectangle2D.Double(axisTickMarks.getBounds().getX(), axisTickMarks.getBounds().getY(), axisTickLabels.getBounds().getWidth(), axisTickMarks.getBounds().getHeight()
+          + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight());
       // g.setColor(Color.red);
       // g.draw(bounds);
 
