@@ -143,17 +143,17 @@ public class PlotContentLineChart extends PlotContent {
           y = new BigDecimal(yOrig.doubleValue());
         }
 
-        int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
-        int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+        double xTransform = xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace);
+        double yTransform = bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
 
         // a check if all x data are the exact same values
         if (Math.abs(xMax.subtract(xMin).doubleValue()) / 5 == 0.0) {
-          xTransform = (int) (bounds.getWidth() / 2.0);
+          xTransform = bounds.getWidth() / 2.0;
         }
 
         // a check if all y data are the exact same values
         if (Math.abs(yMax.subtract(yMin).doubleValue()) / 5 == 0.0) {
-          yTransform = (int) (bounds.getHeight() / 2.0);
+          yTransform = bounds.getHeight() / 2.0;
         }
 
         double xOffset = bounds.getX() + xTransform - 1;
@@ -176,7 +176,7 @@ public class PlotContentLineChart extends PlotContent {
         if (getChartPainter().getStyleManager().getChartType() == ChartType.Area) {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.getStrokeColor());
-            int yBottomOfArea = (int) (bounds.getY() + bounds.getHeight() - yTopMargin + 1);
+            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
 
             Path2D.Double path = new Path2D.Double();
             path.moveTo(previousX, previousY);
@@ -210,8 +210,8 @@ public class PlotContentLineChart extends PlotContent {
           } else {
             topValue = y.add(eb);
           }
-          int topEBTransform = (int) (bounds.getHeight() - (yTopMargin + topValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
-          int topEBOffset = (int) (bounds.getY() + topEBTransform);
+          double topEBTransform = bounds.getHeight() - (yTopMargin + topValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
+          double topEBOffset = bounds.getY() + topEBTransform;
 
           BigDecimal bottomValue = null;
           if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
@@ -221,8 +221,8 @@ public class PlotContentLineChart extends PlotContent {
           } else {
             bottomValue = y.subtract(eb);
           }
-          int bottomEBTransform = (int) (bounds.getHeight() - (yTopMargin + bottomValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
-          int bottomEBOffset = (int) (bounds.getY() + bottomEBTransform);
+          double bottomEBTransform = bounds.getHeight() - (yTopMargin + bottomValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
+          double bottomEBOffset = bounds.getY() + bottomEBTransform;
 
           Shape line = new Line2D.Double(xOffset, topEBOffset, xOffset, bottomEBOffset);
           g.draw(line);

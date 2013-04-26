@@ -73,20 +73,20 @@ public class AxisTickLabels implements ChartPart {
           layout.draw(g, (float) xOffset, (float) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
           if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
-            maxTickLabelWidth = (int) tickLabelBounds.getWidth();
+            maxTickLabelWidth = tickLabelBounds.getWidth();
           }
         }
       }
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset, maxTickLabelWidth, (int) axisTick.getAxis().getPaintZone().getHeight());
+      bounds = new Rectangle2D.Double(xOffset, yOffset, maxTickLabelWidth, axisTick.getAxis().getPaintZone().getHeight());
       // g.setColor(Color.blue);
       // g.draw(bounds);
 
     } else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
 
-      double xOffset = (int) (axisTick.getAxis().getPaintZone().getX());
-      double yOffset = (int) (axisTick.getAxis().getAxisTitle().getBounds().getY());
+      double xOffset = axisTick.getAxis().getPaintZone().getX();
+      double yOffset = axisTick.getAxis().getAxisTitle().getBounds().getY();
       double maxTickLabelHeight = 0;
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
@@ -100,7 +100,7 @@ public class AxisTickLabels implements ChartPart {
           layout.draw(g, (float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
 
           if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
-            maxTickLabelHeight = (int) tickLabelBounds.getHeight();
+            maxTickLabelHeight = tickLabelBounds.getHeight();
           }
         }
       }

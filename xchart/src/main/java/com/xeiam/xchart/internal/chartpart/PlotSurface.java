@@ -70,15 +70,15 @@ public class PlotSurface implements ChartPart {
       List<Integer> yAxisTickLocations = getChartPainter().getAxisPair().getyAxis().getAxisTick().getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
-        int tickLocation = yAxisTickLocations.get(i);
-        int yOffset = (int) (bounds.getY() + bounds.getHeight() - tickLocation);
+        double tickLocation = yAxisTickLocations.get(i);
+        double yOffset = bounds.getY() + bounds.getHeight() - tickLocation;
 
         // draw lines
         if (getChartPainter().getStyleManager().isPlotGridLinesVisible()) {
 
           g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
           g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
-          Shape line = new Line2D.Double((int) bounds.getX(), yOffset, bounds.getX() + bounds.getWidth() - 2, yOffset);
+          Shape line = new Line2D.Double( bounds.getX(), yOffset, bounds.getX() + bounds.getWidth() - 2, yOffset);
           g.draw(line);
         }
         // tick marks
@@ -100,8 +100,8 @@ public class PlotSurface implements ChartPart {
         List<Integer> xAxisTickLocations = getChartPainter().getAxisPair().getxAxis().getAxisTick().getTickLocations();
         for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
-          int tickLocation = xAxisTickLocations.get(i);
-          int xOffset = (int) (bounds.getX() + tickLocation - 1);
+          double tickLocation = xAxisTickLocations.get(i);
+          double xOffset = bounds.getX() + tickLocation - 1;
 
           // draw lines
           if (getChartPainter().getStyleManager().isPlotGridLinesVisible()) {
@@ -117,9 +117,9 @@ public class PlotSurface implements ChartPart {
             g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
             g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
 
-            Shape line = new Line2D.Double(xOffset, (int) (bounds.getY()), xOffset, (int) (bounds.getY()) + getChartPainter().getStyleManager().getAxisTickMarkLength());
+            Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + getChartPainter().getStyleManager().getAxisTickMarkLength());
             g.draw(line);
-            line = new Line2D.Double(xOffset, (int) (bounds.getY() + bounds.getHeight() - 1), xOffset, (int) (bounds.getY() + bounds.getHeight() - 1)
+            line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight() - 1, xOffset, bounds.getY() + bounds.getHeight() - 1
                 - getChartPainter().getStyleManager().getAxisTickMarkLength());
             g.draw(line);
           }

@@ -179,7 +179,7 @@ public class Axis implements ChartPart {
 
       xOffset = paintZone.getX();
       yOffset = paintZone.getY();
-      width = (getChartPainter().getStyleManager().isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + (int) axisTick.getBounds().getWidth();
+      width = (getChartPainter().getStyleManager().isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + axisTick.getBounds().getWidth();
       height = paintZone.getHeight();
       bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
@@ -191,9 +191,9 @@ public class Axis implements ChartPart {
       // calculate paint zone
       // |____________________|
 
-      double xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0) + getChartPainter()
-          .getStyleManager().getChartPadding());
-      double yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding());
+      double xOffset = axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0)
+          + getChartPainter().getStyleManager().getChartPadding();
+      double yOffset = axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
 
       double chartLegendWidth = 0;
       if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
@@ -231,7 +231,7 @@ public class Axis implements ChartPart {
       xOffset = paintZone.getX();
       yOffset = paintZone.getY();
       width = paintZone.getWidth();
-      height = (getChartPainter().getStyleManager().isXAxisTitleVisible() ? axisTitle.getBounds().getHeight() : 0) + (int) axisTick.getBounds().getHeight();
+      height = (getChartPainter().getStyleManager().isXAxisTitleVisible() ? axisTitle.getBounds().getHeight() : 0) + axisTick.getBounds().getHeight();
       bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
       // g.setColor(Color.yellow);
       // g.draw(bounds);

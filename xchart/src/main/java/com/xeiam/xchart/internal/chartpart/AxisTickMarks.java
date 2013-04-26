@@ -65,14 +65,9 @@ public class AxisTickMarks implements ChartPart {
 
           int tickLocation = axisTick.getTickLocations().get(i);
 
-          // g.setColor(getChart().getStyleManager().getChartBordersColor());
-          // g.setStroke(stroke);
           Shape line = new Line2D.Double(xOffset, yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(),
               yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation);
           g.draw(line);
-
-          // g.drawLine(xOffset, yOffset + (int) (axisTick.getAxis().getPaintZone().getHeight() - tickLocation), xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
-          // + (int) (axisTick.getAxis().getPaintZone().getHeight() - tickLocation));
 
         }
       }
@@ -83,19 +78,16 @@ public class AxisTickMarks implements ChartPart {
             + axisTick.getAxis().getPaintZone().getHeight());
         g.draw(line);
 
-        // g.drawLine(xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
-        // + (int) axisTick.getAxis().getPaintZone().getHeight());
       }
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset, getChartPainter().getStyleManager().getAxisTickMarkLength(), (int) axisTick.getAxis().getPaintZone().getHeight());
+      bounds = new Rectangle2D.Double(xOffset, yOffset, getChartPainter().getStyleManager().getAxisTickMarkLength(), axisTick.getAxis().getPaintZone().getHeight());
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
     } else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
 
       double xOffset = axisTick.getAxis().getPaintZone().getX();
-      // int yOffset = (int) (axisTick.getAxisTickLabels().getBounds().getY() - getChart().getStyleManager().getAxisTickPadding());
       double yOffset = axisTick.getAxisTickLabels().getBounds().getY() - getChartPainter().getStyleManager().getAxisTickPadding();
 
       // tick marks

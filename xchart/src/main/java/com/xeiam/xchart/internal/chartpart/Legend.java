@@ -92,7 +92,7 @@ public class Legend implements ChartPart {
       // determine legend content width
       double legendContentWidth = 0;
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
-        legendContentWidth = (int) (3.0 * Marker.SIZE + chartPainter.getStyleManager().getLegendPadding() + legendTextContentMaxWidth);
+        legendContentWidth = 3.0 * Marker.SIZE + chartPainter.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
       } else {
         legendContentWidth = BOX_SIZE + chartPainter.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
       }
@@ -173,7 +173,7 @@ public class Legend implements ChartPart {
           // paint marker
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
-            series.getMarker().paint(g, (int) (startx + (Marker.SIZE * 1.5)), (int) (starty + maxContentHeight / 2.0));
+            series.getMarker().paint(g, startx + (Marker.SIZE * 1.5), starty + maxContentHeight / 2.0);
           }
         } else {
           // paint little box
@@ -194,7 +194,7 @@ public class Legend implements ChartPart {
         } else {
           layout.draw(g, (float) (startx + BOX_SIZE + chartPainter.getStyleManager().getLegendPadding()), (float) (starty + (maxContentHeight + layout.getBounds().getHeight()) / 2.0));
         }
-        starty = (int) (starty + maxContentHeight + chartPainter.getStyleManager().getLegendPadding());
+        starty = starty + maxContentHeight + chartPainter.getStyleManager().getLegendPadding();
       }
 
       // bounds

@@ -97,8 +97,8 @@ public class ChartTitle implements ChartPart {
       if (chartPainter.getStyleManager().isChartTitleBoxVisible()) {
 
         // paint the chart title box
-        int chartTitleBoxWidth = (int) chartPainter.getPlot().getBounds().getWidth();
-        int chartTitleBoxHeight = (int) (rectangle.getHeight() + 2 * chartPainter.getStyleManager().getChartTitlePadding());
+        double chartTitleBoxWidth = chartPainter.getPlot().getBounds().getWidth();
+        double chartTitleBoxHeight = rectangle.getHeight() + 2 * chartPainter.getStyleManager().getChartTitlePadding();
 
         g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
         Shape rect = new Rectangle2D.Double(xOffset, yOffset, chartTitleBoxWidth, chartTitleBoxHeight);
