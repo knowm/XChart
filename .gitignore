@@ -3,4 +3,5 @@ target/
 .project
 .settings/
 *.png
+*.jpg
 CSV/

@@ -35,6 +35,7 @@ public class Example1 {
     chart.addSeries("y(x)", null, yData);
 
     BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
+    BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
     BitmapEncoder.saveJPG(chart, "./Sample_Chart.jpg", 0.95f);
 
   }

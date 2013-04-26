@@ -83,9 +83,13 @@ public class LineChart03 implements ExampleChart {
     chart.getStyleManager().setChartTitleBoxVisible(true);
     chart.getStyleManager().setChartTitleBoxBorderColor(Color.BLACK);
     chart.getStyleManager().setPlotGridLinesVisible(false);
+
     chart.getStyleManager().setAxisTickPadding(20);
+
     chart.getStyleManager().setAxisTickMarkLength(15);
+
     chart.getStyleManager().setPlotPadding(20);
+
     chart.getStyleManager().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);

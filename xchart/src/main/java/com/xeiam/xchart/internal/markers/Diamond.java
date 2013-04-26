@@ -17,6 +17,8 @@ package com.xeiam.xchart.internal.markers;
 
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 
 /**
  * @author timmolter
@@ -36,16 +38,18 @@ public class Diamond extends Marker {
     int halfSize = (int) (Math.ceil((Marker.SIZE + 3) / 2.0));
     x[0] = xOffset - halfSize + 0;
     x[1] = xOffset - halfSize + halfSize;
-    x[2] = xOffset - halfSize + Marker.SIZE + 3;
+    x[2] = (int) (xOffset - halfSize + Marker.SIZE + 3);
     x[3] = xOffset - halfSize + halfSize;
 
     y[0] = 1 + yOffset - halfSize + halfSize;
-    y[1] = 1 + yOffset - halfSize + Marker.SIZE + 3;
+    y[1] = (int) (1 + yOffset - halfSize + Marker.SIZE + 3);
     y[2] = 1 + yOffset - halfSize + halfSize;
     y[3] = 1 + yOffset - halfSize + 0;
 
-    Polygon diamond = new Polygon(x, y, n);
-    g.fillPolygon(diamond);
+    Shape diamond = new Polygon(x, y, n);
+    g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+    g.fill(diamond);
+    g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_DEFAULT);
 
   }
 

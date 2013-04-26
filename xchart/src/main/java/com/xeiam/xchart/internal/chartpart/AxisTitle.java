@@ -20,6 +20,7 @@ import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 /**
  * AxisTitle
@@ -65,31 +66,19 @@ public class AxisTitle implements ChartPart {
 
         FontRenderContext frc = g.getFontRenderContext();
         TextLayout nonRotatedTextLayout = new TextLayout(text, getChartPainter().getStyleManager().getAxisTitleFont(), frc);
-        Rectangle nonRotatedRectangle = nonRotatedTextLayout.getPixelBounds(null, 0, 0);
-        // System.out.println(nonRotatedRectangle);
+        Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
 
         // ///////////////////////////////////////////////
 
-        // AffineTransform at = new AffineTransform();
-        // // Tx.translate(anchorx, anchory); // S3: final translation
-        // double theta = Math.PI / -2.0;
-        // at.rotate(theta); // S2: rotate around anchor
-        // // Tx.translate(-anchorx, -anchory); // S1: translate anchor to origin
-        // Font derivedFont = font.deriveFont(at);
-        // TextLayout rotatedTextLayout = new TextLayout(text, derivedFont, frc);
-        // // TextLayout rotatedTextLayout = new TextLayout(text, font.deriveFont(AffineTransform.getRotateInstance(Math.PI / -2.0, 0, 0)), frc);
-        // // Rectangle rotatedRectangle = rotatedTextLayout.getPixelBounds(null, 0, 0);
-        // // System.out.println(rotatedRectangle);
-        //
         int xOffset = (int) (axis.getPaintZone().getX() + nonRotatedRectangle.getHeight());
         int yOffset = (int) ((axis.getPaintZone().getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + axis.getPaintZone().getY());
         AffineTransform orig = g.getTransform();
         g.transform(AffineTransform.getRotateInstance(Math.PI / -2.0, xOffset, yOffset));
         g.drawString(text, xOffset, yOffset);
-        // rotatedTextLayout.draw(g, xOffset, yOffset);
 
         // ///////////////////////////////////////////////
         g.setTransform(orig);
+        // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
         bounds = new Rectangle((int) (xOffset - nonRotatedRectangle.getHeight()), (int) (yOffset - nonRotatedRectangle.getWidth()), (int) nonRotatedRectangle.getHeight()
@@ -106,7 +95,7 @@ public class AxisTitle implements ChartPart {
 
         FontRenderContext frc = g.getFontRenderContext();
         TextLayout textLayout = new TextLayout(text, getChartPainter().getStyleManager().getAxisTitleFont(), frc);
-        Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+        Rectangle2D rectangle = textLayout.getBounds();
         // System.out.println(rectangle);
 
         int xOffset = (int) (axis.getPaintZone().getX() + (axis.getPaintZone().getWidth() - rectangle.getWidth()) / 2.0);

@@ -19,6 +19,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Axis tick labels
@@ -69,7 +70,7 @@ public class AxisTickLabels implements ChartPart {
           FontRenderContext frc = g.getFontRenderContext();
           // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
           TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
-          Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
+          Rectangle2D tickLabelBounds = layout.getBounds();
           layout.draw(g, xOffset, (int) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
 
           if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
@@ -96,7 +97,7 @@ public class AxisTickLabels implements ChartPart {
         if (tickLabel != null) { // some are null for logarithmic axes
           FontRenderContext frc = g.getFontRenderContext();
           TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
-          Rectangle tickLabelBounds = layout.getPixelBounds(null, 0, 0);
+          Rectangle2D tickLabelBounds = layout.getBounds();
           layout.draw(g, (int) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), yOffset);
 
           if (tickLabelBounds.getHeight() > maxTickLabelHeight) {

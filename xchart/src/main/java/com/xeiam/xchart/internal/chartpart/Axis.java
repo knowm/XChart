@@ -19,6 +19,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager.LegendPosition;
@@ -128,7 +129,7 @@ public class Axis implements ChartPart {
       double titleHeight = 0.0;
       if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
         TextLayout textLayout = new TextLayout(axisTitle.getText(), getChartPainter().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
-        Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+        Rectangle2D rectangle = textLayout.getBounds();
         titleHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTitlePadding();
       }
 
@@ -136,9 +137,8 @@ public class Axis implements ChartPart {
       double axisTickLabelsHeight = 0.0;
       if (getChartPainter().getStyleManager().isXAxisTicksVisible()) {
         TextLayout textLayout = new TextLayout("0", getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-        Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
-        axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength()
-            + getChartPainter().getStyleManager().getPlotPadding();
+        Rectangle2D rectangle = textLayout.getBounds();
+        axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
       }
       return (int) (titleHeight + axisTickLabelsHeight);
     } else { // Y-Axis
@@ -165,7 +165,9 @@ public class Axis implements ChartPart {
       int xOffset = getChartPainter().getStyleManager().getChartPadding();
       int yOffset = getChartPainter().getChartTitle().getSizeHint();
       int width = 80; // arbitrary, final width depends on Axis tick labels
-      int height = getChartPainter().getHeight() - yOffset - axisPair.getxAxis().getSizeHint() - getChartPainter().getStyleManager().getChartPadding();
+
+      int height = getChartPainter().getHeight() - yOffset - axisPair.getxAxis().getSizeHint() - getChartPainter().getStyleManager().getPlotPadding()
+          - getChartPainter().getStyleManager().getChartPadding();
       Rectangle yAxisRectangle = new Rectangle(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -190,9 +192,9 @@ public class Axis implements ChartPart {
 
       int xOffset = (int) (axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0) + getChartPainter()
           .getStyleManager().getChartPadding());
-      int yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight());
+      int yOffset = (int) (axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding());
 
-      int chartLegendWidth = 0;
+      double chartLegendWidth = 0;
       if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
         chartLegendWidth = getChartPainter().getChartLegend().getSizeHint()[0];
       }

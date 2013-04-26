@@ -17,6 +17,8 @@ package com.xeiam.xchart.internal.markers;
 
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 
 /**
  * @author timmolter
@@ -35,15 +37,17 @@ public class TriangleUp extends Marker {
     // Make a triangle
     int halfSize = (int) (Math.ceil((Marker.SIZE + 1) / 2.0));
     x[0] = xOffset - halfSize + 0;
-    x[1] = xOffset - halfSize + Marker.SIZE + 1;
+    x[1] = (int) (xOffset - halfSize + Marker.SIZE + 1);
     x[2] = xOffset - halfSize + halfSize;
 
-    y[0] = yOffset - halfSize + Marker.SIZE + 1;
-    y[1] = yOffset - halfSize + Marker.SIZE + 1;
+    y[0] = (int) (yOffset - halfSize + Marker.SIZE + 1);
+    y[1] = (int) (yOffset - halfSize + Marker.SIZE + 1);
     y[2] = yOffset - halfSize + 0;
 
-    Polygon triangle = new Polygon(x, y, n);
-    g.fillPolygon(triangle);
+    Shape triangle = new Polygon(x, y, n);
+    g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+    g.fill(triangle);
+    g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_DEFAULT);
 
   }
 }

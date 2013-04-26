@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Chart Title
@@ -70,7 +71,7 @@ public class ChartTitle implements ChartPart {
     if (chartPainter.getStyleManager().isChartTitleVisible()) {
 
       TextLayout textLayout = new TextLayout(text, chartPainter.getStyleManager().getChartTitleFont(), new FontRenderContext(null, true, false));
-      Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+      Rectangle2D rectangle = textLayout.getBounds();
       int titleHeight = (int) ((chartPainter.getStyleManager().isChartTitleVisible() ? rectangle.getHeight() : 0));
       return chartPainter.getStyleManager().getChartPadding() + 2 * chartPainter.getStyleManager().getChartTitlePadding() + titleHeight;
     } else {
@@ -89,7 +90,7 @@ public class ChartTitle implements ChartPart {
       // create rectangle first for sizing
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout textLayout = new TextLayout(text, chartPainter.getStyleManager().getChartTitleFont(), frc);
-      Rectangle rectangle = textLayout.getPixelBounds(null, 0, 0);
+      Rectangle2D rectangle = textLayout.getBounds();
 
       int xOffset = (int) chartPainter.getPlot().getBounds().getX();
       int yOffset = chartPainter.getStyleManager().getChartPadding();
@@ -111,7 +112,7 @@ public class ChartTitle implements ChartPart {
       xOffset = (int) (chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0);
       yOffset = (int) (chartPainter.getStyleManager().getChartPadding() - rectangle.getY() + chartPainter.getStyleManager().getChartTitlePadding());
 
-      // bounds = new Rectangle(xOffset, yOffset + ((int) rectangle.getY()), (int) rectangle.getWidth(), (int) (rectangle.getHeight()));
+      bounds = new Rectangle(xOffset, yOffset + ((int) rectangle.getY()), (int) rectangle.getWidth(), (int) (rectangle.getHeight()));
       // g.setColor(Color.green);
       // g.draw(bounds);
 
