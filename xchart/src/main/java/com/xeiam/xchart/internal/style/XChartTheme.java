@@ -214,7 +214,7 @@ public class XChartTheme implements Theme {
   @Override
   public int getPlotPadding() {
 
-    return 3;
+    return 4;
   }
 
   @Override

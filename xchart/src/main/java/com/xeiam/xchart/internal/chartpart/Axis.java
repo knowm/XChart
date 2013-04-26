@@ -211,7 +211,7 @@ public class Axis implements ChartPart {
           - 2
           * getChartPainter().getStyleManager().getChartPadding()
 
-          - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding() + 1) : 0)
+          - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
           - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
               .getChartPadding() : 0)

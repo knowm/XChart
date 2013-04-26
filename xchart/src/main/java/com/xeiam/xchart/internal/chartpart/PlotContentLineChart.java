@@ -156,7 +156,7 @@ public class PlotContentLineChart extends PlotContent {
           yTransform = bounds.getHeight() / 2.0;
         }
 
-        double xOffset = bounds.getX() + xTransform - 1;
+        double xOffset = bounds.getX() + xTransform;
         double yOffset = bounds.getY() + yTransform;
         // System.out.println(yOffset);
         // System.out.println(yTransform);

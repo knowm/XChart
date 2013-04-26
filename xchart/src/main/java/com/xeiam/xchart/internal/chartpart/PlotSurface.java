@@ -78,7 +78,7 @@ public class PlotSurface implements ChartPart {
 
           g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
           g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
-          Shape line = new Line2D.Double( bounds.getX(), yOffset, bounds.getX() + bounds.getWidth() - 2, yOffset);
+          Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
           g.draw(line);
         }
         // tick marks
@@ -88,7 +88,7 @@ public class PlotSurface implements ChartPart {
           g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
           Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset);
           g.draw(line);
-          line = new Line2D.Double((bounds.getX() + bounds.getWidth() - 2), yOffset, (bounds.getX() + bounds.getWidth() - 2) - getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset);
+          line = new Line2D.Double(bounds.getX() + bounds.getWidth(), yOffset, bounds.getX() + bounds.getWidth() - getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset);
           g.draw(line);
         }
       }
@@ -101,14 +101,14 @@ public class PlotSurface implements ChartPart {
         for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
           double tickLocation = xAxisTickLocations.get(i);
-          double xOffset = bounds.getX() + tickLocation - 1;
+          double xOffset = bounds.getX() + tickLocation;
 
           // draw lines
           if (getChartPainter().getStyleManager().isPlotGridLinesVisible()) {
             g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
             g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
 
-            Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight() - 1);
+            Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
             g.draw(line);
           }
           // tick marks
@@ -119,8 +119,7 @@ public class PlotSurface implements ChartPart {
 
             Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + getChartPainter().getStyleManager().getAxisTickMarkLength());
             g.draw(line);
-            line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight() - 1, xOffset, bounds.getY() + bounds.getHeight() - 1
-                - getChartPainter().getStyleManager().getAxisTickMarkLength());
+            line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight(), xOffset, bounds.getY() + bounds.getHeight() - getChartPainter().getStyleManager().getAxisTickMarkLength());
             g.draw(line);
           }
         }
