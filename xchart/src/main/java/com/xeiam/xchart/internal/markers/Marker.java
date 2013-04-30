@@ -27,8 +27,7 @@ public abstract class Marker {
 
   public static final double SIZE = 8;
 
-  public static final double X_OFFSET = -1.0 * (SIZE / 2.0);
-  public static final double Y_OFFSET = -1.0 * (SIZE / 2.0);
+  public static final double HALF_SIZE = SIZE / 2.0;
 
   public abstract void paint(Graphics2D g, double xOffset, double yOffset);
 }

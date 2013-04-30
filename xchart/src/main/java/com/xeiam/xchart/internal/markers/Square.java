@@ -28,7 +28,7 @@ public class Square extends Marker {
   public void paint(Graphics2D g, double xOffset, double yOffset) {
 
     g.setStroke(stroke);
-    Shape square = new Rectangle2D.Double(xOffset + Marker.X_OFFSET, yOffset + Marker.Y_OFFSET, Marker.SIZE, Marker.SIZE);
+    Shape square = new Rectangle2D.Double(xOffset - Marker.HALF_SIZE, yOffset - Marker.HALF_SIZE, Marker.SIZE, Marker.SIZE);
     g.fill(square);
 
   }

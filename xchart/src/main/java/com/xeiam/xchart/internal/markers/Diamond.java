@@ -29,13 +29,13 @@ public class Diamond extends Marker {
     g.setStroke(stroke);
 
     // Make a diamond
-    double halfSize = Math.ceil((Marker.SIZE + 3) / 2.0);
+    double diamondHalfSize = Marker.HALF_SIZE * 1.3;
 
     Path2D.Double path = new Path2D.Double();
-    path.moveTo(xOffset - halfSize, yOffset - halfSize + halfSize);
-    path.lineTo(xOffset - halfSize + halfSize, yOffset - halfSize + Marker.SIZE + 3);
-    path.lineTo(xOffset - halfSize + Marker.SIZE + 3, yOffset - halfSize + halfSize);
-    path.lineTo(xOffset - halfSize + halfSize, yOffset - halfSize);
+    path.moveTo(xOffset - diamondHalfSize, yOffset);
+    path.lineTo(xOffset, yOffset - diamondHalfSize);
+    path.lineTo(xOffset + diamondHalfSize, yOffset);
+    path.lineTo(xOffset, yOffset + diamondHalfSize);
     path.closePath();
     g.fill(path);
 

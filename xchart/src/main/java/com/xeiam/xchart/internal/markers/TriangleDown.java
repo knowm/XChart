@@ -29,12 +29,10 @@ public class TriangleDown extends Marker {
     g.setStroke(stroke);
 
     // Make a triangle
-    double halfSize = Math.ceil((Marker.SIZE + 1) / 2.0);
-
     Path2D.Double path = new Path2D.Double();
-    path.moveTo(xOffset - halfSize + 0, 1 + yOffset - halfSize + 0);
-    path.lineTo(xOffset - halfSize + halfSize, 1 + yOffset - halfSize + Marker.SIZE + 1);
-    path.lineTo(xOffset - halfSize + Marker.SIZE + 1, 1 + yOffset - halfSize + 0);
+    path.moveTo(xOffset - Marker.HALF_SIZE, 1 + yOffset - Marker.HALF_SIZE);
+    path.lineTo(xOffset, 1 + yOffset - Marker.HALF_SIZE + Marker.SIZE + 1);
+    path.lineTo(xOffset - Marker.HALF_SIZE + Marker.SIZE + 1, 1 + yOffset - Marker.HALF_SIZE);
     path.closePath();
     g.fill(path);
 
