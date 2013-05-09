@@ -6,6 +6,7 @@ script: "mvn deploy --settings target/travis/settings.xml"
 branches:
   only:
     - develop
+
 env:
   global:
     - secure: "ccuq9bR5wmQHrLcipwUw5BzDZq6FQTJ1yiJExDve2Wzh40FeFmlJ4IoiF5jY\nTiVmYEdQgpkYhwzFzQQrVhR2YfpteUbt14gc/V7yFvGPDfi6xIEFMz/kXTKh\n+kUav7xyjmtB1S05W3ayUZJIpiL/ahlatT6/DmDBHubHOQ0SzJQ="
