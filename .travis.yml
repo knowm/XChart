@@ -9,5 +9,5 @@ branches:
 
 env:
   global:
-    - secure: "kLm3xarqqvI9W6KvWupcTOau2iPfha+LYteCdZCiq+lwnXyEG/FUx1v71New\nowQQTnfvXuWMR/kH0BnMm8WYJSImUDMkE0v90uoY/J+5FcrzfVBQO4lj16Jh\n7629+BWjfWoK9yCTUCt0i0Qsg9qbyGT/ErADdlu/c87Byd3GPLY="
-    - secure: "XlDG6tg4wpGhsiMC7wzlRqOo3Q6T+xYqSMCx+nWwGkF1RTiuOwgS0vXOMFc4\nmONmhUa2s6ydZKlTO6HhWtbV02gKMrCbwcZf0SDnP8UMyTdJY7LgR752fXuj\naqrSzigkAm3Krqu2IT6M0RP/ZjOqK4JH9Kal9gBUlgUC+R2rCd8="
+    - secure: "R7i6miE4AIbj1o6E8fwWvKwjvygha172QSdKM0Jto/Qq3AyLuWMCthYAxevq\nX+I64lw3exhmEiOHXHjh1lGTnGZ9kXklIU+q4vo9QfdYH7WU47chE0KZfQtd\n64EoFo8KmSD4VQjyiNv7ReLdoqksRAj2dL386fWrBAUWkwhxD4w="
+    - secure: "UL4rCDPPBrk7cju9f+fNi1qfGWb+q/36wJYUEeuINDa2a4c4oHvdOX0aYOIV\nbBDeaReKMtl6mpjG2uxCZwaz7N3/VADDMrqA+wbTbWKgyWeTACzAz/Z/6w8E\noOAkS8EUCZgDiXeHuirYvQQ47KbzYmf2m4/EUAQm+VIHFbO1ssE="
