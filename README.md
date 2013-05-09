@@ -67,7 +67,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.1.1-SNAPSHOT</version>
+      <version>2.2.0-SNAPSHOT</version>
     </dependency>
 
 ## Building
@@ -81,9 +81,9 @@ mvn javadoc:aggregate
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
 
-## More Info
-Sonar Code Quality: http://sonar.xeiam.com/  
-Jenkins CI: http://ci.xeiam.com/  
+## Build Status
+[![Build Status](https://travis-ci.org/timmolter/XChart.png)](https://travis-ci.org/timmolter/XChart.png)?branch=develop
+  
 
 ## Donations
 17dQktcAmU4urXz7tGk2sbuiCqykm3WLs6  
