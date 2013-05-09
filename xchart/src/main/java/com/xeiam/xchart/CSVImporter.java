@@ -92,6 +92,12 @@ public class CSVImporter {
     return getChartFromCSVDir(path2Directory, dataOrientation, width, height, null);
   }
 
+  /**
+   * Get the series's data from a file
+   * 
+   * @param csvFile
+   * @return
+   */
   private static String[] getSeriesDataFromCSVRows(File csvFile) {
 
     String[] xAndYData = new String[2];
@@ -119,6 +125,10 @@ public class CSVImporter {
     return xAndYData;
   }
 
+  /**
+   * @param csvFile
+   * @return
+   */
   private static String[] getSeriesDataFromCSVColumns(File csvFile) {
 
     String[] xAndYData = new String[2];
@@ -149,6 +159,10 @@ public class CSVImporter {
     return xAndYData;
   }
 
+  /**
+   * @param stringData
+   * @return
+   */
   private static List<Number> getAxisData(String stringData) {
 
     List<Number> axisData = new ArrayList<Number>();

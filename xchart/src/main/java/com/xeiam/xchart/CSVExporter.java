@@ -22,6 +22,12 @@ import java.util.Iterator;
  */
 public class CSVExporter {
 
+  /**
+   * Write a Chart series as rows in a CSV file.
+   * 
+   * @param series
+   * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
+   */
   public static void writeCSVRows(Series series, String path2Dir) {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
@@ -48,6 +54,12 @@ public class CSVExporter {
     }
   }
 
+  /**
+   * Write a Chart series as columns in a CSV file.
+   * 
+   * @param series
+   * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
+   */
   public static void writeCSVColumns(Series series, String path2Dir) {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
@@ -81,6 +93,11 @@ public class CSVExporter {
 
   }
 
+  /**
+   * @param collection
+   * @param separator
+   * @return
+   */
   private static String join(Collection<? extends Object> collection, String separator) {
 
     if (collection == null) {
