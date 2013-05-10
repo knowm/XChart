@@ -83,7 +83,7 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 
 ## Build Status
 [![Build Status](https://travis-ci.org/timmolter/XChart.png?branch=develop)](https://travis-ci.org/timmolter/XChart.png?branch=develop)
-  
+[Build History](https://travis-ci.org/timmolter/XChart/builds)  
 
 ## Donations
 17dQktcAmU4urXz7tGk2sbuiCqykm3WLs6  
