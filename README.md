@@ -81,7 +81,7 @@ mvn javadoc:aggregate
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
 
-## Continuous Integration Status
+## Continuous Integration
 [![Build Status](https://travis-ci.org/timmolter/XChart.png?branch=develop)](https://travis-ci.org/timmolter/XChart.png)  
 [Build History](https://travis-ci.org/timmolter/XChart/builds)  
 
