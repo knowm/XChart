@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import java.util.List;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
-import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.StyleManager.LegendPosition;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**

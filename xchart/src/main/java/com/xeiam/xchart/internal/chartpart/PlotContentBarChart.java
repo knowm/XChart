@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,8 @@ public class PlotContentBarChart extends PlotContent {
       // override min and maxValue if specified
       if (getChartPainter().getStyleManager().getYAxisMin() != null) {
         yMin = new BigDecimal(getChartPainter().getStyleManager().getYAxisMin());
-      } else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+      }
+      else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
         // int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
         int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
         // System.out.println("logMin: " + logMin);
@@ -106,16 +107,19 @@ public class PlotContentBarChart extends PlotContent {
       }
       if (getChartPainter().getStyleManager().getYAxisMax() != null) {
         yMax = new BigDecimal(getChartPainter().getStyleManager().getYAxisMax());
-      } else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+      }
+      else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
         yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
       }
       // figure out the general form of the chart
       int chartForm = 1; // 1=positive, -1=negative, 0=span
       if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
         chartForm = 1; // positive chart
-      } else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
+      }
+      else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
         chartForm = -1; // negative chart
-      } else {
+      }
+      else {
         chartForm = 0;// span chart
       }
       // System.out.println(yMin);
@@ -132,7 +136,8 @@ public class PlotContentBarChart extends PlotContent {
           BigDecimal y = new BigDecimal(yItr.next().doubleValue());
           if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
             y = new BigDecimal(Math.log10(y.doubleValue()));
-          } else {
+          }
+          else {
             y = new BigDecimal(y.doubleValue());
           }
           BigDecimal yTop = null;
@@ -151,7 +156,8 @@ public class PlotContentBarChart extends PlotContent {
             if (y.compareTo(BigDecimal.ZERO) >= 0) { // positive
               yTop = y;
               yBottom = BigDecimal.ZERO;
-            } else {
+            }
+            else {
               yTop = BigDecimal.ZERO;
               yBottom = y;
             }
@@ -181,7 +187,8 @@ public class PlotContentBarChart extends PlotContent {
           path.closePath();
           g.fill(path);
 
-        } else {
+        }
+        else {
           barCounter++;
         }
       }

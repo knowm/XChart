@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 Xeiam LLC.
+ * Copyright 2012 - 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,9 +118,11 @@ public class XChartPanel extends JPanel {
         try {
           if (fileChooser.getFileFilter() == null) {
             BitmapEncoder.savePNG(chart, theFileToSave.getCanonicalPath().toString());
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
             BitmapEncoder.saveJPG(chart, theFileToSave.getCanonicalPath().toString() + ".jpg", 1.0f);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
             BitmapEncoder.savePNG(chart, theFileToSave.getCanonicalPath().toString() + ".png");
           }
         } catch (IOException e) {
