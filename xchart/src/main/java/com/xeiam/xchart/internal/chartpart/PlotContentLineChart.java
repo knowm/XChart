@@ -107,6 +107,9 @@ public class PlotContentLineChart extends PlotContent {
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }
+      
+      Path2D.Double path = null;
+
       while (xItr.hasNext()) {
 
         BigDecimal x = null;
@@ -124,6 +127,9 @@ public class PlotContentLineChart extends PlotContent {
 
         Number next = yItr.next();
         if (next == null) {
+          closePath(g, path, previousX, bounds, yTopMargin);
+          path = null;
+
           previousX = Integer.MIN_VALUE;
           previousY = Integer.MIN_VALUE;
           continue;
@@ -178,13 +184,19 @@ public class PlotContentLineChart extends PlotContent {
             g.setColor(series.getStrokeColor());
             double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
 
-            Path2D.Double path = new Path2D.Double();
-            path.moveTo(previousX, previousY);
+            // if the new x value is smaller than the previous one, close the current path
+            if (xOffset < previousX) {
+              closePath(g, path, previousX, bounds, yTopMargin);
+              path = null;
+            }
+            
+            if (path == null) {
+              path = new Path2D.Double();
+              path.moveTo(previousX, yBottomOfArea);
+              path.lineTo(previousX, previousY);
+            }
+            
             path.lineTo(xOffset, yOffset);
-            path.lineTo(xOffset, yBottomOfArea);
-            path.lineTo(previousX, yBottomOfArea);
-            path.closePath();
-            g.fill(path);
           }
         }
 
@@ -232,6 +244,21 @@ public class PlotContentLineChart extends PlotContent {
           g.draw(line);
         }
       }
+      
+      // close any open path for area charts
+      closePath(g, path, previousX, bounds, yTopMargin);
+    }
+  }
+  
+  /**
+   * Closes a path for area charts if one is available.
+   */
+  private void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
+    if (path != null) {
+      double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
+      path.lineTo(previousX, yBottomOfArea);
+      path.closePath();
+      g.fill(path);
     }
   }
 }
