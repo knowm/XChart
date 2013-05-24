@@ -107,7 +107,7 @@ public class PlotContentLineChart extends PlotContent {
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }
-      
+
       Path2D.Double path = null;
 
       while (xItr.hasNext()) {
@@ -127,6 +127,8 @@ public class PlotContentLineChart extends PlotContent {
 
         Number next = yItr.next();
         if (next == null) {
+
+          // for area charts
           closePath(g, path, previousX, bounds, yTopMargin);
           path = null;
 
@@ -145,7 +147,8 @@ public class PlotContentLineChart extends PlotContent {
         // System.out.println(y);
         if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
           y = new BigDecimal(Math.log10(yOrig.doubleValue()));
-        } else {
+        }
+        else {
           y = new BigDecimal(yOrig.doubleValue());
         }
 
@@ -180,22 +183,18 @@ public class PlotContentLineChart extends PlotContent {
 
         // paint area
         if (getChartPainter().getStyleManager().getChartType() == ChartType.Area) {
+
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+
             g.setColor(series.getStrokeColor());
             double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
 
-            // if the new x value is smaller than the previous one, close the current path
-            if (xOffset < previousX) {
-              closePath(g, path, previousX, bounds, yTopMargin);
-              path = null;
-            }
-            
             if (path == null) {
               path = new Path2D.Double();
               path.moveTo(previousX, yBottomOfArea);
               path.lineTo(previousX, previousY);
             }
-            
+
             path.lineTo(xOffset, yOffset);
           }
         }
@@ -219,7 +218,8 @@ public class PlotContentLineChart extends PlotContent {
           if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
             topValue = yOrig.add(eb);
             topValue = new BigDecimal(Math.log10(topValue.doubleValue()));
-          } else {
+          }
+          else {
             topValue = y.add(eb);
           }
           double topEBTransform = bounds.getHeight() - (yTopMargin + topValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
@@ -230,7 +230,8 @@ public class PlotContentLineChart extends PlotContent {
             bottomValue = yOrig.subtract(eb);
             // System.out.println(bottomValue);
             bottomValue = new BigDecimal(Math.log10(bottomValue.doubleValue()));
-          } else {
+          }
+          else {
             bottomValue = y.subtract(eb);
           }
           double bottomEBTransform = bounds.getHeight() - (yTopMargin + bottomValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
@@ -244,16 +245,17 @@ public class PlotContentLineChart extends PlotContent {
           g.draw(line);
         }
       }
-      
+
       // close any open path for area charts
       closePath(g, path, previousX, bounds, yTopMargin);
     }
   }
-  
+
   /**
    * Closes a path for area charts if one is available.
    */
   private void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
+
     if (path != null) {
       double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
       path.lineTo(previousX, yBottomOfArea);
@@ -261,4 +263,5 @@ public class PlotContentLineChart extends PlotContent {
       g.fill(path);
     }
   }
+
 }
