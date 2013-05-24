@@ -99,7 +99,8 @@ public class Series {
     BigDecimal[] yMinMax = null;
     if (errorBars == null) {
       yMinMax = findMinMax(yData, yAxisType);
-    } else {
+    }
+    else {
       yMinMax = findMinMaxWithErrorBars(yData, errorBars);
     }
     yMin = yMinMax[0];
@@ -130,10 +131,12 @@ public class Series {
       if (axisType == AxisType.Number) {
         bigDecimal = new BigDecimal(((Number) dataPoint).toString());
 
-      } else if (axisType == AxisType.Date) {
+      }
+      else if (axisType == AxisType.Date) {
         Date date = (Date) dataPoint;
         bigDecimal = new BigDecimal(date.getTime());
-      } else if (axisType == AxisType.String) {
+      }
+      else if (axisType == AxisType.String) {
         return new BigDecimal[] { null, null };
       }
       if (min == null || bigDecimal.compareTo(min) < 0) {

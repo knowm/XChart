@@ -80,15 +80,18 @@ public class AxisTitle implements ChartPart {
         // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
-        bounds = new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight()
-            + getChartPainter().getStyleManager().getAxisTitlePadding(), nonRotatedRectangle.getWidth());
+        bounds =
+            new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight()
+                + getChartPainter().getStyleManager().getAxisTitlePadding(), nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
-      } else {
+      }
+      else {
         bounds = new Rectangle2D.Double(axis.getPaintZone().getX(), axis.getPaintZone().getY(), 0, axis.getPaintZone().getHeight());
       }
 
-    } else {
+    }
+    else {
 
       if (text != null && !text.trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
 
@@ -102,12 +105,14 @@ public class AxisTitle implements ChartPart {
 
         textLayout.draw(g, (float) xOffset, (float) (yOffset - rectangle.getY()));
 
-        bounds = new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight()
-            + getChartPainter().getStyleManager().getAxisTitlePadding());
+        bounds =
+            new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight()
+                + getChartPainter().getStyleManager().getAxisTitlePadding());
         // g.setColor(Color.blue);
         // g.draw(bounds);
 
-      } else {
+      }
+      else {
         bounds = new Rectangle2D.Double(axis.getPaintZone().getX(), axis.getPaintZone().getY() + axis.getPaintZone().getHeight(), axis.getPaintZone().getWidth(), 0);
         // g.setColor(Color.blue);
         // g.draw(bounds);

@@ -17,7 +17,6 @@ package com.xeiam.xchart;
 
 import java.util.Collection;
 
-
 /**
  * A convenience class for making Charts with one line of code
  * 
@@ -51,7 +50,8 @@ public final class QuickChart {
     double[][] yData2d = { yData };
     if (seriesName == null) {
       return getChart(chartTitle, xTitle, yTitle, null, xData, yData2d);
-    } else {
+    }
+    else {
       return getChart(chartTitle, xTitle, yTitle, new String[] { seriesName }, xData, yData2d);
     }
   }
@@ -82,7 +82,8 @@ public final class QuickChart {
       Series series;
       if (seriesNames != null) {
         series = chart.addSeries(seriesNames[i], xData, yData[i]);
-      } else {
+      }
+      else {
         chart.getStyleManager().setLegendVisible(false);
         series = chart.addSeries(" " + i, xData, yData[i]);
       }

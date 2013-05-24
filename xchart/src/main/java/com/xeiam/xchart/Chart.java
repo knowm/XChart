@@ -62,9 +62,11 @@ public class Chart {
 
     if (chartTheme == ChartTheme.XChart) {
       setTheme(new XChartTheme());
-    } else if (chartTheme == ChartTheme.GGPlot2) {
+    }
+    else if (chartTheme == ChartTheme.GGPlot2) {
       setTheme(new GGPlot2Theme());
-    } else if (chartTheme == ChartTheme.Matlab) {
+    }
+    else if (chartTheme == ChartTheme.Matlab) {
       setTheme(new MatlabTheme());
     }
   }

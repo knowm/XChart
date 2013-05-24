@@ -87,14 +87,17 @@ public class AxisPair implements ChartPart {
       Object dataPoint = itr.next();
       if (dataPoint instanceof Number) {
         xAxis.setAxisType(AxisType.Number);
-      } else if (dataPoint instanceof Date) {
+      }
+      else if (dataPoint instanceof Date) {
         xAxis.setAxisType(AxisType.Date);
-      } else if (dataPoint instanceof String) {
+      }
+      else if (dataPoint instanceof String) {
         xAxis.setAxisType(AxisType.String);
       }
       yAxis.setAxisType(AxisType.Number);
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
-    } else { // generate xData
+    }
+    else { // generate xData
       Collection<Number> generatedXData = new ArrayList<Number>();
       for (int i = 1; i < yData.size() + 1; i++) {
         generatedXData.add(i);

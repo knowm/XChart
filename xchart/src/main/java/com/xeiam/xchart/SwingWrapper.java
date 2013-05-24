@@ -116,7 +116,8 @@ public class SwingWrapper {
           if (chart != null) {
             JPanel chartPanel = new XChartPanel(chart);
             frame.add(chartPanel);
-          } else {
+          }
+          else {
             JPanel chartPanel = new JPanel();
             frame.getContentPane().add(chartPanel);
           }

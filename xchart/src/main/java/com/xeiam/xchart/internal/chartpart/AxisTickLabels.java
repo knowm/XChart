@@ -83,7 +83,8 @@ public class AxisTickLabels implements ChartPart {
       // g.setColor(Color.blue);
       // g.draw(bounds);
 
-    } else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
+    }
+    else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
 
       double xOffset = axisTick.getAxis().getPaintZone().getX();
       double yOffset = axisTick.getAxis().getAxisTitle().getBounds().getY();

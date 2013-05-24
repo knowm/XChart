@@ -55,7 +55,8 @@ public class ChartTitle implements ChartPart {
 
     if (text.trim().equalsIgnoreCase("")) {
       chartPainter.getStyleManager().setChartTitleVisible(false);
-    } else {
+    }
+    else {
       chartPainter.getStyleManager().setChartTitleVisible(true);
     }
     this.text = text;
@@ -74,7 +75,8 @@ public class ChartTitle implements ChartPart {
       Rectangle2D rectangle = textLayout.getBounds();
       int titleHeight = (int) ((chartPainter.getStyleManager().isChartTitleVisible() ? rectangle.getHeight() : 0));
       return chartPainter.getStyleManager().getChartPadding() + 2 * chartPainter.getStyleManager().getChartTitlePadding() + titleHeight;
-    } else {
+    }
+    else {
       return chartPainter.getStyleManager().getChartPadding();
     }
   }

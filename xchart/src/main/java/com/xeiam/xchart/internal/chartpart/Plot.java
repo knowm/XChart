@@ -77,7 +77,8 @@ public class Plot implements ChartPart {
     plotSurface.paint(g);
     if (getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
       this.plotContent = new PlotContentBarChart(this);
-    } else {
+    }
+    else {
       this.plotContent = new PlotContentLineChart(this);
     }
     plotContent.paint(g);

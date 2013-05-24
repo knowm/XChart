@@ -65,8 +65,9 @@ public class AxisTickMarks implements ChartPart {
 
           int tickLocation = axisTick.getTickLocations().get(i);
 
-          Shape line = new Line2D.Double(xOffset, yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(),
-              yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation);
+          Shape line =
+              new Line2D.Double(xOffset, yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
+                  + axisTick.getAxis().getPaintZone().getHeight() - tickLocation);
           g.draw(line);
 
         }
@@ -74,8 +75,9 @@ public class AxisTickMarks implements ChartPart {
       // Line
       if (getChartPainter().getStyleManager().isAxisTicksLineVisible()) {
 
-        Shape line = new Line2D.Double(xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
-            + axisTick.getAxis().getPaintZone().getHeight());
+        Shape line =
+            new Line2D.Double(xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
+                + axisTick.getAxis().getPaintZone().getHeight());
         g.draw(line);
 
       }
@@ -85,7 +87,8 @@ public class AxisTickMarks implements ChartPart {
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
-    } else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
+    }
+    else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
 
       double xOffset = axisTick.getAxis().getPaintZone().getX();
       double yOffset = axisTick.getAxisTickLabels().getBounds().getY() - getChartPainter().getStyleManager().getAxisTickPadding();
@@ -104,14 +107,16 @@ public class AxisTickMarks implements ChartPart {
       // Line
       if (getChartPainter().getStyleManager().isAxisTicksLineVisible()) {
 
-        Shape line = new Line2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength(), xOffset + axisTick.getAxis().getPaintZone().getWidth(), yOffset
-            - getChartPainter().getStyleManager().getAxisTickMarkLength());
+        Shape line =
+            new Line2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength(), xOffset + axisTick.getAxis().getPaintZone().getWidth(), yOffset
+                - getChartPainter().getStyleManager().getAxisTickMarkLength());
         g.draw(line);
       }
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength(), axisTick.getAxis().getPaintZone().getWidth(), getChartPainter().getStyleManager()
-          .getAxisTickMarkLength());
+      bounds =
+          new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength(), axisTick.getAxis().getPaintZone().getWidth(), getChartPainter().getStyleManager()
+              .getAxisTickMarkLength());
       // g.setColor(Color.yellow);
       // g.draw(bounds);
     }

@@ -84,7 +84,8 @@ public class Legend implements ChartPart {
       double maxContentHeight = 0;
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
         maxContentHeight = Math.max(legendTextContentMaxHeight, Marker.SIZE);
-      } else {
+      }
+      else {
         maxContentHeight = Math.max(legendTextContentMaxHeight, BOX_SIZE);
       }
       double legendContentHeight = maxContentHeight * seriesMap.size() + chartPainter.getStyleManager().getLegendPadding() * (seriesMap.size() - 1);
@@ -93,14 +94,16 @@ public class Legend implements ChartPart {
       double legendContentWidth = 0;
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
         legendContentWidth = 3.0 * Marker.SIZE + chartPainter.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
-      } else {
+      }
+      else {
         legendContentWidth = BOX_SIZE + chartPainter.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
       }
       // Legend Box
       double legendBoxWidth = legendContentWidth + 2 * chartPainter.getStyleManager().getLegendPadding();
       double legendBoxHeight = legendContentHeight + 2 * chartPainter.getStyleManager().getLegendPadding();
       return new double[] { legendBoxWidth, legendBoxHeight, maxContentHeight };
-    } else {
+    }
+    else {
       return new double[] { 0, 0, 0 };
     }
   }
@@ -175,7 +178,8 @@ public class Legend implements ChartPart {
             g.setColor(series.getMarkerColor());
             series.getMarker().paint(g, startx + (Marker.SIZE * 1.5), starty + maxContentHeight / 2.0);
           }
-        } else {
+        }
+        else {
           // paint little box
           if (series.getStroke() != null) {
             g.setColor(series.getStrokeColor());
@@ -191,7 +195,8 @@ public class Legend implements ChartPart {
         if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
           layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + chartPainter.getStyleManager().getLegendPadding()), (float) (starty + (maxContentHeight - 1 + layout.getBounds()
               .getHeight()) / 2.0));
-        } else {
+        }
+        else {
           layout.draw(g, (float) (startx + BOX_SIZE + chartPainter.getStyleManager().getLegendPadding()), (float) (starty + (maxContentHeight + layout.getBounds().getHeight()) / 2.0));
         }
         starty = starty + maxContentHeight + chartPainter.getStyleManager().getLegendPadding();
