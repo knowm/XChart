@@ -31,6 +31,9 @@ import com.xeiam.xchart.internal.style.XChartTheme;
  */
 public class StyleManager {
 
+  /**
+   * Note: For Area Charts, the X-Axis data must be in ascending order.
+   */
   public enum ChartType {
 
     Line, Scatter, Area, Bar

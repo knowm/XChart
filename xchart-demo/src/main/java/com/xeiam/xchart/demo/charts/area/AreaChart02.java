@@ -64,6 +64,10 @@ public class AreaChart02 implements ExampleChart {
     }
     xData.add(10);
     yData.add(null);
+    xData.add(11);
+    yData.add(100);
+    xData.add(12);
+    yData.add(90);
 
     chart.addSeries("a", xData, yData);
 

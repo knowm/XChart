@@ -194,8 +194,10 @@ public class PlotContentLineChart extends PlotContent {
               path.moveTo(previousX, yBottomOfArea);
               path.lineTo(previousX, previousY);
             }
-
             path.lineTo(xOffset, yOffset);
+          }
+          if (xOffset < previousX) {
+            throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
           }
         }
 
