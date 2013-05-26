@@ -38,6 +38,7 @@ public class Example0 {
 
     // Save it
     BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
+    BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
 
   }
 }
