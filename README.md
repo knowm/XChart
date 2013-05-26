@@ -36,10 +36,11 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 * Date and category X-Axis
 * Multiple series
 * Extensive customization
-* Themes
+* Themes - XChart, GGPlot2, MATLAB
 * Right-click, Save-As...
 * User-defined axes range
 * Custom legend placement
+* CSV import and export
 
 ## Getting Started
 ### Non-Maven
