@@ -38,7 +38,7 @@ public class AxisPair implements ChartPart {
 
   private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
 
-  private int seriesCount;
+  private int seriesCount = 0;
 
   private Axis xAxis;
   private Axis yAxis;
@@ -87,14 +87,17 @@ public class AxisPair implements ChartPart {
       Object dataPoint = itr.next();
       if (dataPoint instanceof Number) {
         xAxis.setAxisType(AxisType.Number);
-      } else if (dataPoint instanceof Date) {
+      }
+      else if (dataPoint instanceof Date) {
         xAxis.setAxisType(AxisType.Date);
-      } else if (dataPoint instanceof String) {
+      }
+      else if (dataPoint instanceof String) {
         xAxis.setAxisType(AxisType.String);
       }
       yAxis.setAxisType(AxisType.Number);
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
-    } else { // generate xData
+    }
+    else { // generate xData
       Collection<Number> generatedXData = new ArrayList<Number>();
       for (int i = 1; i < yData.size() + 1; i++) {
         generatedXData.add(i);
@@ -155,32 +158,6 @@ public class AxisPair implements ChartPart {
   public Axis getyAxis() {
 
     return yAxis;
-  }
-
-  // Helper Methods ///////////////
-
-  /**
-   * Gets the percentage of working space allowed for tick marks
-   * 
-   * @param workingSpace
-   * @return
-   */
-  public static int getTickSpace(int workingSpace) {
-
-    return (int) (workingSpace * 0.95);
-  }
-
-  /**
-   * Gets the offset for the beginning of the tick marks
-   * 
-   * @param workingSpace
-   * @param tickSpace
-   * @return
-   */
-  public static int getTickStartOffset(int workingSpace, int tickSpace) {
-
-    int marginSpace = workingSpace - tickSpace;
-    return (int) (marginSpace / 2.0);
   }
 
 }

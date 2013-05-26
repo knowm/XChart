@@ -16,7 +16,10 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -25,6 +28,7 @@ import java.util.Map;
 
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager.ChartType;
+import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 
 /**
@@ -45,15 +49,15 @@ public class PlotContentLineChart extends PlotContent {
   @Override
   public void paint(Graphics2D g) {
 
-    Rectangle bounds = plot.getBounds();
+    Rectangle2D bounds = plot.getBounds();
 
     // X-Axis
-    int xTickSpace = AxisPair.getTickSpace((int) bounds.getWidth());
-    int xLeftMargin = AxisPair.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
+    int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
+    int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = AxisPair.getTickSpace((int) bounds.getHeight());
-    int yTopMargin = AxisPair.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
+    int yTickSpace = Utils.getTickSpace((int) bounds.getHeight());
+    int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     Map<Integer, Series> seriesMap = getChartPainter().getAxisPair().getSeriesMap();
     for (Integer seriesId : seriesMap.keySet()) {
@@ -94,8 +98,8 @@ public class PlotContentLineChart extends PlotContent {
       }
       Collection<Number> errorBars = series.getErrorBars();
 
-      int previousX = Integer.MIN_VALUE;
-      int previousY = Integer.MIN_VALUE;
+      double previousX = Integer.MIN_VALUE;
+      double previousY = Integer.MIN_VALUE;
 
       Iterator<?> xItr = xData.iterator();
       Iterator<Number> yItr = yData.iterator();
@@ -103,6 +107,9 @@ public class PlotContentLineChart extends PlotContent {
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }
+
+      Path2D.Double path = null;
+
       while (xItr.hasNext()) {
 
         BigDecimal x = null;
@@ -118,51 +125,79 @@ public class PlotContentLineChart extends PlotContent {
           x = new BigDecimal(Math.log10(x.doubleValue()));
         }
 
-        BigDecimal y = new BigDecimal(yItr.next().doubleValue());
+        Number next = yItr.next();
+        if (next == null) {
 
-        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
-          y = new BigDecimal(Math.log10(y.doubleValue()));
+          // for area charts
+          closePath(g, path, previousX, bounds, yTopMargin);
+          path = null;
+
+          previousX = Integer.MIN_VALUE;
+          previousY = Integer.MIN_VALUE;
+          continue;
+        }
+        BigDecimal yOrig = new BigDecimal(next.doubleValue());
+        BigDecimal y = null;
+        BigDecimal eb = BigDecimal.ZERO;
+
+        if (errorBars != null) {
+          eb = new BigDecimal(ebItr.next().doubleValue());
         }
 
         // System.out.println(y);
-        double eb = 0.0;
-        if (errorBars != null) {
-          eb = ebItr.next().doubleValue();
+        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+          y = new BigDecimal(Math.log10(yOrig.doubleValue()));
+        }
+        else {
+          y = new BigDecimal(yOrig.doubleValue());
         }
 
-        int xTransform = (int) (xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace));
-        int yTransform = (int) (bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
+        double xTransform = xLeftMargin + (x.subtract(xMin).doubleValue() / xMax.subtract(xMin).doubleValue() * xTickSpace);
+        double yTransform = bounds.getHeight() - (yTopMargin + y.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
 
         // a check if all x data are the exact same values
         if (Math.abs(xMax.subtract(xMin).doubleValue()) / 5 == 0.0) {
-          xTransform = (int) (bounds.getWidth() / 2.0);
+          xTransform = bounds.getWidth() / 2.0;
         }
 
         // a check if all y data are the exact same values
         if (Math.abs(yMax.subtract(yMin).doubleValue()) / 5 == 0.0) {
-          yTransform = (int) (bounds.getHeight() / 2.0);
+          yTransform = bounds.getHeight() / 2.0;
         }
 
-        int xOffset = (int) (bounds.getX() + xTransform - 1);
-        int yOffset = (int) (bounds.getY() + yTransform);
+        double xOffset = bounds.getX() + xTransform;
+        double yOffset = bounds.getY() + yTransform;
         // System.out.println(yOffset);
         // System.out.println(yTransform);
 
         // paint line
         if (series.getStroke() != null && getChartPainter().getStyleManager().getChartType() != ChartType.Scatter) {
+
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
             g.setColor(series.getStrokeColor());
             g.setStroke(series.getStroke());
-            g.drawLine(previousX, previousY, xOffset, yOffset);
+            Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
+            g.draw(line);
           }
         }
 
         // paint area
         if (getChartPainter().getStyleManager().getChartType() == ChartType.Area) {
+
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+
             g.setColor(series.getStrokeColor());
-            int yBottomOfArea = (int) (bounds.getY() + bounds.getHeight() - yTopMargin + 1);
-            g.fillPolygon(new int[] { previousX, xOffset, xOffset, previousX }, new int[] { previousY, yOffset, yBottomOfArea, yBottomOfArea }, 4);
+            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
+
+            if (path == null) {
+              path = new Path2D.Double();
+              path.moveTo(previousX, yBottomOfArea);
+              path.lineTo(previousX, previousY);
+            }
+            path.lineTo(xOffset, yOffset);
+          }
+          if (xOffset < previousX) {
+            throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
           }
         }
 
@@ -177,18 +212,58 @@ public class PlotContentLineChart extends PlotContent {
 
         // paint errorbar
         if (errorBars != null) {
+
           g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
           g.setStroke(errorBarStroke);
-          int bottom = (int) (-1 * bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
-          int top = (int) (bounds.getHeight() * eb / (yMax.subtract(yMin).doubleValue()));
-          g.drawLine(xOffset, yOffset + bottom, xOffset, yOffset + top);
-          g.drawLine(xOffset - 3, yOffset + bottom, xOffset + 3, yOffset + bottom);
-          g.drawLine(xOffset - 3, yOffset + top, xOffset + 3, yOffset + top);
+
+          BigDecimal topValue = null;
+          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+            topValue = yOrig.add(eb);
+            topValue = new BigDecimal(Math.log10(topValue.doubleValue()));
+          }
+          else {
+            topValue = y.add(eb);
+          }
+          double topEBTransform = bounds.getHeight() - (yTopMargin + topValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
+          double topEBOffset = bounds.getY() + topEBTransform;
+
+          BigDecimal bottomValue = null;
+          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+            bottomValue = yOrig.subtract(eb);
+            // System.out.println(bottomValue);
+            bottomValue = new BigDecimal(Math.log10(bottomValue.doubleValue()));
+          }
+          else {
+            bottomValue = y.subtract(eb);
+          }
+          double bottomEBTransform = bounds.getHeight() - (yTopMargin + bottomValue.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
+          double bottomEBOffset = bounds.getY() + bottomEBTransform;
+
+          Shape line = new Line2D.Double(xOffset, topEBOffset, xOffset, bottomEBOffset);
+          g.draw(line);
+          line = new Line2D.Double(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
+          g.draw(line);
+          line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
+          g.draw(line);
         }
       }
 
+      // close any open path for area charts
+      closePath(g, path, previousX, bounds, yTopMargin);
     }
+  }
 
+  /**
+   * Closes a path for area charts if one is available.
+   */
+  private void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
+
+    if (path != null) {
+      double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
+      path.lineTo(previousX, yBottomOfArea);
+      path.closePath();
+      g.fill(path);
+    }
   }
 
 }

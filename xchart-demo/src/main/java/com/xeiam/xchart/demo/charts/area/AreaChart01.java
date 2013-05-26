@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,6 +51,7 @@ public class AreaChart01 implements ExampleChart {
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyleManager().setAxisTitlesVisible(false);
 
     return chart;
   }

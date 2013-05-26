@@ -17,6 +17,8 @@ package com.xeiam.xchart.standalone;
 
 import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesMarker;
 
 /**
  * Creates a simple Chart and saves it as a PNG and JPEG image file.
@@ -32,9 +34,11 @@ public class Example1 {
     chart.setChartTitle("Sample Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.addSeries("y(x)", null, yData);
+    Series series = chart.addSeries("y(x)", null, yData);
+    series.setMarker(SeriesMarker.CIRCLE);
 
     BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
+    BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
     BitmapEncoder.saveJPG(chart, "./Sample_Chart.jpg", 0.95f);
 
   }

@@ -1,23 +1,17 @@
 /**
- * Copyright (C) 2013 Xeiam LLC http://xeiam.com
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is furnished to do
- * so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Copyright 2013 Xeiam LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.xeiam.xchart;
 
@@ -27,15 +21,19 @@ import java.awt.Stroke;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import com.xeiam.xchart.internal.style.GGPlot2Theme;
 import com.xeiam.xchart.internal.style.Theme;
 import com.xeiam.xchart.internal.style.XChartTheme;
 
 /**
+ * The StyleManager is used to manage all things related to styling of the vast number of Chart components
+ * 
  * @author timmolter
  */
 public class StyleManager {
 
+  /**
+   * Note: For Area Charts, the X-Axis data must be in ascending order.
+   */
   public enum ChartType {
 
     Line, Scatter, Area, Bar
@@ -43,12 +41,12 @@ public class StyleManager {
 
   public enum LegendPosition {
 
-    OutsideW, InsideNW, InsideNE, InsideSE, InsideSW
+    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW
   }
 
   public enum ChartTheme {
 
-    XChart, GGPlot2
+    XChart, GGPlot2, Matlab
   }
 
   /** the default Theme */
@@ -89,6 +87,7 @@ public class StyleManager {
   private Stroke axisTickMarksStroke;
   private Color axisTickLabelsColor;
   private boolean isAxisTicksLineVisible;
+  private boolean isAxisTicksMarksVisible;
   private int plotPadding;
   private int axisTitlePadding;
   private boolean isXAxisLogarithmic;
@@ -103,6 +102,7 @@ public class StyleManager {
   private Color plotBackgroundColor;
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
+  private boolean isPlotTicksMarksVisible;
   private Color plotGridLinesColor;
   private Stroke plotGridLinesStroke;
 
@@ -161,6 +161,7 @@ public class StyleManager {
     axisTickMarksStroke = theme.getAxisTickMarksStroke();
     axisTickLabelsColor = theme.getAxisTickLabelsColor();
     isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
+    isAxisTicksMarksVisible = theme.isAxisTicksMarksVisible();
     plotPadding = theme.getPlotPadding();
     axisTitlePadding = theme.getAxisTitlePadding();
     isXAxisLogarithmic = false;
@@ -175,6 +176,7 @@ public class StyleManager {
     plotBackgroundColor = theme.getPlotBackgroundColor();
     plotBorderColor = theme.getPlotBorderColor();
     isPlotBorderVisible = theme.isPlotBorderVisible();
+    isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
     plotGridLinesColor = theme.getPlotGridLinesColor();
     plotGridLinesStroke = theme.getPlotGridLinesStroke();
 
@@ -194,24 +196,10 @@ public class StyleManager {
    * 
    * @param theme
    */
-  public void setTheme(Theme theme) {
+  protected void setTheme(Theme theme) {
 
     this.theme = theme;
     setAllStyles();
-  }
-
-  /**
-   * Set the ChartTheme the style manager should use
-   * 
-   * @param theme
-   */
-  public void setChartTheme(ChartTheme chartTheme) {
-
-    if (chartTheme == ChartTheme.XChart) {
-      setTheme(new XChartTheme());
-    } else if (chartTheme == ChartTheme.GGPlot2) {
-      setTheme(new GGPlot2Theme());
-    }
   }
 
   public Theme getTheme() {
@@ -506,7 +494,6 @@ public class StyleManager {
 
     this.xAxisTitleVisible = isVisible;
     this.yAxisTitleVisible = isVisible;
-
   }
 
   /**
@@ -565,7 +552,6 @@ public class StyleManager {
 
     this.xAxisTicksVisible = isVisible;
     this.yAxisTicksVisible = isVisible;
-
   }
 
   /**
@@ -674,7 +660,22 @@ public class StyleManager {
   }
 
   /**
-   * sets the pading between the tick marks and the plot area
+   * sets the visibility of the tick marks
+   * 
+   * @param isAxisTicksMarksVisible
+   */
+  public void setAxisTicksMarksVisible(boolean isAxisTicksMarksVisible) {
+
+    this.isAxisTicksMarksVisible = isAxisTicksMarksVisible;
+  }
+
+  public boolean isAxisTicksMarksVisible() {
+
+    return isAxisTicksMarksVisible;
+  }
+
+  /**
+   * sets the padding between the tick marks and the plot area
    * 
    * @param plotPadding
    */
@@ -833,6 +834,21 @@ public class StyleManager {
   public boolean isPlotBorderVisible() {
 
     return isPlotBorderVisible;
+  }
+
+  /**
+   * sets the visibility of the ticks marks inside the plot area
+   * 
+   * @param isPlotTicksMarksVisible
+   */
+  public void setPlotTicksMarksVisible(boolean isPlotTicksMarksVisible) {
+
+    this.isPlotTicksMarksVisible = isPlotTicksMarksVisible;
+  }
+
+  public boolean isPlotTicksMarksVisible() {
+
+    return isPlotTicksMarksVisible;
   }
 
   /**

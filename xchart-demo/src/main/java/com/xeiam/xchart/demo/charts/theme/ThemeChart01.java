@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ public class ThemeChart01 implements ExampleChart {
       }
 
       // Customize Chart
-      chart.setChartTitle("XChartTheme");
+      chart.setChartTitle("XChart Theme");
       chart.setXAxisTitle("X");
       chart.setYAxisTitle("Y");
 

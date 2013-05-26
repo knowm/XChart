@@ -36,10 +36,11 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 * Date and category X-Axis
 * Multiple series
 * Extensive customization
-* Themes
+* Themes - XChart, GGPlot2, MATLAB
 * Right-click, Save-As...
 * User-defined axes range
 * Custom legend placement
+* CSV import and export
 
 ## Getting Started
 ### Non-Maven
@@ -53,7 +54,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>com.xeiam.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>2.1.0</version>
+        <version>2.2.0</version>
     </dependency>
 
 For snapshots, add the following to your pom.xml file:
@@ -67,7 +68,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.1.1-SNAPSHOT</version>
+      <version>2.2.1-SNAPSHOT</version>
     </dependency>
 
 ## Building
@@ -76,14 +77,14 @@ mvn javadoc:aggregate
 
 ## Running Demo
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.1.0.jar:xchart-2.1.0.jar com.xeiam.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.2.0.jar:xchart-2.2.0.jar com.xeiam.xchart.demo.XChartDemo
 
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
 
-## More Info
-Sonar Code Quality: http://sonar.xeiam.com/  
-Jenkins CI: http://ci.xeiam.com/  
+## Continuous Integration
+[![Build Status](https://travis-ci.org/timmolter/XChart.png?branch=develop)](https://travis-ci.org/timmolter/XChart.png)  
+[Build History](https://travis-ci.org/timmolter/XChart/builds)  
 
 ## Donations
-17dQktcAmU4urXz7tGk2sbuiCqykm3WLs6  
+15MvtM8e3bzepmZ5vTe8cHvrEZg6eDzw2w  

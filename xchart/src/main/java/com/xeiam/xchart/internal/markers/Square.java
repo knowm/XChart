@@ -16,7 +16,8 @@
 package com.xeiam.xchart.internal.markers;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author timmolter
@@ -24,10 +25,11 @@ import java.awt.Rectangle;
 public class Square extends Marker {
 
   @Override
-  public void paint(Graphics2D g, int xOffset, int yOffset) {
+  public void paint(Graphics2D g, double xOffset, double yOffset) {
 
     g.setStroke(stroke);
-    g.fill(new Rectangle(xOffset + Marker.X_OFFSET, yOffset + Marker.Y_OFFSET, Marker.SIZE, Marker.SIZE));
+    Shape square = new Rectangle2D.Double(xOffset - Marker.HALF_SIZE, yOffset - Marker.HALF_SIZE, Marker.SIZE, Marker.SIZE);
+    g.fill(square);
 
   }
 

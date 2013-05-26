@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,8 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.internal.Utils;
 
 /**
  * @author timmolter
@@ -44,15 +46,15 @@ public class PlotContentBarChart extends PlotContent {
   @Override
   public void paint(Graphics2D g) {
 
-    Rectangle bounds = plot.getBounds();
+    Rectangle2D bounds = plot.getBounds();
 
     // X-Axis
-    int xTickSpace = AxisPair.getTickSpace((int) bounds.getWidth());
-    int xLeftMargin = AxisPair.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
+    int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
+    int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = AxisPair.getTickSpace((int) bounds.getHeight());
-    int yTopMargin = AxisPair.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
+    int yTickSpace = Utils.getTickSpace((int) bounds.getHeight());
+    int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     // get all categories
     Set<Object> categories = new TreeSet<Object>();
@@ -94,19 +96,34 @@ public class PlotContentBarChart extends PlotContent {
       if (getChartPainter().getStyleManager().getYAxisMin() != null) {
         yMin = new BigDecimal(getChartPainter().getStyleManager().getYAxisMin());
       }
+      else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+        // int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
+        int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
+        // System.out.println("logMin: " + logMin);
+        // System.out.println("min : " + getChartPainter().getAxisPair().getyAxis().getMin().doubleValue());
+        // yMin = new BigDecimal(Math.log10(Utils.pow(10, logMin).doubleValue()));
+        // yMin = new BigDecimal(Utils.pow(10, logMin).doubleValue());
+        yMin = new BigDecimal(logMin);
+      }
       if (getChartPainter().getStyleManager().getYAxisMax() != null) {
         yMax = new BigDecimal(getChartPainter().getStyleManager().getYAxisMax());
       }
-
+      else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+        yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
+      }
       // figure out the general form of the chart
       int chartForm = 1; // 1=positive, -1=negative, 0=span
       if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
         chartForm = 1; // positive chart
-      } else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
+      }
+      else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
         chartForm = -1; // negative chart
-      } else {
+      }
+      else {
         chartForm = 0;// span chart
       }
+      // System.out.println(yMin);
+      // System.out.println(yMax);
 
       Iterator<?> categoryItr = categories.iterator();
       Iterator<Number> yItr = yData.iterator();
@@ -117,6 +134,12 @@ public class PlotContentBarChart extends PlotContent {
         if (xData.contains(categoryItr.next())) {
 
           BigDecimal y = new BigDecimal(yItr.next().doubleValue());
+          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+            y = new BigDecimal(Math.log10(y.doubleValue()));
+          }
+          else {
+            y = new BigDecimal(y.doubleValue());
+          }
           BigDecimal yTop = null;
           BigDecimal yBottom = null;
 
@@ -133,7 +156,8 @@ public class PlotContentBarChart extends PlotContent {
             if (y.compareTo(BigDecimal.ZERO) >= 0) { // positive
               yTop = y;
               yBottom = BigDecimal.ZERO;
-            } else {
+            }
+            else {
               yTop = BigDecimal.ZERO;
               yBottom = y;
             }
@@ -142,25 +166,29 @@ public class PlotContentBarChart extends PlotContent {
             break;
           }
 
-          // if (yTop.compareTo(yMax) > 0) {
-          // yTop = yMax;
-          // }
-          int yTransform = (int) (bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace));
-          int yOffset = (int) (bounds.getY() + yTransform) + 1;
+          double yTransform = bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
 
-          // if (yBottom.compareTo(yMin) > 0) {
-          // yBottom = yMin;
-          // }
-          int zeroTransform = (int) (bounds.getHeight() - (yTopMargin + (yBottom.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace));
-          int zeroOffset = (int) (bounds.getY() + zeroTransform) + 1;
+          double yOffset = bounds.getY() + yTransform + 1;
+
+          double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace);
+          double zeroOffset = bounds.getY() + zeroTransform + 1;
 
           // paint bar
-          int barWidth = (int) (gridStep / seriesMap.size() / 1.1);
-          int barMargin = (int) (gridStep * .05);
-          int xOffset = (int) (bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin);
+          double barWidth = gridStep / seriesMap.size() / 1.1;
+          double barMargin = gridStep * .05;
+          double xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
           g.setColor(series.getStrokeColor());
-          g.fillPolygon(new int[] { xOffset, xOffset + barWidth, xOffset + barWidth, xOffset }, new int[] { yOffset, yOffset, zeroOffset, zeroOffset }, 4);
-        } else {
+
+          Path2D.Double path = new Path2D.Double();
+          path.moveTo(xOffset, yOffset);
+          path.lineTo(xOffset + barWidth, yOffset);
+          path.lineTo(xOffset + barWidth, zeroOffset);
+          path.lineTo(xOffset, zeroOffset);
+          path.closePath();
+          g.fill(path);
+
+        }
+        else {
           barCounter++;
         }
       }

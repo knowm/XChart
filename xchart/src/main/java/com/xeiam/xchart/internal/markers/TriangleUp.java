@@ -16,7 +16,7 @@
 package com.xeiam.xchart.internal.markers;
 
 import java.awt.Graphics2D;
-import java.awt.Polygon;
+import java.awt.geom.Path2D;
 
 /**
  * @author timmolter
@@ -24,26 +24,17 @@ import java.awt.Polygon;
 public class TriangleUp extends Marker {
 
   @Override
-  public void paint(Graphics2D g, int xOffset, int yOffset) {
+  public void paint(Graphics2D g, double xOffset, double yOffset) {
 
     g.setStroke(stroke);
 
-    int[] x = new int[3];
-    int[] y = new int[3];
-    int n = 3;
-
     // Make a triangle
-    int halfSize = (int) (Math.ceil((Marker.SIZE + 1) / 2.0));
-    x[0] = xOffset - halfSize + 0;
-    x[1] = xOffset - halfSize + Marker.SIZE + 1;
-    x[2] = xOffset - halfSize + halfSize;
-
-    y[0] = yOffset - halfSize + Marker.SIZE + 1;
-    y[1] = yOffset - halfSize + Marker.SIZE + 1;
-    y[2] = yOffset - halfSize + 0;
-
-    Polygon triangle = new Polygon(x, y, n);
-    g.fillPolygon(triangle);
+    Path2D.Double path = new Path2D.Double();
+    path.moveTo(xOffset - Marker.HALF_SIZE, yOffset - Marker.HALF_SIZE + Marker.SIZE + 1);
+    path.lineTo(xOffset - Marker.HALF_SIZE + Marker.SIZE + 1, yOffset - Marker.HALF_SIZE + Marker.SIZE + 1);
+    path.lineTo(xOffset, yOffset - Marker.HALF_SIZE);
+    path.closePath();
+    g.fill(path);
 
   }
 }

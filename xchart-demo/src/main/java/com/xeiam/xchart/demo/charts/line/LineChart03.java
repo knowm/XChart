@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,9 +83,13 @@ public class LineChart03 implements ExampleChart {
     chart.getStyleManager().setChartTitleBoxVisible(true);
     chart.getStyleManager().setChartTitleBoxBorderColor(Color.BLACK);
     chart.getStyleManager().setPlotGridLinesVisible(false);
+
     chart.getStyleManager().setAxisTickPadding(20);
+
     chart.getStyleManager().setAxisTickMarkLength(15);
+
     chart.getStyleManager().setPlotPadding(20);
+
     chart.getStyleManager().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);

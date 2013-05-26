@@ -1,29 +1,24 @@
 /**
- * Copyright (C) 2013 Xeiam LLC http://xeiam.com
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is furnished to do
- * so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Copyright 2013 Xeiam LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
@@ -61,43 +56,75 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     }
 
     // tick space - a percentage of the working space available for ticks, i.e. 95%
-    int tickSpace = AxisPair.getTickSpace(workingSpace); // in plot space
+    int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = AxisPair.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
 
     int logMin = (int) Math.floor(Math.log10(minValue.doubleValue()));
     int logMax = (int) Math.ceil(Math.log10(maxValue.doubleValue()));
+    // int logMin = (int) Math.log10(minValue.doubleValue());
+    // int logMax = (int) Math.log10(maxValue.doubleValue());
+    // System.out.println("minValue: " + minValue);
+    // System.out.println("maxValue: " + maxValue);
+    // System.out.println("logMin: " + logMin);
+    // System.out.println("logMax: " + logMax);
 
-    final BigDecimal min = new BigDecimal(minValue.doubleValue());
-    BigDecimal tickStep = pow(10, logMin - 1);
+    if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
+      logMin = (int) (Math.log10(styleManager.getYAxisMin())); // no floor
+    }
+    if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {
+      logMax = (int) (Math.log10(styleManager.getYAxisMax())); // no floor
+    }
+    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
+      logMin = (int) (Math.log10(styleManager.getXAxisMin())); // no floor
+    }
+    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null) {
+      logMax = (int) (Math.log10(styleManager.getXAxisMax())); // no floor
+    }
 
-    BigDecimal firstPosition = getFirstPosition(tickStep);
+    // BigDecimal firstPosition = getFirstPosition(tickStep);
+    // System.out.println("firstPosition: " + firstPosition);
+    BigDecimal firstPosition = Utils.pow(10, logMin);
+    BigDecimal tickStep = Utils.pow(10, logMin - 1);
 
     for (int i = logMin; i <= logMax; i++) { // for each decade
 
-      for (BigDecimal j = firstPosition; j.doubleValue() <= pow(10, i).doubleValue(); j = j.add(tickStep)) {
+      // System.out.println("tickStep: " + tickStep);
+      // System.out.println("firstPosition: " + firstPosition);
+      // System.out.println("i: " + i);
+      // System.out.println("pow(10, i).doubleValue(): " + pow(10, i).doubleValue());
 
+      for (BigDecimal j = firstPosition; j.doubleValue() <= Utils.pow(10, i).doubleValue(); j = j.add(tickStep)) {
+
+        // System.out.println("j: " + j);
         // System.out.println(Math.log10(j.doubleValue()) % 1);
 
+        if (j.doubleValue() < minValue.doubleValue()) {
+          // System.out.println("continue");
+          continue;
+        }
+
         if (j.doubleValue() > maxValue.doubleValue()) {
+          // System.out.println("break");
           break;
         }
 
         // only add labels for the decades
         if (Math.log10(j.doubleValue()) % 1 == 0.0) {
           tickLabels.add(numberFormatter.formatNumber(j));
-        } else {
+        }
+        else {
           tickLabels.add(null);
         }
 
         // add all the tick marks though
-        int tickLabelPosition = (int) (margin + (Math.log10(j.doubleValue()) - Math.log10(min.doubleValue())) / (Math.log10(maxValue.doubleValue()) - Math.log10(min.doubleValue())) * tickSpace);
+        int tickLabelPosition =
+            (int) (margin + (Math.log10(j.doubleValue()) - Math.log10(minValue.doubleValue())) / (Math.log10(maxValue.doubleValue()) - Math.log10(minValue.doubleValue())) * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
-      tickStep = tickStep.multiply(pow(10, 1));
-      firstPosition = tickStep.add(pow(10, i));
+      tickStep = tickStep.multiply(Utils.pow(10, 1));
+      firstPosition = tickStep.add(Utils.pow(10, i));
     }
   }
-
 }

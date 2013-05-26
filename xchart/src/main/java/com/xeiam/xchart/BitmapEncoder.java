@@ -16,6 +16,7 @@
 package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,8 +27,12 @@ import java.util.Iterator;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
+import javax.imageio.metadata.IIOInvalidTreeException;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.FileImageOutputStream;
 
 /**
@@ -64,6 +69,79 @@ public final class BitmapEncoder {
   }
 
   /**
+   * Save a chart as a PNG with a custom DPI. The default DPI is 72, which is fine for displaying charts on a computer monitor, but for printing charts, a DPI of around 300 is much better.
+   * 
+   * @param chart
+   * @param fileName
+   * @param DPI
+   * @throws IOException
+   */
+  public static void savePNGWithDPI(Chart chart, String fileName, int DPI) throws IOException {
+
+    double scaleFactor = DPI / 72.0;
+
+    BufferedImage bufferedImage = new BufferedImage((int) (chart.getWidth() * scaleFactor), (int) (chart.getHeight() * scaleFactor), BufferedImage.TYPE_INT_RGB);
+
+    Graphics2D graphics2D = bufferedImage.createGraphics();
+
+    AffineTransform at = graphics2D.getTransform();
+    at.scale(scaleFactor, scaleFactor);
+    graphics2D.setTransform(at);
+
+    chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
+
+    for (Iterator<ImageWriter> iw = ImageIO.getImageWritersByFormatName("png"); iw.hasNext();) {
+      ImageWriter writer = iw.next();
+      // instantiate an ImageWriteParam object with default compression options
+      ImageWriteParam iwp = writer.getDefaultWriteParam();
+
+      ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
+      IIOMetadata metadata = writer.getDefaultImageMetadata(typeSpecifier, iwp);
+      if (metadata.isReadOnly() || !metadata.isStandardMetadataFormatSupported()) {
+        continue;
+      }
+
+      setDPIforPNG(metadata, DPI);
+
+      File file = new File(fileName);
+      FileImageOutputStream output = new FileImageOutputStream(file);
+      writer.setOutput(output);
+      IIOImage image = new IIOImage(bufferedImage, null, metadata);
+      writer.write(null, image, iwp);
+      writer.dispose();
+      break;
+    }
+  }
+
+  /**
+   * Sets the metadata correctly
+   * 
+   * @param metadata
+   * @param DPI
+   * @throws IIOInvalidTreeException
+   */
+  private static void setDPIforPNG(IIOMetadata metadata, int DPI) throws IIOInvalidTreeException {
+
+    // for PNG, it's dots per millimeter
+    double dotsPerMilli = 1.0 * DPI / 10 / 2.54;
+
+    IIOMetadataNode horiz = new IIOMetadataNode("HorizontalPixelSize");
+    horiz.setAttribute("value", Double.toString(dotsPerMilli));
+
+    IIOMetadataNode vert = new IIOMetadataNode("VerticalPixelSize");
+    vert.setAttribute("value", Double.toString(dotsPerMilli));
+
+    IIOMetadataNode dim = new IIOMetadataNode("Dimension");
+    dim.appendChild(horiz);
+    dim.appendChild(vert);
+
+    IIOMetadataNode root = new IIOMetadataNode("javax_imageio_1.0");
+    root.appendChild(dim);
+
+    metadata.mergeTree("javax_imageio_1.0", root);
+  }
+
+  /**
    * Save a Chart as a JPEG file
    * 
    * @param chart
@@ -90,6 +168,14 @@ public final class BitmapEncoder {
     IIOImage image = new IIOImage(bufferedImage, null, null);
     writer.write(null, image, iwp);
     writer.dispose();
+  }
+
+  public static void main(String[] args) {
+
+    for (String format : ImageIO.getWriterFormatNames()) {
+      System.out.println(format);
+      // ImageIO.write(bufferedImage, format, new File("C:\\image_new." + format));
+    }
   }
 
 }

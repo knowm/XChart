@@ -16,7 +16,7 @@
 package com.xeiam.xchart.internal.markers;
 
 import java.awt.Graphics2D;
-import java.awt.Polygon;
+import java.awt.geom.Path2D;
 
 /**
  * @author timmolter
@@ -24,28 +24,20 @@ import java.awt.Polygon;
 public class Diamond extends Marker {
 
   @Override
-  public void paint(Graphics2D g, int xOffset, int yOffset) {
+  public void paint(Graphics2D g, double xOffset, double yOffset) {
 
     g.setStroke(stroke);
 
-    int[] x = new int[4];
-    int[] y = new int[4];
-    int n = 4;
-
     // Make a diamond
-    int halfSize = (int) (Math.ceil((Marker.SIZE + 3) / 2.0));
-    x[0] = xOffset - halfSize + 0;
-    x[1] = xOffset - halfSize + halfSize;
-    x[2] = xOffset - halfSize + Marker.SIZE + 3;
-    x[3] = xOffset - halfSize + halfSize;
+    double diamondHalfSize = Marker.HALF_SIZE * 1.3;
 
-    y[0] = 1 + yOffset - halfSize + halfSize;
-    y[1] = 1 + yOffset - halfSize + Marker.SIZE + 3;
-    y[2] = 1 + yOffset - halfSize + halfSize;
-    y[3] = 1 + yOffset - halfSize + 0;
-
-    Polygon diamond = new Polygon(x, y, n);
-    g.fillPolygon(diamond);
+    Path2D.Double path = new Path2D.Double();
+    path.moveTo(xOffset - diamondHalfSize, yOffset);
+    path.lineTo(xOffset, yOffset - diamondHalfSize);
+    path.lineTo(xOffset + diamondHalfSize, yOffset);
+    path.lineTo(xOffset, yOffset + diamondHalfSize);
+    path.closePath();
+    g.fill(path);
 
   }
 

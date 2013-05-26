@@ -16,6 +16,8 @@
 package com.xeiam.xchart.internal.markers;
 
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
 /**
  * @author timmolter
@@ -23,10 +25,11 @@ import java.awt.Graphics2D;
 public class Circle extends Marker {
 
   @Override
-  public void paint(Graphics2D g, int xOffset, int yOffset) {
+  public void paint(Graphics2D g, double xOffset, double yOffset) {
 
     g.setStroke(stroke);
-    g.fillOval(xOffset + Marker.X_OFFSET, yOffset + Marker.Y_OFFSET, Marker.SIZE, Marker.SIZE);
+    Shape circle = new Ellipse2D.Double(xOffset - Marker.HALF_SIZE, yOffset - Marker.HALF_SIZE, Marker.SIZE, Marker.SIZE);
+    g.fill(circle);
 
   }
 

@@ -25,10 +25,9 @@ public abstract class Marker {
 
   protected BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
-  public static final int SIZE = 7; // make this an odd number!
+  public static final double SIZE = 8;
 
-  public static final int X_OFFSET = (int) (-1.0 * (SIZE / 2.0));
-  public static final int Y_OFFSET = (int) (-1.0 * (SIZE / 2.0));
+  public static final double HALF_SIZE = SIZE / 2.0;
 
-  public abstract void paint(Graphics2D g, int xOffset, int yOffset);
+  public abstract void paint(Graphics2D g, double xOffset, double yOffset);
 }
