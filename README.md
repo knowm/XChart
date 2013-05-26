@@ -41,6 +41,7 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 * User-defined axes range
 * Custom legend placement
 * CSV import and export
+* High resolution chart export
 
 ## Getting Started
 ### Non-Maven
