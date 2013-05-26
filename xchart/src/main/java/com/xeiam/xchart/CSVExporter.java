@@ -25,6 +25,9 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
+ * This class is used to export Chart data to a folder containing one or more CSV files. The parent folder's name is the title of the chart. Each series becomes a CSV file in the folder. The series'
+ * name becomes the CSV files' name.
+ * 
  * @author timmolter
  */
 public class CSVExporter {
