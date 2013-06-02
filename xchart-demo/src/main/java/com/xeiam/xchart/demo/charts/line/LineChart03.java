@@ -93,6 +93,7 @@ public class LineChart03 implements ExampleChart {
     chart.getStyleManager().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
+    chart.getStyleManager().setLegendSeriesLineLength(12);
     chart.getStyleManager().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.getStyleManager().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
     chart.getStyleManager().setDatePattern("dd-MMM");

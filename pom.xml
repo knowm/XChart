@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -114,6 +115,33 @@
 					<autoversionsubmodules>true</autoversionsubmodules>
 				</configuration>
 			</plugin>
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-enforcer-plugin</artifactId> -->
+			<!-- <version>1.2</version> -->
+			<!-- <dependencies> -->
+			<!-- <dependency> -->
+			<!-- <groupId>de.andrena.tools.nopackagecycles</groupId> -->
+			<!-- <artifactId>no-package-cycles-enforcer-rule</artifactId> -->
+			<!-- <version>1.0.0</version> -->
+			<!-- </dependency> -->
+			<!-- </dependencies> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>enforce-no-package-cycles</id> -->
+			<!-- <goals> -->
+			<!-- <goal>enforce</goal> -->
+			<!-- </goals> -->
+			<!-- <phase>compile</phase> -->
+			<!-- <configuration> -->
+			<!-- <rules> -->
+			<!-- <NoPackageCyclesRule -->
+			<!-- implementation="de.andrena.tools.nopackagecycles.NoPackageCyclesRule" 
+				/> -->
+			<!-- </rules> -->
+			<!-- </configuration> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
 

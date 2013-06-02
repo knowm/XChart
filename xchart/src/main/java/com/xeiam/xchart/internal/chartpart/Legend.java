@@ -93,7 +93,7 @@ public class Legend implements ChartPart {
       // determine legend content width
       double legendContentWidth = 0;
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
-        legendContentWidth = 3.0 * Marker.SIZE + chartPainter.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
+        legendContentWidth = getChartPainter().getStyleManager().getLegendSeriesLineLength() + chartPainter.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
       }
       else {
         legendContentWidth = BOX_SIZE + chartPainter.getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
@@ -169,14 +169,14 @@ public class Legend implements ChartPart {
           if (getChartPainter().getStyleManager().getChartType() != ChartType.Scatter && series.getStroke() != null) {
             g.setColor(series.getStrokeColor());
             g.setStroke(series.getStroke());
-            Shape line = new Line2D.Double(startx, starty + maxContentHeight / 2.0, startx + Marker.SIZE * 3.0, starty + maxContentHeight / 2.0);
+            Shape line = new Line2D.Double(startx, starty + maxContentHeight / 2.0, startx + getChartPainter().getStyleManager().getLegendSeriesLineLength(), starty + maxContentHeight / 2.0);
             g.draw(line);
           }
 
           // paint marker
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
-            series.getMarker().paint(g, startx + (Marker.SIZE * 1.5), starty + maxContentHeight / 2.0);
+            series.getMarker().paint(g, startx + getChartPainter().getStyleManager().getLegendSeriesLineLength() / 2.0, starty + maxContentHeight / 2.0);
           }
         }
         else {
@@ -193,8 +193,8 @@ public class Legend implements ChartPart {
         g.setColor(chartPainter.getStyleManager().getChartFontColor());
         TextLayout layout = new TextLayout(series.getName(), chartPainter.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
         if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
-          layout.draw(g, (float) (startx + Marker.SIZE + (Marker.SIZE * 1.5) + chartPainter.getStyleManager().getLegendPadding()), (float) (starty + (maxContentHeight - 1 + layout.getBounds()
-              .getHeight()) / 2.0));
+          layout.draw(g, (float) (startx + getChartPainter().getStyleManager().getLegendSeriesLineLength() + chartPainter.getStyleManager().getLegendPadding()),
+              (float) (starty + (maxContentHeight - 1 + layout.getBounds().getHeight()) / 2.0));
         }
         else {
           layout.draw(g, (float) (startx + BOX_SIZE + chartPainter.getStyleManager().getLegendPadding()), (float) (starty + (maxContentHeight + layout.getBounds().getHeight()) / 2.0));
