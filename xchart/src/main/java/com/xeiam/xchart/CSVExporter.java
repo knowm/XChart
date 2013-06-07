@@ -49,6 +49,10 @@ public class CSVExporter {
       out.write(csv);
       csv = join(series.getyData(), ",") + System.getProperty("line.separator");
       out.write(csv);
+      if (series.getErrorBars() != null) {
+        csv = join(series.getErrorBars(), ",") + System.getProperty("line.separator");
+        out.write(csv);
+      }
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -78,14 +82,32 @@ public class CSVExporter {
 
       out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
       Collection<?> xData = series.getxData();
-      Collection<?> yData = series.getyData();
+      Collection<Number> yData = series.getyData();
+      Collection<Number> errorBarData = series.getErrorBars();
       Iterator<?> itrx = xData.iterator();
-      Iterator<?> itry = yData.iterator();
+      Iterator<Number> itry = yData.iterator();
+      Iterator<Number> itrErrorBar = null;
+      if (errorBarData != null) {
+        itrErrorBar = errorBarData.iterator();
+      }
       while (itrx.hasNext()) {
         Number xDataPoint = (Number) itrx.next();
-        Number yDataPoint = (Number) itry.next();
-        String csv = xDataPoint + "," + yDataPoint + System.getProperty("line.separator");
-        out.write(csv);
+        Number yDataPoint = itry.next();
+        Number errorBarValue = null;
+        if (itrErrorBar != null) {
+          errorBarValue = itrErrorBar.next();
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(xDataPoint + ",");
+        sb.append(yDataPoint + ",");
+        if (errorBarValue != null) {
+          sb.append(errorBarValue + ",");
+        }
+        sb.append(System.getProperty("line.separator"));
+
+        // String csv = xDataPoint + "," + yDataPoint + errorBarValue == null ? "" : ("," + errorBarValue) + System.getProperty("line.separator");
+        // String csv = + yDataPoint + System.getProperty("line.separator");
+        out.write(sb.toString());
       }
 
     } catch (Exception e) {
