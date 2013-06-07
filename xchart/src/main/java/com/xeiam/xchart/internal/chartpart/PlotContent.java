@@ -27,7 +27,7 @@ public abstract class PlotContent implements ChartPart {
   /** parent */
   protected Plot plot;
 
-  protected final Stroke errorBarStroke = new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /**
    * Constructor
