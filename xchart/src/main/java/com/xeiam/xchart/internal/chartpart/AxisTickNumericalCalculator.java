@@ -82,6 +82,11 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
    */
   private BigDecimal getGridStep(int tickSpace) {
 
+    // this prevents an infinite loop when the plot gets sized really small.
+    if (tickSpace < 10) {
+      return BigDecimal.ONE;
+    }
+
     // the span of the data
     double span = Math.abs(maxValue.subtract(minValue).doubleValue()); // in data space
 
@@ -108,7 +113,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
       }
     }
     else {
-      while (significand >= 10) {
+      while (significand >= 10 || significand == Double.NEGATIVE_INFINITY) {
         significand /= 10.0;
         exponent++;
       }
