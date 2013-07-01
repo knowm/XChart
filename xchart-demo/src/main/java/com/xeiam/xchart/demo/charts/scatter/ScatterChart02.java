@@ -65,7 +65,7 @@ public class ScatterChart02 implements ExampleChart {
     chart.getStyleManager().setXAxisLogarithmic(true);
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideN);
 
     // Series
     chart.addSeries("logarithmic data", xData, yData);

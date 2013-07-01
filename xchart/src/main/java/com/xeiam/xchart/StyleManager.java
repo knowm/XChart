@@ -41,7 +41,7 @@ public class StyleManager {
 
   public enum LegendPosition {
 
-    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW
+    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW, InsideN
   }
 
   public enum ChartTheme {

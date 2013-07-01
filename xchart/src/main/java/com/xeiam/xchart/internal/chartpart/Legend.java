@@ -146,6 +146,10 @@ public class Legend implements ChartPart {
         xOffset = chartPainter.getPlot().getBounds().getX() + LEGEND_MARGIN;
         yOffset = chartPainter.getPlot().getBounds().getY() + chartPainter.getPlot().getBounds().getHeight() - legendBoxHeight - LEGEND_MARGIN;
         break;
+      case InsideN:
+        xOffset = chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - legendBoxWidth) / 2 + LEGEND_MARGIN;
+        yOffset = chartPainter.getPlot().getBounds().getY() + LEGEND_MARGIN;
+        break;
 
       default:
         break;
