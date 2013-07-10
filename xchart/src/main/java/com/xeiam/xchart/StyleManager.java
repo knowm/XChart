@@ -41,7 +41,7 @@ public class StyleManager {
 
   public enum LegendPosition {
 
-    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW
+    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW, InsideN
   }
 
   public enum ChartTheme {
@@ -72,6 +72,7 @@ public class StyleManager {
   private Color legendBorderColor;
   private Font legendFont;
   private int legendPadding;
+  private int legendSeriesLineLength;
   private LegendPosition legendPosition;
 
   // Chart Axes ///////////////////////////////
@@ -146,6 +147,7 @@ public class StyleManager {
     legendBorderColor = theme.getLegendBorderColor();
     legendFont = theme.getLegendFont();
     legendPadding = theme.getLegendPadding();
+    legendSeriesLineLength = theme.getLegendSeriesLineLength();
     legendPosition = theme.getLegendPosition();
 
     // axes
@@ -436,6 +438,26 @@ public class StyleManager {
   public int getLegendPadding() {
 
     return legendPadding;
+  }
+
+  /**
+   * Set the chart legend series line length
+   * 
+   * @param legendPadding
+   */
+  public void setLegendSeriesLineLength(int legendSeriesLineLength) {
+
+    if (legendSeriesLineLength < 0) {
+      this.legendSeriesLineLength = 0;
+    }
+    else {
+      this.legendSeriesLineLength = legendSeriesLineLength;
+    }
+  }
+
+  public int getLegendSeriesLineLength() {
+
+    return legendSeriesLineLength;
   }
 
   /**

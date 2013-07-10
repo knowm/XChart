@@ -120,6 +120,12 @@ public class MatlabTheme implements Theme {
   }
 
   @Override
+  public int getLegendSeriesLineLength() {
+
+    return 24;
+  }
+
+  @Override
   public LegendPosition getLegendPosition() {
 
     return LegendPosition.OutsideE;

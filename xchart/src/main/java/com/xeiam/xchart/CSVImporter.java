@@ -70,7 +70,13 @@ public class CSVImporter {
       else {
         xAndYData = getSeriesDataFromCSVColumns(csvFile);
       }
-      chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]));
+
+      if (xAndYData[2] == null || xAndYData[2].trim().equalsIgnoreCase("")) {
+        chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]));
+      }
+      else {
+        chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), getAxisData(xAndYData[2]));
+      }
     }
 
     return chart;
@@ -96,7 +102,7 @@ public class CSVImporter {
    */
   private static String[] getSeriesDataFromCSVRows(File csvFile) {
 
-    String[] xAndYData = new String[2];
+    String[] xAndYData = new String[3];
 
     BufferedReader bufferedReader = null;
     try {
@@ -127,9 +133,10 @@ public class CSVImporter {
    */
   private static String[] getSeriesDataFromCSVColumns(File csvFile) {
 
-    String[] xAndYData = new String[2];
+    String[] xAndYData = new String[3];
     xAndYData[0] = "";
     xAndYData[1] = "";
+    xAndYData[2] = "";
 
     BufferedReader bufferedReader = null;
     try {
@@ -137,8 +144,12 @@ public class CSVImporter {
       String line = null;
       bufferedReader = new BufferedReader(new FileReader(csvFile));
       while ((line = bufferedReader.readLine()) != null) {
-        xAndYData[0] += line.split(",")[0] + ",";
-        xAndYData[1] += line.split(",")[1] + ",";
+        String[] dataArray = line.split(",");
+        xAndYData[0] += dataArray[0] + ",";
+        xAndYData[1] += dataArray[1] + ",";
+        if (dataArray.length > 2) {
+          xAndYData[2] += dataArray[2] + ",";
+        }
       }
 
     } catch (Exception e) {
@@ -165,8 +176,13 @@ public class CSVImporter {
     String[] stringDataArray = stringData.split(",");
     for (int i = 0; i < stringDataArray.length; i++) {
       String dataPoint = stringDataArray[i];
-      BigDecimal value = new BigDecimal(dataPoint);
-      axisData.add(value);
+      try {
+        BigDecimal value = new BigDecimal(dataPoint);
+        axisData.add(value);
+      } catch (NumberFormatException e) {
+        System.out.println("Error parsing >" + dataPoint + "< !");
+        throw (e);
+      }
     }
     return axisData;
   }

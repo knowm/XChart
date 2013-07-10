@@ -22,11 +22,14 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
     // Save it
     BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
     
+    // or save it in high-res
+    BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
+    
 Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.jsp), [download the thing](http://xeiam.com/xchart_changelog.jsp) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
 ## Features
 * No additional dependencies
-* ~85KB Jar
+* ~100KB Jar
 * Line charts
 * Scatter charts
 * Area Charts
@@ -41,6 +44,7 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 * User-defined axes range
 * Custom legend placement
 * CSV import and export
+* High resolution chart export
 
 ## Getting Started
 ### Non-Maven

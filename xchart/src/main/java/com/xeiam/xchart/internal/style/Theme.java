@@ -60,6 +60,8 @@ public interface Theme {
 
   public int getLegendPadding();
 
+  public int getLegendSeriesLineLength();
+
   public LegendPosition getLegendPosition();
 
   // Chart Axes ///////////////////////////////
