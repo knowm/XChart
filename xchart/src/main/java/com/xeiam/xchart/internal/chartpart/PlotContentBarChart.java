@@ -21,7 +21,6 @@ import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -58,11 +57,9 @@ public class PlotContentBarChart extends PlotContent {
 
     // get all categories
     Set<Object> categories = new TreeSet<Object>();
-    Map<Integer, Series> seriesMap = getChartPainter().getAxisPair().getSeriesMap();
-    for (Integer seriesId : seriesMap.keySet()) {
+    for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
 
-      Series series = seriesMap.get(seriesId);
-      Iterator<?> xItr = series.getxData().iterator();
+      Iterator<?> xItr = series.getXData().iterator();
       while (xItr.hasNext()) {
         categories.add(xItr.next());
       }
@@ -72,14 +69,12 @@ public class PlotContentBarChart extends PlotContent {
 
     // plot series
     int seriesCounter = 0;
-    for (Integer seriesId : seriesMap.keySet()) {
-
-      Series series = seriesMap.get(seriesId);
+    for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
 
       // data points
-      Collection<?> xData = series.getxData();
+      Collection<?> xData = series.getXData();
 
-      Collection<Number> yData = series.getyData();
+      Collection<Number> yData = series.getYData();
       BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
 
@@ -174,7 +169,7 @@ public class PlotContentBarChart extends PlotContent {
           double zeroOffset = bounds.getY() + zeroTransform + 1;
 
           // paint bar
-          double barWidth = gridStep / seriesMap.size() / 1.1;
+          double barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() / 1.1;
           double barMargin = gridStep * .05;
           double xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
           g.setColor(series.getStrokeColor());

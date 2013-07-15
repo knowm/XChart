@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.markers.Marker;
@@ -36,8 +37,10 @@ public class Series {
   private String name = "";
 
   private Collection<?> xData;
+  private AxisType xAxisType;
 
   private Collection<Number> yData;
+  private AxisType yAxisType;
 
   private Collection<Number> errorBars;
 
@@ -74,6 +77,7 @@ public class Series {
    * @param yData
    * @param yAxisType
    * @param errorBars
+   * @param seriesColorMarkerLineStyle
    */
   public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<Number> yData, AxisType yAxisType, Collection<Number> errorBars, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
 
@@ -82,7 +86,9 @@ public class Series {
     }
     this.name = name;
     this.xData = xData;
+    this.xAxisType = xAxisType;
     this.yData = yData;
+    this.yAxisType = yAxisType;
     this.errorBars = errorBars;
 
     strokeColor = seriesColorMarkerLineStyle.getColor();
@@ -90,23 +96,8 @@ public class Series {
     marker = seriesColorMarkerLineStyle.getMarker();
     stroke = seriesColorMarkerLineStyle.getStroke();
 
-    // xData
-    BigDecimal[] xMinMax = findMinMax(xData, xAxisType);
-    xMin = xMinMax[0];
-    xMax = xMinMax[1];
+    calculateMinMax();
 
-    // yData
-    BigDecimal[] yMinMax = null;
-    if (errorBars == null) {
-      yMinMax = findMinMax(yData, yAxisType);
-    }
-    else {
-      yMinMax = findMinMaxWithErrorBars(yData, errorBars);
-    }
-    yMin = yMinMax[0];
-    yMax = yMinMax[1];
-    // System.out.println(yMin);
-    // System.out.println(yMax);
   }
 
   /**
@@ -246,12 +237,12 @@ public class Series {
     this.markerColor = color;
   }
 
-  public Collection<?> getxData() {
+  public Collection<?> getXData() {
 
     return xData;
   }
 
-  public Collection<Number> getyData() {
+  public Collection<Number> getYData() {
 
     return yData;
   }
@@ -304,5 +295,38 @@ public class Series {
   public String getName() {
 
     return name;
+  }
+
+  void replaceXData(List<Number> newXData) {
+
+    xData = newXData;
+    calculateMinMax();
+  }
+
+  void replaceYData(List<Number> newYData) {
+
+    yData = newYData;
+    calculateMinMax();
+  }
+
+  private void calculateMinMax() {
+
+    // xData
+    BigDecimal[] xMinMax = findMinMax(xData, xAxisType);
+    xMin = xMinMax[0];
+    xMax = xMinMax[1];
+
+    // yData
+    BigDecimal[] yMinMax = null;
+    if (errorBars == null) {
+      yMinMax = findMinMax(yData, yAxisType);
+    }
+    else {
+      yMinMax = findMinMaxWithErrorBars(yData, errorBars);
+    }
+    yMin = yMinMax[0];
+    yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
   }
 }

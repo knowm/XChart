@@ -18,7 +18,6 @@ package com.xeiam.xchart.internal.chartpart;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -49,7 +48,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     calculate(chart);
   }
 
-  private void calculate(ChartPainter chart) {
+  private void calculate(ChartPainter chartPainter) {
 
     // tick space - a percentage of the working space available for ticks, i.e. 95%
     int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
@@ -59,20 +58,18 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
 
     // get all categories
     Set<Object> categories = new TreeSet<Object>();
-    Map<Integer, Series> seriesMap = chart.getAxisPair().getSeriesMap();
-    for (Integer seriesId : seriesMap.keySet()) {
+    for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
-      Series series = seriesMap.get(seriesId);
-      Iterator<?> xItr = series.getxData().iterator();
+      Iterator<?> xItr = series.getXData().iterator();
       while (xItr.hasNext()) {
         Object x = null;
-        if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+        if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
           x = new BigDecimal(((Number) xItr.next()).doubleValue());
         }
-        else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+        else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
           x = new BigDecimal(((Date) xItr.next()).getTime());
         }
-        else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
+        else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
           x = xItr.next();
         }
         categories.add(x);
@@ -88,24 +85,24 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     NumberFormatter numberFormatter = null;
     DateFormatter dateFormatter = null;
 
-    if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+    if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
       numberFormatter = new NumberFormatter(styleManager);
     }
-    else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
-      dateFormatter = new DateFormatter(chart.getStyleManager());
+    else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+      dateFormatter = new DateFormatter(chartPainter.getStyleManager());
     }
     int counter = 0;
     for (Object category : categories) {
-      if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+      if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
         tickLabels.add(numberFormatter.formatNumber((BigDecimal) category));
       }
-      else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+      else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
         long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
         long gridStepHint = (long) (span / (double) tickSpace * DEFAULT_TICK_MARK_STEP_HINT_X);
         long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
         tickLabels.add(dateFormatter.formatDate((BigDecimal) category, timeUnit));
       }
-      else if (chart.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
+      else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
         tickLabels.add(category.toString());
       }
       int tickLabelPosition = margin + firstPosition + gridStep * counter++;

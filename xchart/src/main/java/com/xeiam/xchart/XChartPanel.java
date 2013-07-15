@@ -26,6 +26,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -239,5 +241,31 @@ public class XChartPanel extends JPanel {
       });
       add(saveAsMenuItem);
     }
+  }
+
+  /**
+   * update a series by only updating the Y-Axis data
+   * 
+   * @param seriesName
+   * @param newYData
+   */
+  public void updateSeries(String seriesName, List<Number> newYData) {
+
+    Series series = chart.getSeriesMap().get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    series.replaceYData(newYData);
+
+    // generate X-Data
+    List<Number> generatedXData = new ArrayList<Number>();
+    for (int i = 1; i < newYData.size() + 1; i++) {
+      generatedXData.add(i);
+    }
+    series.replaceXData(generatedXData);
+
+    // Re-display the chart
+    revalidate();
+    repaint();
   }
 }

@@ -16,7 +16,7 @@
 package com.xeiam.xchart.standalone;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,22 +24,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.Series;
-import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.XChartPanel;
 
 /**
- * @author rossjourdain
+ * @author timmolter
  */
-public class RealtimeAttempt {
+public class RealtimeAttempt2 {
 
   private Chart chart;
-  private JPanel chartPanel;
+  private XChartPanel chartPanel;
+  private static final String SERIES_NAME = "series1";
+  private List<Number> yData;
 
   public static void main(String[] args) throws Exception {
 
     // Setup the panel
-    final RealtimeAttempt realtimeAttempt = new RealtimeAttempt();
+    final RealtimeAttempt2 realtimeAttempt = new RealtimeAttempt2();
     realtimeAttempt.buildPanel();
 
     // Schedule a job for the event-dispatching thread:
@@ -77,15 +77,14 @@ public class RealtimeAttempt {
 
   public void buildPanel() {
 
-    Collection<Number> yData = getRandomData(5);
+    yData = getRandomData(5);
 
     // Create Chart
     chart = new Chart(500, 400);
-    chart.setChartTitle("Sample Chart");
+    chart.setChartTitle("Sample Real-time Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    Series series = chart.addSeries("y(x)", null, yData);
-    series.setMarker(SeriesMarker.CIRCLE);
+    chart.addSeries(SERIES_NAME, null, yData);
 
     chartPanel = new XChartPanel(chart);
   }
@@ -93,33 +92,16 @@ public class RealtimeAttempt {
   public void updateData() {
 
     // Get some new data
-    Collection<Number> newData = getRandomData(1);
+    List<Number> newData = getRandomData(1);
 
-    // Replace the existing
-    ArrayList<Number> replacementData = new ArrayList<Number>();
-
-    Series oldSeries = (Series) chart.getSeriesMap().values().toArray()[0];
-    Collection<Number> oldData = oldSeries.getYData();
-    replacementData.addAll(oldData);
-
-    replacementData.addAll(newData);
+    yData.addAll(newData);
 
     // Limit the total number of points
-    while (replacementData.size() > 20) {
-      replacementData.remove(0);
+    while (yData.size() > 20) {
+      yData.remove(0);
     }
 
-    // Swap out the data
-    chart.getSeriesMap().clear();
-    Series newSeries = chart.addSeries(oldSeries.getName(), null, replacementData);
-    newSeries.setLineColor(oldSeries.getStrokeColor());
-    newSeries.setLineStyle(oldSeries.getStroke());
-    newSeries.setMarkerColor(oldSeries.getMarkerColor());
-    // etc
-
-    // Re-display the chart
-    chartPanel.revalidate();
-    chartPanel.repaint();
+    chartPanel.updateSeries(SERIES_NAME, yData);
   }
 
   public Chart getChart() {
@@ -132,9 +114,9 @@ public class RealtimeAttempt {
     return chartPanel;
   }
 
-  private static Collection<Number> getRandomData(int numPoints) {
+  private static List<Number> getRandomData(int numPoints) {
 
-    ArrayList<Number> data = new ArrayList<Number>();
+    List<Number> data = new ArrayList<Number>();
     for (int i = 0; i < numPoints; i++) {
       data.add(Math.random() * 100);
     }

@@ -22,7 +22,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Map;
 
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager.ChartType;
@@ -61,14 +60,12 @@ public class Legend implements ChartPart {
 
     if (chartPainter.getStyleManager().isLegendVisible()) {
 
-      Map<Integer, Series> seriesMap = chartPainter.getAxisPair().getSeriesMap();
-
       // determine legend text content max width
       double legendTextContentMaxWidth = 0;
       double legendTextContentMaxHeight = 0;
 
-      for (Integer seriesId : seriesMap.keySet()) {
-        Series series = seriesMap.get(seriesId);
+      for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
+
         TextLayout textLayout = new TextLayout(series.getName(), chartPainter.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
         Rectangle2D rectangle = textLayout.getBounds();
         // System.out.println(rectangle);
@@ -88,7 +85,8 @@ public class Legend implements ChartPart {
       else {
         maxContentHeight = Math.max(legendTextContentMaxHeight, BOX_SIZE);
       }
-      double legendContentHeight = maxContentHeight * seriesMap.size() + chartPainter.getStyleManager().getLegendPadding() * (seriesMap.size() - 1);
+      double legendContentHeight =
+          maxContentHeight * getChartPainter().getAxisPair().getSeriesMap().size() + chartPainter.getStyleManager().getLegendPadding() * (getChartPainter().getAxisPair().getSeriesMap().size() - 1);
 
       // determine legend content width
       double legendContentWidth = 0;
@@ -115,8 +113,6 @@ public class Legend implements ChartPart {
     g.setFont(chartPainter.getStyleManager().getLegendFont());
 
     if (chartPainter.getStyleManager().isLegendVisible()) {
-
-      Map<Integer, Series> seriesMap = chartPainter.getAxisPair().getSeriesMap();
 
       double legendBoxWidth = getSizeHint()[0];
       double legendBoxHeight = getSizeHint()[1];
@@ -164,8 +160,8 @@ public class Legend implements ChartPart {
       // Draw legend content inside legend box
       double startx = xOffset + chartPainter.getStyleManager().getLegendPadding();
       double starty = yOffset + chartPainter.getStyleManager().getLegendPadding();
-      for (Integer seriesId : seriesMap.keySet()) {
-        Series series = seriesMap.get(seriesId);
+
+      for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
         if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
 

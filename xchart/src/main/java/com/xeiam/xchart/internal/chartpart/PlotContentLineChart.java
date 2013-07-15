@@ -24,7 +24,6 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Map;
 
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager.ChartType;
@@ -59,17 +58,14 @@ public class PlotContentLineChart extends PlotContent {
     int yTickSpace = Utils.getTickSpace((int) bounds.getHeight());
     int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
-    Map<Integer, Series> seriesMap = getChartPainter().getAxisPair().getSeriesMap();
-    for (Integer seriesId : seriesMap.keySet()) {
-
-      Series series = seriesMap.get(seriesId);
+    for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
 
       // data points
-      Collection<?> xData = series.getxData();
+      Collection<?> xData = series.getXData();
       BigDecimal xMin = getChartPainter().getAxisPair().getxAxis().getMin();
       BigDecimal xMax = getChartPainter().getAxisPair().getxAxis().getMax();
 
-      Collection<Number> yData = series.getyData();
+      Collection<Number> yData = series.getYData();
       BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
 

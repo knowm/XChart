@@ -36,9 +36,7 @@ public class AxisPair implements ChartPart {
   /** parent */
   private final ChartPainter chartPainter;
 
-  private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
-
-  private int seriesCount = 0;
+  private Map<String, Series> seriesMap = new LinkedHashMap<String, Series>();
 
   private Axis xAxis;
   private Axis yAxis;
@@ -115,11 +113,11 @@ public class AxisPair implements ChartPart {
       throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
     }
 
-    seriesMap.put(seriesCount++, series);
+    if (seriesMap.keySet().contains(seriesName)) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+    }
 
-    // add min/max to axis
-    xAxis.addMinMax(series.getxMin(), series.getxMax());
-    yAxis.addMinMax(series.getyMin(), series.getyMax());
+    seriesMap.put(seriesName, series);
 
     return series;
   }
@@ -145,7 +143,7 @@ public class AxisPair implements ChartPart {
 
   // Getters /////////////////////////////////////////////////
 
-  public Map<Integer, Series> getSeriesMap() {
+  public Map<String, Series> getSeriesMap() {
 
     return seriesMap;
   }

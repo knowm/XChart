@@ -25,7 +25,6 @@ import com.xeiam.xchart.StyleManager.ChartTheme;
 import com.xeiam.xchart.internal.chartpart.ChartPainter;
 import com.xeiam.xchart.internal.style.GGPlot2Theme;
 import com.xeiam.xchart.internal.style.MatlabTheme;
-import com.xeiam.xchart.internal.style.Theme;
 import com.xeiam.xchart.internal.style.XChartTheme;
 
 /**
@@ -61,13 +60,13 @@ public class Chart {
     chartPainter = new ChartPainter(width, height);
 
     if (chartTheme == ChartTheme.XChart) {
-      setTheme(new XChartTheme());
+      chartPainter.getStyleManager().setTheme(new XChartTheme());
     }
     else if (chartTheme == ChartTheme.GGPlot2) {
-      setTheme(new GGPlot2Theme());
+      chartPainter.getStyleManager().setTheme(new GGPlot2Theme());
     }
     else if (chartTheme == ChartTheme.Matlab) {
-      setTheme(new MatlabTheme());
+      chartPainter.getStyleManager().setTheme(new MatlabTheme());
     }
   }
 
@@ -97,8 +96,6 @@ public class Chart {
 
   /**
    * @param g
-   * @param width
-   * @param height
    */
   public void paint(Graphics2D g) {
 
@@ -258,16 +255,6 @@ public class Chart {
     return chartPainter.getStyleManager();
   }
 
-  /**
-   * Set the theme the Chart's style manager should use
-   * 
-   * @param theme
-   */
-  public void setTheme(Theme theme) {
-
-    chartPainter.getStyleManager().setTheme(theme);
-  }
-
   public int getWidth() {
 
     return chartPainter.getWidth();
@@ -278,7 +265,7 @@ public class Chart {
     return chartPainter.getHeight();
   }
 
-  public Map<Integer, Series> getSeriesMap() {
+  public Map<String, Series> getSeriesMap() {
 
     return chartPainter.getAxisPair().getSeriesMap();
   }

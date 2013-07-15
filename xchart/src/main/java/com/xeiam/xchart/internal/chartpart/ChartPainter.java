@@ -21,6 +21,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 
+import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager;
 
 /**
@@ -42,7 +43,8 @@ public class ChartPainter {
   /**
    * Constructor
    * 
-   * @param chart
+   * @param width
+   * @param height
    */
   public ChartPainter(int width, int height) {
 
@@ -73,6 +75,13 @@ public class ChartPainter {
    * @param g
    */
   public void paint(Graphics2D g) {
+
+    // calc axis min and max
+    for (Series series : getAxisPair().getSeriesMap().values()) {
+      // add min/max to axis
+      axisPair.getxAxis().addMinMax(series.getxMin(), series.getxMax());
+      axisPair.getyAxis().addMinMax(series.getyMin(), series.getyMax());
+    }
 
     // Sanity checks
     if (axisPair.getSeriesMap().isEmpty()) {
