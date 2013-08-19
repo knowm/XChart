@@ -45,13 +45,27 @@
 	</scm>
 
 	<ciManagement>
-		<url>http://ci.xeiam.com/</url>
+		<url>https://travis-ci.org/timmolter/XChart</url>
 	</ciManagement>
 
 	<modules>
 		<module>xchart</module>
 		<module>xchart-demo</module>
 	</modules>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<downloadUrl>https://oss.sonatype.org/content/groups/public/com/xeiam/xchart</downloadUrl>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>
@@ -172,22 +186,21 @@
 				</dependencies>
 
 			</plugin>
+			<!-- for header in all .java files -->
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.10.b1</version>
+				<configuration>
+					<header>etc/header.txt</header>
+					<aggregate>true</aggregate>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>sonatype-nexus-staging</id>
-			<name>Nexus Release Repository</name>
-			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-		<downloadUrl>https://oss.sonatype.org/content/groups/public/com/xeiam/xchart</downloadUrl>
-	</distributionManagement>
 
 	<profiles>
 		<profile>

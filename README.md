@@ -76,8 +76,17 @@ For snapshots, add the following to your pom.xml file:
     </dependency>
 
 ## Building
-mvn clean package  
-mvn javadoc:aggregate  
+
+#### general
+
+    mvn clean package  
+    mvn javadoc:javadoc  
+
+#### maven-license-plugin
+
+    mvn license:check
+    mvn license:format
+    mvn license:remove
 
 ## Running Demo
     cd /path/to/xchart-demo/jar/
