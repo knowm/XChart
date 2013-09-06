@@ -73,7 +73,10 @@ public class SwingWrapper {
   /**
    * Display the chart in a Swing JFrame
    */
-  public void displayChart() {
+  public JFrame displayChart() {
+
+    // Create and set up the window.
+    final JFrame frame = new JFrame("XChart");
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
@@ -82,8 +85,6 @@ public class SwingWrapper {
       @Override
       public void run() {
 
-        // Create and set up the window.
-        JFrame frame = new JFrame("XChart");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel chartPanel = new XChartPanel(charts.get(0));
         frame.add(chartPanel);
@@ -93,12 +94,17 @@ public class SwingWrapper {
         frame.setVisible(true);
       }
     });
+
+    return frame;
   }
 
   /**
    * Display the chart in a Swing JFrame
    */
-  public void displayChartMatrix() {
+  public JFrame displayChartMatrix() {
+
+    // Create and set up the window.
+    final JFrame frame = new JFrame("XChart");
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
@@ -107,8 +113,6 @@ public class SwingWrapper {
       @Override
       public void run() {
 
-        // Create and set up the window.
-        JFrame frame = new JFrame("XChart");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
 
@@ -129,6 +133,8 @@ public class SwingWrapper {
         frame.setVisible(true);
       }
     });
+
+    return frame;
   }
 
 }
