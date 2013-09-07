@@ -172,9 +172,10 @@ public class Series {
    * 
    * @param seriesLineStyle
    */
-  public void setLineStyle(SeriesLineStyle seriesLineStyle) {
+  public Series setLineStyle(SeriesLineStyle seriesLineStyle) {
 
     stroke = SeriesLineStyle.getBasicStroke(seriesLineStyle);
+    return this;
   }
 
   /**
@@ -182,9 +183,10 @@ public class Series {
    * 
    * @param basicStroke
    */
-  public void setLineStyle(BasicStroke basicStroke) {
+  public Series setLineStyle(BasicStroke basicStroke) {
 
     stroke = basicStroke;
+    return this;
   }
 
   /**
@@ -192,9 +194,10 @@ public class Series {
    * 
    * @param seriesColor
    */
-  public void setLineColor(SeriesColor seriesColor) {
+  public Series setLineColor(SeriesColor seriesColor) {
 
     strokeColor = seriesColor.getColor();
+    return this;
   }
 
   /**
@@ -202,9 +205,10 @@ public class Series {
    * 
    * @param color
    */
-  public void setLineColor(java.awt.Color color) {
+  public Series setLineColor(java.awt.Color color) {
 
     strokeColor = color;
+    return this;
   }
 
   /**
@@ -212,9 +216,10 @@ public class Series {
    * 
    * @param seriesMarker
    */
-  public void setMarker(SeriesMarker seriesMarker) {
+  public Series setMarker(SeriesMarker seriesMarker) {
 
     this.marker = seriesMarker.getMarker();
+    return this;
   }
 
   /**
@@ -222,9 +227,10 @@ public class Series {
    * 
    * @param seriesColor
    */
-  public void setMarkerColor(SeriesColor seriesColor) {
+  public Series setMarkerColor(SeriesColor seriesColor) {
 
     this.markerColor = seriesColor.getColor();
+    return this;
   }
 
   /**
@@ -232,9 +238,10 @@ public class Series {
    * 
    * @param color
    */
-  public void setMarkerColor(java.awt.Color color) {
+  public Series setMarkerColor(java.awt.Color color) {
 
     this.markerColor = color;
+    return this;
   }
 
   public Collection<?> getXData() {
