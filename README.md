@@ -1,3 +1,5 @@
+[![XChart](http://xeiam.com/images/XChart_64_64.png)](http://xeiam.com/xchart.jsp)
+
 ## XChart
 A Simple Charting Library for Java
 
