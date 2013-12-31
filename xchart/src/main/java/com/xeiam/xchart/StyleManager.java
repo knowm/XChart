@@ -15,14 +15,14 @@
  */
 package com.xeiam.xchart;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Stroke;
-import java.util.Locale;
-import java.util.TimeZone;
-
+import com.xeiam.xchart.internal.style.GGPlot2Theme;
+import com.xeiam.xchart.internal.style.MatlabTheme;
 import com.xeiam.xchart.internal.style.Theme;
 import com.xeiam.xchart.internal.style.XChartTheme;
+
+import java.awt.*;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * The StyleManager is used to manage all things related to styling of the vast number of Chart components
@@ -46,7 +46,22 @@ public class StyleManager {
 
   public enum ChartTheme {
 
-    XChart, GGPlot2, Matlab
+    XChart, GGPlot2, Matlab;
+
+    public Theme newInstance(ChartTheme chartTheme) {
+
+      switch (chartTheme) {
+        case GGPlot2:
+          return new GGPlot2Theme();
+
+        case Matlab:
+          return new MatlabTheme();
+
+        case XChart:
+        default:
+          return new XChartTheme();
+      }
+    }
   }
 
   /** the default Theme */

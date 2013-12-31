@@ -15,17 +15,15 @@
  */
 package com.xeiam.xchart;
 
-import java.awt.Graphics2D;
+import com.xeiam.xchart.StyleManager.ChartTheme;
+import com.xeiam.xchart.internal.chartpart.ChartPainter;
+import com.xeiam.xchart.internal.style.Theme;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
-
-import com.xeiam.xchart.StyleManager.ChartTheme;
-import com.xeiam.xchart.internal.chartpart.ChartPainter;
-import com.xeiam.xchart.internal.style.GGPlot2Theme;
-import com.xeiam.xchart.internal.style.MatlabTheme;
-import com.xeiam.xchart.internal.style.XChartTheme;
 
 /**
  * An XChart Chart
@@ -56,18 +54,20 @@ public class Chart {
    * @param chartTheme
    */
   public Chart(int width, int height, ChartTheme chartTheme) {
+    this(width, height, chartTheme.newInstance(chartTheme));
+  }
+
+  /**
+   * Constructor
+   *
+   * @param width
+   * @param height
+   * @param theme instance of Theme class
+   */
+  public Chart(int width, int height, Theme theme) {
 
     chartPainter = new ChartPainter(width, height);
-
-    if (chartTheme == ChartTheme.XChart) {
-      chartPainter.getStyleManager().setTheme(new XChartTheme());
-    }
-    else if (chartTheme == ChartTheme.GGPlot2) {
-      chartPainter.getStyleManager().setTheme(new GGPlot2Theme());
-    }
-    else if (chartTheme == ChartTheme.Matlab) {
-      chartPainter.getStyleManager().setTheme(new MatlabTheme());
-    }
+    chartPainter.getStyleManager().setTheme(theme);
   }
 
   /**
