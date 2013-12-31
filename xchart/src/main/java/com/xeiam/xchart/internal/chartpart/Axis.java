@@ -200,7 +200,7 @@ public class Axis implements ChartPart {
 
       double chartLegendWidth = 0;
       if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
-        chartLegendWidth = getChartPainter().getChartLegend().getSizeHint()[0];
+        chartLegendWidth = getChartPainter().getChartLegend().getSizeHint(g)[0];
       }
 
       double width =
