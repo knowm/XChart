@@ -15,15 +15,15 @@
  */
 package com.xeiam.xchart;
 
-import com.xeiam.xchart.StyleManager.ChartTheme;
-import com.xeiam.xchart.internal.chartpart.ChartPainter;
-import com.xeiam.xchart.internal.style.Theme;
-
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+
+import com.xeiam.xchart.StyleManager.ChartTheme;
+import com.xeiam.xchart.internal.chartpart.ChartPainter;
+import com.xeiam.xchart.internal.style.Theme;
 
 /**
  * An XChart Chart
@@ -54,12 +54,13 @@ public class Chart {
    * @param chartTheme
    */
   public Chart(int width, int height, ChartTheme chartTheme) {
+
     this(width, height, chartTheme.newInstance(chartTheme));
   }
 
   /**
    * Constructor
-   *
+   * 
    * @param width
    * @param height
    * @param theme instance of Theme class

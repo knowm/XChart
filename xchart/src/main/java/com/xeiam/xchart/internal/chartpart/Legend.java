@@ -15,14 +15,16 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.*;
-import java.awt.font.*;
+import java.awt.BasicStroke;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.text.AttributedCharacterIterator;
-import java.text.AttributedString;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager;
@@ -49,7 +51,7 @@ public class Legend implements ChartPart {
 
   /**
    * Constructor
-   *
+   * 
    * @param chartPainter
    */
   public Legend(ChartPainter chartPainter) {
@@ -59,13 +61,14 @@ public class Legend implements ChartPart {
 
   /**
    * get the width of the chart legend
-   *
+   * 
    * @param g
    * @return
    */
   protected double[] getSizeHint(Graphics2D g) {
+
     if (!chartPainter.getStyleManager().isLegendVisible()) {
-      return new double[]{0, 0};
+      return new double[] { 0, 0 };
     }
 
     StyleManager styleManager = getChartPainter().getStyleManager();
@@ -101,16 +104,18 @@ public class Legend implements ChartPart {
     double legendContentWidth = 0;
     if (!isBar) {
       legendContentWidth = styleManager.getLegendSeriesLineLength() + styleManager.getLegendPadding() + legendTextContentMaxWidth;
-    } else {
+    }
+    else {
       legendContentWidth = BOX_SIZE + styleManager.getLegendPadding() + legendTextContentMaxWidth;
     }
     // Legend Box
     double legendBoxWidth = legendContentWidth + 2 * styleManager.getLegendPadding();
     double legendBoxHeight = legendContentHeight + 2 * styleManager.getLegendPadding();
-    return new double[]{legendBoxWidth, legendBoxHeight};
+    return new double[] { legendBoxWidth, legendBoxHeight };
   }
 
   private List<Map.Entry<String, Rectangle2D>> getSeriesBounds(Series series, Graphics2D g) {
+
     String lines[] = series.getName().split("\\n");
     List<Map.Entry<String, Rectangle2D>> stringBounds = new ArrayList<Map.Entry<String, Rectangle2D>>(lines.length);
     for (String line : lines) {
@@ -128,7 +133,8 @@ public class Legend implements ChartPart {
 
     StyleManager styleManager = getChartPainter().getStyleManager();
 
-    if (!styleManager.isLegendVisible()) return;
+    if (!styleManager.isLegendVisible())
+      return;
 
     final double[] sizeHint = getSizeHint(g);
 
@@ -141,33 +147,33 @@ public class Legend implements ChartPart {
     double xOffset = 0;
     double yOffset = 0;
     switch (styleManager.getLegendPosition()) {
-      case OutsideE:
-        xOffset = chartPainter.getWidth() - legendBoxWidth - styleManager.getChartPadding();
-        yOffset = chartPainter.getPlot().getBounds().getY() + (chartPainter.getPlot().getBounds().getHeight() - legendBoxHeight) / 2.0;
-        break;
-      case InsideNW:
-        xOffset = chartPainter.getPlot().getBounds().getX() + LEGEND_MARGIN;
-        yOffset = chartPainter.getPlot().getBounds().getY() + LEGEND_MARGIN;
-        break;
-      case InsideNE:
-        xOffset = chartPainter.getPlot().getBounds().getX() + chartPainter.getPlot().getBounds().getWidth() - legendBoxWidth - LEGEND_MARGIN;
-        yOffset = chartPainter.getPlot().getBounds().getY() + LEGEND_MARGIN;
-        break;
-      case InsideSE:
-        xOffset = chartPainter.getPlot().getBounds().getX() + chartPainter.getPlot().getBounds().getWidth() - legendBoxWidth - LEGEND_MARGIN;
-        yOffset = chartPainter.getPlot().getBounds().getY() + chartPainter.getPlot().getBounds().getHeight() - legendBoxHeight - LEGEND_MARGIN;
-        break;
-      case InsideSW:
-        xOffset = chartPainter.getPlot().getBounds().getX() + LEGEND_MARGIN;
-        yOffset = chartPainter.getPlot().getBounds().getY() + chartPainter.getPlot().getBounds().getHeight() - legendBoxHeight - LEGEND_MARGIN;
-        break;
-      case InsideN:
-        xOffset = chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - legendBoxWidth) / 2 + LEGEND_MARGIN;
-        yOffset = chartPainter.getPlot().getBounds().getY() + LEGEND_MARGIN;
-        break;
+    case OutsideE:
+      xOffset = chartPainter.getWidth() - legendBoxWidth - styleManager.getChartPadding();
+      yOffset = chartPainter.getPlot().getBounds().getY() + (chartPainter.getPlot().getBounds().getHeight() - legendBoxHeight) / 2.0;
+      break;
+    case InsideNW:
+      xOffset = chartPainter.getPlot().getBounds().getX() + LEGEND_MARGIN;
+      yOffset = chartPainter.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      break;
+    case InsideNE:
+      xOffset = chartPainter.getPlot().getBounds().getX() + chartPainter.getPlot().getBounds().getWidth() - legendBoxWidth - LEGEND_MARGIN;
+      yOffset = chartPainter.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      break;
+    case InsideSE:
+      xOffset = chartPainter.getPlot().getBounds().getX() + chartPainter.getPlot().getBounds().getWidth() - legendBoxWidth - LEGEND_MARGIN;
+      yOffset = chartPainter.getPlot().getBounds().getY() + chartPainter.getPlot().getBounds().getHeight() - legendBoxHeight - LEGEND_MARGIN;
+      break;
+    case InsideSW:
+      xOffset = chartPainter.getPlot().getBounds().getX() + LEGEND_MARGIN;
+      yOffset = chartPainter.getPlot().getBounds().getY() + chartPainter.getPlot().getBounds().getHeight() - legendBoxHeight - LEGEND_MARGIN;
+      break;
+    case InsideN:
+      xOffset = chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - legendBoxWidth) / 2 + LEGEND_MARGIN;
+      yOffset = chartPainter.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      break;
 
-      default:
-        break;
+    default:
+      break;
     }
 
     g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
@@ -180,7 +186,6 @@ public class Legend implements ChartPart {
     // Draw legend content inside legend box
     double startx = xOffset + styleManager.getLegendPadding();
     double starty = yOffset + styleManager.getLegendPadding();
-
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
       List<Map.Entry<String, Rectangle2D>> seriesBounds = getSeriesBounds(series, g);
@@ -202,7 +207,8 @@ public class Legend implements ChartPart {
           g.setColor(series.getMarkerColor());
           series.getMarker().paint(g, startx + styleManager.getLegendSeriesLineLength() / 2.0, starty + blockHeight / 2.0);
         }
-      } else {
+      }
+      else {
         // paint little box
         if (series.getStroke() != null) {
           g.setColor(series.getStrokeColor());
@@ -223,12 +229,13 @@ public class Legend implements ChartPart {
         }
         itemOffsetY = (float) Math.max(itemOffsetY, Marker.SIZE);
         starty += blockHeight + fontMetrics.getDescent();
-      } else {
+      }
+      else {
         final float x = (float) (startx + BOX_SIZE + styleManager.getLegendPadding());
         for (Map.Entry<String, Rectangle2D> entry : seriesBounds) {
           double height = entry.getValue().getHeight();
           double centerOffsetY = (Math.max(BOX_SIZE, height) - height) / 2.0;
-          g.drawString(entry.getKey(), x, (float)(starty + height + itemOffsetY + centerOffsetY));
+          g.drawString(entry.getKey(), x, (float) (starty + height + itemOffsetY + centerOffsetY));
           itemOffsetY += height;
         }
         starty += Math.max(BOX_SIZE, blockHeight) + styleManager.getLegendPadding();
@@ -239,8 +246,8 @@ public class Legend implements ChartPart {
     // bounds
     bounds = new Rectangle2D.Double(xOffset, yOffset, legendBoxWidth, legendBoxHeight);
 
-//    g.setColor(Color.blue);
-//    g.draw(bounds);
+    // g.setColor(Color.blue);
+    // g.draw(bounds);
 
   }
 
