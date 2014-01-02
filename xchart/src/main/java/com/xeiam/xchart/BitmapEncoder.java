@@ -18,6 +18,7 @@ package com.xeiam.xchart;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -58,9 +59,7 @@ public final class BitmapEncoder {
    */
   public static void savePNG(Chart chart, String fileName) throws IOException {
 
-    BufferedImage bufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
-    Graphics2D graphics2D = bufferedImage.createGraphics();
-    chart.paint(graphics2D);
+    BufferedImage bufferedImage = getBufferedImage(chart);
 
     // Save chart as PNG
     OutputStream out = new FileOutputStream(fileName);
@@ -146,15 +145,13 @@ public final class BitmapEncoder {
    * 
    * @param chart
    * @param fileName
-   * @param quality - // a float between 0 and 1 (1 = maximum quality)
+   * @param quality - a float between 0 and 1 (1 = maximum quality)
    * @throws FileNotFoundException
    * @throws IOException
    */
   public static void saveJPG(Chart chart, String fileName, float quality) throws FileNotFoundException, IOException {
 
-    BufferedImage bufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
-    Graphics2D graphics2D = bufferedImage.createGraphics();
-    chart.paint(graphics2D);
+    BufferedImage bufferedImage = getBufferedImage(chart);
 
     Iterator<ImageWriter> iter = ImageIO.getImageWritersByFormatName("jpeg");
     ImageWriter writer = iter.next();
@@ -170,12 +167,34 @@ public final class BitmapEncoder {
     writer.dispose();
   }
 
-  public static void main(String[] args) {
+  /**
+   * Generates a byte[] for a given chart, PNG compressed
+   * 
+   * @param chart
+   * @return a byte[] for a given chart, PNG compressed
+   * @throws IOException
+   */
+  public static byte[] getPNGBytes(Chart chart) throws IOException {
 
-    for (String format : ImageIO.getWriterFormatNames()) {
-      System.out.println(format);
-      // ImageIO.write(bufferedImage, format, new File("C:\\image_new." + format));
-    }
+    BufferedImage bufferedImage = getBufferedImage(chart);
+
+    byte[] imageInBytes = null;
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ImageIO.write(bufferedImage, "png", baos);
+    baos.flush();
+    imageInBytes = baos.toByteArray();
+    baos.close();
+
+    return imageInBytes;
+  }
+
+  public static BufferedImage getBufferedImage(Chart chart) {
+
+    BufferedImage bufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
+    Graphics2D graphics2D = bufferedImage.createGraphics();
+    chart.paint(graphics2D);
+    return bufferedImage;
   }
 
 }
