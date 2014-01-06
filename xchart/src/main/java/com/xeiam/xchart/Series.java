@@ -39,10 +39,10 @@ public class Series {
   private Collection<?> xData;
   private AxisType xAxisType;
 
-  private Collection<Number> yData;
+  private Collection<? extends Number> yData;
   private AxisType yAxisType;
 
-  private Collection<Number> errorBars;
+  private Collection<? extends Number> errorBars;
 
   /** the minimum value of axis range */
   private BigDecimal xMin;
@@ -79,7 +79,8 @@ public class Series {
    * @param errorBars
    * @param seriesColorMarkerLineStyle
    */
-  public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<Number> yData, AxisType yAxisType, Collection<Number> errorBars, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+  public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<? extends Number> yData, AxisType yAxisType, Collection<? extends Number> errorBars,
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
 
     if (name == null || name.length() < 1) {
       throw new IllegalArgumentException("Series name cannot be null or zero-length!!!");
@@ -147,13 +148,13 @@ public class Series {
    * @param data
    * @return
    */
-  private BigDecimal[] findMinMaxWithErrorBars(Collection<Number> data, Collection<Number> errorBars) {
+  private BigDecimal[] findMinMaxWithErrorBars(Collection<? extends Number> data, Collection<? extends Number> errorBars) {
 
     BigDecimal min = null;
     BigDecimal max = null;
 
-    Iterator<Number> itr = data.iterator();
-    Iterator<Number> ebItr = errorBars.iterator();
+    Iterator<? extends Number> itr = data.iterator();
+    Iterator<? extends Number> ebItr = errorBars.iterator();
     while (itr.hasNext()) {
       BigDecimal bigDecimal = new BigDecimal(itr.next().doubleValue());
       BigDecimal eb = new BigDecimal(ebItr.next().doubleValue());
@@ -249,12 +250,12 @@ public class Series {
     return xData;
   }
 
-  public Collection<Number> getYData() {
+  public Collection<? extends Number> getYData() {
 
     return yData;
   }
 
-  public Collection<Number> getErrorBars() {
+  public Collection<? extends Number> getErrorBars() {
 
     return errorBars;
   }

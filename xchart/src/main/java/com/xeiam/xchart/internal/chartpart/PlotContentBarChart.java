@@ -74,7 +74,7 @@ public class PlotContentBarChart extends PlotContent {
       // data points
       Collection<?> xData = series.getXData();
 
-      Collection<Number> yData = series.getYData();
+      Collection<? extends Number> yData = series.getYData();
       BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
 
@@ -121,7 +121,7 @@ public class PlotContentBarChart extends PlotContent {
       // System.out.println(yMax);
 
       Iterator<?> categoryItr = categories.iterator();
-      Iterator<Number> yItr = yData.iterator();
+      Iterator<? extends Number> yItr = yData.iterator();
 
       int barCounter = 0;
       while (categoryItr.hasNext()) {

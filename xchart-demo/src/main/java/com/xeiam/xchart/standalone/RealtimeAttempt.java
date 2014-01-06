@@ -16,7 +16,7 @@
 package com.xeiam.xchart.standalone;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -77,7 +77,7 @@ public class RealtimeAttempt {
 
   public void buildPanel() {
 
-    Collection<Number> yData = getRandomData(5);
+    List<Double> yData = getRandomData(5);
 
     // Create Chart
     chart = new Chart(500, 400);
@@ -93,13 +93,13 @@ public class RealtimeAttempt {
   public void updateData() {
 
     // Get some new data
-    Collection<Number> newData = getRandomData(1);
+    List<Double> newData = getRandomData(1);
 
     // Replace the existing
-    ArrayList<Number> replacementData = new ArrayList<Number>();
+    List<Double> replacementData = new ArrayList<Double>();
 
     Series oldSeries = (Series) chart.getSeriesMap().values().toArray()[0];
-    Collection<Number> oldData = oldSeries.getYData();
+    List<Double> oldData = (List<Double>) oldSeries.getYData();
     replacementData.addAll(oldData);
 
     replacementData.addAll(newData);
@@ -132,9 +132,9 @@ public class RealtimeAttempt {
     return chartPanel;
   }
 
-  private static Collection<Number> getRandomData(int numPoints) {
+  private static List<Double> getRandomData(int numPoints) {
 
-    ArrayList<Number> data = new ArrayList<Number>();
+    List<Double> data = new ArrayList<Double>();
     for (int i = 0; i < numPoints; i++) {
       data.add(Math.random() * 100);
     }

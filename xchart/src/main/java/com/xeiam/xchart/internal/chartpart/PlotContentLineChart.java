@@ -65,7 +65,7 @@ public class PlotContentLineChart extends PlotContent {
       BigDecimal xMin = getChartPainter().getAxisPair().getxAxis().getMin();
       BigDecimal xMax = getChartPainter().getAxisPair().getxAxis().getMax();
 
-      Collection<Number> yData = series.getYData();
+      Collection<? extends Number> yData = series.getYData();
       BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
       BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
 
@@ -92,14 +92,14 @@ public class PlotContentLineChart extends PlotContent {
         yMin = new BigDecimal(Math.log10(yMin.doubleValue()));
         yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
       }
-      Collection<Number> errorBars = series.getErrorBars();
+      Collection<? extends Number> errorBars = series.getErrorBars();
 
       double previousX = Integer.MIN_VALUE;
       double previousY = Integer.MIN_VALUE;
 
       Iterator<?> xItr = xData.iterator();
-      Iterator<Number> yItr = yData.iterator();
-      Iterator<Number> ebItr = null;
+      Iterator<? extends Number> yItr = yData.iterator();
+      Iterator<? extends Number> ebItr = null;
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }

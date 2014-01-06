@@ -62,7 +62,7 @@ public class AxisPair implements ChartPart {
    * @param xData
    * @param yData
    */
-  public <T> Series addSeries(String seriesName, Collection<T> xData, Collection<Number> yData, Collection<Number> errorBars) {
+  public <T> Series addSeries(String seriesName, Collection<T> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
 
     // Sanity checks
     if (seriesName == null) {

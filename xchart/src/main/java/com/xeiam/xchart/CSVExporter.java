@@ -82,11 +82,11 @@ public class CSVExporter {
 
       out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
       Collection<?> xData = series.getXData();
-      Collection<Number> yData = series.getYData();
-      Collection<Number> errorBarData = series.getErrorBars();
+      Collection<? extends Number> yData = series.getYData();
+      Collection<? extends Number> errorBarData = series.getErrorBars();
       Iterator<?> itrx = xData.iterator();
-      Iterator<Number> itry = yData.iterator();
-      Iterator<Number> itrErrorBar = null;
+      Iterator<? extends Number> itry = yData.iterator();
+      Iterator<? extends Number> itrErrorBar = null;
       if (errorBarData != null) {
         itrErrorBar = errorBarData.iterator();
       }
