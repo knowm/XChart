@@ -57,7 +57,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     // the span of the data
     long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
 
-    long gridStepHint = (long) (span / (double) tickSpace * DEFAULT_TICK_MARK_STEP_HINT_X);
+    long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
 
     long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     BigDecimal gridStep = null;

@@ -54,7 +54,7 @@ public class ThemeChart03 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
     chart.getStyleManager().setPlotGridLinesVisible(false);
-
+    chart.getStyleManager().setXAxisTickMarkSpacingHint(100);
     // generate data
     Collection<Date> xData = new ArrayList<Date>();
     Collection<Number> y1Data = new ArrayList<Number>();

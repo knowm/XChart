@@ -90,7 +90,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     // the span of the data
     double span = Math.abs(maxValue.subtract(minValue).doubleValue()); // in data space
 
-    int tickMarkSpaceHint = (axisDirection == Direction.X ? DEFAULT_TICK_MARK_STEP_HINT_X : DEFAULT_TICK_MARK_STEP_HINT_Y);
+    int tickMarkSpaceHint = (axisDirection == Direction.X ? styleManager.getXAxisTickMarkSpacingHint() : styleManager.getYAxisTickMarkSpacingHint());
 
     // for very short plots, squeeze some more ticks in than normal
     if (axisDirection == Direction.Y && tickSpace < 160) {

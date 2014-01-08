@@ -96,6 +96,10 @@ public interface Theme {
 
   public int getPlotPadding();
 
+  public int getXAxisTickMarkSpacingHint();
+
+  public int getYAxisTickMarkSpacingHint();
+
   // Chart Plot Area ///////////////////////////////
 
   public boolean isPlotGridLinesVisible();

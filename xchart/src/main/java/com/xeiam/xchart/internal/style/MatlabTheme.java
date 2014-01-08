@@ -223,6 +223,18 @@ public class MatlabTheme implements Theme {
     return 10;
   }
 
+  @Override
+  public int getXAxisTickMarkSpacingHint() {
+
+    return 74;
+  }
+
+  @Override
+  public int getYAxisTickMarkSpacingHint() {
+
+    return 44;
+  }
+
   // Chart Plot Area ///////////////////////////////
 
   @Override

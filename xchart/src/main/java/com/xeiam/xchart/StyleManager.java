@@ -108,6 +108,8 @@ public class StyleManager {
   private boolean isAxisTicksMarksVisible;
   private int plotPadding;
   private int axisTitlePadding;
+  private int xAxisTickMarkSpacingHint;
+  private int yAxisTickMarkSpacingHint;
   private boolean isXAxisLogarithmic;
   private boolean isYAxisLogarithmic;
   private Double xAxisMin;
@@ -183,6 +185,8 @@ public class StyleManager {
     isAxisTicksMarksVisible = theme.isAxisTicksMarksVisible();
     plotPadding = theme.getPlotPadding();
     axisTitlePadding = theme.getAxisTitlePadding();
+    xAxisTickMarkSpacingHint = theme.getXAxisTickMarkSpacingHint();
+    yAxisTickMarkSpacingHint = theme.getYAxisTickMarkSpacingHint();
     isXAxisLogarithmic = false;
     isYAxisLogarithmic = false;
     xAxisMin = null;
@@ -741,6 +745,36 @@ public class StyleManager {
   public int getAxisTitlePadding() {
 
     return axisTitlePadding;
+  }
+
+  /**
+   * set the spacing between tick marks for the X-Axis
+   * 
+   * @param xAxisTickMarkSpacingHint
+   */
+  public void setXAxisTickMarkSpacingHint(int xAxisTickMarkSpacingHint) {
+
+    this.xAxisTickMarkSpacingHint = xAxisTickMarkSpacingHint;
+  }
+
+  public int getXAxisTickMarkSpacingHint() {
+
+    return xAxisTickMarkSpacingHint;
+  }
+
+  /**
+   * set the spacing between tick marks for the Y-Axis
+   * 
+   * @param xAxisTickMarkSpacingHint
+   */
+  public void setYAxisTickMarkSpacingHint(int yAxisTickMarkSpacingHint) {
+
+    this.yAxisTickMarkSpacingHint = yAxisTickMarkSpacingHint;
+  }
+
+  public int getYAxisTickMarkSpacingHint() {
+
+    return yAxisTickMarkSpacingHint;
   }
 
   /**

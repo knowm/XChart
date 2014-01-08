@@ -29,12 +29,6 @@ import com.xeiam.xchart.internal.chartpart.Axis.Direction;
  */
 public abstract class AxisTickCalculator {
 
-  /** the default tick mark step hint for x axis */
-  protected static final int DEFAULT_TICK_MARK_STEP_HINT_X = 74;
-
-  /** the default tick mark step hint for y axis */
-  protected static final int DEFAULT_TICK_MARK_STEP_HINT_Y = 44;
-
   /** the List of tick label position in pixels */
   protected List<Integer> tickLocations = new LinkedList<Integer>();;
 
