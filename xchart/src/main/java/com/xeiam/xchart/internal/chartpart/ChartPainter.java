@@ -19,7 +19,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-import java.math.BigDecimal;
 
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager;
@@ -79,6 +78,11 @@ public class ChartPainter {
     // calc axis min and max
     for (Series series : getAxisPair().getSeriesMap().values()) {
       // add min/max to axis
+      // System.out.println(series.getxMin());
+      // System.out.println(series.getxMax());
+      // System.out.println(series.getyMin());
+      // System.out.println(series.getyMax());
+      // System.out.println("****");
       axisPair.getxAxis().addMinMax(series.getxMin(), series.getxMax());
       axisPair.getyAxis().addMinMax(series.getyMin(), series.getyMax());
     }
@@ -87,10 +91,10 @@ public class ChartPainter {
     if (axisPair.getSeriesMap().isEmpty()) {
       throw new RuntimeException("No series defined for Chart!!!");
     }
-    if (getStyleManager().isXAxisLogarithmic() && axisPair.getxAxis().getMin().compareTo(BigDecimal.ZERO) <= 0) {
+    if (getStyleManager().isXAxisLogarithmic() && axisPair.getxAxis().getMin() <= 0.0) {
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic X-Axis!!!");
     }
-    if (getStyleManager().isYAxisLogarithmic() && axisPair.getyAxis().getMin().compareTo(BigDecimal.ZERO) <= 0) {
+    if (getStyleManager().isYAxisLogarithmic() && axisPair.getyAxis().getMin() <= 0.0) {
       // System.out.println(axisPair.getyAxis().getMin());
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic Y-Axis!!!");
     }

@@ -61,6 +61,8 @@ public class DateChart03 implements ExampleChart {
       } catch (ParseException e) {
         e.printStackTrace();
       }
+      // System.out.println(date.getTime());
+      // System.out.println(date.toString());
       xData.add(date);
       yData.add(Math.random() * i);
     }

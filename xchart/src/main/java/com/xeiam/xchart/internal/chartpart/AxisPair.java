@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.xeiam.xchart.Series;
@@ -96,7 +97,7 @@ public class AxisPair implements ChartPart {
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     }
     else { // generate xData
-      Collection<Number> generatedXData = new ArrayList<Number>();
+      List<Number> generatedXData = new ArrayList<Number>();
       for (int i = 1; i < yData.size() + 1; i++) {
         generatedXData.add(i);
       }

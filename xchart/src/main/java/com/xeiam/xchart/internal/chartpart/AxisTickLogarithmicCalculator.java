@@ -15,8 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.math.BigDecimal;
-
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
@@ -39,7 +37,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickLogarithmicCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public AxisTickLogarithmicCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     numberFormatter = new NumberFormatter(styleManager);
@@ -59,10 +57,10 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
-    int logMin = (int) Math.floor(Math.log10(minValue.doubleValue()));
-    int logMax = (int) Math.ceil(Math.log10(maxValue.doubleValue()));
+    int logMin = (int) Math.floor(Math.log10(minValue));
+    int logMax = (int) Math.ceil(Math.log10(maxValue));
     // int logMin = (int) Math.log10(minValue.doubleValue());
     // int logMax = (int) Math.log10(maxValue.doubleValue());
     // System.out.println("minValue: " + minValue);
@@ -83,10 +81,10 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       logMax = (int) (Math.log10(styleManager.getXAxisMax())); // no floor
     }
 
-    // BigDecimal firstPosition = getFirstPosition(tickStep);
+    // double firstPosition = getFirstPosition(tickStep);
     // System.out.println("firstPosition: " + firstPosition);
-    BigDecimal firstPosition = Utils.pow(10, logMin);
-    BigDecimal tickStep = Utils.pow(10, logMin - 1);
+    double firstPosition = Utils.pow(10, logMin);
+    double tickStep = Utils.pow(10, logMin - 1);
 
     for (int i = logMin; i <= logMax; i++) { // for each decade
 
@@ -95,23 +93,23 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       // System.out.println("i: " + i);
       // System.out.println("pow(10, i).doubleValue(): " + pow(10, i).doubleValue());
 
-      for (BigDecimal j = firstPosition; j.doubleValue() <= Utils.pow(10, i).doubleValue(); j = j.add(tickStep)) {
+      for (double j = firstPosition; j <= Utils.pow(10, i); j = j + tickStep) {
 
         // System.out.println("j: " + j);
         // System.out.println(Math.log10(j.doubleValue()) % 1);
 
-        if (j.doubleValue() < minValue.doubleValue()) {
+        if (j < minValue) {
           // System.out.println("continue");
           continue;
         }
 
-        if (j.doubleValue() > maxValue.doubleValue()) {
+        if (j > maxValue) {
           // System.out.println("break");
           break;
         }
 
         // only add labels for the decades
-        if (Math.log10(j.doubleValue()) % 1 == 0.0) {
+        if (Math.log10(j) % 1 == 0.0) {
           tickLabels.add(numberFormatter.formatNumber(j));
         }
         else {
@@ -119,12 +117,11 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
         }
 
         // add all the tick marks though
-        int tickLabelPosition =
-            (int) (margin + (Math.log10(j.doubleValue()) - Math.log10(minValue.doubleValue())) / (Math.log10(maxValue.doubleValue()) - Math.log10(minValue.doubleValue())) * tickSpace);
+        int tickLabelPosition = (int) (margin + (Math.log10(j) - Math.log10(minValue)) / (Math.log10(maxValue) - Math.log10(minValue)) * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
-      tickStep = tickStep.multiply(Utils.pow(10, 1));
-      firstPosition = tickStep.add(Utils.pow(10, i));
+      tickStep = tickStep * Utils.pow(10, 1);
+      firstPosition = tickStep + Utils.pow(10, i);
     }
   }
 }

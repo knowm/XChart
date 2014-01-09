@@ -19,7 +19,6 @@ import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
-import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager.LegendPosition;
 
@@ -50,9 +49,9 @@ public class Axis implements ChartPart {
   /** the axis direction */
   private Direction direction;
 
-  private BigDecimal min = null;
+  private double min = Double.MAX_VALUE;
 
-  private BigDecimal max = null;
+  private double max = Double.MIN_VALUE;
 
   /** the bounds */
   private Rectangle2D bounds;
@@ -88,14 +87,14 @@ public class Axis implements ChartPart {
    * @param min
    * @param max
    */
-  protected void addMinMax(BigDecimal min, BigDecimal max) {
+  protected void addMinMax(double min, double max) {
 
     // System.out.println(min);
     // System.out.println(max);
-    if (this.min == null || min.compareTo(this.min) < 0) {
+    if (this.min == Double.NaN || min < this.min) {
       this.min = min;
     }
-    if (this.max == null || max.compareTo(this.max) > 0) {
+    if (this.max == Double.NaN || max > this.max) {
       this.max = max;
     }
 
@@ -255,12 +254,12 @@ public class Axis implements ChartPart {
     return axisType;
   }
 
-  public BigDecimal getMin() {
+  public double getMin() {
 
     return min;
   }
 
-  public BigDecimal getMax() {
+  public double getMax() {
 
     return max;
   }

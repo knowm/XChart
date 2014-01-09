@@ -18,7 +18,6 @@ package com.xeiam.xchart;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class DecimalAxisTickCalculatorTest {
   @Test
   public void testDateOneMinuteTimespan() {
 
-    AxisTickNumericalCalculator decimalAxisTickCalculator = new AxisTickNumericalCalculator(Direction.X, 600, new BigDecimal(-15), new BigDecimal(15), new StyleManager());
+    AxisTickNumericalCalculator decimalAxisTickCalculator = new AxisTickNumericalCalculator(Direction.X, 600, -15, 15, new StyleManager());
 
     List<String> tickLabels = decimalAxisTickCalculator.getTickLabels();
     System.out.println(Arrays.toString(tickLabels.toArray()));

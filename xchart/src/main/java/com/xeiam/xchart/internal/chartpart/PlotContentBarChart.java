@@ -18,7 +18,6 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -75,43 +74,41 @@ public class PlotContentBarChart extends PlotContent {
       Collection<?> xData = series.getXData();
 
       Collection<? extends Number> yData = series.getYData();
-      BigDecimal yMin = getChartPainter().getAxisPair().getyAxis().getMin();
-      BigDecimal yMax = getChartPainter().getAxisPair().getyAxis().getMax();
+      double yMin = getChartPainter().getAxisPair().getyAxis().getMin();
+      double yMax = getChartPainter().getAxisPair().getyAxis().getMax();
 
       // if min and max positive, set min to zero
-      if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
-        yMin = BigDecimal.ZERO;
+      if (yMin > 0.0 && yMax > 0.0) {
+        yMin = 0.0;
       }
       // if min and max negative, set max to zero
-      if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
-        yMax = BigDecimal.ZERO;
+      if (yMin < 0.0 && yMax < 0.0) {
+        yMax = 0.0;
       }
 
       // override min and maxValue if specified
       if (getChartPainter().getStyleManager().getYAxisMin() != null) {
-        yMin = new BigDecimal(getChartPainter().getStyleManager().getYAxisMin());
+        yMin = getChartPainter().getStyleManager().getYAxisMin();
       }
       else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
         // int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
-        int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
+        int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin()));
         // System.out.println("logMin: " + logMin);
         // System.out.println("min : " + getChartPainter().getAxisPair().getyAxis().getMin().doubleValue());
-        // yMin = new BigDecimal(Math.log10(Utils.pow(10, logMin).doubleValue()));
-        // yMin = new BigDecimal(Utils.pow(10, logMin).doubleValue());
-        yMin = new BigDecimal(logMin);
+        yMin = logMin;
       }
       if (getChartPainter().getStyleManager().getYAxisMax() != null) {
-        yMax = new BigDecimal(getChartPainter().getStyleManager().getYAxisMax());
+        yMax = getChartPainter().getStyleManager().getYAxisMax();
       }
       else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
-        yMax = new BigDecimal(Math.log10(yMax.doubleValue()));
+        yMax = Math.log10(yMax);
       }
       // figure out the general form of the chart
       int chartForm = 1; // 1=positive, -1=negative, 0=span
-      if (yMin.compareTo(BigDecimal.ZERO) > 0 && yMax.compareTo(BigDecimal.ZERO) > 0) {
+      if (yMin > 0.0 && yMax > 0.0) {
         chartForm = 1; // positive chart
       }
-      else if (yMin.compareTo(BigDecimal.ZERO) < 0 && yMax.compareTo(BigDecimal.ZERO) < 0) {
+      else if (yMin < 0.0 && yMax < 0.0) {
         chartForm = -1; // negative chart
       }
       else {
@@ -128,32 +125,30 @@ public class PlotContentBarChart extends PlotContent {
 
         if (xData.contains(categoryItr.next())) {
 
-          BigDecimal y = new BigDecimal(yItr.next().doubleValue());
+          double y = ((Number) yItr.next()).doubleValue();
           if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
-            y = new BigDecimal(Math.log10(y.doubleValue()));
+            y = Math.log10(y);
           }
-          else {
-            y = new BigDecimal(y.doubleValue());
-          }
-          BigDecimal yTop = null;
-          BigDecimal yBottom = null;
+
+          double yTop = 0.0;
+          double yBottom = 0.0;
 
           switch (chartForm) {
           case 1: // positive chart
-            yTop = new BigDecimal(y.doubleValue());
+            yTop = y;
             yBottom = yMin;
             break;
           case -1: // negative chart
             yTop = yMax;
-            yBottom = new BigDecimal(y.doubleValue());
+            yBottom = y;
             break;
           case 0: // span chart
-            if (y.compareTo(BigDecimal.ZERO) >= 0) { // positive
+            if (y >= 0.0) { // positive
               yTop = y;
-              yBottom = BigDecimal.ZERO;
+              yBottom = 0.0;
             }
             else {
-              yTop = BigDecimal.ZERO;
+              yTop = 0.0;
               yBottom = y;
             }
             break;
@@ -161,11 +156,11 @@ public class PlotContentBarChart extends PlotContent {
             break;
           }
 
-          double yTransform = bounds.getHeight() - (yTopMargin + yTop.subtract(yMin).doubleValue() / yMax.subtract(yMin).doubleValue() * yTickSpace);
+          double yTransform = bounds.getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
 
           double yOffset = bounds.getY() + yTransform + 1;
 
-          double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom.subtract(yMin).doubleValue()) / (yMax.subtract(yMin).doubleValue()) * yTickSpace);
+          double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
           double zeroOffset = bounds.getY() + zeroTransform + 1;
 
           // paint bar

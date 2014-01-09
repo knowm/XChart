@@ -60,15 +60,17 @@ public class DateChart01 implements ExampleChart {
     Collection<Date> xData = new ArrayList<Date>();
     Collection<Number> yData = new ArrayList<Number>();
 
-    DateFormat sdf = new SimpleDateFormat("ss.S");
+    DateFormat sdf = new SimpleDateFormat("HH:mm:ss.S");
     Date date = null;
     for (int i = 1; i <= 14; i++) {
 
       try {
-        date = sdf.parse("31." + (100 * i + random.nextInt(20)));
+        date = sdf.parse("23:45:31." + (100 * i + random.nextInt(20)));
       } catch (ParseException e) {
         e.printStackTrace();
       }
+      // System.out.println(date.getTime());
+      // System.out.println(date.toString());
       xData.add(date);
       yData.add(Math.random() * i);
     }

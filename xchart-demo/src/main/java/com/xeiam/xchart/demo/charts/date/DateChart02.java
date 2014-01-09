@@ -53,11 +53,11 @@ public class DateChart02 implements ExampleChart {
 
     Random random = new Random();
 
-    DateFormat sdf = new SimpleDateFormat("mm:ss.SSS");
+    DateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
     Date date = null;
     for (int i = 1; i <= 14; i++) {
       try {
-        date = sdf.parse("23:" + (5 * i + random.nextInt(2)) + "." + random.nextInt(1000));
+        date = sdf.parse("23:45:" + (5 * i + random.nextInt(2)) + "." + random.nextInt(1000));
       } catch (ParseException e) {
         e.printStackTrace();
       }

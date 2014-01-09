@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,9 +38,9 @@ public abstract class AxisTickCalculator {
 
   protected final int workingSpace;
 
-  protected final BigDecimal minValue;
+  protected final double minValue;
 
-  protected final BigDecimal maxValue;
+  protected final double maxValue;
 
   protected final StyleManager styleManager;
 
@@ -54,37 +53,37 @@ public abstract class AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public AxisTickCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     // override min/max value for bar charts' Y-Axis
-    BigDecimal overrideMinValue = minValue;
-    BigDecimal overrideMaxValue = maxValue;
+    double overrideMinValue = minValue;
+    double overrideMaxValue = maxValue;
     if (styleManager.getChartType() == ChartType.Bar && axisDirection == Direction.Y) { // this is the Y-Axis for a bar chart
-      if (minValue.compareTo(BigDecimal.ZERO) > 0 && maxValue.compareTo(BigDecimal.ZERO) > 0) {
-        overrideMinValue = BigDecimal.ZERO;
+      if (minValue > 0.0 && maxValue > 0.0) {
+        overrideMinValue = 0.0;
       }
-      if (minValue.compareTo(BigDecimal.ZERO) < 0 && maxValue.compareTo(BigDecimal.ZERO) < 0) {
-        overrideMaxValue = BigDecimal.ZERO;
+      if (minValue < 0.0 && maxValue < 0.0) {
+        overrideMaxValue = 0.0;
       }
     }
 
     if (styleManager.getChartType() == ChartType.Bar && styleManager.isYAxisLogarithmic()) {
-      int logMin = (int) Math.floor(Math.log10(minValue.doubleValue()));
-      overrideMinValue = new BigDecimal(Utils.pow(10, logMin).doubleValue());
+      int logMin = (int) Math.floor(Math.log10(minValue));
+      overrideMinValue = Utils.pow(10, logMin);
     }
 
     // override min and maxValue if specified
     if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
-      overrideMinValue = new BigDecimal(styleManager.getXAxisMin());
+      overrideMinValue = styleManager.getXAxisMin();
     }
     if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
-      overrideMinValue = new BigDecimal(styleManager.getYAxisMin());
+      overrideMinValue = styleManager.getYAxisMin();
     }
     if (axisDirection == Direction.X && styleManager.getXAxisMax() != null) {
-      overrideMaxValue = new BigDecimal(styleManager.getXAxisMax());
+      overrideMaxValue = styleManager.getXAxisMax();
     }
     if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {
-      overrideMaxValue = new BigDecimal(styleManager.getYAxisMax());
+      overrideMaxValue = styleManager.getYAxisMax();
     }
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
@@ -93,14 +92,20 @@ public abstract class AxisTickCalculator {
     this.styleManager = styleManager;
   }
 
-  BigDecimal getFirstPosition(BigDecimal gridStep) {
+  /**
+   * Gets the first position
+   * 
+   * @param gridStep
+   * @return
+   */
+  double getFirstPosition(double gridStep) {
 
-    BigDecimal firstPosition;
-    if (minValue.remainder(gridStep).doubleValue() <= 0.0) {
-      firstPosition = minValue.subtract(minValue.remainder(gridStep));
+    double firstPosition;
+    if (minValue % gridStep <= 0.0) {
+      firstPosition = minValue - (minValue % gridStep);
     }
     else {
-      firstPosition = minValue.subtract(minValue.remainder(gridStep)).add(gridStep);
+      firstPosition = minValue - (minValue % gridStep) + gridStep;
     }
     return firstPosition;
   }

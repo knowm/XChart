@@ -15,8 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.math.BigDecimal;
-
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
@@ -39,7 +37,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickNumericalCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public AxisTickNumericalCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     numberFormatter = new NumberFormatter(styleManager);
@@ -59,17 +57,17 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
-    BigDecimal gridStep = getGridStep(tickSpace);
-    BigDecimal firstPosition = getFirstPosition(gridStep);
+    double gridStep = getGridStep(tickSpace);
+    double firstPosition = getFirstPosition(gridStep);
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
+    for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
 
       tickLabels.add(numberFormatter.formatNumber(tickPosition));
       // here we convert tickPosition finally to plot space, i.e. pixels
-      int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
+      int tickLabelPosition = (int) (margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace));
       tickLocations.add(tickLabelPosition);
     }
   }
@@ -80,15 +78,15 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
    * @param tickSpace in plot space
    * @return
    */
-  private BigDecimal getGridStep(int tickSpace) {
+  private double getGridStep(int tickSpace) {
 
     // this prevents an infinite loop when the plot gets sized really small.
     if (tickSpace < 10) {
-      return BigDecimal.ONE;
+      return 1.0;
     }
 
     // the span of the data
-    double span = Math.abs(maxValue.subtract(minValue).doubleValue()); // in data space
+    double span = Math.abs(maxValue - minValue); // in data space
 
     int tickMarkSpaceHint = (axisDirection == Direction.X ? styleManager.getXAxisTickMarkSpacingHint() : styleManager.getYAxisTickMarkSpacingHint());
 
@@ -120,18 +118,18 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     }
 
     // calculate the grid step with hint.
-    BigDecimal gridStep;
+    double gridStep;
     if (significand > 7.5) {
       // gridStep = 10.0 * 10 ** exponent
-      gridStep = BigDecimal.TEN.multiply(Utils.pow(10, exponent));
+      gridStep = 10.0 * Utils.pow(10, exponent);
     }
     else if (significand > 3.5) {
       // gridStep = 5.0 * 10 ** exponent
-      gridStep = new BigDecimal(new Double(5).toString()).multiply(Utils.pow(10, exponent));
+      gridStep = 5.0 * Utils.pow(10, exponent);
     }
     else if (significand > 1.5) {
       // gridStep = 2.0 * 10 ** exponent
-      gridStep = new BigDecimal(new Double(2).toString()).multiply(Utils.pow(10, exponent));
+      gridStep = 2.0 * Utils.pow(10, exponent);
     }
     else {
       // gridStep = 1.0 * 10 ** exponent
@@ -139,5 +137,4 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     }
     return gridStep;
   }
-
 }

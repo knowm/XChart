@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
@@ -42,7 +41,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickBarChartCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, ChartPainter chart) {
+  public AxisTickBarChartCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, ChartPainter chart) {
 
     super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
     calculate(chart);
@@ -54,7 +53,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // get all categories
     Set<Object> categories = new TreeSet<Object>();
@@ -64,10 +63,10 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       while (xItr.hasNext()) {
         Object x = null;
         if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
-          x = new BigDecimal(((Number) xItr.next()).doubleValue());
+          x = xItr.next();
         }
         else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
-          x = new BigDecimal(((Date) xItr.next()).getTime());
+          x = (double) (((Date) xItr.next()).getTime());
         }
         else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
           x = xItr.next();
@@ -94,13 +93,13 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     int counter = 0;
     for (Object category : categories) {
       if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
-        tickLabels.add(numberFormatter.formatNumber((BigDecimal) category));
+        tickLabels.add(numberFormatter.formatNumber((Double) category));
       }
       else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
-        long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
+        long span = (long) Math.abs(maxValue - minValue); // in data space
         long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
         long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
-        tickLabels.add(dateFormatter.formatDate((BigDecimal) category, timeUnit));
+        tickLabels.add(dateFormatter.formatDate((Double) category, timeUnit));
       }
       else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
         tickLabels.add(category.toString());
@@ -109,5 +108,4 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       tickLocations.add(tickLabelPosition);
     }
   }
-
 }

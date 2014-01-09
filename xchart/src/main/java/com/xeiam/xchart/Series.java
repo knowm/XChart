@@ -17,7 +17,6 @@ package com.xeiam.xchart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -45,16 +44,16 @@ public class Series {
   private Collection<? extends Number> errorBars;
 
   /** the minimum value of axis range */
-  private BigDecimal xMin;
+  private double xMin;
 
   /** the maximum value of axis range */
-  private BigDecimal xMax;
+  private double xMax;
 
   /** the minimum value of axis range */
-  private BigDecimal yMin;
+  private double yMin;
 
   /** the maximum value of axis range */
-  private BigDecimal yMax;
+  private double yMax;
 
   /** Line Style */
   private BasicStroke stroke;
@@ -107,10 +106,10 @@ public class Series {
    * @param data
    * @return
    */
-  private BigDecimal[] findMinMax(Collection<?> data, AxisType axisType) {
+  private double[] findMinMax(Collection<?> data, AxisType axisType) {
 
-    BigDecimal min = null;
-    BigDecimal max = null;
+    double min = Double.MAX_VALUE;
+    double max = Double.MIN_VALUE;
 
     for (Object dataPoint : data) {
 
@@ -118,28 +117,28 @@ public class Series {
         continue;
       }
 
-      BigDecimal bigDecimal = null;
+      double value = 0.0;
 
       if (axisType == AxisType.Number) {
-        bigDecimal = new BigDecimal(((Number) dataPoint).toString());
+        value = ((Number) dataPoint).doubleValue();
 
       }
       else if (axisType == AxisType.Date) {
         Date date = (Date) dataPoint;
-        bigDecimal = new BigDecimal(date.getTime());
+        value = date.getTime();
       }
       else if (axisType == AxisType.String) {
-        return new BigDecimal[] { null, null };
+        return new double[] { Double.NaN, Double.NaN };
       }
-      if (min == null || bigDecimal.compareTo(min) < 0) {
-        min = bigDecimal;
+      if (value < min) {
+        min = value;
       }
-      if (max == null || bigDecimal.compareTo(max) > 0) {
-        max = bigDecimal;
+      if (value > max) {
+        max = value;
       }
     }
 
-    return new BigDecimal[] { min, max };
+    return new double[] { min, max };
   }
 
   /**
@@ -148,24 +147,24 @@ public class Series {
    * @param data
    * @return
    */
-  private BigDecimal[] findMinMaxWithErrorBars(Collection<? extends Number> data, Collection<? extends Number> errorBars) {
+  private double[] findMinMaxWithErrorBars(Collection<? extends Number> data, Collection<? extends Number> errorBars) {
 
-    BigDecimal min = null;
-    BigDecimal max = null;
+    double min = Double.MAX_VALUE;
+    double max = Double.MIN_VALUE;
 
     Iterator<? extends Number> itr = data.iterator();
     Iterator<? extends Number> ebItr = errorBars.iterator();
     while (itr.hasNext()) {
-      BigDecimal bigDecimal = new BigDecimal(itr.next().doubleValue());
-      BigDecimal eb = new BigDecimal(ebItr.next().doubleValue());
-      if (min == null || (bigDecimal.subtract(eb)).compareTo(min) < 0) {
-        min = bigDecimal.subtract(eb);
+      double bigDecimal = itr.next().doubleValue();
+      double eb = ebItr.next().doubleValue();
+      if (bigDecimal - eb < min) {
+        min = bigDecimal - eb;
       }
-      if (max == null || (bigDecimal.add(eb)).compareTo(max) > 0) {
-        max = bigDecimal.add(eb);
+      if (bigDecimal + eb > max) {
+        max = bigDecimal + eb;
       }
     }
-    return new BigDecimal[] { min, max };
+    return new double[] { min, max };
   }
 
   /**
@@ -260,22 +259,22 @@ public class Series {
     return errorBars;
   }
 
-  public BigDecimal getxMin() {
+  public double getxMin() {
 
     return xMin;
   }
 
-  public BigDecimal getxMax() {
+  public double getxMax() {
 
     return xMax;
   }
 
-  public BigDecimal getyMin() {
+  public double getyMin() {
 
     return yMin;
   }
 
-  public BigDecimal getyMax() {
+  public double getyMax() {
 
     return yMax;
   }
@@ -320,12 +319,12 @@ public class Series {
   private void calculateMinMax() {
 
     // xData
-    BigDecimal[] xMinMax = findMinMax(xData, xAxisType);
+    double[] xMinMax = findMinMax(xData, xAxisType);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
 
     // yData
-    BigDecimal[] yMinMax = null;
+    double[] yMinMax = null;
     if (errorBars == null) {
       yMinMax = findMinMax(yData, yAxisType);
     }
