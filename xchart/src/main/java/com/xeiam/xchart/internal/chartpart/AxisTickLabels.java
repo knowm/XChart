@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 - 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,6 +66,12 @@ public class AxisTickLabels implements ChartPart {
         int tickLocation = axisTick.getTickLocations().get(i);
 
         if (tickLabel != null) { // some are null for logarithmic axes
+
+          // AffineTransform orig = g.getTransform();
+          // AffineTransform at = new AffineTransform();
+          // at.rotate(Math.PI / -2.0, xOffset, (float) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation / 2.0));
+          // g.transform(at);
+
           FontRenderContext frc = g.getFontRenderContext();
           // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
           TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
@@ -75,6 +81,8 @@ public class AxisTickLabels implements ChartPart {
           if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
             maxTickLabelWidth = tickLabelBounds.getWidth();
           }
+          // g.setTransform(orig);
+
         }
       }
 
