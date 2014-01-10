@@ -46,8 +46,8 @@ public class LineChart01 implements ExampleChart {
   public Chart getChart() {
 
     // generates Log data
-    List<Number> xData = new ArrayList<Number>();
-    List<Number> yData = new ArrayList<Number>();
+    List<Integer> xData = new ArrayList<Integer>();
+    List<Double> yData = new ArrayList<Double>();
     for (int i = -3; i <= 3; i++) {
       xData.add(i);
       yData.add(Math.pow(10, i));

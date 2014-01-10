@@ -19,8 +19,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
@@ -57,8 +57,8 @@ public class DateChart01 implements ExampleChart {
     Random random = new Random();
 
     // generate data
-    Collection<Date> xData = new ArrayList<Date>();
-    Collection<Number> yData = new ArrayList<Number>();
+    List<Date> xData = new ArrayList<Date>();
+    List<Double> yData = new ArrayList<Double>();
 
     DateFormat sdf = new SimpleDateFormat("HH:mm:ss.S");
     Date date = null;

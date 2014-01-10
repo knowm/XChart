@@ -19,8 +19,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
@@ -48,8 +48,8 @@ public class DateChart07 implements ExampleChart {
     chart.getStyleManager().setLegendVisible(false);
 
     // generate data
-    Collection<Date> xData = new ArrayList<Date>();
-    Collection<Number> yData = new ArrayList<Number>();
+    List<Date> xData = new ArrayList<Date>();
+    List<Double> yData = new ArrayList<Double>();
 
     Random random = new Random();
 

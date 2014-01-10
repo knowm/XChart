@@ -48,8 +48,8 @@ public class ScatterChart02 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    List<Number> xData = new ArrayList<Number>();
-    List<Number> yData = new ArrayList<Number>();
+    List<Double> xData = new ArrayList<Double>();
+    List<Double> yData = new ArrayList<Double>();
     Random random = new Random();
     int size = 400;
     for (int i = 0; i < size; i++) {

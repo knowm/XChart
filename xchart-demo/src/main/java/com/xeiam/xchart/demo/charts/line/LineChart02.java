@@ -47,12 +47,12 @@ public class LineChart02 implements ExampleChart {
 
     // generates sine data
     int size = 30;
-    List<Number> xData1 = new ArrayList<Number>();
-    List<Number> yData1 = new ArrayList<Number>();
+    List<Integer> xData = new ArrayList<Integer>();
+    List<Double> yData = new ArrayList<Double>();
     for (int i = 0; i <= size; i++) {
       double radians = (Math.PI / (size / 2) * i);
-      xData1.add(i - size / 2);
-      yData1.add(size * Math.sin(radians));
+      xData.add(i - size / 2);
+      yData.add(size * Math.sin(radians));
     }
 
     // Create Chart
@@ -63,7 +63,7 @@ public class LineChart02 implements ExampleChart {
     chart.getStyleManager().setLegendVisible(false);
 
     // Series 1
-    Series series1 = chart.addSeries("y=sin(x)", xData1, yData1);
+    Series series1 = chart.addSeries("y=sin(x)", xData, yData);
     series1.setLineColor(SeriesColor.PURPLE);
     series1.setLineStyle(SeriesLineStyle.DASH_DASH);
     series1.setMarkerColor(SeriesColor.GREEN);

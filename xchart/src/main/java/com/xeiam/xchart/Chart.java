@@ -111,7 +111,7 @@ public class Chart {
    * @param yData
    * @return
    */
-  public Series addCategorySeries(String seriesName, Collection<String> xData, Collection<Number> yData) {
+  public Series addCategorySeries(String seriesName, Collection<String> xData, Collection<? extends Number> yData) {
 
     return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
   }
@@ -124,7 +124,7 @@ public class Chart {
    * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
-  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData) {
+  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<? extends Number> yData) {
 
     return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
   }
@@ -138,7 +138,7 @@ public class Chart {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData, Collection<Number> errorBars) {
+  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
 
     return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
   }

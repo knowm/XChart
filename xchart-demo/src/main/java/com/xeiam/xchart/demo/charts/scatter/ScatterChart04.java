@@ -51,12 +51,12 @@ public class ScatterChart04 implements ExampleChart {
 
     // generates data
     int size = 10;
-    List<Number> xData1 = new ArrayList<Number>();
-    List<Number> yData1 = new ArrayList<Number>();
-    List<Number> errorBars = new ArrayList<Number>();
+    List<Integer> xData = new ArrayList<Integer>();
+    List<Double> yData = new ArrayList<Double>();
+    List<Double> errorBars = new ArrayList<Double>();
     for (int i = 0; i <= size; i++) {
-      xData1.add(i);
-      yData1.add(10 * Math.exp(-i));
+      xData.add(i);
+      yData.add(10 * Math.exp(-i));
       errorBars.add(Math.random() + .3);
     }
 
@@ -69,7 +69,7 @@ public class ScatterChart04 implements ExampleChart {
     chart.getStyleManager().setAxisTitlesVisible(false);
 
     // Series
-    Series series = chart.addSeries("10^(-x)", xData1, yData1, errorBars);
+    Series series = chart.addSeries("10^(-x)", xData, yData, errorBars);
     series.setMarkerColor(Color.RED);
     series.setMarker(SeriesMarker.SQUARE);
 

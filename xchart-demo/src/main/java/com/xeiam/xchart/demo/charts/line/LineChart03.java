@@ -55,7 +55,7 @@ public class LineChart03 implements ExampleChart {
 
     // generates linear data
     Collection<Date> xData = new ArrayList<Date>();
-    Collection<Number> yData = new ArrayList<Number>();
+    Collection<Double> yData = new ArrayList<Double>();
 
     DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     Date date = null;
