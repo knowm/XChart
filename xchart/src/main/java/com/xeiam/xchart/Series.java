@@ -97,7 +97,6 @@ public class Series {
     stroke = seriesColorMarkerLineStyle.getStroke();
 
     calculateMinMax();
-
   }
 
   /**
@@ -259,22 +258,22 @@ public class Series {
     return errorBars;
   }
 
-  public double getxMin() {
+  public double getXMin() {
 
     return xMin;
   }
 
-  public double getxMax() {
+  public double getXMax() {
 
     return xMax;
   }
 
-  public double getyMin() {
+  public double getYMin() {
 
     return yMin;
   }
 
-  public double getyMax() {
+  public double getYMax() {
 
     return yMax;
   }
@@ -304,13 +303,13 @@ public class Series {
     return name;
   }
 
-  void replaceXData(List<Number> newXData) {
+  void replaceXData(List<? extends Number> newXData) {
 
     xData = newXData;
     calculateMinMax();
   }
 
-  void replaceYData(List<Number> newYData) {
+  void replaceYData(List<? extends Number> newYData) {
 
     yData = newYData;
     calculateMinMax();
@@ -322,6 +321,8 @@ public class Series {
     double[] xMinMax = findMinMax(xData, xAxisType);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
+    // System.out.println(xMin);
+    // System.out.println(xMax);
 
     // yData
     double[] yMinMax = null;

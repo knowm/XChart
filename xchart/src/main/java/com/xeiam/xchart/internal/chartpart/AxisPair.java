@@ -149,12 +149,12 @@ public class AxisPair implements ChartPart {
     return seriesMap;
   }
 
-  public Axis getxAxis() {
+  public Axis getXAxis() {
 
     return xAxis;
   }
 
-  public Axis getyAxis() {
+  public Axis getYAxis() {
 
     return yAxis;
   }

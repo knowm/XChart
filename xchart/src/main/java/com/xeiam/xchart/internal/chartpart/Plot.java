@@ -59,17 +59,17 @@ public class Plot implements ChartPart {
     bounds = new Rectangle2D.Double();
 
     // calculate bounds
-    double xOffset = chartPainter.getAxisPair().getyAxis().getBounds().getX()
+    double xOffset = chartPainter.getAxisPair().getYAxis().getBounds().getX()
 
-    + chartPainter.getAxisPair().getyAxis().getBounds().getWidth()
+    + chartPainter.getAxisPair().getYAxis().getBounds().getWidth()
 
     + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding()) : 0)
 
     ;
 
-    double yOffset = chartPainter.getAxisPair().getyAxis().getBounds().getY();
-    double width = chartPainter.getAxisPair().getxAxis().getBounds().getWidth();
-    double height = chartPainter.getAxisPair().getyAxis().getBounds().getHeight();
+    double yOffset = chartPainter.getAxisPair().getYAxis().getBounds().getY();
+    double width = chartPainter.getAxisPair().getXAxis().getBounds().getWidth();
+    double height = chartPainter.getAxisPair().getYAxis().getBounds().getHeight();
     bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
     // g.setColor(Color.green);
     // g.draw(bounds);

@@ -74,8 +74,8 @@ public class PlotContentBarChart extends PlotContent {
       Collection<?> xData = series.getXData();
 
       Collection<? extends Number> yData = series.getYData();
-      double yMin = getChartPainter().getAxisPair().getyAxis().getMin();
-      double yMax = getChartPainter().getAxisPair().getyAxis().getMax();
+      double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
+      double yMax = getChartPainter().getAxisPair().getYAxis().getMax();
 
       // if min and max positive, set min to zero
       if (yMin > 0.0 && yMax > 0.0) {
@@ -92,7 +92,7 @@ public class PlotContentBarChart extends PlotContent {
       }
       else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
         // int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
-        int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin()));
+        int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getYAxis().getMin()));
         // System.out.println("logMin: " + logMin);
         // System.out.println("min : " + getChartPainter().getAxisPair().getyAxis().getMin().doubleValue());
         yMin = logMin;

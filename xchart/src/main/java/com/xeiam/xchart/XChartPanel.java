@@ -244,12 +244,13 @@ public class XChartPanel extends JPanel {
   }
 
   /**
-   * update a series by only updating the Y-Axis data
+   * update a series by only updating the Y-Axis data. The X-Axis data will is automatically generated as a list of increasing Integers starting from 1 and ending at the size of the new Y-Axis data
+   * list.
    * 
    * @param seriesName
    * @param newYData
    */
-  public void updateSeries(String seriesName, List<Number> newYData) {
+  public void updateSeries(String seriesName, List<? extends Number> newYData) {
 
     Series series = chart.getSeriesMap().get(seriesName);
     if (series == null) {
@@ -263,6 +264,26 @@ public class XChartPanel extends JPanel {
       generatedXData.add(i);
     }
     series.replaceXData(generatedXData);
+
+    // Re-display the chart
+    revalidate();
+    repaint();
+  }
+
+  /**
+   * update a series by only updating both the X-Axis and Y-Axis data
+   * 
+   * @param seriesName
+   * @param newYData
+   */
+  public void updateSeries(String seriesName, List<? extends Number> newXData, List<? extends Number> newYData) {
+
+    Series series = chart.getSeriesMap().get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    series.replaceXData(newXData);
+    series.replaceYData(newYData);
 
     // Re-display the chart
     revalidate();

@@ -61,12 +61,12 @@ public class PlotContentLineChart extends PlotContent {
 
       // data points
       Collection<?> xData = series.getXData();
-      double xMin = getChartPainter().getAxisPair().getxAxis().getMin();
-      double xMax = getChartPainter().getAxisPair().getxAxis().getMax();
+      double xMin = getChartPainter().getAxisPair().getXAxis().getMin();
+      double xMax = getChartPainter().getAxisPair().getXAxis().getMax();
 
       Collection<? extends Number> yData = series.getYData();
-      double yMin = getChartPainter().getAxisPair().getyAxis().getMin();
-      double yMax = getChartPainter().getAxisPair().getyAxis().getMax();
+      double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
+      double yMax = getChartPainter().getAxisPair().getYAxis().getMax();
 
       // override min and maxValue if specified
       if (getChartPainter().getStyleManager().getXAxisMin() != null) {
@@ -108,11 +108,11 @@ public class PlotContentLineChart extends PlotContent {
       while (xItr.hasNext()) {
 
         double x = 0.0;
-        if (getChartPainter().getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+        if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
           x = ((Number) xItr.next()).doubleValue();
           // System.out.println(x);
         }
-        if (getChartPainter().getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+        if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           x = ((Date) xItr.next()).getTime();
           // System.out.println(x);
         }

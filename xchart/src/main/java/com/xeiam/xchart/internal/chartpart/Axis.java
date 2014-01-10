@@ -49,9 +49,9 @@ public class Axis implements ChartPart {
   /** the axis direction */
   private Direction direction;
 
-  private double min = Double.MAX_VALUE;
+  private double min;;
 
-  private double max = Double.MIN_VALUE;
+  private double max;;
 
   /** the bounds */
   private Rectangle2D bounds;
@@ -81,6 +81,15 @@ public class Axis implements ChartPart {
     this.direction = direction;
     axisTitle = new AxisTitle(this);
     axisTick = new AxisTick(this);
+  }
+
+  /**
+   * Reset the default min and max values in preparation for calculating the actualy min and max
+   */
+  void resetMinMax() {
+
+    min = Double.MAX_VALUE;
+    max = Double.MIN_VALUE;
   }
 
   /**
@@ -166,7 +175,7 @@ public class Axis implements ChartPart {
       double width = 80; // arbitrary, final width depends on Axis tick labels
 
       double height =
-          getChartPainter().getHeight() - yOffset - axisPair.getxAxis().getSizeHint() - getChartPainter().getStyleManager().getPlotPadding() - getChartPainter().getStyleManager().getChartPadding();
+          getChartPainter().getHeight() - yOffset - axisPair.getXAxis().getSizeHint() - getChartPainter().getStyleManager().getPlotPadding() - getChartPainter().getStyleManager().getChartPadding();
       Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
       this.paintZone = yAxisRectangle;
@@ -193,9 +202,9 @@ public class Axis implements ChartPart {
       // |____________________|
 
       double xOffset =
-          axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0)
+          axisPair.getYAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0)
               + getChartPainter().getStyleManager().getChartPadding();
-      double yOffset = axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
+      double yOffset = axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
 
       double chartLegendWidth = 0;
       if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
@@ -206,7 +215,7 @@ public class Axis implements ChartPart {
 
           getChartPainter().getWidth()
 
-              - axisPair.getyAxis().getBounds().getWidth()
+              - axisPair.getYAxis().getBounds().getWidth()
 
               - chartLegendWidth
 

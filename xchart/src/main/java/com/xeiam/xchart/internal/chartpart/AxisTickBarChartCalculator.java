@@ -62,13 +62,13 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       Iterator<?> xItr = series.getXData().iterator();
       while (xItr.hasNext()) {
         Object x = null;
-        if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+        if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
           x = xItr.next();
         }
-        else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+        else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           x = (double) (((Date) xItr.next()).getTime());
         }
-        else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
+        else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
           x = xItr.next();
         }
         categories.add(x);
@@ -84,24 +84,24 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     NumberFormatter numberFormatter = null;
     DateFormatter dateFormatter = null;
 
-    if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+    if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
       numberFormatter = new NumberFormatter(styleManager);
     }
-    else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+    else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
       dateFormatter = new DateFormatter(chartPainter.getStyleManager());
     }
     int counter = 0;
     for (Object category : categories) {
-      if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Number) {
+      if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
         tickLabels.add(numberFormatter.formatNumber((Double) category));
       }
-      else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.Date) {
+      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
         long span = (long) Math.abs(maxValue - minValue); // in data space
         long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
         long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
         tickLabels.add(dateFormatter.formatDate((Double) category, timeUnit));
       }
-      else if (chartPainter.getAxisPair().getxAxis().getAxisType() == AxisType.String) {
+      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
         tickLabels.add(category.toString());
       }
       int tickLabelPosition = margin + firstPosition + gridStep * counter++;

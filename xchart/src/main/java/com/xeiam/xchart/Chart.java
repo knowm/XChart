@@ -233,7 +233,7 @@ public class Chart {
    */
   public void setXAxisTitle(String title) {
 
-    chartPainter.getAxisPair().getxAxis().getAxisTitle().setText(title);
+    chartPainter.getAxisPair().getXAxis().getAxisTitle().setText(title);
   }
 
   /**
@@ -243,7 +243,7 @@ public class Chart {
    */
   public void setYAxisTitle(String title) {
 
-    chartPainter.getAxisPair().getyAxis().getAxisTitle().setText(title);
+    chartPainter.getAxisPair().getYAxis().getAxisTitle().setText(title);
   }
 
   /**

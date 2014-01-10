@@ -76,6 +76,9 @@ public class ChartPainter {
   public void paint(Graphics2D g) {
 
     // calc axis min and max
+    axisPair.getXAxis().resetMinMax();
+    axisPair.getYAxis().resetMinMax();
+
     for (Series series : getAxisPair().getSeriesMap().values()) {
       // add min/max to axis
       // System.out.println(series.getxMin());
@@ -83,18 +86,18 @@ public class ChartPainter {
       // System.out.println(series.getyMin());
       // System.out.println(series.getyMax());
       // System.out.println("****");
-      axisPair.getxAxis().addMinMax(series.getxMin(), series.getxMax());
-      axisPair.getyAxis().addMinMax(series.getyMin(), series.getyMax());
+      axisPair.getXAxis().addMinMax(series.getXMin(), series.getXMax());
+      axisPair.getYAxis().addMinMax(series.getYMin(), series.getYMax());
     }
 
     // Sanity checks
     if (axisPair.getSeriesMap().isEmpty()) {
       throw new RuntimeException("No series defined for Chart!!!");
     }
-    if (getStyleManager().isXAxisLogarithmic() && axisPair.getxAxis().getMin() <= 0.0) {
+    if (getStyleManager().isXAxisLogarithmic() && axisPair.getXAxis().getMin() <= 0.0) {
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic X-Axis!!!");
     }
-    if (getStyleManager().isYAxisLogarithmic() && axisPair.getyAxis().getMin() <= 0.0) {
+    if (getStyleManager().isYAxisLogarithmic() && axisPair.getYAxis().getMin() <= 0.0) {
       // System.out.println(axisPair.getyAxis().getMin());
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic Y-Axis!!!");
     }
