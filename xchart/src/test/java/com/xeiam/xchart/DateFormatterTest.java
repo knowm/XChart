@@ -91,7 +91,7 @@ public class DateFormatterTest {
     gridStepHint = (long) (span / 1000 * 74);
     timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("13-21"));
+    assertThat(stringValue, equalTo("21:25"));
 
     // week
     value = 1358112317000L;

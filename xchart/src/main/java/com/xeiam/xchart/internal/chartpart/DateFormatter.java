@@ -99,7 +99,7 @@ public class DateFormatter {
         datePattern = "HH:mm";
       }
       else if (timeUnit == HOUR_SCALE) {
-        datePattern = "dd-HH";
+        datePattern = "HH:mm";
       }
       else if (timeUnit == DAY_SCALE) {
         datePattern = "MM-dd";
