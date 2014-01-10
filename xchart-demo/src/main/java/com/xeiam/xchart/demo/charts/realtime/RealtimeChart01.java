@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.standalone;
+package com.xeiam.xchart.demo.charts.realtime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,27 +21,26 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.XChartPanel;
+import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
+ * Realtime
+ * 
  * @author timmolter
  */
-public class RealtimeAttempt3 {
+public class RealtimeChart01 implements ExampleChart {
 
-  private Chart chart;
-  private XChartPanel chartPanel;
-  private static final String SERIES_NAME = "series1";
-  private List<Integer> xData;
   private List<Double> yData;
+  public static final String SERIES_NAME = "series1";
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
 
     // Setup the panel
-    final RealtimeAttempt3 realtimeAttempt = new RealtimeAttempt3();
-    realtimeAttempt.buildPanel();
+    final RealtimeChart01 realtimeChart01 = new RealtimeChart01();
+    final XChartPanel chartPanel = realtimeChart01.buildPanel();
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
@@ -53,7 +52,7 @@ public class RealtimeAttempt3 {
         // Create and set up the window.
         JFrame frame = new JFrame("XChart");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(realtimeAttempt.getChartPanel());
+        frame.add(chartPanel);
 
         // Display the window.
         frame.pack();
@@ -67,7 +66,9 @@ public class RealtimeAttempt3 {
       @Override
       public void run() {
 
-        realtimeAttempt.updateData();
+        realtimeChart01.updateData();
+        chartPanel.updateSeries(SERIES_NAME, realtimeChart01.getyData());
+
       }
     };
 
@@ -76,51 +77,28 @@ public class RealtimeAttempt3 {
 
   }
 
-  public void buildPanel() {
+  public XChartPanel buildPanel() {
 
     yData = getRandomData(5);
-    xData = getMonotonicallyIncreasingData(5);
+    return new XChartPanel(getChart());
+  }
+
+  @Override
+  public Chart getChart() {
+
+    yData = getRandomData(5);
 
     // Create Chart
-    chart = new Chart(500, 400);
+    Chart chart = new Chart(500, 400);
     chart.setChartTitle("Sample Real-time Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.addSeries(SERIES_NAME, xData, yData);
-
-    chartPanel = new XChartPanel(chart);
-  }
-
-  public void updateData() {
-
-    // Get some new data
-    List<Double> newYData = getRandomData(1);
-    yData.addAll(newYData);
-
-    xData.add(xData.get(xData.size() - 1) + 1);
-
-    // Limit the total number of points
-    while (yData.size() > 20) {
-      yData.remove(0);
-    }
-    while (xData.size() > 20) {
-      xData.remove(0);
-    }
-
-    chartPanel.updateSeries(SERIES_NAME, xData, yData);
-  }
-
-  public Chart getChart() {
+    chart.addSeries(SERIES_NAME, null, yData);
 
     return chart;
   }
 
-  public JPanel getChartPanel() {
-
-    return chartPanel;
-  }
-
-  private List<Double> getRandomData(int numPoints) {
+  private static List<Double> getRandomData(int numPoints) {
 
     List<Double> data = new ArrayList<Double>();
     for (int i = 0; i < numPoints; i++) {
@@ -129,12 +107,22 @@ public class RealtimeAttempt3 {
     return data;
   }
 
-  private List<Integer> getMonotonicallyIncreasingData(int numPoints) {
+  public void updateData() {
 
-    List<Integer> data = new ArrayList<Integer>();
-    for (int i = 0; i < numPoints; i++) {
-      data.add(i);
+    // Get some new data
+    List<Double> newData = getRandomData(1);
+
+    yData.addAll(newData);
+
+    // Limit the total number of points
+    while (yData.size() > 20) {
+      yData.remove(0);
     }
-    return data;
+
+  }
+
+  public List<Double> getyData() {
+
+    return yData;
   }
 }

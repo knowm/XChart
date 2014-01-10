@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.standalone;
+package com.xeiam.xchart.demo.charts.realtime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,26 +21,29 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.XChartPanel;
+import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
+ * Realtime
+ * 
  * @author timmolter
  */
-public class RealtimeAttempt2 {
+public class RealtimeChart02 implements ExampleChart {
 
   private Chart chart;
-  private XChartPanel chartPanel;
-  private static final String SERIES_NAME = "series1";
-  private List<Number> yData;
+  // private XChartPanel chartPanel;
+  public static final String SERIES_NAME = "series1";
+  private List<Integer> xData;
+  private List<Double> yData;
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
 
     // Setup the panel
-    final RealtimeAttempt2 realtimeAttempt = new RealtimeAttempt2();
-    realtimeAttempt.buildPanel();
+    final RealtimeChart02 realtimeChart02 = new RealtimeChart02();
+    final XChartPanel chartPanel = realtimeChart02.buildPanel();
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
@@ -52,7 +55,7 @@ public class RealtimeAttempt2 {
         // Create and set up the window.
         JFrame frame = new JFrame("XChart");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(realtimeAttempt.getChartPanel());
+        frame.add(chartPanel);
 
         // Display the window.
         frame.pack();
@@ -66,7 +69,9 @@ public class RealtimeAttempt2 {
       @Override
       public void run() {
 
-        realtimeAttempt.updateData();
+        realtimeChart02.updateData();
+        chartPanel.updateSeries(SERIES_NAME, realtimeChart02.getxData(), realtimeChart02.getyData());
+
       }
     };
 
@@ -75,24 +80,52 @@ public class RealtimeAttempt2 {
 
   }
 
-  public void buildPanel() {
+  public XChartPanel buildPanel() {
 
+    yData = getRandomData(5);
+    xData = getMonotonicallyIncreasingData(5);
+
+    return new XChartPanel(getChart());
+  }
+
+  @Override
+  public Chart getChart() {
+
+    xData = getMonotonicallyIncreasingData(5);
     yData = getRandomData(5);
 
     // Create Chart
-    chart = new Chart(500, 400);
+    Chart chart = new Chart(500, 400);
     chart.setChartTitle("Sample Real-time Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.addSeries(SERIES_NAME, null, yData);
+    chart.addSeries(SERIES_NAME, xData, yData);
 
-    chartPanel = new XChartPanel(chart);
+    return chart;
+  }
+
+  private List<Double> getRandomData(int numPoints) {
+
+    List<Double> data = new ArrayList<Double>();
+    for (int i = 0; i < numPoints; i++) {
+      data.add(Math.random() * 100);
+    }
+    return data;
+  }
+
+  private List<Integer> getMonotonicallyIncreasingData(int numPoints) {
+
+    List<Integer> data = new ArrayList<Integer>();
+    for (int i = 0; i < numPoints; i++) {
+      data.add(i);
+    }
+    return data;
   }
 
   public void updateData() {
 
     // Get some new data
-    List<Number> newData = getRandomData(1);
+    List<Double> newData = getRandomData(1);
 
     yData.addAll(newData);
 
@@ -101,25 +134,19 @@ public class RealtimeAttempt2 {
       yData.remove(0);
     }
 
-    chartPanel.updateSeries(SERIES_NAME, yData);
-  }
-
-  public Chart getChart() {
-
-    return chart;
-  }
-
-  public JPanel getChartPanel() {
-
-    return chartPanel;
-  }
-
-  private static List<Number> getRandomData(int numPoints) {
-
-    List<Number> data = new ArrayList<Number>();
-    for (int i = 0; i < numPoints; i++) {
-      data.add(Math.random() * 100);
+    xData.add(xData.get(xData.size() - 1) + 1);
+    while (xData.size() > 20) {
+      xData.remove(0);
     }
-    return data;
+  }
+
+  public List<Double> getyData() {
+
+    return yData;
+  }
+
+  public List<Integer> getxData() {
+
+    return xData;
   }
 }
