@@ -303,7 +303,7 @@ public class Series {
     return name;
   }
 
-  void replaceXData(List<? extends Number> newXData) {
+  void replaceXData(List<?> newXData) {
 
     xData = newXData;
     calculateMinMax();

@@ -79,7 +79,6 @@ public class RealtimeChart01 implements ExampleChart {
 
   public XChartPanel buildPanel() {
 
-    yData = getRandomData(5);
     return new XChartPanel(getChart());
   }
 

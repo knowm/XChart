@@ -34,7 +34,6 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 public class RealtimeChart02 implements ExampleChart {
 
   private Chart chart;
-  // private XChartPanel chartPanel;
   public static final String SERIES_NAME = "series1";
   private List<Integer> xData;
   private List<Double> yData;
@@ -81,9 +80,6 @@ public class RealtimeChart02 implements ExampleChart {
   }
 
   public XChartPanel buildPanel() {
-
-    yData = getRandomData(5);
-    xData = getMonotonicallyIncreasingData(5);
 
     return new XChartPanel(getChart());
   }

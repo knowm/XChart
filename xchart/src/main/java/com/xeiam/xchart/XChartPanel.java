@@ -249,8 +249,9 @@ public class XChartPanel extends JPanel {
    * 
    * @param seriesName
    * @param newYData
+   * @return
    */
-  public void updateSeries(String seriesName, List<? extends Number> newYData) {
+  public Series updateSeries(String seriesName, List<? extends Number> newYData) {
 
     Series series = chart.getSeriesMap().get(seriesName);
     if (series == null) {
@@ -268,6 +269,8 @@ public class XChartPanel extends JPanel {
     // Re-display the chart
     revalidate();
     repaint();
+    return series;
+
   }
 
   /**
@@ -275,8 +278,9 @@ public class XChartPanel extends JPanel {
    * 
    * @param seriesName
    * @param newYData
+   * @return
    */
-  public void updateSeries(String seriesName, List<? extends Number> newXData, List<? extends Number> newYData) {
+  public Series updateSeries(String seriesName, List<?> newXData, List<? extends Number> newYData) {
 
     Series series = chart.getSeriesMap().get(seriesName);
     if (series == null) {
@@ -288,5 +292,7 @@ public class XChartPanel extends JPanel {
     // Re-display the chart
     revalidate();
     repaint();
+
+    return series;
   }
 }
