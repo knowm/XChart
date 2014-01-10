@@ -18,7 +18,7 @@ package com.xeiam.xchart;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.xeiam.xchart.StyleManager.ChartTheme;
@@ -104,33 +104,20 @@ public class Chart {
   }
 
   /**
-   * Add a Category series to the chart
-   * 
-   * @param seriesName
-   * @param xData
-   * @param yData
-   * @return
-   */
-  public Series addCategorySeries(String seriesName, Collection<String> xData, Collection<? extends Number> yData) {
-
-    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
-  }
-
-  /**
-   * Add a Date series to the chart
+   * Add a series to the chart using Collections
    * 
    * @param seriesName
    * @param xData the X-Axis data
    * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
-  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<? extends Number> yData) {
+  public Series addSeries(String seriesName, Collection<?> xData, Collection<? extends Number> yData) {
 
     return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
   }
 
   /**
-   * Add a Date series to the chart with error bars
+   * Add a Number series to the chart using Collections with error bars
    * 
    * @param seriesName
    * @param xData the X-Axis data
@@ -138,34 +125,7 @@ public class Chart {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
-
-    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
-  }
-
-  /**
-   * Add a Number series to the chart using Collection<Number>
-   * 
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param yData the Y-Axis data
-   * @return A Series object that you can set properties on
-   */
-  public Series addSeries(String seriesName, Collection<? extends Number> xData, Collection<? extends Number> yData) {
-
-    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
-  }
-
-  /**
-   * Add a Number series to the chart using Collection<Number> with error bars
-   * 
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param yData the Y-Axis data
-   * @param errorBars the error bar data
-   * @return A Series object that you can set properties on
-   */
-  public Series addSeries(String seriesName, Collection<? extends Number> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
+  public Series addSeries(String seriesName, Collection<?> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
 
     return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
   }
@@ -194,20 +154,20 @@ public class Chart {
    */
   public Series addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
-    Collection<Number> xDataNumber = null;
+    List<Double> xDataNumber = null;
     if (xData != null) {
-      xDataNumber = new ArrayList<Number>();
+      xDataNumber = new ArrayList<Double>();
       for (double d : xData) {
         xDataNumber.add(new Double(d));
       }
     }
-    Collection<Number> yDataNumber = new ArrayList<Number>();
+    List<Double> yDataNumber = new ArrayList<Double>();
     for (double d : yData) {
       yDataNumber.add(new Double(d));
     }
-    Collection<Number> errorBarDataNumber = null;
+    List<Double> errorBarDataNumber = null;
     if (errorBars != null) {
-      errorBarDataNumber = new ArrayList<Number>();
+      errorBarDataNumber = new ArrayList<Double>();
       for (double d : errorBars) {
         errorBarDataNumber.add(new Double(d));
       }

@@ -28,8 +28,11 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Realtime
- * 
- * @author timmolter
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>real-time chart updates
+ * <li>fixed window
  */
 public class RealtimeChart01 implements ExampleChart {
 

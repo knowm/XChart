@@ -75,7 +75,7 @@ public class DateChart01 implements ExampleChart {
       yData.add(Math.random() * i);
     }
 
-    Series series = chart.addDateSeries("blah", xData, yData);
+    Series series = chart.addSeries("blah", xData, yData);
     series.setMarker(SeriesMarker.NONE);
 
     return chart;

@@ -65,7 +65,7 @@ public class DateChart05 implements ExampleChart {
       yData.add(Math.random() * i);
     }
 
-    chart.addDateSeries("blah", xData, yData);
+    chart.addSeries("blah", xData, yData);
 
     return chart;
 

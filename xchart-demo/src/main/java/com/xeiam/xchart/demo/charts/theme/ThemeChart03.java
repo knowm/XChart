@@ -103,9 +103,9 @@ public class ThemeChart03 implements ExampleChart {
       e.printStackTrace();
     }
 
-    Series series1 = chart.addDateSeries("downloads", xData, y1Data);
+    Series series1 = chart.addSeries("downloads", xData, y1Data);
     series1.setLineStyle(SeriesLineStyle.DOT_DOT);
-    chart.addDateSeries("price", xData, y2Data);
+    chart.addSeries("price", xData, y2Data);
 
     return chart;
   }

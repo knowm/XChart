@@ -59,11 +59,13 @@ public class AxisPair implements ChartPart {
   }
 
   /**
-   * @param <T>
+   * @param seriesName
    * @param xData
    * @param yData
+   * @param errorBars
+   * @return Series
    */
-  public <T> Series addSeries(String seriesName, Collection<T> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
+  public Series addSeries(String seriesName, Collection<?> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
 
     // Sanity checks
     if (seriesName == null) {
@@ -81,7 +83,7 @@ public class AxisPair implements ChartPart {
 
     Series series = null;
     if (xData != null) {
-      // Check if xAxis series contains Number or Date data
+      // inspect the series to see what kind of data it contains (Number, Date or String)
       Iterator<?> itr = xData.iterator();
       Object dataPoint = itr.next();
       if (dataPoint instanceof Number) {
@@ -92,6 +94,9 @@ public class AxisPair implements ChartPart {
       }
       else if (dataPoint instanceof String) {
         xAxis.setAxisType(AxisType.String);
+      }
+      else {
+        throw new RuntimeException("Series data must be either Number, Date or String type!!!");
       }
       yAxis.setAxisType(AxisType.Number);
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());

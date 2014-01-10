@@ -20,7 +20,6 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.markers.Marker;
@@ -303,13 +302,13 @@ public class Series {
     return name;
   }
 
-  void replaceXData(List<?> newXData) {
+  void replaceXData(Collection<?> newXData) {
 
     xData = newXData;
     calculateMinMax();
   }
 
-  void replaceYData(List<? extends Number> newYData) {
+  void replaceYData(Collection<? extends Number> newYData) {
 
     yData = newYData;
     calculateMinMax();

@@ -100,7 +100,7 @@ public class LineChart03 implements ExampleChart {
     chart.getStyleManager().setNormalDecimalPattern("#0.000");
     chart.getStyleManager().setLocale(Locale.GERMAN);
 
-    Series series = chart.addDateSeries("Fake Data", xData, yData);
+    Series series = chart.addSeries("Fake Data", xData, yData);
     series.setLineColor(SeriesColor.BLUE);
     series.setMarkerColor(Color.ORANGE);
     series.setMarker(SeriesMarker.CIRCLE);
