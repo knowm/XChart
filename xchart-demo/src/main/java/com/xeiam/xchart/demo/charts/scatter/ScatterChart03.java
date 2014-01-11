@@ -20,9 +20,6 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * 
- */
-/**
  * Single point
  * <p>
  * Demonstrates the following:
