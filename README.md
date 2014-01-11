@@ -80,7 +80,7 @@ For snapshots, add the following to your pom.xml file:
 #### general
 
     mvn clean package  
-    mvn javadoc:javadoc  
+    mvn javadoc:aggregate  
 
 #### maven-license-plugin
 
