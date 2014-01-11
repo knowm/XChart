@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
@@ -59,7 +60,7 @@ public class BarChart02 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().theme(ChartTheme.Matlab).chartType(ChartType.Bar).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
 
-    Collection<Date> xData = new ArrayList<Date>();
+    List<Date> xData = new ArrayList<Date>();
     Collection<Number> yData = new ArrayList<Number>();
 
     Random random = new Random();
@@ -74,7 +75,7 @@ public class BarChart02 implements ExampleChart {
       xData.add(date);
       yData.add(-1 * ((random.nextInt(i) + 1)));
     }
-    Series series = chart.addDateSeries("Model 77", xData, yData);
+    Series series = chart.addSeries("Model 77", xData, yData);
     series.setLineColor(SeriesColor.RED);
     chart.getStyleManager().setPlotGridLinesVisible(false);
 

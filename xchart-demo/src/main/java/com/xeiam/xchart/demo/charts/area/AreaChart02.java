@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package com.xeiam.xchart.demo.charts.area;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
@@ -49,8 +49,8 @@ public class AreaChart02 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title("AreaChart02").xAxisTitle("X").yAxisTitle("Y").build();
 
-    Collection<Number> xData = new ArrayList<Number>();
-    Collection<Number> yData = new ArrayList<Number>();
+    List<Integer> xData = new ArrayList<Integer>();
+    List<Integer> yData = new ArrayList<Integer>();
     for (int i = 0; i < 5; i++) {
       xData.add(i);
       yData.add(i * i);

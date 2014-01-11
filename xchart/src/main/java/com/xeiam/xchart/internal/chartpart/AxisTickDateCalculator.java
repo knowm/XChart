@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 package com.xeiam.xchart.internal.chartpart;
-
-import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
@@ -39,7 +37,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickDateCalculator(Direction axisDirection, int workingSpace, BigDecimal minValue, BigDecimal maxValue, StyleManager styleManager) {
+  public AxisTickDateCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     dateFormatter = new DateFormatter(styleManager);
@@ -52,31 +50,31 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space BigDecimal gridStep = getGridStepForDecimal(tickSpace);
+    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // the span of the data
-    long span = Math.abs(maxValue.subtract(minValue).longValue()); // in data space
+    long span = (long) Math.abs(maxValue - minValue); // in data space
 
-    long gridStepHint = (long) (span / (double) tickSpace * DEFAULT_TICK_MARK_STEP_HINT_X);
+    long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
 
     long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
-    BigDecimal gridStep = null;
+    double gridStep = 0.0;
     int[] steps = dateFormatter.getValidTickStepsMap().get(timeUnit);
     for (int i = 0; i < steps.length - 1; i++) {
       if (gridStepHint < (timeUnit * steps[i] + timeUnit * steps[i + 1]) / 2.0) {
-        gridStep = new BigDecimal(timeUnit * steps[i]);
+        gridStep = timeUnit * steps[i];
         break;
       }
     }
 
-    BigDecimal firstPosition = getFirstPosition(gridStep);
+    double firstPosition = getFirstPosition(gridStep);
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(maxValue) <= 0; tickPosition = tickPosition.add(gridStep)) {
+    for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
 
       tickLabels.add(dateFormatter.formatDate(tickPosition, timeUnit));
       // here we convert tickPosition finally to plot space, i.e. pixels
-      int tickLabelPosition = (int) (margin + ((tickPosition.subtract(minValue)).doubleValue() / (maxValue.subtract(minValue)).doubleValue() * tickSpace));
+      int tickLabelPosition = (int) (margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace));
       tickLocations.add(tickLabelPosition);
     }
   }

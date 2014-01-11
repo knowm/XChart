@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,6 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
-/**
- * 
- */
 /**
  * Single point
  * <p>

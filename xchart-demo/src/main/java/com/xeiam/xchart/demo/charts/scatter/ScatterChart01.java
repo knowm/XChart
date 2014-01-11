@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 package com.xeiam.xchart.demo.charts.scatter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.StyleManager.ChartType;
@@ -27,8 +27,11 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Gaussian Blob
- * 
- * @author timmolter
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>ChartType.Scatter
+ * <li>Series data as a Set
  */
 public class ScatterChart01 implements ExampleChart {
 
@@ -42,8 +45,8 @@ public class ScatterChart01 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    List<Number> xData = new ArrayList<Number>();
-    List<Number> yData = new ArrayList<Number>();
+    Set<Double> xData = new HashSet<Double>();
+    Set<Double> yData = new HashSet<Double>();
     Random random = new Random();
     int size = 1000;
     for (int i = 0; i < size; i++) {

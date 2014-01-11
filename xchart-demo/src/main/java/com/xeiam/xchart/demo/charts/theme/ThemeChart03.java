@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
@@ -54,11 +54,11 @@ public class ThemeChart03 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
     chart.getStyleManager().setPlotGridLinesVisible(false);
-
+    chart.getStyleManager().setXAxisTickMarkSpacingHint(100);
     // generate data
-    Collection<Date> xData = new ArrayList<Date>();
-    Collection<Number> y1Data = new ArrayList<Number>();
-    Collection<Number> y2Data = new ArrayList<Number>();
+    List<Date> xData = new ArrayList<Date>();
+    List<Double> y1Data = new ArrayList<Double>();
+    List<Double> y2Data = new ArrayList<Double>();
 
     DateFormat sdf = new SimpleDateFormat("yyyy-MM");
 
@@ -66,46 +66,46 @@ public class ThemeChart03 implements ExampleChart {
     try {
       date = sdf.parse("2012-08");
       xData.add(date);
-      y1Data.add(120);
-      y2Data.add(15);
+      y1Data.add(120d);
+      y2Data.add(15d);
 
       date = sdf.parse("2012-11");
       xData.add(date);
-      y1Data.add(165);
-      y2Data.add(15);
+      y1Data.add(165d);
+      y2Data.add(15d);
 
       date = sdf.parse("2013-01");
       xData.add(date);
-      y1Data.add(210);
-      y2Data.add(20);
+      y1Data.add(210d);
+      y2Data.add(20d);
 
       date = sdf.parse("2013-02");
       xData.add(date);
-      y1Data.add(400);
-      y2Data.add(30);
+      y1Data.add(400d);
+      y2Data.add(30d);
 
       date = sdf.parse("2013-03");
       xData.add(date);
-      y1Data.add(800);
-      y2Data.add(100);
+      y1Data.add(800d);
+      y2Data.add(100d);
 
       date = sdf.parse("2013-04");
       xData.add(date);
-      y1Data.add(2000);
-      y2Data.add(120);
+      y1Data.add(2000d);
+      y2Data.add(120d);
 
       date = sdf.parse("2013-05");
       xData.add(date);
-      y1Data.add(3000);
-      y2Data.add(150);
+      y1Data.add(3000d);
+      y2Data.add(150d);
 
     } catch (ParseException e) {
       e.printStackTrace();
     }
 
-    Series series1 = chart.addDateSeries("downloads", xData, y1Data);
+    Series series1 = chart.addSeries("downloads", xData, y1Data);
     series1.setLineStyle(SeriesLineStyle.DOT_DOT);
-    chart.addDateSeries("price", xData, y2Data);
+    chart.addSeries("price", xData, y2Data);
 
     return chart;
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,12 @@ package com.xeiam.xchart;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.xeiam.xchart.StyleManager.ChartTheme;
 import com.xeiam.xchart.internal.chartpart.ChartPainter;
-import com.xeiam.xchart.internal.style.GGPlot2Theme;
-import com.xeiam.xchart.internal.style.MatlabTheme;
 import com.xeiam.xchart.internal.style.Theme;
-import com.xeiam.xchart.internal.style.XChartTheme;
 
 /**
  * An XChart Chart
@@ -58,17 +55,20 @@ public class Chart {
    */
   public Chart(int width, int height, ChartTheme chartTheme) {
 
-    chartPainter = new ChartPainter(width, height);
+    this(width, height, chartTheme.newInstance(chartTheme));
+  }
 
-    if (chartTheme == ChartTheme.XChart) {
-      setTheme(new XChartTheme());
-    }
-    else if (chartTheme == ChartTheme.GGPlot2) {
-      setTheme(new GGPlot2Theme());
-    }
-    else if (chartTheme == ChartTheme.Matlab) {
-      setTheme(new MatlabTheme());
-    }
+  /**
+   * Constructor
+   * 
+   * @param width
+   * @param height
+   * @param theme instance of Theme class
+   */
+  public Chart(int width, int height, Theme theme) {
+
+    chartPainter = new ChartPainter(width, height);
+    chartPainter.getStyleManager().setTheme(theme);
   }
 
   /**
@@ -97,8 +97,6 @@ public class Chart {
 
   /**
    * @param g
-   * @param width
-   * @param height
    */
   public void paint(Graphics2D g) {
 
@@ -106,33 +104,20 @@ public class Chart {
   }
 
   /**
-   * Add a Category series to the chart
-   * 
-   * @param seriesName
-   * @param xData
-   * @param yData
-   * @return
-   */
-  public Series addCategorySeries(String seriesName, Collection<String> xData, Collection<Number> yData) {
-
-    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
-  }
-
-  /**
-   * Add a Date series to the chart
+   * Add a series to the chart using Collections
    * 
    * @param seriesName
    * @param xData the X-Axis data
    * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
-  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData) {
+  public Series addSeries(String seriesName, Collection<?> xData, Collection<? extends Number> yData) {
 
     return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
   }
 
   /**
-   * Add a Date series to the chart with error bars
+   * Add a Number series to the chart using Collections with error bars
    * 
    * @param seriesName
    * @param xData the X-Axis data
@@ -140,34 +125,7 @@ public class Chart {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public Series addDateSeries(String seriesName, Collection<Date> xData, Collection<Number> yData, Collection<Number> errorBars) {
-
-    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
-  }
-
-  /**
-   * Add a Number series to the chart using Collection<Number>
-   * 
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param yData the Y-Axis data
-   * @return A Series object that you can set properties on
-   */
-  public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData) {
-
-    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
-  }
-
-  /**
-   * Add a Number series to the chart using Collection<Number> with error bars
-   * 
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param yData the Y-Axis data
-   * @param errorBars the error bar data
-   * @return A Series object that you can set properties on
-   */
-  public Series addSeries(String seriesName, Collection<Number> xData, Collection<Number> yData, Collection<Number> errorBars) {
+  public Series addSeries(String seriesName, Collection<?> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
 
     return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
   }
@@ -196,20 +154,20 @@ public class Chart {
    */
   public Series addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
-    Collection<Number> xDataNumber = null;
+    List<Double> xDataNumber = null;
     if (xData != null) {
-      xDataNumber = new ArrayList<Number>();
+      xDataNumber = new ArrayList<Double>();
       for (double d : xData) {
         xDataNumber.add(new Double(d));
       }
     }
-    Collection<Number> yDataNumber = new ArrayList<Number>();
+    List<Double> yDataNumber = new ArrayList<Double>();
     for (double d : yData) {
       yDataNumber.add(new Double(d));
     }
-    Collection<Number> errorBarDataNumber = null;
+    List<Double> errorBarDataNumber = null;
     if (errorBars != null) {
-      errorBarDataNumber = new ArrayList<Number>();
+      errorBarDataNumber = new ArrayList<Double>();
       for (double d : errorBars) {
         errorBarDataNumber.add(new Double(d));
       }
@@ -235,7 +193,7 @@ public class Chart {
    */
   public void setXAxisTitle(String title) {
 
-    chartPainter.getAxisPair().getxAxis().getAxisTitle().setText(title);
+    chartPainter.getAxisPair().getXAxis().getAxisTitle().setText(title);
   }
 
   /**
@@ -245,7 +203,7 @@ public class Chart {
    */
   public void setYAxisTitle(String title) {
 
-    chartPainter.getAxisPair().getyAxis().getAxisTitle().setText(title);
+    chartPainter.getAxisPair().getYAxis().getAxisTitle().setText(title);
   }
 
   /**
@@ -258,16 +216,6 @@ public class Chart {
     return chartPainter.getStyleManager();
   }
 
-  /**
-   * Set the theme the Chart's style manager should use
-   * 
-   * @param theme
-   */
-  public void setTheme(Theme theme) {
-
-    chartPainter.getStyleManager().setTheme(theme);
-  }
-
   public int getWidth() {
 
     return chartPainter.getWidth();
@@ -278,7 +226,7 @@ public class Chart {
     return chartPainter.getHeight();
   }
 
-  public Map<Integer, Series> getSeriesMap() {
+  public Map<String, Series> getSeriesMap() {
 
     return chartPainter.getAxisPair().getSeriesMap();
   }

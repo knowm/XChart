@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
-import java.math.BigDecimal;
 
 import com.xeiam.xchart.StyleManager.LegendPosition;
 
@@ -50,9 +49,9 @@ public class Axis implements ChartPart {
   /** the axis direction */
   private Direction direction;
 
-  private BigDecimal min = null;
+  private double min;;
 
-  private BigDecimal max = null;
+  private double max;;
 
   /** the bounds */
   private Rectangle2D bounds;
@@ -85,17 +84,26 @@ public class Axis implements ChartPart {
   }
 
   /**
+   * Reset the default min and max values in preparation for calculating the actualy min and max
+   */
+  void resetMinMax() {
+
+    min = Double.MAX_VALUE;
+    max = Double.MIN_VALUE;
+  }
+
+  /**
    * @param min
    * @param max
    */
-  protected void addMinMax(BigDecimal min, BigDecimal max) {
+  protected void addMinMax(double min, double max) {
 
     // System.out.println(min);
     // System.out.println(max);
-    if (this.min == null || min.compareTo(this.min) < 0) {
+    if (this.min == Double.NaN || min < this.min) {
       this.min = min;
     }
-    if (this.max == null || max.compareTo(this.max) > 0) {
+    if (this.max == Double.NaN || max > this.max) {
       this.max = max;
     }
 
@@ -167,7 +175,7 @@ public class Axis implements ChartPart {
       double width = 80; // arbitrary, final width depends on Axis tick labels
 
       double height =
-          getChartPainter().getHeight() - yOffset - axisPair.getxAxis().getSizeHint() - getChartPainter().getStyleManager().getPlotPadding() - getChartPainter().getStyleManager().getChartPadding();
+          getChartPainter().getHeight() - yOffset - axisPair.getXAxis().getSizeHint() - getChartPainter().getStyleManager().getPlotPadding() - getChartPainter().getStyleManager().getChartPadding();
       Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
       this.paintZone = yAxisRectangle;
@@ -194,20 +202,20 @@ public class Axis implements ChartPart {
       // |____________________|
 
       double xOffset =
-          axisPair.getyAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0)
+          axisPair.getYAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0)
               + getChartPainter().getStyleManager().getChartPadding();
-      double yOffset = axisPair.getyAxis().getBounds().getY() + axisPair.getyAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
+      double yOffset = axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
 
       double chartLegendWidth = 0;
       if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
-        chartLegendWidth = getChartPainter().getChartLegend().getSizeHint()[0];
+        chartLegendWidth = getChartPainter().getChartLegend().getSizeHint(g)[0];
       }
 
       double width =
 
           getChartPainter().getWidth()
 
-              - axisPair.getyAxis().getBounds().getWidth()
+              - axisPair.getYAxis().getBounds().getWidth()
 
               - chartLegendWidth
 
@@ -255,12 +263,12 @@ public class Axis implements ChartPart {
     return axisType;
   }
 
-  public BigDecimal getMin() {
+  public double getMin() {
 
     return min;
   }
 
-  public BigDecimal getMax() {
+  public double getMax() {
 
     return max;
   }

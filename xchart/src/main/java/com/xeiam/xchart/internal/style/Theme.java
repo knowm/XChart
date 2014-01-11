@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,6 +95,10 @@ public interface Theme {
   public int getAxisTitlePadding();
 
   public int getPlotPadding();
+
+  public int getXAxisTickMarkSpacingHint();
+
+  public int getYAxisTickMarkSpacingHint();
 
   // Chart Plot Area ///////////////////////////////
 

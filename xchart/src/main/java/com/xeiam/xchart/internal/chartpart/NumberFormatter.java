@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -42,13 +41,13 @@ public class NumberFormatter {
    * @param value
    * @return
    */
-  public String formatNumber(BigDecimal value) {
+  public String formatNumber(double value) {
 
     NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
 
-    BigDecimal absoluteValue = value.abs();
+    double absoluteValue = Math.abs(value);
 
-    if (absoluteValue.compareTo(new BigDecimal("10000.000001")) == -1 && absoluteValue.compareTo(new BigDecimal(".0009999999")) == 1 || BigDecimal.ZERO.compareTo(value) == 0) {
+    if (absoluteValue < 10000.000001 && absoluteValue > .0009999999 || value == 0) {
 
       DecimalFormat normalFormat = (DecimalFormat) numberFormat;
       normalFormat.applyPattern(styleManager.getNormalDecimalPattern());

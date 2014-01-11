@@ -1,11 +1,11 @@
 /**
- * Copyright 2012 - 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,6 +26,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -239,5 +242,58 @@ public class XChartPanel extends JPanel {
       });
       add(saveAsMenuItem);
     }
+  }
+
+  /**
+   * update a series by only updating the Y-Axis data. The X-Axis data will is automatically generated as a list of increasing Integers starting from 1 and ending at the size of the new Y-Axis data
+   * list.
+   * 
+   * @param seriesName
+   * @param newYData
+   * @return
+   */
+  public Series updateSeries(String seriesName, Collection<? extends Number> newYData) {
+
+    Series series = chart.getSeriesMap().get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    series.replaceYData(newYData);
+
+    // generate X-Data
+    List<Number> generatedXData = new ArrayList<Number>();
+    for (int i = 1; i < newYData.size() + 1; i++) {
+      generatedXData.add(i);
+    }
+    series.replaceXData(generatedXData);
+
+    // Re-display the chart
+    revalidate();
+    repaint();
+    return series;
+
+  }
+
+  /**
+   * update a series by only updating both the X-Axis and Y-Axis data
+   * 
+   * @param seriesName
+   * @param newYData
+   * @return
+   */
+  public Series updateSeries(String seriesName, Collection<?> newXData, List<? extends Number> newYData) {
+
+    Series series = chart.getSeriesMap().get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    series.replaceXData(newXData);
+    series.replaceYData(newYData);
+
+    // Re-display the chart
+    revalidate();
+    repaint();
+
+    return series;
   }
 }

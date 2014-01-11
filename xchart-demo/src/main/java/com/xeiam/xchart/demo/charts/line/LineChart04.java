@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ public class LineChart04 implements ExampleChart {
     chart.getStyleManager().setLegendVisible(false);
 
     for (int i = 0; i < 200; i++) {
-      Series series = chart.addSeries("A", new double[] { Math.random(), Math.random() }, new double[] { Math.random(), Math.random() });
+      Series series = chart.addSeries("A" + i, new double[] { Math.random(), Math.random() }, new double[] { Math.random(), Math.random() });
       series.setLineColor(SeriesColor.BLUE);
       series.setLineStyle(SeriesLineStyle.SOLID);
       series.setMarker(SeriesMarker.CIRCLE);

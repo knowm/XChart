@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package com.xeiam.xchart;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.math.BigDecimal;
 import java.util.Locale;
 
 import org.junit.Test;
@@ -41,87 +40,59 @@ public class NumberFormatterTest {
     // big
     styleManager.setLocale(locale);
 
-    BigDecimal value = new BigDecimal("1");
-    String stringValue = numberFormatter.formatNumber(value);
+    String stringValue = numberFormatter.formatNumber(1);
     assertThat(stringValue, equalTo("1"));
 
-    value = new BigDecimal(1000L);
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(1000);
     assertThat(stringValue, equalTo("1000"));
 
-    value = new BigDecimal("9999");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(9999);
     assertThat(stringValue, equalTo("9999"));
 
-    value = new BigDecimal(20000L);
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(20000);
     assertThat(stringValue, equalTo("2E4"));
 
-    value = new BigDecimal("200.23");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(200.23);
     assertThat(stringValue, equalTo("200.23"));
 
     // small
 
-    value = new BigDecimal("0.01");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(0.01);
     assertThat(stringValue, equalTo("0.01"));
 
-    value = new BigDecimal("0.001");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(0.001);
     assertThat(stringValue, equalTo("0.001"));
 
-    value = new BigDecimal("0.0012");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(0.0012);
     assertThat(stringValue, equalTo("0.0012"));
 
-    value = new BigDecimal("0.0001");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(0.0001);
     assertThat(stringValue, equalTo("1E-4"));
 
-    value = new BigDecimal(".00012");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(.00012);
     assertThat(stringValue, equalTo("1.2E-4"));
 
-    value = new BigDecimal("0.0");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(0.0);
     assertThat(stringValue, equalTo("0"));
 
-    value = new BigDecimal("0");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(0);
     assertThat(stringValue, equalTo("0"));
-
-    // other case
-
-    // TODO handle these cases better
-
-    // value = new BigDecimal("12228120");
-    // stringValue = NumberFormatterUtil.formatNumber(value, null, null, locale);
-    // assertThat(stringValue, equalTo("0.01"));
-
-    // value = new BigDecimal("0.00000000230000056765");
-    // stringValue = NumberFormatterUtil.formatNumber(value, null, null, locale);
-    // assertThat(stringValue, equalTo("0.01"));
 
     // non-default
     styleManager.setLocale(Locale.GERMANY);
 
-    value = new BigDecimal("0.01");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(0.01);
     assertThat(stringValue, equalTo("0,01"));
 
-    value = new BigDecimal("200.23");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(200.23);
     assertThat(stringValue, equalTo("200,23"));
 
     styleManager.setNormalDecimalPattern("#.#");
-    value = new BigDecimal("200.23");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(200.23);
     assertThat(stringValue, equalTo("200,2"));
 
     styleManager.setScientificDecimalPattern("0.#E0");
-    value = new BigDecimal("2009764.23");
-    stringValue = numberFormatter.formatNumber(value);
+    stringValue = numberFormatter.formatNumber(2009764.23);
     assertThat(stringValue, equalTo("2E6"));
 
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <li>Error Bars
  * <li>Logarithmic Y-Axis
  * <li>Setting min and max values for Y-Axis
+ * <li>Multi-line series labels in legend
  */
 public class LineChart06 implements ExampleChart {
 
@@ -61,7 +62,7 @@ public class LineChart06 implements ExampleChart {
 
     chart.getStyleManager().setErrorBarsColor(Color.black);
 
-    Series series1 = chart.addSeries("Error bar test data", xData, yData1, errdata);
+    Series series1 = chart.addSeries("Error bar\ntest data", xData, yData1, errdata);
 
     series1.setLineStyle(SeriesLineStyle.SOLID);
 

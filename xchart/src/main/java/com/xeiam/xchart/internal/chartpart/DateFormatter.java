@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -58,6 +57,10 @@ public class DateFormatter {
     validTickStepsMap.put(YEAR_SCALE, new int[] { 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000 });
   }
 
+  /**
+   * @param gridStepHint
+   * @return
+   */
   public long getTimeUnit(long gridStepHint) {
 
     for (Entry<Long, int[]> entry : validTickStepsMap.entrySet()) {
@@ -80,7 +83,7 @@ public class DateFormatter {
    * @param max
    * @return
    */
-  public String formatDate(BigDecimal value, long timeUnit) {
+  public String formatDate(double value, long timeUnit) {
 
     String datePattern;
 
@@ -96,7 +99,7 @@ public class DateFormatter {
         datePattern = "HH:mm";
       }
       else if (timeUnit == HOUR_SCALE) {
-        datePattern = "dd-HH";
+        datePattern = "HH:mm";
       }
       else if (timeUnit == DAY_SCALE) {
         datePattern = "MM-dd";
@@ -116,7 +119,7 @@ public class DateFormatter {
     simpleDateformat.setTimeZone(styleManager.getTimezone());
     simpleDateformat.applyPattern(datePattern);
 
-    return simpleDateformat.format(value.longValueExact());
+    return simpleDateformat.format(value);
   }
 
   Map<Long, int[]> getValidTickStepsMap() {

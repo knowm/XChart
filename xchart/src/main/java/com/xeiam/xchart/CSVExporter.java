@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,9 +45,9 @@ public class CSVExporter {
     try {
 
       out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
-      String csv = join(series.getxData(), ",") + System.getProperty("line.separator");
+      String csv = join(series.getXData(), ",") + System.getProperty("line.separator");
       out.write(csv);
-      csv = join(series.getyData(), ",") + System.getProperty("line.separator");
+      csv = join(series.getYData(), ",") + System.getProperty("line.separator");
       out.write(csv);
       if (series.getErrorBars() != null) {
         csv = join(series.getErrorBars(), ",") + System.getProperty("line.separator");
@@ -81,12 +81,12 @@ public class CSVExporter {
     try {
 
       out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
-      Collection<?> xData = series.getxData();
-      Collection<Number> yData = series.getyData();
-      Collection<Number> errorBarData = series.getErrorBars();
+      Collection<?> xData = series.getXData();
+      Collection<? extends Number> yData = series.getYData();
+      Collection<? extends Number> errorBarData = series.getErrorBars();
       Iterator<?> itrx = xData.iterator();
-      Iterator<Number> itry = yData.iterator();
-      Iterator<Number> itrErrorBar = null;
+      Iterator<? extends Number> itry = yData.iterator();
+      Iterator<? extends Number> itrErrorBar = null;
       if (errorBarData != null) {
         itrErrorBar = errorBarData.iterator();
       }

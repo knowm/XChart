@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import com.xeiam.xchart.Chart;
@@ -48,16 +48,16 @@ public class DateChart02 implements ExampleChart {
     chart.getStyleManager().setLegendVisible(false);
 
     // generate data
-    Collection<Date> xData = new ArrayList<Date>();
-    Collection<Number> yData = new ArrayList<Number>();
+    List<Date> xData = new ArrayList<Date>();
+    List<Double> yData = new ArrayList<Double>();
 
     Random random = new Random();
 
-    DateFormat sdf = new SimpleDateFormat("mm:ss.SSS");
+    DateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
     Date date = null;
     for (int i = 1; i <= 14; i++) {
       try {
-        date = sdf.parse("23:" + (5 * i + random.nextInt(2)) + "." + random.nextInt(1000));
+        date = sdf.parse("23:45:" + (5 * i + random.nextInt(2)) + "." + random.nextInt(1000));
       } catch (ParseException e) {
         e.printStackTrace();
       }
@@ -65,7 +65,7 @@ public class DateChart02 implements ExampleChart {
       yData.add(Math.random() * i);
     }
 
-    chart.addDateSeries("blah", xData, yData);
+    chart.addSeries("blah", xData, yData);
 
     return chart;
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ public class PlotSurface implements ChartPart {
     if (getChartPainter().getStyleManager().isPlotGridLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
 
       // horizontal
-      List<Integer> yAxisTickLocations = getChartPainter().getAxisPair().getyAxis().getAxisTick().getTickLocations();
+      List<Integer> yAxisTickLocations = getChartPainter().getAxisPair().getYAxis().getAxisTick().getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         double tickLocation = yAxisTickLocations.get(i);
@@ -97,7 +97,7 @@ public class PlotSurface implements ChartPart {
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar
           && (getChartPainter().getStyleManager().isPlotGridLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible())) {
 
-        List<Integer> xAxisTickLocations = getChartPainter().getAxisPair().getxAxis().getAxisTick().getTickLocations();
+        List<Integer> xAxisTickLocations = getChartPainter().getAxisPair().getXAxis().getAxisTick().getTickLocations();
         for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
           double tickLocation = xAxisTickLocations.get(i);

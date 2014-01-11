@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import java.awt.Stroke;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.xeiam.xchart.internal.style.GGPlot2Theme;
+import com.xeiam.xchart.internal.style.MatlabTheme;
 import com.xeiam.xchart.internal.style.Theme;
 import com.xeiam.xchart.internal.style.XChartTheme;
 
@@ -46,7 +48,22 @@ public class StyleManager {
 
   public enum ChartTheme {
 
-    XChart, GGPlot2, Matlab
+    XChart, GGPlot2, Matlab;
+
+    public Theme newInstance(ChartTheme chartTheme) {
+
+      switch (chartTheme) {
+      case GGPlot2:
+        return new GGPlot2Theme();
+
+      case Matlab:
+        return new MatlabTheme();
+
+      case XChart:
+      default:
+        return new XChartTheme();
+      }
+    }
   }
 
   /** the default Theme */
@@ -91,6 +108,8 @@ public class StyleManager {
   private boolean isAxisTicksMarksVisible;
   private int plotPadding;
   private int axisTitlePadding;
+  private int xAxisTickMarkSpacingHint;
+  private int yAxisTickMarkSpacingHint;
   private boolean isXAxisLogarithmic;
   private boolean isYAxisLogarithmic;
   private Double xAxisMin;
@@ -166,6 +185,8 @@ public class StyleManager {
     isAxisTicksMarksVisible = theme.isAxisTicksMarksVisible();
     plotPadding = theme.getPlotPadding();
     axisTitlePadding = theme.getAxisTitlePadding();
+    xAxisTickMarkSpacingHint = theme.getXAxisTickMarkSpacingHint();
+    yAxisTickMarkSpacingHint = theme.getYAxisTickMarkSpacingHint();
     isXAxisLogarithmic = false;
     isYAxisLogarithmic = false;
     xAxisMin = null;
@@ -724,6 +745,36 @@ public class StyleManager {
   public int getAxisTitlePadding() {
 
     return axisTitlePadding;
+  }
+
+  /**
+   * set the spacing between tick marks for the X-Axis
+   * 
+   * @param xAxisTickMarkSpacingHint
+   */
+  public void setXAxisTickMarkSpacingHint(int xAxisTickMarkSpacingHint) {
+
+    this.xAxisTickMarkSpacingHint = xAxisTickMarkSpacingHint;
+  }
+
+  public int getXAxisTickMarkSpacingHint() {
+
+    return xAxisTickMarkSpacingHint;
+  }
+
+  /**
+   * set the spacing between tick marks for the Y-Axis
+   * 
+   * @param xAxisTickMarkSpacingHint
+   */
+  public void setYAxisTickMarkSpacingHint(int yAxisTickMarkSpacingHint) {
+
+    this.yAxisTickMarkSpacingHint = yAxisTickMarkSpacingHint;
+  }
+
+  public int getYAxisTickMarkSpacingHint() {
+
+    return yAxisTickMarkSpacingHint;
   }
 
   /**

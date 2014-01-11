@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ public class LineChart03 implements ExampleChart {
 
     // generates linear data
     Collection<Date> xData = new ArrayList<Date>();
-    Collection<Number> yData = new ArrayList<Number>();
+    Collection<Double> yData = new ArrayList<Double>();
 
     DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     Date date = null;
@@ -100,7 +100,7 @@ public class LineChart03 implements ExampleChart {
     chart.getStyleManager().setNormalDecimalPattern("#0.000");
     chart.getStyleManager().setLocale(Locale.GERMAN);
 
-    Series series = chart.addDateSeries("Fake Data", xData, yData);
+    Series series = chart.addSeries("Fake Data", xData, yData);
     series.setLineColor(SeriesColor.BLUE);
     series.setMarkerColor(Color.ORANGE);
     series.setMarker(SeriesMarker.CIRCLE);

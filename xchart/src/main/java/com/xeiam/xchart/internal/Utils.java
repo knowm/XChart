@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal;
 
-import java.math.BigDecimal;
 
 /**
  * @author timmolter
@@ -53,13 +52,14 @@ public class Utils {
     return (int) (marginSpace / 2.0);
   }
 
-  public static BigDecimal pow(double base, int exponent) {
+  public static double pow(double base, int exponent) {
 
     if (exponent > 0) {
-      return new BigDecimal(base).pow(exponent);
+      return Math.pow(base, exponent);
     }
     else {
-      return BigDecimal.ONE.divide(new BigDecimal(base).pow(-exponent));
+      return 1.0 / Math.pow(base, -1 * exponent);
+
     }
   }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.xeiam.xchart.Series;
@@ -36,9 +37,7 @@ public class AxisPair implements ChartPart {
   /** parent */
   private final ChartPainter chartPainter;
 
-  private Map<Integer, Series> seriesMap = new LinkedHashMap<Integer, Series>();
-
-  private int seriesCount = 0;
+  private Map<String, Series> seriesMap = new LinkedHashMap<String, Series>();
 
   private Axis xAxis;
   private Axis yAxis;
@@ -60,11 +59,13 @@ public class AxisPair implements ChartPart {
   }
 
   /**
-   * @param <T>
+   * @param seriesName
    * @param xData
    * @param yData
+   * @param errorBars
+   * @return Series
    */
-  public <T> Series addSeries(String seriesName, Collection<T> xData, Collection<Number> yData, Collection<Number> errorBars) {
+  public Series addSeries(String seriesName, Collection<?> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
 
     // Sanity checks
     if (seriesName == null) {
@@ -82,7 +83,7 @@ public class AxisPair implements ChartPart {
 
     Series series = null;
     if (xData != null) {
-      // Check if xAxis series contains Number or Date data
+      // inspect the series to see what kind of data it contains (Number, Date or String)
       Iterator<?> itr = xData.iterator();
       Object dataPoint = itr.next();
       if (dataPoint instanceof Number) {
@@ -94,11 +95,14 @@ public class AxisPair implements ChartPart {
       else if (dataPoint instanceof String) {
         xAxis.setAxisType(AxisType.String);
       }
+      else {
+        throw new RuntimeException("Series data must be either Number, Date or String type!!!");
+      }
       yAxis.setAxisType(AxisType.Number);
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     }
     else { // generate xData
-      Collection<Number> generatedXData = new ArrayList<Number>();
+      List<Number> generatedXData = new ArrayList<Number>();
       for (int i = 1; i < yData.size() + 1; i++) {
         generatedXData.add(i);
       }
@@ -115,11 +119,11 @@ public class AxisPair implements ChartPart {
       throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
     }
 
-    seriesMap.put(seriesCount++, series);
+    if (seriesMap.keySet().contains(seriesName)) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+    }
 
-    // add min/max to axis
-    xAxis.addMinMax(series.getxMin(), series.getxMax());
-    yAxis.addMinMax(series.getyMin(), series.getyMax());
+    seriesMap.put(seriesName, series);
 
     return series;
   }
@@ -145,17 +149,17 @@ public class AxisPair implements ChartPart {
 
   // Getters /////////////////////////////////////////////////
 
-  public Map<Integer, Series> getSeriesMap() {
+  public Map<String, Series> getSeriesMap() {
 
     return seriesMap;
   }
 
-  public Axis getxAxis() {
+  public Axis getXAxis() {
 
     return xAxis;
   }
 
-  public Axis getyAxis() {
+  public Axis getYAxis() {
 
     return yAxis;
   }

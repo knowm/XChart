@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package com.xeiam.xchart;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class DateAxisTickCalculatorTest {
   @Test
   public void testDateOneMinuteTimespan() {
 
-    AxisTickDateCalculator decimalAxisTickCalculator = new AxisTickDateCalculator(Direction.X, 600, new BigDecimal(1361110661000L), new BigDecimal(1361110721000L), new StyleManager());
+    AxisTickDateCalculator decimalAxisTickCalculator = new AxisTickDateCalculator(Direction.X, 600, 1361110661000.0, 1361110721000.0, new StyleManager());
 
     List<String> tickLabels = decimalAxisTickCalculator.getTickLabels();
     System.out.println(Arrays.toString(tickLabels.toArray()));

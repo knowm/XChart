@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2011 - 2014 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -221,6 +221,18 @@ public class XChartTheme implements Theme {
   public int getAxisTitlePadding() {
 
     return 10;
+  }
+
+  @Override
+  public int getXAxisTickMarkSpacingHint() {
+
+    return 74;
+  }
+
+  @Override
+  public int getYAxisTickMarkSpacingHint() {
+
+    return 44;
   }
 
   // Chart Plot Area ///////////////////////////////
