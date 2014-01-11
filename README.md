@@ -32,8 +32,8 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 * ~100KB Jar
 * Line charts
 * Scatter charts
-* Area Charts
-* Bar Charts
+* Area charts
+* Bar charts
 * Error bars
 * Logarithmic axes
 * Date and category X-Axis
@@ -45,6 +45,7 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 * Custom legend placement
 * CSV import and export
 * High resolution chart export
+* Real-time charts
 
 ## Getting Started
 ### Non-Maven
