@@ -101,4 +101,4 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 [Build History](https://travis-ci.org/timmolter/XChart/builds)  
 
 ## Donations
-15MvtM8e3bzepmZ5vTe8cHvrEZg6eDzw2w  
+1PrZHiJorAw7RQrjP9CJgtPuqr6fU65PKt
