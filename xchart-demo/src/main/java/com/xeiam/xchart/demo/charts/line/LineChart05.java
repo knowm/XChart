@@ -33,6 +33,7 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <li>Customizing the series style properties
  * <li>Scatter and Line overlay
  * <li>Logarithmic Y-Axis
+ * <li>An X-Axis min value clipping off the series
  */
 public class LineChart05 implements ExampleChart {
 
@@ -74,8 +75,8 @@ public class LineChart05 implements ExampleChart {
     chart.getStyleManager().setYAxisMin(0.01);
     chart.getStyleManager().setYAxisMax(1000);
 
-    chart.getStyleManager().setXAxisMin(-2);
-    chart.getStyleManager().setXAxisMax(8);
+    chart.getStyleManager().setXAxisMin(2);
+    chart.getStyleManager().setXAxisMax(7);
 
     return chart;
   }

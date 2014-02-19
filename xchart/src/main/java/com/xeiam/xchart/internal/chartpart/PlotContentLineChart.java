@@ -49,6 +49,9 @@ public class PlotContentLineChart extends PlotContent {
 
     Rectangle2D bounds = plot.getBounds();
 
+    // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
+    g.setClip(bounds);
+
     // X-Axis
     int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
     int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
@@ -113,11 +116,6 @@ public class PlotContentLineChart extends PlotContent {
           // System.out.println(x);
         }
 
-        // break out of out of over-ridden min and max values
-        if (x < getChartPainter().getStyleManager().getXAxisMin() || x > getChartPainter().getStyleManager().getXAxisMax()) {
-          continue;
-        }
-
         if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
@@ -136,10 +134,6 @@ public class PlotContentLineChart extends PlotContent {
 
         double yOrig = next.doubleValue();
 
-        // break out of out of over-ridden min and max values
-        if (yOrig < getChartPainter().getStyleManager().getYAxisMin() || yOrig > getChartPainter().getStyleManager().getYAxisMax()) {
-          continue;
-        }
         double y = 0.0;
 
         // System.out.println(y);
