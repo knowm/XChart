@@ -98,10 +98,6 @@ public class PlotContentLineChart extends PlotContent {
 
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
-      Iterator<? extends Number> ebItr = null;
-      if (errorBars != null) {
-        ebItr = errorBars.iterator();
-      }
 
       Path2D.Double path = null;
 
@@ -112,9 +108,14 @@ public class PlotContentLineChart extends PlotContent {
           x = ((Number) xItr.next()).doubleValue();
           // System.out.println(x);
         }
-        if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+        else if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           x = ((Date) xItr.next()).getTime();
           // System.out.println(x);
+        }
+
+        // break out of out of over-ridden min and max values
+        if (x < getChartPainter().getStyleManager().getXAxisMin() || x > getChartPainter().getStyleManager().getXAxisMax()) {
+          continue;
         }
 
         if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
@@ -134,12 +135,12 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         double yOrig = next.doubleValue();
-        double y = 0.0;
-        double eb = 0.0;
 
-        if (errorBars != null) {
-          eb = (Double) ebItr.next();
+        // break out of out of over-ridden min and max values
+        if (yOrig < getChartPainter().getStyleManager().getYAxisMin() || yOrig > getChartPainter().getStyleManager().getYAxisMax()) {
+          continue;
         }
+        double y = 0.0;
 
         // System.out.println(y);
         if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
@@ -208,7 +209,17 @@ public class PlotContentLineChart extends PlotContent {
           series.getMarker().paint(g, xOffset, yOffset);
         }
 
-        // paint errorbar
+        // paint errorbars
+        Iterator<? extends Number> ebItr = null;
+        if (errorBars != null) {
+          ebItr = errorBars.iterator();
+        }
+        double eb = 0.0;
+
+        if (errorBars != null) {
+          eb = (Double) ebItr.next();
+        }
+
         if (errorBars != null) {
 
           g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
