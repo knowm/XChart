@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
@@ -48,13 +49,14 @@ public class PlotContentLineChart extends PlotContent {
   public void paint(Graphics2D g) {
 
     Rectangle2D bounds = plot.getBounds();
+    StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // X-Axis
-    int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
+    int xTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
     int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = Utils.getTickSpace((int) bounds.getHeight());
+    int yTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getHeight());
     int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {

@@ -24,6 +24,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
 
 /**
@@ -45,13 +46,14 @@ public class PlotContentBarChart extends PlotContent {
   public void paint(Graphics2D g) {
 
     Rectangle2D bounds = plot.getBounds();
-
+    StyleManager styleManager = plot.getChartPainter().getStyleManager();
+    
     // X-Axis
-    int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
+    int xTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
     int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = Utils.getTickSpace((int) bounds.getHeight());
+    int yTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getHeight());
     int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     // get all categories
