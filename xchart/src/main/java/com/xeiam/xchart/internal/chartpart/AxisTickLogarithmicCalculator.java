@@ -54,7 +54,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     }
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int)(styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
+    int tickSpace = (int) (styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
@@ -109,7 +109,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
         }
 
         // only add labels for the decades
-        if (Math.log10(j) % 1 == 0.0) {
+        if (Math.abs(Math.log10(j) % 1) < 0.00000001) {
           tickLabels.add(numberFormatter.formatNumber(j));
         }
         else {
