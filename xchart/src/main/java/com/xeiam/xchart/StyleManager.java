@@ -116,6 +116,7 @@ public class StyleManager {
   private Double xAxisMax;
   private Double yAxisMin;
   private Double yAxisMax;
+  private double axisTickSpaceRatio; 
 
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
@@ -193,6 +194,7 @@ public class StyleManager {
     xAxisMax = null;
     yAxisMin = null;
     yAxisMax = null;
+    axisTickSpaceRatio = .95;
 
     // Chart Plot Area ///////////////////////////////
     isPlotGridLinesVisible = theme.isPlotGridLinesVisible();
@@ -845,6 +847,14 @@ public class StyleManager {
   public Double getYAxisMax() {
 
     return yAxisMax;
+  }
+
+  public void setAxisTickSpaceRatio(double axisTickSpaceRatio) {
+    this.axisTickSpaceRatio = axisTickSpaceRatio;
+  }
+
+  public double getAxisTickSpaceRatio() {
+	return axisTickSpaceRatio;
   }
 
   // Chart Plot Area ///////////////////////////////
