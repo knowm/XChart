@@ -18,7 +18,6 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.StyleManager.ChartType;
 
 /**
@@ -36,18 +35,15 @@ public class Plot implements ChartPart {
 
   private PlotContent plotContent;
 
-  private StyleManager styleManager;
-
   /**
    * Constructor
    * 
    * @param chartPainter
    */
-  public Plot(ChartPainter chartPainter, StyleManager styleManager) {
+  public Plot(ChartPainter chartPainter) {
 
     this.chartPainter = chartPainter;
     this.plotSurface = new PlotSurface(this);
-    this.styleManager = styleManager;
 
   }
 
@@ -80,10 +76,10 @@ public class Plot implements ChartPart {
 
     plotSurface.paint(g);
     if (getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
-      this.plotContent = new PlotContentBarChart(this, styleManager);
+      this.plotContent = new PlotContentBarChart(this);
     }
     else {
-      this.plotContent = new PlotContentLineChart(this, styleManager);
+      this.plotContent = new PlotContentLineChart(this);
     }
     plotContent.paint(g);
 

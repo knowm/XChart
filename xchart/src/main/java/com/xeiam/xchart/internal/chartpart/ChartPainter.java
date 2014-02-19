@@ -54,7 +54,7 @@ public class ChartPainter {
 
     chartLegend = new Legend(this);
     axisPair = new AxisPair(this);
-    plot = new Plot(this, styleManager);
+    plot = new Plot(this);
     chartTitle = new ChartTitle(this);
   }
 

@@ -32,24 +32,22 @@ import com.xeiam.xchart.internal.Utils;
  */
 public class PlotContentBarChart extends PlotContent {
 
-  private StyleManager styleManager;
-
   /**
    * Constructor
    * 
    * @param plot
    */
-  protected PlotContentBarChart(Plot plot, StyleManager styleManager) {
+  protected PlotContentBarChart(Plot plot) {
 
     super(plot);
-    this.styleManager = styleManager;
   }
 
   @Override
   public void paint(Graphics2D g) {
 
     Rectangle2D bounds = plot.getBounds();
-
+    StyleManager styleManager = plot.getChartPainter().getStyleManager();
+    
     // X-Axis
     int xTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
     int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);

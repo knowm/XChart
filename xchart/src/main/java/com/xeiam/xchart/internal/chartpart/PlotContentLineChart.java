@@ -35,22 +35,21 @@ import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
  */
 public class PlotContentLineChart extends PlotContent {
 
-  private StyleManager styleManager;
-
   /**
    * Constructor
    * 
    * @param plot
    */
-  protected PlotContentLineChart(Plot plot, StyleManager styleManager) {
+  protected PlotContentLineChart(Plot plot) {
+
     super(plot);
-    this.styleManager = styleManager;
   }
 
   @Override
   public void paint(Graphics2D g) {
 
     Rectangle2D bounds = plot.getBounds();
+    StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // X-Axis
     int xTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
