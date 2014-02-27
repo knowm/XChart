@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
@@ -48,13 +49,17 @@ public class PlotContentLineChart extends PlotContent {
   public void paint(Graphics2D g) {
 
     Rectangle2D bounds = plot.getBounds();
+    StyleManager styleManager = plot.getChartPainter().getStyleManager();
+
+    // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
+    g.setClip(bounds);
 
     // X-Axis
-    int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
+    int xTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
     int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = Utils.getTickSpace((int) bounds.getHeight());
+    int yTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getHeight());
     int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
@@ -98,10 +103,6 @@ public class PlotContentLineChart extends PlotContent {
 
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
-      Iterator<? extends Number> ebItr = null;
-      if (errorBars != null) {
-        ebItr = errorBars.iterator();
-      }
 
       Path2D.Double path = null;
 
@@ -112,7 +113,7 @@ public class PlotContentLineChart extends PlotContent {
           x = ((Number) xItr.next()).doubleValue();
           // System.out.println(x);
         }
-        if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+        else if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           x = ((Date) xItr.next()).getTime();
           // System.out.println(x);
         }
@@ -134,12 +135,8 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         double yOrig = next.doubleValue();
-        double y = 0.0;
-        double eb = 0.0;
 
-        if (errorBars != null) {
-          eb = (Double) ebItr.next();
-        }
+        double y = 0.0;
 
         // System.out.println(y);
         if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
@@ -208,7 +205,17 @@ public class PlotContentLineChart extends PlotContent {
           series.getMarker().paint(g, xOffset, yOffset);
         }
 
-        // paint errorbar
+        // paint errorbars
+        Iterator<? extends Number> ebItr = null;
+        if (errorBars != null) {
+          ebItr = errorBars.iterator();
+        }
+        double eb = 0.0;
+
+        if (errorBars != null) {
+          eb = (Double) ebItr.next();
+        }
+
         if (errorBars != null) {
 
           g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());

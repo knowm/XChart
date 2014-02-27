@@ -18,12 +18,13 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
 
 /**
@@ -45,22 +46,26 @@ public class PlotContentBarChart extends PlotContent {
   public void paint(Graphics2D g) {
 
     Rectangle2D bounds = plot.getBounds();
+    StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // X-Axis
-    int xTickSpace = Utils.getTickSpace((int) bounds.getWidth());
+    int xTickSpace = (int) (styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
     int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = Utils.getTickSpace((int) bounds.getHeight());
+    int yTickSpace = (int) (styleManager.getAxisTickSpaceRatio() * bounds.getHeight());
     int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     // get all categories
-    Set<Object> categories = new TreeSet<Object>();
+    List<Object> categories = new ArrayList<Object>();
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
 
       Iterator<?> xItr = series.getXData().iterator();
       while (xItr.hasNext()) {
-        categories.add(xItr.next());
+        Object object = xItr.next();
+        if (!categories.contains(object)) {
+          categories.add(object);
+        }
       }
     }
     int numBars = categories.size();

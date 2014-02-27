@@ -46,8 +46,8 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
 
   private void calculate() {
 
-    // tick space - a percentage of the working space available for ticks, i.e. 95%
-    int tickSpace = Utils.getTickSpace(workingSpace); // in plot space
+    // tick space - a percentage of the working space available for ticks
+    int tickSpace = (int)(styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
