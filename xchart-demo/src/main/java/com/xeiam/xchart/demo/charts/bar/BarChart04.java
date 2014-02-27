@@ -46,8 +46,8 @@ public class BarChart04 implements ExampleChart {
 
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
-    chart.addSeries("male", new double[] { 10, 20, 30, 50 }, new double[] { 40, 30, 20, 60 });
     chart.addSeries("female", new double[] { 10, 20, 30, 40, 50 }, new double[] { 50, 10, 20, 40, 35 });
+    chart.addSeries("male", new double[] { 10, 20, 30, 50 }, new double[] { 40, 30, 20, 60 });
 
     chart.getStyleManager().setYAxisMin(5);
     chart.getStyleManager().setYAxisMax(70);

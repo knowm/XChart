@@ -15,10 +15,10 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
 
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.internal.Utils;
@@ -50,13 +50,13 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
   private void calculate(ChartPainter chartPainter) {
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int)(styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
+    int tickSpace = (int) (styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // get all categories
-    Set<Object> categories = new TreeSet<Object>();
+    List<Object> categories = new ArrayList<Object>();
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
       Iterator<?> xItr = series.getXData().iterator();
@@ -71,7 +71,9 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
           x = xItr.next();
         }
-        categories.add(x);
+        if (!categories.contains(x)) {
+          categories.add(x);
+        }
       }
     }
 
