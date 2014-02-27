@@ -26,7 +26,7 @@ import com.xeiam.xchart.demo.charts.area.AreaChart01;
  * 
  * @author timmolter
  */
-public class SwingDemo extends JPanel {
+public class SwingDemo {
 
   /**
    * Create the GUI and show it. For thread safety, this method should be invoked from the event dispatch thread.
