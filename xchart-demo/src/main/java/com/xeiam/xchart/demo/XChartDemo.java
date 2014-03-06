@@ -78,8 +78,8 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
   private XChartPanel chartPanel;
 
   /** real-time chart example */
-  final RealtimeChart01 realtimeChart01 = new RealtimeChart01();;
-  final RealtimeChart02 realtimeChart02 = new RealtimeChart02();;
+  final RealtimeChart01 realtimeChart01 = new RealtimeChart01();
+  final RealtimeChart02 realtimeChart02 = new RealtimeChart02();
   Timer timer = new Timer();
 
   /**
