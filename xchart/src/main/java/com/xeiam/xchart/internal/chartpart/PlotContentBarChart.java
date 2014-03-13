@@ -18,10 +18,8 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager;
@@ -56,19 +54,7 @@ public class PlotContentBarChart extends PlotContent {
     double yTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
-    // get all categories
-    List<Object> categories = new ArrayList<Object>();
-    for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
-
-      Iterator<?> xItr = series.getXData().iterator();
-      while (xItr.hasNext()) {
-        Object object = xItr.next();
-        if (!categories.contains(object)) {
-          categories.add(object);
-        }
-      }
-    }
-    int numBars = categories.size();
+    int numBars = getChartPainter().getAxisPair().getSeriesMap().values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numBars;
 
     // plot series
@@ -122,70 +108,78 @@ public class PlotContentBarChart extends PlotContent {
       // System.out.println(yMin);
       // System.out.println(yMax);
 
-      Iterator<?> categoryItr = categories.iterator();
+      // all the x-axis data are guaranteed to be the same so we just use the first one
       Iterator<? extends Number> yItr = yData.iterator();
 
       int barCounter = 0;
-      while (categoryItr.hasNext()) {
+      while (yItr.hasNext()) {
 
-        if (xData.contains(categoryItr.next())) {
+        double y = ((Number) yItr.next()).doubleValue();
+        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+          y = Math.log10(y);
+        }
 
-          double y = ((Number) yItr.next()).doubleValue();
-          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
-            y = Math.log10(y);
+        double yTop = 0.0;
+        double yBottom = 0.0;
+
+        switch (chartForm) {
+        case 1: // positive chart
+
+          // check for points off the chart draw area due to a custom yMin
+          if (y < yMin) {
+            barCounter++;
+            continue;
           }
 
-          double yTop = 0.0;
-          double yBottom = 0.0;
+          yTop = y;
+          yBottom = yMin;
+          break;
+        case -1: // negative chart
 
-          switch (chartForm) {
-          case 1: // positive chart
+          // check for points off the chart draw area due to a custom yMin
+          if (y > yMax) {
+            barCounter++;
+            continue;
+          }
+
+          yTop = yMax;
+          yBottom = y;
+          break;
+        case 0: // span chart
+          if (y >= 0.0) { // positive
             yTop = y;
-            yBottom = yMin;
-            break;
-          case -1: // negative chart
-            yTop = yMax;
-            yBottom = y;
-            break;
-          case 0: // span chart
-            if (y >= 0.0) { // positive
-              yTop = y;
-              yBottom = 0.0;
-            }
-            else {
-              yTop = 0.0;
-              yBottom = y;
-            }
-            break;
-          default:
-            break;
+            yBottom = 0.0;
           }
-
-          double yTransform = bounds.getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
-
-          double yOffset = bounds.getY() + yTransform;
-
-          double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
-          double zeroOffset = bounds.getY() + zeroTransform;
-
-          // paint bar
-          double barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() / 1.1;
-          double barMargin = gridStep * .05;
-          double xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
-          g.setColor(series.getStrokeColor());
-
-          Path2D.Double path = new Path2D.Double();
-          path.moveTo(xOffset, yOffset);
-          path.lineTo(xOffset + barWidth, yOffset);
-          path.lineTo(xOffset + barWidth, zeroOffset);
-          path.lineTo(xOffset, zeroOffset);
-          path.closePath();
-          g.fill(path);
-
+          else {
+            yTop = 0.0;
+            yBottom = y;
+          }
+          break;
+        default:
+          break;
         }
-        else {
-          barCounter++;
-        }
+
+        double yTransform = bounds.getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
+
+        double yOffset = bounds.getY() + yTransform;
+
+        double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
+        double zeroOffset = bounds.getY() + zeroTransform;
+
+        // paint bar
+        double barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() / 1.1;
+        double barMargin = gridStep * .05;
+        double xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
+        g.setColor(series.getStrokeColor());
+
+        Path2D.Double path = new Path2D.Double();
+        path.moveTo(xOffset, yOffset);
+        path.lineTo(xOffset + barWidth, yOffset);
+        path.lineTo(xOffset + barWidth, zeroOffset);
+        path.lineTo(xOffset, zeroOffset);
+        path.closePath();
+        g.fill(path);
+
       }
       seriesCounter++;
     }

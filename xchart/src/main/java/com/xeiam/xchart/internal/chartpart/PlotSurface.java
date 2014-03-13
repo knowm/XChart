@@ -95,7 +95,12 @@ public class PlotSurface implements ChartPart {
 
       // vertical
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar
-          && (getChartPainter().getStyleManager().isPlotGridLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible())) {
+
+      && (getChartPainter().getStyleManager().isPlotGridLinesVisible()
+
+      || getChartPainter().getStyleManager().isPlotTicksMarksVisible())
+
+      ) {
 
         List<Double> xAxisTickLocations = getChartPainter().getAxisPair().getXAxis().getAxisTick().getTickLocations();
         for (int i = 0; i < xAxisTickLocations.size(); i++) {

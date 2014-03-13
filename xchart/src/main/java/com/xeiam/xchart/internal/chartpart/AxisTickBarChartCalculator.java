@@ -57,19 +57,30 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
 
     // get all categories
     List<Object> categories = new ArrayList<Object>();
+
+    Series firstSeries = chartPainter.getAxisPair().getSeriesMap().values().iterator().next(); // we use this to check all series have the exact same length and values
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
+      Iterator<?> firstSeriesItr = firstSeries.getXData().iterator();
       Iterator<?> xItr = series.getXData().iterator();
       while (xItr.hasNext()) {
+
+        // check matching
+        Object next = xItr.next();
+        Object firstSeriesNext = firstSeriesItr.next();
+        if (!firstSeriesNext.equals(next)) {
+          throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Bar Charts!!");
+        }
+
         Object x = null;
         if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          x = xItr.next();
+          x = next;
         }
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-          x = (double) (((Date) xItr.next()).getTime());
+          x = (double) (((Date) next).getTime());
         }
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
-          x = xItr.next();
+          x = next;
         }
         if (!categories.contains(x)) {
           categories.add(x);
@@ -134,7 +145,6 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
         dateFormatter = new DateFormatter(chartPainter.getStyleManager());
       }
-      int counter = 0;
 
       for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
 
@@ -147,7 +157,6 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
           long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
           tickLabels.add(dateFormatter.formatDate(tickPosition, timeUnit));
         }
-        // int tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
         double tickLabelPosition = margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
