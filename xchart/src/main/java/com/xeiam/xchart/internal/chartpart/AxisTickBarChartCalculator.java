@@ -77,38 +77,81 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       }
     }
 
-    int numCategories = categories.size();
+    if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
 
-    double gridStep = (tickSpace / (double) numCategories);
-    // int firstPosition = (int) (gridStep / 2.0);
-    double firstPosition = getFirstPosition(gridStep);
-
-    // generate all tickLabels and tickLocations from the first to last position
-    NumberFormatter numberFormatter = null;
-    DateFormatter dateFormatter = null;
-
-    if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-      numberFormatter = new NumberFormatter(styleManager);
+      double gridStep = (tickSpace / (double) categories.size());
+      double firstPosition = gridStep / 2.0;
+      int counter = 0;
+      for (Object category : categories) {
+        tickLabels.add(category.toString());
+        double tickLabelPosition = margin + firstPosition + gridStep * counter++;
+        tickLocations.add(tickLabelPosition);
+      }
     }
-    else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-      dateFormatter = new DateFormatter(chartPainter.getStyleManager());
-    }
-    int counter = 0;
-    for (Object category : categories) {
+    else if (categories.size() < 13) { // Number or Date and 12 or less categories
+
+      double gridStep = (tickSpace / (double) categories.size());
+      double firstPosition = gridStep / 2.0;
+
+      // generate all tickLabels and tickLocations from the first to last position
+      NumberFormatter numberFormatter = null;
+      DateFormatter dateFormatter = null;
+
       if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-        tickLabels.add(numberFormatter.formatNumber((Double) category));
+        numberFormatter = new NumberFormatter(styleManager);
       }
       else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-        long span = (long) Math.abs(maxValue - minValue); // in data space
-        long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
-        long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
-        tickLabels.add(dateFormatter.formatDate((Double) category, timeUnit));
+        dateFormatter = new DateFormatter(chartPainter.getStyleManager());
       }
-      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
-        tickLabels.add(category.toString());
+      int counter = 0;
+
+      for (Object category : categories) {
+        if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+          tickLabels.add(numberFormatter.formatNumber((Double) category));
+        }
+        else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+          long span = (long) Math.abs(maxValue - minValue); // in data space
+          long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
+          long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
+          tickLabels.add(dateFormatter.formatDate((Double) category, timeUnit));
+        }
+        double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
+        tickLocations.add(tickLabelPosition);
       }
-      int tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
-      tickLocations.add(tickLabelPosition);
     }
+    else { // Number or Date
+
+      double gridStep = getNumericalGridStep(tickSpace);
+      double firstPosition = getFirstPosition(gridStep);
+
+      // generate all tickLabels and tickLocations from the first to last position
+      NumberFormatter numberFormatter = null;
+      DateFormatter dateFormatter = null;
+
+      if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+        numberFormatter = new NumberFormatter(styleManager);
+      }
+      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+        dateFormatter = new DateFormatter(chartPainter.getStyleManager());
+      }
+      int counter = 0;
+
+      for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
+
+        if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+          tickLabels.add(numberFormatter.formatNumber(tickPosition));
+        }
+        else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+          long span = (long) Math.abs(maxValue - minValue); // in data space
+          long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
+          long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
+          tickLabels.add(dateFormatter.formatDate(tickPosition, timeUnit));
+        }
+        // int tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
+        double tickLabelPosition = margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace);
+        tickLocations.add(tickLabelPosition);
+      }
+    }
+
   }
 }

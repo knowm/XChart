@@ -41,9 +41,9 @@ public class DecimalAxisTickCalculatorTest {
     assertThat(tickLabels.size(), equalTo(7));
     assertThat(tickLabels.get(0), equalTo("-15"));
 
-    List<Integer> tickLocations = decimalAxisTickCalculator.getTickLocations();
+    List<Double> tickLocations = decimalAxisTickCalculator.getTickLocations();
     System.out.println(Arrays.toString(tickLocations.toArray()));
     assertThat(tickLocations.size(), equalTo(7));
-    assertThat(tickLocations.get(0), equalTo(15));
+    assertThat(tickLocations.get(0), equalTo(15.0));
   }
 }

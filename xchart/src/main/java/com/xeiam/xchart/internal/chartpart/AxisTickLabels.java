@@ -63,7 +63,7 @@ public class AxisTickLabels implements ChartPart {
 
         String tickLabel = axisTick.getTickLabels().get(i);
         // System.out.println(tickLabel);
-        int tickLocation = axisTick.getTickLocations().get(i);
+        double tickLocation = axisTick.getTickLocations().get(i);
 
         if (tickLabel != null) { // some are null for logarithmic axes
 
@@ -100,7 +100,7 @@ public class AxisTickLabels implements ChartPart {
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
         String tickLabel = axisTick.getTickLabels().get(i);
-        int tickLocation = axisTick.getTickLocations().get(i);
+        double tickLocation = axisTick.getTickLocations().get(i);
 
         if (tickLabel != null) { // some are null for logarithmic axes
           FontRenderContext frc = g.getFontRenderContext();

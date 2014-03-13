@@ -49,7 +49,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
       tickLabels.add(numberFormatter.formatNumber(maxValue));
-      tickLocations.add((int) (workingSpace / 2.0));
+      tickLocations.add(workingSpace / 2.0);
       return;
     }
 
@@ -117,7 +117,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
         }
 
         // add all the tick marks though
-        int tickLabelPosition = (int) (margin + (Math.log10(j) - Math.log10(minValue)) / (Math.log10(maxValue) - Math.log10(minValue)) * tickSpace);
+        double tickLabelPosition = (int) (margin + (Math.log10(j) - Math.log10(minValue)) / (Math.log10(maxValue) - Math.log10(minValue)) * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
       tickStep = tickStep * Utils.pow(10, 1);

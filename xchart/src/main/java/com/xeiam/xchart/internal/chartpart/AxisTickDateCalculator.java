@@ -47,7 +47,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
   private void calculate() {
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int)(styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
+    int tickSpace = (int) (styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
@@ -74,7 +74,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
 
       tickLabels.add(dateFormatter.formatDate(tickPosition, timeUnit));
       // here we convert tickPosition finally to plot space, i.e. pixels
-      int tickLabelPosition = (int) (margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace));
+      double tickLabelPosition = (int) (margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace));
       tickLocations.add(tickLabelPosition);
     }
   }
