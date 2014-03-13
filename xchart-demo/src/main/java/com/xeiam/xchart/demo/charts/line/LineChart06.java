@@ -46,11 +46,11 @@ public class LineChart06 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    double[] xData = new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0 };
+    int[] xData = new int[] { 0, 1, 2, 3, 4, 5, 6 };
 
-    double[] yData1 = new double[] { 100, 100, 100, 60, 10, 10, 10 };
+    int[] yData1 = new int[] { 100, 100, 100, 60, 10, 10, 10 };
 
-    double[] errdata = new double[] { 50, 20, 10, 52, 9, 2, 1 };
+    int[] errdata = new int[] { 50, 20, 10, 52, 9, 2, 1 };
 
     Chart chart = new Chart(800, 600);
 
