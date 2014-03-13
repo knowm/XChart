@@ -69,7 +69,7 @@ public class PlotContentBarChart extends PlotContent {
       }
     }
     int numBars = categories.size();
-    int gridStep = (int) (xTickSpace / (double) numBars);
+    double gridStep = xTickSpace / (double) numBars;
 
     // plot series
     int seriesCounter = 0;

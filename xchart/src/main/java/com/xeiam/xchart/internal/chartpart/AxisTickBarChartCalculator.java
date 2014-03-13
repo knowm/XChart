@@ -79,8 +79,9 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
 
     int numCategories = categories.size();
 
-    int gridStep = (int) (tickSpace / (double) numCategories);
-    int firstPosition = (int) (gridStep / 2.0);
+    double gridStep = (tickSpace / (double) numCategories);
+    // int firstPosition = (int) (gridStep / 2.0);
+    double firstPosition = getFirstPosition(gridStep);
 
     // generate all tickLabels and tickLocations from the first to last position
     NumberFormatter numberFormatter = null;
@@ -106,7 +107,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
         tickLabels.add(category.toString());
       }
-      int tickLabelPosition = margin + firstPosition + gridStep * counter++;
+      int tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
       tickLocations.add(tickLabelPosition);
     }
   }
