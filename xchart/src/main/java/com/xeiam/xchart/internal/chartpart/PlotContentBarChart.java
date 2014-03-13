@@ -49,12 +49,12 @@ public class PlotContentBarChart extends PlotContent {
     StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // X-Axis
-    int xTickSpace = (int) (styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
-    int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
+    double xTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getWidth();
+    double xLeftMargin = Utils.getTickStartOffset(bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = (int) (styleManager.getAxisTickSpaceRatio() * bounds.getHeight());
-    int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
+    double yTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getHeight();
+    double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
     // get all categories
     List<Object> categories = new ArrayList<Object>();
@@ -69,7 +69,7 @@ public class PlotContentBarChart extends PlotContent {
       }
     }
     int numBars = categories.size();
-    double gridStep = xTickSpace / (double) numBars;
+    double gridStep = xTickSpace / numBars;
 
     // plot series
     int seriesCounter = 0;
@@ -97,7 +97,7 @@ public class PlotContentBarChart extends PlotContent {
       }
       else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
         // int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
-        int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getYAxis().getMin()));
+        double logMin = Math.floor(Math.log10(getChartPainter().getAxisPair().getYAxis().getMin()));
         // System.out.println("logMin: " + logMin);
         // System.out.println("min : " + getChartPainter().getAxisPair().getyAxis().getMin().doubleValue());
         yMin = logMin;
@@ -163,10 +163,10 @@ public class PlotContentBarChart extends PlotContent {
 
           double yTransform = bounds.getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
 
-          double yOffset = bounds.getY() + yTransform + 1;
+          double yOffset = bounds.getY() + yTransform;
 
           double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
-          double zeroOffset = bounds.getY() + zeroTransform + 1;
+          double zeroOffset = bounds.getY() + zeroTransform;
 
           // paint bar
           double barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() / 1.1;

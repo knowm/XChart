@@ -50,7 +50,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     int tickSpace = (int) (styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // the span of the data
     long span = (long) Math.abs(maxValue - minValue); // in data space

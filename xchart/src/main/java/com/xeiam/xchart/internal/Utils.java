@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal;
 
-
 /**
  * @author timmolter
  */
@@ -35,10 +34,10 @@ public class Utils {
    * @param tickSpace
    * @return
    */
-  public static int getTickStartOffset(int workingSpace, int tickSpace) {
+  public static double getTickStartOffset(double workingSpace, double tickSpace) {
 
-    int marginSpace = workingSpace - tickSpace;
-    return (int) (marginSpace / 2.0);
+    double marginSpace = workingSpace - tickSpace;
+    return marginSpace / 2.0;
   }
 
   public static double pow(double base, int exponent) {

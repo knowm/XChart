@@ -53,7 +53,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     int tickSpace = (int) (styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // get all categories
     List<Object> categories = new ArrayList<Object>();

@@ -126,7 +126,7 @@ public abstract class AxisTickCalculator {
    * @param tickSpace in plot space
    * @return
    */
-  public double getNumericalGridStep(int tickSpace) {
+  public double getNumericalGridStep(double tickSpace) {
 
     // this prevents an infinite loop when the plot gets sized really small.
     if (tickSpace < 10) {
