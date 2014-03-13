@@ -55,11 +55,11 @@ public class PlotContentLineChart extends PlotContent {
     g.setClip(bounds);
 
     // X-Axis
-    int xTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
+    int xTickSpace = (int) (styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
     int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getHeight());
+    int yTickSpace = (int) (styleManager.getAxisTickSpaceRatio() * bounds.getHeight());
     int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
@@ -103,7 +103,10 @@ public class PlotContentLineChart extends PlotContent {
 
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
-
+      Iterator<? extends Number> ebItr = null;
+      if (errorBars != null) {
+        ebItr = errorBars.iterator();
+      }
       Path2D.Double path = null;
 
       while (xItr.hasNext()) {
@@ -206,10 +209,7 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         // paint errorbars
-        Iterator<? extends Number> ebItr = null;
-        if (errorBars != null) {
-          ebItr = errorBars.iterator();
-        }
+
         double eb = 0.0;
 
         if (errorBars != null) {
