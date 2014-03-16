@@ -99,7 +99,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         tickLocations.add(tickLabelPosition);
       }
     }
-    else if (categories.size() < 13) { // Number or Date and 12 or less categories
+    else if (categories.size() < 13) { // Number or Date and 12 or less categories. give each category a tick label
 
       double gridStep = (tickSpace / (double) categories.size());
       double firstPosition = gridStep / 2.0;
@@ -130,7 +130,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         tickLocations.add(tickLabelPosition);
       }
     }
-    else { // Number or Date
+    else { // Number or Date and more than 12 categories. divide up the axis tick space according to normal number axis layout
 
       double gridStep = getNumericalGridStep(tickSpace);
       double firstPosition = getFirstPosition(gridStep);

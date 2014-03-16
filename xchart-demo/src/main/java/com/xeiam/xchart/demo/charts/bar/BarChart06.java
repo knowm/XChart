@@ -48,11 +48,12 @@ public class BarChart06 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histogram").xAxisTitle("Score").yAxisTitle("Count").build();
 
-    chart.addSeries("histogram 1", getGaussianData(1000), 11, -30, 30);
-    chart.addSeries("histogram 2", getGaussianData(1000), 11, -30, 30);
+    chart.addSeries("histogram 1", getGaussianData(10000), 10, -30, 30);
+    chart.addSeries("histogram 2", getGaussianData(10000), 10, -30, 30);
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyleManager().setBarWidthPercentage(.99);
 
     return chart;
   }
@@ -62,8 +63,8 @@ public class BarChart06 implements ExampleChart {
     List<Double> data = new ArrayList<Double>(count);
     Random r = new Random();
     for (int i = 0; i < count; i++) {
-      // data.add(r.nextGaussian() * 10);
-      data.add(r.nextDouble() * 60 - 30);
+      data.add(r.nextGaussian() * 10);
+      // data.add(r.nextDouble() * 60 - 30);
     }
     return data;
   }

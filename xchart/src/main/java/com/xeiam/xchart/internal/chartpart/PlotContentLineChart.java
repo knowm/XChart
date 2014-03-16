@@ -185,7 +185,7 @@ public class PlotContentLineChart extends PlotContent {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
 
             g.setColor(series.getStrokeColor());
-            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
+            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
 
             if (path == null) {
               path = new Path2D.Double();
@@ -264,7 +264,7 @@ public class PlotContentLineChart extends PlotContent {
   private void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
 
     if (path != null) {
-      double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
+      double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
       path.lineTo(previousX, yBottomOfArea);
       path.closePath();
       g.fill(path);

@@ -167,8 +167,9 @@ public class PlotContentBarChart extends PlotContent {
         double zeroOffset = bounds.getY() + zeroTransform;
 
         // paint bar
-        double barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() / 1.1;
-        double barMargin = gridStep * .05;
+        double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
+        double barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() * barWidthPercentage;
+        double barMargin = gridStep * (1 - barWidthPercentage) / 2;
         double xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
         g.setColor(series.getStrokeColor());
 

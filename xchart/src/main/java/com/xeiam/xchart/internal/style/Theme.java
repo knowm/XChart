@@ -116,6 +116,10 @@ public interface Theme {
 
   public boolean isPlotTicksMarksVisible();
 
+  // Bar Charts ///////////////////////////////
+
+  public double getBarWidthPercentage();
+
   // Error Bars ///////////////////////////////
 
   public Color getErrorBarsColor();

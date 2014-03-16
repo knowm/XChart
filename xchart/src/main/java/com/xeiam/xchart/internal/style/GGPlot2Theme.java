@@ -279,6 +279,14 @@ public class GGPlot2Theme implements Theme {
     return new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
   }
 
+  // Bar Charts ///////////////////////////////
+
+  @Override
+  public double getBarWidthPercentage() {
+
+    return 0.9;
+  }
+
   // Error Bars ///////////////////////////////
 
   @Override

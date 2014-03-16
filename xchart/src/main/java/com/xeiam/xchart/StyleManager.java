@@ -38,7 +38,7 @@ public class StyleManager {
    */
   public enum ChartType {
 
-    Line, Scatter, Area, Bar, Histogram
+    Line, Scatter, Area, Bar
   }
 
   public enum LegendPosition {
@@ -126,6 +126,7 @@ public class StyleManager {
   private boolean isPlotTicksMarksVisible;
   private Color plotGridLinesColor;
   private Stroke plotGridLinesStroke;
+  private double barWidthPercentage;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -204,6 +205,7 @@ public class StyleManager {
     isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
     plotGridLinesColor = theme.getPlotGridLinesColor();
     plotGridLinesStroke = theme.getPlotGridLinesStroke();
+    barWidthPercentage = theme.getBarWidthPercentage();
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
@@ -964,6 +966,23 @@ public class StyleManager {
   public Stroke getPlotGridLinesStroke() {
 
     return plotGridLinesStroke;
+  }
+
+  // Bar Charts ///////////////////////////////
+
+  /**
+   * set the width of a single bar in a bar chart. full width is 100%, i.e. 1.0
+   * 
+   * @param barWidthPercentage
+   */
+  public void setBarWidthPercentage(double barWidthPercentage) {
+
+    this.barWidthPercentage = barWidthPercentage;
+  }
+
+  public double getBarWidthPercentage() {
+
+    return barWidthPercentage;
   }
 
   // Error Bars ///////////////////////////////
