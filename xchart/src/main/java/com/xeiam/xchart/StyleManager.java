@@ -126,7 +126,10 @@ public class StyleManager {
   private boolean isPlotTicksMarksVisible;
   private Color plotGridLinesColor;
   private Stroke plotGridLinesStroke;
+
+  // Bar Charts ///////////////////////////////
   private double barWidthPercentage;
+  private boolean isOverlapped;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -205,7 +208,10 @@ public class StyleManager {
     isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
     plotGridLinesColor = theme.getPlotGridLinesColor();
     plotGridLinesStroke = theme.getPlotGridLinesStroke();
+
+    // Bar Charts ///////////////////////////////
     barWidthPercentage = theme.getBarWidthPercentage();
+    isOverlapped = theme.isOverlapped();
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
@@ -983,6 +989,21 @@ public class StyleManager {
   public double getBarWidthPercentage() {
 
     return barWidthPercentage;
+  }
+
+  /**
+   * set whether or no bars are overlapped. Otherwise they are places side-by-side
+   * 
+   * @param isOverlapped
+   */
+  public void setOverlapped(boolean isOverlapped) {
+
+    this.isOverlapped = isOverlapped;
+  }
+
+  public boolean isOverlapped() {
+
+    return isOverlapped;
   }
 
   // Error Bars ///////////////////////////////

@@ -167,12 +167,23 @@ public class PlotContentBarChart extends PlotContent {
         double zeroOffset = bounds.getY() + zeroTransform;
 
         // paint bar
-        double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
-        double barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() * barWidthPercentage;
-        double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-        double xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
-        g.setColor(series.getStrokeColor());
-
+        boolean isOverlap = true;
+        double xOffset;
+        double barWidth;
+        if (getChartPainter().getStyleManager().isOverlapped()) {
+          double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
+          barWidth = gridStep * barWidthPercentage;
+          double barMargin = gridStep * (1 - barWidthPercentage) / 2;
+          xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + barMargin;
+          g.setColor(series.getStrokeColor());
+        }
+        else {
+          double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
+          barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() * barWidthPercentage;
+          double barMargin = gridStep * (1 - barWidthPercentage) / 2;
+          xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
+          g.setColor(series.getStrokeColor());
+        }
         Path2D.Double path = new Path2D.Double();
         path.moveTo(xOffset, yOffset);
         path.lineTo(xOffset + barWidth, yOffset);

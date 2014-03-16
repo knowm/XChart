@@ -120,6 +120,8 @@ public interface Theme {
 
   public double getBarWidthPercentage();
 
+  public boolean isOverlapped();
+
   // Error Bars ///////////////////////////////
 
   public Color getErrorBarsColor();

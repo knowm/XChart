@@ -48,13 +48,13 @@ public class BarChart06 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histogram").xAxisTitle("Score").yAxisTitle("Count").build();
 
-    chart.addSeries("histogram 1", getGaussianData(10000), 10, -30, 30);
-    chart.addSeries("histogram 2", getGaussianData(10000), 10, -30, 30);
+    chart.addSeries("histogram 1", getGaussianData(10000), 30, -30, 30);
+    chart.addSeries("histogram 2", getGaussianData(5000), 30, -30, 30);
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setBarWidthPercentage(.99);
-
+    chart.getStyleManager().setBarWidthPercentage(.96);
+    chart.getStyleManager().setOverlapped(false);
     return chart;
   }
 
