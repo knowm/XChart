@@ -221,23 +221,6 @@ public class Chart {
     return chartPainter.getAxisPair().addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
   }
 
-  // /**
-  // * Add a series for a histogram
-  // *
-  // * @param seriesName
-  // * @param data
-  // * @param numBins
-  // * @param min
-  // * @param max
-  // * @return
-  // */
-  // public Series addSeries(String seriesName, Collection<? extends Number> data, int numBins, double min, double max) {
-  //
-  // Histogram histogram1 = new Histogram(data, numBins, min, max);
-  //
-  // return chartPainter.getAxisPair().addSeries(seriesName, histogram1.getxAxisData(), histogram1.getyAxisData(), null);
-  // }
-
   /**
    * Set the chart title
    * 
