@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.internal;
+package com.xeiam.xchart;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 /**
+ * This class can be used to create histogram data for histogram bar charts
+ * 
  * @author timmolter
  */
 public class Histogram {
 
-  private final List<Double> xAxisData; // bin centers
-  private final List<Double> yAxisData; // frequency counts
+  private List<Double> xAxisData; // bin centers
+  private List<Double> yAxisData; // frequency counts
   private final Collection<? extends Number> originalData;
   private final int numBins;
   private final double min;
@@ -34,6 +37,34 @@ public class Histogram {
 
   /**
    * Constructor
+   * 
+   * @param data
+   * @param numBins
+   */
+  public Histogram(Collection<? extends Number> data, int numBins) {
+
+    this.numBins = numBins;
+    this.originalData = data;
+
+    List<Double> dataAsList = new ArrayList<Double>();
+    Iterator<? extends Number> itr = data.iterator();
+    while (itr.hasNext()) {
+      dataAsList.add(((Number) itr.next()).doubleValue());
+    }
+    Collections.sort(dataAsList);
+    this.min = dataAsList.get(0);
+    this.max = dataAsList.get(dataAsList.size() - 1);
+
+    init();
+  }
+
+  /**
+   * Constructor
+   * 
+   * @param data
+   * @param numBins
+   * @param min
+   * @param max
    */
   public Histogram(Collection<? extends Number> data, int numBins, double min, double max) {
 
@@ -45,14 +76,19 @@ public class Histogram {
     // this.min = data[0];
     // this.max = data[data.length - 1];
 
+    init();
+  }
+
+  private void init() {
+
     double[] tempYAxisData = new double[numBins];
     final double binSize = (max - min) / numBins;
 
     // y axis data
-    Iterator<? extends Number> itr = data.iterator();
+    Iterator<? extends Number> itr = originalData.iterator();
     while (itr.hasNext()) {
 
-      int bin = (int) (((Double) itr.next() - min) / binSize); // changed this from numBins
+      int bin = (int) ((((Number) itr.next()).doubleValue() - min) / binSize); // changed this from numBins
       if (bin < 0) { /* this data is smaller than min */
       }
       else if (bin >= numBins) { /* this data point is bigger than max */

@@ -28,18 +28,19 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * Histogram Overlapped
+ * Histogram Not Overlapped
  * <p>
  * Demonstrates the following:
  * <ul>
  * <li>Histogram
- * <li>Bar Chart styles - overlapped, bar width
+ * <li>Bar Chart styles - not overlapped, bar width
+ * <li>Integer data values
  */
-public class BarChart06 implements ExampleChart {
+public class BarChart07 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new BarChart06();
+    ExampleChart exampleChart = new BarChart07();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -50,25 +51,24 @@ public class BarChart06 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
-    Histogram histogram1 = new Histogram(getGaussianData(10000), 30, -30, 30);
-    Histogram histogram2 = new Histogram(getGaussianData(5000), 30, -30, 30);
+    Histogram histogram1 = new Histogram(getGaussianData(1000), 10, -30, 30);
     chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
+    Histogram histogram2 = new Histogram(getGaussianData(1000), 10, -30, 30);
     chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyleManager().setBarWidthPercentage(.96);
-    chart.getStyleManager().setOverlapped(true);
 
     return chart;
   }
 
-  private List<Double> getGaussianData(int count) {
+  private List<Integer> getGaussianData(int count) {
 
-    List<Double> data = new ArrayList<Double>(count);
+    List<Integer> data = new ArrayList<Integer>(count);
     Random r = new Random();
     for (int i = 0; i < count; i++) {
-      data.add(r.nextGaussian() * 10);
+      data.add((int) (r.nextGaussian() * 10));
       // data.add(r.nextDouble() * 60 - 30);
     }
     return data;

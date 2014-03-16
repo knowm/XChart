@@ -38,6 +38,8 @@ import com.xeiam.xchart.demo.charts.bar.BarChart02;
 import com.xeiam.xchart.demo.charts.bar.BarChart03;
 import com.xeiam.xchart.demo.charts.bar.BarChart04;
 import com.xeiam.xchart.demo.charts.bar.BarChart05;
+import com.xeiam.xchart.demo.charts.bar.BarChart06;
+import com.xeiam.xchart.demo.charts.bar.BarChart07;
 import com.xeiam.xchart.demo.charts.date.DateChart01;
 import com.xeiam.xchart.demo.charts.date.DateChart02;
 import com.xeiam.xchart.demo.charts.date.DateChart03;
@@ -192,7 +194,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaChart02 - Null Y-Axis Data Points", new AreaChart02().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // First category
+    // Line category
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
 
@@ -247,6 +249,12 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart05 - GGPlot2 Theme", new BarChart05().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart06 - Histogram Overlapped", new BarChart06().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart07 - Histogram Not Overlapped", new BarChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Theme category
