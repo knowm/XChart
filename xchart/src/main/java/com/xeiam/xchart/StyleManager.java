@@ -38,7 +38,7 @@ public class StyleManager {
    */
   public enum ChartType {
 
-    Line, Scatter, Area, Bar
+    Line, Scatter, Area, Bar, Histogram
   }
 
   public enum LegendPosition {
@@ -116,7 +116,7 @@ public class StyleManager {
   private Double xAxisMax;
   private Double yAxisMin;
   private Double yAxisMax;
-  private double axisTickSpaceRatio; 
+  private double axisTickSpaceRatio;
 
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
@@ -850,11 +850,13 @@ public class StyleManager {
   }
 
   public void setAxisTickSpaceRatio(double axisTickSpaceRatio) {
+
     this.axisTickSpaceRatio = axisTickSpaceRatio;
   }
 
   public double getAxisTickSpaceRatio() {
-	return axisTickSpaceRatio;
+
+    return axisTickSpaceRatio;
   }
 
   // Chart Plot Area ///////////////////////////////
