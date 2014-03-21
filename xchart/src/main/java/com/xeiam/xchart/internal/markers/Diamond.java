@@ -25,11 +25,11 @@ public class Diamond extends Marker {
 
   @Override
   public void paint(Graphics2D g, double xOffset, double yOffset) {
-
+    double halfSize = getSize() / 2.0;
     g.setStroke(stroke);
 
     // Make a diamond
-    double diamondHalfSize = Marker.HALF_SIZE * 1.3;
+    double diamondHalfSize = halfSize * 1.3;
 
     Path2D.Double path = new Path2D.Double();
     path.moveTo(xOffset - diamondHalfSize, yOffset);

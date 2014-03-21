@@ -250,6 +250,24 @@ public class Chart {
 
     chartPainter.getAxisPair().getYAxis().getAxisTitle().setText(title);
   }
+  
+  /**
+   * Reset the range value of the x-axis. Otherwise the range grows with the extreme values of series.
+   * 
+   */
+  public void resetXAxisRange() {
+
+    chartPainter.getAxisPair().getXAxis().resetRange();
+  }
+
+  /**
+   * Reset the range value of the y-axis. Otherwise the range grows with the extreme values of series.
+   * 
+   */
+  public void resetYAxisRange() {
+
+    chartPainter.getAxisPair().getXAxis().resetRange();
+  }
 
   /**
    * Gets the Chart's style manager, which can be used to customize the Chart's appearance

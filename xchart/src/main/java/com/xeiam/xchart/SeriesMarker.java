@@ -81,8 +81,8 @@ public enum SeriesMarker {
    * @return
    */
   public Marker getMarker() {
-
-    return marker;
+      if(marker == null) return null;
+    return marker.clone();
   }
 
 }
