@@ -256,6 +256,8 @@ public class PlotContentLineChart extends PlotContent {
       // close any open path for area charts
       closePath(g, path, previousX, bounds, yTopMargin);
     }
+
+    g.setClip(null);
   }
 
   /**
