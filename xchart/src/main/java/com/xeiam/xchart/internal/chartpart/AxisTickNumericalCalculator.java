@@ -15,6 +15,8 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.math.BigDecimal;
+
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
@@ -59,15 +61,15 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
-    double gridStep = getNumericalGridStep(tickSpace);
-    double firstPosition = getFirstPosition(gridStep);
+    BigDecimal gridStep = BigDecimal.valueOf(getNumericalGridStep(tickSpace));
+    BigDecimal firstPosition = BigDecimal.valueOf(getFirstPosition(gridStep.doubleValue()));
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
+    for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(BigDecimal.valueOf(maxValue)) <= 0; tickPosition = tickPosition.add(gridStep)) {
 
-      tickLabels.add(numberFormatter.formatNumber(tickPosition));
+      tickLabels.add(numberFormatter.formatNumber(tickPosition.doubleValue()));
       // here we convert tickPosition finally to plot space, i.e. pixels
-      double tickLabelPosition = margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace);
+      double tickLabelPosition = margin + ((tickPosition.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
       tickLocations.add(tickLabelPosition);
     }
   }
