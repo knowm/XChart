@@ -93,10 +93,11 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       // System.out.println("i: " + i);
       // System.out.println("pow(10, i).doubleValue(): " + pow(10, i).doubleValue());
 
-      for (double j = firstPosition; j <= Utils.pow(10, i); j = j + tickStep) {
+      // using trhe .00000001 factor to dal with double value imprecision
+      for (double j = firstPosition; j <= Utils.pow(10, i) + .00000001; j = j + tickStep) {
 
         // System.out.println("j: " + j);
-        // System.out.println(Math.log10(j.doubleValue()) % 1);
+        // System.out.println(Math.log10(j) % 1);
 
         if (j < minValue) {
           // System.out.println("continue");
