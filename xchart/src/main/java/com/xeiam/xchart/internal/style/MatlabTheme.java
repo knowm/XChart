@@ -289,7 +289,7 @@ public class MatlabTheme implements Theme {
   }
 
   @Override
-  public boolean isOverlapped() {
+  public boolean barsOverlapped() {
 
     return false;
   }

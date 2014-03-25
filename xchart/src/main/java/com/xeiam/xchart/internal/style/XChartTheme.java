@@ -288,7 +288,7 @@ public class XChartTheme implements Theme {
   }
 
   @Override
-  public boolean isOverlapped() {
+  public boolean barsOverlapped() {
 
     return false;
   }

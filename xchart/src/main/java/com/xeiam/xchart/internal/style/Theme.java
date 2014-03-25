@@ -120,7 +120,7 @@ public interface Theme {
 
   public double getBarWidthPercentage();
 
-  public boolean isOverlapped();
+  public boolean barsOverlapped();
 
   // Error Bars ///////////////////////////////
 

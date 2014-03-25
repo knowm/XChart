@@ -129,7 +129,7 @@ public class StyleManager {
 
   // Bar Charts ///////////////////////////////
   private double barWidthPercentage;
-  private boolean isOverlapped;
+  private boolean barsOverlapped;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -211,7 +211,7 @@ public class StyleManager {
 
     // Bar Charts ///////////////////////////////
     barWidthPercentage = theme.getBarWidthPercentage();
-    isOverlapped = theme.isOverlapped();
+    barsOverlapped = theme.barsOverlapped();
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
@@ -994,16 +994,16 @@ public class StyleManager {
   /**
    * set whether or no bars are overlapped. Otherwise they are places side-by-side
    * 
-   * @param isOverlapped
+   * @param barsOverlapped
    */
-  public void setOverlapped(boolean isOverlapped) {
+  public void setBarsOverlapped(boolean barsOverlapped) {
 
-    this.isOverlapped = isOverlapped;
+    this.barsOverlapped = barsOverlapped;
   }
 
-  public boolean isOverlapped() {
+  public boolean barsOverlapped() {
 
-    return isOverlapped;
+    return barsOverlapped;
   }
 
   // Error Bars ///////////////////////////////

@@ -288,7 +288,7 @@ public class GGPlot2Theme implements Theme {
   }
 
   @Override
-  public boolean isOverlapped() {
+  public boolean barsOverlapped() {
 
     return false;
   }

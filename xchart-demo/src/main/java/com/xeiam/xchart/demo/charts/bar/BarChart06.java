@@ -58,7 +58,7 @@ public class BarChart06 implements ExampleChart {
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyleManager().setBarWidthPercentage(.96);
-    chart.getStyleManager().setOverlapped(true);
+    chart.getStyleManager().setBarsOverlapped(true);
 
     return chart;
   }

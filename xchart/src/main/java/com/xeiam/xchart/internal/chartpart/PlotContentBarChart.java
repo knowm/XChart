@@ -170,7 +170,7 @@ public class PlotContentBarChart extends PlotContent {
         boolean isOverlap = true;
         double xOffset;
         double barWidth;
-        if (getChartPainter().getStyleManager().isOverlapped()) {
+        if (getChartPainter().getStyleManager().barsOverlapped()) {
           double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
