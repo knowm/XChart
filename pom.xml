@@ -4,7 +4,7 @@
 
 	<groupId>com.xeiam.xchart</groupId>
 	<artifactId>xchart-parent</artifactId>
-	<version>2.3.2-SNAPSHOT</version>
+	<version>2.3.2</version>
 	<packaging>pom</packaging>
 	<name>XChart Parent</name>
 	<description>Basic Charts for Java Applications</description>
@@ -40,7 +40,7 @@
 		<connection>scm:git:git@github.com:timmolter/XChart.git</connection>
 		<developerConnection>scm:git:git@github.com:timmolter/XChart.git</developerConnection>
 		<url>git@github.com:timmolter/XChart.git</url>
-		<tag>HEAD</tag>
+		<tag>xchart-2.3.2</tag>
 	</scm>
 
 	<ciManagement>
