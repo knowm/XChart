@@ -245,7 +245,7 @@ public class XChartPanel extends JPanel {
   }
 
   /**
-   * update a series by only updating the Y-Axis data. The X-Axis data will is automatically generated as a list of increasing Integers starting from 1 and ending at the size of the new Y-Axis data
+   * update a series by only updating the Y-Axis data. The X-Axis data will be automatically generated as a list of increasing Integers starting from 1 and ending at the size of the new Y-Axis data
    * list.
    * 
    * @param seriesName
@@ -275,7 +275,7 @@ public class XChartPanel extends JPanel {
   }
 
   /**
-   * update a series by only updating both the X-Axis and Y-Axis data
+   * update a series by updating both the X-Axis and Y-Axis data
    * 
    * @param seriesName
    * @param newYData
