@@ -280,6 +280,20 @@ public class MatlabTheme implements Theme {
 
   }
 
+  // Bar Charts ///////////////////////////////
+
+  @Override
+  public double getBarWidthPercentage() {
+
+    return 0.9;
+  }
+
+  @Override
+  public boolean barsOverlapped() {
+
+    return false;
+  }
+
   // Error Bars ///////////////////////////////
 
   @Override

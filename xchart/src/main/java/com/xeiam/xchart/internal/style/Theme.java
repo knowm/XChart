@@ -116,6 +116,12 @@ public interface Theme {
 
   public boolean isPlotTicksMarksVisible();
 
+  // Bar Charts ///////////////////////////////
+
+  public double getBarWidthPercentage();
+
+  public boolean barsOverlapped();
+
   // Error Bars ///////////////////////////////
 
   public Color getErrorBarsColor();

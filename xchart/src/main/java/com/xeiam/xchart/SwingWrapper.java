@@ -29,6 +29,8 @@ import javax.swing.JPanel;
  */
 public class SwingWrapper {
 
+  private String windowTitle = "XChart";
+
   private List<Chart> charts = new ArrayList<Chart>();
   private int numRows;
   private int numColumns;
@@ -72,11 +74,23 @@ public class SwingWrapper {
 
   /**
    * Display the chart in a Swing JFrame
+   * 
+   * @param windowTitle the title of the window
+   */
+  public JFrame displayChart(String windowTitle) {
+
+    this.windowTitle = windowTitle;
+
+    return displayChart();
+  }
+
+  /**
+   * Display the chart in a Swing JFrame
    */
   public JFrame displayChart() {
 
     // Create and set up the window.
-    final JFrame frame = new JFrame("XChart");
+    final JFrame frame = new JFrame(windowTitle);
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
@@ -99,12 +113,25 @@ public class SwingWrapper {
   }
 
   /**
+   * Display the charts in a Swing JFrame
+   * 
+   * @param windowTitle the title of the window
+   * @return the JFrame
+   */
+  public JFrame displayChartMatrix(String windowTitle) {
+
+    this.windowTitle = windowTitle;
+
+    return displayChartMatrix();
+  }
+
+  /**
    * Display the chart in a Swing JFrame
    */
   public JFrame displayChartMatrix() {
 
     // Create and set up the window.
-    final JFrame frame = new JFrame("XChart");
+    final JFrame frame = new JFrame(windowTitle);
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.

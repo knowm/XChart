@@ -102,3 +102,4 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 
 ## Donations
 1PrZHiJorAw7RQrjP9CJgtPuqr6fU65PKt
+

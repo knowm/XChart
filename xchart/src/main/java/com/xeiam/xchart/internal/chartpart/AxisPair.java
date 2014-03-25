@@ -102,9 +102,9 @@ public class AxisPair implements ChartPart {
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     }
     else { // generate xData
-      List<Number> generatedXData = new ArrayList<Number>();
+      List<Double> generatedXData = new ArrayList<Double>();
       for (int i = 1; i < yData.size() + 1; i++) {
-        generatedXData.add(i);
+        generatedXData.add((double) i);
       }
       xAxis.setAxisType(AxisType.Number);
       yAxis.setAxisType(AxisType.Number);

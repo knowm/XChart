@@ -152,7 +152,7 @@ public class AxisTick implements ChartPart {
     return axisTickLabels;
   }
 
-  public List<Integer> getTickLocations() {
+  public List<Double> getTickLocations() {
 
     return gridStep.getTickLocations();
   }

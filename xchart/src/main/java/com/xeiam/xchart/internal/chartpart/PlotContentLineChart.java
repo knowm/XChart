@@ -55,12 +55,12 @@ public class PlotContentLineChart extends PlotContent {
     g.setClip(bounds);
 
     // X-Axis
-    int xTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getWidth());
-    int xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
+    double xTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getWidth();
+    double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    int yTickSpace = (int)(styleManager.getAxisTickSpaceRatio() * bounds.getHeight());
-    int yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
+    double yTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getHeight();
+    double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
 
@@ -103,7 +103,10 @@ public class PlotContentLineChart extends PlotContent {
 
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
-
+      Iterator<? extends Number> ebItr = null;
+      if (errorBars != null) {
+        ebItr = errorBars.iterator();
+      }
       Path2D.Double path = null;
 
       while (xItr.hasNext()) {
@@ -182,7 +185,7 @@ public class PlotContentLineChart extends PlotContent {
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
 
             g.setColor(series.getStrokeColor());
-            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
+            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
 
             if (path == null) {
               path = new Path2D.Double();
@@ -206,10 +209,7 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         // paint errorbars
-        Iterator<? extends Number> ebItr = null;
-        if (errorBars != null) {
-          ebItr = errorBars.iterator();
-        }
+
         double eb = 0.0;
 
         if (errorBars != null) {
@@ -256,6 +256,8 @@ public class PlotContentLineChart extends PlotContent {
       // close any open path for area charts
       closePath(g, path, previousX, bounds, yTopMargin);
     }
+
+    g.setClip(null);
   }
 
   /**
@@ -264,7 +266,7 @@ public class PlotContentLineChart extends PlotContent {
   private void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
 
     if (path != null) {
-      double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin + 1;
+      double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
       path.lineTo(previousX, yBottomOfArea);
       path.closePath();
       g.fill(path);

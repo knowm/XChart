@@ -41,9 +41,9 @@ public class DateAxisTickCalculatorTest {
     assertThat(tickLabels.size(), equalTo(6));
     assertThat(tickLabels.get(0), equalTo("17:50"));
 
-    List<Integer> tickLocations = decimalAxisTickCalculator.getTickLocations();
+    List<Double> tickLocations = decimalAxisTickCalculator.getTickLocations();
     System.out.println(Arrays.toString(tickLocations.toArray()));
     assertThat(tickLocations.size(), equalTo(6));
-    assertThat(tickLocations.get(0), equalTo(100));
+    assertThat(tickLocations.get(0), equalTo(100.0));
   }
 }

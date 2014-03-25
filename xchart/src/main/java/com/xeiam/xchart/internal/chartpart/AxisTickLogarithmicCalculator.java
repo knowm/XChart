@@ -49,15 +49,15 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
       tickLabels.add(numberFormatter.formatNumber(maxValue));
-      tickLocations.add((int) (workingSpace / 2.0));
+      tickLocations.add(workingSpace / 2.0);
       return;
     }
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int) (styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
+    double tickSpace = styleManager.getAxisTickSpaceRatio() * workingSpace; // in plot space
 
     // where the tick should begin in the working space in pixels
-    int margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     int logMin = (int) Math.floor(Math.log10(minValue));
     int logMax = (int) Math.ceil(Math.log10(maxValue));
@@ -93,10 +93,11 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       // System.out.println("i: " + i);
       // System.out.println("pow(10, i).doubleValue(): " + pow(10, i).doubleValue());
 
-      for (double j = firstPosition; j <= Utils.pow(10, i); j = j + tickStep) {
+      // using trhe .00000001 factor to dal with double value imprecision
+      for (double j = firstPosition; j <= Utils.pow(10, i) + .00000001; j = j + tickStep) {
 
         // System.out.println("j: " + j);
-        // System.out.println(Math.log10(j.doubleValue()) % 1);
+        // System.out.println(Math.log10(j) % 1);
 
         if (j < minValue) {
           // System.out.println("continue");
@@ -117,7 +118,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
         }
 
         // add all the tick marks though
-        int tickLabelPosition = (int) (margin + (Math.log10(j) - Math.log10(minValue)) / (Math.log10(maxValue) - Math.log10(minValue)) * tickSpace);
+        double tickLabelPosition = (int) (margin + (Math.log10(j) - Math.log10(minValue)) / (Math.log10(maxValue) - Math.log10(minValue)) * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
       tickStep = tickStep * Utils.pow(10, 1);

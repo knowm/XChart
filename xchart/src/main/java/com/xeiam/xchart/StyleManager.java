@@ -116,7 +116,7 @@ public class StyleManager {
   private Double xAxisMax;
   private Double yAxisMin;
   private Double yAxisMax;
-  private double axisTickSpaceRatio; 
+  private double axisTickSpaceRatio;
 
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
@@ -126,6 +126,10 @@ public class StyleManager {
   private boolean isPlotTicksMarksVisible;
   private Color plotGridLinesColor;
   private Stroke plotGridLinesStroke;
+
+  // Bar Charts ///////////////////////////////
+  private double barWidthPercentage;
+  private boolean barsOverlapped;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -204,6 +208,10 @@ public class StyleManager {
     isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
     plotGridLinesColor = theme.getPlotGridLinesColor();
     plotGridLinesStroke = theme.getPlotGridLinesStroke();
+
+    // Bar Charts ///////////////////////////////
+    barWidthPercentage = theme.getBarWidthPercentage();
+    barsOverlapped = theme.barsOverlapped();
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
@@ -850,11 +858,13 @@ public class StyleManager {
   }
 
   public void setAxisTickSpaceRatio(double axisTickSpaceRatio) {
+
     this.axisTickSpaceRatio = axisTickSpaceRatio;
   }
 
   public double getAxisTickSpaceRatio() {
-	return axisTickSpaceRatio;
+
+    return axisTickSpaceRatio;
   }
 
   // Chart Plot Area ///////////////////////////////
@@ -962,6 +972,38 @@ public class StyleManager {
   public Stroke getPlotGridLinesStroke() {
 
     return plotGridLinesStroke;
+  }
+
+  // Bar Charts ///////////////////////////////
+
+  /**
+   * set the width of a single bar in a bar chart. full width is 100%, i.e. 1.0
+   * 
+   * @param barWidthPercentage
+   */
+  public void setBarWidthPercentage(double barWidthPercentage) {
+
+    this.barWidthPercentage = barWidthPercentage;
+  }
+
+  public double getBarWidthPercentage() {
+
+    return barWidthPercentage;
+  }
+
+  /**
+   * set whether or no bars are overlapped. Otherwise they are places side-by-side
+   * 
+   * @param barsOverlapped
+   */
+  public void setBarsOverlapped(boolean barsOverlapped) {
+
+    this.barsOverlapped = barsOverlapped;
+  }
+
+  public boolean barsOverlapped() {
+
+    return barsOverlapped;
   }
 
   // Error Bars ///////////////////////////////

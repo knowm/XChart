@@ -63,7 +63,7 @@ public class AxisTickMarks implements ChartPart {
 
         for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
-          int tickLocation = axisTick.getTickLocations().get(i);
+          double tickLocation = axisTick.getTickLocations().get(i);
 
           Shape line =
               new Line2D.Double(xOffset, yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
@@ -98,7 +98,7 @@ public class AxisTickMarks implements ChartPart {
 
         for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
-          int tickLocation = axisTick.getTickLocations().get(i);
+          double tickLocation = axisTick.getTickLocations().get(i);
 
           Shape line = new Line2D.Double(xOffset + tickLocation, yOffset, xOffset + tickLocation, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength());
           g.draw(line);
