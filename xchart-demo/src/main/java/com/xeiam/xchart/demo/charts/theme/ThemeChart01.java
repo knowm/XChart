@@ -24,6 +24,10 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Default XChart Theme
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Setting marker size
  */
 public class ThemeChart01 implements ExampleChart {
 
@@ -58,6 +62,7 @@ public class ThemeChart01 implements ExampleChart {
 
       String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
       chart.addSeries(seriesName, xData, yData);
+      chart.getStyleManager().setMarkerSize(11);
 
     }
     return chart;

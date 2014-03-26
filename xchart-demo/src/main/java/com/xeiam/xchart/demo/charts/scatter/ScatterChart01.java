@@ -32,6 +32,7 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <ul>
  * <li>ChartType.Scatter
  * <li>Series data as a Set
+ * <li>Setting marker size
  */
 public class ScatterChart01 implements ExampleChart {
 
@@ -61,6 +62,7 @@ public class ScatterChart01 implements ExampleChart {
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyleManager().setMarkerSize(16);
 
     // Series
     chart.addSeries("Gaussian Blob", xData, yData);

@@ -76,13 +76,15 @@ public class Legend implements ChartPart {
 
     // determine legend text content max width
     double legendTextContentMaxWidth = 0;
-    double legendTextContentMaxHeight = 0;
+    // double legendTextContentMaxHeight = 0;
 
     // determine legend content height
     double legendContentHeight = 0;
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
-      List<Map.Entry<String, Rectangle2D>> seriesBounds = getSeriesBounds(series, g);
+
+      List<Map.Entry<String, Rectangle2D>> seriesBounds = getSeriesNameBounds(series, g);
+
       double blockHeight = 0;
       for (Map.Entry<String, Rectangle2D> entry : seriesBounds) {
         blockHeight += entry.getValue().getHeight();
@@ -91,13 +93,8 @@ public class Legend implements ChartPart {
 
       blockHeight = Math.max(blockHeight, isBar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
-      legendTextContentMaxHeight = Math.max(legendTextContentMaxHeight, blockHeight);
-      legendContentHeight += blockHeight;
+      legendContentHeight += blockHeight + styleManager.getLegendPadding();
     }
-
-    // vertical padding between items
-    double paddingSize = isBar ? styleManager.getLegendPadding() : fontMetrics.getDescent();
-    legendContentHeight += paddingSize * (chartPainter.getAxisPair().getSeriesMap().size() - 1);
 
     // determine legend content width
     double legendContentWidth = 0;
@@ -109,11 +106,11 @@ public class Legend implements ChartPart {
     }
     // Legend Box
     double legendBoxWidth = legendContentWidth + 2 * styleManager.getLegendPadding();
-    double legendBoxHeight = legendContentHeight + 2 * styleManager.getLegendPadding();
+    double legendBoxHeight = legendContentHeight + 1 * styleManager.getLegendPadding();
     return new double[] { legendBoxWidth, legendBoxHeight };
   }
 
-  private List<Map.Entry<String, Rectangle2D>> getSeriesBounds(Series series, Graphics2D g) {
+  private List<Map.Entry<String, Rectangle2D>> getSeriesNameBounds(Series series, Graphics2D g) {
 
     String lines[] = series.getName().split("\\n");
     List<Map.Entry<String, Rectangle2D>> stringBounds = new ArrayList<Map.Entry<String, Rectangle2D>>(lines.length);
@@ -188,11 +185,15 @@ public class Legend implements ChartPart {
     double starty = yOffset + styleManager.getLegendPadding();
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
-      List<Map.Entry<String, Rectangle2D>> seriesBounds = getSeriesBounds(series, g);
+
+      List<Map.Entry<String, Rectangle2D>> seriesNameBounds = getSeriesNameBounds(series, g);
+
       float blockHeight = 0;
-      for (Map.Entry<String, Rectangle2D> entry : seriesBounds) {
+      for (Map.Entry<String, Rectangle2D> entry : seriesNameBounds) {
         blockHeight += entry.getValue().getHeight();
       }
+
+      blockHeight = Math.max(blockHeight, styleManager.getChartType() == ChartType.Bar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
       if (styleManager.getChartType() != ChartType.Bar) {
         // paint line
@@ -224,22 +225,21 @@ public class Legend implements ChartPart {
       float itemOffsetY = -fontMetrics.getDescent();
       if (styleManager.getChartType() != ChartType.Bar) {
         final float x = (float) (startx + styleManager.getLegendSeriesLineLength() + styleManager.getLegendPadding());
-        for (Map.Entry<String, Rectangle2D> entry : seriesBounds) {
+        for (Map.Entry<String, Rectangle2D> entry : seriesNameBounds) {
           g.drawString(entry.getKey(), x, (float) (starty + entry.getValue().getHeight()) + itemOffsetY);
           itemOffsetY += entry.getValue().getHeight();
         }
-        itemOffsetY = Math.max(itemOffsetY, getChartPainter().getStyleManager().getMarkerSize());
-        starty += blockHeight + fontMetrics.getDescent();
+        starty += blockHeight + styleManager.getLegendPadding();
       }
       else {
         final float x = (float) (startx + BOX_SIZE + styleManager.getLegendPadding());
-        for (Map.Entry<String, Rectangle2D> entry : seriesBounds) {
+        for (Map.Entry<String, Rectangle2D> entry : seriesNameBounds) {
           double height = entry.getValue().getHeight();
           double centerOffsetY = (Math.max(BOX_SIZE, height) - height) / 2.0;
           g.drawString(entry.getKey(), x, (float) (starty + height + itemOffsetY + centerOffsetY));
           itemOffsetY += height;
         }
-        starty += Math.max(BOX_SIZE, blockHeight) + styleManager.getLegendPadding();
+        starty += blockHeight + styleManager.getLegendPadding();
       }
 
     }
