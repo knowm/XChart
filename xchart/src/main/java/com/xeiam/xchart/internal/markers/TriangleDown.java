@@ -32,8 +32,8 @@ public class TriangleDown extends Marker {
     // Make a triangle
     Path2D.Double path = new Path2D.Double();
     path.moveTo(xOffset - halfSize, 1 + yOffset - halfSize);
-    path.lineTo(xOffset, 1 + yOffset - halfSize + markerSize + 1);
-    path.lineTo(xOffset - halfSize + markerSize + 1, 1 + yOffset - halfSize);
+    path.lineTo(xOffset, 1 + yOffset - halfSize + markerSize);
+    path.lineTo(xOffset - halfSize + markerSize, 1 + yOffset - halfSize);
     path.closePath();
     g.fill(path);
 

@@ -31,9 +31,9 @@ public class TriangleUp extends Marker {
 
     // Make a triangle
     Path2D.Double path = new Path2D.Double();
-    path.moveTo(xOffset - halfSize, yOffset - halfSize + markerSize + 1);
-    path.lineTo(xOffset - halfSize + markerSize + 1, yOffset - halfSize + markerSize + 1);
-    path.lineTo(xOffset, yOffset - halfSize);
+    path.moveTo(xOffset - halfSize, yOffset - halfSize + markerSize - 1);
+    path.lineTo(xOffset - halfSize + markerSize, yOffset - halfSize + markerSize - 1);
+    path.lineTo(xOffset, yOffset - halfSize - 1);
     path.closePath();
     g.fill(path);
 
