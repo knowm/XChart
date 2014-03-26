@@ -49,10 +49,13 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 * Real-time charts
 
 ## Getting Started
+
 ### Non-Maven
+
 Download Jar: http://xeiam.com/xchart_changelog.jsp
 
 ### Maven
+
 The XChart release artifacts are hosted on Maven Central.
 
 Add the XChart library as a dependency to your pom.xml file:
@@ -104,3 +107,6 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 ## Donations
 1PrZHiJorAw7RQrjP9CJgtPuqr6fU65PKt
 
+## Release Information
+
+We will announce new releases on our [Twitter page](https://twitter.com/Xeiam).

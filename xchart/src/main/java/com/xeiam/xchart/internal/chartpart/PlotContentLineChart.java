@@ -205,7 +205,7 @@ public class PlotContentLineChart extends PlotContent {
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset);
+          series.getMarker().paint(g, xOffset, yOffset, getChartPainter().getStyleManager().getMarkerSize());
         }
 
         // paint errorbars

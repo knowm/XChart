@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.standalone;
 
-import com.xeiam.xchart.BitmapEncoder;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.QuickChart;
 import com.xeiam.xchart.SwingWrapper;
@@ -35,10 +34,6 @@ public class Example0 {
 
     // Show it
     new SwingWrapper(chart).displayChart();
-
-    // Save it
-    BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
-    BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
 
   }
 }

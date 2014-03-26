@@ -29,7 +29,6 @@ import java.util.Map;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.StyleManager.ChartType;
-import com.xeiam.xchart.internal.markers.Marker;
 
 /**
  * @author timmolter
@@ -90,7 +89,7 @@ public class Legend implements ChartPart {
         legendTextContentMaxWidth = Math.max(legendTextContentMaxWidth, entry.getValue().getWidth());
       }
 
-      blockHeight = Math.max(blockHeight, isBar ? BOX_SIZE : Marker.SIZE);
+      blockHeight = Math.max(blockHeight, isBar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
       legendTextContentMaxHeight = Math.max(legendTextContentMaxHeight, blockHeight);
       legendContentHeight += blockHeight;
@@ -133,8 +132,9 @@ public class Legend implements ChartPart {
 
     StyleManager styleManager = getChartPainter().getStyleManager();
 
-    if (!styleManager.isLegendVisible())
+    if (!styleManager.isLegendVisible()) {
       return;
+    }
 
     final double[] sizeHint = getSizeHint(g);
 
@@ -190,8 +190,9 @@ public class Legend implements ChartPart {
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
       List<Map.Entry<String, Rectangle2D>> seriesBounds = getSeriesBounds(series, g);
       float blockHeight = 0;
-      for (Map.Entry<String, Rectangle2D> entry : seriesBounds)
+      for (Map.Entry<String, Rectangle2D> entry : seriesBounds) {
         blockHeight += entry.getValue().getHeight();
+      }
 
       if (styleManager.getChartType() != ChartType.Bar) {
         // paint line
@@ -205,7 +206,7 @@ public class Legend implements ChartPart {
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, startx + styleManager.getLegendSeriesLineLength() / 2.0, starty + blockHeight / 2.0);
+          series.getMarker().paint(g, startx + styleManager.getLegendSeriesLineLength() / 2.0, starty + blockHeight / 2.0, getChartPainter().getStyleManager().getMarkerSize());
         }
       }
       else {
@@ -227,7 +228,7 @@ public class Legend implements ChartPart {
           g.drawString(entry.getKey(), x, (float) (starty + entry.getValue().getHeight()) + itemOffsetY);
           itemOffsetY += entry.getValue().getHeight();
         }
-        itemOffsetY = (float) Math.max(itemOffsetY, Marker.SIZE);
+        itemOffsetY = Math.max(itemOffsetY, getChartPainter().getStyleManager().getMarkerSize());
         starty += blockHeight + fontMetrics.getDescent();
       }
       else {

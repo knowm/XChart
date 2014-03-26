@@ -129,7 +129,10 @@ public class StyleManager {
 
   // Bar Charts ///////////////////////////////
   private double barWidthPercentage;
-  private boolean barsOverlapped;
+  private boolean isBarsOverlapped;
+
+  // Line, Scatter, Area Charts ///////////////////////////////
+  private int markerSize;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -211,7 +214,11 @@ public class StyleManager {
 
     // Bar Charts ///////////////////////////////
     barWidthPercentage = theme.getBarWidthPercentage();
-    barsOverlapped = theme.barsOverlapped();
+    isBarsOverlapped = theme.isBarsOverlapped();
+
+    // Line, Scatter, Area Charts ///////////////////////////////
+
+    markerSize = theme.getMarkerSize();
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
@@ -994,16 +1001,33 @@ public class StyleManager {
   /**
    * set whether or no bars are overlapped. Otherwise they are places side-by-side
    * 
-   * @param barsOverlapped
+   * @param isBarsOverlapped
    */
-  public void setBarsOverlapped(boolean barsOverlapped) {
+  public void setBarsOverlapped(boolean isBarsOverlapped) {
 
-    this.barsOverlapped = barsOverlapped;
+    this.isBarsOverlapped = isBarsOverlapped;
   }
 
-  public boolean barsOverlapped() {
+  public boolean isBarsOverlapped() {
 
-    return barsOverlapped;
+    return isBarsOverlapped;
+  }
+
+  // Line, Scatter, Area Charts ///////////////////////////////
+
+  /**
+   * Sets the size of the markers in pixels
+   * 
+   * @param markerSize
+   */
+  public void setMarkerSize(int markerSize) {
+
+    this.markerSize = markerSize;
+  }
+
+  public int getMarkerSize() {
+
+    return markerSize;
   }
 
   // Error Bars ///////////////////////////////
