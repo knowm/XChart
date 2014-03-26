@@ -49,9 +49,9 @@ public class Axis implements ChartPart {
   /** the axis direction */
   private Direction direction;
 
-  private double min;;
+  private double min;
 
-  private double max;;
+  private double max;
 
   /** the bounds */
   private Rectangle2D bounds;
@@ -272,7 +272,12 @@ public class Axis implements ChartPart {
 
     return max;
   }
-
+  
+  public void resetRange() {
+    min = Double.NaN;
+    max = Double.NaN;
+  }
+  
   public AxisTick getAxisTick() {
 
     return axisTick;

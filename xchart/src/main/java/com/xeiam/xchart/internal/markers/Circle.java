@@ -26,9 +26,10 @@ public class Circle extends Marker {
 
   @Override
   public void paint(Graphics2D g, double xOffset, double yOffset) {
-
+    double halfSize = size / 2.0;
+    
     g.setStroke(stroke);
-    Shape circle = new Ellipse2D.Double(xOffset - Marker.HALF_SIZE, yOffset - Marker.HALF_SIZE, Marker.SIZE, Marker.SIZE);
+    Shape circle = new Ellipse2D.Double(xOffset - halfSize, yOffset - halfSize, size, size);
     g.fill(circle);
 
   }

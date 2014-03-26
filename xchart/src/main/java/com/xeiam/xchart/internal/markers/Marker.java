@@ -21,13 +21,32 @@ import java.awt.Graphics2D;
 /**
  * @author timmolter
  */
-public abstract class Marker {
-
-  protected BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
-
+public abstract class Marker implements Cloneable {
+  private static final double MIN_SIZE = 3;
+  private static final double MAX_SIZE = 25;
+  
   public static final double SIZE = 8;
-
-  public static final double HALF_SIZE = SIZE / 2.0;
+    
+  protected BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  
+  protected double size = SIZE;
 
   public abstract void paint(Graphics2D g, double xOffset, double yOffset);
+  
+  public double getSize() {
+    return size;
+  }
+  
+  public void setSize(double size) {
+    this.size = Math.max(MIN_SIZE, Math.min(MAX_SIZE, size));
+  }
+ 
+  @Override
+  public Marker clone()  {
+     try {
+        return (Marker) super.clone();
+    } catch (CloneNotSupportedException e) {
+        return null;
+    }
+  }
 }

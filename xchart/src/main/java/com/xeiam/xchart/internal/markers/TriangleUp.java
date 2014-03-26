@@ -25,14 +25,15 @@ public class TriangleUp extends Marker {
 
   @Override
   public void paint(Graphics2D g, double xOffset, double yOffset) {
-
+    double halfSize = size / 2.0;
+    
     g.setStroke(stroke);
 
     // Make a triangle
     Path2D.Double path = new Path2D.Double();
-    path.moveTo(xOffset - Marker.HALF_SIZE, yOffset - Marker.HALF_SIZE + Marker.SIZE + 1);
-    path.lineTo(xOffset - Marker.HALF_SIZE + Marker.SIZE + 1, yOffset - Marker.HALF_SIZE + Marker.SIZE + 1);
-    path.lineTo(xOffset, yOffset - Marker.HALF_SIZE);
+    path.moveTo(xOffset - halfSize, yOffset - halfSize + size + 1);
+    path.lineTo(xOffset - halfSize + size + 1, yOffset - halfSize + size + 1);
+    path.lineTo(xOffset, yOffset - halfSize);
     path.closePath();
     g.fill(path);
 
