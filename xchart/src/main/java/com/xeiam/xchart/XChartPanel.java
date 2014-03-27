@@ -38,6 +38,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
+import com.xeiam.xchart.BitmapEncoder.BitmapFormat;
+
 /**
  * A Swing JPanel that contains a Chart
  * <p>
@@ -111,8 +113,13 @@ public class XChartPanel extends JPanel {
 
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.addChoosableFileFilter(new JPGSaveFilter());
-    fileChooser.addChoosableFileFilter(new PNGSaveFilter());
+    FileFilter pngFileFilter = new PNGSaveFilter();
+    fileChooser.addChoosableFileFilter(pngFileFilter);
+    fileChooser.addChoosableFileFilter(new BMPSaveFilter());
+    fileChooser.addChoosableFileFilter(new GIFSaveFilter());
     fileChooser.setAcceptAllFileFilterUsed(false);
+
+    fileChooser.setFileFilter(pngFileFilter);
 
     if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 
@@ -120,13 +127,19 @@ public class XChartPanel extends JPanel {
         File theFileToSave = fileChooser.getSelectedFile();
         try {
           if (fileChooser.getFileFilter() == null) {
-            BitmapEncoder.savePNG(chart, theFileToSave.getCanonicalPath().toString());
+            BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.PNG);
           }
           else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
-            BitmapEncoder.saveJPG(chart, theFileToSave.getCanonicalPath().toString() + ".jpg", 1.0f);
+            BitmapEncoder.saveJPGWithQuality(chart, theFileToSave.getCanonicalPath().toString() + ".jpg", 1.0f);
           }
           else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
-            BitmapEncoder.savePNG(chart, theFileToSave.getCanonicalPath().toString() + ".png");
+            BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.PNG);
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
+            BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.BMP);
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
+            BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.GIF);
           }
         } catch (IOException e) {
           e.printStackTrace();
@@ -154,6 +167,50 @@ public class XChartPanel extends JPanel {
     public String getDescription() {
 
       return "*.jpg,*.JPG";
+    }
+
+  }
+
+  private class BMPSaveFilter extends FileFilter {
+
+    @Override
+    public boolean accept(File f) {
+
+      if (f.isDirectory()) {
+        return false;
+      }
+
+      String s = f.getName();
+
+      return s.endsWith(".bmp") || s.endsWith(".BMP");
+    }
+
+    @Override
+    public String getDescription() {
+
+      return "*.bmp,*.BMP";
+    }
+
+  }
+
+  private class GIFSaveFilter extends FileFilter {
+
+    @Override
+    public boolean accept(File f) {
+
+      if (f.isDirectory()) {
+        return false;
+      }
+
+      String s = f.getName();
+
+      return s.endsWith(".gif") || s.endsWith(".GIF");
+    }
+
+    @Override
+    public String getDescription() {
+
+      return "*.gif,*.GIF";
     }
 
   }

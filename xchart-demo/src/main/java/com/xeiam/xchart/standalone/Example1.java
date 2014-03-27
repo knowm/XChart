@@ -16,6 +16,7 @@
 package com.xeiam.xchart.standalone;
 
 import com.xeiam.xchart.BitmapEncoder;
+import com.xeiam.xchart.BitmapEncoder.BitmapFormat;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SeriesMarker;
@@ -37,9 +38,15 @@ public class Example1 {
     Series series = chart.addSeries("y(x)", null, yData);
     series.setMarker(SeriesMarker.CIRCLE);
 
-    BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
-    BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
-    BitmapEncoder.saveJPG(chart, "./Sample_Chart.jpg", 0.95f);
+    BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
+    BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.JPG);
+    BitmapEncoder.saveJPGWithQuality(chart, "./Sample_Chart_With_Quality.jpg", 0.95f);
+    BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.BMP);
+    BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.GIF);
+
+    BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
+    BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.JPG, 300);
+    BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.GIF, 300);
 
   }
 }
