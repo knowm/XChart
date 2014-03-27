@@ -302,13 +302,13 @@ public class Series {
     return name;
   }
 
-  void replaceXData(Collection<?> newXData) {
+  public void replaceXData(Collection<?> newXData) {
 
     xData = newXData;
     calculateMinMax();
   }
 
-  void replaceYData(Collection<? extends Number> newYData) {
+  public void replaceYData(Collection<? extends Number> newYData) {
 
     yData = newYData;
     calculateMinMax();

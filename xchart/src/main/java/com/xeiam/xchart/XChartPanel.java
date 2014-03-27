@@ -261,7 +261,7 @@ public class XChartPanel extends JPanel {
     series.replaceYData(newYData);
 
     // generate X-Data
-    List<Number> generatedXData = new ArrayList<Number>();
+    List<Integer> generatedXData = new ArrayList<Integer>();
     for (int i = 1; i < newYData.size() + 1; i++) {
       generatedXData.add(i);
     }
