@@ -9,3 +9,6 @@ bin/
 *.jpg
 *.bmp
 *.gif
+*.svg
+*.pdf
+*.eps

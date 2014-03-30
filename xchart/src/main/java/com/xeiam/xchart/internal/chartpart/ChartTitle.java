@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -120,7 +121,15 @@ public class ChartTitle implements ChartPart {
       // g.draw(bounds);
 
       g.setColor(chartPainter.getStyleManager().getChartFontColor());
-      textLayout.draw(g, xOffset, yOffset);
+      // textLayout.draw(g, xOffset, yOffset);
+
+      Shape shape = textLayout.getOutline(null);
+      AffineTransform orig = g.getTransform();
+      AffineTransform at = new AffineTransform();
+      at.translate(xOffset, yOffset);
+      g.transform(at);
+      g.fill(shape);
+      g.setTransform(orig);
     }
 
   }

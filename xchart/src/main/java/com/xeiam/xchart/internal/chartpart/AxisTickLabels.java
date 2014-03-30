@@ -16,8 +16,10 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -76,12 +78,20 @@ public class AxisTickLabels implements ChartPart {
           // TextLayout layout = new TextLayout(tickLabel, font, new FontRenderContext(null, true, false));
           TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
           Rectangle2D tickLabelBounds = layout.getBounds();
-          layout.draw(g, (float) xOffset, (float) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
+          // layout.draw(g, (float) xOffset, (float) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
+
+          Shape shape = layout.getOutline(null);
+
+          AffineTransform orig = g.getTransform();
+          AffineTransform at = new AffineTransform();
+          at.translate((float) xOffset, (float) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
+          g.transform(at);
+          g.fill(shape);
+          g.setTransform(orig);
 
           if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
             maxTickLabelWidth = tickLabelBounds.getWidth();
           }
-          // g.setTransform(orig);
 
         }
       }
@@ -106,7 +116,19 @@ public class AxisTickLabels implements ChartPart {
           FontRenderContext frc = g.getFontRenderContext();
           TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
           Rectangle2D tickLabelBounds = layout.getBounds();
-          layout.draw(g, (float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
+          // layout.draw(g, (float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
+
+          Shape shape = layout.getOutline(null);
+
+          // Graphics2D gTemp = (Graphics2D) g.create();
+          // gTemp.setTransform(g.getTransform());
+          // gTemp.translate((float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
+          AffineTransform orig = g.getTransform();
+          AffineTransform at = new AffineTransform();
+          at.translate((float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
+          g.transform(at);
+          g.fill(shape);
+          g.setTransform(orig);
 
           if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
             maxTickLabelHeight = tickLabelBounds.getHeight();

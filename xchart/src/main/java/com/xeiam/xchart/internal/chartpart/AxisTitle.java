@@ -16,6 +16,7 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -72,11 +73,13 @@ public class AxisTitle implements ChartPart {
         int xOffset = (int) (axis.getPaintZone().getX() + nonRotatedRectangle.getHeight());
         int yOffset = (int) ((axis.getPaintZone().getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + axis.getPaintZone().getY());
         AffineTransform orig = g.getTransform();
-        g.transform(AffineTransform.getRotateInstance(Math.PI / -2.0, xOffset, yOffset));
+        AffineTransform at = new AffineTransform();
+        at.rotate(Math.PI / -2.0, xOffset, yOffset);
+        g.transform(at);
         g.drawString(text, xOffset, yOffset);
+        g.setTransform(orig);
 
         // ///////////////////////////////////////////////
-        g.setTransform(orig);
         // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
@@ -103,7 +106,14 @@ public class AxisTitle implements ChartPart {
         double xOffset = axis.getPaintZone().getX() + (axis.getPaintZone().getWidth() - rectangle.getWidth()) / 2.0;
         double yOffset = axis.getPaintZone().getY() + axis.getPaintZone().getHeight() - rectangle.getHeight();
 
-        textLayout.draw(g, (float) xOffset, (float) (yOffset - rectangle.getY()));
+        // textLayout.draw(g, (float) xOffset, (float) (yOffset - rectangle.getY()));
+        Shape shape = textLayout.getOutline(null);
+        AffineTransform orig = g.getTransform();
+        AffineTransform at = new AffineTransform();
+        at.translate((float) xOffset, (float) (yOffset - rectangle.getY()));
+        g.transform(at);
+        g.fill(shape);
+        g.setTransform(orig);
 
         bounds =
             new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight()

@@ -16,9 +16,11 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.AbstractMap;
@@ -37,6 +39,7 @@ public class Legend implements ChartPart {
 
   private static final int LEGEND_MARGIN = 6;
   private static final int BOX_SIZE = 20;
+  private static final int MULTI_LINE_SPACE = 3;
 
   /**
    * parent
@@ -71,26 +74,25 @@ public class Legend implements ChartPart {
     }
 
     StyleManager styleManager = getChartPainter().getStyleManager();
-    FontMetrics fontMetrics = g.getFontMetrics(chartPainter.getStyleManager().getLegendFont());
     boolean isBar = styleManager.getChartType() == ChartType.Bar;
 
     // determine legend text content max width
     double legendTextContentMaxWidth = 0;
-    // double legendTextContentMaxHeight = 0;
 
     // determine legend content height
     double legendContentHeight = 0;
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
-      List<Map.Entry<String, Rectangle2D>> seriesBounds = getSeriesNameBounds(series, g);
+      List<Map.Entry<String, Rectangle2D>> seriesBounds = getSeriesTextBounds(series, g);
 
       double blockHeight = 0;
       for (Map.Entry<String, Rectangle2D> entry : seriesBounds) {
-        blockHeight += entry.getValue().getHeight();
+        blockHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
         legendTextContentMaxWidth = Math.max(legendTextContentMaxWidth, entry.getValue().getWidth());
       }
 
+      blockHeight -= MULTI_LINE_SPACE;
       blockHeight = Math.max(blockHeight, isBar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
       legendContentHeight += blockHeight + styleManager.getLegendPadding();
@@ -104,28 +106,18 @@ public class Legend implements ChartPart {
     else {
       legendContentWidth = BOX_SIZE + styleManager.getLegendPadding() + legendTextContentMaxWidth;
     }
+
     // Legend Box
     double legendBoxWidth = legendContentWidth + 2 * styleManager.getLegendPadding();
     double legendBoxHeight = legendContentHeight + 1 * styleManager.getLegendPadding();
     return new double[] { legendBoxWidth, legendBoxHeight };
   }
 
-  private List<Map.Entry<String, Rectangle2D>> getSeriesNameBounds(Series series, Graphics2D g) {
-
-    String lines[] = series.getName().split("\\n");
-    List<Map.Entry<String, Rectangle2D>> stringBounds = new ArrayList<Map.Entry<String, Rectangle2D>>(lines.length);
-    for (String line : lines) {
-      Rectangle2D bounds = g.getFontMetrics().getStringBounds(line, g);
-      stringBounds.add(new AbstractMap.SimpleEntry<String, Rectangle2D>(line, bounds));
-    }
-    return stringBounds;
-  }
-
   @Override
   public void paint(Graphics2D g) {
 
     bounds = new Rectangle2D.Double();
-    g.setFont(chartPainter.getStyleManager().getLegendFont());
+    // g.setFont(chartPainter.getStyleManager().getLegendFont());
 
     StyleManager styleManager = getChartPainter().getStyleManager();
 
@@ -138,7 +130,7 @@ public class Legend implements ChartPart {
     double legendBoxWidth = sizeHint[0];
     double legendBoxHeight = sizeHint[1];
 
-    FontMetrics fontMetrics = g.getFontMetrics(styleManager.getLegendFont());
+    // FontMetrics fontMetrics = g.getFontMetrics(styleManager.getLegendFont());
 
     // legend draw position
     double xOffset = 0;
@@ -186,16 +178,20 @@ public class Legend implements ChartPart {
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
-      List<Map.Entry<String, Rectangle2D>> seriesNameBounds = getSeriesNameBounds(series, g);
+      List<Map.Entry<String, Rectangle2D>> seriesTextBounds = getSeriesTextBounds(series, g);
 
       float blockHeight = 0;
-      for (Map.Entry<String, Rectangle2D> entry : seriesNameBounds) {
-        blockHeight += entry.getValue().getHeight();
+      double legendTextContentMaxWidth = 0;
+      for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds) {
+        blockHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
+        legendTextContentMaxWidth = Math.max(legendTextContentMaxWidth, entry.getValue().getWidth());
       }
+      blockHeight -= MULTI_LINE_SPACE;
 
       blockHeight = Math.max(blockHeight, styleManager.getChartType() == ChartType.Bar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
       if (styleManager.getChartType() != ChartType.Bar) {
+
         // paint line
         if (styleManager.getChartType() != ChartType.Scatter && series.getStroke() != null) {
           g.setColor(series.getStrokeColor());
@@ -204,10 +200,17 @@ public class Legend implements ChartPart {
           g.draw(line);
         }
 
+        // // debug box
+        // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, styleManager.getLegendSeriesLineLength(), blockHeight);
+        // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+        // g.setColor(Color.red);
+        // g.draw(boundsTemp);
+
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
           series.getMarker().paint(g, startx + styleManager.getLegendSeriesLineLength() / 2.0, starty + blockHeight / 2.0, getChartPainter().getStyleManager().getMarkerSize());
+
         }
       }
       else {
@@ -217,27 +220,73 @@ public class Legend implements ChartPart {
           Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
           g.fill(rectSmall);
         }
+        // // debug box
+        // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+        // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+        // g.setColor(Color.red);
+        // g.draw(boundsTemp);
       }
 
       // paint series name
       g.setColor(chartPainter.getStyleManager().getChartFontColor());
 
-      float itemOffsetY = -fontMetrics.getDescent();
+      double multiLineOffset = 0.0;
+
       if (styleManager.getChartType() != ChartType.Bar) {
-        final float x = (float) (startx + styleManager.getLegendSeriesLineLength() + styleManager.getLegendPadding());
-        for (Map.Entry<String, Rectangle2D> entry : seriesNameBounds) {
-          g.drawString(entry.getKey(), x, (float) (starty + entry.getValue().getHeight()) + itemOffsetY);
-          itemOffsetY += entry.getValue().getHeight();
+
+        double x = startx + styleManager.getLegendSeriesLineLength() + styleManager.getLegendPadding();
+        for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds) {
+
+          // float itemOffsetY = -fontMetrics.getDescent();
+          // System.out.println(itemOffsetY);
+
+          double height = entry.getValue().getHeight();
+          double centerOffsetY = (Math.max(getChartPainter().getStyleManager().getMarkerSize(), height) - height) / 2.0;
+
+          FontRenderContext frc = g.getFontRenderContext();
+          TextLayout tl = new TextLayout(entry.getKey(), styleManager.getLegendFont(), frc);
+          Shape shape = tl.getOutline(null);
+          AffineTransform orig = g.getTransform();
+          AffineTransform at = new AffineTransform();
+          at.translate(x, starty + height + centerOffsetY + multiLineOffset);
+          g.transform(at);
+          g.fill(shape);
+          g.setTransform(orig);
+
+          // // debug box
+          // Rectangle2D boundsTemp = new Rectangle2D.Double(x, starty + centerOffsetY + multiLineOffset, entry.getValue().getWidth(), height);
+          // g.setColor(Color.blue);
+          // g.draw(boundsTemp);
+
+          multiLineOffset += height + MULTI_LINE_SPACE;
         }
+
         starty += blockHeight + styleManager.getLegendPadding();
       }
       else {
-        final float x = (float) (startx + BOX_SIZE + styleManager.getLegendPadding());
-        for (Map.Entry<String, Rectangle2D> entry : seriesNameBounds) {
+
+        final double x = startx + BOX_SIZE + styleManager.getLegendPadding();
+        for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds) {
+
           double height = entry.getValue().getHeight();
           double centerOffsetY = (Math.max(BOX_SIZE, height) - height) / 2.0;
-          g.drawString(entry.getKey(), x, (float) (starty + height + itemOffsetY + centerOffsetY));
-          itemOffsetY += height;
+
+          FontRenderContext frc = g.getFontRenderContext();
+          TextLayout tl = new TextLayout(entry.getKey(), styleManager.getLegendFont(), frc);
+          Shape shape = tl.getOutline(null);
+          AffineTransform orig = g.getTransform();
+          AffineTransform at = new AffineTransform();
+          at.translate(x, starty + height + centerOffsetY + multiLineOffset);
+          g.transform(at);
+          g.fill(shape);
+          g.setTransform(orig);
+
+          // // debug box
+          // Rectangle2D boundsTemp = new Rectangle2D.Double(x, starty + centerOffsetY, entry.getValue().getWidth(), height);
+          // g.setColor(Color.blue);
+          // g.draw(boundsTemp);
+          multiLineOffset += height + MULTI_LINE_SPACE;
+
         }
         starty += blockHeight + styleManager.getLegendPadding();
       }
@@ -250,6 +299,20 @@ public class Legend implements ChartPart {
     // g.setColor(Color.blue);
     // g.draw(bounds);
 
+  }
+
+  private List<Map.Entry<String, Rectangle2D>> getSeriesTextBounds(Series series, Graphics2D g) {
+
+    String lines[] = series.getName().split("\\n");
+    List<Map.Entry<String, Rectangle2D>> seriesTextBounds = new ArrayList<Map.Entry<String, Rectangle2D>>(lines.length);
+    for (String line : lines) {
+      FontRenderContext frc = g.getFontRenderContext();
+      TextLayout tl = new TextLayout(line, getChartPainter().getStyleManager().getLegendFont(), frc);
+      Shape shape = tl.getOutline(null);
+      Rectangle2D bounds = shape.getBounds2D();
+      seriesTextBounds.add(new AbstractMap.SimpleEntry<String, Rectangle2D>(line, bounds));
+    }
+    return seriesTextBounds;
   }
 
   @Override
