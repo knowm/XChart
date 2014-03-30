@@ -18,7 +18,10 @@ package com.xeiam.xchart;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import de.erichseifert.vectorgraphics2d.EPSGraphics2D;
+import de.erichseifert.vectorgraphics2d.PDFGraphics2D;
 import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
+import de.erichseifert.vectorgraphics2d.VectorGraphics2D;
 
 /**
  * A helper class with static methods for saving Charts as bitmaps
@@ -40,10 +43,28 @@ public final class VectorGraphicsEncoder {
 
   public static void saveVectorGraphic(Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
 
-    SVGGraphics2D g = new SVGGraphics2D(0.0, 0.0, chart.getWidth(), chart.getHeight());
+    VectorGraphics2D g = null;
+
+    switch (vectorGraphicsFormat) {
+    case EPS:
+      g = new EPSGraphics2D(0.0, 0.0, chart.getWidth(), chart.getHeight());
+      break;
+    case PDF:
+      g = new PDFGraphics2D(0.0, 0.0, chart.getWidth(), chart.getHeight());
+      break;
+    case SVG:
+      g = new SVGGraphics2D(0.0, 0.0, chart.getWidth(), chart.getHeight());
+      break;
+
+    default:
+      break;
+    }
+
     chart.paint(g, chart.getWidth(), chart.getHeight());
+
     // Write the vector graphic output to a file
-    FileOutputStream file = new FileOutputStream("./ellipse.svg");
+    FileOutputStream file = new FileOutputStream(fileName + "." + vectorGraphicsFormat.toString().toLowerCase());
+
     try {
       file.write(g.getBytes());
     } finally {

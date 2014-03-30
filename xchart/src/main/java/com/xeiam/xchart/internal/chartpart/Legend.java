@@ -23,9 +23,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.xeiam.xchart.Series;
@@ -84,10 +82,10 @@ public class Legend implements ChartPart {
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
-      List<Map.Entry<String, Rectangle2D>> seriesBounds = getSeriesTextBounds(series, g);
+      Map<String, Rectangle2D> seriesBounds = getSeriesTextBounds(series, g);
 
       double blockHeight = 0;
-      for (Map.Entry<String, Rectangle2D> entry : seriesBounds) {
+      for (Map.Entry<String, Rectangle2D> entry : seriesBounds.entrySet()) {
         blockHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
         legendTextContentMaxWidth = Math.max(legendTextContentMaxWidth, entry.getValue().getWidth());
       }
@@ -129,8 +127,6 @@ public class Legend implements ChartPart {
 
     double legendBoxWidth = sizeHint[0];
     double legendBoxHeight = sizeHint[1];
-
-    // FontMetrics fontMetrics = g.getFontMetrics(styleManager.getLegendFont());
 
     // legend draw position
     double xOffset = 0;
@@ -178,11 +174,11 @@ public class Legend implements ChartPart {
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
-      List<Map.Entry<String, Rectangle2D>> seriesTextBounds = getSeriesTextBounds(series, g);
+      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series, g);
 
       float blockHeight = 0;
       double legendTextContentMaxWidth = 0;
-      for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds) {
+      for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
         blockHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
         legendTextContentMaxWidth = Math.max(legendTextContentMaxWidth, entry.getValue().getWidth());
       }
@@ -227,7 +223,7 @@ public class Legend implements ChartPart {
         // g.draw(boundsTemp);
       }
 
-      // paint series name
+      // paint series text
       g.setColor(chartPainter.getStyleManager().getChartFontColor());
 
       double multiLineOffset = 0.0;
@@ -235,10 +231,7 @@ public class Legend implements ChartPart {
       if (styleManager.getChartType() != ChartType.Bar) {
 
         double x = startx + styleManager.getLegendSeriesLineLength() + styleManager.getLegendPadding();
-        for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds) {
-
-          // float itemOffsetY = -fontMetrics.getDescent();
-          // System.out.println(itemOffsetY);
+        for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
           double height = entry.getValue().getHeight();
           double centerOffsetY = (Math.max(getChartPainter().getStyleManager().getMarkerSize(), height) - height) / 2.0;
@@ -266,7 +259,7 @@ public class Legend implements ChartPart {
       else {
 
         final double x = startx + BOX_SIZE + styleManager.getLegendPadding();
-        for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds) {
+        for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
           double height = entry.getValue().getHeight();
           double centerOffsetY = (Math.max(BOX_SIZE, height) - height) / 2.0;
@@ -301,16 +294,24 @@ public class Legend implements ChartPart {
 
   }
 
-  private List<Map.Entry<String, Rectangle2D>> getSeriesTextBounds(Series series, Graphics2D g) {
+  private Map<String, Rectangle2D> getSeriesTextBounds(Series series, Graphics2D g) {
+
+    // FontMetrics fontMetrics = g.getFontMetrics(getChartPainter().getStyleManager().getLegendFont());
+    // float fontDescent = fontMetrics.getDescent();
 
     String lines[] = series.getName().split("\\n");
-    List<Map.Entry<String, Rectangle2D>> seriesTextBounds = new ArrayList<Map.Entry<String, Rectangle2D>>(lines.length);
+    Map<String, Rectangle2D> seriesTextBounds = new LinkedHashMap<String, Rectangle2D>(lines.length);
     for (String line : lines) {
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout tl = new TextLayout(line, getChartPainter().getStyleManager().getLegendFont(), frc);
       Shape shape = tl.getOutline(null);
       Rectangle2D bounds = shape.getBounds2D();
-      seriesTextBounds.add(new AbstractMap.SimpleEntry<String, Rectangle2D>(line, bounds));
+      // System.out.println(tl.getAscent());
+      // System.out.println(tl.getDescent());
+      // System.out.println(tl.getBounds());
+      // seriesTextBounds.put(line, new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight() - tl.getDescent()));
+      // seriesTextBounds.put(line, new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), tl.getAscent()));
+      seriesTextBounds.put(line, bounds);
     }
     return seriesTextBounds;
   }

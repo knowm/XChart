@@ -84,7 +84,7 @@ public class AxisTickLabels implements ChartPart {
 
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
-          at.translate((float) xOffset, (float) (yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0));
+          at.translate(xOffset, yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation + tickLabelBounds.getHeight() / 2.0);
           g.transform(at);
           g.fill(shape);
           g.setTransform(orig);
@@ -114,21 +114,23 @@ public class AxisTickLabels implements ChartPart {
 
         if (tickLabel != null) { // some are null for logarithmic axes
           FontRenderContext frc = g.getFontRenderContext();
-          TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
-          Rectangle2D tickLabelBounds = layout.getBounds();
-          // layout.draw(g, (float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
+          TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
+          // GlyphVector v = getChartPainter().getStyleManager().getAxisTickLabelsFont().createGlyphVector(frc, tickLabel);
 
-          Shape shape = layout.getOutline(null);
+          // Shape shape = v.getOutline();
+          Shape shape = textLayout.getOutline(null);
+          Rectangle2D tickLabelBounds = shape.getBounds2D();
 
-          // Graphics2D gTemp = (Graphics2D) g.create();
-          // gTemp.setTransform(g.getTransform());
-          // gTemp.translate((float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
-          at.translate((float) (xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0), (float) yOffset);
+          at.translate(xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0, yOffset);
           g.transform(at);
           g.fill(shape);
           g.setTransform(orig);
+
+          // // debug box
+          // g.setColor(Color.blue);
+          // g.draw(new Rectangle2D.Double(xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0, yOffset - tickLabelBounds.getHeight(), tickLabelBounds.getWidth(), tickLabelBounds.getHeight()));
 
           if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
             maxTickLabelHeight = tickLabelBounds.getHeight();

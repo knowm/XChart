@@ -20,6 +20,8 @@ import com.xeiam.xchart.BitmapEncoder.BitmapFormat;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SeriesMarker;
+import com.xeiam.xchart.VectorGraphicsEncoder;
+import com.xeiam.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 
 /**
  * Creates a simple Chart and saves it as a PNG and JPEG image file.
@@ -47,6 +49,10 @@ public class Example1 {
     BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
     BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.JPG, 300);
     BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.GIF, 300);
+
+    VectorGraphicsEncoder.saveVectorGraphic(chart, "./Sample_Chart", VectorGraphicsFormat.EPS);
+    VectorGraphicsEncoder.saveVectorGraphic(chart, "./Sample_Chart", VectorGraphicsFormat.PDF);
+    VectorGraphicsEncoder.saveVectorGraphic(chart, "./Sample_Chart", VectorGraphicsFormat.SVG);
 
   }
 }
