@@ -36,7 +36,7 @@ public abstract class AxisTickCalculator {
 
   protected final Direction axisDirection;
 
-  protected final int workingSpace;
+  protected final double workingSpace;
 
   protected final double minValue;
 
@@ -53,7 +53,7 @@ public abstract class AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     // override min/max value for bar charts' Y-Axis
     double overrideMinValue = minValue;

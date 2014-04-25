@@ -62,13 +62,13 @@ public class AxisTick implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    int workingSpace = 0;
+    double workingSpace = 0.0;
     if (axis.getDirection() == Axis.Direction.Y) {
-      workingSpace = (int) axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
+      workingSpace = axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
       // System.out.println("workingspace= " + workingSpace);
     }
     else if (axis.getDirection() == Axis.Direction.X) {
-      workingSpace = (int) axis.getPaintZone().getWidth(); // number of pixels the axis has to work with for drawing AxisTicks
+      workingSpace = axis.getPaintZone().getWidth(); // number of pixels the axis has to work with for drawing AxisTicks
       // System.out.println("workingspace= " + workingSpace);
     }
 

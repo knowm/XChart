@@ -37,7 +37,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickDateCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickDateCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     dateFormatter = new DateFormatter(styleManager);

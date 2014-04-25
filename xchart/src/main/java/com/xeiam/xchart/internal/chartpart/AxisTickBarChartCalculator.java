@@ -41,7 +41,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickBarChartCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, ChartPainter chart) {
+  public AxisTickBarChartCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, ChartPainter chart) {
 
     super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
     calculate(chart);
