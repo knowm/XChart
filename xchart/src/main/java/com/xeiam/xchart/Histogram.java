@@ -87,10 +87,10 @@ public class Histogram {
 
       int bin = (int) ((((Number) itr.next()).doubleValue() - min) / binSize); // changed this from numBins
       if (bin < 0) { /* this data is smaller than min */
-        System.out.println("less than");
+        // System.out.println("less than");
       }
       else if (bin > numBins) { /* this data point is bigger than max */
-        System.out.println("greater than");
+        // System.out.println("greater than");
       }
       else if (bin == numBins) { // this falls right on the edge of the max bin
         tempYAxisData[bin - 1] += 1;

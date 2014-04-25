@@ -100,12 +100,15 @@ public abstract class AxisTickCalculator {
    */
   double getFirstPosition(double gridStep) {
 
-    double firstPosition;
-    if (minValue % gridStep <= 0.0) {
+    // System.out.println("******");
+
+    double firstPosition = minValue - (minValue % gridStep) + gridStep;
+
+    // System.out.println(firstPosition - minValue);
+    // System.out.println(.9 * gridStep);
+
+    if ((firstPosition - minValue) > .8 * gridStep) {
       firstPosition = minValue - (minValue % gridStep);
-    }
-    else {
-      firstPosition = minValue - (minValue % gridStep) + gridStep;
     }
     return firstPosition;
   }
