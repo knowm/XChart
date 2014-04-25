@@ -34,16 +34,16 @@ public class DateAxisTickCalculatorTest {
   @Test
   public void testDateOneMinuteTimespan() {
 
-    AxisTickDateCalculator decimalAxisTickCalculator = new AxisTickDateCalculator(Direction.X, 600, 1361110661000.0, 1361110721000.0, new StyleManager());
+    AxisTickDateCalculator axisTickDateCalculator = new AxisTickDateCalculator(Direction.X, 600, 1361110661000.0, 1361110721000.0, new StyleManager());
 
-    List<String> tickLabels = decimalAxisTickCalculator.getTickLabels();
+    List<String> tickLabels = axisTickDateCalculator.getTickLabels();
     System.out.println(Arrays.toString(tickLabels.toArray()));
-    assertThat(tickLabels.size(), equalTo(6));
-    assertThat(tickLabels.get(0), equalTo("17:50"));
+    assertThat(tickLabels.size(), equalTo(7));
+    assertThat(tickLabels.get(0), equalTo("17:40"));
 
-    List<Double> tickLocations = decimalAxisTickCalculator.getTickLocations();
+    List<Double> tickLocations = axisTickDateCalculator.getTickLocations();
     System.out.println(Arrays.toString(tickLocations.toArray()));
-    assertThat(tickLocations.size(), equalTo(6));
-    assertThat(tickLocations.get(0), equalTo(100.0));
+    assertThat(tickLocations.size(), equalTo(7));
+    assertThat(tickLocations.get(0), equalTo(5.5));
   }
 }
