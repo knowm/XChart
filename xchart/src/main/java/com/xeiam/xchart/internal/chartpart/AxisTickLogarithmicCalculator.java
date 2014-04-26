@@ -46,9 +46,11 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
   private void calculate() {
 
+    String pattern = numberFormatter.getFormatPattern(minValue, maxValue);
+
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(numberFormatter.formatNumber(maxValue));
+      tickLabels.add(numberFormatter.formatNumber(maxValue, pattern));
       tickLocations.add(workingSpace / 2.0);
       return;
     }
@@ -111,7 +113,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
         // only add labels for the decades
         if (Math.abs(Math.log10(j) % 1) < 0.00000001) {
-          tickLabels.add(numberFormatter.formatNumber(j));
+          tickLabels.add(numberFormatter.formatNumber(j, pattern));
         }
         else {
           tickLabels.add(null);

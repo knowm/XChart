@@ -141,8 +141,7 @@ public class StyleManager {
   private String datePattern;
   private Locale locale;
   private TimeZone timezone;
-  private String normalDecimalPattern;
-  private String scientificDecimalPattern;
+  private String decimalPattern;
 
   /**
    * Constructor
@@ -227,8 +226,7 @@ public class StyleManager {
     datePattern = null; // if not null, this override pattern will be used
     locale = Locale.getDefault();
     timezone = TimeZone.getDefault();
-    normalDecimalPattern = "#.####";
-    scientificDecimalPattern = "0.##E0";
+    decimalPattern = null;
   }
 
   /**
@@ -1099,28 +1097,14 @@ public class StyleManager {
    * 
    * @param pattern - the pattern describing the decimal format
    */
-  public void setNormalDecimalPattern(String normalDecimalPattern) {
+  public void setDecimalPattern(String normalDecimalPattern) {
 
-    this.normalDecimalPattern = normalDecimalPattern;
+    this.decimalPattern = normalDecimalPattern;
   }
 
-  public String getNormalDecimalPattern() {
+  public String getDecimalPattern() {
 
-    return normalDecimalPattern;
+    return decimalPattern;
   }
 
-  /**
-   * Set the scientific notation formatter for all tick labels
-   * 
-   * @param pattern - the pattern describing the scientific notation format
-   */
-  public void setScientificDecimalPattern(String scientificDecimalPattern) {
-
-    this.scientificDecimalPattern = scientificDecimalPattern;
-  }
-
-  public String getScientificDecimalPattern() {
-
-    return scientificDecimalPattern;
-  }
 }

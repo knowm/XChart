@@ -88,6 +88,7 @@ public class DateFormatter {
     String datePattern;
 
     if (styleManager.getDatePattern() == null) {
+
       // intelligently set date pattern if none is given
       if (timeUnit == MILLIS_SCALE) {
         datePattern = "ss.SSS";

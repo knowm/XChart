@@ -35,32 +35,79 @@ public class NumberFormatter {
     this.styleManager = styleManager;
   }
 
+  public String getFormatPattern(double min, double max) {
+
+    System.out.println("min: " + min);
+    System.out.println("max: " + max);
+
+    double difference = max - min;
+    int placeOfDifference = (int) Math.floor(Math.log(difference) / Math.log(10)) + 1;
+    int placeOfSmallest = (int) Math.floor(Math.log(Math.min(Math.abs(min), Math.abs(max))) / Math.log(10)) + 1;
+
+    System.out.println("difference: " + difference);
+    System.out.println("placeOfDifference: " + placeOfDifference);
+    System.out.println("placeOfSmallest: " + placeOfSmallest);
+
+    if (placeOfDifference <= 4 && placeOfDifference >= -4) {
+      System.out.println("getNormalDecimalPattern");
+      return getNormalDecimalPattern(placeOfSmallest, placeOfDifference);
+    }
+    else {
+      System.out.println("getScientificDecimalPattern");
+      return getScientificDecimalPattern(placeOfSmallest, placeOfDifference);
+    }
+  }
+
+  private String getNormalDecimalPattern(int placeOfMin, int placeOfDifference) {
+
+    int maxNumPlaces = 15;
+    StringBuilder sb = new StringBuilder();
+    for (int i = maxNumPlaces - 1; i >= -1 * maxNumPlaces; i--) {
+
+      if (i < placeOfMin && i >= placeOfDifference - 2) {
+        sb.append("0");
+      }
+      else {
+        sb.append("#");
+      }
+      if (i % 3 == 0 && i > 0) {
+        sb.append(",");
+      }
+      if (i == 0) {
+        sb.append(".");
+      }
+    }
+    System.out.println(sb.toString());
+    return sb.toString();
+  }
+
+  private String getScientificDecimalPattern(int placeOfMin, int placeOfDifference) {
+
+    StringBuilder sb = new StringBuilder();
+    for (int i = placeOfMin; i >= 0; i--) {
+      sb.append("0");
+      if (i == placeOfDifference) {
+        sb.append(".");
+      }
+    }
+    sb.append("E0");
+    System.out.println(sb.toString());
+    return sb.toString();
+  }
+
   /**
    * Format a number value, if the override patterns are null, it uses defaults
    * 
    * @param value
    * @return
    */
-  public String formatNumber(double value) {
+  public String formatNumber(double value, String pattern) {
 
     NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
 
-    double absoluteValue = Math.abs(value);
-
-    if (absoluteValue < 10000.000001 && absoluteValue > .0009999999 || value == 0) {
-
-      DecimalFormat normalFormat = (DecimalFormat) numberFormat;
-      normalFormat.applyPattern(styleManager.getNormalDecimalPattern());
-      return normalFormat.format(value);
-
-    }
-    else {
-
-      DecimalFormat scientificFormat = (DecimalFormat) numberFormat;
-      scientificFormat.applyPattern(styleManager.getScientificDecimalPattern());
-      return scientificFormat.format(value);
-
-    }
+    DecimalFormat normalFormat = (DecimalFormat) numberFormat;
+    normalFormat.applyPattern(styleManager.getDecimalPattern() == null ? pattern : styleManager.getDecimalPattern());
+    return normalFormat.format(value);
 
   }
 }

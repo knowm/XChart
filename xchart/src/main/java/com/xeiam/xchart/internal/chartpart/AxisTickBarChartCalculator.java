@@ -108,6 +108,8 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       NumberFormatter numberFormatter = null;
       DateFormatter dateFormatter = null;
 
+      String pattern = numberFormatter.getFormatPattern(minValue, maxValue);
+
       if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
         numberFormatter = new NumberFormatter(styleManager);
       }
@@ -118,7 +120,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
 
       for (Object category : categories) {
         if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          tickLabels.add(numberFormatter.formatNumber((Double) category));
+          tickLabels.add(numberFormatter.formatNumber((Double) category, pattern));
         }
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           long span = (long) Math.abs(maxValue - minValue); // in data space
@@ -139,6 +141,8 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       NumberFormatter numberFormatter = null;
       DateFormatter dateFormatter = null;
 
+      String pattern = numberFormatter.getFormatPattern(minValue, maxValue);
+
       if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
         numberFormatter = new NumberFormatter(styleManager);
       }
@@ -149,7 +153,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
 
         if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          tickLabels.add(numberFormatter.formatNumber(tickPosition));
+          tickLabels.add(numberFormatter.formatNumber(tickPosition, pattern));
         }
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           long span = (long) Math.abs(maxValue - minValue); // in data space

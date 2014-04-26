@@ -44,10 +44,10 @@ public class NumberFormatterTest {
     assertThat(stringValue, equalTo("1"));
 
     stringValue = numberFormatter.formatNumber(1000);
-    assertThat(stringValue, equalTo("1000"));
+    assertThat(stringValue, equalTo("1,000"));
 
     stringValue = numberFormatter.formatNumber(9999);
-    assertThat(stringValue, equalTo("9999"));
+    assertThat(stringValue, equalTo("9,999"));
 
     stringValue = numberFormatter.formatNumber(20000);
     assertThat(stringValue, equalTo("2E4"));
@@ -84,10 +84,13 @@ public class NumberFormatterTest {
     stringValue = numberFormatter.formatNumber(0.01);
     assertThat(stringValue, equalTo("0,01"));
 
+    stringValue = numberFormatter.formatNumber(10000);
+    assertThat(stringValue, equalTo("10.000"));
+
     stringValue = numberFormatter.formatNumber(200.23);
     assertThat(stringValue, equalTo("200,23"));
 
-    styleManager.setNormalDecimalPattern("#.#");
+    styleManager.setDecimalPattern("#.#");
     stringValue = numberFormatter.formatNumber(200.23);
     assertThat(stringValue, equalTo("200,2"));
 
