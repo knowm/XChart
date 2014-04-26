@@ -89,7 +89,7 @@ public class Axis implements ChartPart {
   void resetMinMax() {
 
     min = Double.MAX_VALUE;
-    max = Double.MIN_VALUE;
+    max = -Double.MAX_VALUE;
   }
 
   /**
