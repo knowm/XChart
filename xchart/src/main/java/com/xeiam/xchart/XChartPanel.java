@@ -353,4 +353,30 @@ public class XChartPanel extends JPanel {
 
     return series;
   }
+
+  /**
+   * update a series by updating the X-Axis, Y-Axis and error bar data
+   * 
+   * @param seriesName
+   * @param newXData
+   * @param newYData
+   * @param newErrorBarData
+   * @return
+   */
+  public Series updateSeries(String seriesName, Collection<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
+
+    Series series = chart.getSeriesMap().get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    series.replaceXData(newXData);
+    series.replaceYData(newYData);
+    series.replaceErrroBarData(newErrorBarData);
+
+    // Re-display the chart
+    revalidate();
+    repaint();
+
+    return series;
+  }
 }

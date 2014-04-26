@@ -313,6 +313,12 @@ public class Series {
     calculateMinMax();
   }
 
+  public void replaceErrroBarData(Collection<? extends Number> newErrorBars) {
+
+    errorBars = newErrorBars;
+    calculateMinMax();
+  }
+
   private void calculateMinMax() {
 
     // xData

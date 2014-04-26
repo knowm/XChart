@@ -37,9 +37,9 @@ public class NumberFormatter {
 
   public String getFormatPattern(double value, double min, double max) {
 
-    System.out.println("value: " + value);
-    System.out.println("min: " + min);
-    System.out.println("max: " + max);
+    // System.out.println("value: " + value);
+    // System.out.println("min: " + min);
+    // System.out.println("max: " + max);
 
     double difference = max - min;
     int placeOfDifference;
@@ -57,9 +57,9 @@ public class NumberFormatter {
       placeOfValue = (int) Math.floor(Math.log(value) / Math.log(10));
     }
 
-    System.out.println("difference: " + difference);
-    System.out.println("placeOfDifference: " + placeOfDifference);
-    System.out.println("placeOfValue: " + placeOfValue);
+    // System.out.println("difference: " + difference);
+    // System.out.println("placeOfDifference: " + placeOfDifference);
+    // System.out.println("placeOfValue: " + placeOfValue);
 
     if (placeOfDifference <= 4 && placeOfDifference >= -4) {
       // System.out.println("getNormalDecimalPattern");
@@ -93,7 +93,7 @@ public class NumberFormatter {
         sb.append(".");
       }
     }
-    System.out.println(sb.toString());
+    // System.out.println(sb.toString());
     return sb.toString();
   }
 
