@@ -16,6 +16,7 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
@@ -63,9 +64,11 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
 
     BigDecimal gridStep = BigDecimal.valueOf(getNumericalGridStep(tickSpace));
     BigDecimal firstPosition = BigDecimal.valueOf(getFirstPosition(gridStep.doubleValue()));
+    BigDecimal scaledfirstPosition = firstPosition.setScale(16, RoundingMode.HALF_UP);
+    // System.out.println("scaledfirstPosition: " + scaledfirstPosition); // chop off any double imprecision
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(BigDecimal.valueOf(maxValue + gridStep.doubleValue() * 0.2)) <= 0; tickPosition = tickPosition.add(gridStep)) {
+    for (BigDecimal tickPosition = scaledfirstPosition; tickPosition.compareTo(BigDecimal.valueOf(maxValue + gridStep.doubleValue() * 0.2)) <= 0; tickPosition = tickPosition.add(gridStep)) {
 
       tickLabels.add(numberFormatter.formatNumber(tickPosition.doubleValue(), minValue, maxValue));
       // here we convert tickPosition finally to plot space, i.e. pixels

@@ -62,12 +62,12 @@ public class NumberFormatter {
     System.out.println("placeOfValue: " + placeOfValue);
 
     if (placeOfDifference <= 4 && placeOfDifference >= -4) {
-      System.out.println("getNormalDecimalPattern");
+      // System.out.println("getNormalDecimalPattern");
       return getNormalDecimalPatternPositive(placeOfValue, placeOfDifference);
     }
     else {
-      System.out.println("getScientificDecimalPattern");
-      return getScientificDecimalPattern(placeOfValue, placeOfDifference);
+      // System.out.println("getScientificDecimalPattern");
+      return getScientificDecimalPattern();
     }
   }
 
@@ -97,18 +97,9 @@ public class NumberFormatter {
     return sb.toString();
   }
 
-  private String getScientificDecimalPattern(int placeOfValue, int placeOfDifference) {
+  private String getScientificDecimalPattern() {
 
-    StringBuilder sb = new StringBuilder();
-    for (int i = placeOfValue; i >= 0; i--) {
-      sb.append("0");
-      if (i == placeOfDifference) {
-        sb.append(".");
-      }
-    }
-    sb.append("E0");
-    System.out.println(sb.toString());
-    return sb.toString();
+    return "0E0";
   }
 
   /**

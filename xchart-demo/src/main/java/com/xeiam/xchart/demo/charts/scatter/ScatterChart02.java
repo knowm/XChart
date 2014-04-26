@@ -56,7 +56,7 @@ public class ScatterChart02 implements ExampleChart {
     for (int i = 0; i < size; i++) {
       double nextRandom = random.nextDouble();
       xData.add(Math.pow(10, nextRandom * 10));
-      yData.add(1000000000.0 + nextRandom + random.nextDouble());
+      yData.add(1000000000.0 + nextRandom * 100);
     }
 
     // Create Chart
