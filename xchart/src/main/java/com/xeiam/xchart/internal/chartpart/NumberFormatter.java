@@ -77,10 +77,10 @@ public class NumberFormatter {
     StringBuilder sb = new StringBuilder();
     for (int i = maxNumPlaces - 1; i >= -1 * maxNumPlaces; i--) {
 
-      if (i >= 0 && (i < placeOfValue && i >= placeOfDifference)) {
+      if (i >= 0 && (i < placeOfValue)) {
         sb.append("0");
       }
-      else if (i < 0 && (i > placeOfValue && i >= placeOfDifference)) {
+      else if (i < 0 && (i > placeOfValue)) {
         sb.append("0");
       }
       else {
@@ -99,7 +99,7 @@ public class NumberFormatter {
 
   private String getScientificDecimalPattern() {
 
-    return "0E0";
+    return "0.###############E0";
   }
 
   /**
