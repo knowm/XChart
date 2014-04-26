@@ -33,6 +33,7 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <li>ChartType.Scatter
  * <li>Series data as a Set
  * <li>Setting marker size
+ * <li>Formatting of negative numbers with large magnitude but small differences
  */
 public class ScatterChart01 implements ExampleChart {
 
@@ -52,7 +53,7 @@ public class ScatterChart01 implements ExampleChart {
     int size = 1000;
     for (int i = 0; i < size; i++) {
       xData.add(random.nextGaussian());
-      yData.add(random.nextGaussian());
+      yData.add(-100 + random.nextGaussian());
     }
 
     // Create Chart

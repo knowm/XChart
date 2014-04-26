@@ -33,6 +33,7 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <li>Scatter chart
  * <li>Logarithmic X-Axis
  * <li>Place legend at Inside-NW position
+ * <li>Formatting of number with large magnitude but small differences
  * 
  * @author timmolter
  */

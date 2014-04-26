@@ -1097,9 +1097,9 @@ public class StyleManager {
    * 
    * @param pattern - the pattern describing the decimal format
    */
-  public void setDecimalPattern(String normalDecimalPattern) {
+  public void setDecimalPattern(String decimalPattern) {
 
-    this.decimalPattern = normalDecimalPattern;
+    this.decimalPattern = decimalPattern;
   }
 
   public String getDecimalPattern() {

@@ -35,36 +35,43 @@ public class NumberFormatter {
     this.styleManager = styleManager;
   }
 
-  public String getFormatPattern(double min, double max) {
+  public String getFormatPattern(double value, double min, double max) {
 
+    System.out.println("value: " + value);
     System.out.println("min: " + min);
     System.out.println("max: " + max);
 
     double difference = max - min;
-    int placeOfDifference = (int) Math.floor(Math.log(difference) / Math.log(10)) + 1;
-    int placeOfSmallest = (int) Math.floor(Math.log(Math.min(Math.abs(min), Math.abs(max))) / Math.log(10)) + 1;
+    int placeOfDifference;
+    if (difference == 0.0) {
+      placeOfDifference = 0;
+    }
+    else {
+      placeOfDifference = (int) Math.floor(Math.log(difference) / Math.log(10));
+    }
+    int placeOfValue = (int) Math.floor(Math.log(value) / Math.log(10));
 
     System.out.println("difference: " + difference);
     System.out.println("placeOfDifference: " + placeOfDifference);
-    System.out.println("placeOfSmallest: " + placeOfSmallest);
+    System.out.println("placeOfValue: " + placeOfValue);
 
     if (placeOfDifference <= 4 && placeOfDifference >= -4) {
       System.out.println("getNormalDecimalPattern");
-      return getNormalDecimalPattern(placeOfSmallest, placeOfDifference);
+      return getNormalDecimalPattern(placeOfValue, placeOfDifference);
     }
     else {
       System.out.println("getScientificDecimalPattern");
-      return getScientificDecimalPattern(placeOfSmallest, placeOfDifference);
+      return getScientificDecimalPattern(placeOfValue, placeOfDifference);
     }
   }
 
-  private String getNormalDecimalPattern(int placeOfMin, int placeOfDifference) {
+  private String getNormalDecimalPattern(int placeOfValue, int placeOfDifference) {
 
     int maxNumPlaces = 15;
     StringBuilder sb = new StringBuilder();
     for (int i = maxNumPlaces - 1; i >= -1 * maxNumPlaces; i--) {
 
-      if (i < placeOfMin && i >= placeOfDifference - 2) {
+      if (i < placeOfValue && i >= placeOfDifference) {
         sb.append("0");
       }
       else {
@@ -81,10 +88,10 @@ public class NumberFormatter {
     return sb.toString();
   }
 
-  private String getScientificDecimalPattern(int placeOfMin, int placeOfDifference) {
+  private String getScientificDecimalPattern(int placeOfValue, int placeOfDifference) {
 
     StringBuilder sb = new StringBuilder();
-    for (int i = placeOfMin; i >= 0; i--) {
+    for (int i = placeOfValue; i >= 0; i--) {
       sb.append("0");
       if (i == placeOfDifference) {
         sb.append(".");
@@ -101,12 +108,48 @@ public class NumberFormatter {
    * @param value
    * @return
    */
-  public String formatNumber(double value, String pattern) {
+  public String formatNumber(double value, double min, double max) {
 
     NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
 
+    String decimalPattern;
+
+    if (styleManager.getDatePattern() == null) {
+
+      decimalPattern = getFormatPattern(value, min, max);
+    }
+    else {
+      decimalPattern = styleManager.getDecimalPattern();
+    }
+
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
-    normalFormat.applyPattern(styleManager.getDecimalPattern() == null ? pattern : styleManager.getDecimalPattern());
+    normalFormat.applyPattern(decimalPattern);
+    return normalFormat.format(value);
+
+  }
+
+  /**
+   * Format a log number value for log Axes which show only decade tick labels. if the override patterns are null, it uses defaults
+   * 
+   * @param value
+   * @return
+   */
+  public String formatLogNumber(double value) {
+
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
+
+    String decimalPattern;
+
+    if (styleManager.getDatePattern() == null) {
+
+      decimalPattern = "0E0";
+    }
+    else {
+      decimalPattern = styleManager.getDatePattern();
+    }
+
+    DecimalFormat normalFormat = (DecimalFormat) numberFormat;
+    normalFormat.applyPattern(decimalPattern);
     return normalFormat.format(value);
 
   }

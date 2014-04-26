@@ -48,11 +48,9 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
 
   private void calculate() {
 
-    String pattern = numberFormatter.getFormatPattern(minValue, maxValue);
-
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(numberFormatter.formatNumber(maxValue, pattern));
+      tickLabels.add(numberFormatter.formatNumber(maxValue, minValue, maxValue));
       tickLocations.add(workingSpace / 2.0);
       return;
     }
@@ -69,7 +67,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = firstPosition; tickPosition.compareTo(BigDecimal.valueOf(maxValue + gridStep.doubleValue() * 0.2)) <= 0; tickPosition = tickPosition.add(gridStep)) {
 
-      tickLabels.add(numberFormatter.formatNumber(tickPosition.doubleValue(), pattern));
+      tickLabels.add(numberFormatter.formatNumber(tickPosition.doubleValue(), minValue, maxValue));
       // here we convert tickPosition finally to plot space, i.e. pixels
       double tickLabelPosition = margin + ((tickPosition.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
       tickLocations.add(tickLabelPosition);
