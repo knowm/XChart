@@ -49,7 +49,13 @@ public class NumberFormatter {
     else {
       placeOfDifference = (int) Math.floor(Math.log(difference) / Math.log(10));
     }
-    int placeOfValue = (int) Math.floor(Math.log(value) / Math.log(10));
+    int placeOfValue;
+    if (value == 0.0) {
+      placeOfValue = 0;
+    }
+    else {
+      placeOfValue = (int) Math.floor(Math.log(value) / Math.log(10));
+    }
 
     System.out.println("difference: " + difference);
     System.out.println("placeOfDifference: " + placeOfDifference);
@@ -57,7 +63,7 @@ public class NumberFormatter {
 
     if (placeOfDifference <= 4 && placeOfDifference >= -4) {
       System.out.println("getNormalDecimalPattern");
-      return getNormalDecimalPattern(placeOfValue, placeOfDifference);
+      return getNormalDecimalPatternPositive(placeOfValue, placeOfDifference);
     }
     else {
       System.out.println("getScientificDecimalPattern");
@@ -65,13 +71,16 @@ public class NumberFormatter {
     }
   }
 
-  private String getNormalDecimalPattern(int placeOfValue, int placeOfDifference) {
+  private String getNormalDecimalPatternPositive(int placeOfValue, int placeOfDifference) {
 
     int maxNumPlaces = 15;
     StringBuilder sb = new StringBuilder();
     for (int i = maxNumPlaces - 1; i >= -1 * maxNumPlaces; i--) {
 
-      if (i < placeOfValue && i >= placeOfDifference) {
+      if (i >= 0 && (i < placeOfValue && i >= placeOfDifference)) {
+        sb.append("0");
+      }
+      else if (i < 0 && (i > placeOfValue && i >= placeOfDifference)) {
         sb.append("0");
       }
       else {

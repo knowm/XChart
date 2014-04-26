@@ -48,7 +48,7 @@ public class LineChart04 implements ExampleChart {
     chart.getStyleManager().setLegendVisible(false);
 
     for (int i = 0; i < 200; i++) {
-      Series series = chart.addSeries("A" + i, new double[] { Math.random(), Math.random() }, new double[] { Math.random(), Math.random() });
+      Series series = chart.addSeries("A" + i, new double[] { Math.random(), Math.random() }, new double[] { Math.random() / 1000, Math.random() / 1000 });
       series.setLineColor(SeriesColor.BLUE);
       series.setLineStyle(SeriesLineStyle.SOLID);
       series.setMarker(SeriesMarker.CIRCLE);
