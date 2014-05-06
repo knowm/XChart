@@ -32,7 +32,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-public class ObjUtil extends StrUtil {
+public class ObjUtil extends ListUtil {
 	public static String sSet = "=";
 	public static Modifier modifier;
 
