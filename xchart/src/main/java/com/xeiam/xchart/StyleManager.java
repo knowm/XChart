@@ -138,9 +138,9 @@ public class StyleManager {
   private Color errorBarsColor;
 
   // Formatting ////////////////////////////////
-  private String datePattern;
   private Locale locale;
   private TimeZone timezone;
+  private String datePattern;
   private String decimalPattern;
 
   /**
@@ -223,9 +223,9 @@ public class StyleManager {
     errorBarsColor = theme.getErrorBarsColor();
 
     // Formatting ////////////////////////////////
-    datePattern = null; // if not null, this override pattern will be used
     locale = Locale.getDefault();
     timezone = TimeZone.getDefault();
+    datePattern = null; // if not null, this override pattern will be used
     decimalPattern = null;
   }
 
@@ -1048,21 +1048,6 @@ public class StyleManager {
   // Formatting ////////////////////////////////
 
   /**
-   * Set the String formatter for Data x-axis
-   * 
-   * @param pattern - the pattern describing the date and time format
-   */
-  public void setDatePattern(String datePattern) {
-
-    this.datePattern = datePattern;
-  }
-
-  public String getDatePattern() {
-
-    return datePattern;
-  }
-
-  /**
    * Set the locale to use for rendering the chart
    * 
    * @param locale - the locale to use when formatting Strings and dates for the axis tick labels
@@ -1090,6 +1075,21 @@ public class StyleManager {
   public TimeZone getTimezone() {
 
     return timezone;
+  }
+
+  /**
+   * Set the String formatter for Data x-axis
+   * 
+   * @param pattern - the pattern describing the date and time format
+   */
+  public void setDatePattern(String datePattern) {
+
+    this.datePattern = datePattern;
+  }
+
+  public String getDatePattern() {
+
+    return datePattern;
   }
 
   /**

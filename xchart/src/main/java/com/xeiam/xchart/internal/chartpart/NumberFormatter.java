@@ -114,7 +114,7 @@ public class NumberFormatter {
 
     String decimalPattern;
 
-    if (styleManager.getDatePattern() == null) {
+    if (styleManager.getDecimalPattern() == null) {
 
       decimalPattern = getFormatPattern(value, min, max);
     }
@@ -140,12 +140,12 @@ public class NumberFormatter {
 
     String decimalPattern;
 
-    if (styleManager.getDatePattern() == null) {
+    if (styleManager.getDecimalPattern() == null) {
 
       decimalPattern = "0E0";
     }
     else {
-      decimalPattern = styleManager.getDatePattern();
+      decimalPattern = styleManager.getDecimalPattern();
     }
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
