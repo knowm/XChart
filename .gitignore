@@ -1,10 +1,28 @@
+# IntelliJ
+.idea/
+*.iws
+*.iml
+*.ipr
+*.ips
+.idea/
+
+
+# Eclipse
+.settings/
+.metadata/
+.classpath
+.project
+
+# Generated
 target/
 javadoc/
 bin/
-.classpath
-.project
-.settings/
+log/
+
+# Misc.
 .DS_Store
+
+# Sample images
 *.png
 *.jpg
 *.bmp
