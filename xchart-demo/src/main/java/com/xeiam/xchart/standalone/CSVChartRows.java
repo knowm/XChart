@@ -31,7 +31,7 @@ public class CSVChartRows {
     // import chart from a folder containing CSV files
     Chart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartRows/", DataOrientation.Rows, 600, 400);
 
-    CSVExporter.writeCSVRows(chart.getSeriesMap().get(0), "./CSV/CSVChartRowsExport/");
+    CSVExporter.writeCSVRows(chart.getSeriesMap().get("series1"), "./CSV/CSVChartRowsExport/");
 
     // Show it
     new SwingWrapper(chart).displayChart();
