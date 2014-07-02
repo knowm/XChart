@@ -107,9 +107,12 @@ public class AxisTickLabels implements ChartPart {
       double xOffset = axisTick.getAxis().getPaintZone().getX();
       double yOffset = axisTick.getAxis().getAxisTitle().getBounds().getY();
       double maxTickLabelHeight = 0;
+
+      // System.out.println("axisTick.getTickLabels().size(): " + axisTick.getTickLabels().size());
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
 
         String tickLabel = axisTick.getTickLabels().get(i);
+        // System.out.println("tickLabel: " + tickLabel);
         double tickLocation = axisTick.getTickLocations().get(i);
 
         if (tickLabel != null) { // some are null for logarithmic axes
