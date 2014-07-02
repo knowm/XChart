@@ -73,7 +73,7 @@ public class BarChart02 implements ExampleChart {
         e.printStackTrace();
       }
       xData.add(date);
-      yData.add(-1 * ((random.nextInt(i) + 1)));
+      yData.add(-1 * 0.00000001 * ((random.nextInt(i) + 1)));
     }
     Series series = chart.addSeries("Model 77", xData, yData);
     series.setLineColor(SeriesColor.RED);

@@ -51,11 +51,11 @@ public class ScatterChart04 implements ExampleChart {
 
     // generates data
     int size = 10;
-    List<Integer> xData = new ArrayList<Integer>();
+    List<Double> xData = new ArrayList<Double>();
     List<Double> yData = new ArrayList<Double>();
     List<Double> errorBars = new ArrayList<Double>();
     for (int i = 0; i <= size; i++) {
-      xData.add(i);
+      xData.add(((double) i) / 100000000);
       yData.add(10 * Math.exp(-i));
       errorBars.add(Math.random() + .3);
     }

@@ -15,13 +15,15 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.math.BigDecimal;
+
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for logarithmic axes
- * 
+ *
  * @author timmolter
  */
 public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
@@ -30,7 +32,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
-   * 
+   *
    * @param axisDirection
    * @param workingSpace
    * @param minValue
@@ -48,7 +50,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(numberFormatter.formatNumber(maxValue, minValue, maxValue));
+      tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf(maxValue), minValue, maxValue));
       tickLocations.add(workingSpace / 2.0);
       return;
     }

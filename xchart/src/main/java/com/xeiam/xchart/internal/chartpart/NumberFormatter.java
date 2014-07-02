@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -35,7 +36,7 @@ public class NumberFormatter {
     this.styleManager = styleManager;
   }
 
-  public String getFormatPattern(double value, double min, double max) {
+  public String getFormatPattern(BigDecimal value, double min, double max) {
 
     // System.out.println("value: " + value);
     // System.out.println("min: " + min);
@@ -50,11 +51,11 @@ public class NumberFormatter {
       placeOfDifference = (int) Math.floor(Math.log(difference) / Math.log(10));
     }
     int placeOfValue;
-    if (value == 0.0) {
+    if (value.doubleValue() == 0.0) {
       placeOfValue = 0;
     }
     else {
-      placeOfValue = (int) Math.floor(Math.log(value) / Math.log(10));
+      placeOfValue = (int) Math.floor(Math.log(value.doubleValue()) / Math.log(10));
     }
 
     // System.out.println("difference: " + difference);
@@ -104,11 +105,11 @@ public class NumberFormatter {
 
   /**
    * Format a number value, if the override patterns are null, it uses defaults
-   * 
+   *
    * @param value
    * @return
    */
-  public String formatNumber(double value, double min, double max) {
+  public String formatNumber(BigDecimal value, double min, double max) {
 
     NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
 
@@ -130,7 +131,7 @@ public class NumberFormatter {
 
   /**
    * Format a log number value for log Axes which show only decade tick labels. if the override patterns are null, it uses defaults
-   * 
+   *
    * @param value
    * @return
    */

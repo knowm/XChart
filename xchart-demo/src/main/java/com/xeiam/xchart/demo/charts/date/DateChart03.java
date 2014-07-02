@@ -64,7 +64,7 @@ public class DateChart03 implements ExampleChart {
       // System.out.println(date.getTime());
       // System.out.println(date.toString());
       xData.add(date);
-      yData.add(Math.random() * i);
+      yData.add(Math.random() * i * 1000000000);
     }
 
     chart.addSeries("blah", xData, yData);

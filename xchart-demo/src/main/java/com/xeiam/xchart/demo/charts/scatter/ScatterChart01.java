@@ -52,7 +52,7 @@ public class ScatterChart01 implements ExampleChart {
     Random random = new Random();
     int size = 1000;
     for (int i = 0; i < size; i++) {
-      xData.add(random.nextGaussian());
+      xData.add(random.nextGaussian() / 1000);
       yData.add(-1000000 + random.nextGaussian());
     }
 
