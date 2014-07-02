@@ -39,7 +39,7 @@ public class AxisTick implements ChartPart {
   /** the bounds */
   private Rectangle2D bounds = new Rectangle2D.Double();
 
-  AxisTickCalculator gridStep = null;
+  AxisTickCalculator axisTickCalculator = null;
 
   /**
    * Constructor
@@ -74,27 +74,27 @@ public class AxisTick implements ChartPart {
 
     if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
 
-      gridStep = new AxisTickBarChartCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter());
+      axisTickCalculator = new AxisTickBarChartCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter());
 
     }
     else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
 
-      gridStep = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
+      axisTickCalculator = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
 
     }
     else if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
 
-      gridStep = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
+      axisTickCalculator = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
 
     }
     else if (axis.getAxisType() == AxisType.Number) {
 
-      gridStep = new AxisTickNumericalCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
+      axisTickCalculator = new AxisTickNumericalCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
 
     }
     else if (axis.getAxisType() == AxisType.Date) {
 
-      gridStep = new AxisTickDateCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
+      axisTickCalculator = new AxisTickDateCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
 
     }
 
@@ -154,11 +154,11 @@ public class AxisTick implements ChartPart {
 
   public List<Double> getTickLocations() {
 
-    return gridStep.getTickLocations();
+    return axisTickCalculator.getTickLocations();
   }
 
   public List<String> getTickLabels() {
 
-    return gridStep.getTickLabels();
+    return axisTickCalculator.getTickLabels();
   }
 }

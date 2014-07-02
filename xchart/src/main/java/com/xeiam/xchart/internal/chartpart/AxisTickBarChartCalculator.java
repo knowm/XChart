@@ -147,7 +147,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         dateFormatter = new DateFormatter(chartPainter.getStyleManager());
       }
 
-      for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
+      for (double tickPosition = firstPosition; tickPosition <= maxValue + 2 * gridStep; tickPosition = tickPosition + gridStep) {
 
         if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
           tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf(tickPosition), minValue, maxValue));

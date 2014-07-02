@@ -21,7 +21,7 @@ import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for date axes
- * 
+ *
  * @author timmolter
  */
 public class AxisTickDateCalculator extends AxisTickCalculator {
@@ -30,7 +30,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
-   * 
+   *
    * @param axisDirection
    * @param workingSpace
    * @param minValue
@@ -70,7 +70,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     double firstPosition = getFirstPosition(gridStep);
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
+    for (double tickPosition = firstPosition; tickPosition <= maxValue + 2 * gridStep; tickPosition = tickPosition + gridStep) {
 
       tickLabels.add(dateFormatter.formatDate(tickPosition, timeUnit));
       // here we convert tickPosition finally to plot space, i.e. pixels
