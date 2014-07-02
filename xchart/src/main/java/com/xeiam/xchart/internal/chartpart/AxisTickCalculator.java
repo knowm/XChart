@@ -46,7 +46,7 @@ public abstract class AxisTickCalculator {
 
   /**
    * Constructor
-   * 
+   *
    * @param axisDirection
    * @param workingSpace
    * @param minValue
@@ -94,7 +94,7 @@ public abstract class AxisTickCalculator {
 
   /**
    * Gets the first position
-   * 
+   *
    * @param gridStep
    * @return
    */
@@ -104,10 +104,7 @@ public abstract class AxisTickCalculator {
 
     double firstPosition = minValue - (minValue % gridStep) + gridStep;
 
-    // System.out.println(firstPosition - minValue);
-    // System.out.println(.9 * gridStep);
-
-    if ((firstPosition - minValue) > .8 * gridStep) {
+    if ((firstPosition - minValue) > gridStep) {
       firstPosition = minValue - (minValue % gridStep);
     }
     return firstPosition;
@@ -125,7 +122,7 @@ public abstract class AxisTickCalculator {
 
   /**
    * Determine the grid step for the data set given the space in pixels allocated for the axis
-   * 
+   *
    * @param tickSpace in plot space
    * @return
    */

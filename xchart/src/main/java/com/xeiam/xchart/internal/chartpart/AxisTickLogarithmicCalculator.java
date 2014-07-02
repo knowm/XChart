@@ -101,12 +101,12 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
         // System.out.println("j: " + j);
         // System.out.println(Math.log10(j) % 1);
 
-        if (j < minValue - tickStep * .2) {
+        if (j < minValue - tickStep) {
           // System.out.println("continue");
           continue;
         }
 
-        if (j > maxValue + tickStep * 1.2) {
+        if (j > maxValue + tickStep) {
           // System.out.println("break");
           break;
         }

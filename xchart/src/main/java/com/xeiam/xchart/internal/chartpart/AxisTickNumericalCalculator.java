@@ -72,8 +72,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     // System.out.println("scaledfirstPosition: " + cleanedFirstPosition);
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (BigDecimal tickPosition = cleanedFirstPosition; tickPosition.compareTo(BigDecimal.valueOf(maxValue + cleanedGridStep.doubleValue() * 0.2)) <= 0; tickPosition =
-        tickPosition.add(cleanedGridStep)) {
+    for (BigDecimal tickPosition = cleanedFirstPosition; tickPosition.compareTo(BigDecimal.valueOf(maxValue)) < 0; tickPosition = tickPosition.add(cleanedGridStep)) {
 
       tickLabels.add(numberFormatter.formatNumber(tickPosition, minValue, maxValue));
       // here we convert tickPosition finally to plot space, i.e. pixels
