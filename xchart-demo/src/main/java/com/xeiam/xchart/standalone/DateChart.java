@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 - 2014 Xeiam LLC.
+ * Copyright 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.date;
+package com.xeiam.xchart.standalone;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -29,13 +29,13 @@ import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * Day Scale
+ * @author timmolter
  */
-public class DateChart05 implements ExampleChart {
+public class DateChart implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new DateChart05();
+    ExampleChart exampleChart = new DateChart();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -53,16 +53,18 @@ public class DateChart05 implements ExampleChart {
 
     Random random = new Random();
 
-    DateFormat sdf = new SimpleDateFormat("MM-dd");
+    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date date = null;
-    for (int i = 1; i <= 14; i++) {
+    for (int i = 1; i <= 5; i++) {
       try {
-        date = sdf.parse("02-" + (6 * i + random.nextInt(2)));
+        date = sdf.parse("2014-02-" + i);
       } catch (ParseException e) {
         e.printStackTrace();
       }
+      System.out.println(date);
       xData.add(date);
-      yData.add(Math.random() * i / -100000000);
+      System.out.println(date.getTime());
+      yData.add(Math.random() * i);
     }
 
     chart.addSeries("blah", xData, yData);

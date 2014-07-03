@@ -24,12 +24,12 @@ import java.awt.geom.Path2D;
 public class Diamond extends Marker {
 
   @Override
-  public void paint(Graphics2D g, double xOffset, double yOffset) {
+  public void paint(Graphics2D g, double xOffset, double yOffset, int markerSize) {
 
     g.setStroke(stroke);
 
     // Make a diamond
-    double diamondHalfSize = Marker.HALF_SIZE * 1.3;
+    double diamondHalfSize = (double) markerSize / 2 * 1.3;
 
     Path2D.Double path = new Path2D.Double();
     path.moveTo(xOffset - diamondHalfSize, yOffset);

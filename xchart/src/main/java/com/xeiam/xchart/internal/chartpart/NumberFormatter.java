@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -35,32 +36,122 @@ public class NumberFormatter {
     this.styleManager = styleManager;
   }
 
+  public String getFormatPattern(BigDecimal value, double min, double max) {
+
+    // System.out.println("value: " + value);
+    // System.out.println("min: " + min);
+    // System.out.println("max: " + max);
+
+    double difference = max - min;
+    int placeOfDifference;
+    if (difference == 0.0) {
+      placeOfDifference = 0;
+    }
+    else {
+      placeOfDifference = (int) Math.floor(Math.log(difference) / Math.log(10));
+    }
+    int placeOfValue;
+    if (value.doubleValue() == 0.0) {
+      placeOfValue = 0;
+    }
+    else {
+      placeOfValue = (int) Math.floor(Math.log(value.doubleValue()) / Math.log(10));
+    }
+
+    // System.out.println("difference: " + difference);
+    // System.out.println("placeOfDifference: " + placeOfDifference);
+    // System.out.println("placeOfValue: " + placeOfValue);
+
+    if (placeOfDifference <= 4 && placeOfDifference >= -4) {
+      // System.out.println("getNormalDecimalPattern");
+      return getNormalDecimalPatternPositive(placeOfValue, placeOfDifference);
+    }
+    else {
+      // System.out.println("getScientificDecimalPattern");
+      return getScientificDecimalPattern();
+    }
+  }
+
+  private String getNormalDecimalPatternPositive(int placeOfValue, int placeOfDifference) {
+
+    int maxNumPlaces = 15;
+    StringBuilder sb = new StringBuilder();
+    for (int i = maxNumPlaces - 1; i >= -1 * maxNumPlaces; i--) {
+
+      if (i >= 0 && (i < placeOfValue)) {
+        sb.append("0");
+      }
+      else if (i < 0 && (i > placeOfValue)) {
+        sb.append("0");
+      }
+      else {
+        sb.append("#");
+      }
+      if (i % 3 == 0 && i > 0) {
+        sb.append(",");
+      }
+      if (i == 0) {
+        sb.append(".");
+      }
+    }
+    // System.out.println(sb.toString());
+    return sb.toString();
+  }
+
+  private String getScientificDecimalPattern() {
+
+    return "0.###############E0";
+  }
+
   /**
    * Format a number value, if the override patterns are null, it uses defaults
-   * 
+   *
    * @param value
    * @return
    */
-  public String formatNumber(double value) {
+  public String formatNumber(BigDecimal value, double min, double max) {
 
     NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
 
-    double absoluteValue = Math.abs(value);
+    String decimalPattern;
 
-    if (absoluteValue < 10000.000001 && absoluteValue > .0009999999 || value == 0) {
+    if (styleManager.getDecimalPattern() == null) {
 
-      DecimalFormat normalFormat = (DecimalFormat) numberFormat;
-      normalFormat.applyPattern(styleManager.getNormalDecimalPattern());
-      return normalFormat.format(value);
-
+      decimalPattern = getFormatPattern(value, min, max);
     }
     else {
-
-      DecimalFormat scientificFormat = (DecimalFormat) numberFormat;
-      scientificFormat.applyPattern(styleManager.getScientificDecimalPattern());
-      return scientificFormat.format(value);
-
+      decimalPattern = styleManager.getDecimalPattern();
     }
+
+    DecimalFormat normalFormat = (DecimalFormat) numberFormat;
+    normalFormat.applyPattern(decimalPattern);
+    return normalFormat.format(value);
+
+  }
+
+  /**
+   * Format a log number value for log Axes which show only decade tick labels. if the override patterns are null, it uses defaults
+   *
+   * @param value
+   * @return
+   */
+  public String formatLogNumber(double value) {
+
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
+
+    String decimalPattern;
+
+    if (styleManager.getDecimalPattern() == null) {
+
+      decimalPattern = "0E0";
+    }
+    else {
+      decimalPattern = styleManager.getDecimalPattern();
+    }
+
+    DecimalFormat normalFormat = (DecimalFormat) numberFormat;
+    normalFormat.applyPattern(decimalPattern);
+    return normalFormat.format(value);
 
   }
 }

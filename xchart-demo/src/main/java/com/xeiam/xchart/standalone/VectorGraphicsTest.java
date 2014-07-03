@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 - 2014 Xeiam LLC.
+ * Copyright 2013 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,26 +15,27 @@
  */
 package com.xeiam.xchart.standalone;
 
-import com.xeiam.xchart.CSVExporter;
-import com.xeiam.xchart.CSVImporter;
-import com.xeiam.xchart.CSVImporter.DataOrientation;
+import java.io.IOException;
+
 import com.xeiam.xchart.Chart;
-import com.xeiam.xchart.SwingWrapper;
+import com.xeiam.xchart.QuickChart;
+import com.xeiam.xchart.VectorGraphicsEncoder;
+import com.xeiam.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 
 /**
  * @author timmolter
  */
-public class CSVChartColumns {
+public class VectorGraphicsTest {
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws IOException {
 
-    // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartColumns/", DataOrientation.Columns, 600, 600);
+    double[] xData = new double[] { 0.0, 1.0, 2.0 };
+    double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
-    CSVExporter.writeCSVColumns(chart.getSeriesMap().get("series1"), "./CSV/CSVChartColumnsExport/");
+    // Create Chart
+    Chart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
 
-    // Show it
-    new SwingWrapper(chart).displayChart();
-
+    VectorGraphicsEncoder.saveVectorGraphic(chart, "", VectorGraphicsFormat.PDF);
   }
+
 }

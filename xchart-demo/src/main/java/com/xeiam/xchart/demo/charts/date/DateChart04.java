@@ -62,7 +62,7 @@ public class DateChart04 implements ExampleChart {
         e.printStackTrace();
       }
       xData.add(date);
-      yData.add(Math.random() * i);
+      yData.add(Math.random() * i / 10000000000.0);
     }
 
     chart.addSeries("blah", xData, yData);

@@ -32,6 +32,8 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <ul>
  * <li>ChartType.Scatter
  * <li>Series data as a Set
+ * <li>Setting marker size
+ * <li>Formatting of negative numbers with large magnitude but small differences
  */
 public class ScatterChart01 implements ExampleChart {
 
@@ -50,8 +52,8 @@ public class ScatterChart01 implements ExampleChart {
     Random random = new Random();
     int size = 1000;
     for (int i = 0; i < size; i++) {
-      xData.add(random.nextGaussian());
-      yData.add(random.nextGaussian());
+      xData.add(random.nextGaussian() / 1000);
+      yData.add(-1000000 + random.nextGaussian());
     }
 
     // Create Chart
@@ -61,6 +63,7 @@ public class ScatterChart01 implements ExampleChart {
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyleManager().setMarkerSize(16);
 
     // Series
     chart.addSeries("Gaussian Blob", xData, yData);

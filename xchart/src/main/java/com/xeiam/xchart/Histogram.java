@@ -70,11 +70,8 @@ public class Histogram {
 
     this.numBins = numBins;
     this.originalData = data;
-    // Arrays.sort(data);
     this.min = min;
     this.max = max;
-    // this.min = data[0];
-    // this.max = data[data.length - 1];
 
     init();
   }
@@ -90,8 +87,13 @@ public class Histogram {
 
       int bin = (int) ((((Number) itr.next()).doubleValue() - min) / binSize); // changed this from numBins
       if (bin < 0) { /* this data is smaller than min */
+        // System.out.println("less than");
       }
-      else if (bin >= numBins) { /* this data point is bigger than max */
+      else if (bin > numBins) { /* this data point is bigger than max */
+        // System.out.println("greater than");
+      }
+      else if (bin == numBins) { // this falls right on the edge of the max bin
+        tempYAxisData[bin - 1] += 1;
       }
       else {
         tempYAxisData[bin] += 1;

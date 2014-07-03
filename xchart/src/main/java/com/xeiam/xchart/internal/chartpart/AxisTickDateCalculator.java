@@ -21,7 +21,7 @@ import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for date axes
- * 
+ *
  * @author timmolter
  */
 public class AxisTickDateCalculator extends AxisTickCalculator {
@@ -30,14 +30,14 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
-   * 
+   *
    * @param axisDirection
    * @param workingSpace
    * @param minValue
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickDateCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickDateCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     dateFormatter = new DateFormatter(styleManager);
@@ -47,7 +47,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
   private void calculate() {
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int) (styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
+    double tickSpace = styleManager.getAxisTickSpaceRatio() * workingSpace; // in plot space
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
@@ -55,7 +55,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     // the span of the data
     long span = (long) Math.abs(maxValue - minValue); // in data space
 
-    long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
+    long gridStepHint = (long) (span / tickSpace * styleManager.getXAxisTickMarkSpacingHint());
 
     long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     double gridStep = 0.0;
@@ -70,11 +70,11 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     double firstPosition = getFirstPosition(gridStep);
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
+    for (double tickPosition = firstPosition; tickPosition <= maxValue + 2 * gridStep; tickPosition = tickPosition + gridStep) {
 
       tickLabels.add(dateFormatter.formatDate(tickPosition, timeUnit));
       // here we convert tickPosition finally to plot space, i.e. pixels
-      double tickLabelPosition = (int) (margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace));
+      double tickLabelPosition = margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace);
       tickLocations.add(tickLabelPosition);
     }
   }

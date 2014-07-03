@@ -49,9 +49,9 @@ public class Axis implements ChartPart {
   /** the axis direction */
   private Direction direction;
 
-  private double min;;
+  private double min;
 
-  private double max;;
+  private double max;
 
   /** the bounds */
   private Rectangle2D bounds;
@@ -84,12 +84,12 @@ public class Axis implements ChartPart {
   }
 
   /**
-   * Reset the default min and max values in preparation for calculating the actualy min and max
+   * Reset the default min and max values in preparation for calculating the actual min and max
    */
   void resetMinMax() {
 
     min = Double.MAX_VALUE;
-    max = Double.MIN_VALUE;
+    max = -Double.MAX_VALUE;
   }
 
   /**

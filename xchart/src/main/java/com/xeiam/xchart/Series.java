@@ -107,7 +107,7 @@ public class Series {
   private double[] findMinMax(Collection<?> data, AxisType axisType) {
 
     double min = Double.MAX_VALUE;
-    double max = Double.MIN_VALUE;
+    double max = -Double.MAX_VALUE;
 
     for (Object dataPoint : data) {
 
@@ -119,7 +119,6 @@ public class Series {
 
       if (axisType == AxisType.Number) {
         value = ((Number) dataPoint).doubleValue();
-
       }
       else if (axisType == AxisType.Date) {
         Date date = (Date) dataPoint;
@@ -148,7 +147,7 @@ public class Series {
   private double[] findMinMaxWithErrorBars(Collection<? extends Number> data, Collection<? extends Number> errorBars) {
 
     double min = Double.MAX_VALUE;
-    double max = Double.MIN_VALUE;
+    double max = -Double.MAX_VALUE;
 
     Iterator<? extends Number> itr = data.iterator();
     Iterator<? extends Number> ebItr = errorBars.iterator();
@@ -302,15 +301,21 @@ public class Series {
     return name;
   }
 
-  void replaceXData(Collection<?> newXData) {
+  public void replaceXData(Collection<?> newXData) {
 
     xData = newXData;
     calculateMinMax();
   }
 
-  void replaceYData(Collection<? extends Number> newYData) {
+  public void replaceYData(Collection<? extends Number> newYData) {
 
     yData = newYData;
+    calculateMinMax();
+  }
+
+  public void replaceErrroBarData(Collection<? extends Number> newErrorBars) {
+
+    errorBars = newErrorBars;
     calculateMinMax();
   }
 

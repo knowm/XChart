@@ -52,7 +52,7 @@ public class LineChart02 implements ExampleChart {
     for (int i = 0; i <= size; i++) {
       double radians = (Math.PI / (size / 2) * i);
       xData.add(i - size / 2);
-      yData.add(size * Math.sin(radians));
+      yData.add(-.000001 * Math.sin(radians));
     }
 
     // Create Chart

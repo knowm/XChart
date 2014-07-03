@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -27,21 +28,21 @@ import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
- * 
+ *
  * @author timmolter
  */
 public class AxisTickBarChartCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
-   * 
+   *
    * @param axisDirection
    * @param workingSpace
    * @param minValue
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickBarChartCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, ChartPainter chart) {
+  public AxisTickBarChartCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, ChartPainter chart) {
 
     super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
     calculate(chart);
@@ -118,7 +119,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
 
       for (Object category : categories) {
         if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          tickLabels.add(numberFormatter.formatNumber((Double) category));
+          tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf((Double) category), minValue, maxValue));
         }
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           long span = (long) Math.abs(maxValue - minValue); // in data space
@@ -146,10 +147,10 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         dateFormatter = new DateFormatter(chartPainter.getStyleManager());
       }
 
-      for (double tickPosition = firstPosition; tickPosition <= maxValue; tickPosition = tickPosition + gridStep) {
+      for (double tickPosition = firstPosition; tickPosition <= maxValue + 2 * gridStep; tickPosition = tickPosition + gridStep) {
 
         if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          tickLabels.add(numberFormatter.formatNumber(tickPosition));
+          tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf(tickPosition), minValue, maxValue));
         }
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           long span = (long) Math.abs(maxValue - minValue); // in data space

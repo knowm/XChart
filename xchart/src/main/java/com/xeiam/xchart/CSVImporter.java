@@ -19,7 +19,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,7 +176,7 @@ public class CSVImporter {
     for (int i = 0; i < stringDataArray.length; i++) {
       String dataPoint = stringDataArray[i];
       try {
-        BigDecimal value = new BigDecimal(dataPoint);
+        Double value = Double.parseDouble(dataPoint);
         axisData.add(value);
       } catch (NumberFormatException e) {
         System.out.println("Error parsing >" + dataPoint + "< !");

@@ -15,13 +15,15 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.math.BigDecimal;
+
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.internal.Utils;
 import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for logarithmic axes
- * 
+ *
  * @author timmolter
  */
 public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
@@ -30,14 +32,14 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
-   * 
+   *
    * @param axisDirection
    * @param workingSpace
    * @param minValue
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickLogarithmicCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickLogarithmicCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     numberFormatter = new NumberFormatter(styleManager);
@@ -48,7 +50,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(numberFormatter.formatNumber(maxValue));
+      tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf(maxValue), minValue, maxValue));
       tickLocations.add(workingSpace / 2.0);
       return;
     }
@@ -93,25 +95,25 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       // System.out.println("i: " + i);
       // System.out.println("pow(10, i).doubleValue(): " + pow(10, i).doubleValue());
 
-      // using trhe .00000001 factor to dal with double value imprecision
+      // using the .00000001 factor to deal with double value imprecision
       for (double j = firstPosition; j <= Utils.pow(10, i) + .00000001; j = j + tickStep) {
 
         // System.out.println("j: " + j);
         // System.out.println(Math.log10(j) % 1);
 
-        if (j < minValue) {
+        if (j < minValue - tickStep) {
           // System.out.println("continue");
           continue;
         }
 
-        if (j > maxValue) {
+        if (j > maxValue + tickStep) {
           // System.out.println("break");
           break;
         }
 
         // only add labels for the decades
         if (Math.abs(Math.log10(j) % 1) < 0.00000001) {
-          tickLabels.add(numberFormatter.formatNumber(j));
+          tickLabels.add(numberFormatter.formatLogNumber(j));
         }
         else {
           tickLabels.add(null);

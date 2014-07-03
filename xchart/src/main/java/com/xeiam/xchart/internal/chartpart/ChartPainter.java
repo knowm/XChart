@@ -41,7 +41,7 @@ public class ChartPainter {
 
   /**
    * Constructor
-   * 
+   *
    * @param width
    * @param height
    */
@@ -117,7 +117,7 @@ public class ChartPainter {
 
   /**
    * for internal usage
-   * 
+   *
    * @return
    */
   public ChartTitle getChartTitle() {
@@ -127,7 +127,7 @@ public class ChartPainter {
 
   /**
    * for internal usage
-   * 
+   *
    * @return
    */
   public Legend getChartLegend() {
@@ -137,7 +137,7 @@ public class ChartPainter {
 
   /**
    * for internal usage
-   * 
+   *
    * @return
    */
   public AxisPair getAxisPair() {
@@ -147,7 +147,7 @@ public class ChartPainter {
 
   /**
    * for internal usage
-   * 
+   *
    * @return
    */
   public Plot getPlot() {
@@ -167,7 +167,7 @@ public class ChartPainter {
 
   /**
    * Gets the Chart's style manager, which can be used to customize the Chart's appearance
-   * 
+   *
    * @return the style manager
    */
   public StyleManager getStyleManager() {

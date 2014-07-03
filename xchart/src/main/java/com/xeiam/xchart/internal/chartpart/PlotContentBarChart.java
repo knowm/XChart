@@ -62,7 +62,7 @@ public class PlotContentBarChart extends PlotContent {
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
 
       // data points
-      Collection<?> xData = series.getXData();
+      // Collection<?> xData = series.getXData();
 
       Collection<? extends Number> yData = series.getYData();
       double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
@@ -170,7 +170,7 @@ public class PlotContentBarChart extends PlotContent {
         boolean isOverlap = true;
         double xOffset;
         double barWidth;
-        if (getChartPainter().getStyleManager().barsOverlapped()) {
+        if (getChartPainter().getStyleManager().isBarsOverlapped()) {
           double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;

@@ -120,7 +120,11 @@ public interface Theme {
 
   public double getBarWidthPercentage();
 
-  public boolean barsOverlapped();
+  public boolean isBarsOverlapped();
+
+  // Line, Scatter, Area Charts ///////////////////////////////
+
+  public int getMarkerSize();
 
   // Error Bars ///////////////////////////////
 

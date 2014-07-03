@@ -50,20 +50,24 @@ public final class BitmapEncoder {
 
   }
 
+  public enum BitmapFormat {
+    PNG, JPG, BMP, GIF;
+  }
+
   /**
-   * Save a Chart as a PNG file
+   * Save a Chart as an image file
    * 
    * @param chart
    * @param fileName
+   * @param bitmapFormat
    * @throws IOException
    */
-  public static void savePNG(Chart chart, String fileName) throws IOException {
+  public static void saveBitmap(Chart chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
-    // Save chart as PNG
-    OutputStream out = new FileOutputStream(fileName);
-    ImageIO.write(bufferedImage, "png", out);
+    OutputStream out = new FileOutputStream(fileName + "." + bitmapFormat.toString().toLowerCase());
+    ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), out);
     out.close();
   }
 
@@ -75,7 +79,7 @@ public final class BitmapEncoder {
    * @param DPI
    * @throws IOException
    */
-  public static void savePNGWithDPI(Chart chart, String fileName, int DPI) throws IOException {
+  public static void saveBitmapWithDPI(Chart chart, String fileName, BitmapFormat bitmapFormat, int DPI) throws IOException {
 
     double scaleFactor = DPI / 72.0;
 
@@ -88,27 +92,26 @@ public final class BitmapEncoder {
     graphics2D.setTransform(at);
 
     chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
-
-    for (Iterator<ImageWriter> iw = ImageIO.getImageWritersByFormatName("png"); iw.hasNext();) {
-      ImageWriter writer = iw.next();
+    Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(bitmapFormat.toString().toLowerCase());
+    if (writers.hasNext()) {
+      ImageWriter writer = writers.next();
       // instantiate an ImageWriteParam object with default compression options
       ImageWriteParam iwp = writer.getDefaultWriteParam();
 
       ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
       IIOMetadata metadata = writer.getDefaultImageMetadata(typeSpecifier, iwp);
       if (metadata.isReadOnly() || !metadata.isStandardMetadataFormatSupported()) {
-        continue;
+        throw new IllegalArgumentException("It is not possible to set the DPI on a bitmap with " + bitmapFormat + " format!! Try another format.");
       }
 
-      setDPIforPNG(metadata, DPI);
+      setDPI(metadata, DPI);
 
-      File file = new File(fileName);
+      File file = new File(fileName + "." + bitmapFormat.toString().toLowerCase());
       FileImageOutputStream output = new FileImageOutputStream(file);
       writer.setOutput(output);
       IIOImage image = new IIOImage(bufferedImage, null, metadata);
       writer.write(null, image, iwp);
       writer.dispose();
-      break;
     }
   }
 
@@ -119,7 +122,7 @@ public final class BitmapEncoder {
    * @param DPI
    * @throws IIOInvalidTreeException
    */
-  private static void setDPIforPNG(IIOMetadata metadata, int DPI) throws IIOInvalidTreeException {
+  private static void setDPI(IIOMetadata metadata, int DPI) throws IIOInvalidTreeException {
 
     // for PNG, it's dots per millimeter
     double dotsPerMilli = 1.0 * DPI / 10 / 2.54;
@@ -149,7 +152,7 @@ public final class BitmapEncoder {
    * @throws FileNotFoundException
    * @throws IOException
    */
-  public static void saveJPG(Chart chart, String fileName, float quality) throws FileNotFoundException, IOException {
+  public static void saveJPGWithQuality(Chart chart, String fileName, float quality) throws FileNotFoundException, IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
@@ -174,14 +177,14 @@ public final class BitmapEncoder {
    * @return a byte[] for a given chart, PNG compressed
    * @throws IOException
    */
-  public static byte[] getPNGBytes(Chart chart) throws IOException {
+  public static byte[] getBitmapBytes(Chart chart, BitmapFormat bitmapFormat) throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
     byte[] imageInBytes = null;
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    ImageIO.write(bufferedImage, "png", baos);
+    ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), baos);
     baos.flush();
     imageInBytes = baos.toByteArray();
     baos.close();

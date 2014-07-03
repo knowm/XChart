@@ -129,17 +129,19 @@ public class StyleManager {
 
   // Bar Charts ///////////////////////////////
   private double barWidthPercentage;
-  private boolean barsOverlapped;
+  private boolean isBarsOverlapped;
+
+  // Line, Scatter, Area Charts ///////////////////////////////
+  private int markerSize;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
 
   // Formatting ////////////////////////////////
-  private String datePattern;
   private Locale locale;
   private TimeZone timezone;
-  private String normalDecimalPattern;
-  private String scientificDecimalPattern;
+  private String datePattern;
+  private String decimalPattern;
 
   /**
    * Constructor
@@ -211,17 +213,20 @@ public class StyleManager {
 
     // Bar Charts ///////////////////////////////
     barWidthPercentage = theme.getBarWidthPercentage();
-    barsOverlapped = theme.barsOverlapped();
+    isBarsOverlapped = theme.isBarsOverlapped();
+
+    // Line, Scatter, Area Charts ///////////////////////////////
+
+    markerSize = theme.getMarkerSize();
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
 
     // Formatting ////////////////////////////////
-    datePattern = null; // if not null, this override pattern will be used
     locale = Locale.getDefault();
     timezone = TimeZone.getDefault();
-    normalDecimalPattern = "#.####";
-    scientificDecimalPattern = "0.##E0";
+    datePattern = null; // if not null, this override pattern will be used
+    decimalPattern = null;
   }
 
   /**
@@ -994,16 +999,33 @@ public class StyleManager {
   /**
    * set whether or no bars are overlapped. Otherwise they are places side-by-side
    * 
-   * @param barsOverlapped
+   * @param isBarsOverlapped
    */
-  public void setBarsOverlapped(boolean barsOverlapped) {
+  public void setBarsOverlapped(boolean isBarsOverlapped) {
 
-    this.barsOverlapped = barsOverlapped;
+    this.isBarsOverlapped = isBarsOverlapped;
   }
 
-  public boolean barsOverlapped() {
+  public boolean isBarsOverlapped() {
 
-    return barsOverlapped;
+    return isBarsOverlapped;
+  }
+
+  // Line, Scatter, Area Charts ///////////////////////////////
+
+  /**
+   * Sets the size of the markers in pixels
+   * 
+   * @param markerSize
+   */
+  public void setMarkerSize(int markerSize) {
+
+    this.markerSize = markerSize;
+  }
+
+  public int getMarkerSize() {
+
+    return markerSize;
   }
 
   // Error Bars ///////////////////////////////
@@ -1024,21 +1046,6 @@ public class StyleManager {
   }
 
   // Formatting ////////////////////////////////
-
-  /**
-   * Set the String formatter for Data x-axis
-   * 
-   * @param pattern - the pattern describing the date and time format
-   */
-  public void setDatePattern(String datePattern) {
-
-    this.datePattern = datePattern;
-  }
-
-  public String getDatePattern() {
-
-    return datePattern;
-  }
 
   /**
    * Set the locale to use for rendering the chart
@@ -1071,32 +1078,33 @@ public class StyleManager {
   }
 
   /**
+   * Set the String formatter for Data x-axis
+   * 
+   * @param pattern - the pattern describing the date and time format
+   */
+  public void setDatePattern(String datePattern) {
+
+    this.datePattern = datePattern;
+  }
+
+  public String getDatePattern() {
+
+    return datePattern;
+  }
+
+  /**
    * Set the decimal formatter for all tick labels
    * 
    * @param pattern - the pattern describing the decimal format
    */
-  public void setNormalDecimalPattern(String normalDecimalPattern) {
+  public void setDecimalPattern(String decimalPattern) {
 
-    this.normalDecimalPattern = normalDecimalPattern;
+    this.decimalPattern = decimalPattern;
   }
 
-  public String getNormalDecimalPattern() {
+  public String getDecimalPattern() {
 
-    return normalDecimalPattern;
+    return decimalPattern;
   }
 
-  /**
-   * Set the scientific notation formatter for all tick labels
-   * 
-   * @param pattern - the pattern describing the scientific notation format
-   */
-  public void setScientificDecimalPattern(String scientificDecimalPattern) {
-
-    this.scientificDecimalPattern = scientificDecimalPattern;
-  }
-
-  public String getScientificDecimalPattern() {
-
-    return scientificDecimalPattern;
-  }
 }

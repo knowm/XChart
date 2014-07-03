@@ -53,18 +53,18 @@ public class DateChart03 implements ExampleChart {
 
     Random random = new Random();
 
-    DateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss.SSS");
     Date date = null;
     for (int i = 1; i <= 14; i++) {
       try {
-        date = sdf.parse("08:" + (5 * i + random.nextInt(2)) + ":" + (random.nextInt(2)) + "." + random.nextInt(1000));
+        date = sdf.parse("2013-07-22-08:" + (5 * i + random.nextInt(2)) + ":" + (random.nextInt(2)) + "." + random.nextInt(1000));
       } catch (ParseException e) {
         e.printStackTrace();
       }
       // System.out.println(date.getTime());
       // System.out.println(date.toString());
       xData.add(date);
-      yData.add(Math.random() * i);
+      yData.add(Math.random() * i * 1000000000);
     }
 
     chart.addSeries("blah", xData, yData);

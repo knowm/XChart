@@ -288,9 +288,17 @@ public class XChartTheme implements Theme {
   }
 
   @Override
-  public boolean barsOverlapped() {
+  public boolean isBarsOverlapped() {
 
     return false;
+  }
+
+  // Line, Scatter, Area Charts ///////////////////////////////
+
+  @Override
+  public int getMarkerSize() {
+
+    return 8;
   }
 
   // Error Bars ///////////////////////////////

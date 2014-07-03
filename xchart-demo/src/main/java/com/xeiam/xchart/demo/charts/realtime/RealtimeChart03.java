@@ -33,17 +33,21 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <ul>
  * <li>real-time chart updates
  * <li>fixed window
+ * <li>error bars
  */
-public class RealtimeChart01 implements ExampleChart {
+public class RealtimeChart03 implements ExampleChart {
 
-  private List<Double> yData;
+  private List<Integer> xData = new ArrayList<Integer>();
+  private List<Double> yData = new ArrayList<Double>();
+  private List<Double> errorBars = new ArrayList<Double>();
+
   public static final String SERIES_NAME = "series1";
 
   public static void main(String[] args) {
 
     // Setup the panel
-    final RealtimeChart01 realtimeChart01 = new RealtimeChart01();
-    final XChartPanel chartPanel = realtimeChart01.buildPanel();
+    final RealtimeChart03 realtimeChart03 = new RealtimeChart03();
+    final XChartPanel chartPanel = realtimeChart03.buildPanel();
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
@@ -69,8 +73,8 @@ public class RealtimeChart01 implements ExampleChart {
       @Override
       public void run() {
 
-        realtimeChart01.updateData();
-        chartPanel.updateSeries(SERIES_NAME, realtimeChart01.getyData());
+        realtimeChart03.updateData();
+        chartPanel.updateSeries(SERIES_NAME, realtimeChart03.xData, realtimeChart03.getyData(), realtimeChart03.errorBars);
 
       }
     };
@@ -88,38 +92,47 @@ public class RealtimeChart01 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    yData = getRandomData(5);
+    yData.add(0.0);
+    for (int i = 0; i < 50; i++) {
+      double lastPoint = yData.get(yData.size() - 1);
+      yData.add(getRandomWalk(lastPoint));
+    }
+    // generate X-Data
+    xData = new ArrayList<Integer>();
+    for (int i = 1; i < yData.size() + 1; i++) {
+      xData.add(i);
+    }
+    // generate error bars
+    errorBars = new ArrayList<Double>();
+    for (int i = 0; i < yData.size(); i++) {
+      errorBars.add(20 * Math.random());
+    }
 
     // Create Chart
     Chart chart = new Chart(500, 400);
     chart.setChartTitle("Sample Real-time Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.addSeries(SERIES_NAME, null, yData);
+    chart.addSeries(SERIES_NAME, xData, yData, errorBars);
 
     return chart;
   }
 
-  private List<Double> getRandomData(int numPoints) {
+  private Double getRandomWalk(double lastPoint) {
 
-    List<Double> data = new ArrayList<Double>();
-    for (int i = 0; i < numPoints; i++) {
-      data.add(Math.random() * 100);
-    }
-    return data;
+    return lastPoint + (Math.random() * 100 - 50);
   }
 
   public void updateData() {
 
     // Get some new data
-    List<Double> newData = getRandomData(1);
+    double lastPoint = yData.get(yData.size() - 1);
+    yData.add(getRandomWalk(lastPoint));
+    yData.remove(0);
 
-    yData.addAll(newData);
-
-    // Limit the total number of points
-    while (yData.size() > 20) {
-      yData.remove(0);
-    }
+    // update error bars
+    errorBars.add(20 * Math.random());
+    errorBars.remove(0);
 
   }
 

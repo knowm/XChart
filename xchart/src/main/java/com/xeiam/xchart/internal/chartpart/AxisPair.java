@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 
@@ -46,7 +47,7 @@ public class AxisPair implements ChartPart {
 
   /**
    * Constructor
-   * 
+   *
    * @param the parent chartPainter
    */
   public AxisPair(ChartPainter chartPainter) {
@@ -93,6 +94,9 @@ public class AxisPair implements ChartPart {
         xAxis.setAxisType(AxisType.Date);
       }
       else if (dataPoint instanceof String) {
+        if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
+          throw new RuntimeException("X-Axis data types of String can only be used for Bar Charts!!!");
+        }
         xAxis.setAxisType(AxisType.String);
       }
       else {

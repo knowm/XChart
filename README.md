@@ -1,4 +1,4 @@
-## [![XChart](http://xeiam.com/images/XChart_64_64.png)](http://xeiam.com/xchart) XChart
+## [![XChart](http://www.xeiam.com/images/XChart_64_64.png)](http://www.xeiam.com/xchart) XChart
 A Simple Charting Library for Java
 
 ## Description
@@ -25,7 +25,7 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
     // or save it in high-res
     BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
     
-Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.jsp), [download the thing](http://xeiam.com/xchart_changelog.jsp) and [provide feedback](https://github.com/timmolter/XChart/issues).
+Now go ahead and [study some more examples](http://www.xeiam.com/xchart_examplecode.jsp), [download the thing](http://www.xeiam.com/xchart_changelog.jsp) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
 ## Features
 * No additional dependencies
@@ -49,10 +49,13 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart_examplecode.
 * Real-time charts
 
 ## Getting Started
+
 ### Non-Maven
-Download Jar: http://xeiam.com/xchart_changelog.jsp
+
+Download Jar: http://www.xeiam.com/xchart_changelog.jsp
 
 ### Maven
+
 The XChart release artifacts are hosted on Maven Central.
 
 Add the XChart library as a dependency to your pom.xml file:
@@ -60,7 +63,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>com.xeiam.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>2.3.2</version>
+        <version>2.4.0</version>
     </dependency>
 
 For snapshots, add the following to your pom.xml file:
@@ -74,7 +77,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.3.3-SNAPSHOT</version>
+      <version>2.4.1-SNAPSHOT</version>
     </dependency>
 
 ## Building
@@ -92,7 +95,7 @@ For snapshots, add the following to your pom.xml file:
 
 ## Running Demo
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.3.2.jar:xchart-2.3.2.jar com.xeiam.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.4.0.jar:xchart-2.4.0.jar com.xeiam.xchart.demo.XChartDemo
 
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
@@ -104,3 +107,6 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 ## Donations
 1PrZHiJorAw7RQrjP9CJgtPuqr6fU65PKt
 
+## Release Information
+
+We will announce new releases on our [Twitter page](https://twitter.com/Xeiam).

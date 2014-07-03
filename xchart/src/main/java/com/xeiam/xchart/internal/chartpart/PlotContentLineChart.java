@@ -37,7 +37,7 @@ public class PlotContentLineChart extends PlotContent {
 
   /**
    * Constructor
-   * 
+   *
    * @param plot
    */
   protected PlotContentLineChart(Plot plot) {
@@ -66,6 +66,7 @@ public class PlotContentLineChart extends PlotContent {
 
       // data points
       Collection<?> xData = series.getXData();
+      // System.out.println(xData);
       double xMin = getChartPainter().getAxisPair().getXAxis().getMin();
       double xMax = getChartPainter().getAxisPair().getXAxis().getMax();
 
@@ -205,7 +206,7 @@ public class PlotContentLineChart extends PlotContent {
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset);
+          series.getMarker().paint(g, xOffset, yOffset, getChartPainter().getStyleManager().getMarkerSize());
         }
 
         // paint errorbars

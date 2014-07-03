@@ -36,7 +36,7 @@ public abstract class AxisTickCalculator {
 
   protected final Direction axisDirection;
 
-  protected final int workingSpace;
+  protected final double workingSpace;
 
   protected final double minValue;
 
@@ -46,14 +46,14 @@ public abstract class AxisTickCalculator {
 
   /**
    * Constructor
-   * 
+   *
    * @param axisDirection
    * @param workingSpace
    * @param minValue
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickCalculator(Direction axisDirection, int workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     // override min/max value for bar charts' Y-Axis
     double overrideMinValue = minValue;
@@ -94,19 +94,20 @@ public abstract class AxisTickCalculator {
 
   /**
    * Gets the first position
-   * 
+   *
    * @param gridStep
    * @return
    */
   double getFirstPosition(double gridStep) {
 
-    double firstPosition;
-    if (minValue % gridStep <= 0.0) {
-      firstPosition = minValue - (minValue % gridStep);
-    }
-    else {
-      firstPosition = minValue - (minValue % gridStep) + gridStep;
-    }
+    // System.out.println("******");
+
+    // double firstPosition = minValue - (minValue % gridStep) + gridStep;
+    double firstPosition = minValue - (minValue % gridStep) - gridStep;
+    //
+    // if ((firstPosition - minValue) > gridStep) {
+    // firstPosition = minValue - (minValue % gridStep);
+    // }
     return firstPosition;
   }
 
@@ -122,7 +123,7 @@ public abstract class AxisTickCalculator {
 
   /**
    * Determine the grid step for the data set given the space in pixels allocated for the axis
-   * 
+   *
    * @param tickSpace in plot space
    * @return
    */

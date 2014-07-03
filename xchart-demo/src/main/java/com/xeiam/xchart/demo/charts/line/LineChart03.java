@@ -97,7 +97,7 @@ public class LineChart03 implements ExampleChart {
     chart.getStyleManager().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.getStyleManager().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
     chart.getStyleManager().setDatePattern("dd-MMM");
-    chart.getStyleManager().setNormalDecimalPattern("#0.000");
+    chart.getStyleManager().setDecimalPattern("#0.000");
     chart.getStyleManager().setLocale(Locale.GERMAN);
 
     Series series = chart.addSeries("Fake Data", xData, yData);
