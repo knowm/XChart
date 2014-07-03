@@ -21,6 +21,8 @@ import java.awt.Stroke;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.leores.util.ObjUtil;
+
 import com.xeiam.xchart.internal.style.GGPlot2Theme;
 import com.xeiam.xchart.internal.style.MatlabTheme;
 import com.xeiam.xchart.internal.style.Theme;
@@ -1107,4 +1109,7 @@ public class StyleManager {
     return decimalPattern;
   }
 
+ public boolean load(String str) {
+	return ObjUtil.loadFromString(this, str);
+ }
 }

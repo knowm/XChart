@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.leores.util.ObjUtil;
+
 import com.xeiam.xchart.StyleManager.ChartTheme;
 import com.xeiam.xchart.internal.chartpart.ChartPainter;
 import com.xeiam.xchart.internal.style.Theme;
@@ -275,5 +277,9 @@ public class Chart {
 
     return chartPainter.getAxisPair().getSeriesMap();
   }
+  
+  public boolean load(String str) {
+   return ObjUtil.loadFromString(this, str);
+ }
 
 }
