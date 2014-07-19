@@ -15,12 +15,13 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Axis tick labels
@@ -58,38 +59,58 @@ public class AxisTickLabels implements ChartPart {
 
     if (axisTick.getAxis().getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) { // Y-Axis
 
-      double xOffset = axisTick.getAxis().getAxisTitle().getBounds().getX() + axisTick.getAxis().getAxisTitle().getBounds().getWidth();
+      double xWidth = axisTick.getAxis().getAxisTitle().getBounds().getWidth();
+      double xOffset = axisTick.getAxis().getAxisTitle().getBounds().getX() + xWidth;
       double yOffset = axisTick.getAxis().getPaintZone().getY();
       double height = axisTick.getAxis().getPaintZone().getHeight();
       double maxTickLabelWidth = 0;
+      Map<Double, TextLayout> axisLabelTextLayouts = new HashMap<Double, TextLayout>();
 
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
-
         String tickLabel = axisTick.getTickLabels().get(i);
-        // System.out.println(tickLabel);
         double tickLocation = axisTick.getTickLocations().get(i);
         double flippedTickLocation = yOffset + height - tickLocation;
 
         if (tickLabel != null && flippedTickLocation > yOffset && flippedTickLocation < yOffset + height) { // some are null for logarithmic axes
-
           FontRenderContext frc = g.getFontRenderContext();
-          TextLayout layout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
-          Rectangle2D tickLabelBounds = layout.getBounds();
-
-          Shape shape = layout.getOutline(null);
-
-          AffineTransform orig = g.getTransform();
-          AffineTransform at = new AffineTransform();
-          at.translate(xOffset, flippedTickLocation + tickLabelBounds.getHeight() / 2.0);
-          g.transform(at);
-          g.fill(shape);
-          g.setTransform(orig);
-
-          if (tickLabelBounds.getWidth() > maxTickLabelWidth) {
-            maxTickLabelWidth = tickLabelBounds.getWidth();
+          TextLayout axisLabelTextLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
+          Rectangle2D tickLabelBounds = axisLabelTextLayout.getBounds();
+          double boundWidth = tickLabelBounds.getWidth();
+          if (boundWidth > maxTickLabelWidth) {
+            maxTickLabelWidth = boundWidth;
           }
-
+          axisLabelTextLayouts.put(tickLocation, axisLabelTextLayout);
         }
+      }
+
+      for (Double tickLocation : axisLabelTextLayouts.keySet()) {
+
+        TextLayout axisLabelTextLayout = axisLabelTextLayouts.get(tickLocation);
+        Rectangle2D tickLabelBounds = axisLabelTextLayout.getBounds();
+        Shape shape = axisLabelTextLayout.getOutline(null);
+
+        double flippedTickLocation = yOffset + height - tickLocation;
+
+        AffineTransform orig = g.getTransform();
+        AffineTransform at = new AffineTransform();
+        double boundWidth = tickLabelBounds.getWidth();
+        double xPos;
+        switch (getChartPainter().getStyleManager().getYAxisLabelAlignment()) {
+          case Right:
+            xPos = xOffset + maxTickLabelWidth - boundWidth;
+            break;
+          case Centre:
+            xPos = xOffset + (maxTickLabelWidth - boundWidth) / 2;
+            break;
+          case Left:
+          default:
+            xPos = xOffset;
+        }
+        at.translate(xPos, flippedTickLocation + tickLabelBounds.getHeight() / 2.0);
+        g.transform(at);
+        g.fill(shape);
+        g.setTransform(orig);
+
       }
 
       // bounds
@@ -124,7 +145,19 @@ public class AxisTickLabels implements ChartPart {
 
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
-          at.translate(shiftedTickLocation - tickLabelBounds.getWidth() / 2.0, yOffset);
+          double xPos;
+          switch (getChartPainter().getStyleManager().getXAxisLabelAlignment()) {
+            case Left:
+              xPos = shiftedTickLocation;
+              break;
+            case Right:
+              xPos = shiftedTickLocation - tickLabelBounds.getWidth();
+              break;
+            case Centre:
+            default:
+              xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
+          }
+          at.translate(xPos, yOffset);
           g.transform(at);
           g.fill(shape);
           g.setTransform(orig);

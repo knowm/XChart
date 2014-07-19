@@ -32,6 +32,10 @@ import com.xeiam.xchart.internal.style.SeriesColorMarkerLineStyle;
  */
 public class Series {
 
+  public enum SeriesType {
+    Line, Area
+  }
+
   private String name = "";
 
   private Collection<?> xData;
@@ -39,6 +43,8 @@ public class Series {
 
   private Collection<? extends Number> yData;
   private AxisType yAxisType;
+
+  private SeriesType seriesType;
 
   private Collection<? extends Number> errorBars;
 
@@ -59,6 +65,9 @@ public class Series {
 
   /** Line Color */
   private Color strokeColor;
+
+  /** Fill Colour */
+  private Color fillColor;
 
   /** Marker Style */
   private Marker marker;
@@ -91,6 +100,7 @@ public class Series {
     this.errorBars = errorBars;
 
     strokeColor = seriesColorMarkerLineStyle.getColor();
+    fillColor = seriesColorMarkerLineStyle.getColor();
     markerColor = seriesColorMarkerLineStyle.getColor();
     marker = seriesColorMarkerLineStyle.getMarker();
     stroke = seriesColorMarkerLineStyle.getStroke();
@@ -241,6 +251,14 @@ public class Series {
     return this;
   }
 
+  public SeriesType getSeriesType() {
+    return seriesType;
+  }
+
+  public void setSeriesType(SeriesType seriesType) {
+    this.seriesType = seriesType;
+  }
+
   public Collection<?> getXData() {
 
     return xData;
@@ -294,6 +312,14 @@ public class Series {
   public Color getMarkerColor() {
 
     return markerColor;
+  }
+
+  public Color getFillColor() {
+    return fillColor;
+  }
+
+  public void setFillColor(Color fillColor) {
+    this.fillColor = fillColor;
   }
 
   public String getName() {

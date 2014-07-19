@@ -66,6 +66,12 @@ public class StyleManager {
     }
   }
 
+  public enum TextAlignment {
+    Left,
+    Centre,
+    Right;
+  }
+
   /** the default Theme */
   private Theme theme = new XChartTheme();
 
@@ -117,6 +123,8 @@ public class StyleManager {
   private Double yAxisMin;
   private Double yAxisMax;
   private double axisTickSpaceRatio;
+  private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
+  private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
 
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
@@ -871,6 +879,23 @@ public class StyleManager {
 
     return axisTickSpaceRatio;
   }
+
+  public TextAlignment getXAxisLabelAlignment() {
+    return xAxisLabelAlignment;
+  }
+
+  public void setXAxisLabelAlignment(TextAlignment xAxisLabelAlignment) {
+    this.xAxisLabelAlignment = xAxisLabelAlignment;
+  }
+
+  public TextAlignment getYAxisLabelAlignment() {
+    return yAxisLabelAlignment;
+  }
+
+  public void setYAxisLabelAlignment(TextAlignment yAxisLabelAlignment) {
+    this.yAxisLabelAlignment = yAxisLabelAlignment;
+  }
+
 
   // Chart Plot Area ///////////////////////////////
 

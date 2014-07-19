@@ -181,11 +181,11 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         // paint area
-        if (getChartPainter().getStyleManager().getChartType() == ChartType.Area) {
+        if (getChartPainter().getStyleManager().getChartType() == ChartType.Area || Series.SeriesType.Area.equals(series.getSeriesType())) {
 
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
 
-            g.setColor(series.getStrokeColor());
+            g.setColor(series.getFillColor());
             double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
 
             if (path == null) {
