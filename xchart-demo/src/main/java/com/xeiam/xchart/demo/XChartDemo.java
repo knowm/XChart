@@ -47,12 +47,7 @@ import com.xeiam.xchart.demo.charts.date.DateChart04;
 import com.xeiam.xchart.demo.charts.date.DateChart05;
 import com.xeiam.xchart.demo.charts.date.DateChart06;
 import com.xeiam.xchart.demo.charts.date.DateChart07;
-import com.xeiam.xchart.demo.charts.line.LineChart01;
-import com.xeiam.xchart.demo.charts.line.LineChart02;
-import com.xeiam.xchart.demo.charts.line.LineChart03;
-import com.xeiam.xchart.demo.charts.line.LineChart04;
-import com.xeiam.xchart.demo.charts.line.LineChart05;
-import com.xeiam.xchart.demo.charts.line.LineChart06;
+import com.xeiam.xchart.demo.charts.line.*;
 import com.xeiam.xchart.demo.charts.realtime.RealtimeChart01;
 import com.xeiam.xchart.demo.charts.realtime.RealtimeChart02;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart01;
@@ -214,6 +209,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart06 - Logarithmic Y-Axis with Error Bars", new LineChart06().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineAreaChart07 - Line & Area Chart", new LineAreaChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Scatter category
