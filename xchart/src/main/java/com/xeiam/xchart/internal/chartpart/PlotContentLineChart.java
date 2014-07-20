@@ -55,11 +55,11 @@ public class PlotContentLineChart extends PlotContent {
     g.setClip(bounds);
 
     // X-Axis
-    double xTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getWidth();
+    double xTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getHeight();
+    double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {

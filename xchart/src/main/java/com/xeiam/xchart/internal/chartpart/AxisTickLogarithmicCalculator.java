@@ -56,7 +56,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     }
 
     // tick space - a percentage of the working space available for ticks
-    double tickSpace = styleManager.getAxisTickSpaceRatio() * workingSpace; // in plot space
+    double tickSpace = styleManager.getAxisTickSpacePercentage() * workingSpace; // in plot space
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);

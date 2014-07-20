@@ -57,7 +57,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     }
 
     // tick space - a percentage of the working space available for ticks
-    double tickSpace = styleManager.getAxisTickSpaceRatio() * workingSpace; // in plot space
+    double tickSpace = styleManager.getAxisTickSpacePercentage() * workingSpace; // in plot space
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
@@ -74,7 +74,9 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = cleanedFirstPosition; tickPosition.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0; tickPosition = tickPosition.add(cleanedGridStep)) {
 
-      tickLabels.add(numberFormatter.formatNumber(tickPosition, minValue, maxValue, axisDirection));
+      String tickLabel = numberFormatter.formatNumber(tickPosition, minValue, maxValue, axisDirection);
+      // System.out.println(tickLabel);
+      tickLabels.add(tickLabel);
       // here we convert tickPosition finally to plot space, i.e. pixels
       double tickLabelPosition = margin + ((tickPosition.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
       tickLocations.add(tickLabelPosition);

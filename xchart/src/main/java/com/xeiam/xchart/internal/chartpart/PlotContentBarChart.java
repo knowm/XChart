@@ -47,11 +47,11 @@ public class PlotContentBarChart extends PlotContent {
     StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // X-Axis
-    double xTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getWidth();
+    double xTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset(bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getHeight();
+    double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
     int numBars = getChartPainter().getAxisPair().getSeriesMap().values().iterator().next().getXData().size();

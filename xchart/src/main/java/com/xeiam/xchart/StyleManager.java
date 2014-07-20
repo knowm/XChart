@@ -120,7 +120,7 @@ public class StyleManager {
   private Double xAxisMax;
   private Double yAxisMin;
   private Double yAxisMax;
-  private double axisTickSpaceRatio;
+  private double axisTickSpacePercentage;
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
 
@@ -208,7 +208,7 @@ public class StyleManager {
     xAxisMax = null;
     yAxisMin = null;
     yAxisMax = null;
-    axisTickSpaceRatio = .95;
+    axisTickSpacePercentage = .95;
 
     // Chart Plot Area ///////////////////////////////
     isPlotGridLinesVisible = theme.isPlotGridLinesVisible();
@@ -872,14 +872,14 @@ public class StyleManager {
     return yAxisMax;
   }
 
-  public void setAxisTickSpaceRatio(double axisTickSpaceRatio) {
+  public void setAxisTickSpacePercentage(double axisTickSpacePercentage) {
 
-    this.axisTickSpaceRatio = axisTickSpaceRatio;
+    this.axisTickSpacePercentage = axisTickSpacePercentage;
   }
 
-  public double getAxisTickSpaceRatio() {
+  public double getAxisTickSpacePercentage() {
 
-    return axisTickSpaceRatio;
+    return axisTickSpacePercentage;
   }
 
   public TextAlignment getXAxisLabelAlignment() {

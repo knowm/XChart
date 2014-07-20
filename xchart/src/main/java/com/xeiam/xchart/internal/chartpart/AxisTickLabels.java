@@ -69,6 +69,7 @@ public class AxisTickLabels implements ChartPart {
 
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
         String tickLabel = axisTick.getTickLabels().get(i);
+        // System.out.println("** " + tickLabel);
         double tickLocation = axisTick.getTickLocations().get(i);
         double flippedTickLocation = yOffset + height - tickLocation;
 

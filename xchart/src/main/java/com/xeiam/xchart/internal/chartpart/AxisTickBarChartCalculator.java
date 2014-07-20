@@ -51,7 +51,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
   private void calculate(ChartPainter chartPainter) {
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int) (styleManager.getAxisTickSpaceRatio() * workingSpace); // in plot space
+    int tickSpace = (int) (styleManager.getAxisTickSpacePercentage() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
