@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart.demo.charts.line;
+package com.xeiam.xchart.demo.charts.area;
 
-import com.xeiam.xchart.*;
+import com.xeiam.xchart.Chart;
+import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesMarker;
+import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.StyleManager.LegendPosition;
+import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
-
-import java.awt.*;
 
 /**
  * Combination Line & Area Chart
@@ -30,11 +33,11 @@ import java.awt.*;
  * <li>Axis Label Alignment
  * <li>Ensuring a chart axis on a tick
  */
-public class LineAreaChart07 implements ExampleChart {
+public class AreaLineChart03 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineAreaChart07();
+    ExampleChart exampleChart = new AreaLineChart03();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -46,11 +49,13 @@ public class LineAreaChart07 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("LineAreaChart07");
+    chart.setChartTitle(getClass().getSimpleName());
     chart.setXAxisTitle("Age");
     chart.setYAxisTitle("Amount");
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyleManager().setChartType(ChartType.Line);
 
+    // @formatter:off
     double[] xAges = new double[]{
         60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
         70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
@@ -231,6 +236,7 @@ public class LineAreaChart07 implements ExampleChart {
         0,
         0,
         0};
+    // @formatter:on
 
     Series seriesLiability = chart.addSeries("Liability", xAges, yLiability);
     seriesLiability.setMarker(SeriesMarker.NONE);
@@ -246,7 +252,7 @@ public class LineAreaChart07 implements ExampleChart {
     seriesPercentile25th.setMarker(SeriesMarker.NONE);
 
     chart.getStyleManager().setYAxisLabelAlignment(StyleManager.TextAlignment.Right);
-    chart.getStyleManager().setDecimalPattern("$ #,###.##"); // TODO need a different patter for y and x axis
+    chart.getStyleManager().setYAxisDecimalPattern("$ #,###.##");
 
     chart.getStyleManager().setPlotPadding(0);
     chart.getStyleManager().setAxisTickSpaceRatio(1);

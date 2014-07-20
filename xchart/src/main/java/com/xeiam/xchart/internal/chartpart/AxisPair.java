@@ -15,14 +15,20 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
-
-import java.awt.*;
-import java.util.*;
-import java.util.List;
 
 /**
  * @author timmolter
@@ -110,11 +116,11 @@ public class AxisPair implements ChartPart {
     }
 
     switch (chartPainter.getStyleManager().getChartType()) {
-      case Area:
-        series.setSeriesType(Series.SeriesType.Area);
-        break;
-      case Line:
-        series.setSeriesType(Series.SeriesType.Line);
+    case Area:
+      series.setSeriesType(Series.SeriesType.Area);
+      break;
+    case Line:
+      series.setSeriesType(Series.SeriesType.Line);
     }
 
     // Sanity check

@@ -47,7 +47,7 @@ public class AreaChart02 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title("AreaChart02").xAxisTitle("X").yAxisTitle("Y").build();
+    Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
 
     List<Integer> xData = new ArrayList<Integer>();
     List<Integer> yData = new ArrayList<Integer>();

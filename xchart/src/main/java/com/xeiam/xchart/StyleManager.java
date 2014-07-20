@@ -28,7 +28,7 @@ import com.xeiam.xchart.internal.style.XChartTheme;
 
 /**
  * The StyleManager is used to manage all things related to styling of the vast number of Chart components
- * 
+ *
  * @author timmolter
  */
 public class StyleManager {
@@ -67,9 +67,7 @@ public class StyleManager {
   }
 
   public enum TextAlignment {
-    Left,
-    Centre,
-    Right;
+    Left, Centre, Right;
   }
 
   /** the default Theme */
@@ -150,6 +148,8 @@ public class StyleManager {
   private TimeZone timezone;
   private String datePattern;
   private String decimalPattern;
+  private String xAxisDecimalPattern;
+  private String yAxisDecimalPattern;
 
   /**
    * Constructor
@@ -235,11 +235,13 @@ public class StyleManager {
     timezone = TimeZone.getDefault();
     datePattern = null; // if not null, this override pattern will be used
     decimalPattern = null;
+    xAxisDecimalPattern = null;
+    yAxisDecimalPattern = null;
   }
 
   /**
    * Set the theme the style manager should use
-   * 
+   *
    * @param theme
    */
   protected void setTheme(Theme theme) {
@@ -257,7 +259,7 @@ public class StyleManager {
 
   /**
    * sets the Chart Type
-   * 
+   *
    * @param chartType
    */
   public void setChartType(ChartType chartType) {
@@ -272,7 +274,7 @@ public class StyleManager {
 
   /**
    * Set the chart background color - the part around the edge of the chart
-   * 
+   *
    * @param color
    */
   public void setChartBackgroundColor(Color color) {
@@ -287,7 +289,7 @@ public class StyleManager {
 
   /**
    * Set the chart font color. includes: Chart title, axes label, legend
-   * 
+   *
    * @param color
    */
   public void setChartFontColor(Color color) {
@@ -302,7 +304,7 @@ public class StyleManager {
 
   /**
    * Set the chart padding
-   * 
+   *
    * @param chartPadding
    */
   public void setChartPadding(int chartPadding) {
@@ -319,7 +321,7 @@ public class StyleManager {
 
   /**
    * Set the chart title font
-   * 
+   *
    * @param font
    */
   public void setChartTitleFont(Font chartTitleFont) {
@@ -334,7 +336,7 @@ public class StyleManager {
 
   /**
    * Set the chart title visibility
-   * 
+   *
    * @param isChartTitleVisible
    */
   public void setChartTitleVisible(boolean isChartTitleVisible) {
@@ -349,7 +351,7 @@ public class StyleManager {
 
   /**
    * Set the chart title box visibility
-   * 
+   *
    * @param isChartTitleBoxVisible
    */
   public void setChartTitleBoxVisible(boolean isChartTitleBoxVisible) {
@@ -364,7 +366,7 @@ public class StyleManager {
 
   /**
    * set the chart title box background color
-   * 
+   *
    * @param chartTitleBoxBackgroundColor
    */
   public void setChartTitleBoxBackgroundColor(Color chartTitleBoxBackgroundColor) {
@@ -379,7 +381,7 @@ public class StyleManager {
 
   /**
    * set the chart title box border color
-   * 
+   *
    * @param chartTitleBoxBorderColor
    */
   public void setChartTitleBoxBorderColor(Color chartTitleBoxBorderColor) {
@@ -394,7 +396,7 @@ public class StyleManager {
 
   /**
    * set the chart title padding; the space between the chart title and the plot area
-   * 
+   *
    * @param chartTitlePadding
    */
   public void setChartTitlePadding(int chartTitlePadding) {
@@ -411,7 +413,7 @@ public class StyleManager {
 
   /**
    * Set the chart legend background color
-   * 
+   *
    * @param color
    */
   public void setLegendBackgroundColor(Color color) {
@@ -426,7 +428,7 @@ public class StyleManager {
 
   /**
    * Set the chart legend border color
-   * 
+   *
    * @return
    */
   public Color getLegendBorderColor() {
@@ -441,7 +443,7 @@ public class StyleManager {
 
   /**
    * Set the chart legend font
-   * 
+   *
    * @param font
    */
   public void setLegendFont(Font font) {
@@ -456,7 +458,7 @@ public class StyleManager {
 
   /**
    * Set the chart legend visibility
-   * 
+   *
    * @param isLegendVisible
    */
   public void setLegendVisible(boolean isLegendVisible) {
@@ -471,7 +473,7 @@ public class StyleManager {
 
   /**
    * Set the chart legend padding
-   * 
+   *
    * @param legendPadding
    */
   public void setLegendPadding(int legendPadding) {
@@ -486,7 +488,7 @@ public class StyleManager {
 
   /**
    * Set the chart legend series line length
-   * 
+   *
    * @param legendPadding
    */
   public void setLegendSeriesLineLength(int legendSeriesLineLength) {
@@ -506,7 +508,7 @@ public class StyleManager {
 
   /**
    * sets the legend position
-   * 
+   *
    * @param legendPosition
    */
   public void setLegendPosition(LegendPosition legendPosition) {
@@ -523,7 +525,7 @@ public class StyleManager {
 
   /**
    * Set the x-axis title visibility
-   * 
+   *
    * @param isVisible
    */
   public void setXAxisTitleVisible(boolean xAxisTitleVisible) {
@@ -538,7 +540,7 @@ public class StyleManager {
 
   /**
    * Set the y-axis title visibility
-   * 
+   *
    * @param isVisible
    */
   public void setYAxisTitleVisible(boolean yAxisTitleVisible) {
@@ -553,7 +555,7 @@ public class StyleManager {
 
   /**
    * Set the x- and y-axis titles visibility
-   * 
+   *
    * @param isVisible
    */
   public void setAxisTitlesVisible(boolean isVisible) {
@@ -564,7 +566,7 @@ public class StyleManager {
 
   /**
    * Set the x- and y-axis title font
-   * 
+   *
    * @param axisTitleFont
    */
   public void setAxisTitleFont(Font axisTitleFont) {
@@ -579,7 +581,7 @@ public class StyleManager {
 
   /**
    * Set the x-axis tick marks and labels visibility
-   * 
+   *
    * @param isVisible
    */
 
@@ -595,7 +597,7 @@ public class StyleManager {
 
   /**
    * Set the y-axis tick marks and labels visibility
-   * 
+   *
    * @param isVisible
    */
 
@@ -611,7 +613,7 @@ public class StyleManager {
 
   /**
    * Set the x- and y-axis tick marks and labels visibility
-   * 
+   *
    * @param isVisible
    */
   public void setAxisTicksVisible(boolean isVisible) {
@@ -622,7 +624,7 @@ public class StyleManager {
 
   /**
    * Set the x- and y-axis tick label font
-   * 
+   *
    * @param foxAxisTicksFontnt
    */
   public void setAxisTickLabelsFont(Font axisTicksFont) {
@@ -637,7 +639,7 @@ public class StyleManager {
 
   /**
    * set the axis tick mark length
-   * 
+   *
    * @param axisTickMarkLength
    */
   public void setAxisTickMarkLength(int axisTickMarkLength) {
@@ -652,7 +654,7 @@ public class StyleManager {
 
   /**
    * sets the padding between the tick labels and the tick marks
-   * 
+   *
    * @param axisTickPadding
    */
   public void setAxisTickPadding(int axisTickPadding) {
@@ -667,7 +669,7 @@ public class StyleManager {
 
   /**
    * sets the axis tick mark color
-   * 
+   *
    * @param axisTickColor
    */
   public void setAxisTickMarksColor(Color axisTickColor) {
@@ -682,7 +684,7 @@ public class StyleManager {
 
   /**
    * sets the axis tick marks Stroke
-   * 
+   *
    * @param axisTickMarksStroke
    */
   public void setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
@@ -697,7 +699,7 @@ public class StyleManager {
 
   /**
    * sets the axis tick label color
-   * 
+   *
    * @param axisTickLabelsColor
    */
   public void setAxisTickLabelsColor(Color axisTickLabelsColor) {
@@ -712,7 +714,7 @@ public class StyleManager {
 
   /**
    * sets the visibility of the line parallel to the plot edges that go along with the tick marks
-   * 
+   *
    * @param isAxisTicksLineVisible
    */
   public void setAxisTicksLineVisible(boolean isAxisTicksLineVisible) {
@@ -727,7 +729,7 @@ public class StyleManager {
 
   /**
    * sets the visibility of the tick marks
-   * 
+   *
    * @param isAxisTicksMarksVisible
    */
   public void setAxisTicksMarksVisible(boolean isAxisTicksMarksVisible) {
@@ -742,7 +744,7 @@ public class StyleManager {
 
   /**
    * sets the padding between the tick marks and the plot area
-   * 
+   *
    * @param plotPadding
    */
   public void setPlotPadding(int plotPadding) {
@@ -757,7 +759,7 @@ public class StyleManager {
 
   /**
    * sets the padding between the axis title and the tick labels
-   * 
+   *
    * @param axisTitlePadding
    */
   public void setAxisTitlePadding(int axisTitlePadding) {
@@ -772,7 +774,7 @@ public class StyleManager {
 
   /**
    * set the spacing between tick marks for the X-Axis
-   * 
+   *
    * @param xAxisTickMarkSpacingHint
    */
   public void setXAxisTickMarkSpacingHint(int xAxisTickMarkSpacingHint) {
@@ -787,7 +789,7 @@ public class StyleManager {
 
   /**
    * set the spacing between tick marks for the Y-Axis
-   * 
+   *
    * @param xAxisTickMarkSpacingHint
    */
   public void setYAxisTickMarkSpacingHint(int yAxisTickMarkSpacingHint) {
@@ -802,7 +804,7 @@ public class StyleManager {
 
   /**
    * sets the X-Axis to be rendered with a logarithmic scale or not
-   * 
+   *
    * @param isxAxisLogarithmic
    */
   public void setXAxisLogarithmic(boolean isXAxisLogarithmic) {
@@ -817,7 +819,7 @@ public class StyleManager {
 
   /**
    * sets the Y-Axis to be rendered with a logarithmic scale or not
-   * 
+   *
    * @param isyAxisLogarithmic
    */
   public void setYAxisLogarithmic(boolean isYAxisLogarithmic) {
@@ -881,27 +883,30 @@ public class StyleManager {
   }
 
   public TextAlignment getXAxisLabelAlignment() {
+
     return xAxisLabelAlignment;
   }
 
   public void setXAxisLabelAlignment(TextAlignment xAxisLabelAlignment) {
+
     this.xAxisLabelAlignment = xAxisLabelAlignment;
   }
 
   public TextAlignment getYAxisLabelAlignment() {
+
     return yAxisLabelAlignment;
   }
 
   public void setYAxisLabelAlignment(TextAlignment yAxisLabelAlignment) {
+
     this.yAxisLabelAlignment = yAxisLabelAlignment;
   }
-
 
   // Chart Plot Area ///////////////////////////////
 
   /**
    * sets the visibility of the gridlines on the plot area
-   * 
+   *
    * @param isPlotGridLinesVisible
    */
   public void setPlotGridLinesVisible(boolean isPlotGridLinesVisible) {
@@ -916,7 +921,7 @@ public class StyleManager {
 
   /**
    * set the plot area's background color
-   * 
+   *
    * @param plotBackgroundColor
    */
   public void setPlotBackgroundColor(Color plotBackgroundColor) {
@@ -931,7 +936,7 @@ public class StyleManager {
 
   /**
    * set the plot area's border color
-   * 
+   *
    * @param plotBorderColor
    */
   public void setPlotBorderColor(Color plotBorderColor) {
@@ -946,7 +951,7 @@ public class StyleManager {
 
   /**
    * sets the visibility of the border around the plot area
-   * 
+   *
    * @param isPlotBorderVisible
    */
   public void setPlotBorderVisible(boolean isPlotBorderVisible) {
@@ -961,7 +966,7 @@ public class StyleManager {
 
   /**
    * sets the visibility of the ticks marks inside the plot area
-   * 
+   *
    * @param isPlotTicksMarksVisible
    */
   public void setPlotTicksMarksVisible(boolean isPlotTicksMarksVisible) {
@@ -976,7 +981,7 @@ public class StyleManager {
 
   /**
    * set the plot area's grid lines color
-   * 
+   *
    * @param plotGridLinesColor
    */
   public void setPlotGridLinesColor(Color plotGridLinesColor) {
@@ -991,7 +996,7 @@ public class StyleManager {
 
   /**
    * set the plot area's grid lines Stroke
-   * 
+   *
    * @param plotGridLinesStroke
    */
   public void setPlotGridLinesStroke(Stroke plotGridLinesStroke) {
@@ -1008,7 +1013,7 @@ public class StyleManager {
 
   /**
    * set the width of a single bar in a bar chart. full width is 100%, i.e. 1.0
-   * 
+   *
    * @param barWidthPercentage
    */
   public void setBarWidthPercentage(double barWidthPercentage) {
@@ -1023,7 +1028,7 @@ public class StyleManager {
 
   /**
    * set whether or no bars are overlapped. Otherwise they are places side-by-side
-   * 
+   *
    * @param isBarsOverlapped
    */
   public void setBarsOverlapped(boolean isBarsOverlapped) {
@@ -1040,7 +1045,7 @@ public class StyleManager {
 
   /**
    * Sets the size of the markers in pixels
-   * 
+   *
    * @param markerSize
    */
   public void setMarkerSize(int markerSize) {
@@ -1057,7 +1062,7 @@ public class StyleManager {
 
   /**
    * Sets the color of the error bars
-   * 
+   *
    * @param errorBarsColor
    */
   public void setErrorBarsColor(Color errorBarsColor) {
@@ -1074,7 +1079,7 @@ public class StyleManager {
 
   /**
    * Set the locale to use for rendering the chart
-   * 
+   *
    * @param locale - the locale to use when formatting Strings and dates for the axis tick labels
    */
   public void setLocale(Locale locale) {
@@ -1089,7 +1094,7 @@ public class StyleManager {
 
   /**
    * Set the timezone to use for formatting Date axis tick labels
-   * 
+   *
    * @param timezone the timezone to use when formatting date data
    */
   public void setTimezone(TimeZone timezone) {
@@ -1104,7 +1109,7 @@ public class StyleManager {
 
   /**
    * Set the String formatter for Data x-axis
-   * 
+   *
    * @param pattern - the pattern describing the date and time format
    */
   public void setDatePattern(String datePattern) {
@@ -1119,7 +1124,7 @@ public class StyleManager {
 
   /**
    * Set the decimal formatter for all tick labels
-   * 
+   *
    * @param pattern - the pattern describing the decimal format
    */
   public void setDecimalPattern(String decimalPattern) {
@@ -1130,6 +1135,36 @@ public class StyleManager {
   public String getDecimalPattern() {
 
     return decimalPattern;
+  }
+
+  public String getXAxisDecimalPattern() {
+
+    return xAxisDecimalPattern;
+  }
+
+  /**
+   * Set the decimal formatting pattern for the X-Axis
+   *
+   * @param xAxisDecimalPattern
+   */
+  public void setXAxisDecimalPattern(String xAxisDecimalPattern) {
+
+    this.xAxisDecimalPattern = xAxisDecimalPattern;
+  }
+
+  public String getYAxisDecimalPattern() {
+
+    return yAxisDecimalPattern;
+  }
+
+  /**
+   * Set the decimal formatting pattern for the Y-Axis
+   *
+   * @param yAxisDecimalPattern
+   */
+  public void setYAxisDecimalPattern(String yAxisDecimalPattern) {
+
+    this.yAxisDecimalPattern = yAxisDecimalPattern;
   }
 
 }

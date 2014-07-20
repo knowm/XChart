@@ -252,10 +252,12 @@ public class Series {
   }
 
   public SeriesType getSeriesType() {
+
     return seriesType;
   }
 
   public void setSeriesType(SeriesType seriesType) {
+
     this.seriesType = seriesType;
   }
 
@@ -315,10 +317,12 @@ public class Series {
   }
 
   public Color getFillColor() {
+
     return fillColor;
   }
 
   public void setFillColor(Color fillColor) {
+
     this.fillColor = fillColor;
   }
 

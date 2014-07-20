@@ -33,6 +33,7 @@ import javax.swing.tree.TreeSelectionModel;
 import com.xeiam.xchart.XChartPanel;
 import com.xeiam.xchart.demo.charts.area.AreaChart01;
 import com.xeiam.xchart.demo.charts.area.AreaChart02;
+import com.xeiam.xchart.demo.charts.area.AreaLineChart03;
 import com.xeiam.xchart.demo.charts.bar.BarChart01;
 import com.xeiam.xchart.demo.charts.bar.BarChart02;
 import com.xeiam.xchart.demo.charts.bar.BarChart03;
@@ -47,7 +48,12 @@ import com.xeiam.xchart.demo.charts.date.DateChart04;
 import com.xeiam.xchart.demo.charts.date.DateChart05;
 import com.xeiam.xchart.demo.charts.date.DateChart06;
 import com.xeiam.xchart.demo.charts.date.DateChart07;
-import com.xeiam.xchart.demo.charts.line.*;
+import com.xeiam.xchart.demo.charts.line.LineChart01;
+import com.xeiam.xchart.demo.charts.line.LineChart02;
+import com.xeiam.xchart.demo.charts.line.LineChart03;
+import com.xeiam.xchart.demo.charts.line.LineChart04;
+import com.xeiam.xchart.demo.charts.line.LineChart05;
+import com.xeiam.xchart.demo.charts.line.LineChart06;
 import com.xeiam.xchart.demo.charts.realtime.RealtimeChart01;
 import com.xeiam.xchart.demo.charts.realtime.RealtimeChart02;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart01;
@@ -60,7 +66,7 @@ import com.xeiam.xchart.demo.charts.theme.ThemeChart03;
 
 /**
  * Class containing all XChart example charts
- * 
+ *
  * @author timmolter
  */
 public class XChartDemo extends JPanel implements TreeSelectionListener {
@@ -169,7 +175,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
   /**
    * Create the tree
-   * 
+   *
    * @param top
    */
   private void createNodes(DefaultMutableTreeNode top) {
@@ -187,6 +193,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaChart02 - Null Y-Axis Data Points", new AreaChart02().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaLineChart03 - Combination Line & Area Chart", new AreaLineChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Line category
@@ -209,9 +218,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart06 - Logarithmic Y-Axis with Error Bars", new LineChart06().getChart()));
-    category.add(defaultMutableTreeNode);
-
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineAreaChart07 - Line & Area Chart", new LineAreaChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Scatter category

@@ -15,7 +15,8 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -96,15 +97,15 @@ public class AxisTickLabels implements ChartPart {
         double boundWidth = tickLabelBounds.getWidth();
         double xPos;
         switch (getChartPainter().getStyleManager().getYAxisLabelAlignment()) {
-          case Right:
-            xPos = xOffset + maxTickLabelWidth - boundWidth;
-            break;
-          case Centre:
-            xPos = xOffset + (maxTickLabelWidth - boundWidth) / 2;
-            break;
-          case Left:
-          default:
-            xPos = xOffset;
+        case Right:
+          xPos = xOffset + maxTickLabelWidth - boundWidth;
+          break;
+        case Centre:
+          xPos = xOffset + (maxTickLabelWidth - boundWidth) / 2;
+          break;
+        case Left:
+        default:
+          xPos = xOffset;
         }
         at.translate(xPos, flippedTickLocation + tickLabelBounds.getHeight() / 2.0);
         g.transform(at);
@@ -147,15 +148,15 @@ public class AxisTickLabels implements ChartPart {
           AffineTransform at = new AffineTransform();
           double xPos;
           switch (getChartPainter().getStyleManager().getXAxisLabelAlignment()) {
-            case Left:
-              xPos = shiftedTickLocation;
-              break;
-            case Right:
-              xPos = shiftedTickLocation - tickLabelBounds.getWidth();
-              break;
-            case Centre:
-            default:
-              xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
+          case Left:
+            xPos = shiftedTickLocation;
+            break;
+          case Right:
+            xPos = shiftedTickLocation - tickLabelBounds.getWidth();
+            break;
+          case Centre:
+          default:
+            xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
           }
           at.translate(xPos, yOffset);
           g.transform(at);
