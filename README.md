@@ -1,4 +1,4 @@
-## [![XChart](http://www.xeiam.com/images/XChart_64_64.png)](http://www.xeiam.com/xchart) XChart
+## [![XChart](http://xeiam.com/wp-content/uploads/xchartlogo.png)](http://xeiam.com/xchart) XChart
 A Simple Charting Library for Java
 
 ## Description
@@ -25,7 +25,7 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
     // or save it in high-res
     BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
     
-Now go ahead and [study some more examples](http://www.xeiam.com/xchart_examplecode.jsp), [download the thing](http://www.xeiam.com/xchart_changelog.jsp) and [provide feedback](https://github.com/timmolter/XChart/issues).
+Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code/), [download the thing](http://xeiam.com/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
 ## Features
 * No additional dependencies
@@ -52,7 +52,7 @@ Now go ahead and [study some more examples](http://www.xeiam.com/xchart_examplec
 
 ### Non-Maven
 
-Download Jar: http://www.xeiam.com/xchart_changelog.jsp
+Download Jar: http://xeiam.com/xchart-change-log
 
 ### Maven
 
