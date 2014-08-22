@@ -214,7 +214,7 @@ public class PlotContentLineChart extends PlotContent {
         double eb = 0.0;
 
         if (errorBars != null) {
-          eb = (Double) ebItr.next();
+          eb = ebItr.next().doubleValue();
         }
 
         if (errorBars != null) {
