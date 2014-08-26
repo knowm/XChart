@@ -119,13 +119,13 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
 
       for (Object category : categories) {
         if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf((Double) category), minValue, maxValue, axisDirection));
+          tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
         }
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           long span = (long) Math.abs(maxValue - minValue); // in data space
           long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
           long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
-          tickLabels.add(dateFormatter.formatDate((Double) category, timeUnit));
+          tickLabels.add(dateFormatter.formatDate(((Number) category).doubleValue(), timeUnit));
         }
         double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
         tickLocations.add(tickLabelPosition);
