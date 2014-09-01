@@ -16,6 +16,7 @@
 package com.xeiam.xchart;
 
 import java.awt.Graphics2D;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,6 +34,7 @@ import com.xeiam.xchart.internal.style.Theme;
 public class Chart {
 
   private final ChartPainter chartPainter;
+  private final Dimension preferredSize;
 
   /**
    * Constructor
@@ -43,6 +45,7 @@ public class Chart {
   public Chart(int width, int height) {
 
     chartPainter = new ChartPainter(width, height);
+    preferredSize = new Dimension(width, height);
   }
 
   /**
@@ -67,6 +70,7 @@ public class Chart {
   public Chart(int width, int height, Theme theme) {
 
     chartPainter = new ChartPainter(width, height);
+    preferredSize = new Dimension(width, height);
     chartPainter.getStyleManager().setTheme(theme);
   }
 
@@ -274,6 +278,10 @@ public class Chart {
   public Map<String, Series> getSeriesMap() {
 
     return chartPainter.getAxisPair().getSeriesMap();
+  }
+
+  public Dimension getPreferredSize() {
+    return preferredSize;
   }
 
 }
