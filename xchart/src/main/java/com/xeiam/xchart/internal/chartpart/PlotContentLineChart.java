@@ -52,7 +52,7 @@ public class PlotContentLineChart extends PlotContent {
     StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
-    g.setClip(bounds);
+    g.setClip(bounds.createIntersection(g.getClipBounds()));
 
     // X-Axis
     double xTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getWidth();
