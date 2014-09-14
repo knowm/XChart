@@ -136,6 +136,7 @@ public class StyleManager {
   // Bar Charts ///////////////////////////////
   private double barWidthPercentage;
   private boolean isBarsOverlapped;
+  private boolean isBarFilled;
 
   // Line, Scatter, Area Charts ///////////////////////////////
   private int markerSize;
@@ -222,6 +223,7 @@ public class StyleManager {
     // Bar Charts ///////////////////////////////
     barWidthPercentage = theme.getBarWidthPercentage();
     isBarsOverlapped = theme.isBarsOverlapped();
+    isBarFilled = theme.isBarFilled();
 
     // Line, Scatter, Area Charts ///////////////////////////////
 
@@ -1039,6 +1041,21 @@ public class StyleManager {
   public boolean isBarsOverlapped() {
 
     return isBarsOverlapped;
+  }
+
+  /**
+   * set whether or no bars are filled with a solid color or empty.
+   * 
+   * @param isBarFilled
+   */
+  public void setBarFilled(boolean isBarFilled) {
+
+    this.isBarFilled = isBarFilled;
+  }
+
+  public boolean isBarFilled() {
+
+    return isBarFilled;
   }
 
   // Line, Scatter, Area Charts ///////////////////////////////

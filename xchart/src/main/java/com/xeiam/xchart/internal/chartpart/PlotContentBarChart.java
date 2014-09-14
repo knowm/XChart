@@ -32,7 +32,7 @@ public class PlotContentBarChart extends PlotContent {
 
   /**
    * Constructor
-   * 
+   *
    * @param plot
    */
   protected PlotContentBarChart(Plot plot) {
@@ -190,7 +190,13 @@ public class PlotContentBarChart extends PlotContent {
         path.lineTo(xOffset + barWidth, zeroOffset);
         path.lineTo(xOffset, zeroOffset);
         path.closePath();
-        g.fill(path);
+        g.setStroke(series.getStroke());
+        if (getChartPainter().getStyleManager().isBarFilled()) {
+          g.fill(path);
+        }
+        else {
+          g.draw(path);
+        }
 
       }
       seriesCounter++;

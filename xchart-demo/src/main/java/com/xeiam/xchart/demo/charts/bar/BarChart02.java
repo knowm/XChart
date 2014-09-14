@@ -78,6 +78,7 @@ public class BarChart02 implements ExampleChart {
     Series series = chart.addSeries("Model 77", xData, yData);
     series.setLineColor(SeriesColor.RED);
     chart.getStyleManager().setPlotGridLinesVisible(false);
+    chart.getStyleManager().setBarFilled(false);
 
     return chart;
   }
