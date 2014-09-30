@@ -133,6 +133,7 @@ public class NumberFormatter {
     else {
       decimalPattern = getFormatPattern(value, min, max);
     }
+    // System.out.println(decimalPattern);
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
     normalFormat.applyPattern(decimalPattern);
