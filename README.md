@@ -20,10 +20,10 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
     new SwingWrapper(chart).displayChart();
 
     // Save it
-    BitmapEncoder.savePNG(chart, "./Sample_Chart.png");
+    BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
     
     // or save it in high-res
-    BitmapEncoder.savePNGWithDPI(chart, "./Sample_Chart_300_DPI.png", 300);
+    BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
     
 Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code/), [download the thing](http://xeiam.com/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
@@ -63,7 +63,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>com.xeiam.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>2.4.0</version>
+        <version>2.4.1</version>
     </dependency>
 
 For snapshots, add the following to your pom.xml file:
@@ -77,7 +77,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.4.1-SNAPSHOT</version>
+      <version>2.4.2-SNAPSHOT</version>
     </dependency>
 
 ## Building
@@ -95,7 +95,7 @@ For snapshots, add the following to your pom.xml file:
 
 ## Running Demo
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.4.0.jar:xchart-2.4.0.jar com.xeiam.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.4.1.jar:xchart-2.4.1.jar com.xeiam.xchart.demo.XChartDemo
 
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
