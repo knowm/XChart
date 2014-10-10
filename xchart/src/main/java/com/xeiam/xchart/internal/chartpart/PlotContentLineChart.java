@@ -16,6 +16,7 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -49,17 +50,33 @@ public class PlotContentLineChart extends PlotContent {
   public void paint(Graphics2D g) {
 
     Rectangle2D bounds = plot.getBounds();
+    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    // g.setColor(Color.red);
+    // g.draw(bounds);
+
     StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
-    g.setClip(bounds);
+
+    // Rectangle rectangle = g.getClipBounds();
+    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    // g.setColor(Color.green);
+    // g.draw(rectangle);
+
+    Rectangle rectangle = new Rectangle(0, 0, getChartPainter().getWidth(), getChartPainter().getHeight());
+    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    // g.setColor(Color.green);
+    // g.draw(rectangle);
+    g.setClip(bounds.createIntersection(rectangle));
+
+    // g.setClip(bounds.createIntersection(g.getClipBounds()));
 
     // X-Axis
-    double xTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getWidth();
+    double xTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getHeight();
+    double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
@@ -181,11 +198,11 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         // paint area
-        if (getChartPainter().getStyleManager().getChartType() == ChartType.Area) {
+        if (getChartPainter().getStyleManager().getChartType() == ChartType.Area || Series.SeriesType.Area.equals(series.getSeriesType())) {
 
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
 
-            g.setColor(series.getStrokeColor());
+            g.setColor(series.getFillColor());
             double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
 
             if (path == null) {
@@ -214,7 +231,7 @@ public class PlotContentLineChart extends PlotContent {
         double eb = 0.0;
 
         if (errorBars != null) {
-          eb = (Double) ebItr.next();
+          eb = ebItr.next().doubleValue();
         }
 
         if (errorBars != null) {

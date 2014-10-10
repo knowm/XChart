@@ -44,23 +44,24 @@ import com.xeiam.xchart.BitmapEncoder.BitmapFormat;
  * A Swing JPanel that contains a Chart
  * <p>
  * Right-click + Save As... or ctrl+S pops up a Save As dialog box for saving the chart as a JPeg or PNG file.
- * 
+ *
  * @author timmolter
  */
 public class XChartPanel extends JPanel {
 
   private final Chart chart;
-
+  private final Dimension preferredSize;
   private String saveAsString = "Save As...";
 
   /**
    * Constructor
-   * 
+   *
    * @param chart
    */
   public XChartPanel(final Chart chart) {
 
     this.chart = chart;
+    preferredSize = new Dimension(chart.getWidth(), chart.getHeight());
 
     // Right-click listener for saving chart
     this.addMouseListener(new PopUpMenuClickListener());
@@ -73,7 +74,7 @@ public class XChartPanel extends JPanel {
 
   /**
    * Set the "Save As..." String if you want to localize it.
-   * 
+   *
    * @param saveAsString
    */
   public void setSaveAsString(String saveAsString) {
@@ -92,7 +93,7 @@ public class XChartPanel extends JPanel {
   @Override
   public Dimension getPreferredSize() {
 
-    return new Dimension(chart.getWidth(), chart.getHeight());
+    return this.preferredSize;
   }
 
   private class SaveAction extends AbstractAction {
@@ -304,7 +305,7 @@ public class XChartPanel extends JPanel {
   /**
    * update a series by only updating the Y-Axis data. The X-Axis data will be automatically generated as a list of increasing Integers starting from 1 and ending at the size of the new Y-Axis data
    * list.
-   * 
+   *
    * @param seriesName
    * @param newYData
    * @return
@@ -333,7 +334,7 @@ public class XChartPanel extends JPanel {
 
   /**
    * update a series by updating both the X-Axis and Y-Axis data
-   * 
+   *
    * @param seriesName
    * @param newYData
    * @return
@@ -356,7 +357,7 @@ public class XChartPanel extends JPanel {
 
   /**
    * update a series by updating the X-Axis, Y-Axis and error bar data
-   * 
+   *
    * @param seriesName
    * @param newXData
    * @param newYData

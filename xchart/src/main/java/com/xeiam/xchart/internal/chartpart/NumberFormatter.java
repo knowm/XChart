@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import com.xeiam.xchart.StyleManager;
+import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 
 /**
  * @author timmolter
@@ -107,21 +108,32 @@ public class NumberFormatter {
    * Format a number value, if the override patterns are null, it uses defaults
    *
    * @param value
+   * @param min
+   * @param max
+   * @param axisDirection
    * @return
    */
-  public String formatNumber(BigDecimal value, double min, double max) {
+  public String formatNumber(BigDecimal value, double min, double max, Direction axisDirection) {
 
     NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
 
     String decimalPattern;
 
-    if (styleManager.getDecimalPattern() == null) {
+    if (axisDirection == Direction.X && styleManager.getXAxisDecimalPattern() != null) {
 
-      decimalPattern = getFormatPattern(value, min, max);
+      decimalPattern = styleManager.getXAxisDecimalPattern();
     }
-    else {
+    else if (axisDirection == Direction.Y && styleManager.getYAxisDecimalPattern() != null) {
+      decimalPattern = styleManager.getYAxisDecimalPattern();
+    }
+    else if (styleManager.getDecimalPattern() != null) {
+
       decimalPattern = styleManager.getDecimalPattern();
     }
+    else {
+      decimalPattern = getFormatPattern(value, min, max);
+    }
+    // System.out.println(decimalPattern);
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
     normalFormat.applyPattern(decimalPattern);
@@ -135,18 +147,25 @@ public class NumberFormatter {
    * @param value
    * @return
    */
-  public String formatLogNumber(double value) {
+  public String formatLogNumber(double value, Direction axisDirection) {
 
     NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
 
     String decimalPattern;
 
-    if (styleManager.getDecimalPattern() == null) {
+    if (axisDirection == Direction.X && styleManager.getXAxisDecimalPattern() != null) {
 
-      decimalPattern = "0E0";
+      decimalPattern = styleManager.getXAxisDecimalPattern();
+    }
+    else if (axisDirection == Direction.Y && styleManager.getYAxisDecimalPattern() != null) {
+      decimalPattern = styleManager.getYAxisDecimalPattern();
+    }
+    else if (styleManager.getDecimalPattern() != null) {
+
+      decimalPattern = styleManager.getDecimalPattern();
     }
     else {
-      decimalPattern = styleManager.getDecimalPattern();
+      decimalPattern = "0E0";
     }
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;

@@ -16,6 +16,7 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
@@ -32,7 +33,7 @@ public class PlotContentBarChart extends PlotContent {
 
   /**
    * Constructor
-   * 
+   *
    * @param plot
    */
   protected PlotContentBarChart(Plot plot) {
@@ -46,12 +47,16 @@ public class PlotContentBarChart extends PlotContent {
     Rectangle2D bounds = plot.getBounds();
     StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
+    // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
+    Rectangle rectangle = new Rectangle(0, 0, getChartPainter().getWidth(), getChartPainter().getHeight());
+    g.setClip(bounds.createIntersection(rectangle));
+
     // X-Axis
-    double xTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getWidth();
+    double xTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset(bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManager.getAxisTickSpaceRatio() * bounds.getHeight();
+    double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
     int numBars = getChartPainter().getAxisPair().getSeriesMap().values().iterator().next().getXData().size();
@@ -190,7 +195,13 @@ public class PlotContentBarChart extends PlotContent {
         path.lineTo(xOffset + barWidth, zeroOffset);
         path.lineTo(xOffset, zeroOffset);
         path.closePath();
-        g.fill(path);
+        g.setStroke(series.getStroke());
+        if (getChartPainter().getStyleManager().isBarFilled()) {
+          g.fill(path);
+        }
+        else {
+          g.draw(path);
+        }
 
       }
       seriesCounter++;

@@ -33,6 +33,7 @@ import javax.swing.tree.TreeSelectionModel;
 import com.xeiam.xchart.XChartPanel;
 import com.xeiam.xchart.demo.charts.area.AreaChart01;
 import com.xeiam.xchart.demo.charts.area.AreaChart02;
+import com.xeiam.xchart.demo.charts.area.AreaLineChart03;
 import com.xeiam.xchart.demo.charts.bar.BarChart01;
 import com.xeiam.xchart.demo.charts.bar.BarChart02;
 import com.xeiam.xchart.demo.charts.bar.BarChart03;
@@ -65,7 +66,7 @@ import com.xeiam.xchart.demo.charts.theme.ThemeChart03;
 
 /**
  * Class containing all XChart example charts
- * 
+ *
  * @author timmolter
  */
 public class XChartDemo extends JPanel implements TreeSelectionListener {
@@ -174,7 +175,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
   /**
    * Create the tree
-   * 
+   *
    * @param top
    */
   private void createNodes(DefaultMutableTreeNode top) {
@@ -192,6 +193,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaChart02 - Null Y-Axis Data Points", new AreaChart02().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaLineChart03 - Combination Are & Line Chart", new AreaLineChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Line category

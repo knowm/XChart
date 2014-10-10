@@ -73,13 +73,13 @@ public abstract class AxisTickCalculator {
     }
 
     // override min and maxValue if specified
-    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
+    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null && styleManager.getChartType() != ChartType.Bar) {
       overrideMinValue = styleManager.getXAxisMin();
     }
     if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
       overrideMinValue = styleManager.getYAxisMin();
     }
-    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null) {
+    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null && styleManager.getChartType() != ChartType.Bar) {
       overrideMaxValue = styleManager.getXAxisMax();
     }
     if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {

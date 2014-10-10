@@ -293,6 +293,12 @@ public class XChartTheme implements Theme {
     return false;
   }
 
+  @Override
+  public boolean isBarFilled() {
+
+    return true;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override

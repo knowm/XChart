@@ -122,6 +122,8 @@ public interface Theme {
 
   public boolean isBarsOverlapped();
 
+  public boolean isBarFilled();
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   public int getMarkerSize();

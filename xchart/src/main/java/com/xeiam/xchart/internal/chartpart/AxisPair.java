@@ -115,6 +115,14 @@ public class AxisPair implements ChartPart {
       series = new Series(seriesName, generatedXData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     }
 
+    switch (chartPainter.getStyleManager().getChartType()) {
+    case Area:
+      series.setSeriesType(Series.SeriesType.Area);
+      break;
+    case Line:
+      series.setSeriesType(Series.SeriesType.Line);
+    }
+
     // Sanity check
     if (xData != null && xData.size() != yData.size()) {
       throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
