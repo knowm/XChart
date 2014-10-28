@@ -39,7 +39,7 @@ public class ChartTitle implements ChartPart {
 
   /**
    * Constructor
-   * 
+   *
    * @param chartPainter
    */
   public ChartTitle(ChartPainter chartPainter) {
@@ -49,7 +49,7 @@ public class ChartTitle implements ChartPart {
 
   /**
    * set the chart title's text
-   * 
+   *
    * @param text
    */
   public void setText(String text) {
@@ -65,7 +65,7 @@ public class ChartTitle implements ChartPart {
 
   /**
    * get the height of the chart title including the chart padding
-   * 
+   *
    * @return
    */
   protected int getSizeHint() {
@@ -94,8 +94,8 @@ public class ChartTitle implements ChartPart {
       TextLayout textLayout = new TextLayout(text, chartPainter.getStyleManager().getChartTitleFont(), frc);
       Rectangle2D rectangle = textLayout.getBounds();
 
-      int xOffset = (int) chartPainter.getPlot().getBounds().getX();
-      int yOffset = chartPainter.getStyleManager().getChartPadding();
+      double xOffset = (int) chartPainter.getPlot().getBounds().getX();
+      double yOffset = chartPainter.getStyleManager().getChartPadding();
 
       if (chartPainter.getStyleManager().isChartTitleBoxVisible()) {
 
@@ -109,12 +109,11 @@ public class ChartTitle implements ChartPart {
         g.fill(rect);
         g.setColor(chartPainter.getStyleManager().getChartTitleBoxBorderColor());
         g.draw(rect);
-
       }
 
       // paint title
-      xOffset = (int) (chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0);
-      yOffset = (int) (chartPainter.getStyleManager().getChartPadding() - rectangle.getY() + chartPainter.getStyleManager().getChartTitlePadding());
+      xOffset = chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0;
+      yOffset = chartPainter.getStyleManager().getChartPadding() - rectangle.getY() + chartPainter.getStyleManager().getChartTitlePadding();
 
       bounds = new Rectangle2D.Double(xOffset, yOffset + rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
       // g.setColor(Color.green);

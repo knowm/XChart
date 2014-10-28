@@ -45,10 +45,17 @@ public class PlotContentBarChart extends PlotContent {
   public void paint(Graphics2D g) {
 
     Rectangle2D bounds = plot.getBounds();
+    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    // g.setColor(Color.red);
+    // g.draw(bounds);
+
     StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
     Rectangle rectangle = new Rectangle(0, 0, getChartPainter().getWidth(), getChartPainter().getHeight());
+    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    // g.setColor(Color.green);
+    // g.draw(rectangle);
     g.setClip(bounds.createIntersection(rectangle));
 
     // X-Axis
@@ -206,7 +213,7 @@ public class PlotContentBarChart extends PlotContent {
       }
       seriesCounter++;
     }
-
+    g.setClip(null);
   }
 
   @Override
