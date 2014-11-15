@@ -143,6 +143,7 @@ public class StyleManager {
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
+  private boolean isErrorBarsColorSeriesColor;
 
   // Formatting ////////////////////////////////
   private Locale locale;
@@ -231,6 +232,7 @@ public class StyleManager {
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
+    isErrorBarsColorSeriesColor = theme.isErrorBarsColorSeriesColor();
 
     // Formatting ////////////////////////////////
     locale = Locale.getDefault();
@@ -1045,7 +1047,7 @@ public class StyleManager {
 
   /**
    * set whether or no bars are filled with a solid color or empty.
-   * 
+   *
    * @param isBarFilled
    */
   public void setBarFilled(boolean isBarFilled) {
@@ -1090,6 +1092,21 @@ public class StyleManager {
   public Color getErrorBarsColor() {
 
     return errorBarsColor;
+  }
+
+  /**
+   * Set true if the the error bar color should match the series color
+   *
+   * @return
+   */
+  public void setErrorBarsColorSeriesColor(boolean isErrorBarsColorSeriesColor) {
+
+    this.isErrorBarsColorSeriesColor = isErrorBarsColorSeriesColor;
+  }
+
+  public boolean isErrorBarsColorSeriesColor() {
+
+    return isErrorBarsColorSeriesColor;
   }
 
   // Formatting ////////////////////////////////

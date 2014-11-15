@@ -236,7 +236,14 @@ public class PlotContentLineChart extends PlotContent {
 
         if (errorBars != null) {
 
-          g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
+          // set error bar color
+
+          if (getChartPainter().getStyleManager().isErrorBarsColorSeriesColor()) {
+            g.setColor(series.getStrokeColor());
+          }
+          else {
+            g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
+          }
           g.setStroke(errorBarStroke);
 
           double topValue = 0.0;

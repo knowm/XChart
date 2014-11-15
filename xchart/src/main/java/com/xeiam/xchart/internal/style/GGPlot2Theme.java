@@ -315,4 +315,9 @@ public class GGPlot2Theme implements Theme {
     return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
+  @Override
+  public boolean isErrorBarsColorSeriesColor() {
+
+    return false;
+  }
 }
