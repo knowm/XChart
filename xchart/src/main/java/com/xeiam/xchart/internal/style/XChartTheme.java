@@ -312,7 +312,7 @@ public class XChartTheme implements Theme {
   @Override
   public Color getErrorBarsColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
   @Override
