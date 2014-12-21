@@ -63,13 +63,13 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     BigDecimal gridStep = BigDecimal.valueOf(getNumericalGridStep(tickSpace));
-    System.out.println("***gridStep: " + gridStep);
+    // System.out.println("***gridStep: " + gridStep);
     BigDecimal cleanedGridStep = gridStep.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
-    System.out.println("cleanedGridStep: " + cleanedGridStep);
+    // System.out.println("cleanedGridStep: " + cleanedGridStep);
     BigDecimal firstPosition = BigDecimal.valueOf(getFirstPosition(cleanedGridStep.doubleValue()));
-    System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
+    // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
     BigDecimal cleanedFirstPosition = firstPosition.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
-    System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
+    // System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
 
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal tickPosition = cleanedFirstPosition; tickPosition.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0; tickPosition = tickPosition.add(cleanedGridStep)) {
