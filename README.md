@@ -79,6 +79,8 @@ For snapshots, add the following to your pom.xml file:
       <artifactId>xchart</artifactId>
       <version>2.4.3-SNAPSHOT</version>
     </dependency>
+    
+Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/](https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/)
 
 ## Building
 
