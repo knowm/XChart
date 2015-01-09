@@ -316,4 +316,9 @@ public class MatlabTheme implements Theme {
     return ChartColor.getAWTColor(ChartColor.BLACK);
   }
 
+  @Override
+  public boolean isErrorBarsColorSeriesColor() {
+
+    return false;
+  }
 }

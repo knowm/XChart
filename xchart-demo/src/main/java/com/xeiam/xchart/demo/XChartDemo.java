@@ -41,6 +41,7 @@ import com.xeiam.xchart.demo.charts.bar.BarChart04;
 import com.xeiam.xchart.demo.charts.bar.BarChart05;
 import com.xeiam.xchart.demo.charts.bar.BarChart06;
 import com.xeiam.xchart.demo.charts.bar.BarChart07;
+import com.xeiam.xchart.demo.charts.bar.BarChart08;
 import com.xeiam.xchart.demo.charts.date.DateChart01;
 import com.xeiam.xchart.demo.charts.date.DateChart02;
 import com.xeiam.xchart.demo.charts.date.DateChart03;
@@ -259,6 +260,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart07 - Histogram Not Overlapped", new BarChart07().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart08 - Histogram with Error Bars", new BarChart08().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Theme category

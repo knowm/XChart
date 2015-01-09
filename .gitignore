@@ -21,6 +21,7 @@ log/
 
 # Misc.
 .DS_Store
+*.bak
 
 # Sample images
 *.png
@@ -30,3 +31,4 @@ log/
 *.svg
 *.pdf
 *.eps
+

@@ -114,7 +114,6 @@ public class PlotContentLineChart extends PlotContent {
         yMin = Math.log10(yMin);
         yMax = Math.log10(yMax);
       }
-      Collection<? extends Number> errorBars = series.getErrorBars();
 
       double previousX = Integer.MIN_VALUE;
       double previousY = Integer.MIN_VALUE;
@@ -122,6 +121,7 @@ public class PlotContentLineChart extends PlotContent {
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
       Iterator<? extends Number> ebItr = null;
+      Collection<? extends Number> errorBars = series.getErrorBars();
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }
@@ -227,18 +227,20 @@ public class PlotContentLineChart extends PlotContent {
         }
 
         // paint errorbars
-
-        double eb = 0.0;
-
-        if (errorBars != null) {
-          eb = ebItr.next().doubleValue();
-        }
-
         if (errorBars != null) {
 
-          g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
+          double eb = ebItr.next().doubleValue();
+
+          // set error bar style
+          if (getChartPainter().getStyleManager().isErrorBarsColorSeriesColor()) {
+            g.setColor(series.getStrokeColor());
+          }
+          else {
+            g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
+          }
           g.setStroke(errorBarStroke);
 
+          // Top value
           double topValue = 0.0;
           if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
             topValue = yOrig + eb;
@@ -250,6 +252,7 @@ public class PlotContentLineChart extends PlotContent {
           double topEBTransform = bounds.getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
           double topEBOffset = bounds.getY() + topEBTransform;
 
+          // Bottom value
           double bottomValue = 0.0;
           if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
@@ -262,6 +265,7 @@ public class PlotContentLineChart extends PlotContent {
           double bottomEBTransform = bounds.getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
           double bottomEBOffset = bounds.getY() + bottomEBTransform;
 
+          // Draw it
           Shape line = new Line2D.Double(xOffset, topEBOffset, xOffset, bottomEBOffset);
           g.draw(line);
           line = new Line2D.Double(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);

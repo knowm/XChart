@@ -17,6 +17,8 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
@@ -122,6 +124,11 @@ public class PlotContentBarChart extends PlotContent {
 
       // all the x-axis data are guaranteed to be the same so we just use the first one
       Iterator<? extends Number> yItr = yData.iterator();
+      Iterator<? extends Number> ebItr = null;
+      Collection<? extends Number> errorBars = series.getErrorBars();
+      if (errorBars != null) {
+        ebItr = errorBars.iterator();
+      }
 
       int barCounter = 0;
       while (yItr.hasNext()) {
@@ -208,6 +215,41 @@ public class PlotContentBarChart extends PlotContent {
         }
         else {
           g.draw(path);
+        }
+
+        // paint errorbars
+
+        if (errorBars != null) {
+
+          double eb = ebItr.next().doubleValue();
+
+          // set error bar style
+          if (getChartPainter().getStyleManager().isErrorBarsColorSeriesColor()) {
+            g.setColor(series.getStrokeColor());
+          }
+          else {
+            g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
+          }
+          g.setStroke(errorBarStroke);
+
+          // Top value
+          double topValue = y + eb;
+          double topEBTransform = bounds.getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
+          double topEBOffset = bounds.getY() + topEBTransform;
+
+          // Bottom value
+          double bottomValue = y - eb;
+          double bottomEBTransform = bounds.getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
+          double bottomEBOffset = bounds.getY() + bottomEBTransform;
+
+          // Draw it
+          double errorBarOffset = xOffset + barWidth / 2;
+          Shape line = new Line2D.Double(errorBarOffset, topEBOffset, errorBarOffset, bottomEBOffset);
+          g.draw(line);
+          line = new Line2D.Double(errorBarOffset - 3, bottomEBOffset, errorBarOffset + 3, bottomEBOffset);
+          g.draw(line);
+          line = new Line2D.Double(errorBarOffset - 3, topEBOffset, errorBarOffset + 3, topEBOffset);
+          g.draw(line);
         }
 
       }

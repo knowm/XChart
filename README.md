@@ -63,7 +63,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>com.xeiam.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>2.4.2</version>
+        <version>2.4.3</version>
     </dependency>
 
 For snapshots, add the following to your pom.xml file:
@@ -77,8 +77,10 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.4.3-SNAPSHOT</version>
+      <version>2.4.4-SNAPSHOT</version>
     </dependency>
+    
+Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/](https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/)
 
 ## Building
 
