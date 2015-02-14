@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 - 2014 Xeiam LLC.
+ * Copyright 2011 - 2015 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Classes in this package are internal and are not intended to be accessed directly. Therefore, they are not included in the JavaDocs.
  */
