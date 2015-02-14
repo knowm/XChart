@@ -1,4 +1,4 @@
-## [![XChart](https://raw.githubusercontent.com/timmolter/Yank/develop/etc/XChart_64_64.png)](http://xeiam.com/xchart) XChart
+## [![XChart](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_64_64.png)](http://xeiam.com/xchart) XChart
 A Simple Charting Library for Java
 
 ## Description
