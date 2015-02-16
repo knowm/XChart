@@ -28,7 +28,7 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
 Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code/), [download the thing](http://xeiam.com/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
 ## Features
-* No additional dependencies
+* No required additional dependencies
 * ~100KB Jar
 * Line charts
 * Scatter charts
@@ -47,7 +47,8 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code
 * CSV import and export
 * High resolution chart export
 * Real-time charts
-
+ * [x] Java 6 and up
+ 
 ## Getting Started
 
 ### Non-Maven
