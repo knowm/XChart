@@ -49,6 +49,7 @@ import com.xeiam.xchart.demo.charts.date.DateChart04;
 import com.xeiam.xchart.demo.charts.date.DateChart05;
 import com.xeiam.xchart.demo.charts.date.DateChart06;
 import com.xeiam.xchart.demo.charts.date.DateChart07;
+import com.xeiam.xchart.demo.charts.date.DateChart08;
 import com.xeiam.xchart.demo.charts.line.LineChart01;
 import com.xeiam.xchart.demo.charts.line.LineChart02;
 import com.xeiam.xchart.demo.charts.line.LineChart03;
@@ -301,6 +302,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DateChart07 - Year Scale", new DateChart07().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DateChart08 - Rotated Labels", new DateChart08().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Real-time category
