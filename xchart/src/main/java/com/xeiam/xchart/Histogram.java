@@ -17,7 +17,6 @@ package com.xeiam.xchart;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -46,14 +45,19 @@ public class Histogram {
     this.numBins = numBins;
     this.originalData = data;
 
-    List<Double> dataAsList = new ArrayList<Double>();
-    Iterator<? extends Number> itr = data.iterator();
-    while (itr.hasNext()) {
-      dataAsList.add(((Number) itr.next()).doubleValue());
+    Double tempMax = Double.MIN_VALUE;
+    Double tempMin = Double.MAX_VALUE;
+    for (Number number : data) {
+      double value = number.doubleValue();
+      if (value > tempMax) {
+        tempMax = value;
+      }
+      if (value < tempMin) {
+        tempMin = value;
+      }
     }
-    Collections.sort(dataAsList);
-    this.min = dataAsList.get(0);
-    this.max = dataAsList.get(dataAsList.size() - 1);
+    max = tempMax;
+    min = tempMin;
 
     init();
   }
@@ -92,8 +96,7 @@ public class Histogram {
       else if (bin > numBins) { /* this data point is bigger than max */
         // System.out.println("greater than");
       }
-      else if (bin == numBins) { // this falls right on the edge of the max bin
-        tempYAxisData[bin - 1] += 1;
+      else if (bin == numBins) { // this falls on the next bin of the max bin
       }
       else {
         tempYAxisData[bin] += 1;
@@ -101,7 +104,7 @@ public class Histogram {
     }
     yAxisData = new ArrayList<Double>(numBins);
     for (double d : tempYAxisData) {
-      yAxisData.add(new Double(d));
+      yAxisData.add(d);
     }
 
     // x axis data
