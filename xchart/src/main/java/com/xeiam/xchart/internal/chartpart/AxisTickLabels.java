@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 - 2014 Xeiam LLC.
+ * Copyright 2011 - 2015 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,8 +88,10 @@ public class AxisTickLabels implements ChartPart {
       for (Double tickLocation : axisLabelTextLayouts.keySet()) {
 
         TextLayout axisLabelTextLayout = axisLabelTextLayouts.get(tickLocation);
-        Rectangle2D tickLabelBounds = axisLabelTextLayout.getBounds();
-        Shape shape = axisLabelTextLayout.getOutline(null);
+        AffineTransform rot = getChartPainter().getStyleManager().getYAxisLabelRotation() == 0 ? null :
+          AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getYAxisLabelRotation()));
+        Shape shape = axisLabelTextLayout.getOutline(rot);
+        Rectangle2D tickLabelBounds = shape.getBounds();
 
         double flippedTickLocation = yOffset + height - tickLocation;
 
@@ -142,7 +144,9 @@ public class AxisTickLabels implements ChartPart {
           TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
 
           // Shape shape = v.getOutline();
-          Shape shape = textLayout.getOutline(null);
+          AffineTransform rot = getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null :
+            AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+          Shape shape = textLayout.getOutline(rot);
           Rectangle2D tickLabelBounds = shape.getBounds2D();
 
           AffineTransform orig = g.getTransform();

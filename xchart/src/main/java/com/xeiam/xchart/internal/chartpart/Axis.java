@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 - 2014 Xeiam LLC.
+ * Copyright 2011 - 2015 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,13 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.xeiam.xchart.StyleManager.LegendPosition;
 
@@ -143,8 +147,13 @@ public class Axis implements ChartPart {
       // Axis tick labels
       double axisTickLabelsHeight = 0.0;
       if (getChartPainter().getStyleManager().isXAxisTicksVisible()) {
-        TextLayout textLayout = new TextLayout("0", getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-        Rectangle2D rectangle = textLayout.getBounds();
+        String tickLabel = getChartPainter().getAxisPair().getXAxis().getAxisType().equals(AxisType.Date) ?
+            new SimpleDateFormat(getChartPainter().getStyleManager().getDatePattern()).format(new Date()) : "0";
+        TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+        AffineTransform rot = getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null :
+          AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+        Shape shape = textLayout.getOutline(rot);
+        Rectangle2D rectangle = shape.getBounds();
         axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
       }
       return titleHeight + axisTickLabelsHeight;

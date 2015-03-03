@@ -25,24 +25,18 @@ import java.util.Random;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
-import com.xeiam.xchart.Series;
-import com.xeiam.xchart.SeriesMarker;
+import com.xeiam.xchart.StyleManager.TextAlignment;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
- * Millisecond Scale
- * <p>
- * Demonstrates the following:
- * <ul>
- * <li>Millisecond Scale
- * <li>Series with no Markers
+ * Year scale
  */
-public class DateChart01 implements ExampleChart {
+public class DateChart08 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new DateChart01();
+    ExampleChart exampleChart = new DateChart08();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -51,32 +45,32 @@ public class DateChart01 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).title("Millisecond Scale").build();
+    Chart chart = new ChartBuilder().width(800).height(600).title("Year Scale").build();
     chart.getStyleManager().setLegendVisible(false);
-
-    Random random = new Random();
+    chart.getStyleManager().setXAxisLabelRotation(45);
+    chart.getStyleManager().setYAxisLabelRotation(90);
+    chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);
+    chart.getStyleManager().setDatePattern("yyyy-MM-dd");
 
     // generate data
     List<Date> xData = new ArrayList<Date>();
     List<Double> yData = new ArrayList<Double>();
 
-    DateFormat sdf = new SimpleDateFormat("HH:mm:ss.S");
+    Random random = new Random();
+
+    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     Date date = null;
     for (int i = 1; i <= 14; i++) {
-
       try {
-        date = sdf.parse("23:45:31." + (100 * i + random.nextInt(20)));
+        date = sdf.parse("" + (2001 + i) + "-" + random.nextInt(12) + "-" + random.nextInt(28));
       } catch (ParseException e) {
         e.printStackTrace();
       }
-      // System.out.println(date.getTime());
-      // System.out.println(date.toString());
       xData.add(date);
       yData.add(Math.random() * i);
     }
 
-    Series series = chart.addSeries("blah", xData, yData);
-    series.setMarker(SeriesMarker.NONE);
+    chart.addSeries("blah", xData, yData);
 
     return chart;
 

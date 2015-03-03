@@ -1,5 +1,5 @@
 /**
- * Copyright 2011 - 2014 Xeiam LLC.
+ * Copyright 2011 - 2015 Xeiam LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,6 +123,8 @@ public class StyleManager {
   private double axisTickSpacePercentage;
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
+  private int xAxisLabelRotation = 0;
+  private int yAxisLabelRotation = 0;
 
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridLinesVisible;
@@ -904,6 +906,26 @@ public class StyleManager {
   public void setYAxisLabelAlignment(TextAlignment yAxisLabelAlignment) {
 
     this.yAxisLabelAlignment = yAxisLabelAlignment;
+  }
+
+  public int getXAxisLabelRotation() {
+
+    return xAxisLabelRotation;
+  }
+
+  public void setXAxisLabelRotation(int xAxisLabelRotation) {
+
+    this.xAxisLabelRotation = xAxisLabelRotation;
+  }
+
+  public int getYAxisLabelRotation() {
+
+    return yAxisLabelRotation;
+  }
+
+  public void setYAxisLabelRotation(int yAxisLabelRotation) {
+
+    this.yAxisLabelRotation = yAxisLabelRotation;
   }
 
   // Chart Plot Area ///////////////////////////////

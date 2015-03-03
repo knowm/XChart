@@ -1,4 +1,4 @@
-## [![XChart](http://xeiam.com/wp-content/uploads/xchartlogo.png)](http://xeiam.com/xchart) XChart
+## [![XChart](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_64_64.png)](http://xeiam.com/xchart) XChart
 A Simple Charting Library for Java
 
 ## Description
@@ -21,14 +21,14 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
 
     // Save it
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
-    
+
     // or save it in high-res
     BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
-    
+
 Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code/), [download the thing](http://xeiam.com/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
 ## Features
-* No additional dependencies
+* No required additional dependencies
 * ~100KB Jar
 * Line charts
 * Scatter charts
@@ -47,7 +47,8 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code
 * CSV import and export
 * High resolution chart export
 * Real-time charts
-
+ * [x] Java 6 and up
+ 
 ## Getting Started
 
 ### Non-Maven
@@ -73,13 +74,13 @@ For snapshots, add the following to your pom.xml file:
       <snapshots/>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
-    
+
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
       <version>2.4.4-SNAPSHOT</version>
     </dependency>
-    
+
 Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/](https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/)
 
 ## Building
