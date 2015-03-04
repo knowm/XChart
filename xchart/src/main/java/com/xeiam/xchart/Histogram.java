@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * This class can be used to create histogram data for histogram bar charts
- * 
+ *
  * @author timmolter
  */
 public class Histogram {
@@ -36,7 +36,7 @@ public class Histogram {
 
   /**
    * Constructor
-   * 
+   *
    * @param data
    * @param numBins
    */
@@ -64,7 +64,7 @@ public class Histogram {
 
   /**
    * Constructor
-   * 
+   *
    * @param data
    * @param numBins
    * @param min
@@ -89,16 +89,15 @@ public class Histogram {
     Iterator<? extends Number> itr = originalData.iterator();
     while (itr.hasNext()) {
 
-      int bin = (int) ((((Number) itr.next()).doubleValue() - min) / binSize); // changed this from numBins
+      double doubleValue = ((Number) itr.next()).doubleValue();
+      int bin = (int) ((doubleValue - min) / binSize); // changed this from numBins
       if (bin < 0) { /* this data is smaller than min */
         // System.out.println("less than");
-      }
-      else if (bin > numBins) { /* this data point is bigger than max */
+      } else if (doubleValue == max) { // the value falls exactly on the max value
+        tempYAxisData[bin - 1] += 1;
+      } else if (bin > numBins || bin == numBins) { /* this data point is bigger than max */
         // System.out.println("greater than");
-      }
-      else if (bin == numBins) { // this falls on the next bin of the max bin
-      }
-      else {
+      } else {
         tempYAxisData[bin] += 1;
       }
     }
