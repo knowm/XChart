@@ -45,7 +45,7 @@ public class Histogram {
     this.numBins = numBins;
     this.originalData = data;
 
-    Double tempMax = Double.MIN_VALUE;
+    Double tempMax = -Double.MAX_VALUE;
     Double tempMin = Double.MAX_VALUE;
     for (Number number : data) {
       double value = number.doubleValue();
