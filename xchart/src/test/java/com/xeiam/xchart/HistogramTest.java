@@ -40,5 +40,13 @@ public class HistogramTest {
     //    chart.addSeries("histogram 1", histogram.getxAxisData(), histogram.getyAxisData());
     //    new SwingWrapper(chart).displayChart();
 
+  }@Test
+  public void testNegetiveValues() {
+
+    Histogram histogram = new Histogram(Arrays.asList(-1, -2, -3, -4, -5, -6),3);
+
+    assertThat(histogram.getMax()).isEqualTo(-1);
+    assertThat(histogram.getMin()).isEqualTo(-6);
+    assertThat(histogram.getNumBins()).isEqualTo(3);
   }
 }
