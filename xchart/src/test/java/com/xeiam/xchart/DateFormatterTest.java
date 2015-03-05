@@ -15,8 +15,7 @@
  */
 package com.xeiam.xchart;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.fest.assertions.api.Assertions.assertThat;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -51,7 +50,7 @@ public class DateFormatterTest {
     long gridStepHint = (long) (span / 1000 * 74);
     long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     String stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("05.531"));
+    assertThat(stringValue).isEqualTo("05.531");
 
     // sec
     value = 1358108105000L;
@@ -61,7 +60,7 @@ public class DateFormatterTest {
     gridStepHint = (long) (span / 1000 * 74);
     timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("05.000"));
+    assertThat(stringValue).isEqualTo("05.000");
 
     // min
     value = 1358111750000L;
@@ -71,7 +70,7 @@ public class DateFormatterTest {
     gridStepHint = (long) (span / 1000 * 74);
     timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("15:50"));
+    assertThat(stringValue).isEqualTo("15:50");
 
     // hour
     value = 1358111870000L;
@@ -81,7 +80,7 @@ public class DateFormatterTest {
     gridStepHint = (long) (span / 1000 * 74);
     timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("21:17"));
+    assertThat(stringValue).isEqualTo("21:17");
 
     // day
     value = 1358112317000L;
@@ -91,7 +90,7 @@ public class DateFormatterTest {
     gridStepHint = (long) (span / 1000 * 74);
     timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("21:25"));
+    assertThat(stringValue).isEqualTo("21:25");
 
     // week
     value = 1358112317000L;
@@ -101,7 +100,7 @@ public class DateFormatterTest {
     gridStepHint = (long) (span / 1000 * 74);
     timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("01-13"));
+    assertThat(stringValue).isEqualTo("01-13");
 
     // month
     value = 1358112838000L;
@@ -111,7 +110,7 @@ public class DateFormatterTest {
     gridStepHint = (long) (span / 1000 * 74);
     timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("01-13"));
+    assertThat(stringValue).isEqualTo("01-13");
 
     // year
     value = 1358113402000L;
@@ -121,7 +120,7 @@ public class DateFormatterTest {
     gridStepHint = (long) (span / 1000 * 74);
     timeUnit = dateFormatter.getTimeUnit(gridStepHint);
     stringValue = dateFormatter.formatDate(value, timeUnit);
-    assertThat(stringValue, equalTo("2013-01"));
+    assertThat(stringValue).isEqualTo("2013-01");
 
   }
 
