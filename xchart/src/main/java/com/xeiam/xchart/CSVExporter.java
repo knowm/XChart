@@ -43,7 +43,7 @@ public class CSVExporter {
     File newFile = new File(path2Dir + series.getName() + ".csv");
     Writer out = null;
     try {
-
+        
       out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
       String csv = join(series.getXData(), ",") + System.getProperty("line.separator");
       out.write(csv);
