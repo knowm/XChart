@@ -38,7 +38,7 @@ import javax.imageio.stream.FileImageOutputStream;
 
 /**
  * A helper class with static methods for saving Charts as bitmaps
- * 
+ *
  * @author timmolter
  */
 public final class BitmapEncoder {
@@ -56,7 +56,7 @@ public final class BitmapEncoder {
 
   /**
    * Save a Chart as an image file
-   * 
+   *
    * @param chart
    * @param fileName
    * @param bitmapFormat
@@ -72,8 +72,9 @@ public final class BitmapEncoder {
   }
 
   /**
-   * Save a chart as a PNG with a custom DPI. The default DPI is 72, which is fine for displaying charts on a computer monitor, but for printing charts, a DPI of around 300 is much better.
-   * 
+   * Save a chart as a PNG with a custom DPI. The default DPI is 72, which is fine for displaying charts on a computer monitor, but for printing
+   * charts, a DPI of around 300 is much better.
+   *
    * @param chart
    * @param fileName
    * @param DPI
@@ -83,7 +84,8 @@ public final class BitmapEncoder {
 
     double scaleFactor = DPI / 72.0;
 
-    BufferedImage bufferedImage = new BufferedImage((int) (chart.getWidth() * scaleFactor), (int) (chart.getHeight() * scaleFactor), BufferedImage.TYPE_INT_RGB);
+    BufferedImage bufferedImage = new BufferedImage((int) (chart.getWidth() * scaleFactor), (int) (chart.getHeight() * scaleFactor),
+        BufferedImage.TYPE_INT_RGB);
 
     Graphics2D graphics2D = bufferedImage.createGraphics();
 
@@ -117,7 +119,7 @@ public final class BitmapEncoder {
 
   /**
    * Sets the metadata correctly
-   * 
+   *
    * @param metadata
    * @param DPI
    * @throws IIOInvalidTreeException
@@ -145,7 +147,7 @@ public final class BitmapEncoder {
 
   /**
    * Save a Chart as a JPEG file
-   * 
+   *
    * @param chart
    * @param fileName
    * @param quality - a float between 0 and 1 (1 = maximum quality)
@@ -164,15 +166,19 @@ public final class BitmapEncoder {
     iwp.setCompressionQuality(quality);
     File file = new File(fileName);
     FileImageOutputStream output = new FileImageOutputStream(file);
-    writer.setOutput(output);
-    IIOImage image = new IIOImage(bufferedImage, null, null);
-    writer.write(null, image, iwp);
-    writer.dispose();
+    try {
+      writer.setOutput(output);
+      IIOImage image = new IIOImage(bufferedImage, null, null);
+      writer.write(null, image, iwp);
+      writer.dispose();
+    } finally {
+      output.close();
+    }
   }
 
   /**
    * Generates a byte[] for a given chart, PNG compressed
-   * 
+   *
    * @param chart
    * @return a byte[] for a given chart, PNG compressed
    * @throws IOException
