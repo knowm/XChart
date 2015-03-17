@@ -151,7 +151,13 @@ public class XChartPanel extends JPanel {
     @Override
     public boolean accept(File f) {
 
-      return true;
+      if (f.isDirectory()) {
+        return true;
+      }
+
+      String s = f.getName();
+
+      return s.endsWith(".jpg") || s.endsWith(".JPG");
     }
 
     @Override
@@ -167,7 +173,13 @@ public class XChartPanel extends JPanel {
     @Override
     public boolean accept(File f) {
 
-      return true;
+      if (f.isDirectory()) {
+        return true;
+      }
+
+      String s = f.getName();
+
+      return s.endsWith(".bmp") || s.endsWith(".BMP");
     }
 
     @Override
@@ -183,7 +195,13 @@ public class XChartPanel extends JPanel {
     @Override
     public boolean accept(File f) {
 
-      return true;
+      if (f.isDirectory()) {
+        return true;
+      }
+
+      String s = f.getName();
+
+      return s.endsWith(".gif") || s.endsWith(".GIF");
     }
 
     @Override
@@ -199,7 +217,13 @@ public class XChartPanel extends JPanel {
     @Override
     public boolean accept(File f) {
 
-      return true;
+      if (f.isDirectory()) {
+        return true;
+      }
+
+      String s = f.getName();
+
+      return s.endsWith(".png") || s.endsWith(".PNG");
     }
 
     @Override
