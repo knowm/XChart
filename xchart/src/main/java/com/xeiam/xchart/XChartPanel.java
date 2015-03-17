@@ -129,17 +129,13 @@ public class XChartPanel extends JPanel {
         try {
           if (fileChooser.getFileFilter() == null) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.PNG);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
             BitmapEncoder.saveJPGWithQuality(chart, theFileToSave.getCanonicalPath().toString() + ".jpg", 1.0f);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.PNG);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.BMP);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.GIF);
           }
         } catch (IOException e) {
@@ -155,13 +151,7 @@ public class XChartPanel extends JPanel {
     @Override
     public boolean accept(File f) {
 
-      if (f.isDirectory()) {
-        return false;
-      }
-
-      String s = f.getName();
-
-      return s.endsWith(".jpg") || s.endsWith(".JPG");
+      return true;
     }
 
     @Override
@@ -177,13 +167,7 @@ public class XChartPanel extends JPanel {
     @Override
     public boolean accept(File f) {
 
-      if (f.isDirectory()) {
-        return false;
-      }
-
-      String s = f.getName();
-
-      return s.endsWith(".bmp") || s.endsWith(".BMP");
+      return true;
     }
 
     @Override
@@ -199,13 +183,7 @@ public class XChartPanel extends JPanel {
     @Override
     public boolean accept(File f) {
 
-      if (f.isDirectory()) {
-        return false;
-      }
-
-      String s = f.getName();
-
-      return s.endsWith(".gif") || s.endsWith(".GIF");
+      return true;
     }
 
     @Override
@@ -221,13 +199,7 @@ public class XChartPanel extends JPanel {
     @Override
     public boolean accept(File f) {
 
-      if (f.isDirectory()) {
-        return false;
-      }
-
-      String s = f.getName();
-
-      return s.endsWith(".png") || s.endsWith(".PNG");
+      return true;
     }
 
     @Override
@@ -303,8 +275,8 @@ public class XChartPanel extends JPanel {
   }
 
   /**
-   * update a series by only updating the Y-Axis data. The X-Axis data will be automatically generated as a list of increasing Integers starting from 1 and ending at the size of the new Y-Axis data
-   * list.
+   * update a series by only updating the Y-Axis data. The X-Axis data will be automatically generated as a list of increasing Integers starting from
+   * 1 and ending at the size of the new Y-Axis data list.
    *
    * @param seriesName
    * @param newYData
