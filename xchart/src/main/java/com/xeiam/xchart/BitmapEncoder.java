@@ -61,7 +61,7 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @return filename (if extension already exists), otherwise;: filename + "." + extension
    */
-  private static String addFileExtension(String fileName, BitmapFormat bitmapFormat) {
+  public static String addFileExtension(String fileName, BitmapFormat bitmapFormat) {
 	  String fileNameWithFileExtension = fileName;
 	  final String newFileExtension = "." + bitmapFormat.toString().toLowerCase();
 	  if (fileName.length() <= newFileExtension.length() ||
@@ -172,7 +172,7 @@ public final class BitmapEncoder {
    * @throws FileNotFoundException
    * @throws IOException
    */
-  public static void saveJPGWithQuality(Chart chart, String fileName, BitmapFormat bitmapFormat, float quality) throws FileNotFoundException, IOException {
+  public static void saveJPGWithQuality(Chart chart, String fileName, float quality) throws FileNotFoundException, IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
@@ -182,7 +182,7 @@ public final class BitmapEncoder {
     ImageWriteParam iwp = writer.getDefaultWriteParam();
     iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
     iwp.setCompressionQuality(quality);
-    File file = new File(addFileExtension(fileName, bitmapFormat));
+    File file = new File(fileName);
     FileImageOutputStream output = new FileImageOutputStream(file);
     try {
       writer.setOutput(output);

@@ -42,7 +42,7 @@ public class Example1 {
 
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.JPG);
-    BitmapEncoder.saveJPGWithQuality(chart, "./Sample_Chart_With_Quality", BitmapFormat.JPG, 0.95f);
+    BitmapEncoder.saveJPGWithQuality(chart, "./Sample_Chart_With_Quality.jpg", 0.95f);
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.BMP);
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.GIF);
 
