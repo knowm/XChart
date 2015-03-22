@@ -39,6 +39,7 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import com.xeiam.xchart.BitmapEncoder.BitmapFormat;
+import com.xeiam.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -118,6 +119,18 @@ public class XChartPanel extends JPanel {
     fileChooser.addChoosableFileFilter(pngFileFilter);
     fileChooser.addChoosableFileFilter(new SuffixSaveFilter("bmp"));
     fileChooser.addChoosableFileFilter(new SuffixSaveFilter("gif"));
+
+    // VectorGraphics2D is optional, so if it's on the classpath, allow saving charts as vector graphic
+    try {
+      Class.forName("de.erichseifert.vectorgraphics2d.VectorGraphics2D");
+      // it exists on the classpath
+      fileChooser.addChoosableFileFilter(new SuffixSaveFilter("svg"));
+      fileChooser.addChoosableFileFilter(new SuffixSaveFilter("eps"));
+      fileChooser.addChoosableFileFilter(new SuffixSaveFilter("pdf"));
+    } catch (ClassNotFoundException e) {
+      // it does not exist on the classpath
+    }
+
     fileChooser.setAcceptAllFileFilterUsed(false);
 
     fileChooser.setFileFilter(pngFileFilter);
@@ -138,6 +151,12 @@ public class XChartPanel extends JPanel {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.BMP);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.GIF);
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
+            VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath().toString(), VectorGraphicsFormat.SVG);
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
+            VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath().toString(), VectorGraphicsFormat.EPS);
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
+            VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath().toString(), VectorGraphicsFormat.PDF);
           }
         } catch (IOException e) {
           e.printStackTrace();
