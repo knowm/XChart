@@ -53,6 +53,23 @@ public final class BitmapEncoder {
   public enum BitmapFormat {
     PNG, JPG, BMP, GIF;
   }
+  
+  /**
+   * Only adds the extension of the BitmapFormat to the filename if the filename doesn't already have it.
+   * 
+   * @param fileName
+   * @param bitmapFormat
+   * @return filename (if extension already exists), otherwise;: filename + "." + extension
+   */
+  public static String addFileExtension(String fileName, BitmapFormat bitmapFormat) {
+	  String fileNameWithFileExtension = fileName;
+	  final String newFileExtension = "." + bitmapFormat.toString().toLowerCase();
+	  if (fileName.length() <= newFileExtension.length() ||
+			  !fileName.substring(fileName.length()-newFileExtension.length(), fileName.length()).equalsIgnoreCase(newFileExtension)) {
+		  fileNameWithFileExtension = fileName + newFileExtension;
+	  }
+	  return fileNameWithFileExtension;
+  }
 
   /**
    * Save a Chart as an image file
@@ -66,7 +83,7 @@ public final class BitmapEncoder {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
-    OutputStream out = new FileOutputStream(fileName + "." + bitmapFormat.toString().toLowerCase());
+    OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), out);
     out.close();
   }
@@ -108,7 +125,7 @@ public final class BitmapEncoder {
 
       setDPI(metadata, DPI);
 
-      File file = new File(fileName + "." + bitmapFormat.toString().toLowerCase());
+      File file = new File(addFileExtension(fileName, bitmapFormat));
       FileImageOutputStream output = new FileImageOutputStream(file);
       writer.setOutput(output);
       IIOImage image = new IIOImage(bufferedImage, null, metadata);
@@ -150,6 +167,7 @@ public final class BitmapEncoder {
    *
    * @param chart
    * @param fileName
+   * @param bitmapFormat
    * @param quality - a float between 0 and 1 (1 = maximum quality)
    * @throws FileNotFoundException
    * @throws IOException
