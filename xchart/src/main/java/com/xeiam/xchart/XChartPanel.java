@@ -113,11 +113,11 @@ public class XChartPanel extends JPanel {
   private void showSaveAsDialog() {
 
     JFileChooser fileChooser = new JFileChooser();
-    fileChooser.addChoosableFileFilter(new JPGSaveFilter());
-    FileFilter pngFileFilter = new PNGSaveFilter();
+    fileChooser.addChoosableFileFilter(new SuffixSaveFilter("jpg"));
+    FileFilter pngFileFilter = new SuffixSaveFilter("png");
     fileChooser.addChoosableFileFilter(pngFileFilter);
-    fileChooser.addChoosableFileFilter(new BMPSaveFilter());
-    fileChooser.addChoosableFileFilter(new GIFSaveFilter());
+    fileChooser.addChoosableFileFilter(new SuffixSaveFilter("bmp"));
+    fileChooser.addChoosableFileFilter(new SuffixSaveFilter("gif"));
     fileChooser.setAcceptAllFileFilterUsed(false);
 
     fileChooser.setFileFilter(pngFileFilter);
@@ -130,7 +130,8 @@ public class XChartPanel extends JPanel {
           if (fileChooser.getFileFilter() == null) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.PNG);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
-            BitmapEncoder.saveJPGWithQuality(chart, BitmapEncoder.addFileExtension(theFileToSave.getCanonicalPath().toString(), BitmapFormat.JPG), 1.0f);
+            BitmapEncoder.saveJPGWithQuality(chart, BitmapEncoder.addFileExtension(theFileToSave.getCanonicalPath().toString(), BitmapFormat.JPG),
+                1.0f);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.PNG);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
@@ -146,92 +147,38 @@ public class XChartPanel extends JPanel {
     }
   }
 
-  private class JPGSaveFilter extends FileFilter {
+  /**
+   * File filter based on the suffix of a file. This file filter accepts all files that end with .suffix or the capitalized suffix.
+   *
+   * @author Benedikt Bünz
+   */
+  private class SuffixSaveFilter extends FileFilter {
+    private final String suffix;
+
+    /**
+     * @param suffix This file filter accepts all files that end with .suffix or the capitalized suffix.
+     */
+    public SuffixSaveFilter(String suffix) {
+      this.suffix = suffix;
+    }
 
     @Override
     public boolean accept(File f) {
 
       if (f.isDirectory()) {
-        return true;
+        return false;
       }
 
       String s = f.getName();
 
-      return s.endsWith(".jpg") || s.endsWith(".JPG");
+      return s.endsWith("." + suffix) || s.endsWith("." + suffix.toUpperCase());
     }
 
     @Override
     public String getDescription() {
 
-      return "*.jpg,*.JPG";
+      return "*." + suffix + ",*." + suffix.toUpperCase();
     }
-
-  }
-
-  private class BMPSaveFilter extends FileFilter {
-
-    @Override
-    public boolean accept(File f) {
-
-      if (f.isDirectory()) {
-        return true;
-      }
-
-      String s = f.getName();
-
-      return s.endsWith(".bmp") || s.endsWith(".BMP");
-    }
-
-    @Override
-    public String getDescription() {
-
-      return "*.bmp,*.BMP";
-    }
-
-  }
-
-  private class GIFSaveFilter extends FileFilter {
-
-    @Override
-    public boolean accept(File f) {
-
-      if (f.isDirectory()) {
-        return true;
-      }
-
-      String s = f.getName();
-
-      return s.endsWith(".gif") || s.endsWith(".GIF");
-    }
-
-    @Override
-    public String getDescription() {
-
-      return "*.gif,*.GIF";
-    }
-
-  }
-
-  private class PNGSaveFilter extends FileFilter {
-
-    @Override
-    public boolean accept(File f) {
-
-      if (f.isDirectory()) {
-        return true;
-      }
-
-      String s = f.getName();
-
-      return s.endsWith(".png") || s.endsWith(".PNG");
-    }
-
-    @Override
-    public String getDescription() {
-
-      return "*.png,*.PNG";
-    }
-
   }
 
   private class PopUpMenuClickListener extends MouseAdapter {
