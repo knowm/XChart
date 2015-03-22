@@ -1,7 +1,9 @@
 ## [![XChart](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_64_64.png)](http://xeiam.com/xchart) XChart
+
 A Simple Charting Library for Java
 
 ## Description
+
 XChart is a light-weight and convenient library for plotting data.
 
 Its focus is on simplicity and ease-of-use, requiring only two lines of code to save or display a basic default chart.
@@ -9,6 +11,8 @@ Its focus is on simplicity and ease-of-use, requiring only two lines of code to 
 Usage is very simple: Create a Chart instance, add a series of data to it, and either save it or display it.
 
 ## Example
+
+```java
 
     double[] xData = new double[] { 0.0, 1.0, 2.0 };
     double[] yData = new double[] { 2.0, 1.0, 0.0 };
@@ -24,30 +28,33 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
 
     // or save it in high-res
     BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
+```
 
 Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code/), [download the thing](http://xeiam.com/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
 ## Features
-* No required additional dependencies
-* ~100KB Jar
-* Line charts
-* Scatter charts
-* Area charts
-* Bar charts
-* Histogram charts
-* Error bars
-* Logarithmic axes
-* Date and category X-Axis
-* Multiple series
-* Extensive customization
-* Themes - XChart, GGPlot2, MATLAB
-* Right-click, Save-As...
-* User-defined axes range
-* Custom legend placement
-* CSV import and export
-* High resolution chart export
-* Real-time charts
- * [x] Java 6 and up
+
+* [x] No required additional dependencies
+* [x] ~100KB Jar
+* [x] Line charts
+* [x] Scatter charts
+* [x] Area charts
+* [x] Bar charts
+* [x] Histogram charts
+* [x] Error bars
+* [x] Logarithmic axes
+* [x] Date and category X-Axis
+* [x] Multiple series
+* [x] Extensive customization
+* [x] Themes - XChart, GGPlot2, MATLAB
+* [x] Right-click, Save-As...
+* [x] User-defined axes range
+* [x] Custom legend placement
+* [x] CSV import and export
+* [x] High resolution chart export
+* [x] Export as PNG, JPG, BMP, GIF, SVG, EPS, and PDF
+* [x] Real-time charts
+* [x] Java 6 and up
  
 ## Getting Started
 
@@ -61,14 +68,17 @@ The XChart release artifacts are hosted on Maven Central.
 
 Add the XChart library as a dependency to your pom.xml file:
 
+```xml
     <dependency>
         <groupId>com.xeiam.xchart</groupId>
         <artifactId>xchart</artifactId>
         <version>2.4.3</version>
     </dependency>
+```
 
 For snapshots, add the following to your pom.xml file:
 
+```xml
     <repository>
       <id>sonatype-oss-snapshot</id>
       <snapshots/>
@@ -80,6 +90,7 @@ For snapshots, add the following to your pom.xml file:
       <artifactId>xchart</artifactId>
       <version>2.4.4-SNAPSHOT</version>
     </dependency>
+```
 
 Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/](https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/)
 
@@ -97,8 +108,9 @@ Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/c
     mvn license:remove
 
 ## Running Demo
+
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.4.2.jar:xchart-2.4.2.jar com.xeiam.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.4.3.jar:xchart-2.4.3.jar com.xeiam.xchart.demo.XChartDemo
 
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
