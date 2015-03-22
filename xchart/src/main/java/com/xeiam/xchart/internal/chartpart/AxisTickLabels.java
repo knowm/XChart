@@ -88,8 +88,8 @@ public class AxisTickLabels implements ChartPart {
       for (Double tickLocation : axisLabelTextLayouts.keySet()) {
 
         TextLayout axisLabelTextLayout = axisLabelTextLayouts.get(tickLocation);
-        AffineTransform rot = getChartPainter().getStyleManager().getYAxisLabelRotation() == 0 ? null :
-          AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getYAxisLabelRotation()));
+        AffineTransform rot =
+            getChartPainter().getStyleManager().getYAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getYAxisLabelRotation()));
         Shape shape = axisLabelTextLayout.getOutline(rot);
         Rectangle2D tickLabelBounds = shape.getBounds();
 
@@ -144,8 +144,8 @@ public class AxisTickLabels implements ChartPart {
           TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
 
           // Shape shape = v.getOutline();
-          AffineTransform rot = getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null :
-            AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+          AffineTransform rot =
+              getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
           Shape shape = textLayout.getOutline(rot);
           Rectangle2D tickLabelBounds = shape.getBounds2D();
 

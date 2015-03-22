@@ -60,11 +60,11 @@ public class Plot implements ChartPart {
     // calculate bounds
     double xOffset = chartPainter.getAxisPair().getYAxis().getBounds().getX()
 
-        + chartPainter.getAxisPair().getYAxis().getBounds().getWidth()
+    + chartPainter.getAxisPair().getYAxis().getBounds().getWidth()
 
-        + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding()) : 0)
+    + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding()) : 0)
 
-        ;
+    ;
 
     double yOffset = chartPainter.getAxisPair().getYAxis().getBounds().getY();
     double width = chartPainter.getAxisPair().getXAxis().getBounds().getWidth();

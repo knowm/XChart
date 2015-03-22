@@ -16,7 +16,9 @@
 package com.xeiam.xchart;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+
 import java.util.Arrays;
+
 import org.junit.Test;
 
 /**
@@ -34,9 +36,9 @@ public class HistogramTest {
     assertThat(histogram.getNumBins()).isEqualTo(2);
     assertThat(histogram.getyAxisData().get(0) + histogram.getyAxisData().get(1)).isEqualTo(4);
 
-    //    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).build();
-    //    chart.addSeries("histogram 1", histogram.getxAxisData(), histogram.getyAxisData());
-    //    new SwingWrapper(chart).displayChart();
+    // Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).build();
+    // chart.addSeries("histogram 1", histogram.getxAxisData(), histogram.getyAxisData());
+    // new SwingWrapper(chart).displayChart();
   }
 
   @Test

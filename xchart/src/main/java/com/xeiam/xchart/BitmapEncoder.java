@@ -53,7 +53,7 @@ public final class BitmapEncoder {
   public enum BitmapFormat {
     PNG, JPG, BMP, GIF;
   }
-  
+
   /**
    * Only adds the extension of the BitmapFormat to the filename if the filename doesn't already have it.
    * 
@@ -62,13 +62,13 @@ public final class BitmapEncoder {
    * @return filename (if extension already exists), otherwise;: filename + "." + extension
    */
   public static String addFileExtension(String fileName, BitmapFormat bitmapFormat) {
-	  String fileNameWithFileExtension = fileName;
-	  final String newFileExtension = "." + bitmapFormat.toString().toLowerCase();
-	  if (fileName.length() <= newFileExtension.length() ||
-			  !fileName.substring(fileName.length()-newFileExtension.length(), fileName.length()).equalsIgnoreCase(newFileExtension)) {
-		  fileNameWithFileExtension = fileName + newFileExtension;
-	  }
-	  return fileNameWithFileExtension;
+
+    String fileNameWithFileExtension = fileName;
+    final String newFileExtension = "." + bitmapFormat.toString().toLowerCase();
+    if (fileName.length() <= newFileExtension.length() || !fileName.substring(fileName.length() - newFileExtension.length(), fileName.length()).equalsIgnoreCase(newFileExtension)) {
+      fileNameWithFileExtension = fileName + newFileExtension;
+    }
+    return fileNameWithFileExtension;
   }
 
   /**
@@ -101,8 +101,7 @@ public final class BitmapEncoder {
 
     double scaleFactor = DPI / 72.0;
 
-    BufferedImage bufferedImage = new BufferedImage((int) (chart.getWidth() * scaleFactor), (int) (chart.getHeight() * scaleFactor),
-        BufferedImage.TYPE_INT_RGB);
+    BufferedImage bufferedImage = new BufferedImage((int) (chart.getWidth() * scaleFactor), (int) (chart.getHeight() * scaleFactor), BufferedImage.TYPE_INT_RGB);
 
     Graphics2D graphics2D = bufferedImage.createGraphics();
 

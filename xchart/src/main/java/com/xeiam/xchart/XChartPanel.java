@@ -142,20 +142,26 @@ public class XChartPanel extends JPanel {
         try {
           if (fileChooser.getFileFilter() == null) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.PNG);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
-            BitmapEncoder.saveJPGWithQuality(chart, BitmapEncoder.addFileExtension(theFileToSave.getCanonicalPath().toString(), BitmapFormat.JPG),
-                1.0f);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
+            BitmapEncoder.saveJPGWithQuality(chart, BitmapEncoder.addFileExtension(theFileToSave.getCanonicalPath().toString(), BitmapFormat.JPG), 1.0f);
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.PNG);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.BMP);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath().toString(), BitmapFormat.GIF);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
             VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath().toString(), VectorGraphicsFormat.SVG);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
             VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath().toString(), VectorGraphicsFormat.EPS);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
+          }
+          else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
             VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath().toString(), VectorGraphicsFormat.PDF);
           }
         } catch (IOException e) {
@@ -172,12 +178,14 @@ public class XChartPanel extends JPanel {
    * @author Benedikt Bünz
    */
   private class SuffixSaveFilter extends FileFilter {
+
     private final String suffix;
 
     /**
      * @param suffix This file filter accepts all files that end with .suffix or the capitalized suffix.
      */
     public SuffixSaveFilter(String suffix) {
+
       this.suffix = suffix;
     }
 

@@ -147,11 +147,11 @@ public class Axis implements ChartPart {
       // Axis tick labels
       double axisTickLabelsHeight = 0.0;
       if (getChartPainter().getStyleManager().isXAxisTicksVisible()) {
-        String tickLabel = getChartPainter().getAxisPair().getXAxis().getAxisType().equals(AxisType.Date) ?
-            new SimpleDateFormat(getChartPainter().getStyleManager().getDatePattern()).format(new Date()) : "0";
+        String tickLabel =
+            getChartPainter().getAxisPair().getXAxis().getAxisType().equals(AxisType.Date) ? new SimpleDateFormat(getChartPainter().getStyleManager().getDatePattern()).format(new Date()) : "0";
         TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-        AffineTransform rot = getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null :
-          AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+        AffineTransform rot =
+            getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
         Shape shape = textLayout.getOutline(rot);
         Rectangle2D rectangle = shape.getBounds();
         axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
