@@ -62,6 +62,7 @@ import com.xeiam.xchart.demo.charts.scatter.ScatterChart01;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart02;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart03;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart04;
+import com.xeiam.xchart.demo.charts.scatter.ScatterChart05;
 import com.xeiam.xchart.demo.charts.theme.ThemeChart01;
 import com.xeiam.xchart.demo.charts.theme.ThemeChart02;
 import com.xeiam.xchart.demo.charts.theme.ThemeChart03;
@@ -232,10 +233,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart02 - Logarithmic Data", new ScatterChart02().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart03 - Single point", new ScatterChart03().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart03 - Single Point", new ScatterChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart04 - Error Bars", new ScatterChart04().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart05 - Logarithmic Data with Short Span", new ScatterChart05().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Bar category

@@ -77,10 +77,9 @@ public class DateFormatter {
 
   /**
    * Format a date value
-   * 
+   *
    * @param value
-   * @param min
-   * @param max
+   * @param timeUnit
    * @return
    */
   public String formatDate(double value, long timeUnit) {
