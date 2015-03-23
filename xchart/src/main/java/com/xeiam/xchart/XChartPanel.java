@@ -193,7 +193,7 @@ public class XChartPanel extends JPanel {
     public boolean accept(File f) {
 
       if (f.isDirectory()) {
-        return false;
+        return true;
       }
 
       String s = f.getName();
