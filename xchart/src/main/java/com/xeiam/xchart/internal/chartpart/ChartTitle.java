@@ -78,6 +78,7 @@ public class ChartTitle implements ChartPart {
       return chartPainter.getStyleManager().getChartPadding() + 2 * chartPainter.getStyleManager().getChartTitlePadding() + titleHeight;
     }
     else {
+      // TODO make this zero
       return chartPainter.getStyleManager().getChartPadding();
     }
   }

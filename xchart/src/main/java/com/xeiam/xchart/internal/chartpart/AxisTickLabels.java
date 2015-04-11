@@ -68,6 +68,7 @@ public class AxisTickLabels implements ChartPart {
       Map<Double, TextLayout> axisLabelTextLayouts = new HashMap<Double, TextLayout>();
 
       for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+
         String tickLabel = axisTick.getTickLabels().get(i);
         // System.out.println("** " + tickLabel);
         double tickLocation = axisTick.getTickLocations().get(i);

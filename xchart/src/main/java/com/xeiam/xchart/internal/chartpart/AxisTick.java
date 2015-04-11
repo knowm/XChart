@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
@@ -43,7 +44,7 @@ public class AxisTick implements ChartPart {
 
   /**
    * Constructor
-   * 
+   *
    * @param axis
    */
   protected AxisTick(Axis axis) {
@@ -115,8 +116,8 @@ public class AxisTick implements ChartPart {
 
       );
 
-      // g.setColor(Color.red);
-      // g.draw(bounds);
+      g.setColor(Color.red);
+      g.draw(bounds);
 
     }
     else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) {

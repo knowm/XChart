@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
@@ -28,7 +29,7 @@ import com.xeiam.xchart.StyleManager.LegendPosition;
 
 /**
  * Axis
- * 
+ *
  * @author timmolter
  */
 public class Axis implements ChartPart {
@@ -75,7 +76,7 @@ public class Axis implements ChartPart {
 
   /**
    * Constructor
-   * 
+   *
    * @param direction the axis direction (X or Y)
    * @param chart the chart
    */
@@ -129,40 +130,6 @@ public class Axis implements ChartPart {
     return bounds;
   }
 
-  /**
-   * @return
-   */
-  protected double getSizeHint() {
-
-    if (direction == Direction.X) { // X-Axis
-
-      // Axis title
-      double titleHeight = 0.0;
-      if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
-        TextLayout textLayout = new TextLayout(axisTitle.getText(), getChartPainter().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
-        Rectangle2D rectangle = textLayout.getBounds();
-        titleHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTitlePadding();
-      }
-
-      // Axis tick labels
-      double axisTickLabelsHeight = 0.0;
-      if (getChartPainter().getStyleManager().isXAxisTicksVisible()) {
-        String tickLabel =
-            getChartPainter().getAxisPair().getXAxis().getAxisType().equals(AxisType.Date) ? new SimpleDateFormat(getChartPainter().getStyleManager().getDatePattern()).format(new Date()) : "0";
-        TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-        AffineTransform rot =
-            getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
-        Shape shape = textLayout.getOutline(rot);
-        Rectangle2D rectangle = shape.getBounds();
-        axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
-      }
-      return titleHeight + axisTickLabelsHeight;
-    }
-    else { // Y-Axis
-      return 0; // We layout the yAxis first depending in the xAxis height hint. We don't care about the yAxis height hint
-    }
-  }
-
   @Override
   public void paint(Graphics2D g) {
 
@@ -188,8 +155,8 @@ public class Axis implements ChartPart {
       Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
       this.paintZone = yAxisRectangle;
-      // g.setColor(Color.green);
-      // g.draw(yAxisRectangle);
+      g.setColor(Color.green);
+      g.draw(yAxisRectangle);
 
       // fill in Axis with sub-components
       axisTitle.paint(g);
@@ -201,8 +168,8 @@ public class Axis implements ChartPart {
       height = paintZone.getHeight();
       bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
-      // g.setColor(Color.yellow);
-      // g.draw(bounds);
+      g.setColor(Color.yellow);
+      g.draw(bounds);
 
     }
     else { // X-Axis
@@ -242,8 +209,8 @@ public class Axis implements ChartPart {
       Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
       this.paintZone = xAxisRectangle;
-      // g.setColor(Color.green);
-      // g.draw(xAxisRectangle);
+      g.setColor(Color.green);
+      g.draw(xAxisRectangle);
 
       axisTitle.paint(g);
       axisTick.paint(g);
@@ -253,10 +220,47 @@ public class Axis implements ChartPart {
       width = paintZone.getWidth();
       height = (getChartPainter().getStyleManager().isXAxisTitleVisible() ? axisTitle.getBounds().getHeight() : 0) + axisTick.getBounds().getHeight();
       bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
-      // g.setColor(Color.yellow);
-      // g.draw(bounds);
+
+      g.setColor(Color.yellow);
+      g.draw(bounds);
     }
 
+  }
+
+  /**
+   * @return
+   */
+  private double getSizeHint() {
+
+    System.out.println(axisTick.getTickLabels());
+
+    if (direction == Direction.X) { // X-Axis
+
+      // Axis title
+      double titleHeight = 0.0;
+      if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
+        TextLayout textLayout = new TextLayout(axisTitle.getText(), getChartPainter().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
+        Rectangle2D rectangle = textLayout.getBounds();
+        titleHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTitlePadding();
+      }
+
+      // Axis tick labels
+      double axisTickLabelsHeight = 0.0;
+      if (getChartPainter().getStyleManager().isXAxisTicksVisible()) {
+        String tickLabel =
+            getChartPainter().getAxisPair().getXAxis().getAxisType().equals(AxisType.Date) ? new SimpleDateFormat(getChartPainter().getStyleManager().getDatePattern()).format(new Date()) : "0";
+        TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+        AffineTransform rot =
+            getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+        Shape shape = textLayout.getOutline(rot);
+        Rectangle2D rectangle = shape.getBounds();
+        axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
+      }
+      return titleHeight + axisTickLabelsHeight;
+    }
+    else { // Y-Axis
+      return 0; // We layout the yAxis first depending in the xAxis height hint. We don't care about the yAxis height hint
+    }
   }
 
   @Override
