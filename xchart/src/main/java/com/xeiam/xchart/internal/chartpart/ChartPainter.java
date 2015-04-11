@@ -109,6 +109,7 @@ public class ChartPainter {
 
     axisPair.paint(g);
     plot.paint(g);
+    // TODO why not just paint them first and skip the size hinting?
     chartTitle.paint(g);
     chartLegend.paint(g);
 

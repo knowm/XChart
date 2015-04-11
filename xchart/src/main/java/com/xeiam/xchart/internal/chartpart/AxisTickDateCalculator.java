@@ -70,11 +70,11 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     double firstPosition = getFirstPosition(gridStep);
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (double tickPosition = firstPosition; tickPosition <= maxValue + 2 * gridStep; tickPosition = tickPosition + gridStep) {
+    for (double value = firstPosition; value <= maxValue + 2 * gridStep; value = value + gridStep) {
 
-      tickLabels.add(dateFormatter.formatDate(tickPosition, timeUnit));
+      tickLabels.add(dateFormatter.formatDate(value, timeUnit));
       // here we convert tickPosition finally to plot space, i.e. pixels
-      double tickLabelPosition = margin + ((tickPosition - minValue) / (maxValue - minValue) * tickSpace);
+      double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
       tickLocations.add(tickLabelPosition);
     }
   }
