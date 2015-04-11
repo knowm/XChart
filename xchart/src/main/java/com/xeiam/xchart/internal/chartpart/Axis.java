@@ -137,7 +137,9 @@ public class Axis implements ChartPart {
     bounds = new Rectangle2D.Double();
 
     // determine Axis bounds
-    if (direction == Direction.Y) { // Y-Axis
+    if (direction == Direction.Y) { // Y-Axis - gets called first
+
+      // first determine the height of
 
       // calculate paint zone
       // ----
@@ -153,7 +155,6 @@ public class Axis implements ChartPart {
       double height =
           getChartPainter().getHeight() - yOffset - axisPair.getXAxis().getSizeHint() - getChartPainter().getStyleManager().getPlotPadding() - getChartPainter().getStyleManager().getChartPadding();
       Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
-
       this.paintZone = yAxisRectangle;
       g.setColor(Color.green);
       g.draw(yAxisRectangle);
@@ -179,7 +180,7 @@ public class Axis implements ChartPart {
 
       double xOffset =
           axisPair.getYAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0)
-              + getChartPainter().getStyleManager().getChartPadding();
+          + getChartPainter().getStyleManager().getChartPadding();
       double yOffset = axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
 
       double chartLegendWidth = 0;
@@ -191,19 +192,19 @@ public class Axis implements ChartPart {
 
           getChartPainter().getWidth()
 
-              - axisPair.getYAxis().getBounds().getWidth()
+          - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
 
-              - chartLegendWidth
+          - chartLegendWidth
 
-              - 2
+          - 2
               * getChartPainter().getStyleManager().getChartPadding()
 
-              - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
+          - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
-              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-                  .getChartPadding() : 0)
+          - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+              .getChartPadding() : 0)
 
-      ;
+              ;
 
       double height = this.getSizeHint();
       Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
@@ -232,8 +233,6 @@ public class Axis implements ChartPart {
    */
   private double getSizeHint() {
 
-    System.out.println(axisTick.getTickLabels());
-
     if (direction == Direction.X) { // X-Axis
 
       // Axis title
@@ -249,12 +248,12 @@ public class Axis implements ChartPart {
       if (getChartPainter().getStyleManager().isXAxisTicksVisible()) {
         String tickLabel =
             getChartPainter().getAxisPair().getXAxis().getAxisType().equals(AxisType.Date) ? new SimpleDateFormat(getChartPainter().getStyleManager().getDatePattern()).format(new Date()) : "0";
-        TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-        AffineTransform rot =
-            getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
-        Shape shape = textLayout.getOutline(rot);
-        Rectangle2D rectangle = shape.getBounds();
-        axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
+            TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+            AffineTransform rot =
+                getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+            Shape shape = textLayout.getOutline(rot);
+            Rectangle2D rectangle = shape.getBounds();
+            axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
       }
       return titleHeight + axisTickLabelsHeight;
     }

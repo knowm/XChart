@@ -15,7 +15,6 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
@@ -64,10 +63,12 @@ public class AxisTick implements ChartPart {
   public void paint(Graphics2D g) {
 
     double workingSpace = 0.0;
+    // Y-Axis
     if (axis.getDirection() == Axis.Direction.Y) {
       workingSpace = axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
       // System.out.println("workingspace= " + workingSpace);
     }
+    // X-Axis
     else if (axis.getDirection() == Axis.Direction.X) {
       workingSpace = axis.getPaintZone().getWidth(); // number of pixels the axis has to work with for drawing AxisTicks
       // System.out.println("workingspace= " + workingSpace);
@@ -116,8 +117,8 @@ public class AxisTick implements ChartPart {
 
       );
 
-      g.setColor(Color.red);
-      g.draw(bounds);
+      // g.setColor(Color.red);
+      // g.draw(bounds);
 
     }
     else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) {
