@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
@@ -170,8 +171,9 @@ public class AxisTickLabels implements ChartPart {
           g.setTransform(orig);
 
           // // debug box
-          // g.setColor(Color.blue);
-          // g.draw(new Rectangle2D.Double(xOffset + tickLocation - tickLabelBounds.getWidth() / 2.0, yOffset - tickLabelBounds.getHeight(), tickLabelBounds.getWidth(), tickLabelBounds.getHeight()));
+          g.setColor(Color.MAGENTA);
+          g.draw(new Rectangle2D.Double(xPos, yOffset - tickLabelBounds.getHeight(), tickLabelBounds.getWidth(), tickLabelBounds.getHeight()));
+          g.setColor(getChartPainter().getStyleManager().getAxisTickLabelsColor());
 
           if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
             maxTickLabelHeight = tickLabelBounds.getHeight();
