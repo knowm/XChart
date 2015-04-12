@@ -43,6 +43,11 @@ public class NumberFormatter {
     // System.out.println("min: " + min);
     // System.out.println("max: " + max);
 
+    // some special cases first
+    if (value.compareTo(BigDecimal.ZERO) == 0) {
+      return "0";
+    }
+
     double difference = max - min;
     int placeOfDifference;
     if (difference == 0.0) {
