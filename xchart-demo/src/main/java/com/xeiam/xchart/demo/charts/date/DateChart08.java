@@ -25,7 +25,6 @@ import java.util.Random;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
-import com.xeiam.xchart.StyleManager.TextAlignment;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
@@ -47,9 +46,11 @@ public class DateChart08 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().width(800).height(600).title("Year Scale").build();
     chart.getStyleManager().setLegendVisible(false);
-    chart.getStyleManager().setXAxisLabelRotation(45);
-    // chart.getStyleManager().setYAxisLabelRotation(90);
-    chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);
+    // chart.getStyleManager().setXAxisLabelRotation(45);
+    // chart.getStyleManager().setXAxisLabelRotation(90);
+    // chart.getStyleManager().setXAxisLabelRotation(20);
+    // chart.getStyleManager().setXAxisLabelRotation(80);
+    // chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);
     chart.getStyleManager().setDatePattern("yyyy-MM-dd");
 
     // generate data

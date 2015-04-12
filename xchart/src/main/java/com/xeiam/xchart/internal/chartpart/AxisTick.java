@@ -74,31 +74,7 @@ public class AxisTick implements ChartPart {
       // System.out.println("workingspace= " + workingSpace);
     }
 
-    if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
-
-      axisTickCalculator = new AxisTickBarChartCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter());
-
-    }
-    else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
-
-      axisTickCalculator = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
-
-    }
-    else if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
-
-      axisTickCalculator = new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
-
-    }
-    else if (axis.getAxisType() == AxisType.Number) {
-
-      axisTickCalculator = new AxisTickNumericalCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
-
-    }
-    else if (axis.getAxisType() == AxisType.Date) {
-
-      axisTickCalculator = new AxisTickDateCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
-
-    }
+    axisTickCalculator = getAxisTickCalculator(workingSpace);
 
     if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) {
 
@@ -107,15 +83,15 @@ public class AxisTick implements ChartPart {
 
       bounds = new Rectangle2D.Double(
 
-      axisTickLabels.getBounds().getX(),
+          axisTickLabels.getBounds().getX(),
 
-      axisTickLabels.getBounds().getY(),
+          axisTickLabels.getBounds().getY(),
 
-      axisTickLabels.getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
+          axisTickLabels.getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
 
-      axisTickMarks.getBounds().getHeight()
+          axisTickMarks.getBounds().getHeight()
 
-      );
+          );
 
       // g.setColor(Color.red);
       // g.draw(bounds);
@@ -134,6 +110,35 @@ public class AxisTick implements ChartPart {
 
     }
 
+  }
+
+  public AxisTickCalculator getAxisTickCalculator(double workingSpace) {
+
+    if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
+
+      return new AxisTickBarChartCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter());
+
+    }
+    else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+
+      return new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
+
+    }
+    else if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
+
+      return new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
+
+    }
+    else if (axis.getAxisType() == AxisType.Date) {
+
+      return new AxisTickDateCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
+
+    }
+    else { // number
+
+      return new AxisTickNumericalCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
+
+    }
   }
 
   @Override
