@@ -122,7 +122,8 @@ public class AxisTickLabels implements ChartPart {
       // g.draw(bounds);
 
     }
-    else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) { // X-Axis
+    // X-Axis
+    else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) {
 
       double xOffset = axisTick.getAxis().getPaintZone().getX();
       double yOffset = axisTick.getAxis().getAxisTitle().getBounds().getY();

@@ -62,6 +62,7 @@ public class PlotSurface implements ChartPart {
     // paint plot border
     if (getChartPainter().getStyleManager().isPlotBorderVisible()) {
       g.setColor(getChartPainter().getStyleManager().getPlotBorderColor());
+      // g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
       g.draw(rect);
     }
 
@@ -84,6 +85,7 @@ public class PlotSurface implements ChartPart {
             Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
             g.draw(line);
           }
+
           // tick marks
           if (getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
 
@@ -100,11 +102,11 @@ public class PlotSurface implements ChartPart {
       // vertical
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar
 
-      && (getChartPainter().getStyleManager().isPlotGridLinesVisible()
+          && (getChartPainter().getStyleManager().isPlotGridLinesVisible()
 
-      || getChartPainter().getStyleManager().isPlotTicksMarksVisible())
+              || getChartPainter().getStyleManager().isPlotTicksMarksVisible())
 
-      ) {
+          ) {
 
         List<Double> xAxisTickLocations = getChartPainter().getAxisPair().getXAxis().getAxisTick().getTickLocations();
         for (int i = 0; i < xAxisTickLocations.size(); i++) {

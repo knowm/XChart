@@ -280,6 +280,7 @@ public class PlotContentLineChart extends PlotContent {
     }
 
     g.setClip(null);
+
   }
 
   /**
