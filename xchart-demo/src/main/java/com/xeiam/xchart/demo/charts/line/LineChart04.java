@@ -53,6 +53,7 @@ public class LineChart04 implements ExampleChart {
       series.setLineStyle(SeriesLineStyle.SOLID);
       series.setMarker(SeriesMarker.CIRCLE);
       series.setMarkerColor(SeriesColor.BLUE);
+
     }
 
     return chart;

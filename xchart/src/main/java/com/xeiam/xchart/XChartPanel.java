@@ -88,7 +88,9 @@ public class XChartPanel extends JPanel {
 
     super.paintComponent(g);
 
-    chart.paint((Graphics2D) g, getWidth(), getHeight());
+    Graphics2D g2d = (Graphics2D) g.create();
+    chart.paint(g2d, getWidth(), getHeight());
+    g2d.dispose();
   }
 
   @Override
