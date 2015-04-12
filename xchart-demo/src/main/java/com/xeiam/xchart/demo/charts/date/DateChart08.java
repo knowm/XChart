@@ -46,7 +46,7 @@ public class DateChart08 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().width(800).height(600).title("Year Scale").build();
     chart.getStyleManager().setLegendVisible(false);
-    // chart.getStyleManager().setXAxisLabelRotation(45);
+    chart.getStyleManager().setXAxisLabelRotation(45);
     // chart.getStyleManager().setXAxisLabelRotation(90);
     // chart.getStyleManager().setXAxisLabelRotation(20);
     // chart.getStyleManager().setXAxisLabelRotation(80);

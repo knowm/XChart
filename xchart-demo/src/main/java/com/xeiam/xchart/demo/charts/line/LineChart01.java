@@ -21,7 +21,6 @@ import java.util.List;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.ChartBuilder;
 import com.xeiam.xchart.StyleManager.LegendPosition;
-import com.xeiam.xchart.StyleManager.TextAlignment;
 import com.xeiam.xchart.SwingWrapper;
 import com.xeiam.xchart.demo.charts.ExampleChart;
 
@@ -61,7 +60,10 @@ public class LineChart01 implements ExampleChart {
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyleManager().setYAxisLogarithmic(true);
-    chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);
+    // chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);
+    chart.getStyleManager().setXAxisLabelRotation(45);
+    // chart.getStyleManager().setXAxisLabelRotation(90);
+    // chart.getStyleManager().setXAxisLabelRotation(0);
 
     // Series
     chart.addSeries("10^x", xData, yData);

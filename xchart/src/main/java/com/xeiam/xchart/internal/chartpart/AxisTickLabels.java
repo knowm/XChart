@@ -144,10 +144,10 @@ public class AxisTickLabels implements ChartPart {
 
           FontRenderContext frc = g.getFontRenderContext();
           TextLayout textLayout = new TextLayout(tickLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), frc);
+          System.out.println(textLayout.getOutline(null).getBounds().toString());
 
           // Shape shape = v.getOutline();
-          AffineTransform rot =
-              getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+          AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()), 0, 0);
           Shape shape = textLayout.getOutline(rot);
           Rectangle2D tickLabelBounds = shape.getBounds2D();
 
@@ -165,12 +165,23 @@ public class AxisTickLabels implements ChartPart {
           default:
             xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
           }
-          at.translate(xPos, yOffset);
+          System.out.println("tickLabelBounds: " + tickLabelBounds.toString());
+          // double shift = tickLabelBounds.getWidth() * Math.sin(Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+          double shiftX = -1 * tickLabelBounds.getX() * Math.sin(Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+          // double shiftY = textLayout.getOutline(null).getBounds().getHeight() * Math.cos(Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+          // double shiftY = 0;
+          double shiftY = -1 * (tickLabelBounds.getY() + tickLabelBounds.getHeight());
+          // double shift = tickLabelBounds.getWidth() / 2.0;
+          // double shift = 0;
+          System.out.println(shiftX);
+          System.out.println("shiftY: " + shiftY);
+          at.translate(xPos + shiftX, yOffset + shiftY);
+
           g.transform(at);
           g.fill(shape);
           g.setTransform(orig);
 
-          // // debug box
+          // debug box
           g.setColor(Color.MAGENTA);
           g.draw(new Rectangle2D.Double(xPos, yOffset - tickLabelBounds.getHeight(), tickLabelBounds.getWidth(), tickLabelBounds.getHeight()));
           g.setColor(getChartPainter().getStyleManager().getAxisTickLabelsColor());
