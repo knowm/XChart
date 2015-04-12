@@ -74,7 +74,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     // generate all tickLabels and tickLocations from the first to last position
     for (BigDecimal value = cleanedFirstPosition; value.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0; value = value.add(cleanedGridStep)) {
 
-      // System.out.println(tickPosition);
+      // System.out.println(value);
       String tickLabel = numberFormatter.formatNumber(value, minValue, maxValue, axisDirection);
       // System.out.println(tickLabel);
       tickLabels.add(tickLabel);
