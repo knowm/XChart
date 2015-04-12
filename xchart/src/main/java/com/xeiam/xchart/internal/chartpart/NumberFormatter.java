@@ -165,7 +165,12 @@ public class NumberFormatter {
       decimalPattern = styleManager.getDecimalPattern();
     }
     else {
-      decimalPattern = "0E0";
+      if (Math.abs(value) > 1000.0 || Math.abs(value) < 0.001) {
+        decimalPattern = "0E0";
+      }
+      else {
+        decimalPattern = "0.###";
+      }
     }
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
