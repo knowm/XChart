@@ -30,6 +30,11 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
 
 /**
  * Year scale
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Rotated X-Axis labels
+ * <li>Setting a custom date formatter String
  */
 public class DateChart08 implements ExampleChart {
 
@@ -47,11 +52,6 @@ public class DateChart08 implements ExampleChart {
     Chart chart = new ChartBuilder().width(800).height(600).title("Year Scale").build();
     chart.getStyleManager().setLegendVisible(false);
     chart.getStyleManager().setXAxisLabelRotation(45);
-    // chart.getStyleManager().setXAxisLabelRotation(90);
-    // chart.getStyleManager().setXAxisLabelRotation(20);
-    // chart.getStyleManager().setXAxisLabelRotation(80);
-    // chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);
-    chart.getStyleManager().setDatePattern("yyyy-MM-dd");
 
     // generate data
     List<Date> xData = new ArrayList<Date>();
