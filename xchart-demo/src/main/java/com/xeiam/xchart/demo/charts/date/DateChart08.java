@@ -49,7 +49,7 @@ public class DateChart08 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).title("Year Scale").build();
+    Chart chart = new ChartBuilder().width(800).height(600).title("Rotated Tick Labels").build();
     chart.getStyleManager().setLegendVisible(false);
     chart.getStyleManager().setXAxisLabelRotation(45);
 
