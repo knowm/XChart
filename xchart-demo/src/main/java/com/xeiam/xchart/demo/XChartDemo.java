@@ -308,7 +308,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DateChart07 - Year Scale", new DateChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DateChart08 - Rotated Labels", new DateChart08().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DateChart08 - Rotated Tick Labels", new DateChart08().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Real-time category

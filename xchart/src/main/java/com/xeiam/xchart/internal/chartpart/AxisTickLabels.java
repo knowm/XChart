@@ -167,8 +167,8 @@ public class AxisTickLabels implements ChartPart {
           // System.out.println("tickLabelBounds: " + tickLabelBounds.toString());
           double shiftX = -1 * tickLabelBounds.getX() * Math.sin(Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
           double shiftY = -1 * (tickLabelBounds.getY() + tickLabelBounds.getHeight());
-          System.out.println(shiftX);
-          System.out.println("shiftY: " + shiftY);
+          // System.out.println(shiftX);
+          // System.out.println("shiftY: " + shiftY);
           at.translate(xPos + shiftX, yOffset + shiftY);
 
           g.transform(at);
