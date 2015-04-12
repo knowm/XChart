@@ -89,9 +89,7 @@ public class AxisTickLabels implements ChartPart {
       for (Double tickLocation : axisLabelTextLayouts.keySet()) {
 
         TextLayout axisLabelTextLayout = axisLabelTextLayouts.get(tickLocation);
-        AffineTransform rot =
-            getChartPainter().getStyleManager().getYAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getYAxisLabelRotation()));
-        Shape shape = axisLabelTextLayout.getOutline(rot);
+        Shape shape = axisLabelTextLayout.getOutline(null);
         Rectangle2D tickLabelBounds = shape.getBounds();
 
         double flippedTickLocation = yOffset + height - tickLocation;
