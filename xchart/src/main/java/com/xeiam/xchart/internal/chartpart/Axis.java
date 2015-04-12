@@ -158,23 +158,23 @@ public class Axis implements ChartPart {
 
           getChartPainter().getWidth()
 
-          - width // y-axis approx. width
+              - width // y-axis approx. width
 
-          - chartLegendWidth
+              - chartLegendWidth
 
-          - 2
-              * getChartPainter().getStyleManager().getChartPadding()
+              - 2
+          * getChartPainter().getStyleManager().getChartPadding()
 
-          - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
+              - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
-          - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-              .getChartPadding() : 0)
+              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+                  .getChartPadding() : 0)
 
-              ;
+      ;
 
       double height =
           getChartPainter().getHeight() - yOffset - axisPair.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - getChartPainter().getStyleManager().getPlotPadding()
-              - getChartPainter().getStyleManager().getChartPadding();
+          - getChartPainter().getStyleManager().getChartPadding();
       Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -201,7 +201,7 @@ public class Axis implements ChartPart {
 
       double xOffset =
           axisPair.getYAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0)
-          + getChartPainter().getStyleManager().getChartPadding();
+              + getChartPainter().getStyleManager().getChartPadding();
       double yOffset = axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
 
       double chartLegendWidth = 0;
@@ -213,19 +213,19 @@ public class Axis implements ChartPart {
 
           getChartPainter().getWidth()
 
-          - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
+              - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
 
-          - chartLegendWidth
+              - chartLegendWidth
 
-          - 2
-              * getChartPainter().getStyleManager().getChartPadding()
+              - 2
+          * getChartPainter().getStyleManager().getChartPadding()
 
-          - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
+              - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
-          - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-              .getChartPadding() : 0)
+              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+                  .getChartPadding() : 0)
 
-              ;
+      ;
 
       double height = this.getXAxisHeightHint(width);
       Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
@@ -248,6 +248,9 @@ public class Axis implements ChartPart {
   }
 
   /**
+   * The vertical Y-Axis is drawn first, but to know the lower bounds of it, we need to know how high the X-Axis paint zone is going to be. Since the tick labels could be rotated, we need to actually
+   * determine the tick labels first to get an idea of how tall thew X-Axis tick labels will be.
+   * 
    * @return
    */
   private double getXAxisHeightHint(double workingSpace) {
