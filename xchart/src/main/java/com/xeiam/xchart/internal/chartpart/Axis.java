@@ -227,7 +227,14 @@ public class Axis implements ChartPart {
 
       ;
 
-      double height = this.getXAxisHeightHint(width);
+      // double height = this.getXAxisHeightHint(width);
+      // System.out.println("height: " + height);
+      // the Y-Axis was already draw at this point so we know how much vertical room is left for the X-Axis
+      double height =
+          getChartPainter().getHeight() - axisPair.getYAxis().getBounds().getY() - axisPair.getYAxis().getBounds().getHeight() - getChartPainter().getStyleManager().getChartPadding()
+          - getChartPainter().getStyleManager().getPlotPadding();
+      // System.out.println("height2: " + height2);
+
       Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
       // the paint zone
@@ -249,8 +256,8 @@ public class Axis implements ChartPart {
 
   /**
    * The vertical Y-Axis is drawn first, but to know the lower bounds of it, we need to know how high the X-Axis paint zone is going to be. Since the tick labels could be rotated, we need to actually
-   * determine the tick labels first to get an idea of how tall thew X-Axis tick labels will be.
-   * 
+   * determine the tick labels first to get an idea of how tall the X-Axis tick labels will be.
+   *
    * @return
    */
   private double getXAxisHeightHint(double workingSpace) {
@@ -271,11 +278,9 @@ public class Axis implements ChartPart {
       AxisTickCalculator axisTickCalculator = axisTick.getAxisTickCalculator(workingSpace);
       String sampleLabel = axisTickCalculator.getTickLabels().get(0);
 
-      // String tickLabel =
-      // getChartPainter().getAxisPair().getXAxis().getAxisType().equals(AxisType.Date) ? new SimpleDateFormat(getChartPainter().getStyleManager().getDatePattern()).format(new Date()) : "0";
       TextLayout textLayout = new TextLayout(sampleLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
       AffineTransform rot =
-          getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
+          getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(getChartPainter().getStyleManager().getXAxisLabelRotation()));
       Shape shape = textLayout.getOutline(rot);
       Rectangle2D rectangle = shape.getBounds();
       axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();

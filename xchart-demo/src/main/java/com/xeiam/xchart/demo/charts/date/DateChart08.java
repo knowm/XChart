@@ -51,8 +51,8 @@ public class DateChart08 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().width(800).height(600).title("Rotated Tick Labels").build();
     chart.getStyleManager().setLegendVisible(false);
-    chart.getStyleManager().setXAxisLabelRotation(45);
-
+    chart.getStyleManager().setXAxisLabelRotation(60);
+    chart.getStyleManager().setDatePattern("yyyy-MM-dd");
     // generate data
     List<Date> xData = new ArrayList<Date>();
     List<Double> yData = new ArrayList<Double>();
