@@ -51,7 +51,7 @@ public class Legend implements ChartPart {
 
   /**
    * Constructor
-   * 
+   *
    * @param chartPainter
    */
   public Legend(ChartPainter chartPainter) {
@@ -61,7 +61,7 @@ public class Legend implements ChartPart {
 
   /**
    * get the width of the chart legend
-   * 
+   *
    * @param g
    * @return
    */
@@ -161,7 +161,8 @@ public class Legend implements ChartPart {
       break;
     }
 
-    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
+
     Shape rect = new Rectangle2D.Double(xOffset + 1, yOffset + 1, legendBoxWidth - 2, legendBoxHeight - 2);
     g.setColor(styleManager.getLegendBackgroundColor());
     g.fill(rect);
