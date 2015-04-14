@@ -158,23 +158,23 @@ public class Axis implements ChartPart {
 
           getChartPainter().getWidth()
 
-          - width // y-axis approx. width
+              - width // y-axis approx. width
 
-          - chartLegendWidth
+              - chartLegendWidth
 
-          - 2
-              * getChartPainter().getStyleManager().getChartPadding()
+              - 2
+          * getChartPainter().getStyleManager().getChartPadding()
 
-          - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
+              - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
-          - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-              .getChartPadding() : 0)
+              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+                  .getChartPadding() : 0)
 
-              ;
+      ;
 
       double height =
           getChartPainter().getHeight() - yOffset - axisPair.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - getChartPainter().getStyleManager().getPlotPadding()
-              - getChartPainter().getStyleManager().getChartPadding();
+          - getChartPainter().getStyleManager().getChartPadding();
       Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -201,7 +201,7 @@ public class Axis implements ChartPart {
 
       double xOffset =
           axisPair.getYAxis().getBounds().getWidth() + (getChartPainter().getStyleManager().isYAxisTicksVisible() ? getChartPainter().getStyleManager().getPlotPadding() : 0)
-          + getChartPainter().getStyleManager().getChartPadding();
+              + getChartPainter().getStyleManager().getChartPadding();
       double yOffset = axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
 
       double chartLegendWidth = 0;
@@ -213,26 +213,26 @@ public class Axis implements ChartPart {
 
           getChartPainter().getWidth()
 
-          - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
+              - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
 
-          - chartLegendWidth
+              - chartLegendWidth
 
-          - 2
-              * getChartPainter().getStyleManager().getChartPadding()
+              - 2
+          * getChartPainter().getStyleManager().getChartPadding()
 
-          - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
+              - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
-          - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-              .getChartPadding() : 0)
+              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+                  .getChartPadding() : 0)
 
-              ;
+      ;
 
       // double height = this.getXAxisHeightHint(width);
       // System.out.println("height: " + height);
       // the Y-Axis was already draw at this point so we know how much vertical room is left for the X-Axis
       double height =
           getChartPainter().getHeight() - axisPair.getYAxis().getBounds().getY() - axisPair.getYAxis().getBounds().getHeight() - getChartPainter().getStyleManager().getChartPadding()
-              - getChartPainter().getStyleManager().getPlotPadding();
+          - getChartPainter().getStyleManager().getPlotPadding();
       // System.out.println("height2: " + height2);
 
       Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
@@ -279,7 +279,7 @@ public class Axis implements ChartPart {
       String sampleLabel = axisTickCalculator.getTickLabels().get(0);
       // find the longest String in all the labels
       for (int i = 1; i < axisTickCalculator.getTickLabels().size(); i++) {
-        if (axisTickCalculator.getTickLabels().get(i).length() > sampleLabel.length()) {
+        if (axisTickCalculator.getTickLabels().get(i) != null && axisTickCalculator.getTickLabels().get(i).length() > sampleLabel.length()) {
           sampleLabel = axisTickCalculator.getTickLabels().get(i);
         }
       }
