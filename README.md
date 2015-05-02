@@ -52,7 +52,8 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code
 * [x] Custom legend placement
 * [x] CSV import and export
 * [x] High resolution chart export
-* [x] Export as PNG, JPG, BMP, GIF, SVG, EPS, and PDF
+* [x] Export as PNG, JPG, BMP, GIF and EPS
+* [x] Export SVG and PDF using optional de.erichseifert.vectorgraphics2d library
 * [x] Real-time charts
 * [x] Java 6 and up
  
@@ -94,12 +95,23 @@ For snapshots, add the following to your pom.xml file:
 
 Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/](https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/)
 
+### SBT
+
+To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
+
+```scala
+libraryDependencies += "com.xeiam.xchart" % "xchart" % "2.5.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+```
+(SBT/Ivy does not seem to respect the optional [VectorGraphics2D](https://github.com/eseifert/vectorgraphics2d) dependency and as it does not exist in Maven Central the build will fail unless it is excluded or available in a local repository.)
+
 ## Building
 
 #### general
 
     mvn clean package  
     mvn javadoc:aggregate  
+
+Note: in order to add support for SVG and PDF exports the optional [VectorGraphics2D](https://github.com/eseifert/vectorgraphics2d) has to be downloaded installed locally as it is not available in Maven Central. Make sure to checkout and build the right version! 
 
 #### maven-license-plugin
 
