@@ -15,10 +15,10 @@
  */
 package com.xeiam.xchart.demo.charts.realtime;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
 
@@ -105,7 +105,7 @@ public class RealtimeChart02 implements ExampleChart {
 
   private List<Double> getRandomData(int numPoints) {
 
-    List<Double> data = new ArrayList<Double>();
+    List<Double> data = new CopyOnWriteArrayList<Double>();
     for (int i = 0; i < numPoints; i++) {
       data.add(Math.random() * 100);
     }
@@ -114,7 +114,7 @@ public class RealtimeChart02 implements ExampleChart {
 
   private List<Integer> getMonotonicallyIncreasingData(int numPoints) {
 
-    List<Integer> data = new ArrayList<Integer>();
+    List<Integer> data = new CopyOnWriteArrayList<Integer>();
     for (int i = 0; i < numPoints; i++) {
       data.add(i);
     }
