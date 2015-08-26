@@ -19,6 +19,6 @@ import com.xeiam.xchart.Chart;
 
 public interface ExampleChart {
 
-  public Chart getChart();
+  Chart getChart();
 
 }

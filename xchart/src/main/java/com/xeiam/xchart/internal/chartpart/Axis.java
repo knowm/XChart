@@ -33,7 +33,7 @@ public class Axis implements ChartPart {
 
   public enum AxisType {
 
-    Number, Date, String;
+    Number, Date, String
   }
 
   /** parent */

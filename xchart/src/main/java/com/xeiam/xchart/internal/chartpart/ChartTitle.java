@@ -74,7 +74,7 @@ public class ChartTitle implements ChartPart {
 
       TextLayout textLayout = new TextLayout(text, chartPainter.getStyleManager().getChartTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
-      int titleHeight = (int) ((chartPainter.getStyleManager().isChartTitleVisible() ? rectangle.getHeight() : 0));
+      int titleHeight =(int) (chartPainter.getStyleManager().isChartTitleVisible() ? rectangle.getHeight() : 0);
       return chartPainter.getStyleManager().getChartPadding() + 2 * chartPainter.getStyleManager().getChartTitlePadding() + titleHeight;
     }
     else {

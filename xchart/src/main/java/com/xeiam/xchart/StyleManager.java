@@ -67,7 +67,7 @@ public class StyleManager {
   }
 
   public enum TextAlignment {
-    Left, Centre, Right;
+    Left, Centre, Right
   }
 
   /** the default Theme */

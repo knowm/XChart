@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_6" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<lib name="Maven: junit:junit:4.11" scope="TEST"/>
+	<lib name="Maven: org.hamcrest:hamcrest-core:1.3" scope="TEST"/>
+	<lib name="Maven: org.easytesting:fest-assert-core:2.0M10" scope="TEST"/>
+	<lib name="Maven: org.easytesting:fest-util:1.2.5" scope="TEST"/>
+	<levels>
+		<level name="Maven: de.erichseifert.vectorgraphics2d:VectorGraphics2D:0.9.1" value="project"/>
+		<level name="Maven: junit:junit:4.11" value="project"/>
+		<level name="Maven: org.hamcrest:hamcrest-core:1.3" value="project"/>
+		<level name="Maven: org.easytesting:fest-assert-core:2.0M10" value="project"/>
+		<level name="Maven: org.easytesting:fest-util:1.2.5" value="project"/>
+	</levels>
+</component>

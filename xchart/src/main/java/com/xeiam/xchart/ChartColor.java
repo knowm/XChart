@@ -57,7 +57,7 @@ public enum ChartColor {
    * 
    * @param color
    */
-  private ChartColor(Color color) {
+  ChartColor(Color color) {
 
     this.color = color;
   }

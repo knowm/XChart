@@ -133,7 +133,7 @@ public class PlotContentBarChart extends PlotContent {
       int barCounter = 0;
       while (yItr.hasNext()) {
 
-        double y = ((Number) yItr.next()).doubleValue();
+        double y = yItr.next().doubleValue();
         if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
           y = Math.log10(y);
         }

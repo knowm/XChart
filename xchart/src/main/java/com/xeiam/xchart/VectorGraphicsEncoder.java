@@ -38,7 +38,7 @@ public final class VectorGraphicsEncoder {
   }
 
   public enum VectorGraphicsFormat {
-    EPS, PDF, SVG;
+    EPS, PDF, SVG
   }
 
   public static void saveVectorGraphic(Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {

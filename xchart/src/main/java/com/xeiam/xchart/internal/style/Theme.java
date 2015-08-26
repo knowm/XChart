@@ -28,110 +28,110 @@ public interface Theme {
 
   // Chart Style ///////////////////////////////
 
-  public Color getChartBackgroundColor();
+  Color getChartBackgroundColor();
 
-  public Color getChartFontColor();
+  Color getChartFontColor();
 
-  public int getChartPadding();
+  int getChartPadding();
 
   // Chart Title ///////////////////////////////
 
-  public Font getChartTitleFont();
+  Font getChartTitleFont();
 
-  public boolean isChartTitleVisible();
+  boolean isChartTitleVisible();
 
-  public boolean isChartTitleBoxVisible();
+  boolean isChartTitleBoxVisible();
 
-  public Color getChartTitleBoxBackgroundColor();
+  Color getChartTitleBoxBackgroundColor();
 
-  public Color getChartTitleBoxBorderColor();
+  Color getChartTitleBoxBorderColor();
 
-  public int getChartTitlePadding();
+  int getChartTitlePadding();
 
   // Chart Legend ///////////////////////////////
 
-  public Font getLegendFont();
+  Font getLegendFont();
 
-  public boolean isLegendVisible();
+  boolean isLegendVisible();
 
-  public Color getLegendBackgroundColor();
+  Color getLegendBackgroundColor();
 
-  public Color getLegendBorderColor();
+  Color getLegendBorderColor();
 
-  public int getLegendPadding();
+  int getLegendPadding();
 
-  public int getLegendSeriesLineLength();
+  int getLegendSeriesLineLength();
 
-  public LegendPosition getLegendPosition();
+  LegendPosition getLegendPosition();
 
   // Chart Axes ///////////////////////////////
 
-  public boolean isXAxisTitleVisible();
+  boolean isXAxisTitleVisible();
 
-  public boolean isYAxisTitleVisible();
+  boolean isYAxisTitleVisible();
 
-  public Font getAxisTitleFont();
+  Font getAxisTitleFont();
 
-  public boolean isXAxisTicksVisible();
+  boolean isXAxisTicksVisible();
 
-  public boolean isYAxisTicksVisible();
+  boolean isYAxisTicksVisible();
 
-  public Font getAxisTickLabelsFont();
+  Font getAxisTickLabelsFont();
 
-  public int getAxisTickMarkLength();
+  int getAxisTickMarkLength();
 
-  public int getAxisTickPadding();
+  int getAxisTickPadding();
 
-  public Color getAxisTickMarksColor();
+  Color getAxisTickMarksColor();
 
-  public Stroke getAxisTickMarksStroke();
+  Stroke getAxisTickMarksStroke();
 
-  public Color getAxisTickLabelsColor();
+  Color getAxisTickLabelsColor();
 
-  public boolean isAxisTicksLineVisible();
+  boolean isAxisTicksLineVisible();
 
-  public boolean isAxisTicksMarksVisible();
+  boolean isAxisTicksMarksVisible();
 
-  public int getAxisTitlePadding();
+  int getAxisTitlePadding();
 
-  public int getPlotPadding();
+  int getPlotPadding();
 
-  public int getXAxisTickMarkSpacingHint();
+  int getXAxisTickMarkSpacingHint();
 
-  public int getYAxisTickMarkSpacingHint();
+  int getYAxisTickMarkSpacingHint();
 
   // Chart Plot Area ///////////////////////////////
 
-  public boolean isPlotGridLinesVisible();
+  boolean isPlotGridLinesVisible();
 
-  public Color getPlotBackgroundColor();
+  Color getPlotBackgroundColor();
 
-  public Color getPlotBorderColor();
+  Color getPlotBorderColor();
 
-  public boolean isPlotBorderVisible();
+  boolean isPlotBorderVisible();
 
-  public Color getPlotGridLinesColor();
+  Color getPlotGridLinesColor();
 
-  public Stroke getPlotGridLinesStroke();
+  Stroke getPlotGridLinesStroke();
 
-  public boolean isPlotTicksMarksVisible();
+  boolean isPlotTicksMarksVisible();
 
   // Bar Charts ///////////////////////////////
 
-  public double getBarWidthPercentage();
+  double getBarWidthPercentage();
 
-  public boolean isBarsOverlapped();
+  boolean isBarsOverlapped();
 
-  public boolean isBarFilled();
+  boolean isBarFilled();
 
   // Line, Scatter, Area Charts ///////////////////////////////
 
-  public int getMarkerSize();
+  int getMarkerSize();
 
   // Error Bars ///////////////////////////////
 
-  public Color getErrorBarsColor();
+  Color getErrorBarsColor();
 
-  public boolean isErrorBarsColorSeriesColor();
+  boolean isErrorBarsColorSeriesColor();
 
 }
