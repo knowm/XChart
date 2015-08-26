@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
 
@@ -37,9 +38,9 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  */
 public class RealtimeChart03 implements ExampleChart {
 
-  private List<Integer> xData = new ArrayList<Integer>();
-  private List<Double> yData = new ArrayList<Double>();
-  private List<Double> errorBars = new ArrayList<Double>();
+  private List<Integer> xData = new CopyOnWriteArrayList<Integer>();
+  private List<Double> yData = new CopyOnWriteArrayList<Double>();
+  private List<Double> errorBars = new CopyOnWriteArrayList<Double>();
 
   public static final String SERIES_NAME = "series1";
 
