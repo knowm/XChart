@@ -38,7 +38,7 @@ public class AxisTitle implements ChartPart {
 
   /**
    * Constructor
-   * 
+   *
    * @param axis the axis
    */
   protected AxisTitle(Axis axis) {
@@ -72,20 +72,24 @@ public class AxisTitle implements ChartPart {
 
         int xOffset = (int) (axis.getPaintZone().getX() + nonRotatedRectangle.getHeight());
         int yOffset = (int) ((axis.getPaintZone().getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + axis.getPaintZone().getY());
+
+        AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.PI / 2, 0, 0);
+        Shape shape = nonRotatedTextLayout.getOutline(rot);
+
         AffineTransform orig = g.getTransform();
         AffineTransform at = new AffineTransform();
-        at.rotate(Math.PI / -2.0, xOffset, yOffset);
+
+        at.translate(xOffset, yOffset);
         g.transform(at);
-        g.drawString(text, xOffset, yOffset);
+        g.fill(shape);
         g.setTransform(orig);
 
         // ///////////////////////////////////////////////
         // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
-        bounds =
-            new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight()
-                + getChartPainter().getStyleManager().getAxisTitlePadding(), nonRotatedRectangle.getWidth());
+        bounds = new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight() + getChartPainter().getStyleManager()
+            .getAxisTitlePadding(), nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
       }
@@ -115,9 +119,8 @@ public class AxisTitle implements ChartPart {
         g.fill(shape);
         g.setTransform(orig);
 
-        bounds =
-            new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight()
-                + getChartPainter().getStyleManager().getAxisTitlePadding());
+        bounds = new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight() + getChartPainter().getStyleManager()
+            .getAxisTitlePadding());
         // g.setColor(Color.blue);
         // g.draw(bounds);
 
