@@ -58,6 +58,7 @@ import com.xeiam.xchart.demo.charts.line.LineChart05;
 import com.xeiam.xchart.demo.charts.line.LineChart06;
 import com.xeiam.xchart.demo.charts.realtime.RealtimeChart01;
 import com.xeiam.xchart.demo.charts.realtime.RealtimeChart02;
+import com.xeiam.xchart.demo.charts.realtime.RealtimeChart03;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart01;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart02;
 import com.xeiam.xchart.demo.charts.scatter.ScatterChart03;
@@ -86,6 +87,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
   /** real-time chart example */
   final RealtimeChart01 realtimeChart01 = new RealtimeChart01();
   final RealtimeChart02 realtimeChart02 = new RealtimeChart02();
+  final RealtimeChart03 realtimeChart03 = new RealtimeChart03();
   Timer timer = new Timer();
 
   /**
@@ -153,7 +155,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
           public void run() {
 
             realtimeChart01.updateData();
-            chartPanel.updateSeries(RealtimeChart01.SERIES_NAME, realtimeChart01.getyData());
+            chartPanel.updateSeries(RealtimeChart01.SERIES_NAME, null, realtimeChart01.getyData(), null);
           }
         };
         timer = new Timer();
@@ -167,7 +169,21 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
           public void run() {
 
             realtimeChart02.updateData();
-            chartPanel.updateSeries(RealtimeChart02.SERIES_NAME, realtimeChart02.getxData(), realtimeChart02.getyData());
+            chartPanel.updateSeries(RealtimeChart02.SERIES_NAME, realtimeChart02.getxData(), realtimeChart02.getyData(), null);
+          }
+        };
+        timer = new Timer();
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
+      }
+      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart03")) {
+        // set up real-time chart simulated data feed
+        TimerTask chartUpdaterTask = new TimerTask() {
+
+          @Override
+          public void run() {
+
+            realtimeChart03.updateData();
+            chartPanel.updateSeries(RealtimeChart02.SERIES_NAME, null, realtimeChart03.getyData(), realtimeChart03.getErrorBars());
           }
         };
         timer = new Timer();
@@ -319,6 +335,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart02 - Updating X-Axis Window", realtimeChart02.getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart03 - Updating With Error Bars", realtimeChart03.getChart()));
     category.add(defaultMutableTreeNode);
 
   }

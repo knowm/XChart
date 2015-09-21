@@ -81,9 +81,18 @@ public class AxisPair implements ChartPart {
     if (xData != null && xData.size() == 0) {
       throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
     }
+    // Sanity check
+    if (errorBars != null && errorBars.size() != yData.size()) {
+      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
+    }
 
     Series series = null;
     if (xData != null) {
+
+      // Sanity check
+      if (xData.size() != yData.size()) {
+        throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+      }
       // inspect the series to see what kind of data it contains (Number, Date or String)
       Iterator<?> itr = xData.iterator();
       Object dataPoint = itr.next();
@@ -121,14 +130,6 @@ public class AxisPair implements ChartPart {
       break;
     case Line:
       series.setSeriesType(Series.SeriesType.Line);
-    }
-
-    // Sanity check
-    if (xData != null && xData.size() != yData.size()) {
-      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-    }
-    if (errorBars != null && errorBars.size() != yData.size()) {
-      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
     }
 
     if (seriesMap.keySet().contains(seriesName)) {

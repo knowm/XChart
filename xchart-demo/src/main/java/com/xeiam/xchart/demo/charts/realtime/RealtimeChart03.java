@@ -141,4 +141,9 @@ public class RealtimeChart03 implements ExampleChart {
 
     return yData;
   }
+
+  public List<Double> getErrorBars() {
+
+    return errorBars;
+  }
 }

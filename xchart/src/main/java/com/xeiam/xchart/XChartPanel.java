@@ -275,65 +275,13 @@ public class XChartPanel extends JPanel {
   }
 
   /**
-   * update a series by only updating the Y-Axis data. The X-Axis data will be automatically generated as a list of increasing Integers starting from
-   * 1 and ending at the size of the new Y-Axis data list.
+   * Update a series by updating the X-Axis, Y-Axis and error bar data
    *
    * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   *          1 and ending at the size of the new Y-Axis data list.
    * @param newYData
-   * @return
-   */
-  public Series updateSeries(String seriesName, Collection<? extends Number> newYData) {
-
-    Series series = chart.getSeriesMap().get(seriesName);
-    if (series == null) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
-    }
-    series.replaceYData(newYData);
-
-    // generate X-Data
-    List<Integer> generatedXData = new ArrayList<Integer>();
-    for (int i = 1; i < newYData.size() + 1; i++) {
-      generatedXData.add(i);
-    }
-    series.replaceXData(generatedXData);
-
-    // Re-display the chart
-    revalidate();
-    repaint();
-    return series;
-
-  }
-
-  /**
-   * update a series by updating both the X-Axis and Y-Axis data
-   *
-   * @param seriesName
-   * @param newYData
-   * @return
-   */
-  public Series updateSeries(String seriesName, Collection<?> newXData, List<? extends Number> newYData) {
-
-    Series series = chart.getSeriesMap().get(seriesName);
-    if (series == null) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
-    }
-    series.replaceXData(newXData);
-    series.replaceYData(newYData);
-
-    // Re-display the chart
-    revalidate();
-    repaint();
-
-    return series;
-  }
-
-  /**
-   * update a series by updating the X-Axis, Y-Axis and error bar data
-   *
-   * @param seriesName
-   * @param newXData
-   * @param newYData
-   * @param newErrorBarData
+   * @param newErrorBarData - set null if there are no error bars
    * @return
    */
   public Series updateSeries(String seriesName, Collection<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
@@ -342,9 +290,17 @@ public class XChartPanel extends JPanel {
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
     }
-    series.replaceXData(newXData);
-    series.replaceYData(newYData);
-    series.replaceErrroBarData(newErrorBarData);
+    if (newXData == null) {
+      // generate X-Data
+      List<Integer> generatedXData = new ArrayList<Integer>();
+      for (int i = 1; i <= newYData.size(); i++) {
+        generatedXData.add(i);
+      }
+      series.replaceData(generatedXData, newYData, newErrorBarData);
+    }
+    else {
+      series.replaceData(newXData, newYData, newErrorBarData);
+    }
 
     // Re-display the chart
     revalidate();

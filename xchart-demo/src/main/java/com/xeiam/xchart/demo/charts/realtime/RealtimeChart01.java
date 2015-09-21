@@ -70,7 +70,7 @@ public class RealtimeChart01 implements ExampleChart {
       public void run() {
 
         realtimeChart01.updateData();
-        chartPanel.updateSeries(SERIES_NAME, realtimeChart01.getyData());
+        chartPanel.updateSeries(SERIES_NAME, null, realtimeChart01.getyData(), null);
 
       }
     };

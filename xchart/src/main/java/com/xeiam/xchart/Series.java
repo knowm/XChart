@@ -27,7 +27,7 @@ import com.xeiam.xchart.internal.style.SeriesColorMarkerLineStyle;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
- * 
+ *
  * @author timmolter
  */
 public class Series {
@@ -77,7 +77,7 @@ public class Series {
 
   /**
    * Constructor
-   * 
+   *
    * @param name
    * @param xData
    * @param xAxisType
@@ -110,7 +110,7 @@ public class Series {
 
   /**
    * Finds the min and max of a dataset
-   * 
+   *
    * @param data
    * @return
    */
@@ -150,7 +150,7 @@ public class Series {
 
   /**
    * Finds the min and max of a dataset accounting for error bars
-   * 
+   *
    * @param data
    * @return
    */
@@ -176,7 +176,7 @@ public class Series {
 
   /**
    * Set the line style of the series
-   * 
+   *
    * @param seriesLineStyle
    */
   public Series setLineStyle(SeriesLineStyle seriesLineStyle) {
@@ -187,7 +187,7 @@ public class Series {
 
   /**
    * Set the line style of the series
-   * 
+   *
    * @param basicStroke
    */
   public Series setLineStyle(BasicStroke basicStroke) {
@@ -198,7 +198,7 @@ public class Series {
 
   /**
    * Set the line color of the series
-   * 
+   *
    * @param seriesColor
    */
   public Series setLineColor(SeriesColor seriesColor) {
@@ -209,7 +209,7 @@ public class Series {
 
   /**
    * Set the line color of the series
-   * 
+   *
    * @param color
    */
   public Series setLineColor(java.awt.Color color) {
@@ -220,7 +220,7 @@ public class Series {
 
   /**
    * Sets the marker for the series
-   * 
+   *
    * @param seriesMarker
    */
   public Series setMarker(SeriesMarker seriesMarker) {
@@ -231,7 +231,7 @@ public class Series {
 
   /**
    * Sets the marker color for the series
-   * 
+   *
    * @param seriesColor
    */
   public Series setMarkerColor(SeriesColor seriesColor) {
@@ -242,7 +242,7 @@ public class Series {
 
   /**
    * Sets the marker color for the series
-   * 
+   *
    * @param color
    */
   public Series setMarkerColor(java.awt.Color color) {
@@ -331,20 +331,18 @@ public class Series {
     return name;
   }
 
-  public void replaceXData(Collection<?> newXData) {
+  public void replaceData(Collection<?> newXData, Collection<? extends Number> newYData, Collection<? extends Number> newErrorBars) {
+
+    // Sanity check
+    if (newErrorBars != null && newErrorBars.size() != newYData.size()) {
+      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
+    }
+    if (newXData.size() != newYData.size()) {
+      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+    }
 
     xData = newXData;
-    calculateMinMax();
-  }
-
-  public void replaceYData(Collection<? extends Number> newYData) {
-
     yData = newYData;
-    calculateMinMax();
-  }
-
-  public void replaceErrroBarData(Collection<? extends Number> newErrorBars) {
-
     errorBars = newErrorBars;
     calculateMinMax();
   }

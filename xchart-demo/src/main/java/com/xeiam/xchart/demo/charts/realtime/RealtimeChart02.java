@@ -72,7 +72,7 @@ public class RealtimeChart02 implements ExampleChart {
       public void run() {
 
         realtimeChart02.updateData();
-        chartPanel.updateSeries(SERIES_NAME, realtimeChart02.getxData(), realtimeChart02.getyData());
+        chartPanel.updateSeries(SERIES_NAME, realtimeChart02.getxData(), realtimeChart02.getyData(), null);
 
       }
     };
