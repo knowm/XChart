@@ -116,7 +116,8 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
           tickLabels.add(numberFormatter.formatLogNumber(j, axisDirection));
         }
         else {
-          tickLabels.add(null);
+           // Set a space to avoid Zero length string passed to TextLayout constructor
+          tickLabels.add(" ");
         }
 
         // add all the tick marks though
