@@ -102,8 +102,7 @@ public abstract class AxisTickCalculator {
 
     // System.out.println("******");
 
-    double absoluteMinValue = minValue <= maxValue ? minValue : maxValue; 
-    double firstPosition = absoluteMinValue - (absoluteMinValue % gridStep) - gridStep;
+    double firstPosition = minValue - (minValue % gridStep) - gridStep;
     return firstPosition;
   }
 
