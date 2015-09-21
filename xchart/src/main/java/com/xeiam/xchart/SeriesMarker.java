@@ -59,7 +59,7 @@ public enum SeriesMarker {
    * @param index
    * @param marker
    */
-  private SeriesMarker(int index, Marker marker) {
+  SeriesMarker(int index, Marker marker) {
 
     this.index = index;
     this.marker = marker;

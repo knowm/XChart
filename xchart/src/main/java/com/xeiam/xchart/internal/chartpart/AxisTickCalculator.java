@@ -29,7 +29,7 @@ import com.xeiam.xchart.internal.chartpart.Axis.Direction;
 public abstract class AxisTickCalculator {
 
   /** the List of tick label position in pixels */
-  protected List<Double> tickLocations = new LinkedList<Double>();;
+  protected List<Double> tickLocations = new LinkedList<Double>();
 
   /** the List of tick label values */
   protected List<String> tickLabels = new LinkedList<String>();

@@ -72,7 +72,7 @@ public enum SeriesColor {
    * @param index
    * @param color
    */
-  private SeriesColor(int index, Color color) {
+  SeriesColor(int index, Color color) {
 
     this.index = index;
     this.color = color;

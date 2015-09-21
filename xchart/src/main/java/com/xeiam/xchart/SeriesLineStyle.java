@@ -51,7 +51,7 @@ public enum SeriesLineStyle {
    * @param index
    * @param basicStroke
    */
-  private SeriesLineStyle(int index, BasicStroke basicStroke) {
+  SeriesLineStyle(int index, BasicStroke basicStroke) {
 
     this.index = index;
     this.basicStroke = basicStroke;
