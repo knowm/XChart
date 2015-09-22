@@ -1,4 +1,4 @@
-## [![XChart](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_64_64.png)](http://xeiam.com/xchart) XChart
+## [![XChart](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_64_64.png)](http://knowm.org/open-source/xchart) XChart
 
 A Simple Charting Library for Java
 
@@ -30,7 +30,7 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
     BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
 ```
 
-Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code/), [download the thing](http://xeiam.com/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
+Now go ahead and [study some more examples](http://knowm.org/open-source/xchart/xchart-example-code/), [download the thing](http://knowm.org/open-source/xchart/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
 
 ## Features
 
@@ -61,7 +61,7 @@ Now go ahead and [study some more examples](http://xeiam.com/xchart-example-code
 
 ### Non-Maven
 
-Download Jar: http://xeiam.com/xchart-change-log
+Download Jar: http://knowm.org/open-source/xchart/xchart-change-log
 
 ### Maven
 
