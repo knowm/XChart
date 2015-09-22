@@ -136,4 +136,4 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 
 ## Release Information
 
-We will announce new releases on our [Twitter page](https://twitter.com/Xeiam).
+We will announce new releases on our [Twitter page](https://twitter.com/Knowmorg).
