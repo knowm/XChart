@@ -1,0 +1,33 @@
+XChart is developed by Knowm Inc. members and the open-source community.
+
+We thank all of our contributors: https://github.com/timmolter/xchart/graphs/contributors 
+
+For the detailed history of contributions of a given file, try
+
+    git blame file
+
+To see line-by-line credits and to see the change log even across renames and rewrites, try
+
+    git log --follow file
+
+Copyright is held by the original contributor according to the versioning history; see NOTICE.
+
+The following list of authors was automatically generated from the XChart project's git repo with the command:
+
+    git log --format='%aN' | sort -u
+
+Alex Nugent
+Bryan Cardillo
+Chiamh
+Christoffer SOOP
+Hwaipy Li
+Martin Crawford
+Michael Stummvoll
+Nicolas Roduit
+Niklas Polke
+Ross Jourdain
+Thomas Neidhart
+Tim Molter
+rebaomi
+ruX[Ruslan Zaharov]
+timmolter
