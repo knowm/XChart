@@ -73,7 +73,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>com.xeiam.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>2.5.0</version>
+        <version>2.5.1</version>
     </dependency>
 ```
 
@@ -89,7 +89,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>com.xeiam</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.5.1-SNAPSHOT</version>
+      <version>2.5.2-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -122,7 +122,7 @@ Note: in order to add support for SVG and PDF exports the optional [VectorGraphi
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.5.0.jar:xchart-2.5.0.jar com.xeiam.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.5.1.jar:xchart-2.5.1.jar com.xeiam.xchart.demo.XChartDemo
 
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
