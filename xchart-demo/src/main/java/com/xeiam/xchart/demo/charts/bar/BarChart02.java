@@ -19,7 +19,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -61,7 +60,7 @@ public class BarChart02 implements ExampleChart {
     Chart chart = new ChartBuilder().theme(ChartTheme.Matlab).chartType(ChartType.Bar).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
 
     List<Date> xData = new ArrayList<Date>();
-    Collection<Number> yData = new ArrayList<Number>();
+    List<Number> yData = new ArrayList<Number>();
 
     Random random = new Random();
     DateFormat sdf = new SimpleDateFormat("yyyy");

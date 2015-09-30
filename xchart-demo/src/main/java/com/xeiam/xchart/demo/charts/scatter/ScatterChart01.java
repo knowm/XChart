@@ -15,9 +15,9 @@
  */
 package com.xeiam.xchart.demo.charts.scatter;
 
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.StyleManager.ChartType;
@@ -47,8 +47,8 @@ public class ScatterChart01 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    Set<Double> xData = new HashSet<Double>();
-    Set<Double> yData = new HashSet<Double>();
+    List<Double> xData = new LinkedList<Double>();
+    List<Double> yData = new LinkedList<Double>();
     Random random = new Random();
     int size = 1000;
     for (int i = 0; i < size; i++) {

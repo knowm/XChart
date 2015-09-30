@@ -27,7 +27,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -284,7 +283,7 @@ public class XChartPanel extends JPanel {
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public Series updateSeries(String seriesName, Collection<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
+  public Series updateSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
 
     Series series = chart.getSeriesMap().get(seriesName);
     if (series == null) {

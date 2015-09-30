@@ -15,11 +15,11 @@
  */
 package com.xeiam.xchart;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * A convenience class for making Charts with one line of code
- * 
+ *
  * @author timmolter
  */
 public final class QuickChart {
@@ -36,7 +36,7 @@ public final class QuickChart {
 
   /**
    * Creates a Chart with default style
-   * 
+   *
    * @param chartTitle the Chart title
    * @param xTitle The X-Axis title
    * @param yTitle The Y-Axis title
@@ -58,7 +58,7 @@ public final class QuickChart {
 
   /**
    * Creates a Chart with multiple Series for the same X-Axis data with default style
-   * 
+   *
    * @param chartTitle the Chart title
    * @param xTitle The X-Axis title
    * @param yTitle The Y-Axis title
@@ -95,7 +95,7 @@ public final class QuickChart {
 
   /**
    * Creates a Chart with default style
-   * 
+   *
    * @param chartTitle the Chart title
    * @param xTitle The X-Axis title
    * @param yTitle The Y-Axis title
@@ -104,7 +104,7 @@ public final class QuickChart {
    * @param yData A Collection containing Y-Axis data
    * @return a Chart Object
    */
-  public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, Collection<Number> xData, Collection<Number> yData) {
+  public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<Number> xData, List<Number> yData) {
 
     // Create Chart
     Chart chart = new Chart(WIDTH, HEIGHT);

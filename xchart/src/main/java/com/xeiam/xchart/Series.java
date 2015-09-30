@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 import com.xeiam.xchart.internal.markers.Marker;
@@ -38,15 +39,15 @@ public class Series {
 
   private String name = "";
 
-  private Collection<?> xData;
+  private List<?> xData;
   private AxisType xAxisType;
 
-  private Collection<? extends Number> yData;
+  private List<? extends Number> yData;
   private AxisType yAxisType;
 
   private SeriesType seriesType;
 
-  private Collection<? extends Number> errorBars;
+  private List<? extends Number> errorBars;
 
   /** the minimum value of axis range */
   private double xMin;
@@ -86,7 +87,7 @@ public class Series {
    * @param errorBars
    * @param seriesColorMarkerLineStyle
    */
-  public Series(String name, Collection<?> xData, AxisType xAxisType, Collection<? extends Number> yData, AxisType yAxisType, Collection<? extends Number> errorBars,
+  public Series(String name, List<?> xData, AxisType xAxisType, List<? extends Number> yData, AxisType yAxisType, List<? extends Number> errorBars,
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
 
     if (name == null || name.length() < 1) {
@@ -331,7 +332,7 @@ public class Series {
     return name;
   }
 
-  public void replaceData(Collection<?> newXData, Collection<? extends Number> newYData, Collection<? extends Number> newErrorBars) {
+  public void replaceData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBars) {
 
     // Sanity check
     if (newErrorBars != null && newErrorBars.size() != newYData.size()) {

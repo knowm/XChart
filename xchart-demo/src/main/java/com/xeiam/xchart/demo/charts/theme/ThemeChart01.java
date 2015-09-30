@@ -16,7 +16,7 @@
 package com.xeiam.xchart.demo.charts.theme;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.SwingWrapper;
@@ -48,8 +48,8 @@ public class ThemeChart01 implements ExampleChart {
 
       // generates linear data
       int b = 20;
-      Collection<Number> xData = new ArrayList<Number>();
-      Collection<Number> yData = new ArrayList<Number>();
+      List<Number> xData = new ArrayList<Number>();
+      List<Number> yData = new ArrayList<Number>();
       for (int x = 0; x <= b; x++) {
         xData.add(2 * x - b);
         yData.add(2 * i * x - i * b);

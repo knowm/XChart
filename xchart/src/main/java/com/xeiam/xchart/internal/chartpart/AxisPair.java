@@ -18,7 +18,6 @@ package com.xeiam.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -66,7 +65,7 @@ public class AxisPair implements ChartPart {
    * @param errorBars
    * @return Series
    */
-  public Series addSeries(String seriesName, Collection<?> xData, Collection<? extends Number> yData, Collection<? extends Number> errorBars) {
+  public Series addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
     // Sanity checks
     if (seriesName == null) {

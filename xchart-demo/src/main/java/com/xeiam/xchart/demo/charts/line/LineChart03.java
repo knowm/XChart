@@ -21,8 +21,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import com.xeiam.xchart.Chart;
@@ -54,8 +54,8 @@ public class LineChart03 implements ExampleChart {
     Chart chart = new Chart(800, 600);
 
     // generates linear data
-    Collection<Date> xData = new ArrayList<Date>();
-    Collection<Double> yData = new ArrayList<Double>();
+    List<Date> xData = new ArrayList<Date>();
+    List<Double> yData = new ArrayList<Double>();
 
     DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     Date date = null;
