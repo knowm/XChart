@@ -16,7 +16,6 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -56,22 +55,33 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
 
-    // get all categories
-    List<Object> categories = new ArrayList<Object>();
+    List<?> firstXAxis = (List<?>) chartPainter.getAxisPair().getSeriesMap().values().iterator().next().getXData();
 
-    Series firstSeries = chartPainter.getAxisPair().getSeriesMap().values().iterator().next(); // we use this to check all series have the exact same length and values
+    // verify all series have exactly the same xAxis
+    if (chartPainter.getAxisPair().getSeriesMap().size() > 1) {
+
+      for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
+        Iterator<?> firstSeriesItr = firstXAxis.iterator();
+        Iterator<?> xItr = series.getXData().iterator();
+        while (xItr.hasNext()) {
+
+          // check matching
+          Object next = xItr.next();
+          Object firstSeriesNext = firstSeriesItr.next();
+          if (!firstSeriesNext.equals(next)) {
+            throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Bar Charts!!");
+          }
+        }
+      }
+    }
+
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
-      Iterator<?> firstSeriesItr = firstSeries.getXData().iterator();
       Iterator<?> xItr = series.getXData().iterator();
       while (xItr.hasNext()) {
 
         // check matching
         Object next = xItr.next();
-        Object firstSeriesNext = firstSeriesItr.next();
-        if (!firstSeriesNext.equals(next)) {
-          throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Bar Charts!!");
-        }
 
         Object x = null;
         if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
@@ -83,25 +93,22 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
           x = next;
         }
-        if (!categories.contains(x)) {
-          categories.add(x);
-        }
       }
     }
 
     if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
 
-      double gridStep = (tickSpace / (double) categories.size());
+      double gridStep = (tickSpace / (double) firstXAxis.size());
       double firstPosition = gridStep / 2.0;
       int counter = 0;
-      for (Object category : categories) {
+      for (Object category : firstXAxis) {
         tickLabels.add(category.toString());
         double tickLabelPosition = margin + firstPosition + gridStep * counter++;
         tickLocations.add(tickLabelPosition);
       }
     }
 
-    double gridStep = (tickSpace / (double) categories.size());
+    double gridStep = (tickSpace / (double) firstXAxis.size());
     double firstPosition = gridStep / 2.0;
 
     // generate all tickLabels and tickLocations from the first to last position
@@ -116,7 +123,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     }
     int counter = 0;
 
-    for (Object category : categories) {
+    for (Object category : firstXAxis) {
       if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
         tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
       }
