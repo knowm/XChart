@@ -17,7 +17,6 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import com.xeiam.xchart.Series;
@@ -55,83 +54,48 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
 
-    List<?> firstXAxis = (List<?>) chartPainter.getAxisPair().getSeriesMap().values().iterator().next().getXData();
+    List<?> categories = (List<?>) chartPainter.getAxisPair().getSeriesMap().values().iterator().next().getXData();
 
     // verify all series have exactly the same xAxis
     if (chartPainter.getAxisPair().getSeriesMap().size() > 1) {
 
       for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
-        Iterator<?> firstSeriesItr = firstXAxis.iterator();
-        Iterator<?> xItr = series.getXData().iterator();
-        while (xItr.hasNext()) {
-
-          // check matching
-          Object next = xItr.next();
-          Object firstSeriesNext = firstSeriesItr.next();
-          if (!firstSeriesNext.equals(next)) {
-            throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Bar Charts!!");
-          }
+        if (!series.getXData().equals(categories)) {
+          throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Bar Charts!!");
         }
       }
     }
-
-    for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
-
-      Iterator<?> xItr = series.getXData().iterator();
-      while (xItr.hasNext()) {
-
-        // check matching
-        Object next = xItr.next();
-
-        Object x = null;
-        if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          x = next;
-        }
-        else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-          x = (double) (((Date) next).getTime());
-        }
-        else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
-          x = next;
-        }
-      }
-    }
-
-    if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
-
-      double gridStep = (tickSpace / (double) firstXAxis.size());
-      double firstPosition = gridStep / 2.0;
-      int counter = 0;
-      for (Object category : firstXAxis) {
-        tickLabels.add(category.toString());
-        double tickLabelPosition = margin + firstPosition + gridStep * counter++;
-        tickLocations.add(tickLabelPosition);
-      }
-    }
-
-    double gridStep = (tickSpace / (double) firstXAxis.size());
-    double firstPosition = gridStep / 2.0;
 
     // generate all tickLabels and tickLocations from the first to last position
+    double gridStep = (tickSpace / (double) categories.size());
+    double firstPosition = gridStep / 2.0;
+
+    // set up String formatters that may be encountered
     NumberFormatter numberFormatter = null;
     DateFormatter dateFormatter = null;
-
     if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
       numberFormatter = new NumberFormatter(styleManager);
     }
     else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
       dateFormatter = new DateFormatter(chartPainter.getStyleManager());
     }
+
     int counter = 0;
 
-    for (Object category : firstXAxis) {
-      if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+    for (Object category : categories) {
+      if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
+        tickLabels.add(category.toString());
+        double tickLabelPosition = margin + firstPosition + gridStep * counter++;
+        tickLocations.add(tickLabelPosition);
+      }
+      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
         tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
       }
       else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
         long span = (long) Math.abs(maxValue - minValue); // in data space
         long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
         long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
-        tickLabels.add(dateFormatter.formatDate(((Number) category).doubleValue(), timeUnit));
+        tickLabels.add(dateFormatter.formatDate(((Number) ((Date) category).getTime()).doubleValue(), timeUnit));
       }
       double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
       tickLocations.add(tickLabelPosition);
