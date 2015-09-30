@@ -54,7 +54,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     int tickSpace = (int) (styleManager.getAxisTickSpacePercentage() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
-    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
 
     // get all categories
     List<Object> categories = new ArrayList<Object>();
@@ -100,55 +100,34 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         tickLocations.add(tickLabelPosition);
       }
     }
-    else if (categories.size() < 13) { // Number or Date and 12 or less categories. give each category a tick label
 
-      double gridStep = (tickSpace / (double) categories.size());
-      double firstPosition = gridStep / 2.0;
+    double gridStep = (tickSpace / (double) categories.size());
+    double firstPosition = gridStep / 2.0;
 
-      // generate all tickLabels and tickLocations from the first to last position
-      NumberFormatter numberFormatter = null;
-      DateFormatter dateFormatter = null;
+    // generate all tickLabels and tickLocations from the first to last position
+    NumberFormatter numberFormatter = null;
+    DateFormatter dateFormatter = null;
 
-      if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-        numberFormatter = new NumberFormatter(styleManager);
-      }
-      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-        dateFormatter = new DateFormatter(chartPainter.getStyleManager());
-      }
-      int counter = 0;
-
-      for (Object category : categories) {
-        if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
-        }
-        else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-          long span = (long) Math.abs(maxValue - minValue); // in data space
-          long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
-          long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
-          tickLabels.add(dateFormatter.formatDate(((Number) category).doubleValue(), timeUnit));
-        }
-        double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
-        tickLocations.add(tickLabelPosition);
-      }
+    if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+      numberFormatter = new NumberFormatter(styleManager);
     }
-    else { // Number or Date and more than 12 categories. divide up the axis tick space according to normal date oor number axis layout
+    else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+      dateFormatter = new DateFormatter(chartPainter.getStyleManager());
+    }
+    int counter = 0;
 
-      // generate all tickLabels and tickLocations from the first to last position
-
+    for (Object category : categories) {
       if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-
-        AxisTickNumericalCalculator axisTickNumericalCalculator = new AxisTickNumericalCalculator(axisDirection, workingSpace, minValue, maxValue, styleManager);
-        tickLabels = axisTickNumericalCalculator.getTickLabels();
-        tickLocations = axisTickNumericalCalculator.getTickLocations();
-
+        tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
       }
       else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-
-        AxisTickDateCalculator axisTickDateCalculator = new AxisTickDateCalculator(axisDirection, workingSpace, minValue, maxValue, styleManager);
-        tickLabels = axisTickDateCalculator.getTickLabels();
-        tickLocations = axisTickDateCalculator.getTickLocations();
+        long span = (long) Math.abs(maxValue - minValue); // in data space
+        long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
+        long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
+        tickLabels.add(dateFormatter.formatDate(((Number) category).doubleValue(), timeUnit));
       }
-
+      double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
+      tickLocations.add(tickLabelPosition);
     }
 
   }
