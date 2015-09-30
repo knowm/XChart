@@ -87,7 +87,7 @@ For snapshots, add the following to your pom.xml file:
     </repository>
 
     <dependency>
-      <groupId>com.xeiam</groupId>
+      <groupId>com.xeiam.xchart</groupId>
       <artifactId>xchart</artifactId>
       <version>2.5.2-SNAPSHOT</version>
     </dependency>
