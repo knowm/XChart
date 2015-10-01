@@ -147,32 +147,47 @@ public class Axis implements ChartPart {
       // ----
       double xOffset = getChartPainter().getStyleManager().getChartPadding();
       double yOffset = getChartPainter().getChartTitle().getSizeHint();
-      double width = 80; // arbitrary, final width depends on Axis tick labels
 
       double chartLegendWidth = 0;
       if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
         chartLegendWidth = getChartPainter().getChartLegend().getSizeHint(g)[0];
       }
 
-      double approximateXAxisWidth =
+      /////////////////////////
+      int i = 1; // just twice through
+      double width = 80; // arbitrary, final width depends on Axis tick labels
+      double height = 0;
+      do {
+        // System.out.println("width: " + width);
 
-      getChartPainter().getWidth()
+        double approximateXAxisWidth =
 
-      - width // y-axis approx. width
+        getChartPainter().getWidth()
 
-      - chartLegendWidth
+        - width // y-axis approx. width
 
-      - 2 * getChartPainter().getStyleManager().getChartPadding()
+        - chartLegendWidth
 
-      - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
+        - 2 * getChartPainter().getStyleManager().getChartPadding()
 
-      - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-          .getChartPadding() : 0)
+        - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
-      ;
+        - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+            .getChartPadding() : 0)
 
-      double height = getChartPainter().getHeight() - yOffset - axisPair.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - getChartPainter().getStyleManager().getPlotPadding() - getChartPainter()
-          .getStyleManager().getChartPadding();
+        ;
+
+        height = getChartPainter().getHeight() - yOffset - axisPair.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - getChartPainter().getStyleManager().getPlotPadding() - getChartPainter()
+            .getStyleManager().getChartPadding();
+
+        width = getYAxisWidthHint(height);
+
+        // System.out.println("height: " + height);
+
+      } while (i-- > 0);
+
+      /////////////////////////
+
       Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
       this.paintZone = yAxisRectangle;
       // g.setColor(Color.green);
@@ -273,7 +288,7 @@ public class Axis implements ChartPart {
       // System.out.println("XAxisHeightHint");
       // System.out.println("workingSpace: " + workingSpace);
       AxisTickCalculator axisTickCalculator = axisTick.getAxisTickCalculator(workingSpace);
-      String sampleLabel = " ";
+      String sampleLabel = "";
       // find the longest String in all the labels
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
         if (axisTickCalculator.getTickLabels().get(i) != null && axisTickCalculator.getTickLabels().get(i).length() > sampleLabel.length()) {
@@ -289,6 +304,41 @@ public class Axis implements ChartPart {
       Rectangle2D rectangle = shape.getBounds();
 
       axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
+    }
+    return titleHeight + axisTickLabelsHeight;
+  }
+
+  private double getYAxisWidthHint(double workingSpace) {
+
+    // Axis title
+    double titleHeight = 0.0;
+    if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isYAxisTitleVisible()) {
+      TextLayout textLayout = new TextLayout(axisTitle.getText(), getChartPainter().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
+      Rectangle2D rectangle = textLayout.getBounds();
+      titleHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTitlePadding();
+    }
+
+    // Axis tick labels
+    double axisTickLabelsHeight = 0.0;
+    if (getChartPainter().getStyleManager().isYAxisTicksVisible()) {
+
+      // get some real tick labels
+      // System.out.println("XAxisHeightHint");
+      // System.out.println("workingSpace: " + workingSpace);
+      AxisTickCalculator axisTickCalculator = axisTick.getAxisTickCalculator(workingSpace);
+      String sampleLabel = " ";
+      // find the longest String in all the labels
+      for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
+        if (axisTickCalculator.getTickLabels().get(i) != null && axisTickCalculator.getTickLabels().get(i).length() > sampleLabel.length()) {
+          sampleLabel = axisTickCalculator.getTickLabels().get(i);
+        }
+      }
+
+      // get the height of the label including rotation
+      TextLayout textLayout = new TextLayout(sampleLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+      Rectangle2D rectangle = textLayout.getBounds();
+
+      axisTickLabelsHeight = rectangle.getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
     }
     return titleHeight + axisTickLabelsHeight;
   }
