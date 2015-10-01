@@ -138,6 +138,7 @@ public class AxisTickLabels implements ChartPart {
         double tickLocation = axisTick.getTickLocations().get(i);
         double shiftedTickLocation = xOffset + tickLocation;
 
+        // discard null and out of bounds labels
         if (tickLabel != null && shiftedTickLocation > xOffset && shiftedTickLocation < xOffset + width) { // some are null for logarithmic axes
 
           FontRenderContext frc = g.getFontRenderContext();
@@ -183,6 +184,9 @@ public class AxisTickLabels implements ChartPart {
             maxTickLabelHeight = tickLabelBounds.getHeight();
           }
         }
+        // else {
+        // System.out.println("discarding: " + tickLabel);
+        // }
       }
 
       // bounds

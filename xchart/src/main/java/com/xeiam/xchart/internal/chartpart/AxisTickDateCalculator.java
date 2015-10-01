@@ -84,13 +84,13 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
       // generate all tickLabels and tickLocations from the first to last position
       for (double value = firstPosition; value <= maxValue + 2 * gridStep; value = value + gridStep) {
 
-        if (value <= maxValue && value >= minValue) {
+        // if (value <= maxValue && value >= minValue) {
 
-          tickLabels.add(dateFormatter.formatDate(value, timeUnit));
-          // here we convert tickPosition finally to plot space, i.e. pixels
-          double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
-          tickLocations.add(tickLabelPosition);
-        }
+        tickLabels.add(dateFormatter.formatDate(value, timeUnit));
+        // here we convert tickPosition finally to plot space, i.e. pixels
+        double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
+        tickLocations.add(tickLabelPosition);
+        // }
       }
     } while (!willLabelsFitInTickSpaceHint(tickLabels, tickSpacingHint));
   }

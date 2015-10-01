@@ -154,8 +154,8 @@ public class Axis implements ChartPart {
       }
 
       /////////////////////////
-      int i = 1; // just twice through
-      double width = 80; // arbitrary, final width depends on Axis tick labels
+      int i = 1; // just twice through is all it takes
+      double width = 60; // arbitrary, final width depends on Axis tick labels
       double height = 0;
       do {
         // System.out.println("width: " + width);
@@ -291,10 +291,12 @@ public class Axis implements ChartPart {
       String sampleLabel = "";
       // find the longest String in all the labels
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
+        // System.out.println("label: " + axisTickCalculator.getTickLabels().get(i));
         if (axisTickCalculator.getTickLabels().get(i) != null && axisTickCalculator.getTickLabels().get(i).length() > sampleLabel.length()) {
           sampleLabel = axisTickCalculator.getTickLabels().get(i);
         }
       }
+      // System.out.println("sampleLabel: " + sampleLabel);
 
       // get the height of the label including rotation
       TextLayout textLayout = new TextLayout(sampleLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
@@ -326,7 +328,7 @@ public class Axis implements ChartPart {
       // System.out.println("XAxisHeightHint");
       // System.out.println("workingSpace: " + workingSpace);
       AxisTickCalculator axisTickCalculator = axisTick.getAxisTickCalculator(workingSpace);
-      String sampleLabel = " ";
+      String sampleLabel = "";
       // find the longest String in all the labels
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
         if (axisTickCalculator.getTickLabels().get(i) != null && axisTickCalculator.getTickLabels().get(i).length() > sampleLabel.length()) {

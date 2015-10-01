@@ -136,16 +136,16 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
       // generate all tickLabels and tickLocations from the first to last position
       for (BigDecimal value = cleanedFirstPosition; value.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0; value = value.add(cleanedGridStep)) {
 
-        if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 && value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
-          // System.out.println(value);
-          String tickLabel = numberFormatter.formatNumber(value, minValue, maxValue, axisDirection);
-          // System.out.println(tickLabel);
-          tickLabels.add(tickLabel);
+        // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 && value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
+        // System.out.println(value);
+        String tickLabel = numberFormatter.formatNumber(value, minValue, maxValue, axisDirection);
+        // System.out.println(tickLabel);
+        tickLabels.add(tickLabel);
 
-          // here we convert tickPosition finally to plot space, i.e. pixels
-          double tickLabelPosition = margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
-          tickLocations.add(tickLabelPosition);
-        }
+        // here we convert tickPosition finally to plot space, i.e. pixels
+        double tickLabelPosition = margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
+        tickLocations.add(tickLabelPosition);
+        // }
       }
     } while (!willLabelsFitInTickSpaceHint(tickLabels, tickSpacingHint));
 
