@@ -73,13 +73,13 @@ public abstract class AxisTickCalculator {
     }
 
     // override min and maxValue if specified
-    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null && styleManager.getChartType() != ChartType.Bar) {
+    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null && styleManager.getChartType() != ChartType.Bar) { // bar chart cannot have a max or min
       overrideMinValue = styleManager.getXAxisMin();
     }
     if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
       overrideMinValue = styleManager.getYAxisMin();
     }
-    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null && styleManager.getChartType() != ChartType.Bar) {
+    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null && styleManager.getChartType() != ChartType.Bar) { // bar chart cannot have a max or min
       overrideMaxValue = styleManager.getXAxisMax();
     }
     if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {
@@ -98,7 +98,7 @@ public abstract class AxisTickCalculator {
    * @param gridStep
    * @return
    */
-  double getFirstPosition(double gridStep) {
+      double getFirstPosition(double gridStep) {
 
     // System.out.println("******");
 
@@ -114,72 +114,6 @@ public abstract class AxisTickCalculator {
   public List<String> getTickLabels() {
 
     return tickLabels;
-  }
-
-  /**
-   * Determine the grid step for the data set given the space in pixels allocated for the axis
-   *
-   * @param tickSpace in plot space
-   * @return
-   */
-  public double getNumericalGridStep(double tickSpace) {
-
-    // this prevents an infinite loop when the plot gets sized really small.
-    if (tickSpace < 10) {
-      return 1.0;
-    }
-
-    // the span of the data
-    double span = Math.abs(maxValue - minValue); // in data space
-
-    int tickMarkSpaceHint = (axisDirection == Direction.X ? styleManager.getXAxisTickMarkSpacingHint() : styleManager.getYAxisTickMarkSpacingHint());
-
-    // for very short plots, squeeze some more ticks in than normal
-    if (axisDirection == Direction.Y && tickSpace < 160) {
-      tickMarkSpaceHint = 25;
-    }
-
-    double gridStepHint = span / tickSpace * tickMarkSpaceHint;
-
-    // gridStepHint --> significand * 10 ** exponent
-    // e.g. 724.1 --> 7.241 * 10 ** 2
-    double significand = gridStepHint;
-    int exponent = 0;
-    if (significand == 0) {
-      exponent = 1;
-    }
-    else if (significand < 1) {
-      while (significand < 1) {
-        significand *= 10.0;
-        exponent--;
-      }
-    }
-    else {
-      while (significand >= 10 || significand == Double.NEGATIVE_INFINITY) {
-        significand /= 10.0;
-        exponent++;
-      }
-    }
-
-    // calculate the grid step with hint.
-    double gridStep;
-    if (significand > 7.5) {
-      // gridStep = 10.0 * 10 ** exponent
-      gridStep = 10.0 * Utils.pow(10, exponent);
-    }
-    else if (significand > 3.5) {
-      // gridStep = 5.0 * 10 ** exponent
-      gridStep = 5.0 * Utils.pow(10, exponent);
-    }
-    else if (significand > 1.5) {
-      // gridStep = 2.0 * 10 ** exponent
-      gridStep = 2.0 * Utils.pow(10, exponent);
-    }
-    else {
-      // gridStep = 1.0 * 10 ** exponent
-      gridStep = Utils.pow(10, exponent);
-    }
-    return gridStep;
   }
 
 }

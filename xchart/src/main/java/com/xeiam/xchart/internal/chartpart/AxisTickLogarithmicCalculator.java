@@ -63,8 +63,6 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
 
     int logMin = (int) Math.floor(Math.log10(minValue));
     int logMax = (int) Math.ceil(Math.log10(maxValue));
-    // int logMin = (int) Math.log10(minValue.doubleValue());
-    // int logMax = (int) Math.log10(maxValue.doubleValue());
     // System.out.println("minValue: " + minValue);
     // System.out.println("maxValue: " + maxValue);
     // System.out.println("logMin: " + logMin);
@@ -116,7 +114,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
           tickLabels.add(numberFormatter.formatLogNumber(j, axisDirection));
         }
         else {
-           // Set a space to avoid Zero length string passed to TextLayout constructor
+          // Set a space to avoid Zero length string passed to TextLayout constructor
           tickLabels.add(" ");
         }
 
