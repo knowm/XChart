@@ -61,10 +61,10 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
-    int logMin = (int) Math.floor(Math.log10(minValue));
-    int logMax = (int) Math.ceil(Math.log10(maxValue));
     // System.out.println("minValue: " + minValue);
     // System.out.println("maxValue: " + maxValue);
+    int logMin = (int) Math.floor(Math.log10(minValue));
+    int logMax = (int) Math.ceil(Math.log10(maxValue));
     // System.out.println("logMin: " + logMin);
     // System.out.println("logMax: " + logMax);
 
@@ -91,7 +91,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       // System.out.println("tickStep: " + tickStep);
       // System.out.println("firstPosition: " + firstPosition);
       // System.out.println("i: " + i);
-      // System.out.println("pow(10, i).doubleValue(): " + pow(10, i).doubleValue());
+      // System.out.println("Utils.pow(10, i): " + Utils.pow(10, i));
 
       // using the .00000001 factor to deal with double value imprecision
       for (double j = firstPosition; j <= Utils.pow(10, i) + .00000001; j = j + tickStep) {
@@ -114,8 +114,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
           tickLabels.add(numberFormatter.formatLogNumber(j, axisDirection));
         }
         else {
-          // Set a space to avoid Zero length string passed to TextLayout constructor
-          tickLabels.add(" ");
+          tickLabels.add(null);
         }
 
         // add all the tick marks though
