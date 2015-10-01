@@ -142,6 +142,7 @@ public abstract class AxisTickCalculator {
         sampleLabel = tickLabels.get(i);
       }
     }
+    // System.out.println("longestLabel: " + sampleLabel);
 
     TextLayout textLayout = new TextLayout(sampleLabel, styleManager.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
     AffineTransform rot = styleManager.getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(styleManager.getXAxisLabelRotation()));
@@ -151,7 +152,7 @@ public abstract class AxisTickCalculator {
     // System.out.println("largestLabelWidth: " + largestLabelWidth);
     // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
-    return (largestLabelWidth * 1.8 < tickSpacingHint);
+    return (largestLabelWidth * 1.6 < tickSpacingHint);
 
   }
 }

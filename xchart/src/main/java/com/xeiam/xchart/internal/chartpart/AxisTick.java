@@ -15,6 +15,7 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
@@ -74,7 +75,7 @@ public class AxisTick implements ChartPart {
       // System.out.println("workingspace= " + workingSpace);
     }
 
-    System.out.println("AxisTick: " + axis.getDirection());
+    // System.out.println("AxisTick: " + axis.getDirection());
     // System.out.println("workingSpace: " + workingSpace);
     axisTickCalculator = getAxisTickCalculator(workingSpace);
 
@@ -95,8 +96,8 @@ public class AxisTick implements ChartPart {
 
       );
 
-      // g.setColor(Color.red);
-      // g.draw(bounds);
+      g.setColor(Color.red);
+      g.draw(bounds);
 
     }
     else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) {
@@ -106,8 +107,9 @@ public class AxisTick implements ChartPart {
 
       bounds = new Rectangle2D.Double(axisTickMarks.getBounds().getX(), axisTickMarks.getBounds().getY(), axisTickLabels.getBounds().getWidth(), axisTickMarks.getBounds().getHeight()
           + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight());
-      // g.setColor(Color.red);
-      // g.draw(bounds);
+
+      g.setColor(Color.red);
+      g.draw(bounds);
 
     }
 

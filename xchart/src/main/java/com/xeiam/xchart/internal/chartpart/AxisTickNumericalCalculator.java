@@ -59,96 +59,96 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     // tick space - a percentage of the working space available for ticks
     double tickSpace = styleManager.getAxisTickSpacePercentage() * workingSpace; // in plot space
 
-    // where the tick should begin in the working space in pixels
-    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
-
-    BigDecimal gridStep = BigDecimal.valueOf(getNumericalGridStep(tickSpace));
-    // System.out.println("***gridStep: " + gridStep);
-    BigDecimal cleanedGridStep = gridStep.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
-    // System.out.println("cleanedGridStep: " + cleanedGridStep);
-    BigDecimal firstPosition = BigDecimal.valueOf(getFirstPosition(cleanedGridStep.doubleValue()));
-    // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
-    BigDecimal cleanedFirstPosition = firstPosition.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
-    // System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
-
-    // generate all tickLabels and tickLocations from the first to last position
-    for (BigDecimal value = cleanedFirstPosition; value.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0; value = value.add(cleanedGridStep)) {
-
-      // System.out.println(value);
-      String tickLabel = numberFormatter.formatNumber(value, minValue, maxValue, axisDirection);
-      // System.out.println(tickLabel);
-      tickLabels.add(tickLabel);
-
-      // here we convert tickPosition finally to plot space, i.e. pixels
-      double tickLabelPosition = margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
-      tickLocations.add(tickLabelPosition);
-    }
-  }
-
-  /**
-   * Determine the grid step for the data set given the space in pixels allocated for the axis
-   *
-   * @param tickSpace in plot space
-   * @return
-   */
-  private double getNumericalGridStep(double tickSpace) {
-
     // this prevents an infinite loop when the plot gets sized really small.
     if (tickSpace < 10) {
-      return 1.0;
+      return;
     }
 
+    // where the tick should begin in the working space in pixels
+    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
     // the span of the data
     double span = Math.abs(maxValue - minValue); // in data space
 
-    int tickMarkSpaceHint = (axisDirection == Direction.X ? styleManager.getXAxisTickMarkSpacingHint() : styleManager.getYAxisTickMarkSpacingHint());
+    //////////////////////////
 
-    // for very short plots, squeeze some more ticks in than normal
+    int tickSpacingHint = (axisDirection == Direction.X ? styleManager.getXAxisTickMarkSpacingHint() : styleManager.getYAxisTickMarkSpacingHint()) - 5;
+
+    // for very short plots, squeeze some more ticks in than normal into the Y-Axis
     if (axisDirection == Direction.Y && tickSpace < 160) {
-      tickMarkSpaceHint = 25;
+      tickSpacingHint = 25 - 5;
     }
+    do {
 
-    double gridStepHint = span / tickSpace * tickMarkSpaceHint;
+      // System.out.println("calculating ticks...");
+      tickLabels.clear();
+      tickLocations.clear();
+      tickSpacingHint += 5;
+      double gridStepHint = span / tickSpace * tickSpacingHint;
 
-    // gridStepHint --> significand * 10 ** exponent
-    // e.g. 724.1 --> 7.241 * 10 ** 2
-    double significand = gridStepHint;
-    int exponent = 0;
-    if (significand == 0) {
-      exponent = 1;
-    }
-    else if (significand < 1) {
-      while (significand < 1) {
-        significand *= 10.0;
-        exponent--;
+      // gridStepHint --> significand * 10 ** exponent
+      // e.g. 724.1 --> 7.241 * 10 ** 2
+      double significand = gridStepHint;
+      int exponent = 0;
+      if (significand == 0) {
+        exponent = 1;
       }
-    }
-    else {
-      while (significand >= 10 || significand == Double.NEGATIVE_INFINITY) {
-        significand /= 10.0;
-        exponent++;
+      else if (significand < 1) {
+        while (significand < 1) {
+          significand *= 10.0;
+          exponent--;
+        }
       }
-    }
+      else {
+        while (significand >= 10 || significand == Double.NEGATIVE_INFINITY) {
+          significand /= 10.0;
+          exponent++;
+        }
+      }
 
-    // calculate the grid step with hint.
-    double gridStep;
-    if (significand > 7.5) {
-      // gridStep = 10.0 * 10 ** exponent
-      gridStep = 10.0 * Utils.pow(10, exponent);
-    }
-    else if (significand > 3.5) {
-      // gridStep = 5.0 * 10 ** exponent
-      gridStep = 5.0 * Utils.pow(10, exponent);
-    }
-    else if (significand > 1.5) {
-      // gridStep = 2.0 * 10 ** exponent
-      gridStep = 2.0 * Utils.pow(10, exponent);
-    }
-    else {
-      // gridStep = 1.0 * 10 ** exponent
-      gridStep = Utils.pow(10, exponent);
-    }
-    return gridStep;
+      // calculate the grid step with hint.
+      double gridStep;
+      if (significand > 7.5) {
+        // gridStep = 10.0 * 10 ** exponent
+        gridStep = 10.0 * Utils.pow(10, exponent);
+      }
+      else if (significand > 3.5) {
+        // gridStep = 5.0 * 10 ** exponent
+        gridStep = 5.0 * Utils.pow(10, exponent);
+      }
+      else if (significand > 1.5) {
+        // gridStep = 2.0 * 10 ** exponent
+        gridStep = 2.0 * Utils.pow(10, exponent);
+      }
+      else {
+        // gridStep = 1.0 * 10 ** exponent
+        gridStep = Utils.pow(10, exponent);
+      }
+      //////////////////////////
+      BigDecimal gridStepBigDecimal = BigDecimal.valueOf(gridStep);
+      // System.out.println("***gridStep: " + gridStep);
+      BigDecimal cleanedGridStep = gridStepBigDecimal.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
+      // System.out.println("cleanedGridStep: " + cleanedGridStep);
+      BigDecimal firstPosition = BigDecimal.valueOf(getFirstPosition(cleanedGridStep.doubleValue()));
+      // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
+      BigDecimal cleanedFirstPosition = firstPosition.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
+      // System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
+
+      // generate all tickLabels and tickLocations from the first to last position
+      for (BigDecimal value = cleanedFirstPosition; value.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0; value = value.add(cleanedGridStep)) {
+
+        if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 && value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
+          // System.out.println(value);
+          String tickLabel = numberFormatter.formatNumber(value, minValue, maxValue, axisDirection);
+          // System.out.println(tickLabel);
+          tickLabels.add(tickLabel);
+
+          // here we convert tickPosition finally to plot space, i.e. pixels
+          double tickLabelPosition = margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
+          tickLocations.add(tickLabelPosition);
+        }
+      }
+    } while (!willLabelsFitInTickSpaceHint(tickLabels, tickSpacingHint));
+
   }
 
 }

@@ -58,14 +58,13 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     // Can tickSpacingHint be intelligently calculated by looking at the label data?
     // YES. Generate the labels first, see if they "look" OK and reiterate with an increased tickSpacingHint
     // TODO apply this to other Axis types including bar charts
-    // TODO only do this for the X-Axis
-    int tickSpacingHint = styleManager.getXAxisTickMarkSpacingHint() - 10;
+    int tickSpacingHint = styleManager.getXAxisTickMarkSpacingHint() - 5;
     do {
 
-      System.out.println("calulating ticks...");
+      // System.out.println("calculating ticks...");
       tickLabels.clear();
       tickLocations.clear();
-      tickSpacingHint += 10;
+      tickSpacingHint += 5;
       long gridStepHint = (long) (span / tickSpace * tickSpacingHint);
 
       long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
@@ -85,10 +84,13 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
       // generate all tickLabels and tickLocations from the first to last position
       for (double value = firstPosition; value <= maxValue + 2 * gridStep; value = value + gridStep) {
 
-        tickLabels.add(dateFormatter.formatDate(value, timeUnit));
-        // here we convert tickPosition finally to plot space, i.e. pixels
-        double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
-        tickLocations.add(tickLabelPosition);
+        if (value <= maxValue && value >= minValue) {
+
+          tickLabels.add(dateFormatter.formatDate(value, timeUnit));
+          // here we convert tickPosition finally to plot space, i.e. pixels
+          double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
+          tickLocations.add(tickLabelPosition);
+        }
       }
     } while (!willLabelsFitInTickSpaceHint(tickLabels, tickSpacingHint));
   }

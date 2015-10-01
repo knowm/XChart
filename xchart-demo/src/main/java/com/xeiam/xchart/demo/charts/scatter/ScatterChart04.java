@@ -36,6 +36,7 @@ import com.xeiam.xchart.demo.charts.ExampleChart;
  * <li>Using ChartBuilder to Make a Chart
  * <li>List<Number> data sets
  * <li>Setting Series Marker and Marker Color
+ * <li>Using a custom decimal pattern
  */
 public class ScatterChart04 implements ExampleChart {
 
@@ -55,7 +56,7 @@ public class ScatterChart04 implements ExampleChart {
     List<Double> yData = new ArrayList<Double>();
     List<Double> errorBars = new ArrayList<Double>();
     for (int i = 0; i <= size; i++) {
-      xData.add(((double) i) / 100000000);
+      xData.add(((double) i) / 1000000);
       yData.add(10 * Math.exp(-i));
       errorBars.add(Math.random() + .3);
     }
@@ -67,6 +68,7 @@ public class ScatterChart04 implements ExampleChart {
     chart.getStyleManager().setChartTitleVisible(false);
     chart.getStyleManager().setLegendVisible(false);
     chart.getStyleManager().setAxisTitlesVisible(false);
+    chart.getStyleManager().setXAxisDecimalPattern("0.0000000");
 
     // Series
     Series series = chart.addSeries("10^(-x)", xData, yData, errorBars);
