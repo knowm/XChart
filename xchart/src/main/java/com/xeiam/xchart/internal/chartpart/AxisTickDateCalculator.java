@@ -55,28 +55,42 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     // the span of the data
     long span = (long) Math.abs(maxValue - minValue); // in data space
 
-    long gridStepHint = (long) (span / tickSpace * styleManager.getXAxisTickMarkSpacingHint());
+    // Can tickSpacingHint be intelligently calculated by looking at the label data?
+    // YES. Generate the labels first, see if they "look" OK and reiterate with an increased tickSpacingHint
+    // TODO apply this to other Axis types including bar charts
+    // TODO only do this for the X-Axis
+    int tickSpacingHint = styleManager.getXAxisTickMarkSpacingHint() - 10;
+    do {
 
-    long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
-    double gridStep = 0.0;
-    int[] steps = dateFormatter.getValidTickStepsMap().get(timeUnit);
-    for (int i = 0; i < steps.length - 1; i++) {
-      if (gridStepHint < (timeUnit * steps[i] + timeUnit * steps[i + 1]) / 2.0) {
-        gridStep = timeUnit * steps[i];
-        break;
+      System.out.println("calulating ticks...");
+      tickLabels.clear();
+      tickLocations.clear();
+      tickSpacingHint += 10;
+      long gridStepHint = (long) (span / tickSpace * tickSpacingHint);
+
+      long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
+      double gridStep = 0.0;
+      int[] steps = dateFormatter.getValidTickStepsMap().get(timeUnit);
+      for (int i = 0; i < steps.length - 1; i++) {
+        if (gridStepHint < (timeUnit * steps[i] + timeUnit * steps[i + 1]) / 2.0) {
+          gridStep = timeUnit * steps[i];
+          break;
+        }
       }
-    }
 
-    double firstPosition = getFirstPosition(gridStep);
+      // System.out.println("gridStep: " + gridStep);
 
-    // generate all tickLabels and tickLocations from the first to last position
-    for (double value = firstPosition; value <= maxValue + 2 * gridStep; value = value + gridStep) {
+      double firstPosition = getFirstPosition(gridStep);
 
-      tickLabels.add(dateFormatter.formatDate(value, timeUnit));
-      // here we convert tickPosition finally to plot space, i.e. pixels
-      double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
-      tickLocations.add(tickLabelPosition);
-    }
+      // generate all tickLabels and tickLocations from the first to last position
+      for (double value = firstPosition; value <= maxValue + 2 * gridStep; value = value + gridStep) {
+
+        tickLabels.add(dateFormatter.formatDate(value, timeUnit));
+        // here we convert tickPosition finally to plot space, i.e. pixels
+        double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
+        tickLocations.add(tickLabelPosition);
+      }
+    } while (!willLabelsFitInTickSpaceHint(tickLabels, tickSpacingHint));
   }
 
 }

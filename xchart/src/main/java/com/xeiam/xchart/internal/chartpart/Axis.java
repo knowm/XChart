@@ -270,6 +270,8 @@ public class Axis implements ChartPart {
     if (getChartPainter().getStyleManager().isXAxisTicksVisible()) {
 
       // get some real tick labels
+      // System.out.println("XAxisHeightHint");
+      // System.out.println("workingSpace: " + workingSpace);
       AxisTickCalculator axisTickCalculator = axisTick.getAxisTickCalculator(workingSpace);
       String sampleLabel = " ";
       // find the longest String in all the labels
@@ -279,11 +281,13 @@ public class Axis implements ChartPart {
         }
       }
 
+      // get the height of the label including rotation
       TextLayout textLayout = new TextLayout(sampleLabel, getChartPainter().getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
       AffineTransform rot = getChartPainter().getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(getChartPainter().getStyleManager()
           .getXAxisLabelRotation()));
       Shape shape = textLayout.getOutline(rot);
       Rectangle2D rectangle = shape.getBounds();
+
       axisTickLabelsHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
     }
     return titleHeight + axisTickLabelsHeight;

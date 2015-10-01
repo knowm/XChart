@@ -74,6 +74,8 @@ public class AxisTick implements ChartPart {
       // System.out.println("workingspace= " + workingSpace);
     }
 
+    System.out.println("AxisTick: " + axis.getDirection());
+    // System.out.println("workingSpace: " + workingSpace);
     axisTickCalculator = getAxisTickCalculator(workingSpace);
 
     if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) {
@@ -83,15 +85,15 @@ public class AxisTick implements ChartPart {
 
       bounds = new Rectangle2D.Double(
 
-          axisTickLabels.getBounds().getX(),
+      axisTickLabels.getBounds().getX(),
 
-          axisTickLabels.getBounds().getY(),
+      axisTickLabels.getBounds().getY(),
 
-          axisTickLabels.getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
+      axisTickLabels.getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
 
-          axisTickMarks.getBounds().getHeight()
+      axisTickMarks.getBounds().getHeight()
 
-          );
+      );
 
       // g.setColor(Color.red);
       // g.draw(bounds);
@@ -102,9 +104,8 @@ public class AxisTick implements ChartPart {
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      bounds =
-          new Rectangle2D.Double(axisTickMarks.getBounds().getX(), axisTickMarks.getBounds().getY(), axisTickLabels.getBounds().getWidth(), axisTickMarks.getBounds().getHeight()
-              + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight());
+      bounds = new Rectangle2D.Double(axisTickMarks.getBounds().getX(), axisTickMarks.getBounds().getY(), axisTickLabels.getBounds().getWidth(), axisTickMarks.getBounds().getHeight()
+          + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight());
       // g.setColor(Color.red);
       // g.draw(bounds);
 

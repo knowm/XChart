@@ -15,6 +15,11 @@
  */
 package com.xeiam.xchart.internal.chartpart;
 
+import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -116,4 +121,37 @@ public abstract class AxisTickCalculator {
     return tickLabels;
   }
 
+  /**
+   * Given the generated tickLabels, will they fit side-by-side without overlapping each other and looking bad? Sometimes the given tickSpacingHint is simply too small.
+   *
+   * @param tickLabels
+   * @param tickSpacingHint
+   * @return
+   */
+      boolean willLabelsFitInTickSpaceHint(List<String> tickLabels, int tickSpacingHint) {
+
+    // Assume that for Y-Axis the ticks will all fit based on their tickSpace hint because the text is usually horizontal and "short". This more applies to the X-Axis.
+    if (this.axisDirection == Direction.Y) {
+      return true;
+    }
+
+    String sampleLabel = " ";
+    // find the longest String in all the labels
+    for (int i = 0; i < tickLabels.size(); i++) {
+      if (tickLabels.get(i) != null && tickLabels.get(i).length() > sampleLabel.length()) {
+        sampleLabel = tickLabels.get(i);
+      }
+    }
+
+    TextLayout textLayout = new TextLayout(sampleLabel, styleManager.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+    AffineTransform rot = styleManager.getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(styleManager.getXAxisLabelRotation()));
+    Shape shape = textLayout.getOutline(rot);
+    Rectangle2D rectangle = shape.getBounds();
+    double largestLabelWidth = rectangle.getWidth();
+    // System.out.println("largestLabelWidth: " + largestLabelWidth);
+    // System.out.println("tickSpacingHint: " + tickSpacingHint);
+
+    return (largestLabelWidth * 1.8 < tickSpacingHint);
+
+  }
 }
