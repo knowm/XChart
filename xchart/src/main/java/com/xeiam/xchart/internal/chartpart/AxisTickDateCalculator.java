@@ -49,15 +49,18 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
     // tick space - a percentage of the working space available for ticks
     double tickSpace = styleManager.getAxisTickSpacePercentage() * workingSpace; // in plot space
 
+    // this prevents an infinite loop when the plot gets sized really small.
+    if (tickSpace < 10) {
+      return;
+    }
+
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // the span of the data
     long span = (long) Math.abs(maxValue - minValue); // in data space
 
-    // Can tickSpacingHint be intelligently calculated by looking at the label data?
-    // YES. Generate the labels first, see if they "look" OK and reiterate with an increased tickSpacingHint
-    // TODO apply this to other Axis types including bar charts
+    // Generate the labels first, see if they "look" OK and reiterate with an increased tickSpacingHint
     int tickSpacingHint = styleManager.getXAxisTickMarkSpacingHint() - 5;
     do {
 
