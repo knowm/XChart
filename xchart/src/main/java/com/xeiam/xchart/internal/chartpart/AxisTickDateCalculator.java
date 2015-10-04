@@ -110,6 +110,8 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
   public AxisTickDateCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
+
+    System.out.println("AxisTickDateCalculator Constructor");
     calculate();
   }
 

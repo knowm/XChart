@@ -70,7 +70,7 @@ public class PlotSurface implements ChartPart {
     if (getChartPainter().getStyleManager().isPlotGridLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
 
       // horizontal
-      List<Double> yAxisTickLocations = getChartPainter().getAxisPair().getYAxis().getAxisTick().getTickLocations();
+      List<Double> yAxisTickLocations = getChartPainter().getAxisPair().getYAxis().getAxisTickCalculator().getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocations.get(i);
@@ -102,13 +102,13 @@ public class PlotSurface implements ChartPart {
       // vertical
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar
 
-          && (getChartPainter().getStyleManager().isPlotGridLinesVisible()
+      && (getChartPainter().getStyleManager().isPlotGridLinesVisible()
 
-              || getChartPainter().getStyleManager().isPlotTicksMarksVisible())
+      || getChartPainter().getStyleManager().isPlotTicksMarksVisible())
 
-          ) {
+      ) {
 
-        List<Double> xAxisTickLocations = getChartPainter().getAxisPair().getXAxis().getAxisTick().getTickLocations();
+        List<Double> xAxisTickLocations = getChartPainter().getAxisPair().getXAxis().getAxisTickCalculator().getTickLocations();
         for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
           double tickLocation = xAxisTickLocations.get(i);

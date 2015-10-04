@@ -67,11 +67,11 @@ public class AxisTickLabels implements ChartPart {
       double maxTickLabelWidth = 0;
       Map<Double, TextLayout> axisLabelTextLayouts = new HashMap<Double, TextLayout>();
 
-      for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+      for (int i = 0; i < axisTick.getAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
-        String tickLabel = axisTick.getTickLabels().get(i);
+        String tickLabel = axisTick.getAxis().getAxisTickCalculator().getTickLabels().get(i);
         // System.out.println("** " + tickLabel);
-        double tickLocation = axisTick.getTickLocations().get(i);
+        double tickLocation = axisTick.getAxis().getAxisTickCalculator().getTickLocations().get(i);
         double flippedTickLocation = yOffset + height - tickLocation;
 
         if (tickLabel != null && flippedTickLocation > yOffset && flippedTickLocation < yOffset + height) { // some are null for logarithmic axes
@@ -131,11 +131,11 @@ public class AxisTickLabels implements ChartPart {
       double maxTickLabelHeight = 0;
 
       // System.out.println("axisTick.getTickLabels().size(): " + axisTick.getTickLabels().size());
-      for (int i = 0; i < axisTick.getTickLabels().size(); i++) {
+      for (int i = 0; i < axisTick.getAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
-        String tickLabel = axisTick.getTickLabels().get(i);
+        String tickLabel = axisTick.getAxis().getAxisTickCalculator().getTickLabels().get(i);
         // System.out.println("tickLabel: " + tickLabel);
-        double tickLocation = axisTick.getTickLocations().get(i);
+        double tickLocation = axisTick.getAxis().getAxisTickCalculator().getTickLocations().get(i);
         double shiftedTickLocation = xOffset + tickLocation;
 
         // discard null and out of bounds labels

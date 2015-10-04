@@ -17,10 +17,6 @@ package com.xeiam.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
-
-import com.xeiam.xchart.StyleManager.ChartType;
-import com.xeiam.xchart.internal.chartpart.Axis.AxisType;
 
 /**
  * An axis tick
@@ -38,8 +34,6 @@ public class AxisTick implements ChartPart {
 
   /** the bounds */
   private Rectangle2D bounds = new Rectangle2D.Double();
-
-  AxisTickCalculator axisTickCalculator = null;
 
   /**
    * Constructor
@@ -76,7 +70,6 @@ public class AxisTick implements ChartPart {
 
     // System.out.println("AxisTick: " + axis.getDirection());
     // System.out.println("workingSpace: " + workingSpace);
-    axisTickCalculator = getAxisTickCalculator(workingSpace);
 
     if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) {
 
@@ -114,35 +107,6 @@ public class AxisTick implements ChartPart {
 
   }
 
-  public AxisTickCalculator getAxisTickCalculator(double workingSpace) {
-
-    if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
-
-      return new AxisTickBarChartCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter());
-
-    }
-    else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
-
-      return new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
-
-    }
-    else if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisLogarithmic() && axis.getAxisType() != AxisType.Date) {
-
-      return new AxisTickLogarithmicCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
-
-    }
-    else if (axis.getAxisType() == AxisType.Date) {
-
-      return new AxisTickDateCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
-
-    }
-    else { // number
-
-      return new AxisTickNumericalCalculator(axis.getDirection(), workingSpace, axis.getMin(), axis.getMax(), getChartPainter().getStyleManager());
-
-    }
-  }
-
   @Override
   public ChartPainter getChartPainter() {
 
@@ -161,13 +125,13 @@ public class AxisTick implements ChartPart {
     return axisTickLabels;
   }
 
-  public List<Double> getTickLocations() {
-
-    return axisTickCalculator.getTickLocations();
-  }
-
-  public List<String> getTickLabels() {
-
-    return axisTickCalculator.getTickLabels();
-  }
+  // public List<Double> getTickLocations() {
+  //
+  // return axisTickCalculator.getTickLocations();
+  // }
+  //
+  // public List<String> getTickLabels() {
+  //
+  // return axisTickCalculator.getTickLabels();
+  // }
 }

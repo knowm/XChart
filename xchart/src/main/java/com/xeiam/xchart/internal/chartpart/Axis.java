@@ -22,6 +22,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import com.xeiam.xchart.StyleManager.ChartType;
 import com.xeiam.xchart.StyleManager.LegendPosition;
 
 /**
@@ -47,6 +48,9 @@ public class Axis implements ChartPart {
 
   /** the axis tick */
   private AxisTick axisTick;
+
+  /** the axis tick calculator */
+  private AxisTickCalculator axisTickCalculator;
 
   /** the axis direction */
   private Direction direction;
@@ -158,7 +162,7 @@ public class Axis implements ChartPart {
       double width = 60; // arbitrary, final width depends on Axis tick labels
       double height = 0;
       do {
-        // System.out.println("width: " + width);
+        // System.out.println("width before: " + width);
 
         double approximateXAxisWidth =
 
@@ -181,6 +185,7 @@ public class Axis implements ChartPart {
             .getStyleManager().getChartPadding();
 
         width = getYAxisWidthHint(height);
+        // System.out.println("width after: " + width);
 
         // System.out.println("height: " + height);
 
@@ -287,7 +292,7 @@ public class Axis implements ChartPart {
       // get some real tick labels
       // System.out.println("XAxisHeightHint");
       // System.out.println("workingSpace: " + workingSpace);
-      AxisTickCalculator axisTickCalculator = axisTick.getAxisTickCalculator(workingSpace);
+      this.axisTickCalculator = getAxisTickCalculator(workingSpace);
       String sampleLabel = "";
       // find the longest String in all the labels
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
@@ -327,7 +332,7 @@ public class Axis implements ChartPart {
       // get some real tick labels
       // System.out.println("XAxisHeightHint");
       // System.out.println("workingSpace: " + workingSpace);
-      AxisTickCalculator axisTickCalculator = axisTick.getAxisTickCalculator(workingSpace);
+      this.axisTickCalculator = getAxisTickCalculator(workingSpace);
       String sampleLabel = "";
       // find the longest String in all the labels
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
@@ -343,6 +348,34 @@ public class Axis implements ChartPart {
       axisTickLabelsHeight = rectangle.getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + getChartPainter().getStyleManager().getAxisTickMarkLength();
     }
     return titleHeight + axisTickLabelsHeight;
+  }
+
+  private AxisTickCalculator getAxisTickCalculator(double workingSpace) {
+
+    if (getDirection() == Direction.X && getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
+
+      return new AxisTickBarChartCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter());
+
+    }
+    else if (getDirection() == Direction.X && getChartPainter().getStyleManager().isXAxisLogarithmic() && getAxisType() != AxisType.Date) {
+
+      return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter().getStyleManager());
+
+    }
+    else if (getDirection() == Direction.Y && getChartPainter().getStyleManager().isYAxisLogarithmic() && getAxisType() != AxisType.Date) {
+
+      return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter().getStyleManager());
+
+    }
+    else if (getAxisType() == AxisType.Date) {
+
+      return new AxisTickDateCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter().getStyleManager());
+
+    }
+    else { // number
+
+      return new AxisTickNumericalCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter().getStyleManager());
+    }
   }
 
   @Override
@@ -391,6 +424,11 @@ public class Axis implements ChartPart {
   protected void setAxisTitle(AxisTitle axisTitle) {
 
     this.axisTitle = axisTitle;
+  }
+
+  public AxisTickCalculator getAxisTickCalculator() {
+
+    return this.axisTickCalculator;
   }
 
 }
