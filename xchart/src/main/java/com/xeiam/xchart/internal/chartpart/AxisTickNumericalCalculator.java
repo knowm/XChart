@@ -60,7 +60,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     double tickSpace = styleManager.getAxisTickSpacePercentage() * workingSpace; // in plot space
 
     // this prevents an infinite loop when the plot gets sized really small.
-    if (tickSpace < 10) {
+    if (tickSpace < styleManager.getXAxisTickMarkSpacingHint()) {
       return;
     }
 
@@ -77,12 +77,17 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
     if (axisDirection == Direction.Y && tickSpace < 160) {
       tickSpacingHint = 25 - 5;
     }
+
+    int gridStepInChartSpace = 0;
+
     do {
 
       // System.out.println("calculating ticks...");
       tickLabels.clear();
       tickLocations.clear();
       tickSpacingHint += 5;
+      // System.out.println("tickSpacingHint: " + tickSpacingHint);
+
       double gridStepHint = span / tickSpace * tickSpacingHint;
 
       // gridStepHint --> significand * 10 ** exponent
@@ -105,7 +110,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
         }
       }
 
-      // calculate the grid step with hint.
+      // calculate the grid step width hint.
       double gridStep;
       if (significand > 7.5) {
         // gridStep = 10.0 * 10 ** exponent
@@ -124,11 +129,23 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
         gridStep = Utils.pow(10, exponent);
       }
       //////////////////////////
+      // System.out.println("gridStep: " + gridStep);
+      // System.out.println("***gridStepInChartSpace: " + gridStep / span * tickSpace);
+      gridStepInChartSpace = (int) (gridStep / span * tickSpace);
+      // System.out.println("gridStepInChartSpace: " + gridStepInChartSpace);
+
       BigDecimal gridStepBigDecimal = BigDecimal.valueOf(gridStep);
-      // System.out.println("***gridStep: " + gridStep);
       BigDecimal cleanedGridStep = gridStepBigDecimal.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
-      BigDecimal firstPosition = BigDecimal.valueOf(getFirstPosition(cleanedGridStep.doubleValue()));
+      // TODO figure this out. It happens once in a blue moon.
+      BigDecimal firstPosition = null;
+      try {
+        firstPosition = BigDecimal.valueOf(getFirstPosition(cleanedGridStep.doubleValue()));
+      } catch (java.lang.NumberFormatException e) {
+        System.out.println("cleanedGridStep: " + cleanedGridStep);
+        System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
+        System.out.println("NumberFormatException caused by this number: " + getFirstPosition(cleanedGridStep.doubleValue()));
+      }
       // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
       BigDecimal cleanedFirstPosition = firstPosition.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
@@ -147,7 +164,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
         tickLocations.add(tickLabelPosition);
         // }
       }
-    } while (!willLabelsFitInTickSpaceHint(tickLabels, tickSpacingHint));
+    } while (!willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
 
   }
 

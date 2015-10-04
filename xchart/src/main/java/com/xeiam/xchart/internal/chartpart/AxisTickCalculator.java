@@ -152,7 +152,11 @@ public abstract class AxisTickCalculator {
     // System.out.println("largestLabelWidth: " + largestLabelWidth);
     // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
-    return (largestLabelWidth * 1.6 < tickSpacingHint);
+    // if (largestLabelWidth * 1.1 >= tickSpacingHint) {
+    // System.out.println("WILL NOT FIT!!!");
+    // }
+
+    return (largestLabelWidth * 1.1 < tickSpacingHint);
 
   }
 }

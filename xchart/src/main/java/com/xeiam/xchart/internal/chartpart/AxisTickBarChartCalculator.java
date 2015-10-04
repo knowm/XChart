@@ -94,7 +94,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
       else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
         long span = (long) Math.abs(maxValue - minValue); // in data space
         long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
-        long timeUnit = dateFormatter.getTimeUnit(gridStepHint);
+        long timeUnit = dateFormatter.getTimeSpan(gridStepHint);
         tickLabels.add(dateFormatter.formatDate(((Number) ((Date) category).getTime()).doubleValue(), timeUnit));
       }
       double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
