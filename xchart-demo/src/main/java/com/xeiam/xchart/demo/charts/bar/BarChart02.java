@@ -78,6 +78,7 @@ public class BarChart02 implements ExampleChart {
     series.setLineColor(SeriesColor.RED);
     chart.getStyleManager().setPlotGridLinesVisible(false);
     chart.getStyleManager().setBarFilled(false);
+    chart.getStyleManager().setDatePattern("YYYY");
 
     return chart;
   }

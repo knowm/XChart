@@ -16,6 +16,8 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.xeiam.xchart.Series;
@@ -70,7 +72,18 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     double firstPosition = gridStep / 2.0;
 
     // set up String formatters that may be encountered
-    NumberFormatter numberFormatter = new NumberFormatter(styleManager);
+    NumberFormatter numberFormatter = null;
+    SimpleDateFormat simpleDateformat = null;
+    if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+      numberFormatter = new NumberFormatter(styleManager);
+    }
+    else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+      if (styleManager.getDatePattern() == null) {
+        throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
+      }
+      simpleDateformat = new SimpleDateFormat(styleManager.getDatePattern(), styleManager.getLocale());
+      simpleDateformat.setTimeZone(styleManager.getTimezone());
+    }
 
     int counter = 0;
 
@@ -80,8 +93,12 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         double tickLabelPosition = margin + firstPosition + gridStep * counter++;
         tickLocations.add(tickLabelPosition);
       }
-      else {
+      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
         tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
+      }
+      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+
+        tickLabels.add(simpleDateformat.format((((Date) category).getTime())));
       }
       double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
       tickLocations.add(tickLabelPosition);
