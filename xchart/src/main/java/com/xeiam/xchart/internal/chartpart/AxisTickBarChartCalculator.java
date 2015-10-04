@@ -16,7 +16,6 @@
 package com.xeiam.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import com.xeiam.xchart.Series;
@@ -71,14 +70,7 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
     double firstPosition = gridStep / 2.0;
 
     // set up String formatters that may be encountered
-    NumberFormatter numberFormatter = null;
-    DateFormatter dateFormatter = null;
-    if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-      numberFormatter = new NumberFormatter(styleManager);
-    }
-    else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-      dateFormatter = new DateFormatter(chartPainter.getStyleManager());
-    }
+    NumberFormatter numberFormatter = new NumberFormatter(styleManager);
 
     int counter = 0;
 
@@ -88,14 +80,8 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
         double tickLabelPosition = margin + firstPosition + gridStep * counter++;
         tickLocations.add(tickLabelPosition);
       }
-      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+      else {
         tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
-      }
-      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-        long span = (long) Math.abs(maxValue - minValue); // in data space
-        long gridStepHint = (long) (span / (double) tickSpace * styleManager.getXAxisTickMarkSpacingHint());
-        long timeUnit = dateFormatter.getTimeSpan(gridStepHint);
-        tickLabels.add(dateFormatter.formatDate(((Number) ((Date) category).getTime()).doubleValue(), timeUnit));
       }
       double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
       tickLocations.add(tickLabelPosition);
