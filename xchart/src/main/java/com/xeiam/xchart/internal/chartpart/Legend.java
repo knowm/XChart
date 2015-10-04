@@ -70,6 +70,9 @@ public class Legend implements ChartPart {
     if (!chartPainter.getStyleManager().isLegendVisible()) {
       return new double[] { 0, 0 };
     }
+    if (chartPainter.getPlot().getBounds().getWidth() < 30) {
+      return new double[] { 0, 0 };
+    }
 
     StyleManager styleManager = getChartPainter().getStyleManager();
     boolean isBar = styleManager.getChartType() == ChartType.Bar;
@@ -113,6 +116,11 @@ public class Legend implements ChartPart {
 
   @Override
   public void paint(Graphics2D g) {
+
+    // if the area to draw a chart on is so small, don't even bother
+    if (chartPainter.getPlot().getBounds().getWidth() < 30) {
+      return;
+    }
 
     bounds = new Rectangle2D.Double();
     // g.setFont(chartPainter.getStyleManager().getLegendFont());

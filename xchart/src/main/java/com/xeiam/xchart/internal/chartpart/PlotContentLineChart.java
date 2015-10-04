@@ -54,6 +54,11 @@ public class PlotContentLineChart extends PlotContent {
     // g.setColor(Color.red);
     // g.draw(bounds);
 
+    // if the area to draw a chart on is so small, don't even bother
+    if (bounds.getWidth() < 30) {
+      return;
+    }
+
     StyleManager styleManager = plot.getChartPainter().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
