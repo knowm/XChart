@@ -58,6 +58,11 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     // tick space - a percentage of the working space available for ticks
     double tickSpace = styleManager.getAxisTickSpacePercentage() * workingSpace; // in plot space
 
+    // this prevents an infinite loop when the plot gets sized really small.
+    if (tickSpace < styleManager.getXAxisTickMarkSpacingHint()) {
+      return;
+    }
+
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
@@ -81,9 +86,8 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
       logMax = (int) (Math.log10(styleManager.getXAxisMax())); // no floor
     }
 
-    // double firstPosition = getFirstPosition(tickStep);
-    // System.out.println("firstPosition: " + firstPosition);
     double firstPosition = Utils.pow(10, logMin);
+    // System.out.println("firstPosition: " + firstPosition);
     double tickStep = Utils.pow(10, logMin - 1);
 
     for (int i = logMin; i <= logMax; i++) { // for each decade
