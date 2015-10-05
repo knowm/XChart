@@ -29,6 +29,7 @@ import java.util.Map;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.StyleManager.ChartType;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
@@ -329,4 +330,18 @@ public class Legend implements ChartPart {
     return chartPainter;
   }
 
+
+  public double getWidthHint(Graphics2D g) {
+    final LegendPosition position = getChartPainter().getStyleManager()
+        .getLegendPosition();
+    final boolean legendIsVisible = getChartPainter().getStyleManager().isLegendVisible();
+
+    if (position == LegendPosition.OutsideE
+        && legendIsVisible) {
+      return getSizeHint(g)[0] +  getChartPainter().getStyleManager()
+          .getChartPadding();
+    }
+    return 0.0;
+  }
+  
 }

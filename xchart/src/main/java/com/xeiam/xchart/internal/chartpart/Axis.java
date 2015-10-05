@@ -149,26 +149,18 @@ public class Axis implements ChartPart {
       double yOffset = getChartPainter().getChartTitle().getSizeHint();
       double width = 80; // arbitrary, final width depends on Axis tick labels
 
-      double chartLegendWidth = 0;
-      if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
-        chartLegendWidth = getChartPainter().getChartLegend().getSizeHint(g)[0];
-      }
-
       double approximateXAxisWidth =
 
           getChartPainter().getWidth()
 
               - width // y-axis approx. width
 
-              - chartLegendWidth
+              - getChartPainter().getChartLegend().getWidthHint(g)
 
               - 2
           * getChartPainter().getStyleManager().getChartPadding()
 
               - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
-
-              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-                  .getChartPadding() : 0)
 
       ;
 
@@ -204,26 +196,18 @@ public class Axis implements ChartPart {
               + getChartPainter().getStyleManager().getChartPadding();
       double yOffset = axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
 
-      double chartLegendWidth = 0;
-      if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
-        chartLegendWidth = getChartPainter().getChartLegend().getSizeHint(g)[0];
-      }
-
       double width =
 
           getChartPainter().getWidth()
 
               - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
 
-              - chartLegendWidth
+              - getChartPainter().getChartLegend().getWidthHint(g)
 
               - 2
           * getChartPainter().getStyleManager().getChartPadding()
 
               - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
-
-              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-                  .getChartPadding() : 0)
 
       ;
 
