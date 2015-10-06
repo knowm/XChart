@@ -27,7 +27,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.xeiam.xchart.Series;
-import com.xeiam.xchart.StyleManager;
 import com.xeiam.xchart.StyleManager.ChartType;
 
 /**
@@ -38,6 +37,9 @@ public class Legend implements ChartPart {
   private static final int LEGEND_MARGIN = 6;
   private static final int BOX_SIZE = 20;
   private static final int MULTI_LINE_SPACE = 3;
+
+  private double legendBoxWidth = 0.0;
+  private double legendBoxHeight = 0.0;
 
   /**
    * parent
@@ -60,22 +62,15 @@ public class Legend implements ChartPart {
   }
 
   /**
-   * get the width of the chart legend
-   *
-   * @param g
-   * @return
+   * determine the width and height of the chart legend
    */
-  protected double[] getSizeHint(Graphics2D g) {
+  public void determineLegendBoxSize() {
 
     if (!chartPainter.getStyleManager().isLegendVisible()) {
-      return new double[] { 0, 0 };
-    }
-    if (chartPainter.getPlot().getBounds().getWidth() < 30) {
-      return new double[] { 0, 0 };
+      return;
     }
 
-    StyleManager styleManager = getChartPainter().getStyleManager();
-    boolean isBar = styleManager.getChartType() == ChartType.Bar;
+    boolean isBar = getChartPainter().getStyleManager().getChartType() == ChartType.Bar;
 
     // determine legend text content max width
     double legendTextContentMaxWidth = 0;
@@ -85,7 +80,7 @@ public class Legend implements ChartPart {
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
-      Map<String, Rectangle2D> seriesBounds = getSeriesTextBounds(series, g);
+      Map<String, Rectangle2D> seriesBounds = getSeriesTextBounds(series);
 
       double blockHeight = 0;
       for (Map.Entry<String, Rectangle2D> entry : seriesBounds.entrySet()) {
@@ -96,26 +91,29 @@ public class Legend implements ChartPart {
       blockHeight -= MULTI_LINE_SPACE;
       blockHeight = Math.max(blockHeight, isBar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
-      legendContentHeight += blockHeight + styleManager.getLegendPadding();
+      legendContentHeight += blockHeight + getChartPainter().getStyleManager().getLegendPadding();
     }
 
     // determine legend content width
     double legendContentWidth = 0;
     if (!isBar) {
-      legendContentWidth = styleManager.getLegendSeriesLineLength() + styleManager.getLegendPadding() + legendTextContentMaxWidth;
+      legendContentWidth = getChartPainter().getStyleManager().getLegendSeriesLineLength() + getChartPainter().getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
     }
     else {
-      legendContentWidth = BOX_SIZE + styleManager.getLegendPadding() + legendTextContentMaxWidth;
+      legendContentWidth = BOX_SIZE + getChartPainter().getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
     }
 
     // Legend Box
-    double legendBoxWidth = legendContentWidth + 2 * styleManager.getLegendPadding();
-    double legendBoxHeight = legendContentHeight + 1 * styleManager.getLegendPadding();
-    return new double[] { legendBoxWidth, legendBoxHeight };
+    legendBoxWidth = legendContentWidth + 2 * getChartPainter().getStyleManager().getLegendPadding();
+    legendBoxHeight = legendContentHeight + 1 * getChartPainter().getStyleManager().getLegendPadding();
   }
 
   @Override
   public void paint(Graphics2D g) {
+
+    if (!getChartPainter().getStyleManager().isLegendVisible()) {
+      return;
+    }
 
     // if the area to draw a chart on is so small, don't even bother
     if (chartPainter.getPlot().getBounds().getWidth() < 30) {
@@ -125,23 +123,12 @@ public class Legend implements ChartPart {
     bounds = new Rectangle2D.Double();
     // g.setFont(chartPainter.getStyleManager().getLegendFont());
 
-    StyleManager styleManager = getChartPainter().getStyleManager();
-
-    if (!styleManager.isLegendVisible()) {
-      return;
-    }
-
-    final double[] sizeHint = getSizeHint(g);
-
-    double legendBoxWidth = sizeHint[0];
-    double legendBoxHeight = sizeHint[1];
-
     // legend draw position
     double xOffset = 0;
     double yOffset = 0;
-    switch (styleManager.getLegendPosition()) {
+    switch (getChartPainter().getStyleManager().getLegendPosition()) {
     case OutsideE:
-      xOffset = chartPainter.getWidth() - legendBoxWidth - styleManager.getChartPadding();
+      xOffset = chartPainter.getWidth() - legendBoxWidth - getChartPainter().getStyleManager().getChartPadding();
       yOffset = chartPainter.getPlot().getBounds().getY() + (chartPainter.getPlot().getBounds().getHeight() - legendBoxHeight) / 2.0;
       break;
     case InsideNW:
@@ -172,18 +159,18 @@ public class Legend implements ChartPart {
     g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
 
     Shape rect = new Rectangle2D.Double(xOffset + 1, yOffset + 1, legendBoxWidth - 2, legendBoxHeight - 2);
-    g.setColor(styleManager.getLegendBackgroundColor());
+    g.setColor(getChartPainter().getStyleManager().getLegendBackgroundColor());
     g.fill(rect);
-    g.setColor(styleManager.getLegendBorderColor());
+    g.setColor(getChartPainter().getStyleManager().getLegendBorderColor());
     g.draw(rect);
 
     // Draw legend content inside legend box
-    double startx = xOffset + styleManager.getLegendPadding();
-    double starty = yOffset + styleManager.getLegendPadding();
+    double startx = xOffset + getChartPainter().getStyleManager().getLegendPadding();
+    double starty = yOffset + getChartPainter().getStyleManager().getLegendPadding();
 
     for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
 
-      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series, g);
+      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
 
       float blockHeight = 0;
       double legendTextContentMaxWidth = 0;
@@ -193,15 +180,15 @@ public class Legend implements ChartPart {
       }
       blockHeight -= MULTI_LINE_SPACE;
 
-      blockHeight = Math.max(blockHeight, styleManager.getChartType() == ChartType.Bar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
+      blockHeight = Math.max(blockHeight, getChartPainter().getStyleManager().getChartType() == ChartType.Bar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
-      if (styleManager.getChartType() != ChartType.Bar) {
+      if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
 
         // paint line
-        if (styleManager.getChartType() != ChartType.Scatter && series.getStroke() != null) {
+        if (getChartPainter().getStyleManager().getChartType() != ChartType.Scatter && series.getStroke() != null) {
           g.setColor(series.getStrokeColor());
           g.setStroke(series.getStroke());
-          Shape line = new Line2D.Double(startx, starty + blockHeight / 2.0, startx + styleManager.getLegendSeriesLineLength(), starty + blockHeight / 2.0);
+          Shape line = new Line2D.Double(startx, starty + blockHeight / 2.0, startx + getChartPainter().getStyleManager().getLegendSeriesLineLength(), starty + blockHeight / 2.0);
           g.draw(line);
         }
 
@@ -214,7 +201,7 @@ public class Legend implements ChartPart {
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, startx + styleManager.getLegendSeriesLineLength() / 2.0, starty + blockHeight / 2.0, getChartPainter().getStyleManager().getMarkerSize());
+          series.getMarker().paint(g, startx + getChartPainter().getStyleManager().getLegendSeriesLineLength() / 2.0, starty + blockHeight / 2.0, getChartPainter().getStyleManager().getMarkerSize());
 
         }
       }
@@ -237,16 +224,16 @@ public class Legend implements ChartPart {
 
       double multiLineOffset = 0.0;
 
-      if (styleManager.getChartType() != ChartType.Bar) {
+      if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
 
-        double x = startx + styleManager.getLegendSeriesLineLength() + styleManager.getLegendPadding();
+        double x = startx + getChartPainter().getStyleManager().getLegendSeriesLineLength() + getChartPainter().getStyleManager().getLegendPadding();
         for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
           double height = entry.getValue().getHeight();
           double centerOffsetY = (Math.max(getChartPainter().getStyleManager().getMarkerSize(), height) - height) / 2.0;
 
           FontRenderContext frc = g.getFontRenderContext();
-          TextLayout tl = new TextLayout(entry.getKey(), styleManager.getLegendFont(), frc);
+          TextLayout tl = new TextLayout(entry.getKey(), getChartPainter().getStyleManager().getLegendFont(), frc);
           Shape shape = tl.getOutline(null);
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
@@ -263,18 +250,18 @@ public class Legend implements ChartPart {
           multiLineOffset += height + MULTI_LINE_SPACE;
         }
 
-        starty += blockHeight + styleManager.getLegendPadding();
+        starty += blockHeight + getChartPainter().getStyleManager().getLegendPadding();
       }
       else {
 
-        final double x = startx + BOX_SIZE + styleManager.getLegendPadding();
+        final double x = startx + BOX_SIZE + getChartPainter().getStyleManager().getLegendPadding();
         for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
           double height = entry.getValue().getHeight();
           double centerOffsetY = (Math.max(BOX_SIZE, height) - height) / 2.0;
 
           FontRenderContext frc = g.getFontRenderContext();
-          TextLayout tl = new TextLayout(entry.getKey(), styleManager.getLegendFont(), frc);
+          TextLayout tl = new TextLayout(entry.getKey(), getChartPainter().getStyleManager().getLegendFont(), frc);
           Shape shape = tl.getOutline(null);
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
@@ -290,7 +277,7 @@ public class Legend implements ChartPart {
           multiLineOffset += height + MULTI_LINE_SPACE;
 
         }
-        starty += blockHeight + styleManager.getLegendPadding();
+        starty += blockHeight + getChartPainter().getStyleManager().getLegendPadding();
       }
 
     }
@@ -303,7 +290,7 @@ public class Legend implements ChartPart {
 
   }
 
-  private Map<String, Rectangle2D> getSeriesTextBounds(Series series, Graphics2D g) {
+  private Map<String, Rectangle2D> getSeriesTextBounds(Series series) {
 
     // FontMetrics fontMetrics = g.getFontMetrics(getChartPainter().getStyleManager().getLegendFont());
     // float fontDescent = fontMetrics.getDescent();
@@ -311,8 +298,7 @@ public class Legend implements ChartPart {
     String lines[] = series.getName().split("\\n");
     Map<String, Rectangle2D> seriesTextBounds = new LinkedHashMap<String, Rectangle2D>(lines.length);
     for (String line : lines) {
-      FontRenderContext frc = g.getFontRenderContext();
-      TextLayout tl = new TextLayout(line, getChartPainter().getStyleManager().getLegendFont(), frc);
+      TextLayout tl = new TextLayout(line, getChartPainter().getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
       Shape shape = tl.getOutline(null);
       Rectangle2D bounds = shape.getBounds2D();
       // System.out.println(tl.getAscent());
@@ -323,6 +309,16 @@ public class Legend implements ChartPart {
       seriesTextBounds.put(line, bounds);
     }
     return seriesTextBounds;
+  }
+
+  public double getLegendBoxWidth() {
+
+    return legendBoxWidth;
+  }
+
+  public double getLegendBoxHeight() {
+
+    return legendBoxHeight;
   }
 
   @Override

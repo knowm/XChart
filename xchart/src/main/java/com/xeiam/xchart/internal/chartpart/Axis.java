@@ -92,7 +92,7 @@ public class Axis implements ChartPart {
   /**
    * Reset the default min and max values in preparation for calculating the actual min and max
    */
-      void resetMinMax() {
+  protected void resetMinMax() {
 
     min = Double.MAX_VALUE;
     max = -Double.MAX_VALUE;
@@ -152,11 +152,6 @@ public class Axis implements ChartPart {
       double xOffset = getChartPainter().getStyleManager().getChartPadding();
       double yOffset = getChartPainter().getChartTitle().getSizeHint();
 
-      double chartLegendWidth = 0;
-      if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
-        chartLegendWidth = getChartPainter().getChartLegend().getSizeHint(g)[0];
-      }
-
       /////////////////////////
       int i = 1; // just twice through is all it takes
       double width = 60; // arbitrary, final width depends on Axis tick labels
@@ -170,7 +165,7 @@ public class Axis implements ChartPart {
 
         - width // y-axis approx. width
 
-        - chartLegendWidth
+        - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? getChartPainter().getChartLegend().getLegendBoxWidth() : 0)
 
         - 2 * getChartPainter().getStyleManager().getChartPadding()
 
@@ -221,18 +216,13 @@ public class Axis implements ChartPart {
           + getChartPainter().getStyleManager().getChartPadding();
       double yOffset = axisPair.getYAxis().getBounds().getY() + axisPair.getYAxis().getBounds().getHeight() + getChartPainter().getStyleManager().getPlotPadding();
 
-      double chartLegendWidth = 0;
-      if (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE) {
-        chartLegendWidth = getChartPainter().getChartLegend().getSizeHint(g)[0];
-      }
-
       double width =
 
       getChartPainter().getWidth()
 
       - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
 
-      - chartLegendWidth
+      - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? getChartPainter().getChartLegend().getLegendBoxWidth() : 0)
 
       - 2 * getChartPainter().getStyleManager().getChartPadding()
 

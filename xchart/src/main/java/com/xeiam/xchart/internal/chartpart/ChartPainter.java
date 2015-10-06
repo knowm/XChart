@@ -107,6 +107,9 @@ public class ChartPainter {
     Shape rect = new Rectangle2D.Double(0, 0, width, height);
     g.fill(rect);
 
+    // now that we added all the series, we can calculate the legend size
+    chartLegend.determineLegendBoxSize();
+
     axisPair.paint(g);
     plot.paint(g);
     chartTitle.paint(g);

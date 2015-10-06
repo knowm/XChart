@@ -111,7 +111,6 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
 
-    System.out.println("AxisTickDateCalculator Constructor");
     calculate();
   }
 
@@ -192,7 +191,6 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
 
       SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styleManager.getLocale());
       simpleDateformat.setTimeZone(styleManager.getTimezone());
-      // simpleDateformat.applyPattern(datePattern);
 
       // return simpleDateformat.format(value);
 
