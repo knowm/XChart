@@ -1,25 +1,26 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.xeiam.xchart</groupId>
+	<groupId>org.knowm.xchart</groupId>
 	<artifactId>xchart-parent</artifactId>
-	<version>2.5.2-SNAPSHOT</version>
+	<version>2.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>XChart Parent</name>
 	<description>Basic Charts for Java Applications</description>
 	<url>http://knowm.org/open-source/xchart</url>
 	<inceptionYear>2011</inceptionYear>
 
-    <organization>
-        <name>Knowm Inc.</name>
-        <url>http://knowm.org/open-source/</url>
-    </organization>
+	<organization>
+		<name>Knowm Inc.</name>
+		<url>http://knowm.org/open-source/</url>
+	</organization>
 
-    <developers>
-        <developer>
-            <name>Tim Molter</name>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Tim Molter</name>
+		</developer>
+	</developers>
 
 	<licenses>
 		<license>
@@ -87,7 +88,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- FEST for fluent test assertions -->
@@ -138,6 +139,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.3</version>
 						<configuration>
 							<additionalparam>-Xdoclint:none</additionalparam>
 						</configuration>
@@ -151,7 +153,7 @@
 								<plugin>
 									<groupId>org.apache.maven.plugins</groupId>
 									<artifactId>maven-javadoc-plugin</artifactId>
-									<version>2.10.1</version>
+									<version>2.10.3</version>
 									<configuration>
 										<additionalparam>-Xdoclint:none</additionalparam>
 									</configuration>
@@ -170,7 +172,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.3</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -195,7 +197,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>2.5.2</version>
 				<configuration>
 					<autoversionsubmodules>true</autoversionsubmodules>
 				</configuration>
@@ -206,7 +208,7 @@
 				<artifactId>maven-license-plugin</artifactId>
 				<version>1.10.b1</version>
 				<configuration>
-					<header>etc/header.txt</header>
+					<header>NOTICE</header>
 					<aggregate>true</aggregate>
 					<includes>
 						<include>**/*.java</include>

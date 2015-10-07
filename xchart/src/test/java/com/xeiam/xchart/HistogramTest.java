@@ -1,5 +1,6 @@
 /**
- * Copyright 2013 Xeiam LLC.
+ * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +21,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.knowm.xchart.Histogram;
 
 /**
  * @author timmolter

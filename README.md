@@ -91,9 +91,9 @@ Add the XChart library as a dependency to your pom.xml file:
 
 ```xml
     <dependency>
-        <groupId>com.xeiam.xchart</groupId>
+        <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>2.5.1</version>
+        <version>2.6.0</version>
     </dependency>
 ```
 
@@ -107,9 +107,9 @@ For snapshots, add the following to your pom.xml file:
     </repository>
 
     <dependency>
-      <groupId>com.xeiam.xchart</groupId>
+      <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.5.2-SNAPSHOT</version>
+      <version>2.6.1-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -120,7 +120,7 @@ Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/c
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "com.xeiam.xchart" % "xchart" % "2.5.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "2.6.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 (SBT/Ivy does not seem to respect the optional [VectorGraphics2D](https://github.com/eseifert/vectorgraphics2d) dependency and as it does not exist in Maven Central the build will fail unless it is excluded or available in a local repository.)
 
@@ -140,7 +140,7 @@ libraryDependencies += "com.xeiam.xchart" % "xchart" % "2.5.0" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.5.1.jar:xchart-2.5.1.jar com.xeiam.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.5.1.jar:xchart-2.5.1.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 
