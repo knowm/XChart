@@ -140,14 +140,16 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "2.6.0" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.5.1.jar:xchart-2.5.1.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.6.0.jar:xchart-2.6.0.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 
 ## Bugs
+
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
 
 ## Continuous Integration
+
 [![Build Status](https://travis-ci.org/timmolter/XChart.png?branch=develop)](https://travis-ci.org/timmolter/XChart.png)  
 [Build History](https://travis-ci.org/timmolter/XChart/builds)  
 
