@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.xeiam.xchart;
+package org.knowm.xchart;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
