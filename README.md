@@ -1,16 +1,14 @@
 ## [![XChart](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_64_64.png)](http://knowm.org/open-source/xchart) XChart
 
-A Simple Charting Library for Java
+XChart is a light weight Java library for plotting data.
 
 ## Description
 
-XChart is a light-weight and convenient library for plotting data.
+XChart is a light-weight and convenient library for plotting data designed to go from data to chart in the least amount of time possible and to take the guess-work out of customizing the chart style.
 
-Its focus is on simplicity and ease-of-use, requiring only two lines of code to save or display a basic default chart.
+Usage is very simple: Create a `Chart` instance, add a series of data to it, and either save it or display it.
 
-Usage is very simple: Create a Chart instance, add a series of data to it, and either save it or display it.
-
-## Example
+## Simplest Example
 
 ```java
 
@@ -30,7 +28,25 @@ Usage is very simple: Create a Chart instance, add a series of data to it, and e
     BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
 ```
 
-Now go ahead and [study some more examples](http://knowm.org/open-source/xchart/xchart-example-code/), [download the thing](http://knowm.org/open-source/xchart/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Simplest.png)
+
+Charts can be saved as JPG, PNG, GIF, BMP, EPS, SVG, and PDF.
+
+## Chart Customization
+
+All the styling options can be found in one of two possible places: 1) the Chart's `StyleManager` or 2) the series' `set` methods. With this chart customization design, all customization options can be quickly "discovered" using an IDE's built in "Content Assist". With centralized styling like this, there is no need to hunt around the entire charting API to find that one customization you're looking for - it's all right in one spot!
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Chart_Customization.png)
+ 
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Series_Customization.png)
+ 
+## Chart Themes
+
+XChart ships with three different themes: Default **XChart**, **GGPlot2** and **Matlab**. Using a different theme is as simple as setting the Chart's theme with the `theme` method of the `ChartBuilder`.
+
+    Chart chart = new ChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Themes.png)
 
 ## Features
 
@@ -46,16 +62,20 @@ Now go ahead and [study some more examples](http://knowm.org/open-source/xchart/
 * [x] Date and category X-Axis
 * [x] Multiple series
 * [x] Extensive customization
-* [x] Themes - XChart, GGPlot2, MATLAB
+* [x] Themes - XChart, GGPlot2, Matlab
 * [x] Right-click, Save-As...
 * [x] User-defined axes range
 * [x] Custom legend placement
 * [x] CSV import and export
 * [x] High resolution chart export
-* [x] Export as PNG, JPG, BMP, GIF and EPS
-* [x] Export SVG and PDF using optional de.erichseifert.vectorgraphics2d library
+* [x] Export as PNG, JPG, BMP, GIF with custom DPI setting
+* [x] Export SVG, EPS and PDF using optional de.erichseifert.vectorgraphics2d library
 * [x] Real-time charts
 * [x] Java 6 and up
+
+## What's Next?
+
+Now go ahead and [study some more examples](http://knowm.org/open-source/xchart/xchart-example-code/), [download the thing](http://knowm.org/open-source/xchart/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
  
 ## Getting Started
 
@@ -110,8 +130,6 @@ libraryDependencies += "com.xeiam.xchart" % "xchart" % "2.5.0" exclude("de.erich
 
     mvn clean package  
     mvn javadoc:aggregate  
-
-Note: in order to add support for SVG and PDF exports the optional [VectorGraphics2D](https://github.com/eseifert/vectorgraphics2d) has to be downloaded installed locally as it is not available in Maven Central. Make sure to checkout and build the right version! 
 
 #### maven-license-plugin
 
