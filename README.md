@@ -142,6 +142,8 @@ libraryDependencies += "com.xeiam.xchart" % "xchart" % "2.5.0" exclude("de.erich
     cd /path/to/xchart-demo/jar/
     java -cp xchart-demo-2.5.1.jar:xchart-2.5.1.jar com.xeiam.xchart.demo.XChartDemo
 
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
+
 ## Bugs
 Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
 
