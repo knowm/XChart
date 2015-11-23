@@ -65,19 +65,12 @@
 		<downloadUrl>https://oss.sonatype.org/content/groups/public/org/knowm/xchart</downloadUrl>
 	</distributionManagement>
 
-	<repositories>
-		<repository>
-			<id>erichseifert.de</id>
-			<url>http://mvn.erichseifert.de/maven2</url>
-		</repository>
-	</repositories>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>de.erichseifert.vectorgraphics2d</groupId>
 				<artifactId>VectorGraphics2D</artifactId>
-				<version>0.9.2</version>
+				<version>0.9.3</version>
 				<optional>true</optional>
 			</dependency>
 		</dependencies>
