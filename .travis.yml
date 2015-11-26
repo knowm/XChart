@@ -1,4 +1,6 @@
 language: java
+sudo: false
+
 before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
 script: "
 if [ ${TRAVIS_PULL_REQUEST} = 'false' ];
@@ -7,6 +9,9 @@ then
 else 
     mvn clean verify --settings target/travis/settings.xml;
 fi"
+
+jdk:
+  - openjdk6
 
 # whitelist
 branches:
