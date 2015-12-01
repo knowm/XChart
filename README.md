@@ -140,7 +140,7 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "2.6.0" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.6.0.jar:xchart-2.6.0.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.6.1.jar:xchart-2.6.1.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 
