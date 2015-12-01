@@ -113,7 +113,7 @@ For snapshots, add the following to your pom.xml file:
     </dependency>
 ```
 
-Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/](https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/)
+Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/org/knowm/xchart/xchart/](https://oss.sonatype.org/content/groups/public/org/knowm/xchart/xchart/)
 
 ### SBT
 
