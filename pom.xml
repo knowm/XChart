@@ -6,7 +6,7 @@
 	<version>2.6.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>XChart Parent</name>
-	<description>Basic Charts for Java Applications</description>
+	<description>XChart is a light weight Java library for plotting data.</description>
 	<url>http://knowm.org/open-source/xchart</url>
 	<inceptionYear>2011</inceptionYear>
 
