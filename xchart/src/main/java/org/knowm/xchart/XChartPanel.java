@@ -93,6 +93,10 @@ public class XChartPanel extends JPanel {
     g2d.dispose();
   }
 
+  public Chart getChart() {
+    return this.chart;
+  }
+
   @Override
   public Dimension getPreferredSize() {
 
