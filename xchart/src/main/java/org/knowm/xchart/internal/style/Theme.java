@@ -104,6 +104,10 @@ public interface Theme {
   // Chart Plot Area ///////////////////////////////
 
   public boolean isPlotGridLinesVisible();
+  
+  public boolean isPlotGridVerticalLinesVisible();
+  
+  public boolean isPlotGridHorizontalLinesVisible();
 
   public Color getPlotBackgroundColor();
 
