@@ -94,7 +94,7 @@ public class PlotContentLineChart extends PlotContent {
       double xMax;
       if (getChartPainter().getStyleManager().getChartType() == ChartType.Category) {
         xMin = 0;
-        xMax = xData.size() - 1;
+        xMax = xData.size();
       } else {
         xMin = getChartPainter().getAxisPair().getXAxis().getMin();
         xMax = getChartPainter().getAxisPair().getXAxis().getMax();
