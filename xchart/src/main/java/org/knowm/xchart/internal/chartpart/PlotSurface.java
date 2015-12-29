@@ -68,7 +68,10 @@ public class PlotSurface implements ChartPart {
     }
 
     // paint grid lines and/or inner plot ticks
-    if (getChartPainter().getStyleManager().isPlotGridLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
+    if (getChartPainter().getStyleManager().isPlotGridHorizontalLinesVisible() 
+	|| getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible() 
+	|| getChartPainter().getStyleManager().isPlotTicksMarksVisible()
+	) {
 
       // horizontal
       List<Double> yAxisTickLocations = getChartPainter().getAxisPair().getYAxis().getAxisTickCalculator().getTickLocations();
@@ -79,7 +82,7 @@ public class PlotSurface implements ChartPart {
         if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
 
           // draw lines
-          if (getChartPainter().getStyleManager().isPlotGridLinesVisible()) {
+          if (getChartPainter().getStyleManager().isPlotGridHorizontalLinesVisible()) {
 
             g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
             g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
@@ -103,7 +106,7 @@ public class PlotSurface implements ChartPart {
       // vertical
       if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar
 
-      && (getChartPainter().getStyleManager().isPlotGridLinesVisible()
+      && (getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible()
 
       || getChartPainter().getStyleManager().isPlotTicksMarksVisible())
 
@@ -118,7 +121,7 @@ public class PlotSurface implements ChartPart {
           if (xOffset > bounds.getX() && xOffset < bounds.getX() + bounds.getWidth()) {
 
             // draw lines
-            if (getChartPainter().getStyleManager().isPlotGridLinesVisible()) {
+            if (getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible()) {
               g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
               g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
 

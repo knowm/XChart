@@ -245,6 +245,18 @@ public class MatlabTheme implements Theme {
   }
 
   @Override
+  public boolean isPlotGridVerticalLinesVisible() {
+
+    return true;
+  }
+  
+  @Override
+  public boolean isPlotGridHorizontalLinesVisible() {
+
+    return true;
+  }
+  
+  @Override
   public Color getPlotBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.WHITE);

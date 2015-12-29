@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.knowm.xchart</groupId>
 	<artifactId>xchart-parent</artifactId>
-	<version>2.6.1-SNAPSHOT</version>
+	<version>2.6.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>XChart Parent</name>
-	<description>Basic Charts for Java Applications</description>
+	<description>XChart is a light weight Java library for plotting data.</description>
 	<url>http://knowm.org/open-source/xchart</url>
 	<inceptionYear>2011</inceptionYear>
 
@@ -65,19 +65,12 @@
 		<downloadUrl>https://oss.sonatype.org/content/groups/public/org/knowm/xchart</downloadUrl>
 	</distributionManagement>
 
-	<repositories>
-		<repository>
-			<id>erichseifert.de</id>
-			<url>http://mvn.erichseifert.de/maven2</url>
-		</repository>
-	</repositories>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>de.erichseifert.vectorgraphics2d</groupId>
 				<artifactId>VectorGraphics2D</artifactId>
-				<version>0.9.2</version>
+				<version>0.9.3</version>
 				<optional>true</optional>
 			</dependency>
 		</dependencies>
