@@ -90,21 +90,30 @@ public class PlotContentLineChart extends PlotContent {
       // data points
       Collection<?> xData = series.getXData();
       // System.out.println(xData);
-      double xMin = getChartPainter().getAxisPair().getXAxis().getMin();
-      double xMax = getChartPainter().getAxisPair().getXAxis().getMax();
+      double xMin;
+      double xMax;
+      if (getChartPainter().getStyleManager().getChartType() == ChartType.Category) {
+        xMin = 0;
+        xMax = xData.size() - 1;
+      } else {
+        xMin = getChartPainter().getAxisPair().getXAxis().getMin();
+        xMax = getChartPainter().getAxisPair().getXAxis().getMax();
+      }
 
       Collection<? extends Number> yData = series.getYData();
       double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
       double yMax = getChartPainter().getAxisPair().getYAxis().getMax();
 
       // override min and maxValue if specified
-      if (getChartPainter().getStyleManager().getXAxisMin() != null) {
+      if (getChartPainter().getStyleManager().getChartType() != ChartType.Category && 
+          getChartPainter().getStyleManager().getXAxisMin() != null) {
         xMin = getChartPainter().getStyleManager().getXAxisMin();
       }
       if (getChartPainter().getStyleManager().getYAxisMin() != null) {
         yMin = getChartPainter().getStyleManager().getYAxisMin();
       }
-      if (getChartPainter().getStyleManager().getXAxisMax() != null) {
+      if (getChartPainter().getStyleManager().getChartType() != ChartType.Category && 
+          getChartPainter().getStyleManager().getXAxisMax() != null) {
         xMax = getChartPainter().getStyleManager().getXAxisMax();
       }
       if (getChartPainter().getStyleManager().getYAxisMax() != null) {
@@ -112,7 +121,8 @@ public class PlotContentLineChart extends PlotContent {
       }
 
       // logarithmic
-      if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
+      if (getChartPainter().getStyleManager().getChartType() != ChartType.Category && 
+          getChartPainter().getStyleManager().isXAxisLogarithmic()) {
         xMin = Math.log10(xMin);
         xMax = Math.log10(xMax);
       }
@@ -133,20 +143,23 @@ public class PlotContentLineChart extends PlotContent {
       }
       Path2D.Double path = null;
 
-      while (xItr.hasNext()) {
-
-        double x = 0.0;
-        if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          x = ((Number) xItr.next()).doubleValue();
-          // System.out.println(x);
-        }
-        else if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-          x = ((Date) xItr.next()).getTime();
-          // System.out.println(x);
-        }
-
-        if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
-          x = Math.log10(x);
+      double x = -0.5;
+      while (yItr.hasNext()) {
+        if (getChartPainter().getStyleManager().getChartType() == ChartType.Category) {
+          x++;
+        } else {
+          if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+            x = ((Number) xItr.next()).doubleValue();
+            // System.out.println(x);
+          }
+          else if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+            x = ((Date) xItr.next()).getTime();
+            // System.out.println(x);
+          }
+  
+          if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
+            x = Math.log10(x);
+          }
         }
 
         Number next = yItr.next();
