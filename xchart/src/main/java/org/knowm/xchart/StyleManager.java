@@ -124,7 +124,8 @@ public class StyleManager {
   private int xAxisLabelRotation = 0;
 
   // Chart Plot Area ///////////////////////////////
-  private boolean isPlotGridLinesVisible;
+  private boolean isPlotGridHorizontalLinesVisible;
+  private boolean isPlotGridVerticalLinesVisible;
   private Color plotBackgroundColor;
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
@@ -212,7 +213,8 @@ public class StyleManager {
     axisTickSpacePercentage = .95;
 
     // Chart Plot Area ///////////////////////////////
-    isPlotGridLinesVisible = theme.isPlotGridLinesVisible();
+    isPlotGridVerticalLinesVisible = theme.isPlotGridVerticalLinesVisible();
+    isPlotGridHorizontalLinesVisible = theme.isPlotGridHorizontalLinesVisible();
     plotBackgroundColor = theme.getPlotBackgroundColor();
     plotBorderColor = theme.getPlotBorderColor();
     isPlotBorderVisible = theme.isPlotBorderVisible();
@@ -924,12 +926,44 @@ public class StyleManager {
    */
   public void setPlotGridLinesVisible(boolean isPlotGridLinesVisible) {
 
-    this.isPlotGridLinesVisible = isPlotGridLinesVisible;
+    this.isPlotGridHorizontalLinesVisible = isPlotGridLinesVisible;
+    this.isPlotGridVerticalLinesVisible = isPlotGridLinesVisible;
   }
 
+  @Deprecated
   public boolean isPlotGridLinesVisible() {
 
-    return isPlotGridLinesVisible;
+    return isPlotGridHorizontalLinesVisible && isPlotGridVerticalLinesVisible;
+  }
+
+  /**
+   * sets the visibility of the horizontal gridlines on the plot area
+   *
+   * @param isPlotGridLinesVisible
+   */
+  public void setPlotGridHorizontalLinesVisible(boolean isPlotGridHorizontalLinesVisible) {
+
+    this.isPlotGridHorizontalLinesVisible = isPlotGridHorizontalLinesVisible;
+  }
+
+  public boolean isPlotGridHorizontalLinesVisible() {
+
+    return isPlotGridHorizontalLinesVisible;
+  }
+
+  /**
+   * sets the visibility of the vertical gridlines on the plot area
+   *
+   * @param isPlotGridLinesVisible
+   */
+  public void setPlotGridVerticalLinesVisible(boolean isPlotGridVerticalLinesVisible) {
+
+    this.isPlotGridVerticalLinesVisible = isPlotGridVerticalLinesVisible;
+  }
+
+  public boolean isPlotGridVerticalLinesVisible() {
+
+    return isPlotGridVerticalLinesVisible;
   }
 
   /**
