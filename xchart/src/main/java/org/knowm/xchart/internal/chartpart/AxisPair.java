@@ -124,12 +124,33 @@ public class AxisPair implements ChartPart {
       series = new Series(seriesName, generatedXData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     }
 
+    // set series type based on chart type, but only if it's not explicitly set on the series yet.
     switch (chartPainter.getStyleManager().getChartType()) {
-    case Area:
-      series.setSeriesType(Series.SeriesType.Area);
-      break;
     case Line:
-      series.setSeriesType(Series.SeriesType.Line);
+      if (series.getSeriesType() == null) {
+        series.setSeriesType(Series.SeriesType.Line);
+      }
+      break;
+    case Area:
+      if (series.getSeriesType() == null) {
+        series.setSeriesType(Series.SeriesType.Area);
+      }
+      break;
+    case Scatter:
+      if (series.getSeriesType() == null) {
+        series.setSeriesType(Series.SeriesType.Scatter);
+      }
+      break;
+    case Bar:
+      if (series.getSeriesType() == null) {
+        series.setSeriesType(Series.SeriesType.Bar);
+      }
+      break;
+    default:
+      if (series.getSeriesType() == null) {
+        series.setSeriesType(Series.SeriesType.Line);
+      }
+      break;
     }
 
     if (seriesMap.keySet().contains(seriesName)) {

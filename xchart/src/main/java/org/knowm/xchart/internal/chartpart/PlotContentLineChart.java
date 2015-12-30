@@ -28,7 +28,6 @@ import java.util.Iterator;
 
 import org.knowm.xchart.Series;
 import org.knowm.xchart.StyleManager;
-import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisType;
 
@@ -193,18 +192,21 @@ public class PlotContentLineChart extends PlotContent {
         // System.out.println(yTransform);
 
         // paint line
-        if (series.getStroke() != null && getChartPainter().getStyleManager().getChartType() != ChartType.Scatter) {
+        if (Series.SeriesType.Line.equals(series.getSeriesType()) || Series.SeriesType.Area.equals(series.getSeriesType())) {
 
-          if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
-            g.setColor(series.getStrokeColor());
-            g.setStroke(series.getStroke());
-            Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
-            g.draw(line);
+          if (series.getStroke() != null) {
+
+            if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+              g.setColor(series.getStrokeColor());
+              g.setStroke(series.getStroke());
+              Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
+              g.draw(line);
+            }
           }
         }
 
         // paint area
-        if (getChartPainter().getStyleManager().getChartType() == ChartType.Area || Series.SeriesType.Area.equals(series.getSeriesType())) {
+        if (Series.SeriesType.Area.equals(series.getSeriesType())) {
 
           if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
 

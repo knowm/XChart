@@ -28,7 +28,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.knowm.xchart.Series;
-import org.knowm.xchart.StyleManager.ChartType;
 
 /**
  * @author timmolter
@@ -71,7 +70,7 @@ public class Legend implements ChartPart {
       return;
     }
 
-    boolean isBar = getChartPainter().getStyleManager().getChartType() == ChartType.Bar;
+    boolean containsBar = false;
 
     // determine legend text content max width
     double legendTextContentMaxWidth = 0;
@@ -90,14 +89,18 @@ public class Legend implements ChartPart {
       }
 
       blockHeight -= MULTI_LINE_SPACE;
-      blockHeight = Math.max(blockHeight, isBar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
+      blockHeight = Math.max(blockHeight, series.getSeriesType() == Series.SeriesType.Bar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
       legendContentHeight += blockHeight + getChartPainter().getStyleManager().getLegendPadding();
+
+      if (series.getSeriesType() == Series.SeriesType.Bar) {
+        containsBar = true;
+      }
     }
 
     // determine legend content width
     double legendContentWidth = 0;
-    if (!isBar) {
+    if (!containsBar) {
       legendContentWidth = getChartPainter().getStyleManager().getLegendSeriesLineLength() + getChartPainter().getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
     }
     else {
@@ -181,12 +184,12 @@ public class Legend implements ChartPart {
       }
       blockHeight -= MULTI_LINE_SPACE;
 
-      blockHeight = Math.max(blockHeight, getChartPainter().getStyleManager().getChartType() == ChartType.Bar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
+      blockHeight = Math.max(blockHeight, series.getSeriesType() == Series.SeriesType.Bar ? BOX_SIZE : getChartPainter().getStyleManager().getMarkerSize());
 
-      if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
+      if (series.getSeriesType() != Series.SeriesType.Bar) {
 
         // paint line
-        if (getChartPainter().getStyleManager().getChartType() != ChartType.Scatter && series.getStroke() != null) {
+        if (series.getSeriesType() != Series.SeriesType.Scatter && series.getStroke() != null) {
           g.setColor(series.getStrokeColor());
           g.setStroke(series.getStroke());
           Shape line = new Line2D.Double(startx, starty + blockHeight / 2.0, startx + getChartPainter().getStyleManager().getLegendSeriesLineLength(), starty + blockHeight / 2.0);
@@ -206,7 +209,8 @@ public class Legend implements ChartPart {
 
         }
       }
-      else {
+      else { // bar type series
+
         // paint little box
         if (series.getStroke() != null) {
           g.setColor(series.getStrokeColor());
@@ -220,12 +224,12 @@ public class Legend implements ChartPart {
         // g.draw(boundsTemp);
       }
 
-      // paint series text
+      // paint series text /////////////////////////////////////////////////////
       g.setColor(chartPainter.getStyleManager().getChartFontColor());
 
       double multiLineOffset = 0.0;
 
-      if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
+      if (series.getSeriesType() != Series.SeriesType.Bar) {
 
         double x = startx + getChartPainter().getStyleManager().getLegendSeriesLineLength() + getChartPainter().getStyleManager().getLegendPadding();
         for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
@@ -253,7 +257,7 @@ public class Legend implements ChartPart {
 
         starty += blockHeight + getChartPainter().getStyleManager().getLegendPadding();
       }
-      else {
+      else { // bar type series
 
         final double x = startx + BOX_SIZE + getChartPainter().getStyleManager().getLegendPadding();
         for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {

@@ -103,19 +103,6 @@ public class Chart {
   }
 
   /**
-   * Add a series to the chart using Collections
-   *
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param yData the Y-Axis data
-   * @return A Series object that you can set properties on
-   */
-  public Series addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {
-
-    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, null);
-  }
-
-  /**
    * Add a Number series to the chart using Collections with error bars
    *
    * @param seriesName
@@ -127,6 +114,19 @@ public class Chart {
   public Series addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
     return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
+  }
+
+  /**
+   * Add a series to the chart using Collections
+   *
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param yData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public Series addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {
+
+    return addSeries(seriesName, xData, yData, null);
   }
 
   /**
@@ -172,7 +172,7 @@ public class Chart {
       }
     }
 
-    return chartPainter.getAxisPair().addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
+    return addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
   }
 
   /**
@@ -218,7 +218,7 @@ public class Chart {
       }
     }
 
-    return chartPainter.getAxisPair().addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
+    return addSeries(seriesName, xDataNumber, yDataNumber, errorBarDataNumber);
   }
 
   /**

@@ -35,8 +35,10 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 public class Series {
 
   public enum SeriesType {
-    Line, Area
+    Line, Scatter, Area, Bar
   }
+
+  private SeriesType seriesType = null;
 
   private String name = "";
 
@@ -45,8 +47,6 @@ public class Series {
 
   private List<? extends Number> yData;
   private AxisType yAxisType;
-
-  private SeriesType seriesType;
 
   private List<? extends Number> errorBars;
 
@@ -108,6 +108,7 @@ public class Series {
     stroke = seriesColorMarkerLineStyle.getStroke();
 
     calculateMinMax();
+
   }
 
   /**
