@@ -270,7 +270,7 @@ public class Axis implements ChartPart {
 
     // Axis title
     double titleHeight = 0.0;
-    if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
+    if (axisTitle.getText() != null && !axisTitle.getText().trim().isEmpty() && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
       TextLayout textLayout = new TextLayout(axisTitle.getText(), getChartPainter().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
       titleHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTitlePadding();
@@ -310,7 +310,7 @@ public class Axis implements ChartPart {
 
     // Axis title
     double titleHeight = 0.0;
-    if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isYAxisTitleVisible()) {
+    if (axisTitle.getText() != null && !axisTitle.getText().trim().isEmpty() && getChartPainter().getStyleManager().isYAxisTitleVisible()) {
       TextLayout textLayout = new TextLayout(axisTitle.getText(), getChartPainter().getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
       titleHeight = rectangle.getHeight() + getChartPainter().getStyleManager().getAxisTitlePadding();
@@ -343,7 +343,9 @@ public class Axis implements ChartPart {
 
   private AxisTickCalculator getAxisTickCalculator(double workingSpace) {
 
-    if (getDirection() == Direction.X && getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
+    if (getDirection() == Direction.X && 
+        (getChartPainter().getStyleManager().getChartType() == ChartType.Bar || 
+          getChartPainter().getStyleManager().getChartType() == ChartType.Category)) {
 
       return new AxisTickBarChartCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter());
 

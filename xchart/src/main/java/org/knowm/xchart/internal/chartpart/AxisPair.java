@@ -19,6 +19,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -93,6 +94,12 @@ public class AxisPair implements ChartPart {
       if (xData.size() != yData.size()) {
         throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
+      if (! seriesMap.isEmpty() && getChartPainter().getStyleManager().getChartType() == ChartType.Category) {
+        Collection<?> existingSeries = seriesMap.values().iterator().next().getXData();
+        if (! existingSeries.equals(xData)) {
+          throw new IllegalArgumentException("Category charts must have matching x values, values do not match a previous series");
+        }
+      }
       // inspect the series to see what kind of data it contains (Number, Date or String)
       Iterator<?> itr = xData.iterator();
       Object dataPoint = itr.next();
@@ -103,8 +110,9 @@ public class AxisPair implements ChartPart {
         xAxis.setAxisType(AxisType.Date);
       }
       else if (dataPoint instanceof String) {
-        if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
-          throw new RuntimeException("X-Axis data types of String can only be used for Bar Charts!!!");
+        if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar && 
+              getChartPainter().getStyleManager().getChartType() != ChartType.Category) {
+          throw new RuntimeException("X-Axis data types of String can only be used for Bar and Category Charts!!!");
         }
         xAxis.setAxisType(AxisType.String);
       }
@@ -115,6 +123,9 @@ public class AxisPair implements ChartPart {
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
     }
     else { // generate xData
+      if (getChartPainter().getStyleManager().getChartType() == ChartType.Category) {
+        throw new IllegalStateException("Category charts must have x data catagories for every series");
+      }
       List<Double> generatedXData = new ArrayList<Double>();
       for (int i = 1; i < yData.size() + 1; i++) {
         generatedXData.add((double) i);

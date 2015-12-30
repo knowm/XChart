@@ -36,7 +36,7 @@ public class StyleManager {
 
   public enum ChartType {
 
-    Line, Scatter, Area, Bar
+    Line, Scatter, Area, Bar, Category
   }
 
   public enum LegendPosition {
