@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.demo.charts.plot.lines;
+package org.knowm.xchart.standalone;
 
 import java.util.ArrayList;
 import java.util.List;
