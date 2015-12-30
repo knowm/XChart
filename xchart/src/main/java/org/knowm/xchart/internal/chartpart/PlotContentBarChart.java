@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.knowm.xchart.Series;
+import org.knowm.xchart.Series.SeriesType;
 import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.Utils;
 
@@ -76,8 +77,9 @@ public class PlotContentBarChart extends PlotContent {
     int seriesCounter = 0;
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
 
-      // data points
-      // Collection<?> xData = series.getXData();
+      // for line series
+      double previousX = Integer.MIN_VALUE;
+      double previousY = Integer.MIN_VALUE;
 
       Collection<? extends Number> yData = series.getYData();
       double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
@@ -135,6 +137,7 @@ public class PlotContentBarChart extends PlotContent {
       while (yItr.hasNext()) {
 
         double y = ((Number) yItr.next()).doubleValue();
+        // TODO test if this works, make an example chart
         if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
           y = Math.log10(y);
         }
@@ -185,40 +188,66 @@ public class PlotContentBarChart extends PlotContent {
 
         double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
         double zeroOffset = bounds.getY() + zeroTransform;
-
-        // paint bar
-        boolean isOverlap = true;
         double xOffset;
         double barWidth;
+
         if (getChartPainter().getStyleManager().isBarsOverlapped()) {
           double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + barMargin;
-          g.setColor(series.getStrokeColor());
         }
         else {
           double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
           barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
-          g.setColor(series.getStrokeColor());
         }
-        Path2D.Double path = new Path2D.Double();
-        path.moveTo(xOffset, yOffset);
-        path.lineTo(xOffset + barWidth, yOffset);
-        path.lineTo(xOffset + barWidth, zeroOffset);
-        path.lineTo(xOffset, zeroOffset);
-        path.closePath();
-        g.setStroke(series.getStroke());
-        if (getChartPainter().getStyleManager().isBarFilled()) {
-          g.fill(path);
+        if (series.getSeriesType() == SeriesType.Bar) {
+          // paint bar
+          g.setColor(series.getStrokeColor());
+          Path2D.Double path = new Path2D.Double();
+          path.moveTo(xOffset, yOffset);
+          path.lineTo(xOffset + barWidth, yOffset);
+          path.lineTo(xOffset + barWidth, zeroOffset);
+          path.lineTo(xOffset, zeroOffset);
+          path.closePath();
+          g.setStroke(series.getStroke());
+          if (getChartPainter().getStyleManager().isBarFilled()) {
+            g.fill(path);
+          }
+          else {
+            g.draw(path);
+          }
+        }
+        else if (series.getSeriesType() == SeriesType.Line) { // line series
+
+          // paint line
+          if (series.getStroke() != null) {
+
+            if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+              g.setColor(series.getStrokeColor());
+              g.setStroke(series.getStroke());
+              Shape line = new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);
+              g.draw(line);
+            }
+          }
+          previousX = xOffset + barWidth / 2;
+          previousY = yOffset;
+
+          // paint marker
+          if (series.getMarker() != null) {
+            g.setColor(series.getMarkerColor());
+            series.getMarker().paint(g, previousX, previousY, getChartPainter().getStyleManager().getMarkerSize());
+          }
+
         }
         else {
-          g.draw(path);
+          // TODO probably add this earlier as a sanity check when series are added to charts
+          throw new RuntimeException("Category charts only accept Bar and Line series types!!!");
         }
 
-        // paint errorbars
+        // paint error bars
 
         if (errorBars != null) {
 
