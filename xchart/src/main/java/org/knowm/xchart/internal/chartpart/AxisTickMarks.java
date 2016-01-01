@@ -51,21 +51,21 @@ public class AxisTickMarks implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
-    g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
+    g.setColor(getChartInternal().getStyleManager().getAxisTickMarksColor());
+    g.setStroke(getChartInternal().getStyleManager().getAxisTickMarksStroke());
 
-    if (axisTick.getAxis().getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) { // Y-Axis
+    if (axisTick.getAxis().getDirection() == Axis.Direction.Y && getChartInternal().getStyleManager().isYAxisTicksVisible()) { // Y-Axis
 
-      double xOffset = axisTick.getAxisTickLabels().getBounds().getX() + axisTick.getAxisTickLabels().getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding();
+      double xOffset = axisTick.getAxisTickLabels().getBounds().getX() + axisTick.getAxisTickLabels().getBounds().getWidth() + getChartInternal().getStyleManager().getAxisTickPadding();
       double yOffset = axisTick.getAxis().getPaintZone().getY();
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset, getChartPainter().getStyleManager().getAxisTickMarkLength(), axisTick.getAxis().getPaintZone().getHeight());
+      bounds = new Rectangle2D.Double(xOffset, yOffset, getChartInternal().getStyleManager().getAxisTickMarkLength(), axisTick.getAxis().getPaintZone().getHeight());
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
       // tick marks
-      if (getChartPainter().getStyleManager().isAxisTicksMarksVisible()) {
+      if (getChartInternal().getStyleManager().isAxisTicksMarksVisible()) {
 
         for (int i = 0; i < axisTick.getAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
@@ -73,16 +73,16 @@ public class AxisTickMarks implements ChartPart {
           double flippedTickLocation = yOffset + axisTick.getAxis().getPaintZone().getHeight() - tickLocation;
           if (flippedTickLocation > bounds.getY() && flippedTickLocation < bounds.getY() + bounds.getHeight()) {
 
-            Shape line = new Line2D.Double(xOffset, flippedTickLocation, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), flippedTickLocation);
+            Shape line = new Line2D.Double(xOffset, flippedTickLocation, xOffset + getChartInternal().getStyleManager().getAxisTickMarkLength(), flippedTickLocation);
             g.draw(line);
           }
         }
       }
 
       // Line
-      if (getChartPainter().getStyleManager().isAxisTicksLineVisible()) {
+      if (getChartInternal().getStyleManager().isAxisTicksLineVisible()) {
 
-        Shape line = new Line2D.Double(xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset, xOffset + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset
+        Shape line = new Line2D.Double(xOffset + getChartInternal().getStyleManager().getAxisTickMarkLength(), yOffset, xOffset + getChartInternal().getStyleManager().getAxisTickMarkLength(), yOffset
             + axisTick.getAxis().getPaintZone().getHeight());
         g.draw(line);
 
@@ -90,19 +90,19 @@ public class AxisTickMarks implements ChartPart {
 
     }
     // X-Axis
-    else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) {
+    else if (axisTick.getAxis().getDirection() == Axis.Direction.X && getChartInternal().getStyleManager().isXAxisTicksVisible()) {
 
       double xOffset = axisTick.getAxis().getPaintZone().getX();
-      double yOffset = axisTick.getAxisTickLabels().getBounds().getY() - getChartPainter().getStyleManager().getAxisTickPadding();
+      double yOffset = axisTick.getAxisTickLabels().getBounds().getY() - getChartInternal().getStyleManager().getAxisTickPadding();
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength(), axisTick.getAxis().getPaintZone().getWidth(), getChartPainter().getStyleManager()
+      bounds = new Rectangle2D.Double(xOffset, yOffset - getChartInternal().getStyleManager().getAxisTickMarkLength(), axisTick.getAxis().getPaintZone().getWidth(), getChartInternal().getStyleManager()
           .getAxisTickMarkLength());
           // g.setColor(Color.yellow);
           // g.draw(bounds);
 
       // tick marks
-      if (getChartPainter().getStyleManager().isAxisTicksMarksVisible()) {
+      if (getChartInternal().getStyleManager().isAxisTicksMarksVisible()) {
 
         for (int i = 0; i < axisTick.getAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
@@ -111,26 +111,26 @@ public class AxisTickMarks implements ChartPart {
 
           if (shiftedTickLocation > bounds.getX() && shiftedTickLocation < bounds.getX() + bounds.getWidth()) {
 
-            Shape line = new Line2D.Double(shiftedTickLocation, yOffset, xOffset + tickLocation, yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength());
+            Shape line = new Line2D.Double(shiftedTickLocation, yOffset, xOffset + tickLocation, yOffset - getChartInternal().getStyleManager().getAxisTickMarkLength());
             g.draw(line);
           }
         }
       }
 
       // Line
-      if (getChartPainter().getStyleManager().isAxisTicksLineVisible()) {
+      if (getChartInternal().getStyleManager().isAxisTicksLineVisible()) {
 
-        g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
-        g.drawLine((int) xOffset, (int) (yOffset - getChartPainter().getStyleManager().getAxisTickMarkLength()), (int) (xOffset + axisTick.getAxis().getPaintZone().getWidth()), (int) (yOffset
-            - getChartPainter().getStyleManager().getAxisTickMarkLength()));
+        g.setStroke(getChartInternal().getStyleManager().getAxisTickMarksStroke());
+        g.drawLine((int) xOffset, (int) (yOffset - getChartInternal().getStyleManager().getAxisTickMarkLength()), (int) (xOffset + axisTick.getAxis().getPaintZone().getWidth()), (int) (yOffset
+            - getChartInternal().getStyleManager().getAxisTickMarkLength()));
       }
 
     }
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return axisTick.getChartPainter();
+    return axisTick.getChartInternal();
   }
 }

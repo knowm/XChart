@@ -42,7 +42,7 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickCategoryChartCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, ChartPainter chart) {
+  public AxisTickCategoryChartCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, ChartInternal chart) {
 
     super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
 
@@ -69,7 +69,7 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
     calculate(chart);
   }
 
-  private void calculate(ChartPainter chartPainter) {
+  private void calculate(ChartInternal chartInternal) {
 
     // tick space - a percentage of the working space available for ticks
     int tickSpace = (int) (styleManager.getAxisTickSpacePercentage() * workingSpace); // in plot space
@@ -77,12 +77,12 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
 
-    List<?> categories = (List<?>) chartPainter.getAxisPair().getSeriesMap().values().iterator().next().getXData();
+    List<?> categories = (List<?>) chartInternal.getSeriesMap().values().iterator().next().getXData();
 
     // verify all series have exactly the same xAxis
-    if (chartPainter.getAxisPair().getSeriesMap().size() > 1) {
+    if (chartInternal.getSeriesMap().size() > 1) {
 
-      for (Series series : chartPainter.getAxisPair().getSeriesMap().values()) {
+      for (Series series : chartInternal.getSeriesMap().values()) {
         if (!series.getXData().equals(categories)) {
           throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Bar Charts!!");
         }
@@ -96,10 +96,10 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
     // set up String formatters that may be encountered
     NumberFormatter numberFormatter = null;
     SimpleDateFormat simpleDateformat = null;
-    if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+    if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
       numberFormatter = new NumberFormatter(styleManager);
     }
-    else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+    else if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
       if (styleManager.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
       }
@@ -110,15 +110,15 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
     int counter = 0;
 
     for (Object category : categories) {
-      if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
+      if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
         tickLabels.add(category.toString());
         double tickLabelPosition = margin + firstPosition + gridStep * counter++;
         tickLocations.add(tickLabelPosition);
       }
-      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+      else if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
         tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
       }
-      else if (chartPainter.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+      else if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
 
         tickLabels.add(simpleDateformat.format((((Date) category).getTime())));
       }

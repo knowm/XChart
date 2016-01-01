@@ -30,6 +30,6 @@ public interface ChartPart {
 
   public void paint(final Graphics2D g);
 
-  public ChartPainter getChartPainter();
+  public ChartInternal getChartInternal();
 
 }

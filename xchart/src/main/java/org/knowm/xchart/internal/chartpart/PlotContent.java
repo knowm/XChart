@@ -47,9 +47,9 @@ public abstract class PlotContent implements ChartPart {
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return plot.getChartPainter();
+    return plot.getChartInternal();
   }
 
 }

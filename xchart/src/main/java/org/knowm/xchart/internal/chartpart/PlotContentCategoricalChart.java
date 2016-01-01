@@ -53,10 +53,10 @@ public class PlotContentCategoricalChart extends PlotContent {
     // g.setColor(Color.red);
     // g.draw(bounds);
 
-    StyleManager styleManager = plot.getChartPainter().getStyleManager();
+    StyleManager styleManager = plot.getChartInternal().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
-    Rectangle rectangle = new Rectangle(0, 0, getChartPainter().getWidth(), getChartPainter().getHeight());
+    Rectangle rectangle = new Rectangle(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.green);
     // g.draw(rectangle);
@@ -70,20 +70,20 @@ public class PlotContentCategoricalChart extends PlotContent {
     double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
-    int numBars = getChartPainter().getAxisPair().getSeriesMap().values().iterator().next().getXData().size();
+    int numBars = getChartInternal().getSeriesMap().values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numBars;
 
     // plot series
     int seriesCounter = 0;
-    for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
+    for (Series series : getChartInternal().getSeriesMap().values()) {
 
       // for line series
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
       Collection<? extends Number> yData = series.getYData();
-      double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
-      double yMax = getChartPainter().getAxisPair().getYAxis().getMax();
+      double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
+      double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
 
       // if min and max positive, set min to zero
       if (yMin > 0.0 && yMax > 0.0) {
@@ -95,20 +95,20 @@ public class PlotContentCategoricalChart extends PlotContent {
       }
 
       // override min and maxValue if specified
-      if (getChartPainter().getStyleManager().getYAxisMin() != null) {
-        yMin = getChartPainter().getStyleManager().getYAxisMin();
+      if (getChartInternal().getStyleManager().getYAxisMin() != null) {
+        yMin = getChartInternal().getStyleManager().getYAxisMin();
       }
-      else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+      else if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
         // int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
-        double logMin = Math.floor(Math.log10(getChartPainter().getAxisPair().getYAxis().getMin()));
+        double logMin = Math.floor(Math.log10(getChartInternal().getAxisPair().getYAxis().getMin()));
         // System.out.println("logMin: " + logMin);
         // System.out.println("min : " + getChartPainter().getAxisPair().getyAxis().getMin().doubleValue());
         yMin = logMin;
       }
-      if (getChartPainter().getStyleManager().getYAxisMax() != null) {
-        yMax = getChartPainter().getStyleManager().getYAxisMax();
+      if (getChartInternal().getStyleManager().getYAxisMax() != null) {
+        yMax = getChartInternal().getStyleManager().getYAxisMax();
       }
-      else if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+      else if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
         yMax = Math.log10(yMax);
       }
       // figure out the general form of the chart
@@ -138,7 +138,7 @@ public class PlotContentCategoricalChart extends PlotContent {
 
         double y = ((Number) yItr.next()).doubleValue();
         // TODO test if this works, make an example chart
-        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+        if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
           y = Math.log10(y);
         }
 
@@ -191,15 +191,15 @@ public class PlotContentCategoricalChart extends PlotContent {
         double xOffset;
         double barWidth;
 
-        if (getChartPainter().getStyleManager().isBarsOverlapped()) {
-          double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
+        if (getChartInternal().getStyleManager().isBarsOverlapped()) {
+          double barWidthPercentage = getChartInternal().getStyleManager().getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + barMargin;
         }
         else {
-          double barWidthPercentage = getChartPainter().getStyleManager().getBarWidthPercentage();
-          barWidth = gridStep / getChartPainter().getAxisPair().getSeriesMap().size() * barWidthPercentage;
+          double barWidthPercentage = getChartInternal().getStyleManager().getBarWidthPercentage();
+          barWidth = gridStep / getChartInternal().getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
         }
@@ -213,7 +213,7 @@ public class PlotContentCategoricalChart extends PlotContent {
           path.lineTo(xOffset, zeroOffset);
           path.closePath();
           g.setStroke(series.getStroke());
-          if (getChartPainter().getStyleManager().isBarFilled()) {
+          if (getChartInternal().getStyleManager().isBarFilled()) {
             g.fill(path);
           }
           else {
@@ -238,7 +238,7 @@ public class PlotContentCategoricalChart extends PlotContent {
           // paint marker
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
-            series.getMarker().paint(g, previousX, previousY, getChartPainter().getStyleManager().getMarkerSize());
+            series.getMarker().paint(g, previousX, previousY, getChartInternal().getStyleManager().getMarkerSize());
           }
 
         }
@@ -254,11 +254,11 @@ public class PlotContentCategoricalChart extends PlotContent {
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (getChartPainter().getStyleManager().isErrorBarsColorSeriesColor()) {
+          if (getChartInternal().getStyleManager().isErrorBarsColorSeriesColor()) {
             g.setColor(series.getStrokeColor());
           }
           else {
-            g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
+            g.setColor(getChartInternal().getStyleManager().getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 
@@ -289,9 +289,9 @@ public class PlotContentCategoricalChart extends PlotContent {
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return plot.getChartPainter();
+    return plot.getChartInternal();
   }
 
 }

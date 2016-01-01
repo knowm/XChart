@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.knowm.xchart.StyleManager.ChartTheme;
-import org.knowm.xchart.internal.chartpart.ChartPainter;
+import org.knowm.xchart.internal.chartpart.ChartInternal;
 import org.knowm.xchart.internal.style.Theme;
 
 /**
@@ -35,7 +35,7 @@ public class Chart {
   /**
    * Hides ugly details mostly related to painting the chart and managing the added series. Not to be exposed to outside.
    */
-  private final ChartPainter chartPainter;
+  private final ChartInternal chartInternal;
 
   /**
    * Constructor
@@ -45,7 +45,7 @@ public class Chart {
    */
   public Chart(int width, int height) {
 
-    chartPainter = new ChartPainter(width, height);
+    chartInternal = new ChartInternal(width, height);
   }
 
   /**
@@ -69,8 +69,8 @@ public class Chart {
    */
   public Chart(int width, int height, Theme theme) {
 
-    chartPainter = new ChartPainter(width, height);
-    chartPainter.getStyleManager().setTheme(theme);
+    chartInternal = new ChartInternal(width, height);
+    chartInternal.getStyleManager().setTheme(theme);
   }
 
   /**
@@ -94,7 +94,7 @@ public class Chart {
    */
   public void paint(Graphics2D g, int width, int height) {
 
-    chartPainter.paint(g, width, height);
+    chartInternal.paint(g, width, height);
   }
 
   /**
@@ -102,7 +102,7 @@ public class Chart {
    */
   public void paint(Graphics2D g) {
 
-    chartPainter.paint(g);
+    chartInternal.paint(g);
   }
 
   /**
@@ -116,7 +116,7 @@ public class Chart {
    */
   public Series addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
-    return chartPainter.getAxisPair().addSeries(seriesName, xData, yData, errorBars);
+    return chartInternal.addSeries(seriesName, xData, yData, errorBars);
   }
 
   /**
@@ -231,7 +231,7 @@ public class Chart {
    */
   public void setChartTitle(String title) {
 
-    chartPainter.getChartTitle().setText(title);
+    chartInternal.getChartTitle().setText(title);
   }
 
   /**
@@ -241,7 +241,7 @@ public class Chart {
    */
   public void setXAxisTitle(String title) {
 
-    chartPainter.getAxisPair().getXAxis().getAxisTitle().setText(title);
+    chartInternal.getAxisPair().getXAxis().getAxisTitle().setText(title);
   }
 
   /**
@@ -251,7 +251,7 @@ public class Chart {
    */
   public void setYAxisTitle(String title) {
 
-    chartPainter.getAxisPair().getYAxis().getAxisTitle().setText(title);
+    chartInternal.getAxisPair().getYAxis().getAxisTitle().setText(title);
   }
 
   /**
@@ -261,22 +261,22 @@ public class Chart {
    */
   public StyleManager getStyleManager() {
 
-    return chartPainter.getStyleManager();
+    return chartInternal.getStyleManager();
   }
 
   public int getWidth() {
 
-    return chartPainter.getWidth();
+    return chartInternal.getWidth();
   }
 
   public int getHeight() {
 
-    return chartPainter.getHeight();
+    return chartInternal.getHeight();
   }
 
   public Map<String, Series> getSeriesMap() {
 
-    return chartPainter.getAxisPair().getSeriesMap();
+    return chartInternal.getSeriesMap();
   }
 
 }

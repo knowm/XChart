@@ -72,7 +72,7 @@ public class AxisTick implements ChartPart {
     // System.out.println("AxisTick: " + axis.getDirection());
     // System.out.println("workingSpace: " + workingSpace);
 
-    if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) {
+    if (axis.getDirection() == Axis.Direction.Y && getChartInternal().getStyleManager().isYAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
@@ -83,7 +83,7 @@ public class AxisTick implements ChartPart {
 
       axisTickLabels.getBounds().getY(),
 
-      axisTickLabels.getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
+      axisTickLabels.getBounds().getWidth() + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
 
       axisTickMarks.getBounds().getHeight()
 
@@ -93,13 +93,13 @@ public class AxisTick implements ChartPart {
       // g.draw(bounds);
 
     }
-    else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) {
+    else if (axis.getDirection() == Axis.Direction.X && getChartInternal().getStyleManager().isXAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
       bounds = new Rectangle2D.Double(axisTickMarks.getBounds().getX(), axisTickMarks.getBounds().getY(), axisTickLabels.getBounds().getWidth(), axisTickMarks.getBounds().getHeight()
-          + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight());
+          + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight());
 
       // g.setColor(Color.red);
       // g.draw(bounds);
@@ -109,9 +109,9 @@ public class AxisTick implements ChartPart {
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return axis.getChartPainter();
+    return axis.getChartInternal();
   }
 
   // Getters /////////////////////////////////////////////////

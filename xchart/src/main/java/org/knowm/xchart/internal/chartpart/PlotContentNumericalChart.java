@@ -59,7 +59,7 @@ public class PlotContentNumericalChart extends PlotContent {
       return;
     }
 
-    StyleManager styleManager = plot.getChartPainter().getStyleManager();
+    StyleManager styleManager = plot.getChartInternal().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
 
@@ -68,7 +68,7 @@ public class PlotContentNumericalChart extends PlotContent {
     // g.setColor(Color.green);
     // g.draw(rectangle);
 
-    Rectangle rectangle = new Rectangle(0, 0, getChartPainter().getWidth(), getChartPainter().getHeight());
+    Rectangle rectangle = new Rectangle(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.green);
     // g.draw(rectangle);
@@ -84,38 +84,38 @@ public class PlotContentNumericalChart extends PlotContent {
     double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
-    for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
+    for (Series series : getChartInternal().getSeriesMap().values()) {
 
       // data points
       Collection<?> xData = series.getXData();
       // System.out.println(xData);
-      double xMin = getChartPainter().getAxisPair().getXAxis().getMin();
-      double xMax = getChartPainter().getAxisPair().getXAxis().getMax();
+      double xMin = getChartInternal().getAxisPair().getXAxis().getMin();
+      double xMax = getChartInternal().getAxisPair().getXAxis().getMax();
 
       Collection<? extends Number> yData = series.getYData();
-      double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
-      double yMax = getChartPainter().getAxisPair().getYAxis().getMax();
+      double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
+      double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
 
       // override min and maxValue if specified
-      if (getChartPainter().getStyleManager().getXAxisMin() != null) {
-        xMin = getChartPainter().getStyleManager().getXAxisMin();
+      if (getChartInternal().getStyleManager().getXAxisMin() != null) {
+        xMin = getChartInternal().getStyleManager().getXAxisMin();
       }
-      if (getChartPainter().getStyleManager().getYAxisMin() != null) {
-        yMin = getChartPainter().getStyleManager().getYAxisMin();
+      if (getChartInternal().getStyleManager().getYAxisMin() != null) {
+        yMin = getChartInternal().getStyleManager().getYAxisMin();
       }
-      if (getChartPainter().getStyleManager().getXAxisMax() != null) {
-        xMax = getChartPainter().getStyleManager().getXAxisMax();
+      if (getChartInternal().getStyleManager().getXAxisMax() != null) {
+        xMax = getChartInternal().getStyleManager().getXAxisMax();
       }
-      if (getChartPainter().getStyleManager().getYAxisMax() != null) {
-        yMax = getChartPainter().getStyleManager().getYAxisMax();
+      if (getChartInternal().getStyleManager().getYAxisMax() != null) {
+        yMax = getChartInternal().getStyleManager().getYAxisMax();
       }
 
       // logarithmic
-      if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
+      if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
         xMin = Math.log10(xMin);
         xMax = Math.log10(xMax);
       }
-      if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+      if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
         yMin = Math.log10(yMin);
         yMax = Math.log10(yMax);
       }
@@ -135,16 +135,16 @@ public class PlotContentNumericalChart extends PlotContent {
       while (xItr.hasNext()) {
 
         double x = 0.0;
-        if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+        if (getChartInternal().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
           x = ((Number) xItr.next()).doubleValue();
           // System.out.println(x);
         }
-        else if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+        else if (getChartInternal().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           x = ((Date) xItr.next()).getTime();
           // System.out.println(x);
         }
 
-        if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
+        if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
 
@@ -165,7 +165,7 @@ public class PlotContentNumericalChart extends PlotContent {
         double y = 0.0;
 
         // System.out.println(y);
-        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+        if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         }
         else {
@@ -231,7 +231,7 @@ public class PlotContentNumericalChart extends PlotContent {
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset, getChartPainter().getStyleManager().getMarkerSize());
+          series.getMarker().paint(g, xOffset, yOffset, getChartInternal().getStyleManager().getMarkerSize());
         }
 
         // paint errorbars
@@ -240,17 +240,17 @@ public class PlotContentNumericalChart extends PlotContent {
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (getChartPainter().getStyleManager().isErrorBarsColorSeriesColor()) {
+          if (getChartInternal().getStyleManager().isErrorBarsColorSeriesColor()) {
             g.setColor(series.getStrokeColor());
           }
           else {
-            g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
+            g.setColor(getChartInternal().getStyleManager().getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 
           // Top value
           double topValue = 0.0;
-          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+          if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
           }
@@ -262,7 +262,7 @@ public class PlotContentNumericalChart extends PlotContent {
 
           // Bottom value
           double bottomValue = 0.0;
-          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+          if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
