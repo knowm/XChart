@@ -61,9 +61,9 @@ public class Plot implements ChartPart {
     // calculate bounds
     double xOffset = chartPainter.getAxisPair().getYAxis().getBounds().getX()
 
-    + chartPainter.getAxisPair().getYAxis().getBounds().getWidth()
+        + chartPainter.getAxisPair().getYAxis().getBounds().getWidth()
 
-    + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding()) : 0)
+        + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding()) : 0)
 
     ;
 
@@ -76,10 +76,10 @@ public class Plot implements ChartPart {
 
     plotSurface.paint(g);
     if (getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
-      this.plotContent = new PlotContentBarChart(this);
+      this.plotContent = new PlotContentCategoricalChart(this);
     }
     else {
-      this.plotContent = new PlotContentLineChart(this);
+      this.plotContent = new PlotContentNumericalChart(this);
     }
     plotContent.paint(g);
 

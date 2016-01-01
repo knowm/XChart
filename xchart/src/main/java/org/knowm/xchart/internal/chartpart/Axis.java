@@ -23,7 +23,6 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.StyleManager.LegendPosition;
 
 /**
@@ -121,7 +120,7 @@ public class Axis implements ChartPart {
   protected void setAxisType(AxisType axisType) {
 
     if (this.axisType != null && this.axisType != axisType) {
-      throw new IllegalArgumentException("Date and Number Axes cannot be mixed on the same chart!! ");
+      throw new IllegalArgumentException("Different Axes (Date, Number, String) cannot be mixed on the same chart!!");
     }
     this.axisType = axisType;
   }
@@ -162,18 +161,18 @@ public class Axis implements ChartPart {
 
         double approximateXAxisWidth =
 
-        getChartPainter().getWidth()
+            getChartPainter().getWidth()
 
-        - width // y-axis approx. width
+                - width // y-axis approx. width
 
-        - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? getChartPainter().getChartLegend().getLegendBoxWidth() : 0)
+                - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? getChartPainter().getChartLegend().getLegendBoxWidth() : 0)
 
-        - 2 * getChartPainter().getStyleManager().getChartPadding()
+                - 2 * getChartPainter().getStyleManager().getChartPadding()
 
-        - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
+                - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
-        - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-            .getChartPadding() : 0)
+                - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+                    .getChartPadding() : 0)
 
         ;
 
@@ -219,18 +218,18 @@ public class Axis implements ChartPart {
 
       double width =
 
-      getChartPainter().getWidth()
+          getChartPainter().getWidth()
 
-      - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
+              - axisPair.getYAxis().getBounds().getWidth() // y-axis was already painted
 
-      - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? getChartPainter().getChartLegend().getLegendBoxWidth() : 0)
+              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? getChartPainter().getChartLegend().getLegendBoxWidth() : 0)
 
-      - 2 * getChartPainter().getStyleManager().getChartPadding()
+              - 2 * getChartPainter().getStyleManager().getChartPadding()
 
-      - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
+              - (getChartPainter().getStyleManager().isYAxisTicksVisible() ? (getChartPainter().getStyleManager().getPlotPadding()) : 0)
 
-      - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
-          .getChartPadding() : 0)
+              - (getChartPainter().getStyleManager().getLegendPosition() == LegendPosition.OutsideE && getChartPainter().getStyleManager().isLegendVisible() ? getChartPainter().getStyleManager()
+                  .getChartPadding() : 0)
 
       ;
 
@@ -343,9 +342,9 @@ public class Axis implements ChartPart {
 
   private AxisTickCalculator getAxisTickCalculator(double workingSpace) {
 
-    if (getDirection() == Direction.X && getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
+    if (getDirection() == Direction.X && getAxisType() == AxisType.String) {
 
-      return new AxisTickBarChartCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter());
+      return new AxisTickCategoryChartCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter());
 
     }
     else if (getDirection() == Direction.X && getChartPainter().getStyleManager().isXAxisLogarithmic() && getAxisType() != AxisType.Date) {
@@ -365,7 +364,7 @@ public class Axis implements ChartPart {
     }
     else { // number
 
-      return new AxisTickNumericalCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter().getStyleManager());
+      return new AxisTickNumberCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartPainter().getStyleManager());
     }
   }
 

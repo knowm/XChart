@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.knowm.xchart.Series;
-import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.internal.chartpart.Axis.AxisType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 
@@ -103,13 +102,10 @@ public class AxisPair implements ChartPart {
         xAxis.setAxisType(AxisType.Date);
       }
       else if (dataPoint instanceof String) {
-        if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar) {
-          throw new RuntimeException("X-Axis data types of String can only be used for Bar Charts!!!");
-        }
         xAxis.setAxisType(AxisType.String);
       }
       else {
-        throw new RuntimeException("Series data must be either Number, Date or String type!!!");
+        throw new IllegalArgumentException("Series data must be either Number, Date or String type!!!");
       }
       yAxis.setAxisType(AxisType.Number);
       series = new Series(seriesName, xData, xAxis.getAxisType(), yData, yAxis.getAxisType(), errorBars, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());

@@ -32,6 +32,9 @@ import org.knowm.xchart.internal.style.Theme;
  */
 public class Chart {
 
+  /**
+   * Hides ugly details mostly related to painting the chart and managing the added series. Not to be exposed to outside.
+   */
   private final ChartPainter chartPainter;
 
   /**

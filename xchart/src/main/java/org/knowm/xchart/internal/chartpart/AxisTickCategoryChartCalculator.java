@@ -27,11 +27,11 @@ import org.knowm.xchart.internal.chartpart.Axis.AxisType;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for String axes
  *
  * @author timmolter
  */
-public class AxisTickBarChartCalculator extends AxisTickCalculator {
+public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
 
   /**
    * Constructor
@@ -42,9 +42,30 @@ public class AxisTickBarChartCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickBarChartCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, ChartPainter chart) {
+  public AxisTickCategoryChartCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, ChartPainter chart) {
 
     super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
+
+    // override min/max value for bar charts' Y-Axis
+    double overrideMinValue = minValue;
+    double overrideMaxValue = maxValue;
+    if (axisDirection == Direction.Y) { // this is the Y-Axis for a bar chart
+      if (minValue > 0.0 && maxValue > 0.0) {
+        overrideMinValue = 0.0;
+      }
+      if (minValue < 0.0 && maxValue < 0.0) {
+        overrideMaxValue = 0.0;
+      }
+    }
+
+    if (styleManager.isYAxisLogarithmic()) {
+      int logMin = (int) Math.floor(Math.log10(minValue));
+      overrideMinValue = Utils.pow(10, logMin);
+    }
+
+    this.minValue = overrideMinValue;
+    this.maxValue = overrideMaxValue;
+
     calculate(chart);
   }
 

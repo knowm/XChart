@@ -34,14 +34,14 @@ import org.knowm.xchart.internal.chartpart.Axis.AxisType;
 /**
  * @author timmolter
  */
-public class PlotContentLineChart extends PlotContent {
+public class PlotContentNumericalChart extends PlotContent {
 
   /**
    * Constructor
    *
    * @param plot
    */
-  protected PlotContentLineChart(Plot plot) {
+  protected PlotContentNumericalChart(Plot plot) {
 
     super(plot);
   }
@@ -120,8 +120,8 @@ public class PlotContentLineChart extends PlotContent {
         yMax = Math.log10(yMax);
       }
 
-      double previousX = Integer.MIN_VALUE;
-      double previousY = Integer.MIN_VALUE;
+      double previousX = -Double.MAX_VALUE;
+      double previousY = -Double.MAX_VALUE;
 
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
@@ -155,8 +155,8 @@ public class PlotContentLineChart extends PlotContent {
           closePath(g, path, previousX, bounds, yTopMargin);
           path = null;
 
-          previousX = Integer.MIN_VALUE;
-          previousY = Integer.MIN_VALUE;
+          previousX = -Double.MAX_VALUE;
+          previousY = -Double.MAX_VALUE;
           continue;
         }
 
@@ -196,7 +196,7 @@ public class PlotContentLineChart extends PlotContent {
 
           if (series.getStroke() != null) {
 
-            if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+            if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
               g.setColor(series.getStrokeColor());
               g.setStroke(series.getStroke());
               Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
@@ -208,7 +208,7 @@ public class PlotContentLineChart extends PlotContent {
         // paint area
         if (Series.SeriesType.Area.equals(series.getSeriesType())) {
 
-          if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+          if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
             g.setColor(series.getFillColor());
             double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;

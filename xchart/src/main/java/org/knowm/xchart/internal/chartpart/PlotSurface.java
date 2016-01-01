@@ -22,8 +22,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import org.knowm.xchart.StyleManager.ChartType;
-
 /**
  * Draws the plot background, the plot border and the horizontal and vertical grid lines
  *
@@ -68,12 +66,9 @@ public class PlotSurface implements ChartPart {
     }
 
     // paint grid lines and/or inner plot ticks
-    if (getChartPainter().getStyleManager().isPlotGridHorizontalLinesVisible() 
-	|| getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible() 
-	|| getChartPainter().getStyleManager().isPlotTicksMarksVisible()
-	) {
 
-      // horizontal
+    // horizontal
+    if (getChartPainter().getStyleManager().isPlotGridHorizontalLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
       List<Double> yAxisTickLocations = getChartPainter().getAxisPair().getYAxis().getAxisTickCalculator().getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
@@ -102,43 +97,37 @@ public class PlotSurface implements ChartPart {
           }
         }
       }
+    }
 
-      // vertical
-      if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar
+    // vertical
+    if (getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible() || getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
 
-      && (getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible()
+      List<Double> xAxisTickLocations = getChartPainter().getAxisPair().getXAxis().getAxisTickCalculator().getTickLocations();
+      for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
-      || getChartPainter().getStyleManager().isPlotTicksMarksVisible())
+        double tickLocation = xAxisTickLocations.get(i);
+        double xOffset = bounds.getX() + tickLocation;
 
-      ) {
+        if (xOffset > bounds.getX() && xOffset < bounds.getX() + bounds.getWidth()) {
 
-        List<Double> xAxisTickLocations = getChartPainter().getAxisPair().getXAxis().getAxisTickCalculator().getTickLocations();
-        for (int i = 0; i < xAxisTickLocations.size(); i++) {
+          // draw lines
+          if (getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible()) {
+            g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
+            g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
 
-          double tickLocation = xAxisTickLocations.get(i);
-          double xOffset = bounds.getX() + tickLocation;
+            Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
+            g.draw(line);
+          }
+          // tick marks
+          if (getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
 
-          if (xOffset > bounds.getX() && xOffset < bounds.getX() + bounds.getWidth()) {
+            g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
+            g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
 
-            // draw lines
-            if (getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible()) {
-              g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
-              g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
-
-              Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
-              g.draw(line);
-            }
-            // tick marks
-            if (getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
-
-              g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
-              g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
-
-              Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + getChartPainter().getStyleManager().getAxisTickMarkLength());
-              g.draw(line);
-              line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight(), xOffset, bounds.getY() + bounds.getHeight() - getChartPainter().getStyleManager().getAxisTickMarkLength());
-              g.draw(line);
-            }
+            Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + getChartPainter().getStyleManager().getAxisTickMarkLength());
+            g.draw(line);
+            line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight(), xOffset, bounds.getY() + bounds.getHeight() - getChartPainter().getStyleManager().getAxisTickMarkLength());
+            g.draw(line);
           }
         }
       }

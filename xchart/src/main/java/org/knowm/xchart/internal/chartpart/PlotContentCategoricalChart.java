@@ -33,14 +33,14 @@ import org.knowm.xchart.internal.Utils;
 /**
  * @author timmolter
  */
-public class PlotContentBarChart extends PlotContent {
+public class PlotContentCategoricalChart extends PlotContent {
 
   /**
    * Constructor
    *
    * @param plot
    */
-  protected PlotContentBarChart(Plot plot) {
+  protected PlotContentCategoricalChart(Plot plot) {
 
     super(plot);
   }
@@ -78,8 +78,8 @@ public class PlotContentBarChart extends PlotContent {
     for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
 
       // for line series
-      double previousX = Integer.MIN_VALUE;
-      double previousY = Integer.MIN_VALUE;
+      double previousX = -Double.MAX_VALUE;
+      double previousY = -Double.MAX_VALUE;
 
       Collection<? extends Number> yData = series.getYData();
       double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
@@ -225,7 +225,7 @@ public class PlotContentBarChart extends PlotContent {
           // paint line
           if (series.getStroke() != null) {
 
-            if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+            if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
               g.setColor(series.getStrokeColor());
               g.setStroke(series.getStroke());
               Shape line = new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);

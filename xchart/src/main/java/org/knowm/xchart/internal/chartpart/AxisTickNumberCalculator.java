@@ -28,7 +28,7 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
  *
  * @author timmolter
  */
-public class AxisTickNumericalCalculator extends AxisTickCalculator {
+public class AxisTickNumberCalculator extends AxisTickCalculator {
 
   NumberFormatter numberFormatter = null;
 
@@ -41,7 +41,7 @@ public class AxisTickNumericalCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickNumericalCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickNumberCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     numberFormatter = new NumberFormatter(styleManager);
