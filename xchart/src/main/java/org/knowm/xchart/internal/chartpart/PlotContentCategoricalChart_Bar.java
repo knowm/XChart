@@ -117,7 +117,15 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
       int categoryCounter = 0;
       while (yItr.hasNext()) {
 
-        double y = yItr.next().doubleValue();
+        Number next = yItr.next();
+        if (next == null) {
+
+          previousX = -Double.MAX_VALUE;
+          previousY = -Double.MAX_VALUE;
+          categoryCounter++;
+          continue;
+        }
+        double y = next.doubleValue();
 
         double yTop = 0.0;
         double yBottom = 0.0;
