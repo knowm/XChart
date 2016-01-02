@@ -81,10 +81,10 @@ public class PlotContentNumericalChart extends PlotContent {
     double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
-    double xMin = getChartInternal().getxAxisMin();
-    double xMax = getChartInternal().getxAxisMax();
-    double yMin = getChartInternal().getyAxisMin();
-    double yMax = getChartInternal().getyAxisMax();
+    double xMin = getChartInternal().getAxisPair().getXAxis().getMin();
+    double xMax = getChartInternal().getAxisPair().getXAxis().getMax();
+    double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
+    double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
 
     // logarithmic
     if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {

@@ -29,7 +29,6 @@ import java.util.Map;
 
 import org.knowm.xchart.Series;
 import org.knowm.xchart.StyleManager;
-import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.internal.chartpart.Axis.AxisType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 
@@ -52,11 +51,6 @@ public class ChartInternal {
   private SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler();
 
   private final StyleManager styleManager;
-
-  private double xAxisMin;
-  private double xAxisMax;
-  private double yAxisMin;
-  private double yAxisMax;
 
   // Chart Parts
   private Legend chartLegend;
@@ -293,12 +287,16 @@ public class ChartInternal {
    */
   public void paint(Graphics2D g) {
 
+    // Sanity checks
+    if (getSeriesMap().isEmpty()) {
+      throw new RuntimeException("No series defined for Chart!!!");
+    }
+
     // calc axis min and max
     axisPair.getXAxis().resetMinMax();
     axisPair.getYAxis().resetMinMax();
-
     for (Series series : getSeriesMap().values()) {
-      // add min/max to axis
+      // add min/max to axes
       // System.out.println(series.getxMin());
       // System.out.println(series.getxMax());
       // System.out.println(series.getyMin());
@@ -307,71 +305,21 @@ public class ChartInternal {
       axisPair.getXAxis().addMinMax(series.getXMin(), series.getXMax());
       axisPair.getYAxis().addMinMax(series.getYMin(), series.getYMax());
     }
-    // Sanity checks
-    if (getSeriesMap().isEmpty()) {
-      throw new RuntimeException("No series defined for Chart!!!");
-    }
 
-    xAxisMin = axisPair.getXAxis().getMin();
-    xAxisMax = axisPair.getXAxis().getMax();
-    yAxisMin = axisPair.getYAxis().getMin();
-    yAxisMax = axisPair.getYAxis().getMax();
-
-    // override min/max value for bar charts' Y-Axis
-    double overrideXAxisMinValue = xAxisMin;
-    double overrideXAxisMaxValue = xAxisMax;
-    double overrideYAxisMinValue = yAxisMin;
-    double overrideYAxisMaxValue = yAxisMax;
-    if (styleManager.getChartType() == ChartType.Bar) { // this is the Y-Axis for a bar chart
-      if (yAxisMin > 0.0 && yAxisMax > 0.0) {
-        overrideYAxisMinValue = 0.0;
-      }
-      if (yAxisMin < 0.0 && yAxisMax < 0.0) {
-        overrideYAxisMaxValue = 0.0;
-      }
-    }
-
-    // override min and maxValue if specified
-    if (styleManager.getXAxisMin() != null && styleManager.getChartType() != ChartType.Bar) { // bar chart cannot have a max or min TODO is this true? Do we want this?
-      overrideXAxisMinValue = styleManager.getXAxisMin();
-    }
-    if (styleManager.getXAxisMax() != null && styleManager.getChartType() != ChartType.Bar) { // bar chart cannot have a max or min
-      overrideXAxisMaxValue = styleManager.getXAxisMax();
-    }
-    if (styleManager.getYAxisMin() != null) {
-      overrideYAxisMinValue = styleManager.getYAxisMin();
-    }
-    if (styleManager.getYAxisMax() != null) {
-      overrideYAxisMaxValue = styleManager.getYAxisMax();
-    }
-
-    this.xAxisMin = overrideXAxisMinValue;
-    this.xAxisMax = overrideXAxisMaxValue;
-    this.yAxisMin = overrideYAxisMinValue;
-    this.yAxisMax = overrideYAxisMaxValue;
+    axisPair.getXAxis().overrideMinMax();
+    axisPair.getYAxis().overrideMinMax();
 
     // logarithmic
 
-    if (getStyleManager().isXAxisLogarithmic() && xAxisMin <= 0.0) {
+    if (getStyleManager().isXAxisLogarithmic() && axisPair.getXAxis().getMin() <= 0.0) {
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic X-Axis!!!");
     }
-    if (getStyleManager().isYAxisLogarithmic() && yAxisMin <= 0.0) {
+    if (getStyleManager().isYAxisLogarithmic() && axisPair.getYAxis().getMin() <= 0.0) {
       // System.out.println(axisPair.getyAxis().getMin());
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic Y-Axis!!!");
     }
-    // if (styleManager.getChartType() == ChartType.Bar && styleManager.isYAxisLogarithmic()) {
-    // int logMin = (int) Math.floor(Math.log10(yAxisMin));
-    // overrideYAxisMinValue = Utils.pow(10, logMin);
-    // }
-    // if (styleManager.isXAxisLogarithmic()) {
-    // xAxisMin = Math.log10(overrideXAxisMinValue);
-    // xAxisMax = Math.log10(overrideXAxisMaxValue);
-    // }
-    // if (styleManager.isYAxisLogarithmic()) {
-    // yAxisMin = Math.log10(overrideYAxisMinValue);
-    // yAxisMax = Math.log10(overrideYAxisMaxValue);
-    // }
 
+    // paint chart main background
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
     g.setColor(styleManager.getChartBackgroundColor());
     Shape rect = new Rectangle2D.Double(0, 0, width, height);
@@ -456,26 +404,6 @@ public class ChartInternal {
   public StyleManager getStyleManager() {
 
     return styleManager;
-  }
-
-  public double getxAxisMin() {
-
-    return xAxisMin;
-  }
-
-  public double getxAxisMax() {
-
-    return xAxisMax;
-  }
-
-  public double getyAxisMin() {
-
-    return yAxisMin;
-  }
-
-  public double getyAxisMax() {
-
-    return yAxisMax;
   }
 
 }

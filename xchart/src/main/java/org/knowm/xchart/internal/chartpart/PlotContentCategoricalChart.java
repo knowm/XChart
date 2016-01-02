@@ -75,8 +75,8 @@ public class PlotContentCategoricalChart extends PlotContent {
     int numCategories = getChartInternal().getSeriesMap().values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
 
-    double yMin = getChartInternal().getyAxisMin();
-    double yMax = getChartInternal().getyAxisMax();
+    double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
+    double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
 
     // TODO only for bar charts necessary
     // figure out the general form of the chart

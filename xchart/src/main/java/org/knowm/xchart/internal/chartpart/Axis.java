@@ -24,6 +24,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
+import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.StyleManager.LegendPosition;
 import org.knowm.xchart.internal.chartpart.ChartInternal.ChartInternalType;
 
@@ -356,14 +357,14 @@ public class Axis implements ChartPart {
       }
       else if (getChartInternal().getChartInternalType() == ChartInternalType.XY && getAxisType() == AxisType.Date) {
 
-        return new AxisTickCalculator_Date(getDirection(), workingSpace, getChartInternal().getxAxisMin(), getChartInternal().getxAxisMax(), getChartInternal().getStyleManager());
+        return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, getChartInternal().getStyleManager());
       }
       else if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
 
-        return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, getChartInternal().getxAxisMin(), getChartInternal().getxAxisMax(), getChartInternal().getStyleManager());
+        return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, getChartInternal().getStyleManager());
       }
       else {
-        return new AxisTickCalculator_Number(getDirection(), workingSpace, getChartInternal().getxAxisMin(), getChartInternal().getxAxisMax(), getChartInternal().getStyleManager());
+        return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, getChartInternal().getStyleManager());
 
       }
     }
@@ -373,10 +374,10 @@ public class Axis implements ChartPart {
 
       if (getChartInternal().getStyleManager().isYAxisLogarithmic() && getAxisType() != AxisType.Date) {
 
-        return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, getChartInternal().getyAxisMin(), getChartInternal().getyAxisMax(), getChartInternal().getStyleManager());
+        return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, getChartInternal().getStyleManager());
       }
       else {
-        return new AxisTickCalculator_Number(getDirection(), workingSpace, getChartInternal().getyAxisMin(), getChartInternal().getyAxisMax(), getChartInternal().getStyleManager());
+        return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, getChartInternal().getStyleManager());
 
       }
     }
@@ -434,6 +435,50 @@ public class Axis implements ChartPart {
   public AxisTickCalculator getAxisTickCalculator() {
 
     return this.axisTickCalculator;
+  }
+
+  public void overrideMinMax() {
+
+    if (direction == Direction.X) { // X-Axis
+
+      double overrideXAxisMinValue = min;
+      double overrideXAxisMaxValue = max;
+
+      // override min and maxValue if specified
+      if (getChartInternal().getStyleManager().getXAxisMin() != null && getChartInternal().getStyleManager().getChartType() != ChartType.Bar) { // bar chart cannot have a max or min TODO is this true?
+        overrideXAxisMinValue = getChartInternal().getStyleManager().getXAxisMin();
+      }
+      if (getChartInternal().getStyleManager().getXAxisMax() != null && getChartInternal().getStyleManager().getChartType() != ChartType.Bar) { // bar chart cannot have a max or min
+        overrideXAxisMaxValue = getChartInternal().getStyleManager().getXAxisMax();
+      }
+      min = overrideXAxisMinValue;
+      max = overrideXAxisMaxValue;
+    }
+    else {
+
+      double overrideYAxisMinValue = min;
+      double overrideYAxisMaxValue = max;
+      // override min/max value for bar charts' Y-Axis
+      if (getChartInternal().getStyleManager().getChartType() == ChartType.Bar) { // this is the Y-Axis for a bar chart
+        if (min > 0.0 && max > 0.0) {
+          overrideYAxisMinValue = 0.0;
+        }
+        if (min < 0.0 && max < 0.0) {
+          overrideYAxisMaxValue = 0.0;
+        }
+      }
+
+      // override min and maxValue if specified
+      if (getChartInternal().getStyleManager().getYAxisMin() != null) {
+        overrideYAxisMinValue = getChartInternal().getStyleManager().getYAxisMin();
+      }
+      if (getChartInternal().getStyleManager().getYAxisMax() != null) {
+        overrideYAxisMaxValue = getChartInternal().getStyleManager().getYAxisMax();
+      }
+      min = overrideYAxisMinValue;
+      max = overrideYAxisMaxValue;
+    }
+
   }
 
 }
