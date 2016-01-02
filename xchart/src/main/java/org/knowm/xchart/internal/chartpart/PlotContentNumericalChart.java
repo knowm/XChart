@@ -98,6 +98,11 @@ public class PlotContentNumericalChart extends PlotContent {
 
     for (Series series : getChartInternal().getSeriesMap().values()) {
 
+      // sanity check
+      if (Series.SeriesType.Bar.equals(series.getSeriesType())) {
+        throw new RuntimeException("X-Y charts only accept Line, Scatter, and Area series types!!!");
+      }
+
       // data points
       Collection<?> xData = series.getXData();
       Collection<? extends Number> yData = series.getYData();

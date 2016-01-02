@@ -32,14 +32,14 @@ import org.knowm.xchart.internal.Utils;
 /**
  * @author timmolter
  */
-public class PlotContentCategoricalChart extends PlotContent {
+public class PlotContentCategoricalChart_Bar extends PlotContent {
 
   /**
    * Constructor
    *
    * @param plot
    */
-  protected PlotContentCategoricalChart(Plot plot) {
+  protected PlotContentCategoricalChart_Bar(Plot plot) {
 
     super(plot);
   }
@@ -98,6 +98,11 @@ public class PlotContentCategoricalChart extends PlotContent {
     int seriesCounter = 0;
     for (Series series : getChartInternal().getSeriesMap().values()) {
 
+      // sanity check
+      if (Series.SeriesType.Area.equals(series.getSeriesType())) {
+        throw new RuntimeException("Category-Bar charts only accept Bar, Line and Scatter series types!!!");
+      }
+
       // for line series
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
@@ -114,7 +119,6 @@ public class PlotContentCategoricalChart extends PlotContent {
 
         double y = yItr.next().doubleValue();
 
-        // TODO only for bar charts necessary
         double yTop = 0.0;
         double yBottom = 0.0;
         switch (chartForm) {
@@ -172,6 +176,8 @@ public class PlotContentCategoricalChart extends PlotContent {
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
         }
+
+        // paint series
         if (series.getSeriesType() == SeriesType.Bar) {
           // paint bar
           g.setColor(series.getStrokeColor());
@@ -189,16 +195,19 @@ public class PlotContentCategoricalChart extends PlotContent {
             g.draw(path);
           }
         }
-        else if (series.getSeriesType() == SeriesType.Line) { // line series
+        else {
 
           // paint line
-          if (series.getStroke() != null) {
+          if (Series.SeriesType.Line.equals(series.getSeriesType())) {
 
-            if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
-              g.setColor(series.getStrokeColor());
-              g.setStroke(series.getStroke());
-              Shape line = new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);
-              g.draw(line);
+            if (series.getStroke() != null) {
+
+              if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
+                g.setColor(series.getStrokeColor());
+                g.setStroke(series.getStroke());
+                Shape line = new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);
+                g.draw(line);
+              }
             }
           }
           previousX = xOffset + barWidth / 2;
@@ -210,10 +219,6 @@ public class PlotContentCategoricalChart extends PlotContent {
             series.getMarker().paint(g, previousX, previousY, getChartInternal().getStyleManager().getMarkerSize());
           }
 
-        }
-        else {
-          // TODO probably add this earlier as a sanity check when series are added to charts
-          throw new RuntimeException("Category charts only accept Bar and Line series types!!!");
         }
 
         // paint error bars

@@ -22,6 +22,9 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
+import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.internal.chartpart.ChartInternal.ChartInternalType;
+
 /**
  * Draws the plot background, the plot border and the horizontal and vertical grid lines
  *
@@ -100,34 +103,38 @@ public class PlotSurface implements ChartPart {
     }
 
     // vertical
-    if (getChartInternal().getStyleManager().isPlotGridVerticalLinesVisible() || getChartInternal().getStyleManager().isPlotTicksMarksVisible()) {
+    if ((getChartInternal().getChartInternalType() == ChartInternalType.XY || (getChartInternal().getChartInternalType() == ChartInternalType.Category && getChartInternal().getStyleManager()
+        .getChartType() != ChartType.Bar))) {
 
-      List<Double> xAxisTickLocations = getChartInternal().getAxisPair().getXAxis().getAxisTickCalculator().getTickLocations();
-      for (int i = 0; i < xAxisTickLocations.size(); i++) {
+      if ((getChartInternal().getStyleManager().isPlotGridVerticalLinesVisible() || getChartInternal().getStyleManager().isPlotTicksMarksVisible())) {
 
-        double tickLocation = xAxisTickLocations.get(i);
-        double xOffset = bounds.getX() + tickLocation;
+        List<Double> xAxisTickLocations = getChartInternal().getAxisPair().getXAxis().getAxisTickCalculator().getTickLocations();
+        for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
-        if (xOffset > bounds.getX() && xOffset < bounds.getX() + bounds.getWidth()) {
+          double tickLocation = xAxisTickLocations.get(i);
+          double xOffset = bounds.getX() + tickLocation;
 
-          // draw lines
-          if (getChartInternal().getStyleManager().isPlotGridVerticalLinesVisible()) {
-            g.setColor(getChartInternal().getStyleManager().getPlotGridLinesColor());
-            g.setStroke(getChartInternal().getStyleManager().getPlotGridLinesStroke());
+          if (xOffset > bounds.getX() && xOffset < bounds.getX() + bounds.getWidth()) {
 
-            Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
-            g.draw(line);
-          }
-          // tick marks
-          if (getChartInternal().getStyleManager().isPlotTicksMarksVisible()) {
+            // draw lines
+            if (getChartInternal().getStyleManager().isPlotGridVerticalLinesVisible()) {
+              g.setColor(getChartInternal().getStyleManager().getPlotGridLinesColor());
+              g.setStroke(getChartInternal().getStyleManager().getPlotGridLinesStroke());
 
-            g.setColor(getChartInternal().getStyleManager().getAxisTickMarksColor());
-            g.setStroke(getChartInternal().getStyleManager().getAxisTickMarksStroke());
+              Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
+              g.draw(line);
+            }
+            // tick marks
+            if (getChartInternal().getStyleManager().isPlotTicksMarksVisible()) {
 
-            Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + getChartInternal().getStyleManager().getAxisTickMarkLength());
-            g.draw(line);
-            line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight(), xOffset, bounds.getY() + bounds.getHeight() - getChartInternal().getStyleManager().getAxisTickMarkLength());
-            g.draw(line);
+              g.setColor(getChartInternal().getStyleManager().getAxisTickMarksColor());
+              g.setStroke(getChartInternal().getStyleManager().getAxisTickMarksStroke());
+
+              Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + getChartInternal().getStyleManager().getAxisTickMarkLength());
+              g.draw(line);
+              line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight(), xOffset, bounds.getY() + bounds.getHeight() - getChartInternal().getStyleManager().getAxisTickMarkLength());
+              g.draw(line);
+            }
           }
         }
       }

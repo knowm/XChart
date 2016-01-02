@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.internal.chartpart.ChartInternal.ChartInternalType;
 
 /**
  * @author timmolter
@@ -75,8 +76,14 @@ public class Plot implements ChartPart {
     // g.draw(bounds);
 
     plotSurface.paint(g);
-    if (getChartInternal().getStyleManager().getChartType() == ChartType.Bar) {
-      this.plotContent = new PlotContentCategoricalChart(this);
+
+    if (getChartInternal().getChartInternalType() == ChartInternalType.Category) {
+      if (getChartInternal().getStyleManager().getChartType() == ChartType.Bar) {
+        this.plotContent = new PlotContentCategoricalChart_Bar(this);
+      }
+      else {
+        this.plotContent = new PlotContentCategoricalChart_Line_Area_Scatter(this);
+      }
     }
     else {
       this.plotContent = new PlotContentNumericalChart(this);

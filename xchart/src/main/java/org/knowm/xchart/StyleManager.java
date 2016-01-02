@@ -930,7 +930,6 @@ public class StyleManager {
     this.isPlotGridVerticalLinesVisible = isPlotGridLinesVisible;
   }
 
-  @Deprecated
   public boolean isPlotGridLinesVisible() {
 
     return isPlotGridHorizontalLinesVisible && isPlotGridVerticalLinesVisible;

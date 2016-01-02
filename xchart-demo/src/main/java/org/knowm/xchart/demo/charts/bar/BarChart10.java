@@ -34,7 +34,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>Mixed series types - Bar and Line
+ * <li>Mixed series types - Bar, Line and Scatter
  * <li>Bar Chart styles - overlapped, bar width
  */
 public class BarChart10 implements ExampleChart {
@@ -52,9 +52,12 @@ public class BarChart10 implements ExampleChart {
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Value vs. Letter").xAxisTitle("Letter").yAxisTitle("Value").theme(ChartTheme.GGPlot2).build();
     chart.addCategorySeries("China", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 11, 23, 20, 36, 5 })));
-    Series series2 = chart.addCategorySeries("World Ave.", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 25,
-        22, 38, 7 })));
+    Series series2 = chart.addCategorySeries("Korea", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 25, 22, 38,
+        7 })), new ArrayList<Number>(Arrays.asList(new Number[] { 1, 3, 2, 1, 2 })));
     series2.setSeriesType(SeriesType.Line);
+    Series series3 = chart.addCategorySeries("World Ave.", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 20, 22,
+        18, 36, 32 })));
+    series3.setSeriesType(SeriesType.Scatter);
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
