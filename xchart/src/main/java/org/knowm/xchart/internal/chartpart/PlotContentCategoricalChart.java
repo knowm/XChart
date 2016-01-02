@@ -27,7 +27,6 @@ import java.util.Iterator;
 
 import org.knowm.xchart.Series;
 import org.knowm.xchart.Series.SeriesType;
-import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.Utils;
 
 /**
@@ -48,12 +47,15 @@ public class PlotContentCategoricalChart extends PlotContent {
   @Override
   public void paint(Graphics2D g) {
 
+    // logarithmic
+    if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+      throw new IllegalArgumentException("Category Charts cannot have logarithmic axes!!! (Not Yet Implemented)");
+    }
+
     Rectangle2D bounds = plot.getBounds();
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.red);
     // g.draw(bounds);
-
-    StyleManager styleManager = getChartInternal().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
     Rectangle rectangle = new Rectangle(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
@@ -73,6 +75,25 @@ public class PlotContentCategoricalChart extends PlotContent {
     int numCategories = getChartInternal().getSeriesMap().values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
 
+    double yMin = getChartInternal().getyAxisMin();
+    double yMax = getChartInternal().getyAxisMax();
+
+    // TODO only for bar charts necessary
+    // figure out the general form of the chart
+    int chartForm = 1; // 1=positive, -1=negative, 0=span
+    if (yMin > 0.0 && yMax > 0.0) {
+      chartForm = 1; // positive chart
+    }
+    else if (yMin < 0.0 && yMax < 0.0) {
+      chartForm = -1; // negative chart
+    }
+    else {
+      chartForm = 0;// span chart
+    }
+    // System.out.println(yMin);
+    // System.out.println(yMax);
+    // System.out.println("chartForm: " + chartForm);
+
     // plot series
     int seriesCounter = 0;
     for (Series series : getChartInternal().getSeriesMap().values()) {
@@ -81,93 +102,37 @@ public class PlotContentCategoricalChart extends PlotContent {
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
-      Collection<? extends Number> yData = series.getYData();
-      double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
-      double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
-
-      // if (styleManager.getChartType() == ChartType.Bar) {
-      // if min and max positive, set min to zero
-      if (yMin > 0.0 && yMax > 0.0) {
-        yMin = 0.0;
-      }
-      // if min and max negative, set max to zero
-      if (yMin < 0.0 && yMax < 0.0) {
-        yMax = 0.0;
-      }
-      // }
-
-      // override min and maxValue if specified
-      if (getChartInternal().getStyleManager().getYAxisMin() != null) {
-        yMin = getChartInternal().getStyleManager().getYAxisMin();
-      }
-      else if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
-        // int logMin = (int) Math.floor(Math.log10(getChartPainter().getAxisPair().getyAxis().getMin().doubleValue()));
-        double logMin = Math.floor(Math.log10(getChartInternal().getAxisPair().getYAxis().getMin()));
-        // System.out.println("logMin: " + logMin);
-        // System.out.println("min : " + getChartPainter().getAxisPair().getyAxis().getMin().doubleValue());
-        yMin = logMin;
-      }
-      if (getChartInternal().getStyleManager().getYAxisMax() != null) {
-        yMax = getChartInternal().getStyleManager().getYAxisMax();
-      }
-      else if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
-        yMax = Math.log10(yMax);
-      }
-
-      // figure out the general form of the chart
-      int chartForm = 1; // 1=positive, -1=negative, 0=span
-      if (yMin > 0.0 && yMax > 0.0) {
-        chartForm = 1; // positive chart
-      }
-      else if (yMin < 0.0 && yMax < 0.0) {
-        chartForm = -1; // negative chart
-      }
-      else {
-        chartForm = 0;// span chart
-      }
-      // System.out.println(yMin);
-      // System.out.println(yMax);
-
-      // all the x-axis data are guaranteed to be the same so we just use the first one
-      Iterator<? extends Number> yItr = yData.iterator();
+      Iterator<? extends Number> yItr = series.getYData().iterator();
       Iterator<? extends Number> ebItr = null;
       Collection<? extends Number> errorBars = series.getErrorBars();
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }
 
-      int barCounter = 0;
+      int categoryCounter = 0;
       while (yItr.hasNext()) {
 
-        double y = ((Number) yItr.next()).doubleValue();
-        // TODO test if this works, make an example chart
-        if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
-          y = Math.log10(y);
-        }
+        double y = yItr.next().doubleValue();
 
+        // TODO only for bar charts necessary
         double yTop = 0.0;
         double yBottom = 0.0;
-
         switch (chartForm) {
         case 1: // positive chart
-
           // check for points off the chart draw area due to a custom yMin
           if (y < yMin) {
-            barCounter++;
+            categoryCounter++;
             continue;
           }
-
           yTop = y;
           yBottom = yMin;
           break;
         case -1: // negative chart
-
           // check for points off the chart draw area due to a custom yMin
           if (y > yMax) {
-            barCounter++;
+            categoryCounter++;
             continue;
           }
-
           yTop = yMax;
           yBottom = y;
           break;
@@ -186,6 +151,7 @@ public class PlotContentCategoricalChart extends PlotContent {
         }
 
         double yTransform = bounds.getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
+        // double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
         double yOffset = bounds.getY() + yTransform;
 
@@ -198,13 +164,13 @@ public class PlotContentCategoricalChart extends PlotContent {
           double barWidthPercentage = getChartInternal().getStyleManager().getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + barMargin;
+          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
         }
         else {
           double barWidthPercentage = getChartInternal().getStyleManager().getBarWidthPercentage();
           barWidth = gridStep / getChartInternal().getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = bounds.getX() + xLeftMargin + gridStep * barCounter++ + seriesCounter * barWidth + barMargin;
+          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
         }
         if (series.getSeriesType() == SeriesType.Bar) {
           // paint bar

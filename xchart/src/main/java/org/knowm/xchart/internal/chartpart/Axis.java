@@ -107,6 +107,7 @@ public class Axis implements ChartPart {
 
     // System.out.println(min);
     // System.out.println(max);
+    // NaN indicates String axis data, so min and max play no role
     if (this.min == Double.NaN || min < this.min) {
       this.min = min;
     }
@@ -343,27 +344,43 @@ public class Axis implements ChartPart {
 
   private AxisTickCalculator getAxisTickCalculator(double workingSpace) {
 
-    if (getDirection() == Direction.X && getChartInternal().getChartInternalType() == ChartInternalType.Category) {
+    // X-Axis
+    if (getDirection() == Direction.X) {
 
-      return new AxisTickCategoryChartCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal());
-    }
-    else if (getChartInternal().getChartInternalType() == ChartInternalType.XY && getAxisType() == AxisType.Date) {
+      if (getChartInternal().getChartInternalType() == ChartInternalType.Category) {
 
-      return new AxisTickDateCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
-    }
-    else if (getDirection() == Direction.X && getChartInternal().getChartInternalType() == ChartInternalType.XY && getChartInternal().getStyleManager().isXAxisLogarithmic()
-        && getAxisType() != AxisType.Date) {
+        // No need to pass in min and max
+        // pass in axis type instead of ChartInternal
+        return new AxisTickCategoryChartCalculator(getDirection(), workingSpace, getChartInternal());
+      }
+      else if (getChartInternal().getChartInternalType() == ChartInternalType.XY && getAxisType() == AxisType.Date) {
 
-      return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
-    }
-    else if (getDirection() == Direction.Y && getChartInternal().getStyleManager().isYAxisLogarithmic() && getAxisType() != AxisType.Date) {
+        // TODO don't pass in style manager
+        return new AxisTickDateCalculator(getDirection(), workingSpace, getChartInternal().getxAxisMin(), getChartInternal().getxAxisMax(), getChartInternal().getStyleManager());
+      }
+      else if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
 
-      return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
-    }
-    else { // number
+        return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getChartInternal().getxAxisMin(), getChartInternal().getxAxisMax(), getChartInternal().getStyleManager());
+      }
+      else {
+        return new AxisTickNumberCalculator(getDirection(), workingSpace, getChartInternal().getxAxisMin(), getChartInternal().getxAxisMax(), getChartInternal().getStyleManager());
 
-      return new AxisTickNumberCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
+      }
     }
+
+    // Y-Axis
+    else {
+
+      if (getChartInternal().getStyleManager().isYAxisLogarithmic() && getAxisType() != AxisType.Date) {
+
+        return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getChartInternal().getyAxisMin(), getChartInternal().getyAxisMax(), getChartInternal().getStyleManager());
+      }
+      else {
+        return new AxisTickNumberCalculator(getDirection(), workingSpace, getChartInternal().getyAxisMin(), getChartInternal().getyAxisMax(), getChartInternal().getStyleManager());
+
+      }
+    }
+
   }
 
   @Override
@@ -379,12 +396,12 @@ public class Axis implements ChartPart {
     return axisType;
   }
 
-  public double getMin() {
+  protected double getMin() {
 
     return min;
   }
 
-  public double getMax() {
+  protected double getMax() {
 
     return max;
   }

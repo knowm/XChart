@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.Iterator;
 
 import org.knowm.xchart.Series;
-import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisType;
 
@@ -59,8 +58,6 @@ public class PlotContentNumericalChart extends PlotContent {
       return;
     }
 
-    StyleManager styleManager = getChartInternal().getStyleManager();
-
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
 
     // Rectangle rectangle = g.getClipBounds();
@@ -84,41 +81,26 @@ public class PlotContentNumericalChart extends PlotContent {
     double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
+    double xMin = getChartInternal().getxAxisMin();
+    double xMax = getChartInternal().getxAxisMax();
+    double yMin = getChartInternal().getyAxisMin();
+    double yMax = getChartInternal().getyAxisMax();
+
+    // logarithmic
+    if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
+      xMin = Math.log10(xMin);
+      xMax = Math.log10(xMax);
+    }
+    if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+      yMin = Math.log10(yMin);
+      yMax = Math.log10(yMax);
+    }
+
     for (Series series : getChartInternal().getSeriesMap().values()) {
 
       // data points
       Collection<?> xData = series.getXData();
-      // System.out.println(xData);
-      double xMin = getChartInternal().getAxisPair().getXAxis().getMin();
-      double xMax = getChartInternal().getAxisPair().getXAxis().getMax();
-
       Collection<? extends Number> yData = series.getYData();
-      double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
-      double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
-
-      // override min and maxValue if specified
-      if (getChartInternal().getStyleManager().getXAxisMin() != null) {
-        xMin = getChartInternal().getStyleManager().getXAxisMin();
-      }
-      if (getChartInternal().getStyleManager().getYAxisMin() != null) {
-        yMin = getChartInternal().getStyleManager().getYAxisMin();
-      }
-      if (getChartInternal().getStyleManager().getXAxisMax() != null) {
-        xMax = getChartInternal().getStyleManager().getXAxisMax();
-      }
-      if (getChartInternal().getStyleManager().getYAxisMax() != null) {
-        yMax = getChartInternal().getStyleManager().getYAxisMax();
-      }
-
-      // logarithmic
-      if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
-        xMin = Math.log10(xMin);
-        xMax = Math.log10(xMax);
-      }
-      if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
-        yMin = Math.log10(yMin);
-        yMax = Math.log10(yMax);
-      }
 
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
@@ -137,16 +119,15 @@ public class PlotContentNumericalChart extends PlotContent {
         double x = 0.0;
         if (getChartInternal().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
           x = ((Number) xItr.next()).doubleValue();
-          // System.out.println(x);
         }
         else if (getChartInternal().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           x = ((Date) xItr.next()).getTime();
-          // System.out.println(x);
         }
-
+        // System.out.println(x);
         if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
+        // System.out.println(x);
 
         Number next = yItr.next();
         if (next == null) {
@@ -188,8 +169,11 @@ public class PlotContentNumericalChart extends PlotContent {
 
         double xOffset = bounds.getX() + xTransform;
         double yOffset = bounds.getY() + yTransform;
-        // System.out.println(yOffset);
+        // System.out.println(xTransform);
+        // System.out.println(xOffset);
         // System.out.println(yTransform);
+        // System.out.println(yOffset);
+        // System.out.println("---");
 
         // paint line
         if (Series.SeriesType.Line.equals(series.getSeriesType()) || Series.SeriesType.Area.equals(series.getSeriesType())) {
@@ -234,7 +218,7 @@ public class PlotContentNumericalChart extends PlotContent {
           series.getMarker().paint(g, xOffset, yOffset, getChartInternal().getStyleManager().getMarkerSize());
         }
 
-        // paint errorbars
+        // paint error bars
         if (errorBars != null) {
 
           double eb = ebItr.next().doubleValue();

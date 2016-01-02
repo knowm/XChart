@@ -42,9 +42,9 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickCategoryChartCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, ChartInternal chart) {
+  public AxisTickCategoryChartCalculator(Direction axisDirection, double workingSpace, ChartInternal chart) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
+    super(axisDirection, workingSpace, Double.NaN, Double.NaN, chart.getStyleManager());
 
     calculate(chart);
   }
