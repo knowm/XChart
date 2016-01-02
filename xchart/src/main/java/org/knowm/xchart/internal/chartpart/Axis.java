@@ -24,6 +24,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.chartpart.ChartInternal.ChartInternalType;
 
 /**
  * Axis
@@ -342,12 +343,18 @@ public class Axis implements ChartPart {
 
   private AxisTickCalculator getAxisTickCalculator(double workingSpace) {
 
-    if (getDirection() == Direction.X && getAxisType() == AxisType.String) {
+    if (getDirection() == Direction.X && getChartInternal().getChartInternalType() == ChartInternalType.Category) {
 
       return new AxisTickCategoryChartCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal());
 
     }
-    else if (getDirection() == Direction.X && getChartInternal().getStyleManager().isXAxisLogarithmic() && getAxisType() != AxisType.Date) {
+    else if (getChartInternal().getChartInternalType() == ChartInternalType.XY && getAxisType() == AxisType.Date) {
+
+      return new AxisTickDateCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
+
+    }
+    else if (getDirection() == Direction.X && getChartInternal().getChartInternalType() == ChartInternalType.XY && getChartInternal().getStyleManager().isXAxisLogarithmic()
+        && getAxisType() != AxisType.Date) {
 
       return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
 
@@ -355,11 +362,6 @@ public class Axis implements ChartPart {
     else if (getDirection() == Direction.Y && getChartInternal().getStyleManager().isYAxisLogarithmic() && getAxisType() != AxisType.Date) {
 
       return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
-
-    }
-    else if (getAxisType() == AxisType.Date) {
-
-      return new AxisTickDateCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
 
     }
     else { // number

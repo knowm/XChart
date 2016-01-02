@@ -51,9 +51,9 @@ public class BarChart09 implements ExampleChart {
 
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Value vs. Letter").xAxisTitle("Letter").yAxisTitle("Value").theme(ChartTheme.GGPlot2).build();
-    chart.addSeries("China", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 11, 23, 20, 36, 5 })));
-    Series series2 = chart.addSeries("World Ave.", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 25, 22, 38,
-        7 })));
+    chart.addCategorySeries("China", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 11, 23, 20, 36, 5 })));
+    Series series2 = chart.addCategorySeries("World Ave.", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 25,
+        22, 38, 7 })));
     series2.setSeriesType(SeriesType.Line);
 
     // Customize Chart

@@ -40,6 +40,13 @@ public class ChartInternal {
   private int width;
   private int height;
 
+  protected enum ChartInternalType {
+
+    XY, Category
+  }
+
+  private ChartInternalType chartInternalType = null;
+
   private Map<String, Series> seriesMap = new LinkedHashMap<String, Series>();
   private SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler();
 
@@ -79,23 +86,13 @@ public class ChartInternal {
    */
   public Series addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
+    if (chartInternalType != null && chartInternalType != ChartInternalType.XY) {
+      throw new IllegalArgumentException("Cannot mix x-y and category series types! Don't call addSeries() and addCategorySeries() for the same chart!");
+    }
+    chartInternalType = ChartInternalType.XY;
+
     // Sanity checks
-    if (seriesName == null) {
-      throw new IllegalArgumentException("Series Name cannot be null!!!");
-    }
-    if (yData == null) {
-      throw new IllegalArgumentException("Y-Axis data cannot be null!!!");
-    }
-    if (yData.size() == 0) {
-      throw new IllegalArgumentException("Y-Axis data cannot be empty!!!");
-    }
-    if (xData != null && xData.size() == 0) {
-      throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
-    }
-    // Sanity check
-    if (errorBars != null && errorBars.size() != yData.size()) {
-      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
-    }
+    sanityCheck(seriesName, xData, yData, errorBars);
 
     Series series = null;
     if (xData != null) {
@@ -104,21 +101,13 @@ public class ChartInternal {
       if (xData.size() != yData.size()) {
         throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
-      // inspect the series to see what kind of data it contains (Number, Date or String)
-      Iterator<?> itr = xData.iterator();
-      Object dataPoint = itr.next();
-      if (dataPoint instanceof Number) {
-        axisPair.getXAxis().setAxisType(AxisType.Number);
+
+      // inspect the series to see what kind of data it contains (Number, Date)
+      AxisType axisType = setXAxisType(xData);
+      if (!(axisType == AxisType.Number || axisType == AxisType.Date)) {
+        throw new IllegalArgumentException("X-Axis data must be of type Number or Date!!!");
       }
-      else if (dataPoint instanceof Date) {
-        axisPair.getXAxis().setAxisType(AxisType.Date);
-      }
-      else if (dataPoint instanceof String) {
-        axisPair.getXAxis().setAxisType(AxisType.String);
-      }
-      else {
-        throw new IllegalArgumentException("Series data must be either Number, Date or String type!!!");
-      }
+
       axisPair.getYAxis().setAxisType(AxisType.Number);
       series = new Series(seriesName, xData, axisPair.getXAxis().getAxisType(), yData, axisPair.getYAxis().getAxisType(), errorBars, seriesColorMarkerLineStyleCycler
           .getNextSeriesColorMarkerLineStyle());
@@ -134,7 +123,117 @@ public class ChartInternal {
           .getNextSeriesColorMarkerLineStyle());
     }
 
-    // set series type based on chart type, but only if it's not explicitly set on the series yet.
+    // set series type
+    setSeriesType(series);
+
+    if (seriesMap.keySet().contains(seriesName)) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+    }
+
+    seriesMap.put(seriesName, series);
+
+    return series;
+  }
+
+  /**
+   * @param seriesName
+   * @param xData
+   * @param yData
+   * @param errorBars
+   * @return Series
+   */
+  public Series addCategorySeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+
+    if (chartInternalType != null && chartInternalType != ChartInternalType.Category) {
+      throw new IllegalArgumentException("Cannot mix x-y and category series types! Don't call addSeries() and addCategorySeries() for the same chart!");
+    }
+    chartInternalType = ChartInternalType.Category;
+
+    // Sanity checks
+    sanityCheck(seriesName, xData, yData, errorBars);
+    if (xData == null) {
+      throw new IllegalArgumentException("Y-Axis data cannot be null!!!");
+    }
+    if (xData.size() != yData.size()) {
+      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+    }
+
+    // inspect the series to see what kind of data it contains (Number, Date, String)
+    setXAxisType(xData);
+
+    axisPair.getYAxis().setAxisType(AxisType.Number);
+    Series series = new Series(seriesName, xData, axisPair.getXAxis().getAxisType(), yData, axisPair.getYAxis().getAxisType(), errorBars, seriesColorMarkerLineStyleCycler
+        .getNextSeriesColorMarkerLineStyle());
+
+    // set series type
+    setSeriesType(series);
+
+    if (seriesMap.keySet().contains(seriesName)) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+    }
+
+    seriesMap.put(seriesName, series);
+
+    return series;
+  }
+
+  private void sanityCheck(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+
+    if (seriesName == null) {
+      throw new IllegalArgumentException("Series Name cannot be null!!!");
+    }
+    if (yData == null) {
+      throw new IllegalArgumentException("Y-Axis data cannot be null!!!");
+    }
+    if (yData.size() == 0) {
+      throw new IllegalArgumentException("Y-Axis data cannot be empty!!!");
+    }
+    if (xData != null && xData.size() == 0) {
+      throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
+    }
+    if (errorBars != null && errorBars.size() != yData.size()) {
+      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
+    }
+
+  }
+
+  /**
+   * Sets the axis type based on the data contained in the xData argument
+   *
+   * @param xData
+   * @return
+   */
+  private AxisType setXAxisType(List<?> xData) {
+
+    AxisType axisType;
+
+    Iterator<?> itr = xData.iterator();
+    Object dataPoint = itr.next();
+    if (dataPoint instanceof Number) {
+      axisType = AxisType.Number;
+      axisPair.getXAxis().setAxisType(axisType);
+    }
+    else if (dataPoint instanceof Date) {
+      axisType = AxisType.Date;
+      axisPair.getXAxis().setAxisType(axisType);
+    }
+    else if (dataPoint instanceof String) {
+      axisType = AxisType.String;
+      axisPair.getXAxis().setAxisType(axisType);
+    }
+    else {
+      throw new IllegalArgumentException("Series data must be either Number, Date or String type!!!");
+    }
+    return axisType;
+  }
+
+  /**
+   * set series type based on chart type, but only if it's not explicitly set on the series yet.
+   *
+   * @param series
+   */
+  private void setSeriesType(Series series) {
+
     switch (getStyleManager().getChartType()) {
     case Line:
       if (series.getSeriesType() == null) {
@@ -152,6 +251,7 @@ public class ChartInternal {
       }
       break;
     case Bar:
+      // TODO Not Yet Supported
       if (series.getSeriesType() == null) {
         series.setSeriesType(Series.SeriesType.Bar);
       }
@@ -162,14 +262,6 @@ public class ChartInternal {
       }
       break;
     }
-
-    if (seriesMap.keySet().contains(seriesName)) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
-    }
-
-    seriesMap.put(seriesName, series);
-
-    return series;
   }
 
   /**
@@ -247,7 +339,7 @@ public class ChartInternal {
    *
    * @return
    */
-  public Legend getChartLegend() {
+  protected Legend getChartLegend() {
 
     return chartLegend;
   }
@@ -267,9 +359,14 @@ public class ChartInternal {
    *
    * @return
    */
-  public Plot getPlot() {
+  protected Plot getPlot() {
 
     return plot;
+  }
+
+  public ChartInternalType getChartInternalType() {
+
+    return chartInternalType;
   }
 
   public int getWidth() {

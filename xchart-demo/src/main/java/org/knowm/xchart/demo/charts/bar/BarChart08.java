@@ -52,7 +52,7 @@ public class BarChart08 implements ExampleChart {
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
     Histogram histogram1 = new Histogram(getGaussianData(10000), 10, -10, 10);
-    chart.addSeries("histogram", histogram1.getxAxisData(), histogram1.getyAxisData(), getFakeErrorData(histogram1.getxAxisData().size()));
+    chart.addCategorySeries("histogram", histogram1.getxAxisData(), histogram1.getyAxisData(), getFakeErrorData(histogram1.getxAxisData().size()));
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);

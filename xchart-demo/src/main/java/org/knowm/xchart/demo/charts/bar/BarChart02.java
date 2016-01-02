@@ -75,7 +75,7 @@ public class BarChart02 implements ExampleChart {
       xData.add(date);
       yData.add(-1 * 0.00000001 * ((random.nextInt(i) + 1)));
     }
-    Series series = chart.addSeries("Model 77", xData, yData);
+    Series series = chart.addCategorySeries("Model 77", xData, yData);
     series.setLineColor(SeriesColor.RED);
     chart.getStyleManager().setPlotGridLinesVisible(false);
     chart.getStyleManager().setBarFilled(false);

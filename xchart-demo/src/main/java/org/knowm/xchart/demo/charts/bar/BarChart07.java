@@ -53,9 +53,9 @@ public class BarChart07 implements ExampleChart {
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
     Histogram histogram1 = new Histogram(getGaussianData(1000), 10, -30, 30);
-    chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
+    chart.addCategorySeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
     Histogram histogram2 = new Histogram(getGaussianData(1000), 10, -30, 30);
-    chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
+    chart.addCategorySeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
