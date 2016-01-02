@@ -85,6 +85,7 @@ public class PlotContentCategoricalChart extends PlotContent {
       double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
       double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
 
+      // if (styleManager.getChartType() == ChartType.Bar) {
       // if min and max positive, set min to zero
       if (yMin > 0.0 && yMax > 0.0) {
         yMin = 0.0;
@@ -93,6 +94,7 @@ public class PlotContentCategoricalChart extends PlotContent {
       if (yMin < 0.0 && yMax < 0.0) {
         yMax = 0.0;
       }
+      // }
 
       // override min and maxValue if specified
       if (getChartInternal().getStyleManager().getYAxisMin() != null) {
@@ -111,6 +113,7 @@ public class PlotContentCategoricalChart extends PlotContent {
       else if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
         yMax = Math.log10(yMax);
       }
+
       // figure out the general form of the chart
       int chartForm = 1; // 1=positive, -1=negative, 0=span
       if (yMin > 0.0 && yMax > 0.0) {

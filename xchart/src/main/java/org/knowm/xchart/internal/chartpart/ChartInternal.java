@@ -105,7 +105,7 @@ public class ChartInternal {
       // inspect the series to see what kind of data it contains (Number, Date)
       AxisType axisType = setXAxisType(xData);
       if (!(axisType == AxisType.Number || axisType == AxisType.Date)) {
-        throw new IllegalArgumentException("X-Axis data must be of type Number or Date!!!");
+        throw new IllegalArgumentException("X-Axis data must be of type Number or Date for X-Y chart types!!!");
       }
 
       axisPair.getYAxis().setAxisType(AxisType.Number);

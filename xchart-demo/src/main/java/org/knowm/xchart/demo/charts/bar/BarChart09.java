@@ -142,7 +142,7 @@ public class BarChart09 implements ExampleChart {
                          
     // Add data series to chart
     for (int i = 0; i < seriesNames.length; i++) {
-      Series series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
+      Series series = chart.addCategorySeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
       series.setMarker(SeriesMarker.NONE);
       series.setSeriesType(SeriesType.Line);
     }

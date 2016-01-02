@@ -25,6 +25,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.knowm.xchart.StyleManager;
+import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 
 /**
@@ -59,16 +61,31 @@ public abstract class AxisTickCalculator {
    */
   public AxisTickCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
-    // override min and maxValue if specified
+    // override min/max value for bar charts' Y-Axis
     double overrideMinValue = minValue;
     double overrideMaxValue = maxValue;
-    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
+    if (styleManager.getChartType() == ChartType.Bar && axisDirection == Direction.Y) { // this is the Y-Axis for a bar chart
+      if (minValue > 0.0 && maxValue > 0.0) {
+        overrideMinValue = 0.0;
+      }
+      if (minValue < 0.0 && maxValue < 0.0) {
+        overrideMaxValue = 0.0;
+      }
+    }
+
+    if (styleManager.getChartType() == ChartType.Bar && styleManager.isYAxisLogarithmic()) {
+      int logMin = (int) Math.floor(Math.log10(minValue));
+      overrideMinValue = Utils.pow(10, logMin);
+    }
+
+    // override min and maxValue if specified
+    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null && styleManager.getChartType() != ChartType.Bar) { // bar chart cannot have a max or min
       overrideMinValue = styleManager.getXAxisMin();
     }
     if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
       overrideMinValue = styleManager.getYAxisMin();
     }
-    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null) {
+    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null && styleManager.getChartType() != ChartType.Bar) { // bar chart cannot have a max or min
       overrideMaxValue = styleManager.getXAxisMax();
     }
     if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {

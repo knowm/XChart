@@ -46,26 +46,6 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
 
     super(axisDirection, workingSpace, minValue, maxValue, chart.getStyleManager());
 
-    // override min/max value for bar charts' Y-Axis
-    double overrideMinValue = minValue;
-    double overrideMaxValue = maxValue;
-    if (axisDirection == Direction.Y) { // this is the Y-Axis for a bar chart
-      if (minValue > 0.0 && maxValue > 0.0) {
-        overrideMinValue = 0.0;
-      }
-      if (minValue < 0.0 && maxValue < 0.0) {
-        overrideMaxValue = 0.0;
-      }
-    }
-
-    if (styleManager.isYAxisLogarithmic()) {
-      int logMin = (int) Math.floor(Math.log10(minValue));
-      overrideMinValue = Utils.pow(10, logMin);
-    }
-
-    this.minValue = overrideMinValue;
-    this.maxValue = overrideMaxValue;
-
     calculate(chart);
   }
 
