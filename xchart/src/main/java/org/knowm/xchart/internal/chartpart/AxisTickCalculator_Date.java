@@ -30,7 +30,7 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
  *
  * @author timmolter
  */
-public class AxisTickDateCalculator extends AxisTickCalculator {
+public class AxisTickCalculator_Date extends AxisTickCalculator {
 
   private static final long MILLIS_SCALE = TimeUnit.MILLISECONDS.toMillis(1L);
   private static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(1L);
@@ -108,7 +108,7 @@ public class AxisTickDateCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickDateCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickCalculator_Date(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
 

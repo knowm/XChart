@@ -27,7 +27,7 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
  *
  * @author timmolter
  */
-public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
+public class AxisTickCalculator_Logarithmic extends AxisTickCalculator {
 
   NumberFormatter numberFormatter = null;
 
@@ -40,7 +40,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickLogarithmicCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickCalculator_Logarithmic(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     numberFormatter = new NumberFormatter(styleManager);

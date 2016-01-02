@@ -31,18 +31,18 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
  *
  * @author timmolter
  */
-public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
+public class AxisTickCalculator_Category extends AxisTickCalculator {
 
   /**
    * Constructor
    *
    * @param axisDirection
    * @param workingSpace
-   * @param minValue
-   * @param maxValue
+   * @param categories
+   * @param axisType
    * @param styleManager
    */
-  public AxisTickCategoryChartCalculator(Direction axisDirection, double workingSpace, List<?> categories, AxisType axisType, StyleManager styleManager) {
+  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, AxisType axisType, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, Double.NaN, Double.NaN, styleManager);
 
