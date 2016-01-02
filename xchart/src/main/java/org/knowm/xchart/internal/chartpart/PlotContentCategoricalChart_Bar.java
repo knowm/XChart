@@ -262,10 +262,4 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
     g.setClip(null);
   }
 
-  @Override
-  public ChartInternal getChartInternal() {
-
-    return plot.getChartInternal();
-  }
-
 }
