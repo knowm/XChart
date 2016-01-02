@@ -346,23 +346,19 @@ public class Axis implements ChartPart {
     if (getDirection() == Direction.X && getChartInternal().getChartInternalType() == ChartInternalType.Category) {
 
       return new AxisTickCategoryChartCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal());
-
     }
     else if (getChartInternal().getChartInternalType() == ChartInternalType.XY && getAxisType() == AxisType.Date) {
 
       return new AxisTickDateCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
-
     }
     else if (getDirection() == Direction.X && getChartInternal().getChartInternalType() == ChartInternalType.XY && getChartInternal().getStyleManager().isXAxisLogarithmic()
         && getAxisType() != AxisType.Date) {
 
       return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
-
     }
     else if (getDirection() == Direction.Y && getChartInternal().getStyleManager().isYAxisLogarithmic() && getAxisType() != AxisType.Date) {
 
       return new AxisTickLogarithmicCalculator(getDirection(), workingSpace, getMin(), getMax(), getChartInternal().getStyleManager());
-
     }
     else { // number
 

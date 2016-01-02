@@ -79,13 +79,13 @@ public class AxisTick implements ChartPart {
 
       bounds = new Rectangle2D.Double(
 
-      axisTickLabels.getBounds().getX(),
+          axisTickLabels.getBounds().getX(),
 
-      axisTickLabels.getBounds().getY(),
+          axisTickLabels.getBounds().getY(),
 
-      axisTickLabels.getBounds().getWidth() + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
+          axisTickLabels.getBounds().getWidth() + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
 
-      axisTickMarks.getBounds().getHeight()
+          axisTickMarks.getBounds().getHeight()
 
       );
 
@@ -126,13 +126,4 @@ public class AxisTick implements ChartPart {
     return axisTickLabels;
   }
 
-  // public List<Double> getTickLocations() {
-  //
-  // return axisTickCalculator.getTickLocations();
-  // }
-  //
-  // public List<String> getTickLabels() {
-  //
-  // return axisTickCalculator.getTickLabels();
-  // }
 }

@@ -251,7 +251,6 @@ public class ChartInternal {
       }
       break;
     case Bar:
-      // TODO Not Yet Supported
       if (series.getSeriesType() == null) {
         series.setSeriesType(Series.SeriesType.Bar);
       }
