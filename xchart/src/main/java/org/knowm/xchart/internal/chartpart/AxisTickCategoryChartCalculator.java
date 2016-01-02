@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.knowm.xchart.Series;
+import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisType;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
@@ -42,32 +42,20 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickCategoryChartCalculator(Direction axisDirection, double workingSpace, ChartInternal chart) {
+  public AxisTickCategoryChartCalculator(Direction axisDirection, double workingSpace, List<?> categories, AxisType axisType, StyleManager styleManager) {
 
-    super(axisDirection, workingSpace, Double.NaN, Double.NaN, chart.getStyleManager());
+    super(axisDirection, workingSpace, Double.NaN, Double.NaN, styleManager);
 
-    calculate(chart);
+    calculate(categories, axisType);
   }
 
-  private void calculate(ChartInternal chartInternal) {
+  private void calculate(List<?> categories, AxisType axisType) {
 
     // tick space - a percentage of the working space available for ticks
     int tickSpace = (int) (styleManager.getAxisTickSpacePercentage() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
-
-    List<?> categories = (List<?>) chartInternal.getSeriesMap().values().iterator().next().getXData();
-
-    // verify all series have exactly the same xAxis
-    if (chartInternal.getSeriesMap().size() > 1) {
-
-      for (Series series : chartInternal.getSeriesMap().values()) {
-        if (!series.getXData().equals(categories)) {
-          throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Bar Charts!!");
-        }
-      }
-    }
 
     // generate all tickLabels and tickLocations from the first to last position
     double gridStep = (tickSpace / (double) categories.size());
@@ -76,10 +64,10 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
     // set up String formatters that may be encountered
     NumberFormatter numberFormatter = null;
     SimpleDateFormat simpleDateformat = null;
-    if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+    if (axisType == AxisType.Number) {
       numberFormatter = new NumberFormatter(styleManager);
     }
-    else if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+    else if (axisType == AxisType.Date) {
       if (styleManager.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
       }
@@ -90,15 +78,15 @@ public class AxisTickCategoryChartCalculator extends AxisTickCalculator {
     int counter = 0;
 
     for (Object category : categories) {
-      if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.String) {
+      if (axisType == AxisType.String) {
         tickLabels.add(category.toString());
         double tickLabelPosition = margin + firstPosition + gridStep * counter++;
         tickLocations.add(tickLabelPosition);
       }
-      else if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+      else if (axisType == AxisType.Number) {
         tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
       }
-      else if (chartInternal.getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+      else if (axisType == AxisType.Date) {
 
         tickLabels.add(simpleDateformat.format((((Date) category).getTime())));
       }

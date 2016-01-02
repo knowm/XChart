@@ -163,6 +163,13 @@ public class ChartInternal {
     if (xData.size() != yData.size()) {
       throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
     }
+    // verify all series have exactly the same xAxis
+    if (seriesMap.size() > 0) { // there was already a series added
+      if (!seriesMap.entrySet().iterator().next().getValue().getXData().equals(xData)) {
+        throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Category Charts!!");
+      }
+    }
+    // TODO make sure pie charts only have one series!
 
     // inspect the series to see what kind of data it contains (Number, Date, String)
     setXAxisType(xData);
@@ -304,6 +311,7 @@ public class ChartInternal {
     if (getSeriesMap().isEmpty()) {
       throw new RuntimeException("No series defined for Chart!!!");
     }
+
     xAxisMin = axisPair.getXAxis().getMin();
     xAxisMax = axisPair.getXAxis().getMax();
     yAxisMin = axisPair.getYAxis().getMin();

@@ -22,6 +22,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import org.knowm.xchart.StyleManager.LegendPosition;
 import org.knowm.xchart.internal.chartpart.ChartInternal.ChartInternalType;
@@ -349,13 +350,13 @@ public class Axis implements ChartPart {
 
       if (getChartInternal().getChartInternalType() == ChartInternalType.Category) {
 
-        // No need to pass in min and max
         // pass in axis type instead of ChartInternal
-        return new AxisTickCategoryChartCalculator(getDirection(), workingSpace, getChartInternal());
+        List<?> categories = (List<?>) getChartInternal().getSeriesMap().values().iterator().next().getXData();
+        AxisType axisType = getChartInternal().getAxisPair().getXAxis().getAxisType();
+        return new AxisTickCategoryChartCalculator(getDirection(), workingSpace, categories, axisType, getChartInternal().getStyleManager());
       }
       else if (getChartInternal().getChartInternalType() == ChartInternalType.XY && getAxisType() == AxisType.Date) {
 
-        // TODO don't pass in style manager
         return new AxisTickDateCalculator(getDirection(), workingSpace, getChartInternal().getxAxisMin(), getChartInternal().getxAxisMax(), getChartInternal().getStyleManager());
       }
       else if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
