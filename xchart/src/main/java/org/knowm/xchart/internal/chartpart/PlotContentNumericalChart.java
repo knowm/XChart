@@ -59,7 +59,7 @@ public class PlotContentNumericalChart extends PlotContent {
       return;
     }
 
-    StyleManager styleManager = plot.getChartInternal().getStyleManager();
+    StyleManager styleManager = getChartInternal().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
 

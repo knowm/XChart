@@ -57,18 +57,18 @@ public class AxisTick implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    double workingSpace = 0.0;
-    // Y-Axis
-    if (axis.getDirection() == Axis.Direction.Y) {
-      workingSpace = axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
-      // System.out.println("workingspace= " + workingSpace);
-    }
-    // X-Axis
-    else if (axis.getDirection() == Axis.Direction.X) {
-      workingSpace = axis.getPaintZone().getWidth(); // number of pixels the axis has to work with for drawing AxisTicks
-      // System.out.println("workingspace= " + workingSpace);
-    }
-
+    // double workingSpace = 0.0;
+    // // Y-Axis
+    // if (axis.getDirection() == Axis.Direction.Y) {
+    // workingSpace = axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
+    // // System.out.println("workingspace= " + workingSpace);
+    // }
+    // // X-Axis
+    // else if (axis.getDirection() == Axis.Direction.X) {
+    // workingSpace = axis.getPaintZone().getWidth(); // number of pixels the axis has to work with for drawing AxisTicks
+    // // System.out.println("workingspace= " + workingSpace);
+    // }
+    //
     // System.out.println("AxisTick: " + axis.getDirection());
     // System.out.println("workingSpace: " + workingSpace);
 
@@ -98,8 +98,17 @@ public class AxisTick implements ChartPart {
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      bounds = new Rectangle2D.Double(axisTickMarks.getBounds().getX(), axisTickMarks.getBounds().getY(), axisTickLabels.getBounds().getWidth(), axisTickMarks.getBounds().getHeight()
-          + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight());
+      bounds = new Rectangle2D.Double(
+
+          axisTickMarks.getBounds().getX(),
+
+          axisTickMarks.getBounds().getY(),
+
+          axisTickLabels.getBounds().getWidth(),
+
+          axisTickMarks.getBounds().getHeight() + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()
+
+      );
 
       // g.setColor(Color.red);
       // g.draw(bounds);

@@ -53,7 +53,7 @@ public class PlotContentCategoricalChart extends PlotContent {
     // g.setColor(Color.red);
     // g.draw(bounds);
 
-    StyleManager styleManager = plot.getChartInternal().getStyleManager();
+    StyleManager styleManager = getChartInternal().getStyleManager();
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
     Rectangle rectangle = new Rectangle(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
@@ -70,8 +70,8 @@ public class PlotContentCategoricalChart extends PlotContent {
     double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
-    int numBars = getChartInternal().getSeriesMap().values().iterator().next().getXData().size();
-    double gridStep = xTickSpace / numBars;
+    int numCategories = getChartInternal().getSeriesMap().values().iterator().next().getXData().size();
+    double gridStep = xTickSpace / numCategories;
 
     // plot series
     int seriesCounter = 0;
