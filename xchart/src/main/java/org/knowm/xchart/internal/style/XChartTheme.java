@@ -35,41 +35,30 @@ import org.knowm.xchart.StyleManager.LegendPosition;
  */
 public class XChartTheme implements Theme {
 
-  /** BLUE */
-  public static SeriesColor BLUE = new SeriesColor(0, 55, 255, 180);
+  // public static SeriesColor BLUE = new SeriesColor(0, 55, 255, 180);
+  // public static SeriesColor ORANGE = new SeriesColor(255, 172, 0, 180);
+  // public static SeriesColor PURPLE = new SeriesColor(128, 0, 255, 180);
+  // public static SeriesColor GREEN = new SeriesColor(0, 205, 0, 180);
+  // public static SeriesColor RED = new SeriesColor(205, 0, 0, 180);
+  // public static SeriesColor YELLOW = new SeriesColor(255, 215, 0, 180);
+  // public static SeriesColor MAGENTA = new SeriesColor(255, 0, 255, 180);
+  // public static SeriesColor PINK = new SeriesColor(255, 166, 201, 180);
+  // public static SeriesColor LIGHT_GREY = new SeriesColor(207, 207, 207, 180);
+  // public static SeriesColor CYAN = new SeriesColor(0, 255, 255, 180);
+  // public static SeriesColor BROWN = new SeriesColor(102, 56, 10, 180);
+  // public static SeriesColor BLACK = new SeriesColor(0, 0, 0, 180);
 
-  /** ORANGE */
-  public static SeriesColor ORANGE = new SeriesColor(255, 172, 0, 180);
+  // printer-friendly colors from http://colorbrewer2.org/
+  public static SeriesColor RED = new SeriesColor(228, 26, 28, 180);
+  public static SeriesColor GREEN = new SeriesColor(55, 126, 184, 180);
+  public static SeriesColor BLUE = new SeriesColor(77, 175, 74, 180);
+  public static SeriesColor PURPLE = new SeriesColor(152, 78, 163, 180);
+  public static SeriesColor ORANGE = new SeriesColor(255, 127, 0, 180);
+  // public static SeriesColor YELLOW = new SeriesColor(255, 255, 51, 180);
+  // public static SeriesColor BROWN = new SeriesColor(166, 86, 40, 180);
+  // public static SeriesColor PINK = new SeriesColor(247, 129, 191, 180);
 
-  /** PURPLE */
-  public static SeriesColor PURPLE = new SeriesColor(128, 0, 255, 180);
-
-  /** GREEN */
-  public static SeriesColor GREEN = new SeriesColor(0, 205, 0, 180);
-
-  /** RED */
-  public static SeriesColor RED = new SeriesColor(205, 0, 0, 180);
-
-  /** YELLOW */
-  public static SeriesColor YELLOW = new SeriesColor(255, 215, 0, 180);
-
-  /** MAGENTA */
-  public static SeriesColor MAGENTA = new SeriesColor(255, 0, 255, 180);
-
-  /** PINK */
-  public static SeriesColor PINK = new SeriesColor(255, 166, 201, 180);
-
-  /** LIGHT_GREY */
-  public static SeriesColor LIGHT_GREY = new SeriesColor(207, 207, 207, 180);
-
-  /** CYAN */
-  public static SeriesColor CYAN = new SeriesColor(0, 255, 255, 180);
-
-  /** BROWN */
-  public static SeriesColor BROWN = new SeriesColor(102, 56, 10, 180);
-
-  /** BLACK */
-  public static SeriesColor BLACK = new SeriesColor(0, 0, 0, 180);
+  // ['rgb(228,26,28)','rgb(55,126,184)','rgb(77,175,74)','rgb(152,78,163)','rgb(255,127,0)','rgb(255,255,51)','rgb(166,86,40)','rgb(247,129,191)']
 
   // Chart Style ///////////////////////////////
 
@@ -389,18 +378,27 @@ public class XChartTheme implements Theme {
 
       // 1. Color
       List<SeriesColor> seriesColorMap = new ArrayList<SeriesColor>();
-      seriesColorMap.add(BLUE);
-      seriesColorMap.add(ORANGE);
-      seriesColorMap.add(PURPLE);
-      seriesColorMap.add(GREEN);
+      // seriesColorMap.add(BLUE);
+      // seriesColorMap.add(ORANGE);
+      // seriesColorMap.add(PURPLE);
+      // seriesColorMap.add(GREEN);
+      // seriesColorMap.add(RED);
+      // seriesColorMap.add(YELLOW);
+      // seriesColorMap.add(MAGENTA);
+      // seriesColorMap.add(PINK);
+      // seriesColorMap.add(LIGHT_GREY);
+      // seriesColorMap.add(CYAN);
+      // seriesColorMap.add(BROWN);
+      // seriesColorMap.add(BLACK);
+
       seriesColorMap.add(RED);
-      seriesColorMap.add(YELLOW);
-      seriesColorMap.add(MAGENTA);
-      seriesColorMap.add(PINK);
-      seriesColorMap.add(LIGHT_GREY);
-      seriesColorMap.add(CYAN);
-      seriesColorMap.add(BROWN);
-      seriesColorMap.add(BLACK);
+      seriesColorMap.add(GREEN);
+      seriesColorMap.add(BLUE);
+      seriesColorMap.add(PURPLE);
+      seriesColorMap.add(ORANGE);
+      // seriesColorMap.add(YELLOW);
+      // seriesColorMap.add(BROWN);
+      // seriesColorMap.add(PINK);
 
       return seriesColorMap;
     }
