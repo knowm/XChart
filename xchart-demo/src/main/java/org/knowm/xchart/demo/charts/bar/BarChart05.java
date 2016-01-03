@@ -49,10 +49,16 @@ public class BarChart05 implements ExampleChart {
 
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Temperature vs. Color").xAxisTitle("Color").yAxisTitle("Temperature").theme(ChartTheme.GGPlot2).build();
-    chart.addCategorySeries("fish", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Yellow" })), new ArrayList<Number>(Arrays.asList(new Number[] { -40, 30, 20,
+    chart.addCategorySeries("fish", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { -40, 30, 20,
         60, 60 })));
-    chart.addCategorySeries("worms", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Yellow" })), new ArrayList<Number>(Arrays.asList(new Number[] { 50, 10, -20,
+    chart.addCategorySeries("worms", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { 50, 10, -20,
         40, 60 })));
+    chart.addCategorySeries("birds", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 22, -23,
+        -34, 37 })));
+    chart.addCategorySeries("ants", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { 50, 57, -14,
+        -20, 31 })));
+    chart.addCategorySeries("slugs", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { -2, 29, 49,
+        -16, -43 })));
 
     return chart;
   }
