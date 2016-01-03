@@ -20,14 +20,56 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 import org.knowm.xchart.ChartColor;
+import org.knowm.xchart.SeriesColor;
+import org.knowm.xchart.SeriesLineStyle;
+import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
  */
 public class XChartTheme implements Theme {
+
+  /** BLUE */
+  public static SeriesColor BLUE = new SeriesColor(0, 55, 255, 180);
+
+  /** ORANGE */
+  public static SeriesColor ORANGE = new SeriesColor(255, 172, 0, 180);
+
+  /** PURPLE */
+  public static SeriesColor PURPLE = new SeriesColor(128, 0, 255, 180);
+
+  /** GREEN */
+  public static SeriesColor GREEN = new SeriesColor(0, 205, 0, 180);
+
+  /** RED */
+  public static SeriesColor RED = new SeriesColor(205, 0, 0, 180);
+
+  /** YELLOW */
+  public static SeriesColor YELLOW = new SeriesColor(255, 215, 0, 180);
+
+  /** MAGENTA */
+  public static SeriesColor MAGENTA = new SeriesColor(255, 0, 255, 180);
+
+  /** PINK */
+  public static SeriesColor PINK = new SeriesColor(255, 166, 201, 180);
+
+  /** LIGHT_GREY */
+  public static SeriesColor LIGHT_GREY = new SeriesColor(207, 207, 207, 180);
+
+  /** CYAN */
+  public static SeriesColor CYAN = new SeriesColor(0, 255, 255, 180);
+
+  /** BROWN */
+  public static SeriesColor BROWN = new SeriesColor(102, 56, 10, 180);
+
+  /** BLACK */
+  public static SeriesColor BLACK = new SeriesColor(0, 0, 0, 180);
 
   // Chart Style ///////////////////////////////
 
@@ -47,6 +89,12 @@ public class XChartTheme implements Theme {
   public int getChartPadding() {
 
     return 10;
+  }
+
+  @Override
+  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+
+    return new XChartSeriesColorMarkerLineStyleCycler();
   }
 
   // Chart Title ///////////////////////////////
@@ -249,13 +297,13 @@ public class XChartTheme implements Theme {
 
     return true;
   }
-  
+
   @Override
   public boolean isPlotGridHorizontalLinesVisible() {
 
     return true;
   }
-  
+
   @Override
   public Color getPlotBackgroundColor() {
 
@@ -332,6 +380,57 @@ public class XChartTheme implements Theme {
   public boolean isErrorBarsColorSeriesColor() {
 
     return false;
+  }
+
+  public class XChartSeriesColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
+
+    @Override
+    public List<SeriesColor> getSeriesColorList() {
+
+      // 1. Color
+      List<SeriesColor> seriesColorMap = new ArrayList<SeriesColor>();
+      seriesColorMap.add(BLUE);
+      seriesColorMap.add(ORANGE);
+      seriesColorMap.add(PURPLE);
+      seriesColorMap.add(GREEN);
+      seriesColorMap.add(RED);
+      seriesColorMap.add(YELLOW);
+      seriesColorMap.add(MAGENTA);
+      seriesColorMap.add(PINK);
+      seriesColorMap.add(LIGHT_GREY);
+      seriesColorMap.add(CYAN);
+      seriesColorMap.add(BROWN);
+      seriesColorMap.add(BLACK);
+
+      return seriesColorMap;
+    }
+
+    @Override
+    public List<SeriesMarker> getSeriesMarkerList() {
+
+      // 2. Marker
+      List<SeriesMarker> seriesMarkerList = new ArrayList<SeriesMarker>();
+      for (SeriesMarker seriesMarker : EnumSet.allOf(SeriesMarker.class)) {
+        if (seriesMarker.getIndex() >= 0) { // skip SeriesMarker.NONE
+          seriesMarkerList.add(seriesMarker);
+        }
+      }
+      return seriesMarkerList;
+    }
+
+    @Override
+    public List<SeriesLineStyle> getLineStyleList() {
+
+      // 3. Stroke
+      List<SeriesLineStyle> seriesLineStyleList = new ArrayList<SeriesLineStyle>();
+      for (SeriesLineStyle seriesLineStyle : EnumSet.allOf(SeriesLineStyle.class)) {
+        if (seriesLineStyle.getIndex() >= 0) { // skip SeriesLineStyle.NONE
+          seriesLineStyleList.add(seriesLineStyle);
+        }
+      }
+      return seriesLineStyleList;
+    }
+
   }
 
 }

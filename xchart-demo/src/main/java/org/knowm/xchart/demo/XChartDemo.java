@@ -241,7 +241,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart06 - Logarithmic Y-Axis with Error Bars", new LineChart06().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart07 - Line chart with multiple Category Series", new LineChart07().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart07 - Line Chart with Multiple Category Series", new LineChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Scatter category

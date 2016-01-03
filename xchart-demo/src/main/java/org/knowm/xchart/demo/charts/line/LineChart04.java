@@ -18,11 +18,11 @@ package org.knowm.xchart.demo.charts.line;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.style.XChartTheme;
 
 /**
  * Hundreds of Series on One Plot
@@ -50,10 +50,10 @@ public class LineChart04 implements ExampleChart {
 
     for (int i = 0; i < 200; i++) {
       Series series = chart.addSeries("A" + i, new double[] { Math.random() / 1000, Math.random() / 1000 }, new double[] { Math.random() / -1000, Math.random() / -1000 });
-      series.setLineColor(SeriesColor.BLUE);
+      series.setLineColor(XChartTheme.BLUE);
       series.setLineStyle(SeriesLineStyle.SOLID);
       series.setMarker(SeriesMarker.CIRCLE);
-      series.setMarkerColor(SeriesColor.BLUE);
+      series.setMarkerColor(XChartTheme.BLUE);
 
     }
 

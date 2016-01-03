@@ -20,10 +20,10 @@ import java.awt.Color;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.internal.style.XChartTheme;
 
 /**
  * @author timmolter
@@ -70,13 +70,13 @@ public class ErrorBarLogTest {
 
     series2.setMarker(SeriesMarker.NONE);
 
-    series2.setLineColor(SeriesColor.RED);
+    series2.setLineColor(XChartTheme.RED);
 
     series3.setLineStyle(SeriesLineStyle.DASH_DASH);
 
     series3.setMarker(SeriesMarker.NONE);
 
-    series3.setLineColor(SeriesColor.RED);
+    series3.setLineColor(XChartTheme.RED);
 
     new SwingWrapper(mychart).displayChart();
 

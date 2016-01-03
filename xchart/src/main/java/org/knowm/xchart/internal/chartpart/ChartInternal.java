@@ -30,7 +30,6 @@ import java.util.Map;
 import org.knowm.xchart.Series;
 import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.chartpart.Axis.AxisType;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 
 /**
  * @author timmolter
@@ -48,7 +47,6 @@ public class ChartInternal {
   private ChartInternalType chartInternalType = null;
 
   private Map<String, Series> seriesMap = new LinkedHashMap<String, Series>();
-  private SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler();
 
   private final StyleManager styleManager;
 
@@ -109,7 +107,7 @@ public class ChartInternal {
       }
 
       axisPair.getYAxis().setAxisType(AxisType.Number);
-      series = new Series(seriesName, xData, axisPair.getXAxis().getAxisType(), yData, axisPair.getYAxis().getAxisType(), errorBars, seriesColorMarkerLineStyleCycler
+      series = new Series(seriesName, xData, axisPair.getXAxis().getAxisType(), yData, axisPair.getYAxis().getAxisType(), errorBars, styleManager.getSeriesColorMarkerLineStyleCycler()
           .getNextSeriesColorMarkerLineStyle());
     }
     else { // generate xData
@@ -119,7 +117,7 @@ public class ChartInternal {
       }
       axisPair.getXAxis().setAxisType(AxisType.Number);
       axisPair.getYAxis().setAxisType(AxisType.Number);
-      series = new Series(seriesName, generatedXData, axisPair.getXAxis().getAxisType(), yData, axisPair.getYAxis().getAxisType(), errorBars, seriesColorMarkerLineStyleCycler
+      series = new Series(seriesName, generatedXData, axisPair.getXAxis().getAxisType(), yData, axisPair.getYAxis().getAxisType(), errorBars, styleManager.getSeriesColorMarkerLineStyleCycler()
           .getNextSeriesColorMarkerLineStyle());
     }
 
@@ -169,7 +167,7 @@ public class ChartInternal {
     setXAxisType(xData);
 
     axisPair.getYAxis().setAxisType(AxisType.Number);
-    Series series = new Series(seriesName, xData, axisPair.getXAxis().getAxisType(), yData, axisPair.getYAxis().getAxisType(), errorBars, seriesColorMarkerLineStyleCycler
+    Series series = new Series(seriesName, xData, axisPair.getXAxis().getAxisType(), yData, axisPair.getYAxis().getAxisType(), errorBars, styleManager.getSeriesColorMarkerLineStyleCycler()
         .getNextSeriesColorMarkerLineStyle());
 
     // set series type

@@ -35,6 +35,8 @@ public interface Theme {
 
   public int getChartPadding();
 
+  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler();
+
   // Chart Title ///////////////////////////////
 
   public Font getChartTitleFont();
@@ -104,9 +106,9 @@ public interface Theme {
   // Chart Plot Area ///////////////////////////////
 
   public boolean isPlotGridLinesVisible();
-  
+
   public boolean isPlotGridVerticalLinesVisible();
-  
+
   public boolean isPlotGridHorizontalLinesVisible();
 
   public Color getPlotBackgroundColor();

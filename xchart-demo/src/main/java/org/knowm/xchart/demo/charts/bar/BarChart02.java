@@ -27,11 +27,11 @@ import java.util.Random;
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.ChartBuilder;
 import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.StyleManager.ChartTheme;
 import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.style.MatlabTheme;
 
 /**
  * Date Categories
@@ -76,7 +76,7 @@ public class BarChart02 implements ExampleChart {
       yData.add(-1 * 0.00000001 * ((random.nextInt(i) + 1)));
     }
     Series series = chart.addCategorySeries("Model 77", xData, yData);
-    series.setLineColor(SeriesColor.RED);
+    series.setLineColor(MatlabTheme.RED);
     chart.getStyleManager().setPlotGridLinesVisible(false);
     chart.getStyleManager().setBarFilled(false);
     chart.getStyleManager().setDatePattern("YYYY");

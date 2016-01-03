@@ -24,6 +24,7 @@ import java.util.TimeZone;
 
 import org.knowm.xchart.internal.style.GGPlot2Theme;
 import org.knowm.xchart.internal.style.MatlabTheme;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.internal.style.Theme;
 import org.knowm.xchart.internal.style.XChartTheme;
 
@@ -76,6 +77,7 @@ public class StyleManager {
   private Color chartBackgroundColor;
   public Color chartFontColor;
   private int chartPadding;
+  private SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler;
 
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
@@ -168,6 +170,7 @@ public class StyleManager {
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
     chartPadding = theme.getChartPadding();
+    seriesColorMarkerLineStyleCycler = theme.getSeriesColorMarkerLineStyleCycler();
 
     // Chart Title ///////////////////////////////
     chartTitleFont = theme.getChartTitleFont();
@@ -320,6 +323,16 @@ public class StyleManager {
   public int getChartPadding() {
 
     return chartPadding;
+  }
+
+  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+
+    return seriesColorMarkerLineStyleCycler;
+  }
+
+  public void setSeriesColorMarkerLineStyleCycler(SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler) {
+
+    this.seriesColorMarkerLineStyleCycler = seriesColorMarkerLineStyleCycler;
   }
 
   // Chart Title ///////////////////////////////

@@ -20,14 +20,29 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.knowm.xchart.ChartColor;
+import org.knowm.xchart.SeriesColor;
+import org.knowm.xchart.SeriesLineStyle;
+import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
  */
 public class GGPlot2Theme implements Theme {
+
+  // The color blind friendly palette
+  public static SeriesColor BLACK = new SeriesColor(0, 0, 0, 255);
+  public static SeriesColor ORANGE = new SeriesColor(230, 159, 0, 255);
+  public static SeriesColor SKY_BLUE = new SeriesColor(86, 180, 233, 255);
+  public static SeriesColor BLUISH_GREEN = new SeriesColor(0, 158, 115, 255);
+  public static SeriesColor YELLOW = new SeriesColor(240, 228, 66, 255);
+  public static SeriesColor BLUE = new SeriesColor(0, 114, 178, 255);
+  public static SeriesColor VERMILLION = new SeriesColor(213, 94, 0, 255);
+  public static SeriesColor REDDISH_PURPLE = new SeriesColor(204, 121, 167, 255);
 
   // Chart Style ///////////////////////////////
 
@@ -47,6 +62,12 @@ public class GGPlot2Theme implements Theme {
   public int getChartPadding() {
 
     return 10;
+  }
+
+  @Override
+  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+
+    return new XChartSeriesColorMarkerLineStyleCycler();
   }
 
   // Chart Title ///////////////////////////////
@@ -244,20 +265,18 @@ public class GGPlot2Theme implements Theme {
     return true;
   }
 
-
   @Override
   public boolean isPlotGridVerticalLinesVisible() {
 
     return true;
   }
-  
 
   @Override
   public boolean isPlotGridHorizontalLinesVisible() {
 
     return true;
   }
-  
+
   @Override
   public Color getPlotBackgroundColor() {
 
@@ -334,5 +353,47 @@ public class GGPlot2Theme implements Theme {
   public boolean isErrorBarsColorSeriesColor() {
 
     return false;
+  }
+
+  public class XChartSeriesColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
+
+    @Override
+    public List<SeriesColor> getSeriesColorList() {
+
+      // 1. Color
+      List<SeriesColor> seriesColorMap = new ArrayList<SeriesColor>();
+      seriesColorMap.add(BLACK);
+      seriesColorMap.add(ORANGE);
+      seriesColorMap.add(SKY_BLUE);
+      seriesColorMap.add(BLUISH_GREEN);
+      seriesColorMap.add(YELLOW);
+      seriesColorMap.add(BLUE);
+      seriesColorMap.add(VERMILLION);
+      seriesColorMap.add(REDDISH_PURPLE);
+
+      return seriesColorMap;
+    }
+
+    @Override
+    public List<SeriesMarker> getSeriesMarkerList() {
+
+      // 2. Marker
+      List<SeriesMarker> seriesMarkerList = new ArrayList<SeriesMarker>();
+      seriesMarkerList.add(SeriesMarker.CIRCLE);
+      seriesMarkerList.add(SeriesMarker.DIAMOND);
+      return seriesMarkerList;
+    }
+
+    @Override
+    public List<SeriesLineStyle> getLineStyleList() {
+
+      // 3. Stroke
+      List<SeriesLineStyle> seriesLineStyleList = new ArrayList<SeriesLineStyle>();
+      seriesLineStyleList.add(SeriesLineStyle.SOLID);
+      seriesLineStyleList.add(SeriesLineStyle.DOT_DOT);
+      seriesLineStyleList.add(SeriesLineStyle.DASH_DASH);
+      return seriesLineStyleList;
+    }
+
   }
 }
