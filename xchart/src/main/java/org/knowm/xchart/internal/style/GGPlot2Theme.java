@@ -35,14 +35,20 @@ import org.knowm.xchart.StyleManager.LegendPosition;
 public class GGPlot2Theme implements Theme {
 
   // The color blind friendly palette
-  public static SeriesColor BLACK = new SeriesColor(0, 0, 0, 255);
-  public static SeriesColor ORANGE = new SeriesColor(230, 159, 0, 255);
-  public static SeriesColor SKY_BLUE = new SeriesColor(86, 180, 233, 255);
-  public static SeriesColor BLUISH_GREEN = new SeriesColor(0, 158, 115, 255);
-  public static SeriesColor YELLOW = new SeriesColor(240, 228, 66, 255);
-  public static SeriesColor BLUE = new SeriesColor(0, 114, 178, 255);
-  public static SeriesColor VERMILLION = new SeriesColor(213, 94, 0, 255);
-  public static SeriesColor REDDISH_PURPLE = new SeriesColor(204, 121, 167, 255);
+  // public static SeriesColor BLACK = new SeriesColor(0, 0, 0, 255);
+  // public static SeriesColor ORANGE = new SeriesColor(230, 159, 0, 255);
+  // public static SeriesColor SKY_BLUE = new SeriesColor(86, 180, 233, 255);
+  // public static SeriesColor BLUISH_GREEN = new SeriesColor(0, 158, 115, 255);
+  // public static SeriesColor YELLOW = new SeriesColor(240, 228, 66, 255);
+  // public static SeriesColor BLUE = new SeriesColor(0, 114, 178, 255);
+  // public static SeriesColor VERMILLION = new SeriesColor(213, 94, 0, 255);
+  // public static SeriesColor REDDISH_PURPLE = new SeriesColor(204, 121, 167, 255);
+
+  public static SeriesColor RED = new SeriesColor(248, 118, 109, 255);
+  public static SeriesColor YELLOW_GREEN = new SeriesColor(163, 165, 0, 255);
+  public static SeriesColor GREEN = new SeriesColor(0, 191, 125, 255);
+  public static SeriesColor BLUE = new SeriesColor(0, 176, 246, 255);
+  public static SeriesColor PURPLE = new SeriesColor(231, 107, 243, 255);
 
   // Chart Style ///////////////////////////////
 
@@ -362,14 +368,22 @@ public class GGPlot2Theme implements Theme {
 
       // 1. Color
       List<SeriesColor> seriesColorMap = new ArrayList<SeriesColor>();
-      seriesColorMap.add(BLACK);
-      seriesColorMap.add(ORANGE);
-      seriesColorMap.add(SKY_BLUE);
-      seriesColorMap.add(BLUISH_GREEN);
-      seriesColorMap.add(YELLOW);
+
+      // The color blind friendly palette
+      // seriesColorMap.add(BLACK);
+      // seriesColorMap.add(ORANGE);
+      // seriesColorMap.add(SKY_BLUE);
+      // seriesColorMap.add(BLUISH_GREEN);
+      // seriesColorMap.add(YELLOW);
+      // seriesColorMap.add(BLUE);
+      // seriesColorMap.add(VERMILLION);
+      // seriesColorMap.add(REDDISH_PURPLE);
+
+      seriesColorMap.add(RED);
+      seriesColorMap.add(YELLOW_GREEN);
+      seriesColorMap.add(GREEN);
       seriesColorMap.add(BLUE);
-      seriesColorMap.add(VERMILLION);
-      seriesColorMap.add(REDDISH_PURPLE);
+      seriesColorMap.add(PURPLE);
 
       return seriesColorMap;
     }
