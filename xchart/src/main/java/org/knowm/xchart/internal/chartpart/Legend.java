@@ -70,7 +70,7 @@ public class Legend implements ChartPart {
       return;
     }
 
-    boolean containsBar = false;
+    boolean containsBarOrPie = false;
 
     // determine legend text content max width
     double legendTextContentMaxWidth = 0;
@@ -89,18 +89,19 @@ public class Legend implements ChartPart {
       }
 
       blockHeight -= MULTI_LINE_SPACE;
-      blockHeight = Math.max(blockHeight, series.getSeriesType() == Series.SeriesType.Bar ? BOX_SIZE : getChartInternal().getStyleManager().getMarkerSize());
+      blockHeight = Math.max(blockHeight, (series.getSeriesType() == Series.SeriesType.Bar || series.getSeriesType() == Series.SeriesType.Pie) ? BOX_SIZE : getChartInternal().getStyleManager()
+          .getMarkerSize());
 
       legendContentHeight += blockHeight + getChartInternal().getStyleManager().getLegendPadding();
 
-      if (series.getSeriesType() == Series.SeriesType.Bar) {
-        containsBar = true;
+      if (series.getSeriesType() == Series.SeriesType.Bar || series.getSeriesType() == Series.SeriesType.Pie) {
+        containsBarOrPie = true;
       }
     }
 
     // determine legend content width
     double legendContentWidth = 0;
-    if (!containsBar) {
+    if (!containsBarOrPie) {
       legendContentWidth = getChartInternal().getStyleManager().getLegendSeriesLineLength() + getChartInternal().getStyleManager().getLegendPadding() + legendTextContentMaxWidth;
     }
     else {
@@ -184,9 +185,10 @@ public class Legend implements ChartPart {
       }
       blockHeight -= MULTI_LINE_SPACE;
 
-      blockHeight = Math.max(blockHeight, series.getSeriesType() == Series.SeriesType.Bar ? BOX_SIZE : getChartInternal().getStyleManager().getMarkerSize());
+      blockHeight = Math.max(blockHeight, (series.getSeriesType() == Series.SeriesType.Bar || series.getSeriesType() == Series.SeriesType.Pie) ? BOX_SIZE : getChartInternal().getStyleManager()
+          .getMarkerSize());
 
-      if (series.getSeriesType() != Series.SeriesType.Bar) {
+      if (series.getSeriesType() != Series.SeriesType.Bar && series.getSeriesType() != Series.SeriesType.Pie) {
 
         // paint line
         if (series.getSeriesType() != Series.SeriesType.Scatter && series.getStroke() != null) {
@@ -205,11 +207,12 @@ public class Legend implements ChartPart {
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, startx + getChartInternal().getStyleManager().getLegendSeriesLineLength() / 2.0, starty + blockHeight / 2.0, getChartInternal().getStyleManager().getMarkerSize());
+          series.getMarker().paint(g, startx + getChartInternal().getStyleManager().getLegendSeriesLineLength() / 2.0, starty + blockHeight / 2.0, getChartInternal().getStyleManager()
+              .getMarkerSize());
 
         }
       }
-      else { // bar type series
+      else { // bar/pie type series
 
         // paint little box
         if (series.getStroke() != null) {
@@ -229,7 +232,7 @@ public class Legend implements ChartPart {
 
       double multiLineOffset = 0.0;
 
-      if (series.getSeriesType() != Series.SeriesType.Bar) {
+      if (series.getSeriesType() != Series.SeriesType.Bar && series.getSeriesType() != Series.SeriesType.Pie) {
 
         double x = startx + getChartInternal().getStyleManager().getLegendSeriesLineLength() + getChartInternal().getStyleManager().getLegendPadding();
         for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
@@ -257,7 +260,7 @@ public class Legend implements ChartPart {
 
         starty += blockHeight + getChartInternal().getStyleManager().getLegendPadding();
       }
-      else { // bar type series
+      else { // bar/pie type series
 
         final double x = startx + BOX_SIZE + getChartInternal().getStyleManager().getLegendPadding();
         for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {

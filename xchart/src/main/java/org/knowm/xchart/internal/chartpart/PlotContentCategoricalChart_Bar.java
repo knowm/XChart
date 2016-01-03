@@ -17,7 +17,6 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -58,7 +57,7 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
     // g.draw(bounds);
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
-    Rectangle rectangle = new Rectangle(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
+    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.green);
     // g.draw(rectangle);
@@ -99,7 +98,7 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
     for (Series series : getChartInternal().getSeriesMap().values()) {
 
       // sanity check
-      if (Series.SeriesType.Area.equals(series.getSeriesType())) {
+      if (Series.SeriesType.Area.equals(series.getSeriesType()) || Series.SeriesType.Pie.equals(series.getSeriesType())) {
         throw new RuntimeException("Category-Bar charts only accept Bar, Line and Scatter series types!!!");
       }
 

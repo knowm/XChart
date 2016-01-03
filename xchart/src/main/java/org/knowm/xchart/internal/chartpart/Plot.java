@@ -81,9 +81,13 @@ public class Plot implements ChartPart {
       if (getChartInternal().getStyleManager().getChartType() == ChartType.Bar) {
         this.plotContent = new PlotContentCategoricalChart_Bar(this);
       }
+
       else {
         this.plotContent = new PlotContentCategoricalChart_Line_Area_Scatter(this);
       }
+    }
+    else if (getChartInternal().getChartInternalType() == ChartInternalType.Pie) {
+      this.plotContent = new PlotContentCategoricalChart_Pie(this);
     }
     else {
       this.plotContent = new PlotContentNumericalChart(this);

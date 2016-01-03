@@ -17,7 +17,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author timmolter
@@ -52,7 +52,7 @@ public class AxisPair implements ChartPart {
   }
 
   @Override
-  public Rectangle getBounds() {
+  public Rectangle2D getBounds() {
 
     return null; // should never be called
   }

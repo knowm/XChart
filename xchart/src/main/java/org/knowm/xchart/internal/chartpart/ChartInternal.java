@@ -21,6 +21,7 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -41,7 +42,7 @@ public class ChartInternal {
 
   protected enum ChartInternalType {
 
-    XY, Category
+    XY, Category, Pie
   }
 
   private ChartInternalType chartInternalType = null;
@@ -85,7 +86,7 @@ public class ChartInternal {
   public Series addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
     if (chartInternalType != null && chartInternalType != ChartInternalType.XY) {
-      throw new IllegalArgumentException("Cannot mix x-y and category series types! Don't call addSeries() and addCategorySeries() for the same chart!");
+      throw new IllegalArgumentException("Cannot mix x-y, category and/or pie series types! Don't call addSeries() and/or addCategorySeries() and/or addPieSeries() for the same chart!");
     }
     chartInternalType = ChartInternalType.XY;
 
@@ -143,7 +144,7 @@ public class ChartInternal {
   public Series addCategorySeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
     if (chartInternalType != null && chartInternalType != ChartInternalType.Category) {
-      throw new IllegalArgumentException("Cannot mix x-y and category series types! Don't call addSeries() and addCategorySeries() for the same chart!");
+      throw new IllegalArgumentException("Cannot mix x-y, category and/or pie series types! Don't call addSeries() and/or addCategorySeries() and/or addPieSeries() for the same chart!");
     }
     chartInternalType = ChartInternalType.Category;
 
@@ -161,7 +162,6 @@ public class ChartInternal {
         throw new IllegalArgumentException("X-Axis data must exactly match all other Series X-Axis data for Category Charts!!");
       }
     }
-    // TODO make sure pie charts only have one series!
 
     // inspect the series to see what kind of data it contains (Number, Date, String)
     setXAxisType(xData);
@@ -176,8 +176,31 @@ public class ChartInternal {
     if (seriesMap.keySet().contains(seriesName)) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
     }
-
     seriesMap.put(seriesName, series);
+
+    return series;
+  }
+
+  public Series addPieSeries(String sliceName, Number value) {
+
+    if (chartInternalType != null && chartInternalType != ChartInternalType.Pie) {
+      throw new IllegalArgumentException("Cannot mix x-y, category and/or pie series types! Don't call addSeries() and/or addCategorySeries() and/or addPieSeries() for the same chart!");
+    }
+    chartInternalType = ChartInternalType.Pie;
+
+    axisPair.getXAxis().setAxisType(AxisType.String);
+
+    axisPair.getYAxis().setAxisType(AxisType.Number);
+    Series series = new Series(sliceName, Arrays.asList(new String[] { sliceName }), axisPair.getXAxis().getAxisType(), Arrays.asList(new Number[] { value }), axisPair.getYAxis().getAxisType(), null,
+        styleManager.getSeriesColorMarkerLineStyleCycler().getNextSeriesColorMarkerLineStyle());
+
+    // set series type
+    setSeriesType(series);
+
+    if (seriesMap.keySet().contains(sliceName)) {
+      throw new IllegalArgumentException("Series name >" + sliceName + "< has already been used. Use unique names for each series!!!");
+    }
+    seriesMap.put(sliceName, series);
 
     return series;
   }
@@ -258,6 +281,11 @@ public class ChartInternal {
     case Bar:
       if (series.getSeriesType() == null) {
         series.setSeriesType(Series.SeriesType.Bar);
+      }
+      break;
+    case Pie:
+      if (series.getSeriesType() == null) {
+        series.setSeriesType(Series.SeriesType.Pie);
       }
       break;
     default:

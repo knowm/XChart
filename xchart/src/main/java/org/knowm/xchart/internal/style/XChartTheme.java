@@ -35,6 +35,7 @@ import org.knowm.xchart.StyleManager.LegendPosition;
  */
 public class XChartTheme implements Theme {
 
+  // original XChart colors
   // public static SeriesColor BLUE = new SeriesColor(0, 55, 255, 180);
   // public static SeriesColor ORANGE = new SeriesColor(255, 172, 0, 180);
   // public static SeriesColor PURPLE = new SeriesColor(128, 0, 255, 180);
@@ -57,8 +58,6 @@ public class XChartTheme implements Theme {
   // public static SeriesColor YELLOW = new SeriesColor(255, 255, 51, 180);
   // public static SeriesColor BROWN = new SeriesColor(166, 86, 40, 180);
   // public static SeriesColor PINK = new SeriesColor(247, 129, 191, 180);
-
-  // ['rgb(228,26,28)','rgb(55,126,184)','rgb(77,175,74)','rgb(152,78,163)','rgb(255,127,0)','rgb(255,255,51)','rgb(166,86,40)','rgb(247,129,191)']
 
   // Chart Style ///////////////////////////////
 

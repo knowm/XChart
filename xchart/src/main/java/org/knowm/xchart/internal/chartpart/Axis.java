@@ -144,6 +144,12 @@ public class Axis implements ChartPart {
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
 
+      if (getChartInternal().getChartInternalType() == ChartInternalType.Pie) {
+        bounds = new Rectangle2D.Double(getChartInternal().getStyleManager().getChartPadding(), getChartInternal().getChartTitle().getSizeHint(), 0, getChartInternal().getHeight() - getChartInternal()
+            .getChartTitle().getSizeHint() - getChartInternal().getStyleManager().getPlotPadding() - getChartInternal().getStyleManager().getChartPadding());
+        return;
+      }
+
       // first determine the height of
 
       // calculate paint zone
@@ -213,6 +219,13 @@ public class Axis implements ChartPart {
     }
     else { // X-Axis
 
+      if (getChartInternal().getChartInternalType() == ChartInternalType.Pie) {
+        bounds = new Rectangle2D.Double(getChartInternal().getStyleManager().getChartPadding(), getChartInternal().getHeight() - getChartInternal().getStyleManager().getChartPadding(),
+            getChartInternal().getWidth() - getChartInternal().getChartTitle().getSizeHint() - getChartInternal().getStyleManager().getPlotPadding() - (getChartInternal().getStyleManager()
+                .getLegendPosition() == LegendPosition.OutsideE ? getChartInternal().getChartLegend().getLegendBoxWidth() : 0), 0);
+        return;
+      }
+
       // calculate paint zone
       // |____________________|
 
@@ -271,6 +284,10 @@ public class Axis implements ChartPart {
    */
   private double getXAxisHeightHint(double workingSpace) {
 
+    if (getChartInternal().getChartInternalType() == ChartInternalType.Pie) {
+      return 0.0;
+    }
+
     // Axis title
     double titleHeight = 0.0;
     if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartInternal().getStyleManager().isXAxisTitleVisible()) {
@@ -287,6 +304,7 @@ public class Axis implements ChartPart {
       // System.out.println("XAxisHeightHint");
       // System.out.println("workingSpace: " + workingSpace);
       this.axisTickCalculator = getAxisTickCalculator(workingSpace);
+
       String sampleLabel = "";
       // find the longest String in all the labels
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
@@ -311,6 +329,10 @@ public class Axis implements ChartPart {
 
   private double getYAxisWidthHint(double workingSpace) {
 
+    if (getChartInternal().getChartInternalType() == ChartInternalType.Pie) {
+      return 0.0;
+    }
+
     // Axis title
     double titleHeight = 0.0;
     if (axisTitle.getText() != null && !axisTitle.getText().trim().equalsIgnoreCase("") && getChartInternal().getStyleManager().isYAxisTitleVisible()) {
@@ -327,6 +349,7 @@ public class Axis implements ChartPart {
       // System.out.println("XAxisHeightHint");
       // System.out.println("workingSpace: " + workingSpace);
       this.axisTickCalculator = getAxisTickCalculator(workingSpace);
+
       String sampleLabel = "";
       // find the longest String in all the labels
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
@@ -355,6 +378,9 @@ public class Axis implements ChartPart {
         AxisType axisType = getChartInternal().getAxisPair().getXAxis().getAxisType();
         return new AxisTickCalculator_Category(getDirection(), workingSpace, categories, axisType, getChartInternal().getStyleManager());
       }
+      else if (getChartInternal().getChartInternalType() == ChartInternalType.Pie) {
+        return null;
+      }
       else if (getChartInternal().getChartInternalType() == ChartInternalType.XY && getAxisType() == AxisType.Date) {
 
         return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, getChartInternal().getStyleManager());
@@ -372,7 +398,10 @@ public class Axis implements ChartPart {
     // Y-Axis
     else {
 
-      if (getChartInternal().getStyleManager().isYAxisLogarithmic() && getAxisType() != AxisType.Date) {
+      if (getChartInternal().getChartInternalType() == ChartInternalType.Pie) {
+        return null;
+      }
+      else if (getChartInternal().getStyleManager().isYAxisLogarithmic() && getAxisType() != AxisType.Date) {
 
         return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, getChartInternal().getStyleManager());
       }

@@ -69,6 +69,9 @@ public class PlotSurface implements ChartPart {
     }
 
     // paint grid lines and/or inner plot ticks
+    if (getChartInternal().getAxisPair().getYAxis().getAxisTickCalculator() == null) {// like for Pie Charts
+      return;
+    }
 
     // horizontal
     if (getChartInternal().getStyleManager().isPlotGridHorizontalLinesVisible() || getChartInternal().getStyleManager().isPlotTicksMarksVisible()) {

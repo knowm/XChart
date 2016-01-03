@@ -160,6 +160,18 @@ public class Chart {
   }
 
   /**
+   * Add a series for a Pie type chart
+   *
+   * @param seriesName
+   * @param value
+   * @return
+   */
+  public Series addPieSeries(String seriesName, Number value) {
+
+    return chartInternal.addPieSeries(seriesName, value);
+  }
+
+  /**
    * Add a series for a X-Y type chart using using double arrays
    *
    * @param seriesName

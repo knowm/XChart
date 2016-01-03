@@ -35,7 +35,7 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 public class Series {
 
   public enum SeriesType {
-    Line, Scatter, Area, Bar
+    Line, Scatter, Area, Bar, Pie
   }
 
   private SeriesType seriesType = null;
