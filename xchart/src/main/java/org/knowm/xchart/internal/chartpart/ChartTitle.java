@@ -109,7 +109,6 @@ public class ChartTitle implements ChartPart {
       double width = 2 * chart.getStyleManager().getChartTitlePadding() + rectangle.getWidth();
       double height = 2 * chart.getStyleManager().getChartTitlePadding() + rectangle.getHeight();
       return new Rectangle2D.Double(Double.NaN, Double.NaN, width, height); // Double.NaN indicates not sure yet.
-
     }
     else {
       // TODO make this zero, need to account for null bounds then when laying out plot

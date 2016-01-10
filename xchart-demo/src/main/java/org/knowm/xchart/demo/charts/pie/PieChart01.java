@@ -42,11 +42,11 @@ public class PieChart01 implements ExampleChart<Chart_Pie> {
   public Chart_Pie getChart() {
 
     // Create Chart
-    Chart_Pie chart = new ChartBuilderPie().width(800).height(600).title(getClass().getSimpleName()).build();
-    chart.addSeries("Pennies", 387);
-    chart.addSeries("Nickels", 234);
-    chart.addSeries("Dimes", 190);
-    chart.addSeries("Quarters", 270);
+    Chart_Pie chart = new ChartBuilderPie().width(400).height(500).title(getClass().getSimpleName()).build();
+    chart.addSeries("Pennies", 100);
+    chart.addSeries("Nickels", 100);
+    chart.addSeries("Dimes", 100);
+    chart.addSeries("Quarters", 100);
 
     return chart;
   }

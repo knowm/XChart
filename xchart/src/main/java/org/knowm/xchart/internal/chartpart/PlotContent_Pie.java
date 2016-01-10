@@ -17,8 +17,13 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 import java.util.Map;
 
 import org.knowm.xchart.Series_Pie;
@@ -32,6 +37,7 @@ import org.knowm.xchart.internal.style.StyleManager;
 public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends PlotContent_ {
 
   StyleManagerPie styleManagerPie;
+  DecimalFormat df = new DecimalFormat("#.0");
 
   /**
    * Constructor
@@ -66,14 +72,14 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
     g.setClip(bounds.createIntersection(rectangle));
 
     // pie bounds
-    double percentage = styleManagerPie.getPieFillPercentage();
+    double pieFillPercentage = styleManagerPie.getPieFillPercentage();
 
     // if (styleManagerPie.isCircular()) {
     //
     // double pieDiameter = Math.min(bounds.getWidth(), bounds.getHeight());
     // }
 
-    double halfBorderPercentage = (1 - percentage) / 2.0;
+    double halfBorderPercentage = (1 - pieFillPercentage) / 2.0;
     double width = styleManagerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getWidth();
     double height = styleManagerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getHeight();
 
@@ -83,9 +89,9 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
 
         bounds.getY() + bounds.getHeight() / 2 - height / 2 + halfBorderPercentage * height,
 
-        width * percentage,
+        width * pieFillPercentage,
 
-        height * percentage);
+        height * pieFillPercentage);
 
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.black);
@@ -94,7 +100,6 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
     // get total
     double total = 0.0;
 
-    // TODO 3.0.0 figure out this warning.
     Map<String, Series_Pie> map = chart.getSeriesMap();
     for (Series_Pie series : map.values()) {
 
@@ -102,21 +107,59 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
     }
 
     // draw pie slices
-    double curValue = 0.0;
-    double startAngle = 0;
-    // TODO 3.0.0 figure out this warning.
+    // double curValue = 0.0;
+    // double curValue = 0.0;
+    double startAngle = styleManagerPie.getStartAngleInDegrees() + 90;
+
     map = chart.getSeriesMap();
     for (Series_Pie series : map.values()) {
 
       Number y = series.getValue();
 
-      startAngle = (curValue * 360 / total);
+      // draw slice
       double arcAngle = (y.doubleValue() * 360 / total);
       g.setColor(series.getFillColor());
       g.fill(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
       g.setColor(styleManagerPie.getPlotBackgroundColor());
       g.draw(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
-      curValue += y.doubleValue();
+      // curValue += y.doubleValue();
+
+      // draw percentage on slice
+      double percentage = y.doubleValue() / total * 100;
+
+      TextLayout textLayout = new TextLayout(df.format(percentage) + "%", chart.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
+      Rectangle2D percentageRectangle = textLayout.getBounds();
+
+      double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - percentageRectangle.getWidth() / 2;
+      double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2 + percentageRectangle.getHeight() / 2;
+      double angle = (arcAngle + startAngle) - arcAngle / 2;
+      double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 3.33);
+      double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 3.33);
+
+      g.setColor(styleManagerPie.getChartFontColor());
+      g.setFont(styleManagerPie.getChartTitleFont());
+
+      Shape shape = textLayout.getOutline(null);
+      AffineTransform orig = g.getTransform();
+      AffineTransform at = new AffineTransform();
+      at.translate(xOffset, yOffset);
+      g.transform(at);
+      g.fill(shape);
+      g.setTransform(orig);
+
+      // // Tick Mark
+      // xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
+      // yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
+      // double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
+      // double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 1.9);
+      // double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
+      // double yOffsetEnd = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 1.9);
+      //
+      // g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
+      // Shape line = new Line2D.Double(xOffsetStart, yOffsetStart, xOffsetEnd, yOffsetEnd);
+      // g.draw(line);
+
+      startAngle += arcAngle;
     }
 
     g.setClip(null);

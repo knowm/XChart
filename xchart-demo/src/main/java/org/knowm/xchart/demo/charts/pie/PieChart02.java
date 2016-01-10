@@ -20,12 +20,11 @@ import java.awt.Color;
 
 import org.knowm.xchart.ChartBuilderPie;
 import org.knowm.xchart.Chart_Pie;
-import org.knowm.xchart.Series_Pie;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
- * Pie Chart with 4 Slices
+ * Pie Chart Custom Color Palette
  * <p>
  * Demonstrates the following:
  * <ul>
@@ -49,8 +48,7 @@ public class PieChart02 implements ExampleChart<Chart_Pie> {
     Chart_Pie chart = new ChartBuilderPie().width(800).height(600).title(getClass().getSimpleName()).build();
     chart.addSeries("Gold", 24);
     chart.addSeries("Silver", 21);
-    Series_Pie series = chart.addSeries("Platinum", 39);
-
+    chart.addSeries("Platinum", 39);
     chart.addSeries("Copper", 17);
     chart.addSeries("Zinc", 40);
 

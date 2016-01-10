@@ -348,6 +348,12 @@ public class GGPlot2Theme implements Theme {
     return true;
   }
 
+  @Override
+  public double getStartAngleInDegrees() {
+
+    return 0;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override

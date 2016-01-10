@@ -29,6 +29,7 @@ public class StyleManagerPie extends StyleManager {
 
   private double pieFillPercentage;
   private boolean isCircular;
+  private double startAngleInDegrees;
 
   /**
    * Constructor
@@ -90,6 +91,21 @@ public class StyleManagerPie extends StyleManager {
   public void setCircular(boolean isCircular) {
 
     this.isCircular = isCircular;
+  }
+
+  public double getStartAngleInDegrees() {
+
+    return startAngleInDegrees;
+  }
+
+  /**
+   * Sets the start angle in degrees. Zero degrees is straight up.
+   *
+   * @param startAngleInDegrees
+   */
+  public void setStartAngleInDegrees(double startAngleInDegrees) {
+
+    this.startAngleInDegrees = startAngleInDegrees;
   }
 
   /**

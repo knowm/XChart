@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
@@ -39,9 +40,11 @@ public abstract class Legend<SM extends StyleManager, S extends Series> implemen
   protected static final int BOX_SIZE = 20;
   protected static final int MULTI_LINE_SPACE = 3;
 
+  protected Chart<SM, S> chart;
   protected Rectangle2D bounds = null;
 
-  protected Chart<SM, S> chart;
+  protected double xOffset = 0;
+  protected double yOffset = 0;
 
   /**
    * Constructor
@@ -57,10 +60,6 @@ public abstract class Legend<SM extends StyleManager, S extends Series> implemen
   @Override
   public void paint(Graphics2D g) {
 
-    if (!chart.getStyleManager().isLegendVisible()) {
-      return;
-    }
-
     // if the area to draw a chart on is so small, don't even bother
     if (chart.getPlot().getBounds().getWidth() < 30) {
       return;
@@ -71,6 +70,46 @@ public abstract class Legend<SM extends StyleManager, S extends Series> implemen
     if (bounds == null) { // No other part asked for the bounds yet. Probably because it's an "inside" legend location
       bounds = getBoundsHint(); // Actually, the only information contained in thsi bounds is the width and height.
     }
+
+    // legend draw position
+
+    switch (chart.getStyleManager().getLegendPosition()) {
+    case OutsideE:
+      xOffset = chart.getWidth() - bounds.getWidth() - chart.getStyleManager().getChartPadding();
+      yOffset = chart.getPlot().getBounds().getY() + (chart.getPlot().getBounds().getHeight() - bounds.getHeight()) / 2.0;
+      break;
+    case InsideNW:
+      xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      break;
+    case InsideNE:
+      xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      break;
+    case InsideSE:
+      xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+      break;
+    case InsideSW:
+      xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+      break;
+    case InsideN:
+      xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      break;
+
+    default:
+      break;
+    }
+
+    // draw legend box background and border
+    Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
+    g.setColor(chart.getStyleManager().getLegendBackgroundColor());
+    g.fill(rect);
+    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
+    g.setColor(chart.getStyleManager().getLegendBorderColor());
+    g.draw(rect);
   }
 
   /**
@@ -90,7 +129,6 @@ public abstract class Legend<SM extends StyleManager, S extends Series> implemen
     // determine total legend content height
     double legendContentHeight = 0;
 
-    // TODO 3.0.0 figure out this warning.
     Map<String, S> map = chart.getSeriesMap();
     for (Series series : map.values()) {
 

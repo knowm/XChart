@@ -138,6 +138,8 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public boolean isCircular();
 
+  public double getStartAngleInDegrees();
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   public int getMarkerSize();

@@ -104,7 +104,6 @@ public class PlotContent_XY<SM extends StyleManagerAxesChart, S extends Series> 
       yMax = Math.log10(yMax);
     }
 
-    // TODO 3.0.0 figure out this warning.
     Map<String, Series_XY> map = chart.getSeriesMap();
     for (Series_XY series : map.values()) {
 

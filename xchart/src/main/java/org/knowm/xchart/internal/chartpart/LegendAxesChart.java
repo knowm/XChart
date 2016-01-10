@@ -54,56 +54,18 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
   @Override
   public void paint(Graphics2D g) {
 
-    super.paint(g);
-
-    // legend draw position
-    double xOffset = 0;
-    double yOffset = 0;
-    switch (chart.getStyleManager().getLegendPosition()) {
-    case OutsideE:
-      xOffset = chart.getWidth() - bounds.getWidth() - chart.getStyleManager().getChartPadding();
-      yOffset = chart.getPlot().getBounds().getY() + (chart.getPlot().getBounds().getHeight() - bounds.getHeight()) / 2.0;
-      break;
-    case InsideNW:
-      xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-      break;
-    case InsideNE:
-      xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-      break;
-    case InsideSE:
-      xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
-      break;
-    case InsideSW:
-      xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
-      break;
-    case InsideN:
-      xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-      break;
-
-    default:
-      break;
+    if (!chart.getStyleManager().isLegendVisible()) {
+      return;
     }
 
-    // TODO need this stroke?
-    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
+    super.paint(g);
 
-    // draw legend box background and border
-    Shape rect = new Rectangle2D.Double(xOffset + 1, yOffset + 1, bounds.getWidth() - 2, bounds.getHeight() - 2);
-    g.setColor(chart.getStyleManager().getLegendBackgroundColor());
-    g.fill(rect);
-    g.setColor(chart.getStyleManager().getLegendBorderColor());
-    g.draw(rect);
+    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
 
     // Draw legend content inside legend box
     double startx = xOffset + chart.getStyleManager().getLegendPadding();
     double starty = yOffset + chart.getStyleManager().getLegendPadding();
 
-    // TODO 3.0.0 figure out this warning.
     Map<String, Series_AxesChart> map = chart.getSeriesMap();
     for (Series_AxesChart series : map.values()) {
 
