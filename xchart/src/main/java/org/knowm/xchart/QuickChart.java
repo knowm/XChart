@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,8 @@
 package org.knowm.xchart;
 
 import java.util.List;
+
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A convenience class for making Charts with one line of code
@@ -71,16 +73,16 @@ public final class QuickChart {
   public static Chart getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
 
     // Create Chart
-    Chart chart = new Chart(WIDTH, HEIGHT);
+    Chart_XY chart = new Chart_XY(WIDTH, HEIGHT);
 
     // Customize Chart
-    chart.setChartTitle(chartTitle);
+    chart.setTitle(chartTitle);
     chart.setXAxisTitle(xTitle);
     chart.setYAxisTitle(yTitle);
 
     // Series
     for (int i = 0; i < yData.length; i++) {
-      Series series;
+      Series_XY series;
       if (seriesNames != null) {
         series = chart.addSeries(seriesNames[i], xData, yData[i]);
       }
@@ -108,14 +110,14 @@ public final class QuickChart {
   public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<? extends Number> xData, List<? extends Number> yData) {
 
     // Create Chart
-    Chart chart = new Chart(WIDTH, HEIGHT);
+    Chart_XY chart = new Chart_XY(WIDTH, HEIGHT);
 
     // Customize Chart
-    chart.setChartTitle(chartTitle);
+    chart.setTitle(chartTitle);
     chart.setXAxisTitle(xTitle);
     chart.setYAxisTitle(yTitle);
 
-    Series series = chart.addSeries(seriesName, xData, yData);
+    Series_XY series = chart.addSeries(seriesName, xData, yData);
     series.setMarker(SeriesMarker.NONE);
 
     return chart;

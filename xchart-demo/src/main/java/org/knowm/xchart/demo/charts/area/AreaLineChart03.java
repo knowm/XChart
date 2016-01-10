@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,15 @@
  */
 package org.knowm.xchart.demo.charts.area;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager;
-import org.knowm.xchart.StyleManager.ChartType;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
 /**
  * Combination Line & Area Chart
@@ -47,14 +48,14 @@ public class AreaLineChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
     // Customize Chart
-    chart.setChartTitle(getClass().getSimpleName());
+    chart.setTitle(getClass().getSimpleName());
     chart.setXAxisTitle("Age");
     chart.setYAxisTitle("Amount");
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setChartType(ChartType.Line);
+    chart.getStyleManager().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Line);
 
     // @formatter:off
     double[] xAges = new double[] { 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
@@ -77,17 +78,17 @@ public class AreaLineChart03 implements ExampleChart {
         565197, 496959, 421280, 358113, 276518, 195571, 109514, 13876, 29, 0, 0, 0, 0 };
     // @formatter:on
 
-    Series seriesLiability = chart.addSeries("Liability", xAges, yLiability);
+    Series_XY seriesLiability = chart.addSeries("Liability", xAges, yLiability);
     seriesLiability.setMarker(SeriesMarker.NONE);
-    seriesLiability.setSeriesType(Series.SeriesType.Area);
+    seriesLiability.setChartXYSeriesRenderStyle(Series_XY.ChartXYSeriesRenderStyle.Area);
 
-    Series seriesPercentile75th = chart.addSeries("75th Percentile", xAges, yPercentile75th);
+    Series_XY seriesPercentile75th = chart.addSeries("75th Percentile", xAges, yPercentile75th);
     seriesPercentile75th.setMarker(SeriesMarker.NONE);
 
-    Series seriesPercentile50th = chart.addSeries("50th Percentile", xAges, yPercentile50th);
+    Series_XY seriesPercentile50th = chart.addSeries("50th Percentile", xAges, yPercentile50th);
     seriesPercentile50th.setMarker(SeriesMarker.NONE);
 
-    Series seriesPercentile25th = chart.addSeries("25th Percentile", xAges, yPercentile25th);
+    Series_XY seriesPercentile25th = chart.addSeries("25th Percentile", xAges, yPercentile25th);
     seriesPercentile25th.setMarker(SeriesMarker.NONE);
 
     chart.getStyleManager().setYAxisLabelAlignment(StyleManager.TextAlignment.Right);

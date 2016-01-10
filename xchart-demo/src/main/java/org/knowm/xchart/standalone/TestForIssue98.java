@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,10 +20,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.StyleManager;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.StyleManagerXY;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
@@ -32,8 +32,8 @@ public class TestForIssue98 {
 
   public static void main(String[] args) throws IOException {
 
-    final Chart chart = new Chart(1920, 1080);
-    StyleManager manager = chart.getStyleManager();
+    final Chart_XY chart = new Chart_XY(1920, 1080);
+    StyleManagerXY manager = chart.getStyleManager();
     manager.setLegendPosition(LegendPosition.InsideNW);
     manager.setYAxisLogarithmic(true);
 

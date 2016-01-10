@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,61 +23,63 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 
-import org.knowm.xchart.Series;
-import org.knowm.xchart.Series.SeriesType;
+import org.knowm.xchart.Series_Category;
+import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.StyleManagerCategory;
+import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.style.StyleManager;
 
 /**
  * @author timmolter
  */
-public class PlotContentCategoricalChart_Bar extends PlotContent {
+public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series> extends PlotContent_ {
+
+  StyleManagerCategory styleManagerCategory;
 
   /**
    * Constructor
    *
    * @param plot
    */
-  protected PlotContentCategoricalChart_Bar(Plot plot) {
+  protected PlotContent_Category_Bar(Chart<StyleManagerCategory, Series_Category> chart) {
 
-    super(plot);
+    super(chart);
+    this.styleManagerCategory = chart.getStyleManager();
   }
 
   @Override
   public void paint(Graphics2D g) {
 
-    // logarithmic
-    if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
-      throw new IllegalArgumentException("Category Charts cannot have logarithmic axes!!! (Not Yet Implemented)");
-    }
-
-    Rectangle2D bounds = plot.getBounds();
+    Rectangle2D bounds = getBounds();
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.red);
     // g.draw(bounds);
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
-    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
+    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, chart.getWidth(), chart.getHeight());
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.green);
     // g.draw(rectangle);
     g.setClip(bounds.createIntersection(rectangle));
 
     // X-Axis
-    double xTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getWidth();
+    double xTickSpace = styleManagerCategory.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset(bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
+    double yTickSpace = styleManagerCategory.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
-    int numCategories = getChartInternal().getSeriesMap().values().iterator().next().getXData().size();
+    Map<String, Series_Category> seriesMap = chart.getSeriesMap();
+    int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
 
-    double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
-    double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
+    double yMin = chart.getAxisPair().getYAxis().getMin();
+    double yMax = chart.getAxisPair().getYAxis().getMax();
 
-    // TODO only for bar charts necessary
     // figure out the general form of the chart
     int chartForm = 1; // 1=positive, -1=negative, 0=span
     if (yMin > 0.0 && yMax > 0.0) {
@@ -95,12 +97,7 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
 
     // plot series
     int seriesCounter = 0;
-    for (Series series : getChartInternal().getSeriesMap().values()) {
-
-      // sanity check
-      if (Series.SeriesType.Area.equals(series.getSeriesType()) || Series.SeriesType.Pie.equals(series.getSeriesType())) {
-        throw new RuntimeException("Category-Bar charts only accept Bar, Line and Scatter series types!!!");
-      }
+    for (Series_Category series : seriesMap.values()) {
 
       // for line series
       double previousX = -Double.MAX_VALUE;
@@ -171,21 +168,21 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
         double xOffset;
         double barWidth;
 
-        if (getChartInternal().getStyleManager().isBarsOverlapped()) {
-          double barWidthPercentage = getChartInternal().getStyleManager().getBarWidthPercentage();
+        if (styleManagerCategory.isBarsOverlapped()) {
+          double barWidthPercentage = styleManagerCategory.getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
         }
         else {
-          double barWidthPercentage = getChartInternal().getStyleManager().getBarWidthPercentage();
-          barWidth = gridStep / getChartInternal().getSeriesMap().size() * barWidthPercentage;
+          double barWidthPercentage = styleManagerCategory.getBarWidthPercentage();
+          barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
         }
 
         // paint series
-        if (series.getSeriesType() == SeriesType.Bar) {
+        if (series.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
           // paint bar
           g.setColor(series.getStrokeColor());
           Path2D.Double path = new Path2D.Double();
@@ -195,7 +192,7 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
           path.lineTo(xOffset, zeroOffset);
           path.closePath();
           g.setStroke(series.getStroke());
-          if (getChartInternal().getStyleManager().isBarFilled()) {
+          if (styleManagerCategory.isBarFilled()) {
             g.fill(path);
           }
           else {
@@ -205,7 +202,7 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
         else {
 
           // paint line
-          if (Series.SeriesType.Line.equals(series.getSeriesType())) {
+          if (series.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Line) {
 
             if (series.getStroke() != null) {
 
@@ -223,7 +220,7 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
           // paint marker
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
-            series.getMarker().paint(g, previousX, previousY, getChartInternal().getStyleManager().getMarkerSize());
+            series.getMarker().paint(g, previousX, previousY, styleManagerCategory.getMarkerSize());
           }
 
         }
@@ -235,11 +232,11 @@ public class PlotContentCategoricalChart_Bar extends PlotContent {
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (getChartInternal().getStyleManager().isErrorBarsColorSeriesColor()) {
+          if (styleManagerCategory.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getStrokeColor());
           }
           else {
-            g.setColor(getChartInternal().getStyleManager().getErrorBarsColor());
+            g.setColor(styleManagerCategory.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,21 +24,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.StyleManager.ChartTheme;
-import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.ChartBuilder_Category;
+import org.knowm.xchart.Chart_Category;
+import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.MatlabTheme;
+import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
 
 /**
  * Date Categories
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>Date categories
+ * <li>Date categories as List
  * <li>All negative values
  * <li>Single series
  * <li>No horizontal plot gridlines
@@ -58,7 +58,7 @@ public class BarChart02 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().theme(ChartTheme.Matlab).chartType(ChartType.Bar).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
+    Chart_Category chart = new ChartBuilder_Category().theme(ChartTheme.Matlab).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
 
     List<Date> xData = new ArrayList<Date>();
     List<Number> yData = new ArrayList<Number>();
@@ -75,7 +75,7 @@ public class BarChart02 implements ExampleChart {
       xData.add(date);
       yData.add(-1 * 0.00000001 * ((random.nextInt(i) + 1)));
     }
-    Series series = chart.addCategorySeries("Model 77", xData, yData);
+    Series_Category series = chart.addSeries("Model 77", xData, yData);
     series.setLineColor(MatlabTheme.RED);
     chart.getStyleManager().setPlotGridLinesVisible(false);
     chart.getStyleManager().setBarFilled(false);

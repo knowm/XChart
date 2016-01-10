@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,7 @@ package org.knowm.xchart.standalone;
 import org.knowm.xchart.CSVExporter;
 import org.knowm.xchart.CSVImporter;
 import org.knowm.xchart.CSVImporter.DataOrientation;
-import org.knowm.xchart.Chart;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 
 /**
@@ -30,7 +30,7 @@ public class CSVChartColumns {
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartColumns/", DataOrientation.Columns, 600, 600);
+    Chart_XY chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartColumns/", DataOrientation.Columns, 600, 600);
 
     CSVExporter.writeCSVColumns(chart.getSeriesMap().get("series1"), "./CSV/CSVChartColumnsExport/");
 

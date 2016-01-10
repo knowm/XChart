@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,33 +19,38 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import org.knowm.xchart.Series_AxesChart;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+
 /**
  * An axis tick
  */
-public class AxisTick implements ChartPart {
+public class AxisTick<SM extends StyleManagerAxesChart, S extends Series> implements ChartPart {
 
-  /** parent */
-  private Axis axis;
+  private final Chart<StyleManagerAxesChart, Series_AxesChart> chart;
+  private Rectangle2D bounds;
+  private final Direction direction;
 
   /** the axisticklabels */
-  private AxisTickLabels axisTickLabels;
+  private AxisTickLabels<StyleManagerAxesChart, Series_AxesChart> axisTickLabels;
 
   /** the axistickmarks */
-  private AxisTickMarks axisTickMarks;
-
-  /** the bounds */
-  private Rectangle2D bounds = new Rectangle2D.Double();
+  private AxisTickMarks<StyleManagerAxesChart, Series_AxesChart> axisTickMarks;
 
   /**
    * Constructor
    *
-   * @param axis
+   * @param chart
+   * @param direction
    */
-  protected AxisTick(Axis axis) {
+  protected AxisTick(Chart<StyleManagerAxesChart, Series_AxesChart> chart, Direction direction) {
 
-    this.axis = axis;
-    axisTickLabels = new AxisTickLabels(this);
-    axisTickMarks = new AxisTickMarks(this);
+    this.chart = chart;
+    this.direction = direction;
+    axisTickLabels = new AxisTickLabels<StyleManagerAxesChart, Series_AxesChart>(chart, direction);
+    axisTickMarks = new AxisTickMarks<StyleManagerAxesChart, Series_AxesChart>(chart, direction);
   }
 
   @Override
@@ -57,22 +62,7 @@ public class AxisTick implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    // double workingSpace = 0.0;
-    // // Y-Axis
-    // if (axis.getDirection() == Axis.Direction.Y) {
-    // workingSpace = axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
-    // // System.out.println("workingspace= " + workingSpace);
-    // }
-    // // X-Axis
-    // else if (axis.getDirection() == Axis.Direction.X) {
-    // workingSpace = axis.getPaintZone().getWidth(); // number of pixels the axis has to work with for drawing AxisTicks
-    // // System.out.println("workingspace= " + workingSpace);
-    // }
-    //
-    // System.out.println("AxisTick: " + axis.getDirection());
-    // System.out.println("workingSpace: " + workingSpace);
-
-    if (axis.getDirection() == Axis.Direction.Y && getChartInternal().getStyleManager().isYAxisTicksVisible()) {
+    if (direction == Axis.Direction.Y && chart.getStyleManager().isYAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
@@ -83,7 +73,7 @@ public class AxisTick implements ChartPart {
 
           axisTickLabels.getBounds().getY(),
 
-          axisTickLabels.getBounds().getWidth() + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
+          axisTickLabels.getBounds().getWidth() + chart.getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
 
           axisTickMarks.getBounds().getHeight()
 
@@ -93,7 +83,7 @@ public class AxisTick implements ChartPart {
       // g.draw(bounds);
 
     }
-    else if (axis.getDirection() == Axis.Direction.X && getChartInternal().getStyleManager().isXAxisTicksVisible()) {
+    else if (direction == Axis.Direction.X && chart.getStyleManager().isXAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
@@ -106,7 +96,7 @@ public class AxisTick implements ChartPart {
 
           axisTickLabels.getBounds().getWidth(),
 
-          axisTickMarks.getBounds().getHeight() + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()
+          axisTickMarks.getBounds().getHeight() + chart.getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()
 
       );
 
@@ -114,23 +104,15 @@ public class AxisTick implements ChartPart {
       // g.draw(bounds);
 
     }
+    else {
+      bounds = new Rectangle2D.Double();
+    }
 
-  }
-
-  @Override
-  public ChartInternal getChartInternal() {
-
-    return axis.getChartInternal();
   }
 
   // Getters /////////////////////////////////////////////////
 
-  public Axis getAxis() {
-
-    return axis;
-  }
-
-  public AxisTickLabels getAxisTickLabels() {
+  protected AxisTickLabels<StyleManagerAxesChart, Series_AxesChart> getAxisTickLabels() {
 
     return axisTickLabels;
   }

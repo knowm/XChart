@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +16,12 @@
  */
 package org.knowm.xchart;
 
-import org.knowm.xchart.internal.markers.Circle;
-import org.knowm.xchart.internal.markers.Diamond;
-import org.knowm.xchart.internal.markers.Marker;
-import org.knowm.xchart.internal.markers.Square;
-import org.knowm.xchart.internal.markers.TriangleDown;
-import org.knowm.xchart.internal.markers.TriangleUp;
+import org.knowm.xchart.internal.style.markers.Circle;
+import org.knowm.xchart.internal.style.markers.Diamond;
+import org.knowm.xchart.internal.style.markers.Marker;
+import org.knowm.xchart.internal.style.markers.Square;
+import org.knowm.xchart.internal.style.markers.TriangleDown;
+import org.knowm.xchart.internal.style.markers.TriangleUp;
 
 /**
  * Pre-defined Markers used for Series Lines

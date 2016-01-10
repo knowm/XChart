@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,35 +22,40 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Map;
 
-import org.knowm.xchart.Series;
+import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.StyleManagerXY;
+import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
+import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 
 /**
  * @author timmolter
  */
-public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
+public class PlotContent_XY<SM extends StyleManagerAxesChart, S extends Series> extends PlotContent_ {
+
+  StyleManagerXY styleManagerXY;
 
   /**
    * Constructor
    *
-   * @param plot
+   * @param chart
    */
-  protected PlotContentCategoricalChart_Line_Area_Scatter(Plot plot) {
+  protected PlotContent_XY(Chart<StyleManagerXY, Series_XY> chart) {
 
-    super(plot);
+    super(chart);
+    styleManagerXY = chart.getStyleManager();
   }
 
   @Override
   public void paint(Graphics2D g) {
 
-    // logarithmic
-    // if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
-    // throw new IllegalArgumentException("Category Charts cannot have logarithmic axes!!! (Not Yet Implemented)");
-    // }
-
-    Rectangle2D bounds = plot.getBounds();
+    Rectangle2D bounds = getBounds();
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.red);
     // g.draw(bounds);
@@ -67,7 +72,7 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
     // g.setColor(Color.green);
     // g.draw(rectangle);
 
-    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
+    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, chart.getWidth(), chart.getHeight());
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.green);
     // g.draw(rectangle);
@@ -76,45 +81,40 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
     // g.setClip(bounds.createIntersection(g.getClipBounds()));
 
     // X-Axis
-    double xTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getWidth();
+    double xTickSpace = styleManagerXY.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
+    double yTickSpace = styleManagerXY.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
-    double xMin = getChartInternal().getAxisPair().getXAxis().getMin();
-    double xMax = getChartInternal().getAxisPair().getXAxis().getMax();
-    double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
-    double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
+    double xMin = chart.getXAxis().getMin();
+    double xMax = chart.getXAxis().getMax();
+    double yMin = chart.getYAxis().getMin();
+    double yMax = chart.getYAxis().getMax();
 
     // logarithmic
-    if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
+    if (styleManagerXY.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
       xMax = Math.log10(xMax);
     }
-    if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+    if (styleManagerXY.isYAxisLogarithmic()) {
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
     }
 
-    int numCategories = getChartInternal().getSeriesMap().values().iterator().next().getXData().size();
-    double gridStep = xTickSpace / numCategories;
-
-    for (Series series : getChartInternal().getSeriesMap().values()) {
-
-      // sanity check
-
-      if (Series.SeriesType.Bar.equals(series.getSeriesType()) || Series.SeriesType.Pie.equals(series.getSeriesType())) {
-        throw new RuntimeException("Category-Line,Scatter,Area charts only accept Line, Scatter, and Area series types!!!");
-      }
+    // TODO 3.0.0 figure out this warning.
+    Map<String, Series_XY> map = chart.getSeriesMap();
+    for (Series_XY series : map.values()) {
 
       // data points
+      Collection<?> xData = series.getXData();
       Collection<? extends Number> yData = series.getYData();
 
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
+      Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
       Iterator<? extends Number> ebItr = null;
       Collection<? extends Number> errorBars = series.getErrorBars();
@@ -123,8 +123,20 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
       }
       Path2D.Double path = null;
 
-      int categoryCounter = 0;
-      while (yItr.hasNext()) {
+      while (xItr.hasNext()) {
+
+        double x = 0.0;
+        if (chart.getXAxis().getAxisDataType() == AxisDataType.Number) {
+          x = ((Number) xItr.next()).doubleValue();
+        }
+        else if (chart.getXAxis().getAxisDataType() == AxisDataType.Date) {
+          x = ((Date) xItr.next()).getTime();
+        }
+        // System.out.println(x);
+        if (styleManagerXY.isXAxisLogarithmic()) {
+          x = Math.log10(x);
+        }
+        // System.out.println(x);
 
         Number next = yItr.next();
         if (next == null) {
@@ -143,7 +155,7 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
         double y = 0.0;
 
         // System.out.println(y);
-        if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+        if (styleManagerXY.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         }
         else {
@@ -151,14 +163,20 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
         }
         // System.out.println(y);
 
+        double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
         double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+
+        // a check if all x data are the exact same values
+        if (Math.abs(xMax - xMin) / 5 == 0.0) {
+          xTransform = bounds.getWidth() / 2.0;
+        }
 
         // a check if all y data are the exact same values
         if (Math.abs(yMax - yMin) / 5 == 0.0) {
           yTransform = bounds.getHeight() / 2.0;
         }
 
-        double xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
+        double xOffset = bounds.getX() + xTransform;
         double yOffset = bounds.getY() + yTransform;
         // System.out.println(xTransform);
         // System.out.println(xOffset);
@@ -167,8 +185,10 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
         // System.out.println("---");
 
         // paint line
-        if (Series.SeriesType.Line.equals(series.getSeriesType()) || Series.SeriesType.Area.equals(series.getSeriesType())) {
 
+        boolean isSeriesLineOrArea = (ChartXYSeriesRenderStyle.Line == series.getChartXYSeriesRenderStyle()) || (ChartXYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle());
+
+        if (isSeriesLineOrArea) {
           if (series.getStroke() != null) {
 
             if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
@@ -181,7 +201,7 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
         }
 
         // paint area
-        if (Series.SeriesType.Area.equals(series.getSeriesType())) {
+        if (ChartXYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
@@ -204,9 +224,9 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
         previousY = yOffset;
 
         // paint marker
-        if (series.getMarker() != null) {
+        if (series.getMarker() != null) { // if set to Marker.NONE, the marker is null
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset, getChartInternal().getStyleManager().getMarkerSize());
+          series.getMarker().paint(g, xOffset, yOffset, styleManagerXY.getMarkerSize());
         }
 
         // paint error bars
@@ -215,17 +235,17 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (getChartInternal().getStyleManager().isErrorBarsColorSeriesColor()) {
+          if (styleManagerXY.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getStrokeColor());
           }
           else {
-            g.setColor(getChartInternal().getStyleManager().getErrorBarsColor());
+            g.setColor(styleManagerXY.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 
           // Top value
           double topValue = 0.0;
-          if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+          if (styleManagerXY.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
           }
@@ -237,7 +257,7 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
 
           // Bottom value
           double bottomValue = 0.0;
-          if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+          if (styleManagerXY.isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
@@ -261,6 +281,7 @@ public class PlotContentCategoricalChart_Line_Area_Scatter extends PlotContent {
       // close any open path for area charts
       closePath(g, path, previousX, bounds, yTopMargin);
     }
+
     g.setClip(null);
 
   }

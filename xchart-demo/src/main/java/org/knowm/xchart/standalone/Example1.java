@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,9 +18,9 @@ package org.knowm.xchart.standalone;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.VectorGraphicsEncoder;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 
@@ -34,11 +34,11 @@ public class Example1 {
     double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
     // Create Chart
-    Chart chart = new Chart(500, 400);
-    chart.setChartTitle("Sample Chart");
+    Chart_XY chart = new Chart_XY(500, 400);
+    chart.setTitle("Sample Chart");
     chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
-    Series series = chart.addSeries("y(x)", null, yData);
+    chart.setXAxisTitle("Y");
+    Series_XY series = chart.addSeries("y(x)", null, yData);
     series.setMarker(SeriesMarker.CIRCLE);
 
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);

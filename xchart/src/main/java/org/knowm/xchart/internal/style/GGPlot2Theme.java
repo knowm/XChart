@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,10 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.knowm.xchart.ChartColor;
-import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
@@ -35,20 +34,20 @@ import org.knowm.xchart.StyleManager.LegendPosition;
 public class GGPlot2Theme implements Theme {
 
   // The color blind friendly palette
-  // public static SeriesColor BLACK = new SeriesColor(0, 0, 0, 255);
-  // public static SeriesColor ORANGE = new SeriesColor(230, 159, 0, 255);
-  // public static SeriesColor SKY_BLUE = new SeriesColor(86, 180, 233, 255);
-  // public static SeriesColor BLUISH_GREEN = new SeriesColor(0, 158, 115, 255);
-  // public static SeriesColor YELLOW = new SeriesColor(240, 228, 66, 255);
-  // public static SeriesColor BLUE = new SeriesColor(0, 114, 178, 255);
-  // public static SeriesColor VERMILLION = new SeriesColor(213, 94, 0, 255);
-  // public static SeriesColor REDDISH_PURPLE = new SeriesColor(204, 121, 167, 255);
+  // public static Color BLACK = new Color(0, 0, 0, 255);
+  // public static Color ORANGE = new Color(230, 159, 0, 255);
+  // public static Color SKY_BLUE = new Color(86, 180, 233, 255);
+  // public static Color BLUISH_GREEN = new Color(0, 158, 115, 255);
+  // public static Color YELLOW = new Color(240, 228, 66, 255);
+  // public static Color BLUE = new Color(0, 114, 178, 255);
+  // public static Color VERMILLION = new Color(213, 94, 0, 255);
+  // public static Color REDDISH_PURPLE = new Color(204, 121, 167, 255);
 
-  public static SeriesColor RED = new SeriesColor(248, 118, 109, 255);
-  public static SeriesColor YELLOW_GREEN = new SeriesColor(163, 165, 0, 255);
-  public static SeriesColor GREEN = new SeriesColor(0, 191, 125, 255);
-  public static SeriesColor BLUE = new SeriesColor(0, 176, 246, 255);
-  public static SeriesColor PURPLE = new SeriesColor(231, 107, 243, 255);
+  public static Color RED = new Color(248, 118, 109, 255);
+  public static Color YELLOW_GREEN = new Color(163, 165, 0, 255);
+  public static Color GREEN = new Color(0, 191, 125, 255);
+  public static Color BLUE = new Color(0, 176, 246, 255);
+  public static Color PURPLE = new Color(231, 107, 243, 255);
 
   // Chart Style ///////////////////////////////
 
@@ -73,7 +72,7 @@ public class GGPlot2Theme implements Theme {
   @Override
   public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
 
-    return new XChartSeriesColorMarkerLineStyleCycler();
+    return new XChartColorMarkerLineStyleCycler();
   }
 
   // Chart Title ///////////////////////////////
@@ -361,13 +360,13 @@ public class GGPlot2Theme implements Theme {
     return false;
   }
 
-  public class XChartSeriesColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
+  public class XChartColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
 
     @Override
-    public List<SeriesColor> getSeriesColorList() {
+    public List<Color> getColorList() {
 
       // 1. Color
-      List<SeriesColor> seriesColorMap = new ArrayList<SeriesColor>();
+      List<Color> seriesColorMap = new ArrayList<Color>();
 
       // The color blind friendly palette
       // seriesColorMap.add(BLACK);

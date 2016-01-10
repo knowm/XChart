@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,9 +19,10 @@ package org.knowm.xchart.demo.charts.theme;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.Chart;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Default XChart Theme
@@ -43,7 +44,7 @@ public class ThemeChart01 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
     for (int i = 1; i <= 14; i++) {
 
@@ -57,7 +58,7 @@ public class ThemeChart01 implements ExampleChart {
       }
 
       // Customize Chart
-      chart.setChartTitle("XChart Theme");
+      chart.setTitle("XChart Theme");
       chart.setXAxisTitle("X");
       chart.setYAxisTitle("Y");
 

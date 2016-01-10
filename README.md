@@ -109,7 +109,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.7.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
     </dependency>
 ```
 

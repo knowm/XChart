@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,9 +23,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
 
-import org.knowm.xchart.Chart;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Realtime
@@ -92,8 +93,8 @@ public class RealtimeChart01 implements ExampleChart {
     yData = getRandomData(5);
 
     // Create Chart
-    Chart chart = new Chart(500, 400);
-    chart.setChartTitle("Sample Real-time Chart");
+    Chart_XY chart = new Chart_XY(500, 400);
+    chart.setTitle("Sample Real-time Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.addSeries(SERIES_NAME, null, yData);

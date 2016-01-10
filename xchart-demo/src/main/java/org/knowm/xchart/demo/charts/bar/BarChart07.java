@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
+import org.knowm.xchart.ChartBuilder_Category;
+import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.Histogram;
-import org.knowm.xchart.StyleManager.ChartType;
-import org.knowm.xchart.StyleManager.LegendPosition;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
 /**
  * Histogram Not Overlapped
@@ -50,12 +50,12 @@ public class BarChart07 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
+    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
     Histogram histogram1 = new Histogram(getGaussianData(1000), 10, -30, 30);
-    chart.addCategorySeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
+    chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
     Histogram histogram2 = new Histogram(getGaussianData(1000), 10, -30, 30);
-    chart.addCategorySeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
+    chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);

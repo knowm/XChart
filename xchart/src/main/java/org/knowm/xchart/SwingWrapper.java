@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,9 +23,11 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.knowm.xchart.internal.chartpart.Chart;
+
 /**
  * A convenience class used to display a Chart in a barebones Swing application
- * 
+ *
  * @author timmolter
  */
 public class SwingWrapper {
@@ -38,7 +40,7 @@ public class SwingWrapper {
 
   /**
    * Constructor
-   * 
+   *
    * @param chart
    */
   public SwingWrapper(Chart chart) {
@@ -48,7 +50,7 @@ public class SwingWrapper {
 
   /**
    * Constructor - The number of rows and columns will be calculated automatically Constructor
-   * 
+   *
    * @param charts
    */
   public SwingWrapper(List<Chart> charts) {
@@ -61,7 +63,7 @@ public class SwingWrapper {
 
   /**
    * Constructor
-   * 
+   *
    * @param charts
    * @param numRows - the number of rows
    * @param numColumns - the number of columns
@@ -75,7 +77,7 @@ public class SwingWrapper {
 
   /**
    * Display the chart in a Swing JFrame
-   * 
+   *
    * @param windowTitle the title of the window
    */
   public JFrame displayChart(String windowTitle) {
@@ -115,7 +117,7 @@ public class SwingWrapper {
 
   /**
    * Display the charts in a Swing JFrame
-   * 
+   *
    * @param windowTitle the title of the window
    * @return the JFrame
    */

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,13 +16,14 @@
  */
 package org.knowm.xchart.demo.charts.line;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.style.XChartTheme;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
 
 /**
  * Hundreds of Series on One Plot
@@ -40,20 +41,20 @@ public class LineChart04 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("LineChart04");
+    chart.setTitle("LineChart04");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.getStyleManager().setLegendVisible(false);
 
     for (int i = 0; i < 200; i++) {
-      Series series = chart.addSeries("A" + i, new double[] { Math.random() / 1000, Math.random() / 1000 }, new double[] { Math.random() / -1000, Math.random() / -1000 });
-      series.setLineColor(XChartTheme.BLUE);
+      Series_XY series = chart.addSeries("A" + i, new double[] { Math.random() / 1000, Math.random() / 1000 }, new double[] { Math.random() / -1000, Math.random() / -1000 });
+      series.setLineColor(XChartSeriesColors.BLUE);
       series.setLineStyle(SeriesLineStyle.SOLID);
       series.setMarker(SeriesMarker.CIRCLE);
-      series.setMarkerColor(XChartTheme.BLUE);
+      series.setMarkerColor(XChartSeriesColors.BLUE);
 
     }
 

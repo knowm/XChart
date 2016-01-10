@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,42 +20,32 @@ import java.awt.BasicStroke;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.StyleManager;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 
 /**
  * @author timmolter
  */
-public abstract class PlotContent implements ChartPart {
+public abstract class PlotContent_<SM extends StyleManagerAxesChart, S extends Series> implements ChartPart {
 
-  /** parent */
-  protected Plot plot;
-
-  StyleManager styleManager;
+  protected final Chart<SM, S> chart;
 
   protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /**
    * Constructor
    *
-   * @param plot
+   * @param chart - The Chart
    */
-  protected PlotContent(Plot plot) {
+  protected PlotContent_(Chart<SM, S> chart) {
 
-    this.plot = plot;
-
-    styleManager = getChartInternal().getStyleManager();
+    this.chart = chart;
   }
 
   @Override
   public Rectangle2D getBounds() {
 
-    return plot.getBounds();
-  }
-
-  @Override
-  public ChartInternal getChartInternal() {
-
-    return plot.getChartInternal();
+    return chart.getPlot().getBounds();
   }
 
 }

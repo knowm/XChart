@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,16 +19,16 @@ package org.knowm.xchart.internal.chartpart;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
  *
  * @author timmolter
  */
-public class AxisTickCalculator_Number extends AxisTickCalculator {
+public class AxisTickCalculator_Number extends AxisTickCalculator_ {
 
   NumberFormatter numberFormatter = null;
 
@@ -41,7 +41,7 @@ public class AxisTickCalculator_Number extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickCalculator_Number(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickCalculator_Number(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManagerAxesChart styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     numberFormatter = new NumberFormatter(styleManager);

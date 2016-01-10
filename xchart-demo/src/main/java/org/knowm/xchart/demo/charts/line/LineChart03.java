@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,15 +26,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.knowm.xchart.Chart;
 import org.knowm.xchart.ChartColor;
-import org.knowm.xchart.Series;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.style.XChartTheme;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
 
 /**
  * Extensive Chart Customization
@@ -52,7 +53,7 @@ public class LineChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
     // generates linear data
     List<Date> xData = new ArrayList<Date>();
@@ -72,7 +73,7 @@ public class LineChart03 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("LineChart03");
+    chart.setTitle("LineChart03");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
     chart.getStyleManager().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
@@ -101,8 +102,8 @@ public class LineChart03 implements ExampleChart {
     chart.getStyleManager().setDecimalPattern("#0.000");
     chart.getStyleManager().setLocale(Locale.GERMAN);
 
-    Series series = chart.addSeries("Fake Data", xData, yData);
-    series.setLineColor(XChartTheme.BLUE);
+    Series_XY series = chart.addSeries("Fake Data", xData, yData);
+    series.setLineColor(XChartSeriesColors.BLUE);
     series.setMarkerColor(Color.ORANGE);
     series.setMarker(SeriesMarker.CIRCLE);
     series.setLineStyle(SeriesLineStyle.SOLID);

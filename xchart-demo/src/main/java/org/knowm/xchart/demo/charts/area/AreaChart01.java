@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +16,13 @@
  */
 package org.knowm.xchart.demo.charts.area;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.StyleManager.ChartType;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.ChartBuilderXY;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
 /**
  * Area Chart with 3 series
@@ -29,7 +30,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * Demonstrates the following:
  * <ul>
  * <li>Area Chart
- * <li>Place legend at Inside-NW position
+ * <li>Place legend at Inside-NE position
  * <li>ChartBuilder
  */
 public class AreaChart01 implements ExampleChart {
@@ -45,15 +46,15 @@ public class AreaChart01 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
+    Chart_XY chart = new ChartBuilderXY().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
     chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });
     chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
     chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNE);
     chart.getStyleManager().setAxisTitlesVisible(false);
-
+    chart.getStyleManager().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
     return chart;
   }
 

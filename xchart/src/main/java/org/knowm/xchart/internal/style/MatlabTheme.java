@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,23 +24,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.knowm.xchart.ChartColor;
-import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
  */
 public class MatlabTheme implements Theme {
 
-  public static SeriesColor BLUE = new SeriesColor(0, 0, 255, 255);
-  public static SeriesColor GREEN = new SeriesColor(0, 128, 0, 255);
-  public static SeriesColor RED = new SeriesColor(255, 0, 0, 255);
-  public static SeriesColor TURQUOISE = new SeriesColor(0, 191, 191, 255);
-  public static SeriesColor MAGENTA = new SeriesColor(191, 0, 191, 255);
-  public static SeriesColor YELLOW = new SeriesColor(191, 191, 0, 255);
-  public static SeriesColor DARK_GREY = new SeriesColor(64, 64, 64, 255);
+  public static Color BLUE = new Color(0, 0, 255, 255);
+  public static Color GREEN = new Color(0, 128, 0, 255);
+  public static Color RED = new Color(255, 0, 0, 255);
+  public static Color TURQUOISE = new Color(0, 191, 191, 255);
+  public static Color MAGENTA = new Color(191, 0, 191, 255);
+  public static Color YELLOW = new Color(191, 191, 0, 255);
+  public static Color DARK_GREY = new Color(64, 64, 64, 255);
 
   // Chart Style ///////////////////////////////
 
@@ -65,7 +64,7 @@ public class MatlabTheme implements Theme {
   @Override
   public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
 
-    return new MatlabSeriesColorMarkerLineStyleCycler();
+    return new MatlabColorMarkerLineStyleCycler();
   }
 
   // Chart Title ///////////////////////////////
@@ -354,13 +353,13 @@ public class MatlabTheme implements Theme {
     return false;
   }
 
-  public class MatlabSeriesColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
+  public class MatlabColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
 
     @Override
-    public List<SeriesColor> getSeriesColorList() {
+    public List<Color> getColorList() {
 
       // 1. Color
-      List<SeriesColor> seriesColorMap = new ArrayList<SeriesColor>();
+      List<Color> seriesColorMap = new ArrayList<Color>();
       seriesColorMap.add(BLUE);
       seriesColorMap.add(GREEN);
       seriesColorMap.add(RED);

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,29 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.internal.markers;
+package org.knowm.xchart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
+import org.knowm.xchart.internal.ChartBuilder;
 
 /**
  * @author timmolter
  */
-public class TriangleUp extends Marker {
+public class ChartBuilderXY extends ChartBuilder<ChartBuilderXY, Chart_XY> {
 
+  String xAxisTitle = "";
+  String yAxisTitle = "";
+
+  public ChartBuilderXY() {
+
+  }
+
+  public ChartBuilderXY xAxisTitle(String xAxisTitle) {
+
+    this.xAxisTitle = xAxisTitle;
+    return this;
+  }
+
+  public ChartBuilderXY yAxisTitle(String yAxisTitle) {
+
+    this.yAxisTitle = yAxisTitle;
+    return this;
+  }
+
+  /**
+   * return fully built ChartXY
+   *
+   * @return a ChartXY
+   */
   @Override
-  public void paint(Graphics2D g, double xOffset, double yOffset, int markerSize) {
+  public Chart_XY build() {
 
-    g.setStroke(stroke);
-    double halfSize = (double) markerSize / 2;
-
-    // Make a triangle
-    Path2D.Double path = new Path2D.Double();
-    path.moveTo(xOffset - halfSize, yOffset - halfSize + markerSize - 1);
-    path.lineTo(xOffset - halfSize + markerSize, yOffset - halfSize + markerSize - 1);
-    path.lineTo(xOffset, yOffset - halfSize - 1);
-    path.closePath();
-    g.fill(path);
-
+    return new Chart_XY(this);
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,18 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.internal.markers;
+package org.knowm.xchart.internal.style.markers;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author timmolter
  */
-public abstract class Marker {
+public class Square extends Marker {
 
-  protected BasicStroke stroke = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  @Override
+  public void paint(Graphics2D g, double xOffset, double yOffset, int markerSize) {
 
-  public abstract void paint(Graphics2D g, double xOffset, double yOffset, int markerSize);
+    g.setStroke(stroke);
+    double halfSize = (double) markerSize / 2;
+    Shape square = new Rectangle2D.Double(xOffset - halfSize, yOffset - halfSize, markerSize, markerSize);
+    g.fill(square);
+
+  }
 
 }

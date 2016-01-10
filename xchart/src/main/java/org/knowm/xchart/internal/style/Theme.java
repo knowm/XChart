@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
@@ -36,6 +36,8 @@ public interface Theme {
   public int getChartPadding();
 
   public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler();
+
+  // public List<Color> getSeriesColors();
 
   // Chart Title ///////////////////////////////
 

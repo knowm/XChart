@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,15 +19,16 @@ package org.knowm.xchart.standalone;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.Series;
+import org.knowm.xchart.ChartBuilderXY;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Create a Chart matrix
- * 
+ *
  * @author timmolter
  */
 public class Example0WithoutVerticalAndHorizontalLines {
@@ -39,12 +40,12 @@ public class Example0WithoutVerticalAndHorizontalLines {
     List<Chart> charts = new ArrayList<Chart>();
 
     for (int i = 0; i < numCharts; i++) {
-      Chart chart = new ChartBuilder().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
+      Chart_XY chart = new ChartBuilderXY().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
       chart.getStyleManager().setYAxisMin(-10);
       chart.getStyleManager().setYAxisMax(10);
       chart.getStyleManager().setPlotGridVerticalLinesVisible(false);
       chart.getStyleManager().setPlotGridHorizontalLinesVisible(false);
-      Series series = chart.addSeries("" + i, null, getRandomWalk(200));
+      Series_XY series = chart.addSeries("" + i, null, getRandomWalk(200));
       series.setMarker(SeriesMarker.NONE);
       charts.add(chart);
     }
@@ -53,7 +54,7 @@ public class Example0WithoutVerticalAndHorizontalLines {
 
   /**
    * Generates a set of random walk data
-   * 
+   *
    * @param numPoints
    * @return
    */

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.internal.markers;
+package org.knowm.xchart.internal.style.markers;
 
 import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
+import java.awt.geom.Path2D;
 
 /**
  * @author timmolter
  */
-public class Circle extends Marker {
+public class TriangleUp extends Marker {
 
   @Override
   public void paint(Graphics2D g, double xOffset, double yOffset, int markerSize) {
 
     g.setStroke(stroke);
     double halfSize = (double) markerSize / 2;
-    Shape circle = new Ellipse2D.Double(xOffset - halfSize, yOffset - halfSize, markerSize, markerSize);
-    g.fill(circle);
+
+    // Make a triangle
+    Path2D.Double path = new Path2D.Double();
+    path.moveTo(xOffset - halfSize, yOffset - halfSize + markerSize - 1);
+    path.lineTo(xOffset - halfSize + markerSize, yOffset - halfSize + markerSize - 1);
+    path.lineTo(xOffset, yOffset - halfSize - 1);
+    path.closePath();
+    g.fill(path);
 
   }
-
 }

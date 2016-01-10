@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,39 +25,15 @@ import java.util.EnumSet;
 import java.util.List;
 
 import org.knowm.xchart.ChartColor;
-import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
 
 /**
  * @author timmolter
  */
 public class XChartTheme implements Theme {
-
-  // original XChart colors
-  // public static SeriesColor BLUE = new SeriesColor(0, 55, 255, 180);
-  // public static SeriesColor ORANGE = new SeriesColor(255, 172, 0, 180);
-  // public static SeriesColor PURPLE = new SeriesColor(128, 0, 255, 180);
-  // public static SeriesColor GREEN = new SeriesColor(0, 205, 0, 180);
-  // public static SeriesColor RED = new SeriesColor(205, 0, 0, 180);
-  // public static SeriesColor YELLOW = new SeriesColor(255, 215, 0, 180);
-  // public static SeriesColor MAGENTA = new SeriesColor(255, 0, 255, 180);
-  // public static SeriesColor PINK = new SeriesColor(255, 166, 201, 180);
-  // public static SeriesColor LIGHT_GREY = new SeriesColor(207, 207, 207, 180);
-  // public static SeriesColor CYAN = new SeriesColor(0, 255, 255, 180);
-  // public static SeriesColor BROWN = new SeriesColor(102, 56, 10, 180);
-  // public static SeriesColor BLACK = new SeriesColor(0, 0, 0, 180);
-
-  // printer-friendly colors from http://colorbrewer2.org/
-  public static SeriesColor RED = new SeriesColor(228, 26, 28, 180);
-  public static SeriesColor GREEN = new SeriesColor(55, 126, 184, 180);
-  public static SeriesColor BLUE = new SeriesColor(77, 175, 74, 180);
-  public static SeriesColor PURPLE = new SeriesColor(152, 78, 163, 180);
-  public static SeriesColor ORANGE = new SeriesColor(255, 127, 0, 180);
-  // public static SeriesColor YELLOW = new SeriesColor(255, 255, 51, 180);
-  // public static SeriesColor BROWN = new SeriesColor(166, 86, 40, 180);
-  // public static SeriesColor PINK = new SeriesColor(247, 129, 191, 180);
 
   // Chart Style ///////////////////////////////
 
@@ -82,7 +58,7 @@ public class XChartTheme implements Theme {
   @Override
   public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
 
-    return new XChartSeriesColorMarkerLineStyleCycler();
+    return new XChartColorMarkerLineStyleCycler();
   }
 
   // Chart Title ///////////////////////////////
@@ -370,36 +346,12 @@ public class XChartTheme implements Theme {
     return false;
   }
 
-  public class XChartSeriesColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
+  public class XChartColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
 
     @Override
-    public List<SeriesColor> getSeriesColorList() {
+    public List<Color> getColorList() {
 
-      // 1. Color
-      List<SeriesColor> seriesColorMap = new ArrayList<SeriesColor>();
-      // seriesColorMap.add(BLUE);
-      // seriesColorMap.add(ORANGE);
-      // seriesColorMap.add(PURPLE);
-      // seriesColorMap.add(GREEN);
-      // seriesColorMap.add(RED);
-      // seriesColorMap.add(YELLOW);
-      // seriesColorMap.add(MAGENTA);
-      // seriesColorMap.add(PINK);
-      // seriesColorMap.add(LIGHT_GREY);
-      // seriesColorMap.add(CYAN);
-      // seriesColorMap.add(BROWN);
-      // seriesColorMap.add(BLACK);
-
-      seriesColorMap.add(RED);
-      seriesColorMap.add(GREEN);
-      seriesColorMap.add(BLUE);
-      seriesColorMap.add(PURPLE);
-      seriesColorMap.add(ORANGE);
-      // seriesColorMap.add(YELLOW);
-      // seriesColorMap.add(BROWN);
-      // seriesColorMap.add(PINK);
-
-      return seriesColorMap;
+      return new XChartSeriesColors().getSeriesColors();
     }
 
     @Override

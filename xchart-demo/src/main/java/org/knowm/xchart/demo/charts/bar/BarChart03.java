@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,20 +16,18 @@
  */
 package org.knowm.xchart.demo.charts.bar;
 
-import java.util.Arrays;
-
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.ChartBuilder_Category;
+import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Positive and Negative
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>Number categories
+ * <li>int categories as array
  * <li>Positive and negative values
  * <li>Single series
  */
@@ -46,8 +44,8 @@ public class BarChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score vs. Age").xAxisTitle("Age").yAxisTitle("Score").build();
-    chart.addCategorySeries("males", Arrays.asList(new Integer[] { 10, 20, 30, 40 }), Arrays.asList(new Integer[] { 40, -30, -20, -60 }));
+    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Score vs. Age").xAxisTitle("Age").yAxisTitle("Score").build();
+    chart.addSeries("males", new int[] { 10, 20, 30, 40 }, new int[] { 40, -30, -20, -60 });
 
     return chart;
   }

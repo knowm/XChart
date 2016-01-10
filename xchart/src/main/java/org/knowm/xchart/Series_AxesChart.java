@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,30 +23,25 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.chartpart.Axis.AxisType;
-import org.knowm.xchart.internal.markers.Marker;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
+import org.knowm.xchart.internal.style.markers.Marker;
 
 /**
- * A Series containing X and Y data to be plotted on a Chart
+ * A Series containing X and Y data to be plotted on a Chart with X and Y Axes
  *
  * @author timmolter
  */
-public class Series {
+public abstract class Series_AxesChart extends Series {
 
-  public enum SeriesType {
-    Line, Scatter, Area, Bar, Pie
-  }
+  public abstract AxisDataType getAxesType(List<?> data);
 
-  private SeriesType seriesType = null;
-
-  private String name = "";
-
-  private List<?> xData;
-  private AxisType xAxisType;
+  private List<?> xData; // can be Number or Date or String
+  private AxisDataType xAxisType;
 
   private List<? extends Number> yData;
-  private AxisType yAxisType;
+  private AxisDataType yAxisType;
 
   private List<? extends Number> errorBars;
 
@@ -68,9 +63,6 @@ public class Series {
   /** Line Color */
   private Color strokeColor;
 
-  /** Fill Colour */
-  private Color fillColor;
-
   /** Marker Style */
   private Marker marker;
 
@@ -88,27 +80,60 @@ public class Series {
    * @param errorBars
    * @param seriesColorMarkerLineStyle
    */
-  public Series(String name, List<?> xData, AxisType xAxisType, List<? extends Number> yData, AxisType yAxisType, List<? extends Number> errorBars,
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+  public Series_AxesChart(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
 
-    if (name == null || name.length() < 1) {
-      throw new IllegalArgumentException("Series name cannot be null or zero-length!!!");
-    }
-    this.name = name;
+    super(name, seriesColorMarkerLineStyle);
+
     this.xData = xData;
-    this.xAxisType = xAxisType;
+    this.xAxisType = getAxesType(xData);
     this.yData = yData;
-    this.yAxisType = yAxisType;
+    this.yAxisType = AxisDataType.Number;
     this.errorBars = errorBars;
-
     strokeColor = seriesColorMarkerLineStyle.getColor();
-    fillColor = seriesColorMarkerLineStyle.getColor();
     markerColor = seriesColorMarkerLineStyle.getColor();
     marker = seriesColorMarkerLineStyle.getMarker();
     stroke = seriesColorMarkerLineStyle.getStroke();
 
     calculateMinMax();
+  }
 
+  public void replaceData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBars) {
+
+    // Sanity check
+    if (newErrorBars != null && newErrorBars.size() != newYData.size()) {
+      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
+    }
+    if (newXData.size() != newYData.size()) {
+      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+    }
+
+    xData = newXData;
+    yData = newYData;
+    errorBars = newErrorBars;
+    calculateMinMax();
+  }
+
+  private void calculateMinMax() {
+
+    // xData
+    double[] xMinMax = findMinMax(xData, xAxisType);
+    xMin = xMinMax[0];
+    xMax = xMinMax[1];
+    // System.out.println(xMin);
+    // System.out.println(xMax);
+
+    // yData
+    double[] yMinMax = null;
+    if (errorBars == null) {
+      yMinMax = findMinMax(yData, yAxisType);
+    }
+    else {
+      yMinMax = findMinMaxWithErrorBars(yData, errorBars);
+    }
+    yMin = yMinMax[0];
+    yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
   }
 
   /**
@@ -117,7 +142,7 @@ public class Series {
    * @param data
    * @return
    */
-  private double[] findMinMax(Collection<?> data, AxisType axisType) {
+  private double[] findMinMax(Collection<?> data, AxisDataType axisType) {
 
     double min = Double.MAX_VALUE;
     double max = -Double.MAX_VALUE;
@@ -130,14 +155,14 @@ public class Series {
 
       double value = 0.0;
 
-      if (axisType == AxisType.Number) {
+      if (axisType == AxisDataType.Number) {
         value = ((Number) dataPoint).doubleValue();
       }
-      else if (axisType == AxisType.Date) {
+      else if (axisType == AxisDataType.Date) {
         Date date = (Date) dataPoint;
         value = date.getTime();
       }
-      else if (axisType == AxisType.String) {
+      else if (axisType == AxisDataType.String) {
         return new double[] { Double.NaN, Double.NaN };
       }
       if (value < min) {
@@ -202,17 +227,6 @@ public class Series {
   /**
    * Set the line color of the series
    *
-   * @param seriesColor
-   */
-  public Series setLineColor(SeriesColor seriesColor) {
-
-    strokeColor = seriesColor.getColor();
-    return this;
-  }
-
-  /**
-   * Set the line color of the series
-   *
    * @param color
    */
   public Series setLineColor(java.awt.Color color) {
@@ -235,17 +249,6 @@ public class Series {
   /**
    * Sets the marker color for the series
    *
-   * @param seriesColor
-   */
-  public Series setMarkerColor(SeriesColor seriesColor) {
-
-    this.markerColor = seriesColor.getColor();
-    return this;
-  }
-
-  /**
-   * Sets the marker color for the series
-   *
    * @param color
    */
   public Series setMarkerColor(java.awt.Color color) {
@@ -254,24 +257,24 @@ public class Series {
     return this;
   }
 
-  public SeriesType getSeriesType() {
-
-    return seriesType;
-  }
-
-  public void setSeriesType(SeriesType seriesType) {
-
-    this.seriesType = seriesType;
-  }
-
   public Collection<?> getXData() {
 
     return xData;
   }
 
+  public AxisDataType getxAxisType() {
+
+    return xAxisType;
+  }
+
   public Collection<? extends Number> getYData() {
 
     return yData;
+  }
+
+  public AxisDataType getyAxisType() {
+
+    return yAxisType;
   }
 
   public Collection<? extends Number> getErrorBars() {
@@ -319,57 +322,4 @@ public class Series {
     return markerColor;
   }
 
-  public Color getFillColor() {
-
-    return fillColor;
-  }
-
-  public void setFillColor(Color fillColor) {
-
-    this.fillColor = fillColor;
-  }
-
-  public String getName() {
-
-    return name;
-  }
-
-  public void replaceData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBars) {
-
-    // Sanity check
-    if (newErrorBars != null && newErrorBars.size() != newYData.size()) {
-      throw new IllegalArgumentException("errorbars and Y-Axis sizes are not the same!!!");
-    }
-    if (newXData.size() != newYData.size()) {
-      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-    }
-
-    xData = newXData;
-    yData = newYData;
-    errorBars = newErrorBars;
-    calculateMinMax();
-  }
-
-  private void calculateMinMax() {
-
-    // xData
-    double[] xMinMax = findMinMax(xData, xAxisType);
-    xMin = xMinMax[0];
-    xMax = xMinMax[1];
-    // System.out.println(xMin);
-    // System.out.println(xMax);
-
-    // yData
-    double[] yMinMax = null;
-    if (errorBars == null) {
-      yMinMax = findMinMax(yData, yAxisType);
-    }
-    else {
-      yMinMax = findMinMaxWithErrorBars(yData, errorBars);
-    }
-    yMin = yMinMax[0];
-    yMax = yMinMax[1];
-    // System.out.println(yMin);
-    // System.out.println(yMax);
-  }
 }

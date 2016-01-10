@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,32 +22,43 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
+import java.util.Map;
 
-import org.knowm.xchart.Series;
+import org.knowm.xchart.Series_Category;
+import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.StyleManagerCategory;
+import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.AxisType;
+import org.knowm.xchart.internal.style.StyleManager;
 
 /**
  * @author timmolter
  */
-public class PlotContentNumericalChart extends PlotContent {
+public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S extends Series> extends PlotContent_ {
+
+  StyleManagerCategory styleManagerCategory;
 
   /**
    * Constructor
    *
    * @param plot
    */
-  protected PlotContentNumericalChart(Plot plot) {
+  protected PlotContent_Category_Line_Area_Scatter(Chart<StyleManagerCategory, Series_Category> chart) {
 
-    super(plot);
+    super(chart);
+    this.styleManagerCategory = styleManagerCategory;
   }
 
   @Override
   public void paint(Graphics2D g) {
 
-    Rectangle2D bounds = plot.getBounds();
+    // logarithmic
+    // if (styleManagerCategory.isYAxisLogarithmic()) {
+    // throw new IllegalArgumentException("Category Charts cannot have logarithmic axes!!! (Not Yet Implemented)");
+    // }
+
+    Rectangle2D bounds = getBounds();
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.red);
     // g.draw(bounds);
@@ -64,7 +75,7 @@ public class PlotContentNumericalChart extends PlotContent {
     // g.setColor(Color.green);
     // g.draw(rectangle);
 
-    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
+    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, chart.getWidth(), chart.getHeight());
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.green);
     // g.draw(rectangle);
@@ -73,43 +84,41 @@ public class PlotContentNumericalChart extends PlotContent {
     // g.setClip(bounds.createIntersection(g.getClipBounds()));
 
     // X-Axis
-    double xTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getWidth();
+    double xTickSpace = styleManagerCategory.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
+    double yTickSpace = styleManagerCategory.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
-    double xMin = getChartInternal().getAxisPair().getXAxis().getMin();
-    double xMax = getChartInternal().getAxisPair().getXAxis().getMax();
-    double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
-    double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
+    double xMin = chart.getAxisPair().getXAxis().getMin();
+    double xMax = chart.getAxisPair().getXAxis().getMax();
+    double yMin = chart.getAxisPair().getYAxis().getMin();
+    double yMax = chart.getAxisPair().getYAxis().getMax();
 
     // logarithmic
-    if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
+    if (styleManagerCategory.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
       xMax = Math.log10(xMax);
     }
-    if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+    if (styleManagerCategory.isYAxisLogarithmic()) {
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
     }
 
-    for (Series series : getChartInternal().getSeriesMap().values()) {
+    Map<String, Series_Category> map = chart.getSeriesMap();
 
-      // sanity check
-      if (Series.SeriesType.Bar.equals(series.getSeriesType())) {
-        throw new RuntimeException("X-Y charts only accept Line, Scatter, and Area series types!!!");
-      }
+    int numCategories = map.size();
+    double gridStep = xTickSpace / numCategories;
+
+    for (Series_Category series : map.values()) {
 
       // data points
-      Collection<?> xData = series.getXData();
       Collection<? extends Number> yData = series.getYData();
 
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
-      Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
       Iterator<? extends Number> ebItr = null;
       Collection<? extends Number> errorBars = series.getErrorBars();
@@ -118,20 +127,8 @@ public class PlotContentNumericalChart extends PlotContent {
       }
       Path2D.Double path = null;
 
-      while (xItr.hasNext()) {
-
-        double x = 0.0;
-        if (getChartInternal().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
-          x = ((Number) xItr.next()).doubleValue();
-        }
-        else if (getChartInternal().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
-          x = ((Date) xItr.next()).getTime();
-        }
-        // System.out.println(x);
-        if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
-          x = Math.log10(x);
-        }
-        // System.out.println(x);
+      int categoryCounter = 0;
+      while (yItr.hasNext()) {
 
         Number next = yItr.next();
         if (next == null) {
@@ -150,7 +147,7 @@ public class PlotContentNumericalChart extends PlotContent {
         double y = 0.0;
 
         // System.out.println(y);
-        if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+        if (styleManagerCategory.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         }
         else {
@@ -158,20 +155,14 @@ public class PlotContentNumericalChart extends PlotContent {
         }
         // System.out.println(y);
 
-        double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
         double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
-
-        // a check if all x data are the exact same values
-        if (Math.abs(xMax - xMin) / 5 == 0.0) {
-          xTransform = bounds.getWidth() / 2.0;
-        }
 
         // a check if all y data are the exact same values
         if (Math.abs(yMax - yMin) / 5 == 0.0) {
           yTransform = bounds.getHeight() / 2.0;
         }
 
-        double xOffset = bounds.getX() + xTransform;
+        double xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
         double yOffset = bounds.getY() + yTransform;
         // System.out.println(xTransform);
         // System.out.println(xOffset);
@@ -180,7 +171,7 @@ public class PlotContentNumericalChart extends PlotContent {
         // System.out.println("---");
 
         // paint line
-        if (Series.SeriesType.Line.equals(series.getSeriesType()) || Series.SeriesType.Area.equals(series.getSeriesType())) {
+        if (ChartCategorySeriesRenderStyle.Line.equals(series.getChartCategorySeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
 
           if (series.getStroke() != null) {
 
@@ -194,7 +185,7 @@ public class PlotContentNumericalChart extends PlotContent {
         }
 
         // paint area
-        if (Series.SeriesType.Area.equals(series.getSeriesType())) {
+        if (ChartCategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
@@ -219,7 +210,7 @@ public class PlotContentNumericalChart extends PlotContent {
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset, getChartInternal().getStyleManager().getMarkerSize());
+          series.getMarker().paint(g, xOffset, yOffset, styleManagerCategory.getMarkerSize());
         }
 
         // paint error bars
@@ -228,17 +219,17 @@ public class PlotContentNumericalChart extends PlotContent {
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (getChartInternal().getStyleManager().isErrorBarsColorSeriesColor()) {
+          if (styleManagerCategory.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getStrokeColor());
           }
           else {
-            g.setColor(getChartInternal().getStyleManager().getErrorBarsColor());
+            g.setColor(styleManagerCategory.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 
           // Top value
           double topValue = 0.0;
-          if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+          if (styleManagerCategory.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
           }
@@ -250,7 +241,7 @@ public class PlotContentNumericalChart extends PlotContent {
 
           // Bottom value
           double bottomValue = 0.0;
-          if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+          if (styleManagerCategory.isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
@@ -274,7 +265,6 @@ public class PlotContentNumericalChart extends PlotContent {
       // close any open path for area charts
       closePath(g, path, previousX, bounds, yTopMargin);
     }
-
     g.setClip(null);
 
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,11 +19,12 @@ package org.knowm.xchart.demo.charts.line;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.ChartBuilderXY;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
 /**
  * Logarithmic Y-Axis
@@ -55,10 +56,10 @@ public class LineChart01 implements ExampleChart {
     }
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).build();
+    Chart_XY chart = new ChartBuilderXY().width(800).height(600).title("Powers of Ten").xAxisTitle("Power").yAxisTitle("Value").build();
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
+    chart.getStyleManager().setChartTitleVisible(true);
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyleManager().setYAxisLogarithmic(true);
     // chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);

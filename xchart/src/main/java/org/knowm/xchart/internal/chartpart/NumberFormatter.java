@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,20 +20,20 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 
 /**
  * @author timmolter
  */
 public class NumberFormatter {
 
-  private final StyleManager styleManager;
+  private final StyleManagerAxesChart styleManager;
 
   /**
    * Constructor
    */
-  public NumberFormatter(StyleManager styleManager) {
+  public NumberFormatter(StyleManagerAxesChart styleManager) {
 
     this.styleManager = styleManager;
   }

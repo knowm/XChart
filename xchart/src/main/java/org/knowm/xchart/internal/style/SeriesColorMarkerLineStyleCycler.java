@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +16,9 @@
  */
 package org.knowm.xchart.internal.style;
 
+import java.awt.Color;
 import java.util.List;
 
-import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
 
@@ -31,14 +31,14 @@ import org.knowm.xchart.SeriesMarker;
  */
 public abstract class SeriesColorMarkerLineStyleCycler {
 
-  public abstract List<SeriesColor> getSeriesColorList();
+  public abstract List<Color> getColorList();
 
   public abstract List<SeriesMarker> getSeriesMarkerList();
 
   public abstract List<SeriesLineStyle> getLineStyleList();
 
-  /** a List holding the SeriesColors */
-  private final List<SeriesColor> seriesColorList;
+  /** a List holding the Colors */
+  private final List<Color> seriesColorList;
 
   /** a map holding the SeriesMarkers */
   private final List<SeriesMarker> seriesMarkerList;
@@ -56,15 +56,15 @@ public abstract class SeriesColorMarkerLineStyleCycler {
    */
   public SeriesColorMarkerLineStyleCycler() {
 
-    seriesColorList = getSeriesColorList();
+    seriesColorList = getColorList();
     seriesMarkerList = getSeriesMarkerList();
     seriesLineStyleList = getLineStyleList();
   }
 
   /**
-   * Get the next SeriesColorMarkerLineStyle
+   * Get the next ColorMarkerLineStyle
    *
-   * @return the next SeriesColorMarkerLineStyle
+   * @return the next ColorMarkerLineStyle
    */
   public SeriesColorMarkerLineStyle getNextSeriesColorMarkerLineStyle() {
 
@@ -73,7 +73,7 @@ public abstract class SeriesColorMarkerLineStyleCycler {
       colorCounter = 0;
       strokeCounter++;
     }
-    SeriesColor seriesColor = seriesColorList.get(colorCounter++);
+    Color seriesColor = seriesColorList.get(colorCounter++);
 
     // 2. Stroke - cycle through strokes one by one but only after a color cycle
     if (strokeCounter >= seriesLineStyleList.size()) {
@@ -87,6 +87,6 @@ public abstract class SeriesColorMarkerLineStyleCycler {
     }
     SeriesMarker marker = seriesMarkerList.get(markerCounter++);
 
-    return new SeriesColorMarkerLineStyle(seriesColor.getColor(), marker.getMarker(), seriesLineStyle.getBasicStroke());
+    return new SeriesColorMarkerLineStyle(seriesColor, marker.getMarker(), seriesLineStyle.getBasicStroke());
   }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,13 +24,13 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 
 /**
  * @author timmolter
  */
-public abstract class AxisTickCalculator {
+public abstract class AxisTickCalculator_ {
 
   /** the List of tick label position in pixels */
   protected List<Double> tickLocations = new LinkedList<Double>();;
@@ -46,7 +46,7 @@ public abstract class AxisTickCalculator {
 
   protected final double maxValue;
 
-  protected final StyleManager styleManager;
+  protected final StyleManagerAxesChart styleManager;
 
   /**
    * Constructor
@@ -57,7 +57,7 @@ public abstract class AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickCalculator_(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManagerAxesChart styleManager) {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
