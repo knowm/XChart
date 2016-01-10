@@ -27,8 +27,10 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.LegendAxesChart;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
-import org.knowm.xchart.internal.style.Theme;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
+import org.knowm.xchart.internal.style.Theme;
 
 /**
  * @author timmolter
@@ -178,10 +180,10 @@ public class Chart_Category extends Chart<StyleManagerCategory, Series_Category>
 
       // inspect the series to see what kind of data it contains (Number, Date)
 
-      series = new Series_Category(seriesName, xData, yData, errorBars, styleManager.getSeriesColorMarkerLineStyleCycler().getNextSeriesColorMarkerLineStyle());
+      series = new Series_Category(seriesName, xData, yData, errorBars);
     }
     else { // generate xData
-      series = new Series_Category(seriesName, getGeneratedData(yData.size()), yData, errorBars, styleManager.getSeriesColorMarkerLineStyleCycler().getNextSeriesColorMarkerLineStyle());
+      series = new Series_Category(seriesName, getGeneratedData(yData.size()), yData, errorBars);
     }
 
     seriesMap.put(seriesName, series);
@@ -238,9 +240,7 @@ public class Chart_Category extends Chart<StyleManagerCategory, Series_Category>
         seriesCategory.setChartCategorySeriesRenderStyle(getStyleManager().getChartCategorySeriesRenderStyle());
       }
     }
-
-    // override min/max value for bar charts' Y-Axis
-    // getyAxis().setMin(0);
+    setSeriesStyles();
 
     // paint chart main background
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
@@ -254,6 +254,35 @@ public class Chart_Category extends Chart<StyleManagerCategory, Series_Category>
     chartLegend.paint(g);
 
     g.dispose();
+  }
+
+  /**
+   * set the series color, marker and line style based on theme
+   */
+  public void setSeriesStyles() {
+
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyleManager().getSeriesColors(), getStyleManager().getSeriesMarkers(),
+        getStyleManager().getSeriesLines());
+    for (Series_Category series : getSeriesMap().values()) {
+
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+
+      if (series.getLineStyle() == null) { // wasn't set manually
+        series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
+      }
+      if (series.getLineColor() == null) { // wasn't set manually
+        series.setLineColor(seriesColorMarkerLineStyle.getColor());
+      }
+      if (series.getFillColor() == null) { // wasn't set manually
+        series.setFillColor(seriesColorMarkerLineStyle.getColor());
+      }
+      if (series.getMarker() == null) { // wasn't set manually
+        series.setMarker(seriesColorMarkerLineStyle.getMarker());
+      }
+      if (series.getMarkerColor() == null) { // wasn't set manually
+        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
+      }
+    }
   }
 
 }

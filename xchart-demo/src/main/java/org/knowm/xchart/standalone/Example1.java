@@ -19,10 +19,10 @@ package org.knowm.xchart.standalone;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.VectorGraphicsEncoder;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Creates a simple Chart and saves it as a PNG and JPEG image file.
@@ -39,7 +39,7 @@ public class Example1 {
     chart.setXAxisTitle("X");
     chart.setXAxisTitle("Y");
     Series_XY series = chart.addSeries("y(x)", null, yData);
-    series.setMarker(SeriesMarker.CIRCLE);
+    series.setMarker(SeriesMarkers.CIRCLE);
 
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.JPG);

@@ -21,10 +21,10 @@ import java.util.List;
 
 import org.knowm.xchart.ChartBuilderXY;
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Create a Chart matrix
@@ -44,7 +44,7 @@ public class Example2 {
       chart.getStyleManager().setYAxisMin(-10);
       chart.getStyleManager().setYAxisMax(10);
       Series_XY series = chart.addSeries("" + i, null, getRandomWalk(200));
-      series.setMarker(SeriesMarker.NONE);
+      series.setMarker(SeriesMarkers.NONE);
       charts.add(chart);
     }
     new SwingWrapper(charts).displayChartMatrix();

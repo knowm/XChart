@@ -19,12 +19,12 @@ package org.knowm.xchart.demo.charts.line;
 import java.awt.Color;
 
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Logarithmic Y-Axis with Error Bars
@@ -66,9 +66,9 @@ public class LineChart06 implements ExampleChart {
 
     Series_XY series1 = chart.addSeries("Error bar\ntest data", xData, yData1, errdata);
 
-    series1.setLineStyle(SeriesLineStyle.SOLID);
+    series1.setLineStyle(SeriesLines.SOLID);
 
-    series1.setMarker(SeriesMarker.DIAMOND);
+    series1.setMarker(SeriesMarkers.DIAMOND);
 
     series1.setMarkerColor(Color.GREEN);
 

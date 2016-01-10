@@ -33,6 +33,7 @@ import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
 
 /**
  * @author timmolter
@@ -189,11 +190,11 @@ public class PlotContent_XY<SM extends StyleManagerAxesChart, S extends Series> 
         boolean isSeriesLineOrArea = (ChartXYSeriesRenderStyle.Line == series.getChartXYSeriesRenderStyle()) || (ChartXYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle());
 
         if (isSeriesLineOrArea) {
-          if (series.getStroke() != null) {
+          if (series.getLineStyle() != SeriesLines.NONE) {
 
             if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
-              g.setColor(series.getStrokeColor());
-              g.setStroke(series.getStroke());
+              g.setColor(series.getLineColor());
+              g.setStroke(series.getLineStyle());
               Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
               g.draw(line);
             }
@@ -236,7 +237,7 @@ public class PlotContent_XY<SM extends StyleManagerAxesChart, S extends Series> 
 
           // set error bar style
           if (styleManagerXY.isErrorBarsColorSeriesColor()) {
-            g.setColor(series.getStrokeColor());
+            g.setColor(series.getLineColor());
           }
           else {
             g.setColor(styleManagerXY.getErrorBarsColor());

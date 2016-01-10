@@ -23,7 +23,6 @@ import java.util.List;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
@@ -58,11 +57,10 @@ public class Series_XY extends Series_AxesChart {
    * @param xData
    * @param yData
    * @param errorBars
-   * @param seriesColorMarkerLineStyle
    */
-  public Series_XY(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+  public Series_XY(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
-    super(name, xData, yData, errorBars, seriesColorMarkerLineStyle);
+    super(name, xData, yData, errorBars);
   }
 
   public ChartXYSeriesRenderStyle getChartXYSeriesRenderStyle() {

@@ -20,15 +20,13 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
 
-import org.knowm.xchart.ChartColor;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.colors.ChartColor;
 import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
+import org.knowm.xchart.internal.style.lines.XChartSeriesLines;
+import org.knowm.xchart.internal.style.markers.Marker;
+import org.knowm.xchart.internal.style.markers.XChartSeriesMarkers;
 
 /**
  * @author timmolter
@@ -56,9 +54,21 @@ public class XChartTheme implements Theme {
   }
 
   @Override
-  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+  public Color[] getSeriesColors() {
 
-    return new XChartColorMarkerLineStyleCycler();
+    return new XChartSeriesColors().getSeriesColors();
+  }
+
+  @Override
+  public Marker[] getSeriesMarkers() {
+
+    return new XChartSeriesMarkers().getSeriesMarkers();
+  }
+
+  @Override
+  public BasicStroke[] getSeriesLines() {
+
+    return new XChartSeriesLines().getSeriesLines();
   }
 
   // Chart Title ///////////////////////////////
@@ -344,42 +354,6 @@ public class XChartTheme implements Theme {
   public boolean isErrorBarsColorSeriesColor() {
 
     return false;
-  }
-
-  public class XChartColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
-
-    @Override
-    public List<Color> getColorList() {
-
-      return new XChartSeriesColors().getSeriesColors();
-    }
-
-    @Override
-    public List<SeriesMarker> getSeriesMarkerList() {
-
-      // 2. Marker
-      List<SeriesMarker> seriesMarkerList = new ArrayList<SeriesMarker>();
-      for (SeriesMarker seriesMarker : EnumSet.allOf(SeriesMarker.class)) {
-        if (seriesMarker.getIndex() >= 0) { // skip SeriesMarker.NONE
-          seriesMarkerList.add(seriesMarker);
-        }
-      }
-      return seriesMarkerList;
-    }
-
-    @Override
-    public List<SeriesLineStyle> getLineStyleList() {
-
-      // 3. Stroke
-      List<SeriesLineStyle> seriesLineStyleList = new ArrayList<SeriesLineStyle>();
-      for (SeriesLineStyle seriesLineStyle : EnumSet.allOf(SeriesLineStyle.class)) {
-        if (seriesLineStyle.getIndex() >= 0) { // skip SeriesLineStyle.NONE
-          seriesLineStyleList.add(seriesLineStyle);
-        }
-      }
-      return seriesLineStyleList;
-    }
-
   }
 
 }

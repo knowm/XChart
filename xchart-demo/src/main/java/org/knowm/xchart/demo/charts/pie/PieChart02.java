@@ -16,6 +16,8 @@
  */
 package org.knowm.xchart.demo.charts.pie;
 
+import java.awt.Color;
+
 import org.knowm.xchart.ChartBuilderPie;
 import org.knowm.xchart.Chart_Pie;
 import org.knowm.xchart.SwingWrapper;
@@ -28,12 +30,13 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <ul>
  * <li>Pie Chart
  * <li>ChartBuilderPie
+ * <li>Custom series palette
  */
-public class PieChart01 implements ExampleChart<Chart_Pie> {
+public class PieChart02 implements ExampleChart<Chart_Pie> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_Pie> exampleChart = new PieChart01();
+    ExampleChart<Chart_Pie> exampleChart = new PieChart02();
     Chart_Pie chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -43,10 +46,14 @@ public class PieChart01 implements ExampleChart<Chart_Pie> {
 
     // Create Chart
     Chart_Pie chart = new ChartBuilderPie().width(800).height(600).title(getClass().getSimpleName()).build();
-    chart.addSeries("Pennies", 387);
-    chart.addSeries("Nickels", 234);
-    chart.addSeries("Dimes", 190);
-    chart.addSeries("Quarters", 270);
+    chart.addSeries("Gold", 24);
+    chart.addSeries("Silver", 21);
+    chart.addSeries("Platinum", 39);
+    chart.addSeries("Copper", 17);
+    chart.addSeries("Zinc", 40);
+
+    Color[] sliceColors = new Color[] { new Color(224, 68, 14), new Color(230, 105, 62), new Color(236, 143, 110), new Color(243, 180, 159), new Color(246, 199, 182) };
+    chart.getStyleManager().setSeriesColors(sliceColors);
 
     return chart;
   }

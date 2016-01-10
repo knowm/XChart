@@ -21,26 +21,24 @@ import java.awt.Color;
 /**
  * @author timmolter
  */
-public class PrinterFriendlySeriesColors implements SeriesColors {
+public class MatlabSeriesColors implements SeriesColors {
 
-  // printer-friendly colors from http://colorbrewer2.org/
-  public static Color RED = new Color(228, 26, 28, 180);
-  public static Color GREEN = new Color(55, 126, 184, 180);
-  public static Color BLUE = new Color(77, 175, 74, 180);
-  public static Color PURPLE = new Color(152, 78, 163, 180);
-  public static Color ORANGE = new Color(255, 127, 0, 180);
-  // public static Color YELLOW = new Color(255, 255, 51, 180);
-  // public static Color BROWN = new Color(166, 86, 40, 180);
-  // public static Color PINK = new Color(247, 129, 191, 180);
+  public static Color BLUE = new Color(0, 0, 255, 255);
+  public static Color GREEN = new Color(0, 128, 0, 255);
+  public static Color RED = new Color(255, 0, 0, 255);
+  public static Color TURQUOISE = new Color(0, 191, 191, 255);
+  public static Color MAGENTA = new Color(191, 0, 191, 255);
+  public static Color YELLOW = new Color(191, 191, 0, 255);
+  public static Color DARK_GREY = new Color(64, 64, 64, 255);
 
   private final Color[] seriesColors;
 
   /**
    * Constructor
    */
-  public PrinterFriendlySeriesColors() {
+  public MatlabSeriesColors() {
 
-    seriesColors = new Color[] { RED, GREEN, BLUE, PURPLE, ORANGE };
+    seriesColors = new Color[] { BLUE, GREEN, RED, TURQUOISE, MAGENTA, YELLOW, DARK_GREY };
   }
 
   @Override

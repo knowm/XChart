@@ -17,6 +17,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,9 +31,7 @@ import org.knowm.xchart.internal.style.StyleManager;
  *
  * @author timmolter
  */
-public abstract class Chart<SM extends StyleManager, S extends Series> {
-
-  public abstract void paint(Graphics2D g); // TODO 3.0.0 combine with ChartPart?
+public abstract class Chart<SM extends StyleManager, S extends Series> implements ChartPart {
 
   public abstract void paint(Graphics2D g, int width, int height);
 
@@ -206,5 +205,11 @@ public abstract class Chart<SM extends StyleManager, S extends Series> {
   public SM getStyleManager() {
 
     return styleManager;
+  }
+
+  @Override
+  public Rectangle2D getBounds() {
+
+    return new Rectangle2D.Double(0, 0, width, height);
   }
 }

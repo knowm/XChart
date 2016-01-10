@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.knowm.xchart.Chart_Category;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
@@ -28,6 +27,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Line chart with multiple Category Series
@@ -96,7 +96,7 @@ public class LineChart07 implements ExampleChart {
     // Add data series to chart
     for (int i = 0; i < seriesNames.length; i++) {
       Series_Category series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
-      series.setMarker(SeriesMarker.NONE);
+      series.setMarker(SeriesMarkers.NONE);
       // series.setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
     }
     chart.getStyleManager().setYAxisLogarithmic(true);

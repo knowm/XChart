@@ -26,16 +26,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.knowm.xchart.ChartColor;
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.colors.ChartColor;
 import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Extensive Chart Customization
@@ -105,8 +105,8 @@ public class LineChart03 implements ExampleChart {
     Series_XY series = chart.addSeries("Fake Data", xData, yData);
     series.setLineColor(XChartSeriesColors.BLUE);
     series.setMarkerColor(Color.ORANGE);
-    series.setMarker(SeriesMarker.CIRCLE);
-    series.setLineStyle(SeriesLineStyle.SOLID);
+    series.setMarker(SeriesMarkers.CIRCLE);
+    series.setLineStyle(SeriesLines.SOLID);
 
     return chart;
   }

@@ -19,13 +19,13 @@ package org.knowm.xchart.demo.charts.line;
 import java.awt.Color;
 
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Scatter and Line
@@ -63,13 +63,13 @@ public class LineChart05 implements ExampleChart {
     double[] yData2 = new double[] { 102, 49, 23.6, 11.3, 5.4, 2.6, 1.25 };
 
     Series_XY series = chart.addSeries("A", xData, yData);
-    series.setLineStyle(SeriesLineStyle.NONE);
-    series.setMarker(SeriesMarker.DIAMOND);
+    series.setLineStyle(SeriesLines.NONE);
+    series.setMarker(SeriesMarkers.DIAMOND);
     series.setMarkerColor(Color.BLACK);
 
     Series_XY series2 = chart.addSeries("B", xData, yData2);
-    series2.setMarker(SeriesMarker.NONE);
-    series2.setLineStyle(SeriesLineStyle.DASH_DASH);
+    series2.setMarker(SeriesMarkers.NONE);
+    series2.setLineStyle(SeriesLines.DASH_DASH);
     series2.setLineColor(Color.BLACK);
 
     chart.getStyleManager().setYAxisLogarithmic(true);

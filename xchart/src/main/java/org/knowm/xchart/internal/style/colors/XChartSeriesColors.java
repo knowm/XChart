@@ -17,13 +17,11 @@
 package org.knowm.xchart.internal.style.colors;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author timmolter
  */
-public class XChartSeriesColors {
+public class XChartSeriesColors implements SeriesColors {
 
   // original XChart colors
   public static Color BLUE = new Color(0, 55, 255, 180);
@@ -39,29 +37,18 @@ public class XChartSeriesColors {
   public static Color BROWN = new Color(102, 56, 10, 180);
   public static Color BLACK = new Color(0, 0, 0, 180);
 
-  List<Color> seriesColors = new ArrayList<Color>();
+  private final Color[] seriesColors;
 
   /**
    * Constructor
    */
   public XChartSeriesColors() {
 
-    seriesColors.add(BLUE);
-    seriesColors.add(ORANGE);
-    seriesColors.add(PURPLE);
-    seriesColors.add(GREEN);
-    seriesColors.add(RED);
-    seriesColors.add(YELLOW);
-    seriesColors.add(MAGENTA);
-    seriesColors.add(PINK);
-    seriesColors.add(LIGHT_GREY);
-    seriesColors.add(CYAN);
-    seriesColors.add(BROWN);
-    seriesColors.add(BLACK);
-
+    seriesColors = new Color[] { BLUE, ORANGE, PURPLE, GREEN, RED, YELLOW, MAGENTA, PINK, LIGHT_GREY, CYAN, BROWN, BLACK };
   }
 
-  public List<Color> getSeriesColors() {
+  @Override
+  public Color[] getSeriesColors() {
 
     return seriesColors;
   }

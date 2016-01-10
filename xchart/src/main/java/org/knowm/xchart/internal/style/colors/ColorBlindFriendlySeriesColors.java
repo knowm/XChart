@@ -21,26 +21,26 @@ import java.awt.Color;
 /**
  * @author timmolter
  */
-public class PrinterFriendlySeriesColors implements SeriesColors {
+public class ColorBlindFriendlySeriesColors implements SeriesColors {
 
-  // printer-friendly colors from http://colorbrewer2.org/
-  public static Color RED = new Color(228, 26, 28, 180);
-  public static Color GREEN = new Color(55, 126, 184, 180);
-  public static Color BLUE = new Color(77, 175, 74, 180);
-  public static Color PURPLE = new Color(152, 78, 163, 180);
-  public static Color ORANGE = new Color(255, 127, 0, 180);
-  // public static Color YELLOW = new Color(255, 255, 51, 180);
-  // public static Color BROWN = new Color(166, 86, 40, 180);
-  // public static Color PINK = new Color(247, 129, 191, 180);
+  // The color blind friendly palette
+  public static Color BLACK = new Color(0, 0, 0, 255);
+  public static Color ORANGE = new Color(230, 159, 0, 255);
+  public static Color SKY_BLUE = new Color(86, 180, 233, 255);
+  public static Color BLUISH_GREEN = new Color(0, 158, 115, 255);
+  public static Color YELLOW = new Color(240, 228, 66, 255);
+  public static Color BLUE = new Color(0, 114, 178, 255);
+  public static Color VERMILLION = new Color(213, 94, 0, 255);
+  public static Color REDDISH_PURPLE = new Color(204, 121, 167, 255);
 
   private final Color[] seriesColors;
 
   /**
    * Constructor
    */
-  public PrinterFriendlySeriesColors() {
+  public ColorBlindFriendlySeriesColors() {
 
-    seriesColors = new Color[] { RED, GREEN, BLUE, PURPLE, ORANGE };
+    seriesColors = new Color[] { BLACK, ORANGE, SKY_BLUE, BLUISH_GREEN, YELLOW, BLUE, VERMILLION, REDDISH_PURPLE };
   }
 
   @Override

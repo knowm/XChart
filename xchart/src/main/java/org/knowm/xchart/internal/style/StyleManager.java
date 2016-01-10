@@ -16,8 +16,11 @@
  */
 package org.knowm.xchart.internal.style;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+
+import org.knowm.xchart.internal.style.markers.Marker;
 
 /**
  * The StyleManager is used to manage all things related to styling of the vast number of Chart components
@@ -63,7 +66,9 @@ public abstract class StyleManager {
   private Color chartBackgroundColor;
   private Color chartFontColor;
   private int chartPadding;
-  private SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler;
+  private Color[] seriesColors;
+  private BasicStroke[] seriesLines;
+  private Marker[] seriesMarkers;
 
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
@@ -93,7 +98,9 @@ public abstract class StyleManager {
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
     chartPadding = theme.getChartPadding();
-    seriesColorMarkerLineStyleCycler = theme.getSeriesColorMarkerLineStyleCycler();
+    seriesColors = theme.getSeriesColors();
+    seriesLines = theme.getSeriesLines();
+    seriesMarkers = theme.getSeriesMarkers();
 
     // Chart Title ///////////////////////////////
     chartTitleFont = theme.getChartTitleFont();
@@ -165,17 +172,37 @@ public abstract class StyleManager {
     return chartPadding;
   }
 
-  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
-
-    return seriesColorMarkerLineStyleCycler;
-  }
-
-  public void setSeriesColorMarkerLineStyleCycler(SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler) {
-
-    this.seriesColorMarkerLineStyleCycler = seriesColorMarkerLineStyleCycler;
-  }
-
   // Chart Title ///////////////////////////////
+
+  public Color[] getSeriesColors() {
+
+    return seriesColors;
+  }
+
+  public void setSeriesColors(Color[] seriesColors) {
+
+    this.seriesColors = seriesColors;
+  }
+
+  public BasicStroke[] getSeriesLines() {
+
+    return seriesLines;
+  }
+
+  public void setSeriesLines(BasicStroke[] seriesLines) {
+
+    this.seriesLines = seriesLines;
+  }
+
+  public Marker[] getSeriesMarkers() {
+
+    return seriesMarkers;
+  }
+
+  public void setSeriesMarkers(Marker[] seriesMarkers) {
+
+    this.seriesMarkers = seriesMarkers;
+  }
 
   /**
    * Set the chart title font

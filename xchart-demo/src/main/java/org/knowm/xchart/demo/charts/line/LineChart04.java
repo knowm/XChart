@@ -17,13 +17,13 @@
 package org.knowm.xchart.demo.charts.line;
 
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Hundreds of Series on One Plot
@@ -52,8 +52,8 @@ public class LineChart04 implements ExampleChart {
     for (int i = 0; i < 200; i++) {
       Series_XY series = chart.addSeries("A" + i, new double[] { Math.random() / 1000, Math.random() / 1000 }, new double[] { Math.random() / -1000, Math.random() / -1000 });
       series.setLineColor(XChartSeriesColors.BLUE);
-      series.setLineStyle(SeriesLineStyle.SOLID);
-      series.setMarker(SeriesMarker.CIRCLE);
+      series.setLineStyle(SeriesLines.SOLID);
+      series.setMarker(SeriesMarkers.CIRCLE);
       series.setMarkerColor(XChartSeriesColors.BLUE);
 
     }

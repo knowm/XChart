@@ -17,7 +17,6 @@
 package org.knowm.xchart.demo.charts.area;
 
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
@@ -25,6 +24,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.StyleManager;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Combination Line & Area Chart
@@ -79,17 +79,17 @@ public class AreaLineChart03 implements ExampleChart {
     // @formatter:on
 
     Series_XY seriesLiability = chart.addSeries("Liability", xAges, yLiability);
-    seriesLiability.setMarker(SeriesMarker.NONE);
+    seriesLiability.setMarker(SeriesMarkers.NONE);
     seriesLiability.setChartXYSeriesRenderStyle(Series_XY.ChartXYSeriesRenderStyle.Area);
 
     Series_XY seriesPercentile75th = chart.addSeries("75th Percentile", xAges, yPercentile75th);
-    seriesPercentile75th.setMarker(SeriesMarker.NONE);
+    seriesPercentile75th.setMarker(SeriesMarkers.NONE);
 
     Series_XY seriesPercentile50th = chart.addSeries("50th Percentile", xAges, yPercentile50th);
-    seriesPercentile50th.setMarker(SeriesMarker.NONE);
+    seriesPercentile50th.setMarker(SeriesMarkers.NONE);
 
     Series_XY seriesPercentile25th = chart.addSeries("25th Percentile", xAges, yPercentile25th);
-    seriesPercentile25th.setMarker(SeriesMarker.NONE);
+    seriesPercentile25th.setMarker(SeriesMarkers.NONE);
 
     chart.getStyleManager().setYAxisLabelAlignment(StyleManager.TextAlignment.Right);
     chart.getStyleManager().setYAxisDecimalPattern("$ #,###.##");

@@ -30,8 +30,8 @@ import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.MatlabTheme;
 import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
+import org.knowm.xchart.internal.style.colors.MatlabSeriesColors;
 
 /**
  * Date Categories
@@ -76,7 +76,7 @@ public class BarChart02 implements ExampleChart {
       yData.add(-1 * 0.00000001 * ((random.nextInt(i) + 1)));
     }
     Series_Category series = chart.addSeries("Model 77", xData, yData);
-    series.setLineColor(MatlabTheme.RED);
+    series.setLineColor(MatlabSeriesColors.RED);
     chart.getStyleManager().setPlotGridLinesVisible(false);
     chart.getStyleManager().setBarFilled(false);
     chart.getStyleManager().setDatePattern("YYYY");

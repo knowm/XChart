@@ -14,53 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart;
+package org.knowm.xchart.internal.style.colors;
 
 import java.awt.Color;
 
 /**
- * Pre-defined Colors used for various Chart Elements
- * 
  * @author timmolter
  */
-public enum ChartColor {
+public class GGPlot2SeriesColors implements SeriesColors {
 
-  /** BLACK */
-  BLACK(new Color(0, 0, 0)),
+  public static Color RED = new Color(248, 118, 109, 255);
+  public static Color YELLOW_GREEN = new Color(163, 165, 0, 255);
+  public static Color GREEN = new Color(0, 191, 125, 255);
+  public static Color BLUE = new Color(0, 176, 246, 255);
+  public static Color PURPLE = new Color(231, 107, 243, 255);
 
-  /** DARK_GREY */
-  DARK_GREY(new Color(130, 130, 130)),
-
-  /** GREY */
-  GREY(new Color(210, 210, 210)),
-
-  /** LIGHT_GREY */
-  LIGHT_GREY(new Color(230, 230, 230)),
-
-  /** WHITE */
-  WHITE(new Color(255, 255, 255));
-
-  Color color;
-
-  /**
-   * Get a AWT Color Object
-   * 
-   * @param chartColor
-   * @return a AWT Color Object
-   */
-  public static Color getAWTColor(ChartColor chartColor) {
-
-    return chartColor.color;
-  }
+  private final Color[] seriesColors;
 
   /**
    * Constructor
-   * 
-   * @param color
    */
-  private ChartColor(Color color) {
+  public GGPlot2SeriesColors() {
 
-    this.color = color;
+    seriesColors = new Color[] { RED, YELLOW_GREEN, GREEN, BLUE, PURPLE };
   }
 
+  @Override
+  public Color[] getSeriesColors() {
+
+    return seriesColors;
+  }
 }

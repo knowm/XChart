@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.markers.Marker;
 
 /**
@@ -78,21 +77,16 @@ public abstract class Series_AxesChart extends Series {
    * @param yData
    * @param yAxisType
    * @param errorBars
-   * @param seriesColorMarkerLineStyle
    */
-  public Series_AxesChart(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+  public Series_AxesChart(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
-    super(name, seriesColorMarkerLineStyle);
+    super(name);
 
     this.xData = xData;
     this.xAxisType = getAxesType(xData);
     this.yData = yData;
     this.yAxisType = AxisDataType.Number;
     this.errorBars = errorBars;
-    strokeColor = seriesColorMarkerLineStyle.getColor();
-    markerColor = seriesColorMarkerLineStyle.getColor();
-    marker = seriesColorMarkerLineStyle.getMarker();
-    stroke = seriesColorMarkerLineStyle.getStroke();
 
     calculateMinMax();
   }
@@ -205,17 +199,6 @@ public abstract class Series_AxesChart extends Series {
   /**
    * Set the line style of the series
    *
-   * @param seriesLineStyle
-   */
-  public Series setLineStyle(SeriesLineStyle seriesLineStyle) {
-
-    stroke = SeriesLineStyle.getBasicStroke(seriesLineStyle);
-    return this;
-  }
-
-  /**
-   * Set the line style of the series
-   *
    * @param basicStroke
    */
   public Series setLineStyle(BasicStroke basicStroke) {
@@ -240,9 +223,9 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param seriesMarker
    */
-  public Series setMarker(SeriesMarker seriesMarker) {
+  public Series setMarker(Marker seriesMarker) {
 
-    this.marker = seriesMarker.getMarker();
+    this.marker = seriesMarker;
     return this;
   }
 
@@ -302,7 +285,7 @@ public abstract class Series_AxesChart extends Series {
     return yMax;
   }
 
-  public BasicStroke getStroke() {
+  public BasicStroke getLineStyle() {
 
     return stroke;
   }
@@ -312,7 +295,7 @@ public abstract class Series_AxesChart extends Series {
     return marker;
   }
 
-  public Color getStrokeColor() {
+  public Color getLineColor() {
 
     return strokeColor;
   }

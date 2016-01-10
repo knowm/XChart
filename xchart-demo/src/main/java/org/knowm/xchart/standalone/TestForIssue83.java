@@ -19,10 +19,10 @@ package org.knowm.xchart.standalone;
 import java.io.IOException;
 
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.internal.style.StyleManager;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
 
 /**
  * @author timmolter
@@ -51,7 +51,7 @@ public class TestForIssue83 {
         40.45, 40.49, 40.47, 40.59, 40.55, 40.55, 40.35, 40.32, 40.57, 40.33, 40.34, 40.57, 40.38, 40.39, 40.53, 40.33, 40.41, 40.56, 40.37, 40.46, 40.44, 40.47, 40.31, 40.36, 40.55, 40.36, 40.31,
         40.6, 40.39, 40.46, 40.49, 40.42, 40.58, 40.44, 40.38, 40.53, 40.5, 40.32, 40.6, 40.33, 40.41, 40.41, 40.53, 40.35, 40.57, 40.46, 40.56, 40.55, 40.34, 40.49, 40.51, 40.32, 40.37, 40.57, 40.5,
         40.35, 40.43, 40.38, 40.58, 40.52, 40.59, 40.49, 40.55, 40.56, 40.53, 40.47, 40.41 };
-    chart.addSeries("Results", keys, values).setLineStyle(SeriesLineStyle.NONE);
+    chart.addSeries("Results", keys, values).setLineStyle(SeriesLines.NONE);
 
     // BitmapEncoder.saveBitmap(chart, "example", BitmapFormat.PNG);
     new SwingWrapper(chart).displayChart();

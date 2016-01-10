@@ -19,11 +19,11 @@ package org.knowm.xchart.standalone;
 import java.awt.Color;
 
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * @author timmolter
@@ -60,21 +60,21 @@ public class ErrorBarLogTest {
 
     Series_XY series3 = mychart.addSeries("Y-error", xData, yData3);
 
-    series1.setLineStyle(SeriesLineStyle.SOLID);
+    series1.setLineStyle(SeriesLines.SOLID);
 
-    series1.setMarker(SeriesMarker.DIAMOND);
+    series1.setMarker(SeriesMarkers.DIAMOND);
 
     series1.setMarkerColor(Color.MAGENTA);
 
-    series2.setLineStyle(SeriesLineStyle.DASH_DASH);
+    series2.setLineStyle(SeriesLines.DASH_DASH);
 
-    series2.setMarker(SeriesMarker.NONE);
+    series2.setMarker(SeriesMarkers.NONE);
 
     series2.setLineColor(XChartSeriesColors.RED);
 
-    series3.setLineStyle(SeriesLineStyle.DASH_DASH);
+    series3.setLineStyle(SeriesLines.DASH_DASH);
 
-    series3.setMarker(SeriesMarker.NONE);
+    series3.setMarker(SeriesMarkers.NONE);
 
     series3.setLineColor(XChartSeriesColors.RED);
 

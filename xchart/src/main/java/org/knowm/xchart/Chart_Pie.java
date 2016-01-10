@@ -25,8 +25,10 @@ import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.LegendPie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;
-import org.knowm.xchart.internal.style.Theme;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
+import org.knowm.xchart.internal.style.Theme;
 
 /**
  * @author timmolter
@@ -91,7 +93,7 @@ public class Chart_Pie extends Chart<StyleManagerPie, Series_Pie> {
    */
   public Series addSeries(String seriesName, Number value) {
 
-    Series_Pie series = new Series_Pie(seriesName, value, styleManager.getSeriesColorMarkerLineStyleCycler().getNextSeriesColorMarkerLineStyle());
+    Series_Pie series = new Series_Pie(seriesName, value);
 
     if (seriesMap.keySet().contains(seriesName)) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
@@ -125,6 +127,8 @@ public class Chart_Pie extends Chart<StyleManagerPie, Series_Pie> {
       }
     }
 
+    setSeriesStyles();
+
     // paint chart main background
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
     g.setColor(styleManager.getChartBackgroundColor());
@@ -137,4 +141,22 @@ public class Chart_Pie extends Chart<StyleManagerPie, Series_Pie> {
 
     g.dispose();
   }
+
+  /**
+   * set the series color based on theme
+   */
+  public void setSeriesStyles() {
+
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyleManager().getSeriesColors(), getStyleManager().getSeriesMarkers(),
+        getStyleManager().getSeriesLines());
+    for (Series series : getSeriesMap().values()) {
+
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+
+      if (series.getFillColor() == null) { // wasn't set manually
+        series.setFillColor(seriesColorMarkerLineStyle.getColor());
+      }
+    }
+  }
+
 }

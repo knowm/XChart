@@ -19,7 +19,6 @@ package org.knowm.xchart.internal;
 import java.awt.Color;
 
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
@@ -41,14 +40,12 @@ public abstract class Series {
    * @param name
    * @param seriesColorMarkerLineStyle
    */
-  public Series(String name, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+  public Series(String name) {
 
     if (name == null || name.length() < 1) {
       throw new IllegalArgumentException("Series name cannot be null or zero-length!!!");
     }
     this.name = name;
-
-    fillColor = seriesColorMarkerLineStyle.getColor();
 
   }
 

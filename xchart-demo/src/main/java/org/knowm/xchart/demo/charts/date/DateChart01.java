@@ -26,11 +26,11 @@ import java.util.Random;
 
 import org.knowm.xchart.ChartBuilderXY;
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Millisecond Scale
@@ -78,7 +78,7 @@ public class DateChart01 implements ExampleChart {
     }
 
     Series_XY series = chart.addSeries("blah", xData, yData);
-    series.setMarker(SeriesMarker.NONE);
+    series.setMarker(SeriesMarkers.NONE);
 
     return chart;
 

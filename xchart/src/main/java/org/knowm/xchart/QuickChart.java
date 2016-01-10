@@ -19,6 +19,7 @@ package org.knowm.xchart;
 import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * A convenience class for making Charts with one line of code
@@ -90,7 +91,7 @@ public final class QuickChart {
         chart.getStyleManager().setLegendVisible(false);
         series = chart.addSeries(" " + i, xData, yData[i]);
       }
-      series.setMarker(SeriesMarker.NONE);
+      series.setMarker(SeriesMarkers.NONE);
     }
 
     return chart;
@@ -118,7 +119,7 @@ public final class QuickChart {
     chart.setYAxisTitle(yTitle);
 
     Series_XY series = chart.addSeries(seriesName, xData, yData);
-    series.setMarker(SeriesMarker.NONE);
+    series.setMarker(SeriesMarkers.NONE);
 
     return chart;
 

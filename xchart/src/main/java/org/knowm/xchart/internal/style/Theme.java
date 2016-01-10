@@ -21,11 +21,14 @@ import java.awt.Font;
 import java.awt.Stroke;
 
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.colors.SeriesColors;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * @author timmolter
  */
-public interface Theme {
+public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Chart Style ///////////////////////////////
 
@@ -34,10 +37,6 @@ public interface Theme {
   public Color getChartFontColor();
 
   public int getChartPadding();
-
-  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler();
-
-  // public List<Color> getSeriesColors();
 
   // Chart Title ///////////////////////////////
 

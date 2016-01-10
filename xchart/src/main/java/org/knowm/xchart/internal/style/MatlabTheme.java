@@ -20,26 +20,18 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.knowm.xchart.ChartColor;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.colors.ChartColor;
+import org.knowm.xchart.internal.style.colors.MatlabSeriesColors;
+import org.knowm.xchart.internal.style.lines.MatlabSeriesLines;
+import org.knowm.xchart.internal.style.markers.Marker;
+import org.knowm.xchart.internal.style.markers.MatlabSeriesMarkers;
 
 /**
  * @author timmolter
  */
 public class MatlabTheme implements Theme {
-
-  public static Color BLUE = new Color(0, 0, 255, 255);
-  public static Color GREEN = new Color(0, 128, 0, 255);
-  public static Color RED = new Color(255, 0, 0, 255);
-  public static Color TURQUOISE = new Color(0, 191, 191, 255);
-  public static Color MAGENTA = new Color(191, 0, 191, 255);
-  public static Color YELLOW = new Color(191, 191, 0, 255);
-  public static Color DARK_GREY = new Color(64, 64, 64, 255);
 
   // Chart Style ///////////////////////////////
 
@@ -62,9 +54,24 @@ public class MatlabTheme implements Theme {
   }
 
   @Override
-  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+  public Marker[] getSeriesMarkers() {
 
-    return new MatlabColorMarkerLineStyleCycler();
+    return new MatlabSeriesMarkers().getSeriesMarkers();
+
+  }
+
+  @Override
+  public BasicStroke[] getSeriesLines() {
+
+    return new MatlabSeriesLines().getSeriesLines();
+
+  }
+
+  @Override
+  public Color[] getSeriesColors() {
+
+    return new MatlabSeriesColors().getSeriesColors();
+
   }
 
   // Chart Title ///////////////////////////////
@@ -353,42 +360,4 @@ public class MatlabTheme implements Theme {
     return false;
   }
 
-  public class MatlabColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
-
-    @Override
-    public List<Color> getColorList() {
-
-      // 1. Color
-      List<Color> seriesColorMap = new ArrayList<Color>();
-      seriesColorMap.add(BLUE);
-      seriesColorMap.add(GREEN);
-      seriesColorMap.add(RED);
-      seriesColorMap.add(TURQUOISE);
-      seriesColorMap.add(MAGENTA);
-      seriesColorMap.add(YELLOW);
-      seriesColorMap.add(DARK_GREY);
-      return seriesColorMap;
-    }
-
-    @Override
-    public List<SeriesMarker> getSeriesMarkerList() {
-
-      // 2. Marker
-      List<SeriesMarker> seriesMarkerList = new ArrayList<SeriesMarker>();
-      seriesMarkerList.add(SeriesMarker.NONE);
-      return seriesMarkerList;
-    }
-
-    @Override
-    public List<SeriesLineStyle> getLineStyleList() {
-
-      // 3. Stroke
-      List<SeriesLineStyle> seriesLineStyleList = new ArrayList<SeriesLineStyle>();
-      seriesLineStyleList.add(SeriesLineStyle.SOLID);
-      seriesLineStyleList.add(SeriesLineStyle.DASH_DASH);
-      seriesLineStyleList.add(SeriesLineStyle.DOT_DOT);
-      return seriesLineStyleList;
-    }
-
-  }
 }

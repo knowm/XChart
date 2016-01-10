@@ -20,34 +20,18 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.knowm.xchart.ChartColor;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.colors.ChartColor;
+import org.knowm.xchart.internal.style.colors.GGPlot2SeriesColors;
+import org.knowm.xchart.internal.style.lines.GGPlot2SeriesLines;
+import org.knowm.xchart.internal.style.markers.GGPlot2SeriesMarkers;
+import org.knowm.xchart.internal.style.markers.Marker;
 
 /**
  * @author timmolter
  */
 public class GGPlot2Theme implements Theme {
-
-  // The color blind friendly palette
-  // public static Color BLACK = new Color(0, 0, 0, 255);
-  // public static Color ORANGE = new Color(230, 159, 0, 255);
-  // public static Color SKY_BLUE = new Color(86, 180, 233, 255);
-  // public static Color BLUISH_GREEN = new Color(0, 158, 115, 255);
-  // public static Color YELLOW = new Color(240, 228, 66, 255);
-  // public static Color BLUE = new Color(0, 114, 178, 255);
-  // public static Color VERMILLION = new Color(213, 94, 0, 255);
-  // public static Color REDDISH_PURPLE = new Color(204, 121, 167, 255);
-
-  public static Color RED = new Color(248, 118, 109, 255);
-  public static Color YELLOW_GREEN = new Color(163, 165, 0, 255);
-  public static Color GREEN = new Color(0, 191, 125, 255);
-  public static Color BLUE = new Color(0, 176, 246, 255);
-  public static Color PURPLE = new Color(231, 107, 243, 255);
 
   // Chart Style ///////////////////////////////
 
@@ -70,11 +54,23 @@ public class GGPlot2Theme implements Theme {
   }
 
   @Override
-  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+  public Marker[] getSeriesMarkers() {
 
-    return new XChartColorMarkerLineStyleCycler();
+    return new GGPlot2SeriesMarkers().getSeriesMarkers();
+
   }
 
+  @Override
+  public BasicStroke[] getSeriesLines() {
+
+    return new GGPlot2SeriesLines().getSeriesLines();
+  }
+
+  @Override
+  public Color[] getSeriesColors() {
+
+    return new GGPlot2SeriesColors().getSeriesColors();
+  }
   // Chart Title ///////////////////////////////
 
   @Override
@@ -360,53 +356,4 @@ public class GGPlot2Theme implements Theme {
     return false;
   }
 
-  public class XChartColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
-
-    @Override
-    public List<Color> getColorList() {
-
-      // 1. Color
-      List<Color> seriesColorMap = new ArrayList<Color>();
-
-      // The color blind friendly palette
-      // seriesColorMap.add(BLACK);
-      // seriesColorMap.add(ORANGE);
-      // seriesColorMap.add(SKY_BLUE);
-      // seriesColorMap.add(BLUISH_GREEN);
-      // seriesColorMap.add(YELLOW);
-      // seriesColorMap.add(BLUE);
-      // seriesColorMap.add(VERMILLION);
-      // seriesColorMap.add(REDDISH_PURPLE);
-
-      seriesColorMap.add(RED);
-      seriesColorMap.add(YELLOW_GREEN);
-      seriesColorMap.add(GREEN);
-      seriesColorMap.add(BLUE);
-      seriesColorMap.add(PURPLE);
-
-      return seriesColorMap;
-    }
-
-    @Override
-    public List<SeriesMarker> getSeriesMarkerList() {
-
-      // 2. Marker
-      List<SeriesMarker> seriesMarkerList = new ArrayList<SeriesMarker>();
-      seriesMarkerList.add(SeriesMarker.CIRCLE);
-      seriesMarkerList.add(SeriesMarker.DIAMOND);
-      return seriesMarkerList;
-    }
-
-    @Override
-    public List<SeriesLineStyle> getLineStyleList() {
-
-      // 3. Stroke
-      List<SeriesLineStyle> seriesLineStyleList = new ArrayList<SeriesLineStyle>();
-      seriesLineStyleList.add(SeriesLineStyle.SOLID);
-      seriesLineStyleList.add(SeriesLineStyle.DOT_DOT);
-      seriesLineStyleList.add(SeriesLineStyle.DASH_DASH);
-      return seriesLineStyleList;
-    }
-
-  }
 }

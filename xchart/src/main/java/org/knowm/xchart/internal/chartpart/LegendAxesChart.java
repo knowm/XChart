@@ -31,6 +31,7 @@ import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
 
 /**
  * @author timmolter
@@ -124,9 +125,9 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
       if (series.getLegendRenderType() != LegendRenderType.Box) {
 
         // paint line
-        if (series.getLegendRenderType() == LegendRenderType.Line && series.getStroke() != null) {
-          g.setColor(series.getStrokeColor());
-          g.setStroke(series.getStroke());
+        if (series.getLegendRenderType() == LegendRenderType.Line && series.getLineStyle() != SeriesLines.NONE) {
+          g.setColor(series.getLineColor());
+          g.setStroke(series.getLineStyle());
           Shape line = new Line2D.Double(startx, starty + legendEntryHeight / 2.0, startx + chart.getStyleManager().getLegendSeriesLineLength(), starty + legendEntryHeight / 2.0);
           g.draw(line);
         }
@@ -147,11 +148,14 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
       else { // bar/pie type series
 
         // paint little box
-        if (series.getStroke() != null) {
-          g.setColor(series.getStrokeColor());
-          Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+        Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+        if (styleManagerAxesChart.isBarFilled()) {
+          g.setColor(series.getFillColor());
           g.fill(rectSmall);
         }
+
+        g.setColor(series.getLineColor());
+        g.draw(rectSmall);
         // // debug box
         // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
         // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));

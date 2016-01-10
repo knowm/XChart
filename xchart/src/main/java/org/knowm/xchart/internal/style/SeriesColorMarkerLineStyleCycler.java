@@ -16,11 +16,10 @@
  */
 package org.knowm.xchart.internal.style;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.util.List;
 
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.internal.style.markers.Marker;
 
 /**
  * Cycles through the different colors, markers, and strokes in a predetermined way
@@ -29,22 +28,16 @@ import org.knowm.xchart.SeriesMarker;
  *
  * @author timmolter
  */
-public abstract class SeriesColorMarkerLineStyleCycler {
-
-  public abstract List<Color> getColorList();
-
-  public abstract List<SeriesMarker> getSeriesMarkerList();
-
-  public abstract List<SeriesLineStyle> getLineStyleList();
+public class SeriesColorMarkerLineStyleCycler {
 
   /** a List holding the Colors */
-  private final List<Color> seriesColorList;
+  private final Color[] seriesColorList;
 
   /** a map holding the SeriesMarkers */
-  private final List<SeriesMarker> seriesMarkerList;
+  private final Marker[] seriesMarkerList;
 
   /** a map holding the SeriesLineStyles */
-  private final List<SeriesLineStyle> seriesLineStyleList;
+  private final BasicStroke[] seriesLineStyleList;
 
   /** an internal counter */
   private int colorCounter = 0;
@@ -54,11 +47,11 @@ public abstract class SeriesColorMarkerLineStyleCycler {
   /**
    * Constructor
    */
-  public SeriesColorMarkerLineStyleCycler() {
+  public SeriesColorMarkerLineStyleCycler(Color[] seriesColorList, Marker[] seriesMarkerList, BasicStroke[] seriesLineStyleList) {
 
-    seriesColorList = getColorList();
-    seriesMarkerList = getSeriesMarkerList();
-    seriesLineStyleList = getLineStyleList();
+    this.seriesColorList = seriesColorList;
+    this.seriesMarkerList = seriesMarkerList;
+    this.seriesLineStyleList = seriesLineStyleList;
   }
 
   /**
@@ -69,24 +62,24 @@ public abstract class SeriesColorMarkerLineStyleCycler {
   public SeriesColorMarkerLineStyle getNextSeriesColorMarkerLineStyle() {
 
     // 1. Color - cycle through colors one by one
-    if (colorCounter >= seriesColorList.size()) {
+    if (colorCounter >= seriesColorList.length) {
       colorCounter = 0;
       strokeCounter++;
     }
-    Color seriesColor = seriesColorList.get(colorCounter++);
+    Color seriesColor = seriesColorList[colorCounter++];
 
     // 2. Stroke - cycle through strokes one by one but only after a color cycle
-    if (strokeCounter >= seriesLineStyleList.size()) {
+    if (strokeCounter >= seriesLineStyleList.length) {
       strokeCounter = 0;
     }
-    SeriesLineStyle seriesLineStyle = seriesLineStyleList.get(strokeCounter);
+    BasicStroke seriesLineStyle = seriesLineStyleList[strokeCounter];
 
     // 3. Marker - cycle through markers one by one
-    if (markerCounter >= seriesMarkerList.size()) {
+    if (markerCounter >= seriesMarkerList.length) {
       markerCounter = 0;
     }
-    SeriesMarker marker = seriesMarkerList.get(markerCounter++);
+    Marker marker = seriesMarkerList[markerCounter++];
 
-    return new SeriesColorMarkerLineStyle(seriesColor, marker.getMarker(), seriesLineStyle.getBasicStroke());
+    return new SeriesColorMarkerLineStyle(seriesColor, marker, seriesLineStyle);
   }
 }

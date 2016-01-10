@@ -19,7 +19,6 @@ package org.knowm.xchart;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 
 /**
  * A Series containing Pie data to be plotted on a Chart
@@ -54,11 +53,10 @@ public class Series_Pie extends Series {
    *
    * @param name
    * @param value
-   * @param seriesColorMarkerLineStyle
    */
-  public Series_Pie(String name, Number value, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+  public Series_Pie(String name, Number value) {
 
-    super(name, seriesColorMarkerLineStyle);
+    super(name);
     this.value = value;
   }
 

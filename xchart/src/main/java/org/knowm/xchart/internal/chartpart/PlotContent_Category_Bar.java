@@ -31,6 +31,7 @@ import org.knowm.xchart.StyleManagerCategory;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
 
 /**
  * @author timmolter
@@ -184,14 +185,14 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
         // paint series
         if (series.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
           // paint bar
-          g.setColor(series.getStrokeColor());
+          g.setColor(series.getLineColor());
           Path2D.Double path = new Path2D.Double();
           path.moveTo(xOffset, yOffset);
           path.lineTo(xOffset + barWidth, yOffset);
           path.lineTo(xOffset + barWidth, zeroOffset);
           path.lineTo(xOffset, zeroOffset);
           path.closePath();
-          g.setStroke(series.getStroke());
+          g.setStroke(series.getLineStyle());
           if (styleManagerCategory.isBarFilled()) {
             g.fill(path);
           }
@@ -204,11 +205,11 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
           // paint line
           if (series.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Line) {
 
-            if (series.getStroke() != null) {
+            if (series.getLineStyle() != SeriesLines.NONE) {
 
               if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
-                g.setColor(series.getStrokeColor());
-                g.setStroke(series.getStroke());
+                g.setColor(series.getLineColor());
+                g.setStroke(series.getLineStyle());
                 Shape line = new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);
                 g.draw(line);
               }
@@ -233,7 +234,7 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
 
           // set error bar style
           if (styleManagerCategory.isErrorBarsColorSeriesColor()) {
-            g.setColor(series.getStrokeColor());
+            g.setColor(series.getLineColor());
           }
           else {
             g.setColor(styleManagerCategory.getErrorBarsColor());
