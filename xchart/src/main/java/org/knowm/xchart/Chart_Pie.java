@@ -91,7 +91,7 @@ public class Chart_Pie extends Chart<StyleManagerPie, Series_Pie> {
    * @param value
    * @return
    */
-  public Series addSeries(String seriesName, Number value) {
+  public Series_Pie addSeries(String seriesName, Number value) {
 
     Series_Pie series = new Series_Pie(seriesName, value);
 

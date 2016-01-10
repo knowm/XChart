@@ -27,6 +27,9 @@ public class StyleManagerPie extends StyleManager {
 
   private ChartPieSeriesRenderStyle chartPieSeriesRenderStyle;
 
+  private double pieFillPercentage;
+  private boolean isCircular;
+
   /**
    * Constructor
    */
@@ -39,7 +42,9 @@ public class StyleManagerPie extends StyleManager {
   @Override
   protected void setAllStyles() {
 
-    chartPieSeriesRenderStyle = ChartPieSeriesRenderStyle.Pie; // set default to area
+    chartPieSeriesRenderStyle = ChartPieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
+    pieFillPercentage = theme.getPieFillPercentage();
+    isCircular = theme.isCircular();
   }
 
   public ChartPieSeriesRenderStyle getChartPieSeriesRenderStyle() {
@@ -55,6 +60,36 @@ public class StyleManagerPie extends StyleManager {
   public void setChartPieSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
 
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
+  }
+
+  public double getPieFillPercentage() {
+
+    return pieFillPercentage;
+  }
+
+  /**
+   * Sets the amount of space that the pie chart fills. Full fill is 100%, i.e. 1.0
+   *
+   * @param pieFillPercentage
+   */
+  public void setPieFillPercentage(double pieFillPercentage) {
+
+    this.pieFillPercentage = pieFillPercentage;
+  }
+
+  public boolean isCircular() {
+
+    return isCircular;
+  }
+
+  /**
+   * Sets whether or not the pie chart is forced to be circular. Otherwise it's shape is oval, matching the containing plot.
+   *
+   * @param isCircular
+   */
+  public void setCircular(boolean isCircular) {
+
+    this.isCircular = isCircular;
   }
 
   /**

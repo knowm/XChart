@@ -132,6 +132,12 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public boolean isBarFilled();
 
+  // Pie Charts ///////////////////////////////
+
+  public double getPieFillPercentage();
+
+  public boolean isCircular();
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   public int getMarkerSize();

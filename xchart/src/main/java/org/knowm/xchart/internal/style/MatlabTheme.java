@@ -338,6 +338,20 @@ public class MatlabTheme implements Theme {
     return true;
   }
 
+  // Pie Charts ///////////////////////////////
+
+  @Override
+  public double getPieFillPercentage() {
+
+    return .90;
+  }
+
+  @Override
+  public boolean isCircular() {
+
+    return true;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override

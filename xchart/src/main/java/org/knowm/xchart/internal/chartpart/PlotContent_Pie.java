@@ -66,13 +66,30 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
     g.setClip(bounds.createIntersection(rectangle));
 
     // pie bounds
-    double percentage = .70;
+    double percentage = styleManagerPie.getPieFillPercentage();
+
+    // if (styleManagerPie.isCircular()) {
+    //
+    // double pieDiameter = Math.min(bounds.getWidth(), bounds.getHeight());
+    // }
+
     double halfBorderPercentage = (1 - percentage) / 2.0;
-    Rectangle2D pieBounds = new Rectangle2D.Double(bounds.getX() + bounds.getWidth() * halfBorderPercentage, bounds.getY() + bounds.getHeight() * halfBorderPercentage, bounds.getWidth() * percentage,
-        bounds.getHeight() * percentage);
-        // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-        // g.setColor(Color.black);
-        // g.draw(pieBounds);
+    double width = styleManagerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getWidth();
+    double height = styleManagerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getHeight();
+
+    Rectangle2D pieBounds = new Rectangle2D.Double(
+
+        bounds.getX() + bounds.getWidth() / 2 - width / 2 + halfBorderPercentage * width,
+
+        bounds.getY() + bounds.getHeight() / 2 - height / 2 + halfBorderPercentage * height,
+
+        width * percentage,
+
+        height * percentage);
+
+    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    // g.setColor(Color.black);
+    // g.draw(pieBounds);
 
     // get total
     double total = 0.0;
