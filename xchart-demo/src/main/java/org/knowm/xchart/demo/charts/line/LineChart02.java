@@ -21,11 +21,11 @@ import java.util.List;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.style.XChartTheme;
 
 /**
  * Sine wave with customized series style
@@ -65,9 +65,9 @@ public class LineChart02 implements ExampleChart {
 
     // Series 1
     Series series1 = chart.addSeries("y=sin(x)", xData, yData);
-    series1.setLineColor(SeriesColor.PURPLE);
+    series1.setLineColor(XChartTheme.PURPLE);
     series1.setLineStyle(SeriesLineStyle.DASH_DASH);
-    series1.setMarkerColor(SeriesColor.GREEN);
+    series1.setMarkerColor(XChartTheme.GREEN);
     series1.setMarker(SeriesMarker.SQUARE);
 
     return chart;

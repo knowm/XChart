@@ -14,24 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.demo.charts.line;
+package org.knowm.xchart.demo.charts.pie;
 
 import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.ChartBuilder;
+import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.style.XChartTheme;
 
 /**
- * Hundreds of Series on One Plot
+ * Pie Chart with 4 Slices
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Pie Chart
+ * <li>ChartBuilder
  */
-public class LineChart04 implements ExampleChart {
+public class PieChart01 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart04();
+    ExampleChart exampleChart = new PieChart01();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -40,22 +43,12 @@ public class LineChart04 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
-
-    // Customize Chart
-    chart.setChartTitle("LineChart04");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
-    chart.getStyleManager().setLegendVisible(false);
-
-    for (int i = 0; i < 200; i++) {
-      Series series = chart.addSeries("A" + i, new double[] { Math.random() / 1000, Math.random() / 1000 }, new double[] { Math.random() / -1000, Math.random() / -1000 });
-      series.setLineColor(XChartTheme.BLUE);
-      series.setLineStyle(SeriesLineStyle.SOLID);
-      series.setMarker(SeriesMarker.CIRCLE);
-      series.setMarkerColor(XChartTheme.BLUE);
-
-    }
+    // TODO remove chartType(ChartType.Pie)
+    Chart chart = new ChartBuilder().chartType(ChartType.Pie).width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
+    chart.addPieSeries("Pennies", 387);
+    chart.addPieSeries("Nickels", 234);
+    chart.addPieSeries("Dimes", 190);
+    chart.addPieSeries("Quarters", 270);
 
     return chart;
   }

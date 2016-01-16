@@ -58,15 +58,15 @@ public class AxisTitle implements ChartPart {
 
     bounds = new Rectangle2D.Double();
 
-    g.setColor(getChartPainter().getStyleManager().getChartFontColor());
-    g.setFont(getChartPainter().getStyleManager().getAxisTitleFont());
+    g.setColor(getChartInternal().getStyleManager().getChartFontColor());
+    g.setFont(getChartInternal().getStyleManager().getAxisTitleFont());
 
     if (axis.getDirection() == Axis.Direction.Y) {
 
-      if (text != null && !text.trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isYAxisTitleVisible()) {
+      if (text != null && !text.trim().equalsIgnoreCase("") && getChartInternal().getStyleManager().isYAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout nonRotatedTextLayout = new TextLayout(text, getChartPainter().getStyleManager().getAxisTitleFont(), frc);
+        TextLayout nonRotatedTextLayout = new TextLayout(text, getChartInternal().getStyleManager().getAxisTitleFont(), frc);
         Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
 
         // ///////////////////////////////////////////////
@@ -89,7 +89,7 @@ public class AxisTitle implements ChartPart {
         // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
-        bounds = new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight() + getChartPainter().getStyleManager()
+        bounds = new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight() + getChartInternal().getStyleManager()
             .getAxisTitlePadding(), nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
@@ -101,10 +101,10 @@ public class AxisTitle implements ChartPart {
     }
     else {
 
-      if (text != null && !text.trim().equalsIgnoreCase("") && getChartPainter().getStyleManager().isXAxisTitleVisible()) {
+      if (text != null && !text.trim().equalsIgnoreCase("") && getChartInternal().getStyleManager().isXAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout textLayout = new TextLayout(text, getChartPainter().getStyleManager().getAxisTitleFont(), frc);
+        TextLayout textLayout = new TextLayout(text, getChartInternal().getStyleManager().getAxisTitleFont(), frc);
         Rectangle2D rectangle = textLayout.getBounds();
         // System.out.println(rectangle);
 
@@ -120,7 +120,7 @@ public class AxisTitle implements ChartPart {
         g.fill(shape);
         g.setTransform(orig);
 
-        bounds = new Rectangle2D.Double(xOffset, yOffset - getChartPainter().getStyleManager().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight() + getChartPainter().getStyleManager()
+        bounds = new Rectangle2D.Double(xOffset, yOffset - getChartInternal().getStyleManager().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight() + getChartInternal().getStyleManager()
             .getAxisTitlePadding());
         // g.setColor(Color.blue);
         // g.draw(bounds);
@@ -136,9 +136,9 @@ public class AxisTitle implements ChartPart {
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return axis.getChartPainter();
+    return axis.getChartInternal();
   }
 
   // Getters /////////////////////////////////////////////////

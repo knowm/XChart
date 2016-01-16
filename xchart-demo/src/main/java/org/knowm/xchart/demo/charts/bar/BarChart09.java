@@ -17,30 +17,31 @@
 package org.knowm.xchart.demo.charts.bar;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.Arrays;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.Histogram;
+import org.knowm.xchart.Series;
+import org.knowm.xchart.Series.SeriesType;
+import org.knowm.xchart.StyleManager.ChartTheme;
 import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.StyleManager.LegendPosition;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
- * Histogram Overlapped
+ * Category chart with Bar, Line and Scatter Series
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>Histogram
+ * <li>Mixed series types - Bar, Line and Scatter
  * <li>Bar Chart styles - overlapped, bar width
  */
-public class BarChart06 implements ExampleChart {
+public class BarChart09 implements ExampleChart {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new BarChart06();
+    ExampleChart exampleChart = new BarChart09();
     Chart chart = exampleChart.getChart();
     new SwingWrapper(chart).displayChart();
   }
@@ -49,30 +50,21 @@ public class BarChart06 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
-
-    Histogram histogram1 = new Histogram(getGaussianData(10000), 30, -30, 30);
-    Histogram histogram2 = new Histogram(getGaussianData(5000), 30, -30, 30);
-    chart.addCategorySeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
-    chart.addCategorySeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
+    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Value vs. Letter").xAxisTitle("Letter").yAxisTitle("Value").theme(ChartTheme.GGPlot2).build();
+    chart.addCategorySeries("China", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 11, 23, 20, 36, 5 })));
+    Series series2 = chart.addCategorySeries("Korea", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 25, 22, 38,
+        7 })), new ArrayList<Number>(Arrays.asList(new Number[] { 1, 3, 2, 1, 2 })));
+    series2.setSeriesType(SeriesType.Line);
+    Series series3 = chart.addCategorySeries("World Ave.", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 20, 22,
+        18, 36, 32 })));
+    series3.setSeriesType(SeriesType.Scatter);
 
     // Customize Chart
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setBarWidthPercentage(.96);
+    chart.getStyleManager().setBarWidthPercentage(.55);
     chart.getStyleManager().setBarsOverlapped(true);
 
     return chart;
-  }
-
-  private List<Double> getGaussianData(int count) {
-
-    List<Double> data = new ArrayList<Double>(count);
-    Random r = new Random();
-    for (int i = 0; i < count; i++) {
-      data.add(r.nextGaussian() * 10);
-      // data.add(r.nextDouble() * 60 - 30);
-    }
-    return data;
   }
 
 }

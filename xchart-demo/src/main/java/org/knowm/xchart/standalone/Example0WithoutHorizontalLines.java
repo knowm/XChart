@@ -14,21 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.demo.charts.plot.lines;
+package org.knowm.xchart.standalone;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.ChartBuilder;
 import org.knowm.xchart.Series;
 import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.VectorGraphicsEncoder;
+import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 
 /**
- * Creates a simple Chart using QuickChart
+ * Creates a simple Chart and saves it as a PNG and JPEG image file.
  */
-public class Example0WithoutVerticalLines {
+public class Example0WithoutHorizontalLines {
 
 	  public static void main(String[] args) {
 
@@ -40,7 +44,7 @@ public class Example0WithoutVerticalLines {
 		      Chart chart = new ChartBuilder().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
 		      chart.getStyleManager().setYAxisMin(-10);
 		      chart.getStyleManager().setYAxisMax(10);
-		      chart.getStyleManager().setPlotGridVerticalLinesVisible(false);
+		      chart.getStyleManager().setPlotGridHorizontalLinesVisible(false);
 		      Series series = chart.addSeries("" + i, null, getRandomWalk(200));
 		      series.setMarker(SeriesMarker.NONE);
 		      charts.add(chart);

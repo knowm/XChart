@@ -16,6 +16,8 @@
  */
 package org.knowm.xchart.demo.charts.bar;
 
+import java.util.Arrays;
+
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.ChartBuilder;
 import org.knowm.xchart.StyleManager.ChartType;
@@ -45,7 +47,7 @@ public class BarChart03 implements ExampleChart {
 
     // Create Chart
     Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Score vs. Age").xAxisTitle("Age").yAxisTitle("Score").build();
-    chart.addSeries("males", new double[] { 10, 20, 30, 40 }, new double[] { 40, -30, -20, -60 });
+    chart.addCategorySeries("males", Arrays.asList(new Integer[] { 10, 20, 30, 40 }), Arrays.asList(new Integer[] { 40, -30, -20, -60 }));
 
     return chart;
   }

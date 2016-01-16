@@ -16,9 +16,7 @@
  */
 package org.knowm.xchart.internal.style;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.knowm.xchart.SeriesColor;
 import org.knowm.xchart.SeriesLineStyle;
@@ -28,19 +26,25 @@ import org.knowm.xchart.SeriesMarker;
  * Cycles through the different colors, markers, and strokes in a predetermined way
  * <p>
  * This is an internal class that should not be used be clients
- * 
+ *
  * @author timmolter
  */
-public class SeriesColorMarkerLineStyleCycler {
+public abstract class SeriesColorMarkerLineStyleCycler {
 
-  /** a map holding the SeriesColors */
-  private final Map<Integer, SeriesColor> seriesColorMap = new HashMap<Integer, SeriesColor>();
+  public abstract List<SeriesColor> getSeriesColorList();
+
+  public abstract List<SeriesMarker> getSeriesMarkerList();
+
+  public abstract List<SeriesLineStyle> getLineStyleList();
+
+  /** a List holding the SeriesColors */
+  private final List<SeriesColor> seriesColorList;
 
   /** a map holding the SeriesMarkers */
-  private final Map<Integer, SeriesMarker> seriesMarkerMap = new HashMap<Integer, SeriesMarker>();
+  private final List<SeriesMarker> seriesMarkerList;
 
   /** a map holding the SeriesLineStyles */
-  private final Map<Integer, SeriesLineStyle> seriesLineStyleMap = new HashMap<Integer, SeriesLineStyle>();
+  private final List<SeriesLineStyle> seriesLineStyleList;
 
   /** an internal counter */
   private int colorCounter = 0;
@@ -52,51 +56,36 @@ public class SeriesColorMarkerLineStyleCycler {
    */
   public SeriesColorMarkerLineStyleCycler() {
 
-    // 1. Color
-    for (SeriesColor seriesColor : EnumSet.allOf(SeriesColor.class)) {
-      seriesColorMap.put(seriesColor.getIndex(), seriesColor);
-    }
-
-    // 2. Marker
-    for (SeriesMarker seriesMarker : EnumSet.allOf(SeriesMarker.class)) {
-      if (seriesMarker.getIndex() >= 0) { // skip SeriesMarker.NONE
-        seriesMarkerMap.put(seriesMarker.getIndex(), seriesMarker);
-      }
-    }
-
-    // 3. Stroke
-    for (SeriesLineStyle seriesLineStyle : EnumSet.allOf(SeriesLineStyle.class)) {
-      if (seriesLineStyle.getIndex() >= 0) { // skip SeriesLineStyle.NONE
-        seriesLineStyleMap.put(seriesLineStyle.getIndex(), seriesLineStyle);
-      }
-    }
+    seriesColorList = getSeriesColorList();
+    seriesMarkerList = getSeriesMarkerList();
+    seriesLineStyleList = getLineStyleList();
   }
 
   /**
    * Get the next SeriesColorMarkerLineStyle
-   * 
+   *
    * @return the next SeriesColorMarkerLineStyle
    */
   public SeriesColorMarkerLineStyle getNextSeriesColorMarkerLineStyle() {
 
     // 1. Color - cycle through colors one by one
-    if (colorCounter >= seriesColorMap.size()) {
+    if (colorCounter >= seriesColorList.size()) {
       colorCounter = 0;
       strokeCounter++;
     }
-    SeriesColor seriesColor = seriesColorMap.get(colorCounter++);
+    SeriesColor seriesColor = seriesColorList.get(colorCounter++);
 
     // 2. Stroke - cycle through strokes one by one but only after a color cycle
-    if (strokeCounter >= seriesLineStyleMap.size()) {
+    if (strokeCounter >= seriesLineStyleList.size()) {
       strokeCounter = 0;
     }
-    SeriesLineStyle seriesLineStyle = seriesLineStyleMap.get(strokeCounter);
+    SeriesLineStyle seriesLineStyle = seriesLineStyleList.get(strokeCounter);
 
     // 3. Marker - cycle through markers one by one
-    if (markerCounter >= seriesMarkerMap.size()) {
+    if (markerCounter >= seriesMarkerList.size()) {
       markerCounter = 0;
     }
-    SeriesMarker marker = seriesMarkerMap.get(markerCounter++);
+    SeriesMarker marker = seriesMarkerList.get(markerCounter++);
 
     return new SeriesColorMarkerLineStyle(seriesColor.getColor(), marker.getMarker(), seriesLineStyle.getBasicStroke());
   }

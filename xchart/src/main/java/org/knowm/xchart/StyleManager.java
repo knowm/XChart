@@ -24,6 +24,7 @@ import java.util.TimeZone;
 
 import org.knowm.xchart.internal.style.GGPlot2Theme;
 import org.knowm.xchart.internal.style.MatlabTheme;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.internal.style.Theme;
 import org.knowm.xchart.internal.style.XChartTheme;
 
@@ -34,12 +35,9 @@ import org.knowm.xchart.internal.style.XChartTheme;
  */
 public class StyleManager {
 
-  /**
-   * Note: For Area Charts, the X-Axis data must be in ascending order.
-   */
   public enum ChartType {
 
-    Line, Scatter, Area, Bar
+    Line, Scatter, Area, Bar, Pie
   }
 
   public enum LegendPosition {
@@ -79,6 +77,7 @@ public class StyleManager {
   private Color chartBackgroundColor;
   public Color chartFontColor;
   private int chartPadding;
+  private SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler;
 
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
@@ -171,6 +170,7 @@ public class StyleManager {
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
     chartPadding = theme.getChartPadding();
+    seriesColorMarkerLineStyleCycler = theme.getSeriesColorMarkerLineStyleCycler();
 
     // Chart Title ///////////////////////////////
     chartTitleFont = theme.getChartTitleFont();
@@ -323,6 +323,16 @@ public class StyleManager {
   public int getChartPadding() {
 
     return chartPadding;
+  }
+
+  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+
+    return seriesColorMarkerLineStyleCycler;
+  }
+
+  public void setSeriesColorMarkerLineStyleCycler(SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler) {
+
+    this.seriesColorMarkerLineStyleCycler = seriesColorMarkerLineStyleCycler;
   }
 
   // Chart Title ///////////////////////////////
@@ -933,7 +943,6 @@ public class StyleManager {
     this.isPlotGridVerticalLinesVisible = isPlotGridLinesVisible;
   }
 
-  @Deprecated
   public boolean isPlotGridLinesVisible() {
 
     return isPlotGridHorizontalLinesVisible && isPlotGridVerticalLinesVisible;

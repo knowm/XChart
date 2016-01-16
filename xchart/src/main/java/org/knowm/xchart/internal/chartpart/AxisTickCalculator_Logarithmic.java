@@ -27,7 +27,7 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
  *
  * @author timmolter
  */
-public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
+public class AxisTickCalculator_Logarithmic extends AxisTickCalculator {
 
   NumberFormatter numberFormatter = null;
 
@@ -40,7 +40,7 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
    * @param maxValue
    * @param styleManager
    */
-  public AxisTickLogarithmicCalculator(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickCalculator_Logarithmic(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styleManager);
     numberFormatter = new NumberFormatter(styleManager);
@@ -74,18 +74,18 @@ public class AxisTickLogarithmicCalculator extends AxisTickCalculator {
     // System.out.println("logMin: " + logMin);
     // System.out.println("logMax: " + logMax);
 
-    if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
-      logMin = (int) (Math.log10(styleManager.getYAxisMin())); // no floor
-    }
-    if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {
-      logMax = (int) (Math.log10(styleManager.getYAxisMax())); // no floor
-    }
-    if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
-      logMin = (int) (Math.log10(styleManager.getXAxisMin())); // no floor
-    }
-    if (axisDirection == Direction.X && styleManager.getXAxisMax() != null) {
-      logMax = (int) (Math.log10(styleManager.getXAxisMax())); // no floor
-    }
+    // if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
+    // logMin = (int) (Math.log10(styleManager.getYAxisMin())); // no floor
+    // }
+    // if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {
+    // logMax = (int) (Math.log10(styleManager.getYAxisMax())); // no floor
+    // }
+    // if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
+    // logMin = (int) (Math.log10(styleManager.getXAxisMin())); // no floor
+    // }
+    // if (axisDirection == Direction.X && styleManager.getXAxisMax() != null) {
+    // logMax = (int) (Math.log10(styleManager.getXAxisMax())); // no floor
+    // }
 
     double firstPosition = Utils.pow(10, logMin);
     // System.out.println("firstPosition: " + firstPosition);

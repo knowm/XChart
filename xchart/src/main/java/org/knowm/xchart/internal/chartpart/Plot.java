@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.internal.chartpart.ChartInternal.ChartInternalType;
 
 /**
  * @author timmolter
@@ -27,7 +28,7 @@ import org.knowm.xchart.StyleManager.ChartType;
 public class Plot implements ChartPart {
 
   /** parent */
-  private final ChartPainter chartPainter;
+  private final ChartInternal chartInternal;
 
   /** the bounds */
   private Rectangle2D bounds;
@@ -39,11 +40,11 @@ public class Plot implements ChartPart {
   /**
    * Constructor
    *
-   * @param chartPainter
+   * @param chartInternal
    */
-  public Plot(ChartPainter chartPainter) {
+  public Plot(ChartInternal chartInternal) {
 
-    this.chartPainter = chartPainter;
+    this.chartInternal = chartInternal;
     this.plotSurface = new PlotSurface(this);
   }
 
@@ -59,35 +60,45 @@ public class Plot implements ChartPart {
     bounds = new Rectangle2D.Double();
 
     // calculate bounds
-    double xOffset = chartPainter.getAxisPair().getYAxis().getBounds().getX()
+    double xOffset = chartInternal.getAxisPair().getYAxis().getBounds().getX()
 
-    + chartPainter.getAxisPair().getYAxis().getBounds().getWidth()
+        + chartInternal.getAxisPair().getYAxis().getBounds().getWidth()
 
-    + (chartPainter.getStyleManager().isYAxisTicksVisible() ? (chartPainter.getStyleManager().getPlotPadding()) : 0)
+        + (chartInternal.getStyleManager().isYAxisTicksVisible() ? (chartInternal.getStyleManager().getPlotPadding()) : 0)
 
     ;
 
-    double yOffset = chartPainter.getAxisPair().getYAxis().getBounds().getY();
-    double width = chartPainter.getAxisPair().getXAxis().getBounds().getWidth();
-    double height = chartPainter.getAxisPair().getYAxis().getBounds().getHeight();
+    double yOffset = chartInternal.getAxisPair().getYAxis().getBounds().getY();
+    double width = chartInternal.getAxisPair().getXAxis().getBounds().getWidth();
+    double height = chartInternal.getAxisPair().getYAxis().getBounds().getHeight();
     bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
     // g.setColor(Color.green);
     // g.draw(bounds);
 
     plotSurface.paint(g);
-    if (getChartPainter().getStyleManager().getChartType() == ChartType.Bar) {
-      this.plotContent = new PlotContentBarChart(this);
+
+    if (getChartInternal().getChartInternalType() == ChartInternalType.Category) {
+      if (getChartInternal().getStyleManager().getChartType() == ChartType.Bar) {
+        this.plotContent = new PlotContentCategoricalChart_Bar(this);
+      }
+
+      else {
+        this.plotContent = new PlotContentCategoricalChart_Line_Area_Scatter(this);
+      }
+    }
+    else if (getChartInternal().getChartInternalType() == ChartInternalType.Pie) {
+      this.plotContent = new PlotContentCategoricalChart_Pie(this);
     }
     else {
-      this.plotContent = new PlotContentLineChart(this);
+      this.plotContent = new PlotContentNumericalChart(this);
     }
     plotContent.paint(g);
 
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return chartPainter;
+    return chartInternal;
   }
 }

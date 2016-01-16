@@ -43,6 +43,7 @@ import org.knowm.xchart.demo.charts.bar.BarChart05;
 import org.knowm.xchart.demo.charts.bar.BarChart06;
 import org.knowm.xchart.demo.charts.bar.BarChart07;
 import org.knowm.xchart.demo.charts.bar.BarChart08;
+import org.knowm.xchart.demo.charts.bar.BarChart09;
 import org.knowm.xchart.demo.charts.date.DateChart01;
 import org.knowm.xchart.demo.charts.date.DateChart02;
 import org.knowm.xchart.demo.charts.date.DateChart03;
@@ -57,6 +58,8 @@ import org.knowm.xchart.demo.charts.line.LineChart03;
 import org.knowm.xchart.demo.charts.line.LineChart04;
 import org.knowm.xchart.demo.charts.line.LineChart05;
 import org.knowm.xchart.demo.charts.line.LineChart06;
+import org.knowm.xchart.demo.charts.line.LineChart07;
+import org.knowm.xchart.demo.charts.pie.PieChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart03;
@@ -217,6 +220,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaLineChart03 - Combination Area & Line Chart", new AreaLineChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
+    // Pie category
+    category = new DefaultMutableTreeNode("Pie Charts");
+    top.add(category);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart01 - Pie Chart with 4 Slices", new PieChart01().getChart()));
+    category.add(defaultMutableTreeNode);
+
     // Line category
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
@@ -237,6 +247,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart06 - Logarithmic Y-Axis with Error Bars", new LineChart06().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart07 - Line Chart with Multiple Category Series", new LineChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Scatter category
@@ -281,6 +294,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart08 - Histogram with Error Bars", new BarChart08().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart09 - Category chart with Bar, Line and Scatter Series", new BarChart09().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Theme category

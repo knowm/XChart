@@ -20,6 +20,8 @@ import java.awt.BasicStroke;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 
+import org.knowm.xchart.StyleManager;
+
 /**
  * @author timmolter
  */
@@ -28,16 +30,20 @@ public abstract class PlotContent implements ChartPart {
   /** parent */
   protected Plot plot;
 
+  StyleManager styleManager;
+
   protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /**
    * Constructor
-   * 
+   *
    * @param plot
    */
   protected PlotContent(Plot plot) {
 
     this.plot = plot;
+
+    styleManager = getChartInternal().getStyleManager();
   }
 
   @Override
@@ -47,9 +53,9 @@ public abstract class PlotContent implements ChartPart {
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return plot.getChartPainter();
+    return plot.getChartInternal();
   }
 
 }

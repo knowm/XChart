@@ -20,14 +20,27 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.knowm.xchart.ChartColor;
+import org.knowm.xchart.SeriesColor;
+import org.knowm.xchart.SeriesLineStyle;
+import org.knowm.xchart.SeriesMarker;
 import org.knowm.xchart.StyleManager.LegendPosition;
 
 /**
  * @author timmolter
  */
 public class MatlabTheme implements Theme {
+
+  public static SeriesColor BLUE = new SeriesColor(0, 0, 255, 255);
+  public static SeriesColor GREEN = new SeriesColor(0, 128, 0, 255);
+  public static SeriesColor RED = new SeriesColor(255, 0, 0, 255);
+  public static SeriesColor TURQUOISE = new SeriesColor(0, 191, 191, 255);
+  public static SeriesColor MAGENTA = new SeriesColor(191, 0, 191, 255);
+  public static SeriesColor YELLOW = new SeriesColor(191, 191, 0, 255);
+  public static SeriesColor DARK_GREY = new SeriesColor(64, 64, 64, 255);
 
   // Chart Style ///////////////////////////////
 
@@ -47,6 +60,12 @@ public class MatlabTheme implements Theme {
   public int getChartPadding() {
 
     return 10;
+  }
+
+  @Override
+  public SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+
+    return new MatlabSeriesColorMarkerLineStyleCycler();
   }
 
   // Chart Title ///////////////////////////////
@@ -249,13 +268,13 @@ public class MatlabTheme implements Theme {
 
     return true;
   }
-  
+
   @Override
   public boolean isPlotGridHorizontalLinesVisible() {
 
     return true;
   }
-  
+
   @Override
   public Color getPlotBackgroundColor() {
 
@@ -333,5 +352,44 @@ public class MatlabTheme implements Theme {
   public boolean isErrorBarsColorSeriesColor() {
 
     return false;
+  }
+
+  public class MatlabSeriesColorMarkerLineStyleCycler extends SeriesColorMarkerLineStyleCycler {
+
+    @Override
+    public List<SeriesColor> getSeriesColorList() {
+
+      // 1. Color
+      List<SeriesColor> seriesColorMap = new ArrayList<SeriesColor>();
+      seriesColorMap.add(BLUE);
+      seriesColorMap.add(GREEN);
+      seriesColorMap.add(RED);
+      seriesColorMap.add(TURQUOISE);
+      seriesColorMap.add(MAGENTA);
+      seriesColorMap.add(YELLOW);
+      seriesColorMap.add(DARK_GREY);
+      return seriesColorMap;
+    }
+
+    @Override
+    public List<SeriesMarker> getSeriesMarkerList() {
+
+      // 2. Marker
+      List<SeriesMarker> seriesMarkerList = new ArrayList<SeriesMarker>();
+      seriesMarkerList.add(SeriesMarker.NONE);
+      return seriesMarkerList;
+    }
+
+    @Override
+    public List<SeriesLineStyle> getLineStyleList() {
+
+      // 3. Stroke
+      List<SeriesLineStyle> seriesLineStyleList = new ArrayList<SeriesLineStyle>();
+      seriesLineStyleList.add(SeriesLineStyle.SOLID);
+      seriesLineStyleList.add(SeriesLineStyle.DASH_DASH);
+      seriesLineStyleList.add(SeriesLineStyle.DOT_DOT);
+      return seriesLineStyleList;
+    }
+
   }
 }

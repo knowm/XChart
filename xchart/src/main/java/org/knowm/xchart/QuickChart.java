@@ -105,7 +105,7 @@ public final class QuickChart {
    * @param yData A Collection containing Y-Axis data
    * @return a Chart Object
    */
-  public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<Number> xData, List<Number> yData) {
+  public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<? extends Number> xData, List<? extends Number> yData) {
 
     // Create Chart
     Chart chart = new Chart(WIDTH, HEIGHT);

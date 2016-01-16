@@ -30,7 +30,7 @@ import java.awt.geom.Rectangle2D;
 public class ChartTitle implements ChartPart {
 
   /** parent */
-  private final ChartPainter chartPainter;
+  private final ChartInternal chartInternal;
 
   /** the title text */
   private String text = ""; // default to ""
@@ -41,11 +41,11 @@ public class ChartTitle implements ChartPart {
   /**
    * Constructor
    *
-   * @param chartPainter
+   * @param chartInternal
    */
-  public ChartTitle(ChartPainter chartPainter) {
+  public ChartTitle(ChartInternal chartInternal) {
 
-    this.chartPainter = chartPainter;
+    this.chartInternal = chartInternal;
   }
 
   /**
@@ -56,10 +56,10 @@ public class ChartTitle implements ChartPart {
   public void setText(String text) {
 
     if (text.trim().equalsIgnoreCase("")) {
-      chartPainter.getStyleManager().setChartTitleVisible(false);
+      chartInternal.getStyleManager().setChartTitleVisible(false);
     }
     else {
-      chartPainter.getStyleManager().setChartTitleVisible(true);
+      chartInternal.getStyleManager().setChartTitleVisible(true);
     }
     this.text = text;
   }
@@ -71,57 +71,57 @@ public class ChartTitle implements ChartPart {
    */
   protected int getSizeHint() {
 
-    if (chartPainter.getStyleManager().isChartTitleVisible()) {
+    if (chartInternal.getStyleManager().isChartTitleVisible()) {
 
-      TextLayout textLayout = new TextLayout(text, chartPainter.getStyleManager().getChartTitleFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = new TextLayout(text, chartInternal.getStyleManager().getChartTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
-      int titleHeight = (int) ((chartPainter.getStyleManager().isChartTitleVisible() ? rectangle.getHeight() : 0));
-      return chartPainter.getStyleManager().getChartPadding() + 2 * chartPainter.getStyleManager().getChartTitlePadding() + titleHeight;
+      int titleHeight = (int) ((chartInternal.getStyleManager().isChartTitleVisible() ? rectangle.getHeight() : 0));
+      return chartInternal.getStyleManager().getChartPadding() + 2 * chartInternal.getStyleManager().getChartTitlePadding() + titleHeight;
     }
     else {
       // TODO make this zero
-      return chartPainter.getStyleManager().getChartPadding();
+      return chartInternal.getStyleManager().getChartPadding();
     }
   }
 
   @Override
   public void paint(Graphics2D g) {
 
-    g.setFont(chartPainter.getStyleManager().getChartTitleFont());
+    g.setFont(chartInternal.getStyleManager().getChartTitleFont());
 
-    if (chartPainter.getStyleManager().isChartTitleVisible()) {
+    if (chartInternal.getStyleManager().isChartTitleVisible()) {
 
       // create rectangle first for sizing
       FontRenderContext frc = g.getFontRenderContext();
-      TextLayout textLayout = new TextLayout(text, chartPainter.getStyleManager().getChartTitleFont(), frc);
+      TextLayout textLayout = new TextLayout(text, chartInternal.getStyleManager().getChartTitleFont(), frc);
       Rectangle2D rectangle = textLayout.getBounds();
 
-      double xOffset = (int) chartPainter.getPlot().getBounds().getX();
-      double yOffset = chartPainter.getStyleManager().getChartPadding();
+      double xOffset = (int) chartInternal.getPlot().getBounds().getX();
+      double yOffset = chartInternal.getStyleManager().getChartPadding();
 
-      if (chartPainter.getStyleManager().isChartTitleBoxVisible()) {
+      if (chartInternal.getStyleManager().isChartTitleBoxVisible()) {
 
         // paint the chart title box
-        double chartTitleBoxWidth = chartPainter.getPlot().getBounds().getWidth();
-        double chartTitleBoxHeight = rectangle.getHeight() + 2 * chartPainter.getStyleManager().getChartTitlePadding();
+        double chartTitleBoxWidth = chartInternal.getPlot().getBounds().getWidth();
+        double chartTitleBoxHeight = rectangle.getHeight() + 2 * chartInternal.getStyleManager().getChartTitlePadding();
 
         g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
         Shape rect = new Rectangle2D.Double(xOffset, yOffset, chartTitleBoxWidth, chartTitleBoxHeight);
-        g.setColor(chartPainter.getStyleManager().getChartTitleBoxBackgroundColor());
+        g.setColor(chartInternal.getStyleManager().getChartTitleBoxBackgroundColor());
         g.fill(rect);
-        g.setColor(chartPainter.getStyleManager().getChartTitleBoxBorderColor());
+        g.setColor(chartInternal.getStyleManager().getChartTitleBoxBorderColor());
         g.draw(rect);
       }
 
       // paint title
-      xOffset = chartPainter.getPlot().getBounds().getX() + (chartPainter.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0;
-      yOffset = chartPainter.getStyleManager().getChartPadding() - rectangle.getY() + chartPainter.getStyleManager().getChartTitlePadding();
+      xOffset = chartInternal.getPlot().getBounds().getX() + (chartInternal.getPlot().getBounds().getWidth() - rectangle.getWidth()) / 2.0;
+      yOffset = chartInternal.getStyleManager().getChartPadding() - rectangle.getY() + chartInternal.getStyleManager().getChartTitlePadding();
 
       bounds = new Rectangle2D.Double(xOffset, yOffset + rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
       // g.setColor(Color.green);
       // g.draw(bounds);
 
-      g.setColor(chartPainter.getStyleManager().getChartFontColor());
+      g.setColor(chartInternal.getStyleManager().getChartFontColor());
       // textLayout.draw(g, xOffset, yOffset);
 
       Shape shape = textLayout.getOutline(null);
@@ -142,8 +142,8 @@ public class ChartTitle implements ChartPart {
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return chartPainter;
+    return chartInternal;
   }
 }

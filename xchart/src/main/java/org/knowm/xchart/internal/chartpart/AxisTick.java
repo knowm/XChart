@@ -57,35 +57,35 @@ public class AxisTick implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    double workingSpace = 0.0;
-    // Y-Axis
-    if (axis.getDirection() == Axis.Direction.Y) {
-      workingSpace = axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
-      // System.out.println("workingspace= " + workingSpace);
-    }
-    // X-Axis
-    else if (axis.getDirection() == Axis.Direction.X) {
-      workingSpace = axis.getPaintZone().getWidth(); // number of pixels the axis has to work with for drawing AxisTicks
-      // System.out.println("workingspace= " + workingSpace);
-    }
-
+    // double workingSpace = 0.0;
+    // // Y-Axis
+    // if (axis.getDirection() == Axis.Direction.Y) {
+    // workingSpace = axis.getPaintZone().getHeight(); // number of pixels the axis has to work with for drawing AxisTicks
+    // // System.out.println("workingspace= " + workingSpace);
+    // }
+    // // X-Axis
+    // else if (axis.getDirection() == Axis.Direction.X) {
+    // workingSpace = axis.getPaintZone().getWidth(); // number of pixels the axis has to work with for drawing AxisTicks
+    // // System.out.println("workingspace= " + workingSpace);
+    // }
+    //
     // System.out.println("AxisTick: " + axis.getDirection());
     // System.out.println("workingSpace: " + workingSpace);
 
-    if (axis.getDirection() == Axis.Direction.Y && getChartPainter().getStyleManager().isYAxisTicksVisible()) {
+    if (axis.getDirection() == Axis.Direction.Y && getChartInternal().getStyleManager().isYAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
       bounds = new Rectangle2D.Double(
 
-      axisTickLabels.getBounds().getX(),
+          axisTickLabels.getBounds().getX(),
 
-      axisTickLabels.getBounds().getY(),
+          axisTickLabels.getBounds().getY(),
 
-      axisTickLabels.getBounds().getWidth() + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
+          axisTickLabels.getBounds().getWidth() + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
 
-      axisTickMarks.getBounds().getHeight()
+          axisTickMarks.getBounds().getHeight()
 
       );
 
@@ -93,13 +93,22 @@ public class AxisTick implements ChartPart {
       // g.draw(bounds);
 
     }
-    else if (axis.getDirection() == Axis.Direction.X && getChartPainter().getStyleManager().isXAxisTicksVisible()) {
+    else if (axis.getDirection() == Axis.Direction.X && getChartInternal().getStyleManager().isXAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      bounds = new Rectangle2D.Double(axisTickMarks.getBounds().getX(), axisTickMarks.getBounds().getY(), axisTickLabels.getBounds().getWidth(), axisTickMarks.getBounds().getHeight()
-          + getChartPainter().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight());
+      bounds = new Rectangle2D.Double(
+
+          axisTickMarks.getBounds().getX(),
+
+          axisTickMarks.getBounds().getY(),
+
+          axisTickLabels.getBounds().getWidth(),
+
+          axisTickMarks.getBounds().getHeight() + getChartInternal().getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()
+
+      );
 
       // g.setColor(Color.red);
       // g.draw(bounds);
@@ -109,9 +118,9 @@ public class AxisTick implements ChartPart {
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return axis.getChartPainter();
+    return axis.getChartInternal();
   }
 
   // Getters /////////////////////////////////////////////////
@@ -126,13 +135,4 @@ public class AxisTick implements ChartPart {
     return axisTickLabels;
   }
 
-  // public List<Double> getTickLocations() {
-  //
-  // return axisTickCalculator.getTickLocations();
-  // }
-  //
-  // public List<String> getTickLabels() {
-  //
-  // return axisTickCalculator.getTickLabels();
-  // }
 }

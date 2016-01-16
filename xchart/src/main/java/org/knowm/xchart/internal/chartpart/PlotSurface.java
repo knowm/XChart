@@ -23,6 +23,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.internal.chartpart.ChartInternal.ChartInternalType;
 
 /**
  * Draws the plot background, the plot border and the horizontal and vertical grid lines
@@ -57,24 +58,24 @@ public class PlotSurface implements ChartPart {
 
     // paint plot background
     Shape rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-    g.setColor(getChartPainter().getStyleManager().getPlotBackgroundColor());
+    g.setColor(getChartInternal().getStyleManager().getPlotBackgroundColor());
     g.fill(rect);
 
     // paint plot border
-    if (getChartPainter().getStyleManager().isPlotBorderVisible()) {
-      g.setColor(getChartPainter().getStyleManager().getPlotBorderColor());
+    if (getChartInternal().getStyleManager().isPlotBorderVisible()) {
+      g.setColor(getChartInternal().getStyleManager().getPlotBorderColor());
       // g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
       g.draw(rect);
     }
 
     // paint grid lines and/or inner plot ticks
-    if (getChartPainter().getStyleManager().isPlotGridHorizontalLinesVisible() 
-	|| getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible() 
-	|| getChartPainter().getStyleManager().isPlotTicksMarksVisible()
-	) {
+    if (getChartInternal().getAxisPair().getYAxis().getAxisTickCalculator() == null) {// like for Pie Charts
+      return;
+    }
 
-      // horizontal
-      List<Double> yAxisTickLocations = getChartPainter().getAxisPair().getYAxis().getAxisTickCalculator().getTickLocations();
+    // horizontal
+    if (getChartInternal().getStyleManager().isPlotGridHorizontalLinesVisible() || getChartInternal().getStyleManager().isPlotTicksMarksVisible()) {
+      List<Double> yAxisTickLocations = getChartInternal().getAxisPair().getYAxis().getAxisTickCalculator().getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
 
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocations.get(i);
@@ -82,37 +83,35 @@ public class PlotSurface implements ChartPart {
         if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
 
           // draw lines
-          if (getChartPainter().getStyleManager().isPlotGridHorizontalLinesVisible()) {
+          if (getChartInternal().getStyleManager().isPlotGridHorizontalLinesVisible()) {
 
-            g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
-            g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
+            g.setColor(getChartInternal().getStyleManager().getPlotGridLinesColor());
+            g.setStroke(getChartInternal().getStyleManager().getPlotGridLinesStroke());
             Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
             g.draw(line);
           }
 
           // tick marks
-          if (getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
+          if (getChartInternal().getStyleManager().isPlotTicksMarksVisible()) {
 
-            g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
-            g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
-            Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset);
+            g.setColor(getChartInternal().getStyleManager().getAxisTickMarksColor());
+            g.setStroke(getChartInternal().getStyleManager().getAxisTickMarksStroke());
+            Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + getChartInternal().getStyleManager().getAxisTickMarkLength(), yOffset);
             g.draw(line);
-            line = new Line2D.Double(bounds.getX() + bounds.getWidth(), yOffset, bounds.getX() + bounds.getWidth() - getChartPainter().getStyleManager().getAxisTickMarkLength(), yOffset);
+            line = new Line2D.Double(bounds.getX() + bounds.getWidth(), yOffset, bounds.getX() + bounds.getWidth() - getChartInternal().getStyleManager().getAxisTickMarkLength(), yOffset);
             g.draw(line);
           }
         }
       }
+    }
 
-      // vertical
-      if (getChartPainter().getStyleManager().getChartType() != ChartType.Bar
+    // vertical
+    if ((getChartInternal().getChartInternalType() == ChartInternalType.XY || (getChartInternal().getChartInternalType() == ChartInternalType.Category && getChartInternal().getStyleManager()
+        .getChartType() != ChartType.Bar))) {
 
-      && (getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible()
+      if ((getChartInternal().getStyleManager().isPlotGridVerticalLinesVisible() || getChartInternal().getStyleManager().isPlotTicksMarksVisible())) {
 
-      || getChartPainter().getStyleManager().isPlotTicksMarksVisible())
-
-      ) {
-
-        List<Double> xAxisTickLocations = getChartPainter().getAxisPair().getXAxis().getAxisTickCalculator().getTickLocations();
+        List<Double> xAxisTickLocations = getChartInternal().getAxisPair().getXAxis().getAxisTickCalculator().getTickLocations();
         for (int i = 0; i < xAxisTickLocations.size(); i++) {
 
           double tickLocation = xAxisTickLocations.get(i);
@@ -121,22 +120,22 @@ public class PlotSurface implements ChartPart {
           if (xOffset > bounds.getX() && xOffset < bounds.getX() + bounds.getWidth()) {
 
             // draw lines
-            if (getChartPainter().getStyleManager().isPlotGridVerticalLinesVisible()) {
-              g.setColor(getChartPainter().getStyleManager().getPlotGridLinesColor());
-              g.setStroke(getChartPainter().getStyleManager().getPlotGridLinesStroke());
+            if (getChartInternal().getStyleManager().isPlotGridVerticalLinesVisible()) {
+              g.setColor(getChartInternal().getStyleManager().getPlotGridLinesColor());
+              g.setStroke(getChartInternal().getStyleManager().getPlotGridLinesStroke());
 
               Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
               g.draw(line);
             }
             // tick marks
-            if (getChartPainter().getStyleManager().isPlotTicksMarksVisible()) {
+            if (getChartInternal().getStyleManager().isPlotTicksMarksVisible()) {
 
-              g.setColor(getChartPainter().getStyleManager().getAxisTickMarksColor());
-              g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
+              g.setColor(getChartInternal().getStyleManager().getAxisTickMarksColor());
+              g.setStroke(getChartInternal().getStyleManager().getAxisTickMarksStroke());
 
-              Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + getChartPainter().getStyleManager().getAxisTickMarkLength());
+              Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + getChartInternal().getStyleManager().getAxisTickMarkLength());
               g.draw(line);
-              line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight(), xOffset, bounds.getY() + bounds.getHeight() - getChartPainter().getStyleManager().getAxisTickMarkLength());
+              line = new Line2D.Double(xOffset, bounds.getY() + bounds.getHeight(), xOffset, bounds.getY() + bounds.getHeight() - getChartInternal().getStyleManager().getAxisTickMarkLength());
               g.draw(line);
             }
           }
@@ -146,9 +145,9 @@ public class PlotSurface implements ChartPart {
   }
 
   @Override
-  public ChartPainter getChartPainter() {
+  public ChartInternal getChartInternal() {
 
-    return plot.getChartPainter();
+    return plot.getChartInternal();
   }
 
 }

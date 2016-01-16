@@ -25,8 +25,6 @@ import java.util.List;
 
 import org.knowm.xchart.Chart;
 import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesLineStyle;
 import org.knowm.xchart.StyleManager.ChartTheme;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -104,8 +102,7 @@ public class ThemeChart03 implements ExampleChart {
       e.printStackTrace();
     }
 
-    Series series1 = chart.addSeries("downloads", xData, y1Data);
-    series1.setLineStyle(SeriesLineStyle.DOT_DOT);
+    chart.addSeries("downloads", xData, y1Data);
     chart.addSeries("price", xData, y2Data);
 
     return chart;

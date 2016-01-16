@@ -109,11 +109,11 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.6.2-SNAPSHOT</version>
+      <version>2.7.0-SNAPSHOT</version>
     </dependency>
 ```
 
-Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/](https://oss.sonatype.org/content/groups/public/com/xeiam/xchart/xchart/)
+Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/content/groups/public/org/knowm/xchart/xchart/](https://oss.sonatype.org/content/groups/public/org/knowm/xchart/xchart/)
 
 ### SBT
 
@@ -140,7 +140,7 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "2.6.0" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.6.0.jar:xchart-2.6.0.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-2.6.1.jar:xchart-2.6.1.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 

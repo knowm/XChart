@@ -17,7 +17,6 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -27,22 +26,20 @@ import java.util.Date;
 import java.util.Iterator;
 
 import org.knowm.xchart.Series;
-import org.knowm.xchart.StyleManager;
-import org.knowm.xchart.StyleManager.ChartType;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisType;
 
 /**
  * @author timmolter
  */
-public class PlotContentLineChart extends PlotContent {
+public class PlotContentNumericalChart extends PlotContent {
 
   /**
    * Constructor
    *
    * @param plot
    */
-  protected PlotContentLineChart(Plot plot) {
+  protected PlotContentNumericalChart(Plot plot) {
 
     super(plot);
   }
@@ -60,8 +57,6 @@ public class PlotContentLineChart extends PlotContent {
       return;
     }
 
-    StyleManager styleManager = plot.getChartPainter().getStyleManager();
-
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
 
     // Rectangle rectangle = g.getClipBounds();
@@ -69,7 +64,7 @@ public class PlotContentLineChart extends PlotContent {
     // g.setColor(Color.green);
     // g.draw(rectangle);
 
-    Rectangle rectangle = new Rectangle(0, 0, getChartPainter().getWidth(), getChartPainter().getHeight());
+    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, getChartInternal().getWidth(), getChartInternal().getHeight());
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.green);
     // g.draw(rectangle);
@@ -85,44 +80,34 @@ public class PlotContentLineChart extends PlotContent {
     double yTickSpace = styleManager.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
-    for (Series series : getChartPainter().getAxisPair().getSeriesMap().values()) {
+    double xMin = getChartInternal().getAxisPair().getXAxis().getMin();
+    double xMax = getChartInternal().getAxisPair().getXAxis().getMax();
+    double yMin = getChartInternal().getAxisPair().getYAxis().getMin();
+    double yMax = getChartInternal().getAxisPair().getYAxis().getMax();
+
+    // logarithmic
+    if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
+      xMin = Math.log10(xMin);
+      xMax = Math.log10(xMax);
+    }
+    if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
+      yMin = Math.log10(yMin);
+      yMax = Math.log10(yMax);
+    }
+
+    for (Series series : getChartInternal().getSeriesMap().values()) {
+
+      // sanity check
+      if (Series.SeriesType.Bar.equals(series.getSeriesType())) {
+        throw new RuntimeException("X-Y charts only accept Line, Scatter, and Area series types!!!");
+      }
 
       // data points
       Collection<?> xData = series.getXData();
-      // System.out.println(xData);
-      double xMin = getChartPainter().getAxisPair().getXAxis().getMin();
-      double xMax = getChartPainter().getAxisPair().getXAxis().getMax();
-
       Collection<? extends Number> yData = series.getYData();
-      double yMin = getChartPainter().getAxisPair().getYAxis().getMin();
-      double yMax = getChartPainter().getAxisPair().getYAxis().getMax();
 
-      // override min and maxValue if specified
-      if (getChartPainter().getStyleManager().getXAxisMin() != null) {
-        xMin = getChartPainter().getStyleManager().getXAxisMin();
-      }
-      if (getChartPainter().getStyleManager().getYAxisMin() != null) {
-        yMin = getChartPainter().getStyleManager().getYAxisMin();
-      }
-      if (getChartPainter().getStyleManager().getXAxisMax() != null) {
-        xMax = getChartPainter().getStyleManager().getXAxisMax();
-      }
-      if (getChartPainter().getStyleManager().getYAxisMax() != null) {
-        yMax = getChartPainter().getStyleManager().getYAxisMax();
-      }
-
-      // logarithmic
-      if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
-        xMin = Math.log10(xMin);
-        xMax = Math.log10(xMax);
-      }
-      if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
-        yMin = Math.log10(yMin);
-        yMax = Math.log10(yMax);
-      }
-
-      double previousX = Integer.MIN_VALUE;
-      double previousY = Integer.MIN_VALUE;
+      double previousX = -Double.MAX_VALUE;
+      double previousY = -Double.MAX_VALUE;
 
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
@@ -136,18 +121,17 @@ public class PlotContentLineChart extends PlotContent {
       while (xItr.hasNext()) {
 
         double x = 0.0;
-        if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
+        if (getChartInternal().getAxisPair().getXAxis().getAxisType() == AxisType.Number) {
           x = ((Number) xItr.next()).doubleValue();
-          // System.out.println(x);
         }
-        else if (getChartPainter().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
+        else if (getChartInternal().getAxisPair().getXAxis().getAxisType() == AxisType.Date) {
           x = ((Date) xItr.next()).getTime();
-          // System.out.println(x);
         }
-
-        if (getChartPainter().getStyleManager().isXAxisLogarithmic()) {
+        // System.out.println(x);
+        if (getChartInternal().getStyleManager().isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
+        // System.out.println(x);
 
         Number next = yItr.next();
         if (next == null) {
@@ -156,8 +140,8 @@ public class PlotContentLineChart extends PlotContent {
           closePath(g, path, previousX, bounds, yTopMargin);
           path = null;
 
-          previousX = Integer.MIN_VALUE;
-          previousY = Integer.MIN_VALUE;
+          previousX = -Double.MAX_VALUE;
+          previousY = -Double.MAX_VALUE;
           continue;
         }
 
@@ -166,7 +150,7 @@ public class PlotContentLineChart extends PlotContent {
         double y = 0.0;
 
         // System.out.println(y);
-        if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+        if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         }
         else {
@@ -189,24 +173,30 @@ public class PlotContentLineChart extends PlotContent {
 
         double xOffset = bounds.getX() + xTransform;
         double yOffset = bounds.getY() + yTransform;
-        // System.out.println(yOffset);
+        // System.out.println(xTransform);
+        // System.out.println(xOffset);
         // System.out.println(yTransform);
+        // System.out.println(yOffset);
+        // System.out.println("---");
 
         // paint line
-        if (series.getStroke() != null && getChartPainter().getStyleManager().getChartType() != ChartType.Scatter) {
+        if (Series.SeriesType.Line.equals(series.getSeriesType()) || Series.SeriesType.Area.equals(series.getSeriesType())) {
 
-          if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
-            g.setColor(series.getStrokeColor());
-            g.setStroke(series.getStroke());
-            Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
-            g.draw(line);
+          if (series.getStroke() != null) {
+
+            if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
+              g.setColor(series.getStrokeColor());
+              g.setStroke(series.getStroke());
+              Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
+              g.draw(line);
+            }
           }
         }
 
         // paint area
-        if (getChartPainter().getStyleManager().getChartType() == ChartType.Area || Series.SeriesType.Area.equals(series.getSeriesType())) {
+        if (Series.SeriesType.Area.equals(series.getSeriesType())) {
 
-          if (previousX != Integer.MIN_VALUE && previousY != Integer.MIN_VALUE) {
+          if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
             g.setColor(series.getFillColor());
             double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
@@ -229,26 +219,26 @@ public class PlotContentLineChart extends PlotContent {
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset, getChartPainter().getStyleManager().getMarkerSize());
+          series.getMarker().paint(g, xOffset, yOffset, getChartInternal().getStyleManager().getMarkerSize());
         }
 
-        // paint errorbars
+        // paint error bars
         if (errorBars != null) {
 
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (getChartPainter().getStyleManager().isErrorBarsColorSeriesColor()) {
+          if (getChartInternal().getStyleManager().isErrorBarsColorSeriesColor()) {
             g.setColor(series.getStrokeColor());
           }
           else {
-            g.setColor(getChartPainter().getStyleManager().getErrorBarsColor());
+            g.setColor(getChartInternal().getStyleManager().getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 
           // Top value
           double topValue = 0.0;
-          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+          if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
           }
@@ -260,7 +250,7 @@ public class PlotContentLineChart extends PlotContent {
 
           // Bottom value
           double bottomValue = 0.0;
-          if (getChartPainter().getStyleManager().isYAxisLogarithmic()) {
+          if (getChartInternal().getStyleManager().isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
