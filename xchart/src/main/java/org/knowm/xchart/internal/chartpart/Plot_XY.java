@@ -17,7 +17,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import org.knowm.xchart.Series_XY;
-import org.knowm.xchart.StyleManagerXY;
+import org.knowm.xchart.Styler_XY;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 
@@ -31,10 +31,10 @@ public class Plot_XY<SM extends StyleManagerAxesChart, S extends Series> extends
    *
    * @param chart
    */
-  public Plot_XY(Chart<StyleManagerXY, Series_XY> chart) {
+  public Plot_XY(Chart<Styler_XY, Series_XY> chart) {
 
     super(chart);
-    this.plotContent = new PlotContent_XY<StyleManagerXY, Series_XY>(chart);
+    this.plotContent = new PlotContent_XY<Styler_XY, Series_XY>(chart);
   }
 
 }

@@ -19,11 +19,11 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.Series_AxesChart;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
-import org.knowm.xchart.StyleManagerCategory;
+import org.knowm.xchart.Styler_Category;
 
 /**
  * @author timmolter
@@ -93,9 +93,9 @@ public class AxisPair<SM extends StyleManagerAxesChart, S extends Series> implem
     double overrideYAxisMinValue = yAxis.getMin();
     double overrideYAxisMaxValue = yAxis.getMax();
 
-    if (chart.getStyleManager() instanceof StyleManagerCategory) {
+    if (chart.getStyleManager() instanceof Styler_Category) {
 
-      StyleManagerCategory styleManagerCategory = (StyleManagerCategory) chart.getStyleManager();
+      Styler_Category styleManagerCategory = (Styler_Category) chart.getStyleManager();
       if (styleManagerCategory.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
         // override min/max value for bar charts' Y-Axis
         // There is a special case where it's desired to anchor the axis min or max to zero, like in the case of bar charts. This flag enables that feature.

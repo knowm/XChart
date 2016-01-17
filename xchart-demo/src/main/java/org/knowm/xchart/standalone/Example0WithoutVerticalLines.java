@@ -19,7 +19,7 @@ package org.knowm.xchart.standalone;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.ChartBuilderXY;
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
@@ -38,7 +38,7 @@ public class Example0WithoutVerticalLines {
     List<Chart> charts = new ArrayList<Chart>();
 
     for (int i = 0; i < numCharts; i++) {
-      Chart_XY chart = new ChartBuilderXY().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
+      Chart_XY chart = new ChartBuilder_XY().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
       chart.getStyleManager().setYAxisMin(-10);
       chart.getStyleManager().setYAxisMax(10);
       chart.getStyleManager().setPlotGridVerticalLinesVisible(false);

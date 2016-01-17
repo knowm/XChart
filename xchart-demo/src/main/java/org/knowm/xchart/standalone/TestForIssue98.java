@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.StyleManagerXY;
+import org.knowm.xchart.Styler_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
@@ -33,7 +33,7 @@ public class TestForIssue98 {
   public static void main(String[] args) throws IOException {
 
     final Chart_XY chart = new Chart_XY(1920, 1080);
-    StyleManagerXY manager = chart.getStyleManager();
+    Styler_XY manager = chart.getStyleManager();
     manager.setLegendPosition(LegendPosition.InsideNW);
     manager.setYAxisLogarithmic(true);
 

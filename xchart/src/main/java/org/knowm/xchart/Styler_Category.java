@@ -16,21 +16,21 @@
  */
 package org.knowm.xchart;
 
-import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 import org.knowm.xchart.internal.style.Theme;
 
 /**
  * @author timmolter
  */
-public class StyleManagerXY extends StyleManagerAxesChart {
+public class Styler_Category extends StyleManagerAxesChart {
 
-  private ChartXYSeriesRenderStyle chartXYSeriesRenderStyle;
+  private ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle;
 
   /**
    * Constructor
    */
-  public StyleManagerXY() {
+  public Styler_Category() {
 
     this.setAllStyles();
     super.setAllStyles();
@@ -39,12 +39,12 @@ public class StyleManagerXY extends StyleManagerAxesChart {
   @Override
   protected void setAllStyles() {
 
-    chartXYSeriesRenderStyle = ChartXYSeriesRenderStyle.Line; // set default to line
+    chartCategorySeriesRenderStyle = ChartCategorySeriesRenderStyle.Bar; // set default to bar
   }
 
-  public ChartXYSeriesRenderStyle getChartXYSeriesRenderStyle() {
+  public ChartCategorySeriesRenderStyle getChartCategorySeriesRenderStyle() {
 
-    return chartXYSeriesRenderStyle;
+    return chartCategorySeriesRenderStyle;
   }
 
   /**
@@ -52,9 +52,9 @@ public class StyleManagerXY extends StyleManagerAxesChart {
    *
    * @param chartXYSeriesRenderStyle
    */
-  public void setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
+  public void setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
 
-    this.chartXYSeriesRenderStyle = chartXYSeriesRenderStyle;
+    this.chartCategorySeriesRenderStyle = chartCategorySeriesRenderStyle;
   }
 
   /**
@@ -72,5 +72,4 @@ public class StyleManagerXY extends StyleManagerAxesChart {
 
     return theme;
   }
-
 }

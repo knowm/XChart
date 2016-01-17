@@ -33,7 +33,7 @@ import org.knowm.xchart.internal.style.Theme;
 /**
  * @author timmolter
  */
-public class Chart_Pie extends Chart<StyleManagerPie, Series_Pie> {
+public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -43,7 +43,7 @@ public class Chart_Pie extends Chart<StyleManagerPie, Series_Pie> {
    */
   public Chart_Pie(int width, int height) {
 
-    super(width, height, new StyleManagerPie());
+    super(width, height, new Styler_Pie());
     plot = new Plot_Pie(this);
     chartLegend = new LegendPie(this);
   }
@@ -78,7 +78,7 @@ public class Chart_Pie extends Chart<StyleManagerPie, Series_Pie> {
    *
    * @param chartBuilder
    */
-  public Chart_Pie(ChartBuilderPie chartBuilder) {
+  public Chart_Pie(ChartBuilder_Pie chartBuilder) {
 
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);

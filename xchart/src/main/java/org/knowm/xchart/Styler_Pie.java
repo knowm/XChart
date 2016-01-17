@@ -23,7 +23,7 @@ import org.knowm.xchart.internal.style.Theme;
 /**
  * @author timmolter
  */
-public class StyleManagerPie extends StyleManager {
+public class Styler_Pie extends StyleManager {
 
   private ChartPieSeriesRenderStyle chartPieSeriesRenderStyle;
 
@@ -34,7 +34,7 @@ public class StyleManagerPie extends StyleManager {
   /**
    * Constructor
    */
-  public StyleManagerPie() {
+  public Styler_Pie() {
 
     this.setAllStyles();
     super.setAllStyles();

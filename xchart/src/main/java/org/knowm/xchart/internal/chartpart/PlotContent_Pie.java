@@ -27,7 +27,7 @@ import java.text.DecimalFormat;
 import java.util.Map;
 
 import org.knowm.xchart.Series_Pie;
-import org.knowm.xchart.StyleManagerPie;
+import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.style.StyleManager;
 
@@ -36,7 +36,7 @@ import org.knowm.xchart.internal.style.StyleManager;
  */
 public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends PlotContent_ {
 
-  StyleManagerPie styleManagerPie;
+  Styler_Pie styleManagerPie;
   DecimalFormat df = new DecimalFormat("#.0");
 
   /**
@@ -44,7 +44,7 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
    *
    * @param plot
    */
-  protected PlotContent_Pie(Chart<StyleManagerPie, Series_Pie> chart) {
+  protected PlotContent_Pie(Chart<Styler_Pie, Series_Pie> chart) {
 
     super(chart);
     styleManagerPie = chart.getStyleManager();

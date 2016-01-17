@@ -20,7 +20,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.ChartBuilderXY;
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
@@ -63,7 +63,7 @@ public class ScatterChart04 implements ExampleChart {
     }
 
     // Create Chart
-    Chart_XY chart = new ChartBuilderXY().width(800).height(600).title("ScatterChart04").xAxisTitle("X").yAxisTitle("Y").build();
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("ScatterChart04").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyleManager().setChartTitleVisible(false);

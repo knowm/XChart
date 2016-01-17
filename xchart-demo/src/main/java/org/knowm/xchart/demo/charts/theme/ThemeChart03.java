@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.knowm.xchart.ChartBuilderXY;
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -52,7 +52,7 @@ public class ThemeChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilderXY().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
     chart.getStyleManager().setPlotGridLinesVisible(false);
     chart.getStyleManager().setXAxisTickMarkSpacingHint(100);
     // generate data

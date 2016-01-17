@@ -28,7 +28,7 @@ import java.util.Map;
 
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
-import org.knowm.xchart.StyleManagerXY;
+import org.knowm.xchart.Styler_XY;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
@@ -40,14 +40,14 @@ import org.knowm.xchart.internal.style.lines.SeriesLines;
  */
 public class PlotContent_XY<SM extends StyleManagerAxesChart, S extends Series> extends PlotContent_ {
 
-  StyleManagerXY styleManagerXY;
+  Styler_XY styleManagerXY;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotContent_XY(Chart<StyleManagerXY, Series_XY> chart) {
+  protected PlotContent_XY(Chart<Styler_XY, Series_XY> chart) {
 
     super(chart);
     styleManagerXY = chart.getStyleManager();

@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
-import org.knowm.xchart.StyleManagerCategory;
+import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.style.StyleManager;
@@ -38,14 +38,14 @@ import org.knowm.xchart.internal.style.lines.SeriesLines;
  */
 public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series> extends PlotContent_ {
 
-  StyleManagerCategory styleManagerCategory;
+  Styler_Category styleManagerCategory;
 
   /**
    * Constructor
    *
    * @param plot
    */
-  protected PlotContent_Category_Bar(Chart<StyleManagerCategory, Series_Category> chart) {
+  protected PlotContent_Category_Bar(Chart<Styler_Category, Series_Category> chart) {
 
     super(chart);
     this.styleManagerCategory = chart.getStyleManager();

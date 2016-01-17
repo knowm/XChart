@@ -16,7 +16,7 @@
  */
 package org.knowm.xchart.demo.charts.pie;
 
-import org.knowm.xchart.ChartBuilderPie;
+import org.knowm.xchart.ChartBuilder_Pie;
 import org.knowm.xchart.Chart_Pie;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -42,7 +42,7 @@ public class PieChart01 implements ExampleChart<Chart_Pie> {
   public Chart_Pie getChart() {
 
     // Create Chart
-    Chart_Pie chart = new ChartBuilderPie().width(400).height(500).title(getClass().getSimpleName()).build();
+    Chart_Pie chart = new ChartBuilder_Pie().width(400).height(500).title(getClass().getSimpleName()).build();
     chart.addSeries("Pennies", 100);
     chart.addSeries("Nickels", 100);
     chart.addSeries("Dimes", 100);

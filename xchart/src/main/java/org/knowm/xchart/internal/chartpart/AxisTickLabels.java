@@ -25,8 +25,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.knowm.xchart.Series_AxesChart;
 import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 

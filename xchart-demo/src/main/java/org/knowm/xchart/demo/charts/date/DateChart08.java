@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.ChartBuilderXY;
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -51,7 +51,7 @@ public class DateChart08 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilderXY().width(800).height(600).title("Rotated Tick Labels").build();
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Rotated Tick Labels").build();
     chart.getStyleManager().setLegendVisible(false);
     chart.getStyleManager().setXAxisLabelRotation(60);
     chart.getStyleManager().setDatePattern("yyyy-MM-dd");

@@ -20,7 +20,7 @@ import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
-import org.knowm.xchart.StyleManagerCategory;
+import org.knowm.xchart.Styler_Category;
 
 /**
  * @author timmolter
@@ -32,19 +32,19 @@ public class Plot_Category<SM extends StyleManagerAxesChart, S extends Series> e
    *
    * @param chart
    */
-  public Plot_Category(Chart<StyleManagerCategory, Series_Category> chart) {
+  public Plot_Category(Chart<Styler_Category, Series_Category> chart) {
 
     super(chart);
 
-    StyleManagerCategory styleManagerCategory = chart.getStyleManager();
+    Styler_Category styleManagerCategory = chart.getStyleManager();
 
     if (ChartCategorySeriesRenderStyle.Bar.equals(styleManagerCategory.getChartCategorySeriesRenderStyle())) {
 
-      this.plotContent = new PlotContent_Category_Bar<StyleManagerCategory, Series_Category>(chart);
+      this.plotContent = new PlotContent_Category_Bar<Styler_Category, Series_Category>(chart);
 
     }
     else {
-      this.plotContent = new PlotContent_Category_Line_Area_Scatter<StyleManagerCategory, Series_Category>(chart);
+      this.plotContent = new PlotContent_Category_Line_Area_Scatter<Styler_Category, Series_Category>(chart);
 
     }
 

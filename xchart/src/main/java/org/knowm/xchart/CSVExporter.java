@@ -25,6 +25,8 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.knowm.xchart.internal.Series_AxesChart;
+
 /**
  * This class is used to export Chart data to a folder containing one or more CSV files. The parent folder's name is the title of the chart. Each
  * series becomes a CSV file in the folder. The series' name becomes the CSV files' name.

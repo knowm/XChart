@@ -21,7 +21,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.Series_Pie;
-import org.knowm.xchart.StyleManagerPie;
+import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.style.StyleManager;
 
@@ -32,14 +32,14 @@ import org.knowm.xchart.internal.style.StyleManager;
  */
 public class PlotSurfacePie<SM extends StyleManager, S extends Series> extends PlotSurface {
 
-  private final StyleManagerPie styleManagerPie;
+  private final Styler_Pie styleManagerPie;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotSurfacePie(Chart<StyleManagerPie, Series_Pie> chart) {
+  protected PlotSurfacePie(Chart<Styler_Pie, Series_Pie> chart) {
 
     super(chart);
     this.styleManagerPie = chart.getStyleManager();

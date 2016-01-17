@@ -18,7 +18,7 @@ package org.knowm.xchart.demo.charts.pie;
 
 import java.awt.Color;
 
-import org.knowm.xchart.ChartBuilderPie;
+import org.knowm.xchart.ChartBuilder_Pie;
 import org.knowm.xchart.Chart_Pie;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -45,7 +45,7 @@ public class PieChart02 implements ExampleChart<Chart_Pie> {
   public Chart_Pie getChart() {
 
     // Create Chart
-    Chart_Pie chart = new ChartBuilderPie().width(800).height(600).title(getClass().getSimpleName()).build();
+    Chart_Pie chart = new ChartBuilder_Pie().width(800).height(600).title(getClass().getSimpleName()).build();
     chart.addSeries("Gold", 24);
     chart.addSeries("Silver", 21);
     chart.addSeries("Platinum", 39);

@@ -21,9 +21,9 @@ import org.knowm.xchart.internal.ChartBuilder;
 /**
  * @author timmolter
  */
-public class ChartBuilderPie extends ChartBuilder<ChartBuilderPie, Chart_Pie> {
+public class ChartBuilder_Pie extends ChartBuilder<ChartBuilder_Pie, Chart_Pie> {
 
-  public ChartBuilderPie() {
+  public ChartBuilder_Pie() {
 
   }
 

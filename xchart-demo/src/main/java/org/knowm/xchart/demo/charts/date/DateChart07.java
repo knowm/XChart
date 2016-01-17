@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.ChartBuilderXY;
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -46,7 +46,7 @@ public class DateChart07 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilderXY().width(800).height(600).title("Year Scale").build();
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Year Scale").build();
     chart.getStyleManager().setLegendVisible(false);
 
     // generate data

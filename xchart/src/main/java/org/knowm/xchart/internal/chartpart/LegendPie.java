@@ -26,7 +26,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
 import org.knowm.xchart.Series_Pie;
-import org.knowm.xchart.StyleManagerPie;
+import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 
@@ -35,14 +35,14 @@ import org.knowm.xchart.internal.style.StyleManagerAxesChart;
  */
 public class LegendPie<SM extends StyleManagerAxesChart, S extends Series> extends Legend {
 
-  StyleManagerPie styleManagerPie;
+  Styler_Pie styleManagerPie;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public LegendPie(Chart<StyleManagerPie, Series_Pie> chart) {
+  public LegendPie(Chart<Styler_Pie, Series_Pie> chart) {
 
     super(chart);
     styleManagerPie = chart.getStyleManager();

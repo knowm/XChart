@@ -20,7 +20,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.Series_Pie;
-import org.knowm.xchart.StyleManagerPie;
+import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.style.StyleManager;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
@@ -35,11 +35,11 @@ public class Plot_Pie<SM extends StyleManager, S extends Series> extends Plot_ {
    *
    * @param chart
    */
-  public Plot_Pie(Chart<StyleManagerPie, Series_Pie> chart) {
+  public Plot_Pie(Chart<Styler_Pie, Series_Pie> chart) {
 
     super(chart);
-    this.plotContent = new PlotContent_Pie<StyleManagerPie, Series_Pie>(chart);
-    this.plotSurface = new PlotSurfacePie<StyleManagerPie, Series_Pie>(chart);
+    this.plotContent = new PlotContent_Pie<Styler_Pie, Series_Pie>(chart);
+    this.plotSurface = new PlotSurfacePie<Styler_Pie, Series_Pie>(chart);
   }
 
   @Override

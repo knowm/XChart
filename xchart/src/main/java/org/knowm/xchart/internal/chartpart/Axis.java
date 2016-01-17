@@ -24,9 +24,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import org.knowm.xchart.Series_AxesChart;
-import org.knowm.xchart.StyleManagerCategory;
+import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.style.StyleManagerAxesChart;
 import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
 
@@ -348,7 +348,7 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
     // X-Axis
     if (getDirection() == Direction.X) {
 
-      if (chart.getStyleManager() instanceof StyleManagerCategory) {
+      if (chart.getStyleManager() instanceof Styler_Category) {
 
         List<?> categories = (List<?>) chart.getSeriesMap().values().iterator().next().getXData();
         AxisDataType axisType = chart.getAxisPair().getXAxis().getAxisDataType();

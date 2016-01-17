@@ -21,22 +21,22 @@ import org.knowm.xchart.internal.ChartBuilder;
 /**
  * @author timmolter
  */
-public class ChartBuilderXY extends ChartBuilder<ChartBuilderXY, Chart_XY> {
+public class ChartBuilder_XY extends ChartBuilder<ChartBuilder_XY, Chart_XY> {
 
   String xAxisTitle = "";
   String yAxisTitle = "";
 
-  public ChartBuilderXY() {
+  public ChartBuilder_XY() {
 
   }
 
-  public ChartBuilderXY xAxisTitle(String xAxisTitle) {
+  public ChartBuilder_XY xAxisTitle(String xAxisTitle) {
 
     this.xAxisTitle = xAxisTitle;
     return this;
   }
 
-  public ChartBuilderXY yAxisTitle(String yAxisTitle) {
+  public ChartBuilder_XY yAxisTitle(String yAxisTitle) {
 
     this.yAxisTitle = yAxisTitle;
     return this;

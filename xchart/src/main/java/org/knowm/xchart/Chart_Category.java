@@ -35,7 +35,7 @@ import org.knowm.xchart.internal.style.Theme;
 /**
  * @author timmolter
  */
-public class Chart_Category extends Chart<StyleManagerCategory, Series_Category> {
+public class Chart_Category extends Chart<Styler_Category, Series_Category> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -45,7 +45,7 @@ public class Chart_Category extends Chart<StyleManagerCategory, Series_Category>
    */
   public Chart_Category(int width, int height) {
 
-    super(width, height, new StyleManagerCategory());
+    super(width, height, new Styler_Category());
     axisPair = new AxisPair(this);
     plot = new Plot_Category(this);
     chartLegend = new LegendAxesChart(this);
