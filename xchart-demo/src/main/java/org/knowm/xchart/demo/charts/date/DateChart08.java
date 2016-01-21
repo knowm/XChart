@@ -52,9 +52,9 @@ public class DateChart08 implements ExampleChart {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Rotated Tick Labels").build();
-    chart.getStyleManager().setLegendVisible(false);
-    chart.getStyleManager().setXAxisLabelRotation(60);
-    chart.getStyleManager().setDatePattern("yyyy-MM-dd");
+    chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setXAxisLabelRotation(60);
+    chart.getStyler().setDatePattern("yyyy-MM-dd");
     // generate data
     List<Date> xData = new ArrayList<Date>();
     List<Double> yData = new ArrayList<Double>();

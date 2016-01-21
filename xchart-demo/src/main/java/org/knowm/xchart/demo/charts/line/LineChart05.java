@@ -23,7 +23,7 @@ import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 import org.knowm.xchart.internal.style.lines.SeriesLines;
 import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
@@ -56,7 +56,7 @@ public class LineChart05 implements ExampleChart {
     chart.setTitle("LineChart05");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
 
     double[] xData = new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 5, 6 };
     double[] yData = new double[] { 106, 44, 26, 10, 7.5, 3.4, .88 };
@@ -72,13 +72,13 @@ public class LineChart05 implements ExampleChart {
     series2.setLineStyle(SeriesLines.DASH_DASH);
     series2.setLineColor(Color.BLACK);
 
-    chart.getStyleManager().setYAxisLogarithmic(true);
+    chart.getStyler().setYAxisLogarithmic(true);
 
-    chart.getStyleManager().setYAxisMin(0.01);
-    chart.getStyleManager().setYAxisMax(1000);
+    chart.getStyler().setYAxisMin(0.01);
+    chart.getStyler().setYAxisMax(1000);
 
-    chart.getStyleManager().setXAxisMin(2);
-    chart.getStyleManager().setXAxisMax(7);
+    chart.getStyler().setXAxisMin(2);
+    chart.getStyler().setXAxisMax(7);
 
     return chart;
   }

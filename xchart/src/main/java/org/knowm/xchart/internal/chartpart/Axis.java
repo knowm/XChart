@@ -27,22 +27,22 @@ import java.util.List;
 import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * Axis
  *
  * @author timmolter
  */
-public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements ChartPart {
+public class Axis<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
 
   public enum AxisDataType {
 
     Number, Date, String;
   }
 
-  private final Chart<StyleManagerAxesChart, Series_AxesChart> chart;
+  private final Chart<Styler_AxesChart, Series_AxesChart> chart;
   private Rectangle2D bounds;
 
   // TODO 3.0.0 use bounds only???
@@ -58,10 +58,10 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
   private AxisDataType axisDataType;
 
   /** the axis title */
-  private AxisTitle<StyleManagerAxesChart, Series_AxesChart> axisTitle;
+  private AxisTitle<Styler_AxesChart, Series_AxesChart> axisTitle;
 
   /** the axis tick */
-  private AxisTick<StyleManagerAxesChart, Series_AxesChart> axisTick;
+  private AxisTick<Styler_AxesChart, Series_AxesChart> axisTick;
 
   /** the axis tick calculator */
   private AxisTickCalculator_ axisTickCalculator;
@@ -89,12 +89,13 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
    * @param chart the Chart
    * @param direction the axis direction (X or Y)
    */
-  public Axis(Chart<StyleManagerAxesChart, Series_AxesChart> chart, Direction direction) {
+  public Axis(Chart<Styler_AxesChart, Series_AxesChart> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;
-    axisTitle = new AxisTitle<StyleManagerAxesChart, Series_AxesChart>(chart, direction);
-    axisTick = new AxisTick<StyleManagerAxesChart, Series_AxesChart>(chart, direction);
+    axisTitle = new AxisTitle<Styler_AxesChart, Series_AxesChart>(chart, direction);
+    axisTick = new AxisTick<Styler_AxesChart, Series_AxesChart>(chart, direction);
+    // resetMinMax();
   }
 
   /**
@@ -152,9 +153,10 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
       // |
       // |
       // ----
-      double xOffset = chart.getStyleManager().getChartPadding();
-      double yOffset = chart.getChartTitle().getBounds().getHeight() < .1 ? chart.getStyleManager().getChartPadding() : chart.getChartTitle().getBounds().getHeight() + 2 * chart.getStyleManager()
-          .getChartPadding();
+      double xOffset = chart.getStyler().getChartPadding();
+      double yOffset = chart.getChartTitle().getBounds().getHeight() < .1 ? chart.getStyler().getChartPadding() : chart.getChartTitle().getBounds().getHeight()
+
+          + chart.getStyler().getChartPadding();
 
       /////////////////////////
       int i = 1; // just twice through is all it takes
@@ -169,17 +171,17 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
 
                 - width // y-axis approx. width
 
-                - (chart.getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? chart.getChartLegend().getBounds().getWidth() : 0)
+                - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0)
 
-                - 2 * chart.getStyleManager().getChartPadding()
+                - 2 * chart.getStyler().getChartPadding()
 
-                - (chart.getStyleManager().isYAxisTicksVisible() ? (chart.getStyleManager().getPlotPadding()) : 0)
+                - (chart.getStyler().isYAxisTicksVisible() ? (chart.getStyler().getPlotPadding()) : 0)
 
-                - (chart.getStyleManager().getLegendPosition() == LegendPosition.OutsideE && chart.getStyleManager().isLegendVisible() ? chart.getStyleManager().getChartPadding() : 0)
+                - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE && chart.getStyler().isLegendVisible() ? chart.getStyler().getChartPadding() : 0)
 
         ;
 
-        height = chart.getHeight() - yOffset - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - chart.getStyleManager().getPlotPadding() - chart.getStyleManager().getChartPadding();
+        height = chart.getHeight() - yOffset - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - chart.getStyler().getPlotPadding() - chart.getStyler().getChartPadding();
 
         width = getYAxisWidthHint(height);
         // System.out.println("width after: " + width);
@@ -201,7 +203,7 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
 
       xOffset = paintZone.getX();
       yOffset = paintZone.getY();
-      width = (chart.getStyleManager().isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + axisTick.getBounds().getWidth();
+      width = (chart.getStyler().isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + axisTick.getBounds().getWidth();
       height = paintZone.getHeight();
       bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
@@ -214,9 +216,8 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
       // calculate paint zone
       // |____________________|
 
-      double xOffset = chart.getYAxis().getBounds().getWidth() + (chart.getStyleManager().isYAxisTicksVisible() ? chart.getStyleManager().getPlotPadding() : 0) + chart.getStyleManager()
-          .getChartPadding();
-      double yOffset = chart.getYAxis().getBounds().getY() + chart.getYAxis().getBounds().getHeight() + chart.getStyleManager().getPlotPadding();
+      double xOffset = chart.getYAxis().getBounds().getWidth() + (chart.getStyler().isYAxisTicksVisible() ? chart.getStyler().getPlotPadding() : 0) + chart.getStyler().getChartPadding();
+      double yOffset = chart.getYAxis().getBounds().getY() + chart.getYAxis().getBounds().getHeight() + chart.getStyler().getPlotPadding();
 
       double width =
 
@@ -224,21 +225,20 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
 
               - chart.getYAxis().getBounds().getWidth() // y-axis was already painted
 
-              - (chart.getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? chart.getChartLegend().getBounds().getWidth() : 0)
+              - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0)
 
-              - 2 * chart.getStyleManager().getChartPadding()
+              - 2 * chart.getStyler().getChartPadding()
 
-              - (chart.getStyleManager().isYAxisTicksVisible() ? (chart.getStyleManager().getPlotPadding()) : 0)
+              - (chart.getStyler().isYAxisTicksVisible() ? (chart.getStyler().getPlotPadding()) : 0)
 
-              - (chart.getStyleManager().getLegendPosition() == LegendPosition.OutsideE && chart.getStyleManager().isLegendVisible() ? chart.getStyleManager().getChartPadding() : 0)
+              - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE && chart.getStyler().isLegendVisible() ? chart.getStyler().getChartPadding() : 0)
 
       ;
 
       // double height = this.getXAxisHeightHint(width);
       // System.out.println("height: " + height);
       // the Y-Axis was already draw at this point so we know how much vertical room is left for the X-Axis
-      double height = chart.getHeight() - chart.getYAxis().getBounds().getY() - chart.getYAxis().getBounds().getHeight() - chart.getStyleManager().getChartPadding() - chart.getStyleManager()
-          .getPlotPadding();
+      double height = chart.getHeight() - chart.getYAxis().getBounds().getY() - chart.getYAxis().getBounds().getHeight() - chart.getStyler().getChartPadding() - chart.getStyler().getPlotPadding();
       // System.out.println("height2: " + height2);
 
       Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
@@ -271,15 +271,15 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
 
     // Axis title
     double titleHeight = 0.0;
-    if (chart.getXAxisTitle() != null && !chart.getXAxisTitle().trim().equalsIgnoreCase("") && chart.getStyleManager().isXAxisTitleVisible()) {
-      TextLayout textLayout = new TextLayout(chart.getXAxisTitle(), chart.getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
+    if (chart.getXAxisTitle() != null && !chart.getXAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isXAxisTitleVisible()) {
+      TextLayout textLayout = new TextLayout(chart.getXAxisTitle(), chart.getStyler().getAxisTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
-      titleHeight = rectangle.getHeight() + chart.getStyleManager().getAxisTitlePadding();
+      titleHeight = rectangle.getHeight() + chart.getStyler().getAxisTitlePadding();
     }
 
     // Axis tick labels
     double axisTickLabelsHeight = 0.0;
-    if (chart.getStyleManager().isXAxisTicksVisible()) {
+    if (chart.getStyler().isXAxisTicksVisible()) {
 
       // get some real tick labels
       // System.out.println("XAxisHeightHint");
@@ -297,12 +297,12 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
       // System.out.println("sampleLabel: " + sampleLabel);
 
       // get the height of the label including rotation
-      TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, chart.getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-      AffineTransform rot = chart.getStyleManager().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(chart.getStyleManager().getXAxisLabelRotation()));
+      TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, chart.getStyler().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+      AffineTransform rot = chart.getStyler().getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(chart.getStyler().getXAxisLabelRotation()));
       Shape shape = textLayout.getOutline(rot);
       Rectangle2D rectangle = shape.getBounds();
 
-      axisTickLabelsHeight = rectangle.getHeight() + chart.getStyleManager().getAxisTickPadding() + chart.getStyleManager().getAxisTickMarkLength();
+      axisTickLabelsHeight = rectangle.getHeight() + chart.getStyler().getAxisTickPadding() + chart.getStyler().getAxisTickMarkLength();
     }
     return titleHeight + axisTickLabelsHeight;
   }
@@ -311,15 +311,15 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
 
     // Axis title
     double titleHeight = 0.0;
-    if (chart.getyYAxisTitle() != null && !chart.getyYAxisTitle().trim().equalsIgnoreCase("") && chart.getStyleManager().isYAxisTitleVisible()) {
-      TextLayout textLayout = new TextLayout(chart.getyYAxisTitle(), chart.getStyleManager().getAxisTitleFont(), new FontRenderContext(null, true, false));
+    if (chart.getyYAxisTitle() != null && !chart.getyYAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isYAxisTitleVisible()) {
+      TextLayout textLayout = new TextLayout(chart.getyYAxisTitle(), chart.getStyler().getAxisTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
-      titleHeight = rectangle.getHeight() + chart.getStyleManager().getAxisTitlePadding();
+      titleHeight = rectangle.getHeight() + chart.getStyler().getAxisTitlePadding();
     }
 
     // Axis tick labels
     double axisTickLabelsHeight = 0.0;
-    if (chart.getStyleManager().isYAxisTicksVisible()) {
+    if (chart.getStyler().isYAxisTicksVisible()) {
 
       // get some real tick labels
       // System.out.println("XAxisHeightHint");
@@ -335,10 +335,10 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
       }
 
       // get the height of the label including rotation
-      TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, chart.getStyleManager().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, chart.getStyler().getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
 
-      axisTickLabelsHeight = rectangle.getWidth() + chart.getStyleManager().getAxisTickPadding() + chart.getStyleManager().getAxisTickMarkLength();
+      axisTickLabelsHeight = rectangle.getWidth() + chart.getStyler().getAxisTickPadding() + chart.getStyler().getAxisTickMarkLength();
     }
     return titleHeight + axisTickLabelsHeight;
   }
@@ -348,24 +348,24 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
     // X-Axis
     if (getDirection() == Direction.X) {
 
-      if (chart.getStyleManager() instanceof Styler_Category) {
+      if (chart.getStyler() instanceof Styler_Category) {
 
         List<?> categories = (List<?>) chart.getSeriesMap().values().iterator().next().getXData();
         AxisDataType axisType = chart.getAxisPair().getXAxis().getAxisDataType();
 
-        return new AxisTickCalculator_Category(getDirection(), workingSpace, categories, axisType, chart.getStyleManager());
+        return new AxisTickCalculator_Category(getDirection(), workingSpace, categories, axisType, chart.getStyler());
 
       }
       else if (getAxisDataType() == AxisDataType.Date) {
 
-        return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, chart.getStyleManager());
+        return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, chart.getStyler());
       }
-      else if (chart.getStyleManager().isXAxisLogarithmic()) {
+      else if (chart.getStyler().isXAxisLogarithmic()) {
 
-        return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, chart.getStyleManager());
+        return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, chart.getStyler());
       }
       else {
-        return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, chart.getStyleManager());
+        return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, chart.getStyler());
 
       }
     }
@@ -373,12 +373,12 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
     // Y-Axis
     else {
 
-      if (chart.getStyleManager().isYAxisLogarithmic() && getAxisDataType() != AxisDataType.Date) {
+      if (chart.getStyler().isYAxisLogarithmic() && getAxisDataType() != AxisDataType.Date) {
 
-        return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, chart.getStyleManager());
+        return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, chart.getStyler());
       }
       else {
-        return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, chart.getStyleManager());
+        return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, chart.getStyler());
 
       }
     }
@@ -412,7 +412,7 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
     this.max = max;
   }
 
-  protected AxisTick<StyleManagerAxesChart, Series_AxesChart> getAxisTick() {
+  protected AxisTick<Styler_AxesChart, Series_AxesChart> getAxisTick() {
 
     return axisTick;
   }
@@ -422,7 +422,7 @@ public class Axis<SM extends StyleManagerAxesChart, S extends Series> implements
     return direction;
   }
 
-  protected AxisTitle<StyleManagerAxesChart, Series_AxesChart> getAxisTitle() {
+  protected AxisTitle<Styler_AxesChart, Series_AxesChart> getAxisTitle() {
 
     return axisTitle;
   }

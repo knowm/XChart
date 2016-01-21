@@ -31,7 +31,7 @@ import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 import org.knowm.xchart.internal.style.colors.ChartColor;
 import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
 import org.knowm.xchart.internal.style.lines.SeriesLines;
@@ -76,31 +76,31 @@ public class LineChart03 implements ExampleChart {
     chart.setTitle("LineChart03");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.getStyleManager().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
-    chart.getStyleManager().setPlotGridLinesColor(new Color(255, 255, 255));
-    chart.getStyleManager().setChartBackgroundColor(Color.WHITE);
-    chart.getStyleManager().setLegendBackgroundColor(Color.PINK);
-    chart.getStyleManager().setChartFontColor(Color.MAGENTA);
-    chart.getStyleManager().setChartTitleBoxBackgroundColor(new Color(0, 222, 0));
-    chart.getStyleManager().setChartTitleBoxVisible(true);
-    chart.getStyleManager().setChartTitleBoxBorderColor(Color.BLACK);
-    chart.getStyleManager().setPlotGridLinesVisible(false);
+    chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
+    chart.getStyler().setPlotGridLinesColor(new Color(255, 255, 255));
+    chart.getStyler().setChartBackgroundColor(Color.WHITE);
+    chart.getStyler().setLegendBackgroundColor(Color.PINK);
+    chart.getStyler().setChartFontColor(Color.MAGENTA);
+    chart.getStyler().setChartTitleBoxBackgroundColor(new Color(0, 222, 0));
+    chart.getStyler().setChartTitleBoxVisible(true);
+    chart.getStyler().setChartTitleBoxBorderColor(Color.BLACK);
+    chart.getStyler().setPlotGridLinesVisible(false);
 
-    chart.getStyleManager().setAxisTickPadding(20);
+    chart.getStyler().setAxisTickPadding(20);
 
-    chart.getStyleManager().setAxisTickMarkLength(15);
+    chart.getStyler().setAxisTickMarkLength(15);
 
-    chart.getStyleManager().setPlotPadding(20);
+    chart.getStyler().setPlotPadding(20);
 
-    chart.getStyleManager().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
-    chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
-    chart.getStyleManager().setLegendSeriesLineLength(12);
-    chart.getStyleManager().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
-    chart.getStyleManager().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
-    chart.getStyleManager().setDatePattern("dd-MMM");
-    chart.getStyleManager().setDecimalPattern("#0.000");
-    chart.getStyleManager().setLocale(Locale.GERMAN);
+    chart.getStyler().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
+    chart.getStyler().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
+    chart.getStyler().setLegendPosition(LegendPosition.InsideSE);
+    chart.getStyler().setLegendSeriesLineLength(12);
+    chart.getStyler().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
+    chart.getStyler().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
+    chart.getStyler().setDatePattern("dd-MMM");
+    chart.getStyler().setDecimalPattern("#0.000");
+    chart.getStyler().setLocale(Locale.GERMAN);
 
     Series_XY series = chart.addSeries("Fake Data", xData, yData);
     series.setLineColor(XChartSeriesColors.BLUE);

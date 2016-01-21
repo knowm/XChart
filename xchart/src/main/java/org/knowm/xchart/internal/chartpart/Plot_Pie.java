@@ -22,13 +22,13 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.Series_Pie;
 import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManager;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * @author timmolter
  */
-public class Plot_Pie<SM extends StyleManager, S extends Series> extends Plot_ {
+public class Plot_Pie<ST extends Styler, S extends Series> extends Plot_ {
 
   /**
    * Constructor
@@ -39,30 +39,30 @@ public class Plot_Pie<SM extends StyleManager, S extends Series> extends Plot_ {
 
     super(chart);
     this.plotContent = new PlotContent_Pie<Styler_Pie, Series_Pie>(chart);
-    this.plotSurface = new PlotSurfacePie<Styler_Pie, Series_Pie>(chart);
+    this.plotSurface = new PlotSurface_Pie<Styler_Pie, Series_Pie>(chart);
   }
 
   @Override
   public void paint(Graphics2D g) {
 
     // calculate bounds
-    double xOffset = chart.getStyleManager().getChartPadding();
+    double xOffset = chart.getStyler().getChartPadding();
 
-    double yOffset = chart.getChartTitle().getBounds().getY() + chart.getStyleManager().getChartPadding();
+    double yOffset = chart.getChartTitle().getBounds().getHeight() + 2 * chart.getStyler().getChartPadding();
 
     double width =
 
         chart.getWidth()
 
-            - (chart.getStyleManager().getLegendPosition() == LegendPosition.OutsideE ? chart.getChartLegend().getBounds().getWidth() : 0)
+            - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0)
 
-            - 2 * chart.getStyleManager().getChartPadding()
+            - 2 * chart.getStyler().getChartPadding()
 
-            - (chart.getStyleManager().getLegendPosition() == LegendPosition.OutsideE && chart.getStyleManager().isLegendVisible() ? chart.getStyleManager().getChartPadding() : 0);
+            - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE && chart.getStyler().isLegendVisible() ? chart.getStyler().getChartPadding() : 0);
 
-    double height = chart.getHeight() - chart.getChartTitle().getBounds().getHeight() - 2 * chart.getStyleManager().getChartPadding();
+    double height = chart.getHeight() - chart.getChartTitle().getBounds().getHeight() - 2 * chart.getStyler().getChartPadding();
 
-    bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
+    this.bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
     super.paint(g);
   }

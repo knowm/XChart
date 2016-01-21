@@ -25,7 +25,7 @@ import java.util.TimeZone;
 /**
  * @author timmolter
  */
-public abstract class StyleManagerAxesChart extends StyleManager {
+public abstract class Styler_AxesChart extends Styler {
 
   // Chart Axes ///////////////////////////////
   private boolean xAxisTitleVisible;

@@ -54,7 +54,7 @@ public class DateChart01 implements ExampleChart {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Millisecond Scale").build();
-    chart.getStyleManager().setLegendVisible(false);
+    chart.getStyler().setLegendVisible(false);
 
     Random random = new Random();
 

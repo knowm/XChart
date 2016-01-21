@@ -20,17 +20,17 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.Styler;
 
 /**
  * @author timmolter
  */
-public class Plot_<SM extends StyleManager, S extends Series> implements ChartPart {
+public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
 
-  protected final Chart<SM, S> chart;
+  protected final Chart<ST, S> chart;
   protected Rectangle2D bounds;
 
-  protected PlotSurface plotSurface;
+  protected PlotSurface_ plotSurface;
   protected PlotContent_ plotContent;
 
   /**
@@ -38,7 +38,7 @@ public class Plot_<SM extends StyleManager, S extends Series> implements ChartPa
    *
    * @param chart
    */
-  public Plot_(Chart<SM, S> chart) {
+  public Plot_(Chart<ST, S> chart) {
 
     this.chart = chart;
   }
@@ -50,24 +50,10 @@ public class Plot_<SM extends StyleManager, S extends Series> implements ChartPa
     // g.draw(bounds);
 
     plotSurface.paint(g);
+    if (chart.getSeriesMap().isEmpty()) {
+      return;
+    }
     plotContent.paint(g);
-
-    // if (chart.getChartType() == Chart.ChartType.Category) {
-    // if (((StyleManagerCategory) chart.getStyleManager()).getChartCategorySeriesType() == ChartCategorySeriesType.Bar) {
-    // this.plotContent = new PlotContentCategoricalChart_Bar(this);
-    // }
-    //
-    // else {
-    // this.plotContent = new PlotContentCategoricalChart_Line_Area_Scatter(this);
-    // }
-    // }
-    // else if (chart.getChartType() == Chart.ChartType.Pie) {
-    // this.plotContent = new PlotContentCategoricalChart_Pie(this);
-    // }
-    // else {
-    // this.plotContent = new PlotContentXYChart(chart);
-    // }
-    // plotContent.paint(g);
 
   }
 

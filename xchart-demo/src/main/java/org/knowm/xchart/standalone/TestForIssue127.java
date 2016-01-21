@@ -16,14 +16,14 @@
  */
 package org.knowm.xchart.standalone;
 
-import org.knowm.xchart.ChartBuilder_Category;
-import org.knowm.xchart.Chart_Category;
+import org.knowm.xchart.ChartBuilder_XY;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 
 /**
  * @author timmolter
  */
-public class TestForIssue111 {
+public class TestForIssue127 {
 
   public static void main(String[] args) {
 
@@ -32,8 +32,9 @@ public class TestForIssue111 {
     // int[] x = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
     // int[] y = new int[] { 1, 0, 1, 0, 1, 0, 0, 0 };
 
-    Chart_Category chart = new ChartBuilder_Category().width(640).height(480).build();
-    chart.addSeries("test", x, y);
+    Chart_XY chart = new ChartBuilder_XY().width(640).height(480).xAxisTitle("x").yAxisTitle("y").build();
+    chart.setTitle("TEst");
+    // chart.addSeries("test", x, y);
     chart.getStyler().setLegendVisible(false);
     new SwingWrapper(chart).displayChart();
   }

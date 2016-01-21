@@ -25,8 +25,8 @@ import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
@@ -51,16 +51,16 @@ public class LineChart07 implements ExampleChart {
 
     // Create Chart
     Chart_Category chart = new Chart_Category(1024, 768, ChartTheme.GGPlot2);
-    chart.getStyleManager().setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
+    chart.getStyler().setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
 
     // Customize Chart
     chart.setTitle("ThreadPoolBenchmark");
     chart.setXAxisTitle("Threads");
     chart.setYAxisTitle("Executions");
-    chart.getStyleManager().setXAxisLabelRotation(270);
-    chart.getStyleManager().setLegendPosition(LegendPosition.OutsideE);
-    chart.getStyleManager().setBarWidthPercentage(0);
-    chart.getStyleManager().setBarsOverlapped(true);
+    chart.getStyler().setXAxisLabelRotation(270);
+    chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
+    chart.getStyler().setBarWidthPercentage(0);
+    chart.getStyler().setBarsOverlapped(true);
 
     // Declare data
     List<String> xAxisKeys = Arrays.asList(new String[] { "release-0.5", "release-0.6", "release-0.7", "release-0.8", "release-0.9", "release-1.0.0", "release-1.1.0", "release-1.2.0", "release-1.3.0",
@@ -99,7 +99,7 @@ public class LineChart07 implements ExampleChart {
       series.setMarker(SeriesMarkers.NONE);
       // series.setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
     }
-    chart.getStyleManager().setYAxisLogarithmic(true);
+    chart.getStyler().setYAxisLogarithmic(true);
 
     return chart;
   }

@@ -41,8 +41,8 @@ public class Example2 {
 
     for (int i = 0; i < numCharts; i++) {
       Chart_XY chart = new ChartBuilder_XY().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
-      chart.getStyleManager().setYAxisMin(-10);
-      chart.getStyleManager().setYAxisMax(10);
+      chart.getStyler().setYAxisMin(-10);
+      chart.getStyler().setYAxisMax(10);
       Series_XY series = chart.addSeries("" + i, null, getRandomWalk(200));
       series.setMarker(SeriesMarkers.NONE);
       charts.add(chart);

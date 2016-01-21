@@ -25,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * @author timmolter
@@ -46,7 +46,7 @@ public abstract class AxisTickCalculator_ {
 
   protected final double maxValue;
 
-  protected final StyleManagerAxesChart styleManager;
+  protected final Styler_AxesChart styler;
 
   /**
    * Constructor
@@ -55,15 +55,15 @@ public abstract class AxisTickCalculator_ {
    * @param workingSpace
    * @param minValue
    * @param maxValue
-   * @param styleManager
+   * @param styler
    */
-  public AxisTickCalculator_(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManagerAxesChart styleManager) {
+  public AxisTickCalculator_(Direction axisDirection, double workingSpace, double minValue, double maxValue, Styler_AxesChart styler) {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
     this.minValue = minValue;
     this.maxValue = maxValue;
-    this.styleManager = styleManager;
+    this.styler = styler;
   }
 
   /**
@@ -113,8 +113,8 @@ public abstract class AxisTickCalculator_ {
     }
     // System.out.println("longestLabel: " + sampleLabel);
 
-    TextLayout textLayout = new TextLayout(sampleLabel, styleManager.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-    AffineTransform rot = styleManager.getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(styleManager.getXAxisLabelRotation()));
+    TextLayout textLayout = new TextLayout(sampleLabel, styler.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+    AffineTransform rot = styler.getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(styler.getXAxisLabelRotation()));
     Shape shape = textLayout.getOutline(rot);
     Rectangle2D rectangle = shape.getBounds();
     double largestLabelWidth = rectangle.getWidth();

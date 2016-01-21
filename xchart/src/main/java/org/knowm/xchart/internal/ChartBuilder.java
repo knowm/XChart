@@ -17,7 +17,7 @@
 package org.knowm.xchart.internal;
 
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
 
 /**
  * A "Builder" to make creating charts easier

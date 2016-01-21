@@ -25,7 +25,7 @@ import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Null Y-Axis Data Points
@@ -74,8 +74,8 @@ public class AreaChart02 implements ExampleChart {
     chart.addSeries("a", xData, yData);
 
     // Customize Chart
-    chart.getStyleManager().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 
     return chart;
   }

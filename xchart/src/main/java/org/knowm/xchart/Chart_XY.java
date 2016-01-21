@@ -25,12 +25,12 @@ import java.util.List;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.LegendAxesChart;
+import org.knowm.xchart.internal.chartpart.Legend_AxesChart;
 import org.knowm.xchart.internal.chartpart.Plot_XY;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
-import org.knowm.xchart.internal.style.Theme;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.internal.style.Theme_;
 
 /**
  * @author timmolter
@@ -48,7 +48,7 @@ public class Chart_XY extends Chart<Styler_XY, Series_XY> {
     super(width, height, new Styler_XY());
     axisPair = new AxisPair(this);
     plot = new Plot_XY(this);
-    chartLegend = new LegendAxesChart(this);
+    legend = new Legend_AxesChart(this);
   }
 
   /**
@@ -58,10 +58,10 @@ public class Chart_XY extends Chart<Styler_XY, Series_XY> {
    * @param height
    * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
-  public Chart_XY(int width, int height, Theme theme) {
+  public Chart_XY(int width, int height, Theme_ theme) {
 
     this(width, height);
-    styleManager.setTheme(theme);
+    styler.setTheme(theme);
   }
 
   /**
@@ -229,29 +229,29 @@ public class Chart_XY extends Chart<Styler_XY, Series_XY> {
   public void paint(Graphics2D g) {
 
     // Sanity checks
-    if (getSeriesMap().isEmpty()) {
-      throw new RuntimeException("No series defined for Chart!!!");
-    }
+    // if (getSeriesMap().isEmpty()) {
+    // throw new RuntimeException("No series defined for Chart!!!");
+    // }
 
     // set the series render styles if they are not set. Legend and Plot need it.
     for (Series_XY seriesXY : getSeriesMap().values()) {
       Series_XY.ChartXYSeriesRenderStyle chartXYSeriesRenderStyle = seriesXY.getChartXYSeriesRenderStyle(); // would be directly set
       if (chartXYSeriesRenderStyle == null) { // wasn't overridden, use default from Style Manager
-        seriesXY.setChartXYSeriesRenderStyle(getStyleManager().getChartXYSeriesRenderStyle());
+        seriesXY.setChartXYSeriesRenderStyle(getStyler().getChartXYSeriesRenderStyle());
       }
     }
     setSeriesStyles();
 
     // paint chart main background
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-    g.setColor(styleManager.getChartBackgroundColor());
+    g.setColor(styler.getChartBackgroundColor());
     Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
     g.fill(rect);
 
     axisPair.paint(g);
     plot.paint(g);
     chartTitle.paint(g);
-    chartLegend.paint(g);
+    legend.paint(g);
 
     g.dispose();
   }
@@ -261,8 +261,8 @@ public class Chart_XY extends Chart<Styler_XY, Series_XY> {
    */
   public void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyleManager().getSeriesColors(), getStyleManager().getSeriesMarkers(),
-        getStyleManager().getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(),
+        getStyler().getSeriesLines());
     for (Series_XY series : getSeriesMap().values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

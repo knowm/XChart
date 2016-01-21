@@ -21,26 +21,26 @@ import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManager;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * @author timmolter
  */
-public class Plot_AxesChart<SM extends StyleManager, S extends Series> extends Plot_ {
+public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
 
-  StyleManagerAxesChart styleManagerAxesChart;
+  Styler_AxesChart stylerAxesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Plot_AxesChart(Chart<StyleManagerAxesChart, Series_XY> chart) {
+  public Plot_AxesChart(Chart<Styler_AxesChart, Series_XY> chart) {
 
     super(chart);
-    styleManagerAxesChart = chart.getStyleManager();
-    this.plotSurface = new PlotSurfaceAxesChart<StyleManagerAxesChart, Series_XY>(chart);
+    stylerAxesChart = chart.getStyler();
+    this.plotSurface = new PlotSurface_AxesChart<Styler_AxesChart, Series_XY>(chart);
   }
 
   @Override
@@ -49,12 +49,12 @@ public class Plot_AxesChart<SM extends StyleManager, S extends Series> extends P
     // calculate bounds
     double xOffset = chart.getYAxis().getBounds().getX() + chart.getYAxis().getBounds().getWidth()
 
-        + (styleManagerAxesChart.isYAxisTicksVisible() ? styleManagerAxesChart.getPlotPadding() : 0);
+        + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotPadding() : 0);
 
     double yOffset = chart.getYAxis().getBounds().getY();
     double width = chart.getXAxis().getBounds().getWidth();
     double height = chart.getYAxis().getBounds().getHeight();
-    bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
+    this.bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
     super.paint(g);
   }

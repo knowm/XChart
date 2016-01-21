@@ -30,15 +30,15 @@ import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.Styler;
 import org.knowm.xchart.internal.style.lines.SeriesLines;
 
 /**
  * @author timmolter
  */
-public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series> extends PlotContent_ {
+public class PlotContent_Category_Bar<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  Styler_Category styleManagerCategory;
+  Styler_Category stylerCategory;
 
   /**
    * Constructor
@@ -48,7 +48,7 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
   protected PlotContent_Category_Bar(Chart<Styler_Category, Series_Category> chart) {
 
     super(chart);
-    this.styleManagerCategory = chart.getStyleManager();
+    this.stylerCategory = chart.getStyler();
   }
 
   @Override
@@ -67,11 +67,11 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
     g.setClip(bounds.createIntersection(rectangle));
 
     // X-Axis
-    double xTickSpace = styleManagerCategory.getAxisTickSpacePercentage() * bounds.getWidth();
+    double xTickSpace = stylerCategory.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset(bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManagerCategory.getAxisTickSpacePercentage() * bounds.getHeight();
+    double yTickSpace = stylerCategory.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
     Map<String, Series_Category> seriesMap = chart.getSeriesMap();
@@ -169,14 +169,14 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
         double xOffset;
         double barWidth;
 
-        if (styleManagerCategory.isBarsOverlapped()) {
-          double barWidthPercentage = styleManagerCategory.getBarWidthPercentage();
+        if (stylerCategory.isBarsOverlapped()) {
+          double barWidthPercentage = stylerCategory.getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
         }
         else {
-          double barWidthPercentage = styleManagerCategory.getBarWidthPercentage();
+          double barWidthPercentage = stylerCategory.getBarWidthPercentage();
           barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
@@ -193,7 +193,7 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
           path.lineTo(xOffset, zeroOffset);
           path.closePath();
           g.setStroke(series.getLineStyle());
-          if (styleManagerCategory.isBarFilled()) {
+          if (stylerCategory.isBarFilled()) {
             g.fill(path);
           }
           else {
@@ -221,7 +221,7 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
           // paint marker
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
-            series.getMarker().paint(g, previousX, previousY, styleManagerCategory.getMarkerSize());
+            series.getMarker().paint(g, previousX, previousY, stylerCategory.getMarkerSize());
           }
 
         }
@@ -233,11 +233,11 @@ public class PlotContent_Category_Bar<SM extends StyleManager, S extends Series>
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (styleManagerCategory.isErrorBarsColorSeriesColor()) {
+          if (stylerCategory.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getLineColor());
           }
           else {
-            g.setColor(styleManagerCategory.getErrorBarsColor());
+            g.setColor(stylerCategory.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 

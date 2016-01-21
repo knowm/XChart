@@ -26,7 +26,7 @@ import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Histogram Overlapped
@@ -57,9 +57,9 @@ public class BarChart06 implements ExampleChart {
     chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setBarWidthPercentage(.96);
-    chart.getStyleManager().setBarsOverlapped(true);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setBarWidthPercentage(.96);
+    chart.getStyler().setBarsOverlapped(true);
 
     return chart;
   }

@@ -66,10 +66,10 @@ public class ScatterChart04 implements ExampleChart {
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("ScatterChart04").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setLegendVisible(false);
-    chart.getStyleManager().setAxisTitlesVisible(false);
-    chart.getStyleManager().setXAxisDecimalPattern("0.0000000");
+    chart.getStyler().setChartTitleVisible(false);
+    chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setAxisTitlesVisible(false);
+    chart.getStyler().setXAxisDecimalPattern("0.0000000");
 
     // Series
     Series_XY series = chart.addSeries("10^(-x)", xData, yData, errorBars);

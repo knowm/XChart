@@ -22,22 +22,22 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * An axis tick
  */
-public class AxisTick<SM extends StyleManagerAxesChart, S extends Series> implements ChartPart {
+public class AxisTick<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
 
-  private final Chart<StyleManagerAxesChart, Series_AxesChart> chart;
+  private final Chart<Styler_AxesChart, Series_AxesChart> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
   /** the axisticklabels */
-  private AxisTickLabels<StyleManagerAxesChart, Series_AxesChart> axisTickLabels;
+  private AxisTickLabels<Styler_AxesChart, Series_AxesChart> axisTickLabels;
 
   /** the axistickmarks */
-  private AxisTickMarks<StyleManagerAxesChart, Series_AxesChart> axisTickMarks;
+  private AxisTickMarks<Styler_AxesChart, Series_AxesChart> axisTickMarks;
 
   /**
    * Constructor
@@ -45,12 +45,12 @@ public class AxisTick<SM extends StyleManagerAxesChart, S extends Series> implem
    * @param chart
    * @param direction
    */
-  protected AxisTick(Chart<StyleManagerAxesChart, Series_AxesChart> chart, Direction direction) {
+  protected AxisTick(Chart<Styler_AxesChart, Series_AxesChart> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;
-    axisTickLabels = new AxisTickLabels<StyleManagerAxesChart, Series_AxesChart>(chart, direction);
-    axisTickMarks = new AxisTickMarks<StyleManagerAxesChart, Series_AxesChart>(chart, direction);
+    axisTickLabels = new AxisTickLabels<Styler_AxesChart, Series_AxesChart>(chart, direction);
+    axisTickMarks = new AxisTickMarks<Styler_AxesChart, Series_AxesChart>(chart, direction);
   }
 
   @Override
@@ -62,7 +62,7 @@ public class AxisTick<SM extends StyleManagerAxesChart, S extends Series> implem
   @Override
   public void paint(Graphics2D g) {
 
-    if (direction == Axis.Direction.Y && chart.getStyleManager().isYAxisTicksVisible()) {
+    if (direction == Axis.Direction.Y && chart.getStyler().isYAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
@@ -73,7 +73,7 @@ public class AxisTick<SM extends StyleManagerAxesChart, S extends Series> implem
 
           axisTickLabels.getBounds().getY(),
 
-          axisTickLabels.getBounds().getWidth() + chart.getStyleManager().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
+          axisTickLabels.getBounds().getWidth() + chart.getStyler().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
 
           axisTickMarks.getBounds().getHeight()
 
@@ -83,7 +83,7 @@ public class AxisTick<SM extends StyleManagerAxesChart, S extends Series> implem
       // g.draw(bounds);
 
     }
-    else if (direction == Axis.Direction.X && chart.getStyleManager().isXAxisTicksVisible()) {
+    else if (direction == Axis.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
@@ -96,7 +96,7 @@ public class AxisTick<SM extends StyleManagerAxesChart, S extends Series> implem
 
           axisTickLabels.getBounds().getWidth(),
 
-          axisTickMarks.getBounds().getHeight() + chart.getStyleManager().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()
+          axisTickMarks.getBounds().getHeight() + chart.getStyler().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()
 
       );
 
@@ -112,7 +112,7 @@ public class AxisTick<SM extends StyleManagerAxesChart, S extends Series> implem
 
   // Getters /////////////////////////////////////////////////
 
-  protected AxisTickLabels<StyleManagerAxesChart, Series_AxesChart> getAxisTickLabels() {
+  protected AxisTickLabels<Styler_AxesChart, Series_AxesChart> getAxisTickLabels() {
 
     return axisTickLabels;
   }

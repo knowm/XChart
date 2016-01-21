@@ -19,12 +19,12 @@ package org.knowm.xchart.internal.chartpart;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.Styler_XY;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * @author timmolter
  */
-public class Plot_XY<SM extends StyleManagerAxesChart, S extends Series> extends Plot_AxesChart {
+public class Plot_XY<ST extends Styler_AxesChart, S extends Series> extends Plot_AxesChart {
 
   /**
    * Constructor

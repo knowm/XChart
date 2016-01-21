@@ -19,21 +19,21 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.Styler;
 
 /**
  * @author timmolter
  */
-public abstract class PlotSurface<SM extends StyleManager, S extends Series> implements ChartPart {
+public abstract class PlotSurface_<ST extends Styler, S extends Series> implements ChartPart {
 
-  protected final Chart<SM, S> chart;
+  protected final Chart<ST, S> chart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotSurface(Chart<SM, S> chart) {
+  protected PlotSurface_(Chart<ST, S> chart) {
 
     this.chart = chart;
   }

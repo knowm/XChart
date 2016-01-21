@@ -22,7 +22,7 @@ import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Area Chart with 3 series
@@ -52,9 +52,9 @@ public class AreaChart01 implements ExampleChart {
     chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNE);
-    chart.getStyleManager().setAxisTitlesVisible(false);
-    chart.getStyleManager().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
+    chart.getStyler().setAxisTitlesVisible(false);
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
     return chart;
   }
 

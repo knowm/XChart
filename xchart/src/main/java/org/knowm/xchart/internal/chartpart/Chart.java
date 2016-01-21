@@ -24,29 +24,29 @@ import java.util.List;
 import java.util.Map;
 
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.Styler;
 
 /**
  * An XChart Chart
  *
  * @author timmolter
  */
-public abstract class Chart<SM extends StyleManager, S extends Series> implements ChartPart {
+public abstract class Chart<ST extends Styler, S extends Series> implements ChartPart {
 
   public abstract void paint(Graphics2D g, int width, int height);
 
-  protected SM styleManager;
+  protected ST styler;
 
   /** Meta Data */
   private int width;
   private int height;
-  private String title;
-  private String xAxisTitle;
-  private String yAxisTitle;
+  private String title = "";
+  private String xAxisTitle = "";
+  private String yAxisTitle = "";
 
   /** Chart Parts */
   protected ChartTitle chartTitle;
-  protected Legend chartLegend;
+  protected Legend_ legend;
   protected Plot_ plot;
   protected AxisPair axisPair;
 
@@ -57,13 +57,13 @@ public abstract class Chart<SM extends StyleManager, S extends Series> implement
    *
    * @param width
    * @param height
-   * @param styleManager
+   * @param styler
    */
-  public Chart(int width, int height, SM styleManager) {
+  public Chart(int width, int height, ST styler) {
 
     this.width = width;
     this.height = height;
-    this.styleManager = styleManager;
+    this.styler = styler;
 
     this.chartTitle = new ChartTitle(this);
   }
@@ -167,9 +167,9 @@ public abstract class Chart<SM extends StyleManager, S extends Series> implement
     return chartTitle;
   }
 
-  protected Legend getChartLegend() {
+  protected Legend_ getLegend() {
 
-    return chartLegend;
+    return legend;
   }
 
   protected Plot_ getPlot() {
@@ -198,13 +198,13 @@ public abstract class Chart<SM extends StyleManager, S extends Series> implement
   }
 
   /**
-   * Gets the Chart's style manager, which can be used to customize the Chart's appearance
+   * Gets the Chart's styler, which can be used to customize the Chart's appearance
    *
-   * @return the style manager
+   * @return the styler
    */
-  public SM getStyleManager() {
+  public ST getStyler() {
 
-    return styleManager;
+    return styler;
   }
 
   @Override

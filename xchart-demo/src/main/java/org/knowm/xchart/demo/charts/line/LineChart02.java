@@ -61,8 +61,8 @@ public class LineChart02 implements ExampleChart {
     Chart_XY chart = new Chart_XY(800, 600);
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setLegendVisible(false);
+    chart.getStyler().setChartTitleVisible(false);
+    chart.getStyler().setLegendVisible(false);
 
     // Series 1
     Series_XY series1 = chart.addSeries("y=sin(x)", xData, yData);

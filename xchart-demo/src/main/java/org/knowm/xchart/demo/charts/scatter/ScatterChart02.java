@@ -25,7 +25,7 @@ import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Logarithmic Data
@@ -64,11 +64,11 @@ public class ScatterChart02 implements ExampleChart {
     // Create Chart
     Chart_XY chart = new Chart_XY(800, 600);
     chart.setTitle("Logarithmic Data");
-    chart.getStyleManager().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
-    chart.getStyleManager().setXAxisLogarithmic(true);
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
+    chart.getStyler().setXAxisLogarithmic(true);
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideN);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideN);
 
     // Series
     chart.addSeries("logarithmic data", xData, yData);

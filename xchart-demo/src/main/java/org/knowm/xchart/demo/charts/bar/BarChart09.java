@@ -26,8 +26,8 @@ import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Category chart with Bar, Line and Scatter Series
@@ -60,9 +60,9 @@ public class BarChart09 implements ExampleChart {
     series3.setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Scatter);
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setBarWidthPercentage(.55);
-    chart.getStyleManager().setBarsOverlapped(true);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setBarWidthPercentage(.55);
+    chart.getStyler().setBarsOverlapped(true);
 
     return chart;
   }

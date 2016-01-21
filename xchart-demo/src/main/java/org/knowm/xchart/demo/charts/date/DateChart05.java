@@ -47,7 +47,7 @@ public class DateChart05 implements ExampleChart {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Day Scale").build();
-    chart.getStyleManager().setLegendVisible(false);
+    chart.getStyler().setLegendVisible(false);
 
     // generate data
     List<Date> xData = new ArrayList<Date>();

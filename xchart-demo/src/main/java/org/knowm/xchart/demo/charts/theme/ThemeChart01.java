@@ -64,7 +64,7 @@ public class ThemeChart01 implements ExampleChart {
 
       String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
       chart.addSeries(seriesName, xData, yData);
-      chart.getStyleManager().setMarkerSize(11);
+      chart.getStyler().setMarkerSize(11);
 
     }
     return chart;

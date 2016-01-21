@@ -19,13 +19,13 @@ package org.knowm.xchart.internal.chartpart;
 import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 import org.knowm.xchart.Styler_Category;
 
 /**
  * @author timmolter
  */
-public class Plot_Category<SM extends StyleManagerAxesChart, S extends Series> extends Plot_AxesChart {
+public class Plot_Category<ST extends Styler_AxesChart, S extends Series> extends Plot_AxesChart {
 
   /**
    * Constructor
@@ -36,9 +36,9 @@ public class Plot_Category<SM extends StyleManagerAxesChart, S extends Series> e
 
     super(chart);
 
-    Styler_Category styleManagerCategory = chart.getStyleManager();
+    Styler_Category stylerCategory = chart.getStyler();
 
-    if (ChartCategorySeriesRenderStyle.Bar.equals(styleManagerCategory.getChartCategorySeriesRenderStyle())) {
+    if (ChartCategorySeriesRenderStyle.Bar.equals(stylerCategory.getChartCategorySeriesRenderStyle())) {
 
       this.plotContent = new PlotContent_Category_Bar<Styler_Category, Series_Category>(chart);
 

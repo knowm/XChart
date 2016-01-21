@@ -17,13 +17,13 @@
 package org.knowm.xchart;
 
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
-import org.knowm.xchart.internal.style.Theme;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
+import org.knowm.xchart.internal.style.Theme_;
 
 /**
  * @author timmolter
  */
-public class Styler_XY extends StyleManagerAxesChart {
+public class Styler_XY extends Styler_AxesChart {
 
   private ChartXYSeriesRenderStyle chartXYSeriesRenderStyle;
 
@@ -58,17 +58,17 @@ public class Styler_XY extends StyleManagerAxesChart {
   }
 
   /**
-   * Set the theme the style manager should use
+   * Set the theme the styler should use
    *
    * @param theme
    */
-  protected void setTheme(Theme theme) {
+  protected void setTheme(Theme_ theme) {
 
     this.theme = theme;
     super.setAllStyles();
   }
 
-  public Theme getTheme() {
+  public Theme_ getTheme() {
 
     return theme;
   }

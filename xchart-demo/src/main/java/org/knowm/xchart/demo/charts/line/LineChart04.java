@@ -47,7 +47,7 @@ public class LineChart04 implements ExampleChart {
     chart.setTitle("LineChart04");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.getStyleManager().setLegendVisible(false);
+    chart.getStyler().setLegendVisible(false);
 
     for (int i = 0; i < 200; i++) {
       Series_XY series = chart.addSeries("A" + i, new double[] { Math.random() / 1000, Math.random() / 1000 }, new double[] { Math.random() / -1000, Math.random() / -1000 });

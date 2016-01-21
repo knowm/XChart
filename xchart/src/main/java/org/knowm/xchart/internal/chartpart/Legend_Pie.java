@@ -28,30 +28,30 @@ import java.util.Map;
 import org.knowm.xchart.Series_Pie;
 import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * @author timmolter
  */
-public class LegendPie<SM extends StyleManagerAxesChart, S extends Series> extends Legend {
+public class Legend_Pie<ST extends Styler_AxesChart, S extends Series> extends Legend_ {
 
-  Styler_Pie styleManagerPie;
+  Styler_Pie stylerPie;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public LegendPie(Chart<Styler_Pie, Series_Pie> chart) {
+  public Legend_Pie(Chart<Styler_Pie, Series_Pie> chart) {
 
     super(chart);
-    styleManagerPie = chart.getStyleManager();
+    stylerPie = chart.getStyler();
   }
 
   @Override
   public void paint(Graphics2D g) {
 
-    if (!chart.getStyleManager().isLegendVisible()) {
+    if (!chart.getStyler().isLegendVisible()) {
       return;
     }
 
@@ -60,8 +60,8 @@ public class LegendPie<SM extends StyleManagerAxesChart, S extends Series> exten
     g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
 
     // Draw legend content inside legend box
-    double startx = xOffset + chart.getStyleManager().getLegendPadding();
-    double starty = yOffset + chart.getStyleManager().getLegendPadding();
+    double startx = xOffset + chart.getStyler().getLegendPadding();
+    double starty = yOffset + chart.getStyler().getLegendPadding();
 
     Map<String, Series> map = chart.getSeriesMap();
     for (Series series : map.values()) {
@@ -97,20 +97,20 @@ public class LegendPie<SM extends StyleManagerAxesChart, S extends Series> exten
       //
       // ////// paint series text /////////
 
-      g.setColor(chart.getStyleManager().getChartFontColor());
+      g.setColor(chart.getStyler().getChartFontColor());
 
       double multiLineOffset = 0.0;
 
       // bar/pie type series
 
-      final double x = startx + BOX_SIZE + chart.getStyleManager().getLegendPadding();
+      final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
       for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
         double height = entry.getValue().getHeight();
         double centerOffsetY = (Math.max(BOX_SIZE, height) - height) / 2.0;
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout tl = new TextLayout(entry.getKey(), chart.getStyleManager().getLegendFont(), frc);
+        TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
         Shape shape = tl.getOutline(null);
         AffineTransform orig = g.getTransform();
         AffineTransform at = new AffineTransform();
@@ -126,7 +126,7 @@ public class LegendPie<SM extends StyleManagerAxesChart, S extends Series> exten
         multiLineOffset += height + MULTI_LINE_SPACE;
 
       }
-      starty += legendEntryHeight + chart.getStyleManager().getLegendPadding();
+      starty += legendEntryHeight + chart.getStyler().getLegendPadding();
 
     }
 

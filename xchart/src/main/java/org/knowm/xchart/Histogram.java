@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This class can be used to create histogram data for histogram bar charts
+ * This class can be used to create histogram
  *
  * @author timmolter
  */

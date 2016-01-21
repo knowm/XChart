@@ -24,7 +24,7 @@ import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Logarithmic Y-Axis
@@ -59,11 +59,11 @@ public class LineChart01 implements ExampleChart {
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Powers of Ten").xAxisTitle("Power").yAxisTitle("Value").build();
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(true);
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setYAxisLogarithmic(true);
+    chart.getStyler().setChartTitleVisible(true);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setYAxisLogarithmic(true);
     // chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);
-    chart.getStyleManager().setXAxisLabelRotation(45);
+    chart.getStyler().setXAxisLabelRotation(45);
     // chart.getStyleManager().setXAxisLabelRotation(90);
     // chart.getStyleManager().setXAxisLabelRotation(0);
 

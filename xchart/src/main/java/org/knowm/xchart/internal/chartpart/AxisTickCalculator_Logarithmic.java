@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for logarithmic axes
@@ -38,12 +38,12 @@ public class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
    * @param workingSpace
    * @param minValue
    * @param maxValue
-   * @param styleManager
+   * @param styler
    */
-  public AxisTickCalculator_Logarithmic(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManagerAxesChart styleManager) {
+  public AxisTickCalculator_Logarithmic(Direction axisDirection, double workingSpace, double minValue, double maxValue, Styler_AxesChart styler) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, styleManager);
-    numberFormatter = new NumberFormatter(styleManager);
+    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    numberFormatter = new NumberFormatter(styler);
     calculate();
   }
 
@@ -57,10 +57,10 @@ public class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     }
 
     // tick space - a percentage of the working space available for ticks
-    double tickSpace = styleManager.getAxisTickSpacePercentage() * workingSpace; // in plot space
+    double tickSpace = styler.getAxisTickSpacePercentage() * workingSpace; // in plot space
 
     // this prevents an infinite loop when the plot gets sized really small.
-    if (tickSpace < styleManager.getXAxisTickMarkSpacingHint()) {
+    if (tickSpace < styler.getXAxisTickMarkSpacingHint()) {
       return;
     }
 
@@ -74,17 +74,17 @@ public class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     // System.out.println("logMin: " + logMin);
     // System.out.println("logMax: " + logMax);
 
-    // if (axisDirection == Direction.Y && styleManager.getYAxisMin() != null) {
-    // logMin = (int) (Math.log10(styleManager.getYAxisMin())); // no floor
+    // if (axisDirection == Direction.Y && styler.getYAxisMin() != null) {
+    // logMin = (int) (Math.log10(styler.getYAxisMin())); // no floor
     // }
-    // if (axisDirection == Direction.Y && styleManager.getYAxisMax() != null) {
-    // logMax = (int) (Math.log10(styleManager.getYAxisMax())); // no floor
+    // if (axisDirection == Direction.Y && styler.getYAxisMax() != null) {
+    // logMax = (int) (Math.log10(styler.getYAxisMax())); // no floor
     // }
-    // if (axisDirection == Direction.X && styleManager.getXAxisMin() != null) {
-    // logMin = (int) (Math.log10(styleManager.getXAxisMin())); // no floor
+    // if (axisDirection == Direction.X && styler.getXAxisMin() != null) {
+    // logMin = (int) (Math.log10(styler.getXAxisMin())); // no floor
     // }
-    // if (axisDirection == Direction.X && styleManager.getXAxisMax() != null) {
-    // logMax = (int) (Math.log10(styleManager.getXAxisMax())); // no floor
+    // if (axisDirection == Direction.X && styler.getXAxisMax() != null) {
+    // logMax = (int) (Math.log10(styler.getXAxisMax())); // no floor
     // }
 
     double firstPosition = Utils.pow(10, logMin);

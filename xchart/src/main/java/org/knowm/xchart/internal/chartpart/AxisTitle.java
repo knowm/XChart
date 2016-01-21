@@ -26,14 +26,14 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * AxisTitle
  */
-public class AxisTitle<SM extends StyleManagerAxesChart, S extends Series> implements ChartPart {
+public class AxisTitle<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
 
-  private final Chart<StyleManagerAxesChart, Series_AxesChart> chart;
+  private final Chart<Styler_AxesChart, Series_AxesChart> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
@@ -43,7 +43,7 @@ public class AxisTitle<SM extends StyleManagerAxesChart, S extends Series> imple
    * @param chart the Chart
    * @param direction the Direction
    */
-  protected AxisTitle(Chart<StyleManagerAxesChart, Series_AxesChart> chart, Direction direction) {
+  protected AxisTitle(Chart<Styler_AxesChart, Series_AxesChart> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;
@@ -54,15 +54,15 @@ public class AxisTitle<SM extends StyleManagerAxesChart, S extends Series> imple
 
     bounds = new Rectangle2D.Double();
 
-    g.setColor(chart.getStyleManager().getChartFontColor());
-    g.setFont(chart.getStyleManager().getAxisTitleFont());
+    g.setColor(chart.getStyler().getChartFontColor());
+    g.setFont(chart.getStyler().getAxisTitleFont());
 
     if (direction == Axis.Direction.Y) {
 
-      if (chart.getyYAxisTitle() != null && !chart.getyYAxisTitle().trim().equalsIgnoreCase("") && chart.getStyleManager().isYAxisTitleVisible()) {
+      if (chart.getyYAxisTitle() != null && !chart.getyYAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isYAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout nonRotatedTextLayout = new TextLayout(chart.getyYAxisTitle(), chart.getStyleManager().getAxisTitleFont(), frc);
+        TextLayout nonRotatedTextLayout = new TextLayout(chart.getyYAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
         Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
 
         // ///////////////////////////////////////////////
@@ -85,7 +85,7 @@ public class AxisTitle<SM extends StyleManagerAxesChart, S extends Series> imple
         // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
-        bounds = new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight() + chart.getStyleManager()
+        bounds = new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight() + chart.getStyler()
             .getAxisTitlePadding(), nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
@@ -97,10 +97,10 @@ public class AxisTitle<SM extends StyleManagerAxesChart, S extends Series> imple
     }
     else {
 
-      if (chart.getXAxisTitle() != null && !chart.getXAxisTitle().trim().equalsIgnoreCase("") && chart.getStyleManager().isXAxisTitleVisible()) {
+      if (chart.getXAxisTitle() != null && !chart.getXAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isXAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout textLayout = new TextLayout(chart.getXAxisTitle(), chart.getStyleManager().getAxisTitleFont(), frc);
+        TextLayout textLayout = new TextLayout(chart.getXAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
         Rectangle2D rectangle = textLayout.getBounds();
         // System.out.println(rectangle);
 
@@ -116,7 +116,7 @@ public class AxisTitle<SM extends StyleManagerAxesChart, S extends Series> imple
         g.fill(shape);
         g.setTransform(orig);
 
-        bounds = new Rectangle2D.Double(xOffset, yOffset - chart.getStyleManager().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight() + chart.getStyleManager().getAxisTitlePadding());
+        bounds = new Rectangle2D.Double(xOffset, yOffset - chart.getStyler().getAxisTitlePadding(), rectangle.getWidth(), rectangle.getHeight() + chart.getStyler().getAxisTitlePadding());
         // g.setColor(Color.blue);
         // g.draw(bounds);
 

@@ -23,7 +23,7 @@ import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Basic Bar Chart
@@ -52,7 +52,7 @@ public class BarChart01 implements ExampleChart {
     chart.addSeries("test 1", Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 }), Arrays.asList(new Integer[] { 4, 5, 9, 6, 5 }));
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 
     return chart;
   }

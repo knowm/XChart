@@ -21,14 +21,14 @@ import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * @author timmolter
  */
-public abstract class PlotContent_<SM extends StyleManagerAxesChart, S extends Series> implements ChartPart {
+public abstract class PlotContent_<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
 
-  protected final Chart<SM, S> chart;
+  protected final Chart<ST, S> chart;
 
   protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
@@ -37,7 +37,7 @@ public abstract class PlotContent_<SM extends StyleManagerAxesChart, S extends S
    *
    * @param chart - The Chart
    */
-  protected PlotContent_(Chart<SM, S> chart) {
+  protected PlotContent_(Chart<ST, S> chart) {
 
     this.chart = chart;
   }

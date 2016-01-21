@@ -22,8 +22,8 @@ import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
@@ -54,8 +54,8 @@ public class AreaLineChart03 implements ExampleChart {
     chart.setTitle(getClass().getSimpleName());
     chart.setXAxisTitle("Age");
     chart.setYAxisTitle("Amount");
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Line);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Line);
 
     // @formatter:off
     double[] xAges = new double[] { 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
@@ -91,11 +91,11 @@ public class AreaLineChart03 implements ExampleChart {
     Series_XY seriesPercentile25th = chart.addSeries("25th Percentile", xAges, yPercentile25th);
     seriesPercentile25th.setMarker(SeriesMarkers.NONE);
 
-    chart.getStyleManager().setYAxisLabelAlignment(StyleManager.TextAlignment.Right);
-    chart.getStyleManager().setYAxisDecimalPattern("$ #,###.##");
+    chart.getStyler().setYAxisLabelAlignment(Styler.TextAlignment.Right);
+    chart.getStyler().setYAxisDecimalPattern("$ #,###.##");
 
-    chart.getStyleManager().setPlotPadding(0);
-    chart.getStyleManager().setAxisTickSpacePercentage(.95);
+    chart.getStyler().setPlotPadding(0);
+    chart.getStyler().setAxisTickSpacePercentage(.95);
     // chart.getStyleManager().setYAxisMax(1620725 * 1.15); // We want to ensure there is a % of padding on the top of the chart
     return chart;
   }

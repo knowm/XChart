@@ -28,7 +28,7 @@ import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
 
 /**
  * Matlab Theme
@@ -53,8 +53,8 @@ public class ThemeChart03 implements ExampleChart {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
-    chart.getStyleManager().setPlotGridLinesVisible(false);
-    chart.getStyleManager().setXAxisTickMarkSpacingHint(100);
+    chart.getStyler().setPlotGridLinesVisible(false);
+    chart.getStyler().setXAxisTickMarkSpacingHint(100);
     // generate data
     List<Date> xData = new ArrayList<Date>();
     List<Double> y1Data = new ArrayList<Double>();

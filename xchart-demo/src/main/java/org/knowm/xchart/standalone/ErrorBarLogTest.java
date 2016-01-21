@@ -46,13 +46,13 @@ public class ErrorBarLogTest {
 
     Chart_XY mychart = new Chart_XY(1200, 800);
 
-    mychart.getStyleManager().setYAxisLogarithmic(true); // set log or linear Y axis
+    mychart.getStyler().setYAxisLogarithmic(true); // set log or linear Y axis
 
-    mychart.getStyleManager().setYAxisMin(.08);
+    mychart.getStyler().setYAxisMin(.08);
 
-    mychart.getStyleManager().setYAxisMax(1000);
+    mychart.getStyler().setYAxisMax(1000);
 
-    mychart.getStyleManager().setErrorBarsColor(Color.black);
+    mychart.getStyler().setErrorBarsColor(Color.black);
 
     Series_XY series1 = mychart.addSeries("Error bar test data", xData, yData1, errdata);
 

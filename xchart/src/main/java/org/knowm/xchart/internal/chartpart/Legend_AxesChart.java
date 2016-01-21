@@ -30,31 +30,31 @@ import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 import org.knowm.xchart.internal.style.lines.SeriesLines;
 
 /**
  * @author timmolter
  */
-public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series> extends Legend {
+public class Legend_AxesChart<ST extends Styler_AxesChart, S extends Series> extends Legend_ {
 
-  StyleManagerAxesChart styleManagerAxesChart;
+  Styler_AxesChart stylerAxesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public LegendAxesChart(Chart<StyleManagerAxesChart, Series_XY> chart) {
+  public Legend_AxesChart(Chart<Styler_AxesChart, Series_XY> chart) {
 
     super(chart);
-    styleManagerAxesChart = chart.getStyleManager();
+    stylerAxesChart = chart.getStyler();
   }
 
   @Override
   public void paint(Graphics2D g) {
 
-    if (!chart.getStyleManager().isLegendVisible()) {
+    if (!chart.getStyler().isLegendVisible()) {
       return;
     }
 
@@ -63,8 +63,8 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
     g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
 
     // Draw legend content inside legend box
-    double startx = xOffset + chart.getStyleManager().getLegendPadding();
-    double starty = yOffset + chart.getStyleManager().getLegendPadding();
+    double startx = xOffset + chart.getStyler().getLegendPadding();
+    double starty = yOffset + chart.getStyler().getLegendPadding();
 
     Map<String, Series_AxesChart> map = chart.getSeriesMap();
     for (Series_AxesChart series : map.values()) {
@@ -79,7 +79,7 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
       }
       legendEntryHeight -= MULTI_LINE_SPACE;
 
-      legendEntryHeight = Math.max(legendEntryHeight, (series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : styleManagerAxesChart.getMarkerSize()));
+      legendEntryHeight = Math.max(legendEntryHeight, (series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize()));
 
       // ////// paint series render graphic /////////
 
@@ -90,12 +90,12 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
         if (series.getLegendRenderType() == LegendRenderType.Line && series.getLineStyle() != SeriesLines.NONE) {
           g.setColor(series.getLineColor());
           g.setStroke(series.getLineStyle());
-          Shape line = new Line2D.Double(startx, starty + legendEntryHeight / 2.0, startx + chart.getStyleManager().getLegendSeriesLineLength(), starty + legendEntryHeight / 2.0);
+          Shape line = new Line2D.Double(startx, starty + legendEntryHeight / 2.0, startx + chart.getStyler().getLegendSeriesLineLength(), starty + legendEntryHeight / 2.0);
           g.draw(line);
         }
 
         // // debug box
-        // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, styleManager.getLegendSeriesLineLength(), blockHeight);
+        // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, styler.getLegendSeriesLineLength(), blockHeight);
         // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
         // g.setColor(Color.red);
         // g.draw(boundsTemp);
@@ -103,7 +103,7 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, startx + chart.getStyleManager().getLegendSeriesLineLength() / 2.0, starty + legendEntryHeight / 2.0, styleManagerAxesChart.getMarkerSize());
+          series.getMarker().paint(g, startx + chart.getStyler().getLegendSeriesLineLength() / 2.0, starty + legendEntryHeight / 2.0, stylerAxesChart.getMarkerSize());
 
         }
       }
@@ -111,7 +111,7 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
 
         // paint little box
         Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
-        if (styleManagerAxesChart.isBarFilled()) {
+        if (stylerAxesChart.isBarFilled()) {
           g.setColor(series.getFillColor());
           g.fill(rectSmall);
         }
@@ -128,20 +128,20 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
       //
       // ////// paint series text /////////
 
-      g.setColor(chart.getStyleManager().getChartFontColor());
+      g.setColor(chart.getStyler().getChartFontColor());
 
       double multiLineOffset = 0.0;
 
       if (series.getLegendRenderType() != LegendRenderType.Box) {
 
-        double x = startx + chart.getStyleManager().getLegendSeriesLineLength() + chart.getStyleManager().getLegendPadding();
+        double x = startx + chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding();
         for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
           double height = entry.getValue().getHeight();
-          double centerOffsetY = (Math.max(styleManagerAxesChart.getMarkerSize(), height) - height) / 2.0;
+          double centerOffsetY = (Math.max(stylerAxesChart.getMarkerSize(), height) - height) / 2.0;
 
           FontRenderContext frc = g.getFontRenderContext();
-          TextLayout tl = new TextLayout(entry.getKey(), chart.getStyleManager().getLegendFont(), frc);
+          TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
           Shape shape = tl.getOutline(null);
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
@@ -161,14 +161,14 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
       }
       else { // bar/pie type series
 
-        final double x = startx + BOX_SIZE + chart.getStyleManager().getLegendPadding();
+        final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
         for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
           double height = entry.getValue().getHeight();
           double centerOffsetY = (Math.max(BOX_SIZE, height) - height) / 2.0;
 
           FontRenderContext frc = g.getFontRenderContext();
-          TextLayout tl = new TextLayout(entry.getKey(), chart.getStyleManager().getLegendFont(), frc);
+          TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
           Shape shape = tl.getOutline(null);
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
@@ -185,7 +185,7 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
 
         }
       }
-      starty += legendEntryHeight + chart.getStyleManager().getLegendPadding();
+      starty += legendEntryHeight + chart.getStyler().getLegendPadding();
 
     }
 
@@ -209,6 +209,6 @@ public class LegendAxesChart<SM extends StyleManagerAxesChart, S extends Series>
   @Override
   public double getSeriesLegendRenderGraphicHeight(Series series) {
 
-    return series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : styleManagerAxesChart.getMarkerSize();
+    return series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize();
   }
 }

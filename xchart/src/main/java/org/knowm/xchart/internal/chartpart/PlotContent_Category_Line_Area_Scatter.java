@@ -30,15 +30,15 @@ import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.Styler;
 import org.knowm.xchart.internal.style.lines.SeriesLines;
 
 /**
  * @author timmolter
  */
-public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S extends Series> extends PlotContent_ {
+public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  Styler_Category styleManagerCategory;
+  Styler_Category stylerCategory;
 
   /**
    * Constructor
@@ -48,14 +48,14 @@ public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S e
   protected PlotContent_Category_Line_Area_Scatter(Chart<Styler_Category, Series_Category> chart) {
 
     super(chart);
-    this.styleManagerCategory = styleManagerCategory;
+    this.stylerCategory = stylerCategory;
   }
 
   @Override
   public void paint(Graphics2D g) {
 
     // logarithmic
-    // if (styleManagerCategory.isYAxisLogarithmic()) {
+    // if (stylerCategory.isYAxisLogarithmic()) {
     // throw new IllegalArgumentException("Category Charts cannot have logarithmic axes!!! (Not Yet Implemented)");
     // }
 
@@ -85,11 +85,11 @@ public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S e
     // g.setClip(bounds.createIntersection(g.getClipBounds()));
 
     // X-Axis
-    double xTickSpace = styleManagerCategory.getAxisTickSpacePercentage() * bounds.getWidth();
+    double xTickSpace = stylerCategory.getAxisTickSpacePercentage() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = styleManagerCategory.getAxisTickSpacePercentage() * bounds.getHeight();
+    double yTickSpace = stylerCategory.getAxisTickSpacePercentage() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     double xMin = chart.getAxisPair().getXAxis().getMin();
@@ -98,11 +98,11 @@ public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S e
     double yMax = chart.getAxisPair().getYAxis().getMax();
 
     // logarithmic
-    if (styleManagerCategory.isXAxisLogarithmic()) {
+    if (stylerCategory.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
       xMax = Math.log10(xMax);
     }
-    if (styleManagerCategory.isYAxisLogarithmic()) {
+    if (stylerCategory.isYAxisLogarithmic()) {
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
     }
@@ -148,7 +148,7 @@ public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S e
         double y = 0.0;
 
         // System.out.println(y);
-        if (styleManagerCategory.isYAxisLogarithmic()) {
+        if (stylerCategory.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         }
         else {
@@ -211,7 +211,7 @@ public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S e
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset, styleManagerCategory.getMarkerSize());
+          series.getMarker().paint(g, xOffset, yOffset, stylerCategory.getMarkerSize());
         }
 
         // paint error bars
@@ -220,17 +220,17 @@ public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S e
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (styleManagerCategory.isErrorBarsColorSeriesColor()) {
+          if (stylerCategory.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getLineColor());
           }
           else {
-            g.setColor(styleManagerCategory.getErrorBarsColor());
+            g.setColor(stylerCategory.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 
           // Top value
           double topValue = 0.0;
-          if (styleManagerCategory.isYAxisLogarithmic()) {
+          if (stylerCategory.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
           }
@@ -242,7 +242,7 @@ public class PlotContent_Category_Line_Area_Scatter<SM extends StyleManager, S e
 
           // Bottom value
           double bottomValue = 0.0;
-          if (styleManagerCategory.isYAxisLogarithmic()) {
+          if (stylerCategory.isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);

@@ -24,7 +24,7 @@ import java.util.List;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for String axes
@@ -40,11 +40,11 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
    * @param workingSpace
    * @param categories
    * @param axisType
-   * @param styleManager
+   * @param styler
    */
-  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, AxisDataType axisType, StyleManagerAxesChart styleManager) {
+  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, AxisDataType axisType, Styler_AxesChart styler) {
 
-    super(axisDirection, workingSpace, Double.NaN, Double.NaN, styleManager);
+    super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
 
     calculate(categories, axisType);
   }
@@ -52,7 +52,7 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
   private void calculate(List<?> categories, AxisDataType axisType) {
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int) (styleManager.getAxisTickSpacePercentage() * workingSpace); // in plot space
+    int tickSpace = (int) (styler.getAxisTickSpacePercentage() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
@@ -65,14 +65,14 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
     NumberFormatter numberFormatter = null;
     SimpleDateFormat simpleDateformat = null;
     if (axisType == AxisDataType.Number) {
-      numberFormatter = new NumberFormatter(styleManager);
+      numberFormatter = new NumberFormatter(styler);
     }
     else if (axisType == AxisDataType.Date) {
-      if (styleManager.getDatePattern() == null) {
+      if (styler.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
       }
-      simpleDateformat = new SimpleDateFormat(styleManager.getDatePattern(), styleManager.getLocale());
-      simpleDateformat.setTimeZone(styleManager.getTimezone());
+      simpleDateformat = new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
+      simpleDateformat.setTimeZone(styler.getTimezone());
     }
 
     int counter = 0;

@@ -56,13 +56,13 @@ public class LineChart06 implements ExampleChart {
 
     Chart_XY chart = new Chart_XY(800, 600);
 
-    chart.getStyleManager().setYAxisLogarithmic(true);
+    chart.getStyler().setYAxisLogarithmic(true);
 
-    chart.getStyleManager().setYAxisMin(.08);
+    chart.getStyler().setYAxisMin(.08);
 
-    chart.getStyleManager().setYAxisMax(1000);
+    chart.getStyler().setYAxisMax(1000);
 
-    chart.getStyleManager().setErrorBarsColor(Color.black);
+    chart.getStyler().setErrorBarsColor(Color.black);
 
     Series_XY series1 = chart.addSeries("Error bar\ntest data", xData, yData1, errdata);
 

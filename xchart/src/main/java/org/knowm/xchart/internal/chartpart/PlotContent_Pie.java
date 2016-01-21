@@ -29,14 +29,14 @@ import java.util.Map;
 import org.knowm.xchart.Series_Pie;
 import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.Styler;
 
 /**
  * @author timmolter
  */
-public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends PlotContent_ {
+public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  Styler_Pie styleManagerPie;
+  Styler_Pie stylerPie;
   DecimalFormat df = new DecimalFormat("#.0");
 
   /**
@@ -47,7 +47,7 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
   protected PlotContent_Pie(Chart<Styler_Pie, Series_Pie> chart) {
 
     super(chart);
-    styleManagerPie = chart.getStyleManager();
+    stylerPie = chart.getStyler();
   }
 
   @Override
@@ -72,16 +72,16 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
     g.setClip(bounds.createIntersection(rectangle));
 
     // pie bounds
-    double pieFillPercentage = styleManagerPie.getPieFillPercentage();
+    double pieFillPercentage = stylerPie.getPieFillPercentage();
 
-    // if (styleManagerPie.isCircular()) {
+    // if (stylerPie.isCircular()) {
     //
     // double pieDiameter = Math.min(bounds.getWidth(), bounds.getHeight());
     // }
 
     double halfBorderPercentage = (1 - pieFillPercentage) / 2.0;
-    double width = styleManagerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getWidth();
-    double height = styleManagerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getHeight();
+    double width = stylerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getWidth();
+    double height = stylerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getHeight();
 
     Rectangle2D pieBounds = new Rectangle2D.Double(
 
@@ -109,7 +109,7 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
     // draw pie slices
     // double curValue = 0.0;
     // double curValue = 0.0;
-    double startAngle = styleManagerPie.getStartAngleInDegrees() + 90;
+    double startAngle = stylerPie.getStartAngleInDegrees() + 90;
 
     map = chart.getSeriesMap();
     for (Series_Pie series : map.values()) {
@@ -120,14 +120,14 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
       double arcAngle = (y.doubleValue() * 360 / total);
       g.setColor(series.getFillColor());
       g.fill(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
-      g.setColor(styleManagerPie.getPlotBackgroundColor());
+      g.setColor(stylerPie.getPlotBackgroundColor());
       g.draw(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
       // curValue += y.doubleValue();
 
       // draw percentage on slice
       double percentage = y.doubleValue() / total * 100;
 
-      TextLayout textLayout = new TextLayout(df.format(percentage) + "%", chart.getStyleManager().getLegendFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = new TextLayout(df.format(percentage) + "%", chart.getStyler().getLegendFont(), new FontRenderContext(null, true, false));
       Rectangle2D percentageRectangle = textLayout.getBounds();
 
       double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - percentageRectangle.getWidth() / 2;
@@ -136,8 +136,8 @@ public class PlotContent_Pie<SM extends StyleManager, S extends Series> extends 
       double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 3.33);
       double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 3.33);
 
-      g.setColor(styleManagerPie.getChartFontColor());
-      g.setFont(styleManagerPie.getChartTitleFont());
+      g.setColor(stylerPie.getChartFontColor());
+      g.setFont(stylerPie.getChartTitleFont());
 
       Shape shape = textLayout.getOutline(null);
       AffineTransform orig = g.getTransform();

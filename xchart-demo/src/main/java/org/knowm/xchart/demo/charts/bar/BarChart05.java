@@ -24,7 +24,7 @@ import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
 
 /**
  * GGPlot2 Theme

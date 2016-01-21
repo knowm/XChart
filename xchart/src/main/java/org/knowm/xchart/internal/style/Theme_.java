@@ -20,7 +20,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 import org.knowm.xchart.internal.style.colors.SeriesColors;
 import org.knowm.xchart.internal.style.lines.SeriesLines;
 import org.knowm.xchart.internal.style.markers.SeriesMarkers;
@@ -28,7 +28,7 @@ import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 /**
  * @author timmolter
  */
-public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
+public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Chart Style ///////////////////////////////
 

@@ -20,8 +20,8 @@ import java.io.IOException;
 
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.internal.style.StyleManager;
-import org.knowm.xchart.internal.style.StyleManager.LegendPosition;
+import org.knowm.xchart.internal.style.Styler;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 import org.knowm.xchart.internal.style.lines.SeriesLines;
 
 /**
@@ -32,7 +32,7 @@ public class TestForIssue83 {
   public static void main(String[] args) throws IOException {
 
     final Chart_XY chart = new Chart_XY(500, 580);
-    final StyleManager styleManager = chart.getStyleManager();
+    final Styler styleManager = chart.getStyler();
     styleManager.setLegendPosition(LegendPosition.InsideNW);
     styleManager.setLegendVisible(false);
 

@@ -23,12 +23,12 @@ import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.LegendPie;
+import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.knowm.xchart.internal.style.StyleManager.ChartTheme;
-import org.knowm.xchart.internal.style.Theme;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.internal.style.Theme_;
 
 /**
  * @author timmolter
@@ -45,7 +45,7 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
 
     super(width, height, new Styler_Pie());
     plot = new Plot_Pie(this);
-    chartLegend = new LegendPie(this);
+    legend = new Legend_Pie(this);
   }
 
   /**
@@ -55,10 +55,10 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
    * @param height
    * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
-  public Chart_Pie(int width, int height, Theme theme) {
+  public Chart_Pie(int width, int height, Theme_ theme) {
 
     this(width, height);
-    styleManager.setTheme(theme);
+    styler.setTheme(theme);
   }
 
   /**
@@ -115,29 +115,28 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
   public void paint(Graphics2D g) {
 
     // Sanity checks
-    if (getSeriesMap().isEmpty()) {
-      throw new RuntimeException("No series defined for Chart!!!");
-    }
+    // if (getSeriesMap().isEmpty()) {
+    // throw new RuntimeException("No series defined for Chart!!!");
+    // }
 
     // set the series types if they are not set. Legend and Plot need it.
     for (Series_Pie seriesPie : getSeriesMap().values()) {
       Series_Pie.ChartPieSeriesRenderStyle seriesType = seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
-        seriesPie.setChartPieSeriesRenderStyle(getStyleManager().getChartPieSeriesRenderStyle());
+        seriesPie.setChartPieSeriesRenderStyle(getStyler().getChartPieSeriesRenderStyle());
       }
     }
-
     setSeriesStyles();
 
     // paint chart main background
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-    g.setColor(styleManager.getChartBackgroundColor());
+    g.setColor(styler.getChartBackgroundColor());
     Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
     g.fill(rect);
 
     plot.paint(g);
     chartTitle.paint(g);
-    chartLegend.paint(g);
+    legend.paint(g);
 
     g.dispose();
   }
@@ -147,8 +146,8 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
    */
   public void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyleManager().getSeriesColors(), getStyleManager().getSeriesMarkers(),
-        getStyleManager().getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(),
+        getStyler().getSeriesLines());
     for (Series series : getSeriesMap().values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

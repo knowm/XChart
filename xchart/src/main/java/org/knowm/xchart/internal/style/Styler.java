@@ -23,11 +23,11 @@ import java.awt.Font;
 import org.knowm.xchart.internal.style.markers.Marker;
 
 /**
- * The StyleManager is used to manage all things related to styling of the vast number of Chart components
+ * The styler is used to manage all things related to styling of the vast number of Chart components
  *
  * @author timmolter
  */
-public abstract class StyleManager {
+public abstract class Styler {
 
   public enum LegendPosition {
 
@@ -38,18 +38,18 @@ public abstract class StyleManager {
 
     XChart, GGPlot2, Matlab;
 
-    public Theme newInstance(ChartTheme chartTheme) {
+    public Theme_ newInstance(ChartTheme chartTheme) {
 
       switch (chartTheme) {
       case GGPlot2:
-        return new GGPlot2Theme();
+        return new Theme_GGPlot2();
 
       case Matlab:
-        return new MatlabTheme();
+        return new Theme_Matlab();
 
       case XChart:
       default:
-        return new XChartTheme();
+        return new Theme_XChart();
       }
     }
   }
@@ -60,7 +60,7 @@ public abstract class StyleManager {
   }
 
   /** the default Theme */
-  protected Theme theme = new XChartTheme();
+  protected Theme_ theme = new Theme_XChart();
 
   // Chart Style ///////////////////////////////
   private Color chartBackgroundColor;

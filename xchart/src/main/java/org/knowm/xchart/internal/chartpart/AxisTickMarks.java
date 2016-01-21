@@ -24,14 +24,14 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.StyleManagerAxesChart;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * Axis tick marks. This includes the little tick marks and the line that hugs the plot area.
  */
-public class AxisTickMarks<SM extends StyleManagerAxesChart, S extends Series> implements ChartPart {
+public class AxisTickMarks<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
 
-  private final Chart<StyleManagerAxesChart, Series_AxesChart> chart;
+  private final Chart<Styler_AxesChart, Series_AxesChart> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
@@ -41,7 +41,7 @@ public class AxisTickMarks<SM extends StyleManagerAxesChart, S extends Series> i
    * @param chart
    * @param direction
    */
-  protected AxisTickMarks(Chart<StyleManagerAxesChart, Series_AxesChart> chart, Direction direction) {
+  protected AxisTickMarks(Chart<Styler_AxesChart, Series_AxesChart> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;
@@ -50,22 +50,22 @@ public class AxisTickMarks<SM extends StyleManagerAxesChart, S extends Series> i
   @Override
   public void paint(Graphics2D g) {
 
-    g.setColor(chart.getStyleManager().getAxisTickMarksColor());
-    g.setStroke(chart.getStyleManager().getAxisTickMarksStroke());
+    g.setColor(chart.getStyler().getAxisTickMarksColor());
+    g.setStroke(chart.getStyler().getAxisTickMarksStroke());
 
-    if (direction == Axis.Direction.Y && chart.getStyleManager().isYAxisTicksVisible()) { // Y-Axis
+    if (direction == Axis.Direction.Y && chart.getStyler().isYAxisTicksVisible()) { // Y-Axis
 
-      double xOffset = chart.getYAxis().getAxisTick().getAxisTickLabels().getBounds().getX() + chart.getYAxis().getAxisTick().getAxisTickLabels().getBounds().getWidth() + chart.getStyleManager()
+      double xOffset = chart.getYAxis().getAxisTick().getAxisTickLabels().getBounds().getX() + chart.getYAxis().getAxisTick().getAxisTickLabels().getBounds().getWidth() + chart.getStyler()
           .getAxisTickPadding();
       double yOffset = chart.getYAxis().getPaintZone().getY();
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset, chart.getStyleManager().getAxisTickMarkLength(), chart.getYAxis().getPaintZone().getHeight());
+      bounds = new Rectangle2D.Double(xOffset, yOffset, chart.getStyler().getAxisTickMarkLength(), chart.getYAxis().getPaintZone().getHeight());
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
       // tick marks
-      if (chart.getStyleManager().isAxisTicksMarksVisible()) {
+      if (chart.getStyler().isAxisTicksMarksVisible()) {
 
         for (int i = 0; i < chart.getYAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
@@ -73,16 +73,16 @@ public class AxisTickMarks<SM extends StyleManagerAxesChart, S extends Series> i
           double flippedTickLocation = yOffset + chart.getYAxis().getPaintZone().getHeight() - tickLocation;
           if (flippedTickLocation > bounds.getY() && flippedTickLocation < bounds.getY() + bounds.getHeight()) {
 
-            Shape line = new Line2D.Double(xOffset, flippedTickLocation, xOffset + chart.getStyleManager().getAxisTickMarkLength(), flippedTickLocation);
+            Shape line = new Line2D.Double(xOffset, flippedTickLocation, xOffset + chart.getStyler().getAxisTickMarkLength(), flippedTickLocation);
             g.draw(line);
           }
         }
       }
 
       // Line
-      if (chart.getStyleManager().isAxisTicksLineVisible()) {
+      if (chart.getStyler().isAxisTicksLineVisible()) {
 
-        Shape line = new Line2D.Double(xOffset + chart.getStyleManager().getAxisTickMarkLength(), yOffset, xOffset + chart.getStyleManager().getAxisTickMarkLength(), yOffset + chart.getYAxis()
+        Shape line = new Line2D.Double(xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset, xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset + chart.getYAxis()
             .getPaintZone().getHeight());
         g.draw(line);
 
@@ -90,18 +90,18 @@ public class AxisTickMarks<SM extends StyleManagerAxesChart, S extends Series> i
 
     }
     // X-Axis
-    else if (direction == Axis.Direction.X && chart.getStyleManager().isXAxisTicksVisible()) {
+    else if (direction == Axis.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
 
       double xOffset = chart.getXAxis().getPaintZone().getX();
-      double yOffset = chart.getXAxis().getAxisTick().getAxisTickLabels().getBounds().getY() - chart.getStyleManager().getAxisTickPadding();
+      double yOffset = chart.getXAxis().getAxisTick().getAxisTickLabels().getBounds().getY() - chart.getStyler().getAxisTickPadding();
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset - chart.getStyleManager().getAxisTickMarkLength(), chart.getXAxis().getPaintZone().getWidth(), chart.getStyleManager().getAxisTickMarkLength());
+      bounds = new Rectangle2D.Double(xOffset, yOffset - chart.getStyler().getAxisTickMarkLength(), chart.getXAxis().getPaintZone().getWidth(), chart.getStyler().getAxisTickMarkLength());
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
       // tick marks
-      if (chart.getStyleManager().isAxisTicksMarksVisible()) {
+      if (chart.getStyler().isAxisTicksMarksVisible()) {
 
         for (int i = 0; i < chart.getXAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
@@ -110,18 +110,18 @@ public class AxisTickMarks<SM extends StyleManagerAxesChart, S extends Series> i
 
           if (shiftedTickLocation > bounds.getX() && shiftedTickLocation < bounds.getX() + bounds.getWidth()) {
 
-            Shape line = new Line2D.Double(shiftedTickLocation, yOffset, xOffset + tickLocation, yOffset - chart.getStyleManager().getAxisTickMarkLength());
+            Shape line = new Line2D.Double(shiftedTickLocation, yOffset, xOffset + tickLocation, yOffset - chart.getStyler().getAxisTickMarkLength());
             g.draw(line);
           }
         }
       }
 
       // Line
-      if (chart.getStyleManager().isAxisTicksLineVisible()) {
+      if (chart.getStyler().isAxisTicksLineVisible()) {
 
-        g.setStroke(chart.getStyleManager().getAxisTickMarksStroke());
-        g.drawLine((int) xOffset, (int) (yOffset - chart.getStyleManager().getAxisTickMarkLength()), (int) (xOffset + chart.getXAxis().getPaintZone().getWidth()), (int) (yOffset - chart
-            .getStyleManager().getAxisTickMarkLength()));
+        g.setStroke(chart.getStyler().getAxisTickMarksStroke());
+        g.drawLine((int) xOffset, (int) (yOffset - chart.getStyler().getAxisTickMarkLength()), (int) (xOffset + chart.getXAxis().getPaintZone().getWidth()), (int) (yOffset - chart
+            .getStyler().getAxisTickMarkLength()));
       }
 
     }

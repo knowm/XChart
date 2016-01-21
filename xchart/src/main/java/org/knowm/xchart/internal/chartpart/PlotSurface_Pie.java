@@ -23,26 +23,26 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.Series_Pie;
 import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.StyleManager;
+import org.knowm.xchart.internal.style.Styler;
 
 /**
  * Draws the plot background and the plot border
  *
  * @author timmolter
  */
-public class PlotSurfacePie<SM extends StyleManager, S extends Series> extends PlotSurface {
+public class PlotSurface_Pie<ST extends Styler, S extends Series> extends PlotSurface_ {
 
-  private final Styler_Pie styleManagerPie;
+  private final Styler_Pie stylerPie;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotSurfacePie(Chart<Styler_Pie, Series_Pie> chart) {
+  protected PlotSurface_Pie(Chart<Styler_Pie, Series_Pie> chart) {
 
     super(chart);
-    this.styleManagerPie = chart.getStyleManager();
+    this.stylerPie = chart.getStyler();
   }
 
   @Override
@@ -52,13 +52,13 @@ public class PlotSurfacePie<SM extends StyleManager, S extends Series> extends P
 
     // paint plot background
     Shape rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-    g.setColor(styleManagerPie.getPlotBackgroundColor());
+    g.setColor(stylerPie.getPlotBackgroundColor());
     g.fill(rect);
 
     // paint plot border
-    if (styleManagerPie.isPlotBorderVisible()) {
-      g.setColor(styleManagerPie.getPlotBorderColor());
-      // g.setStroke(getChartPainter().getStyleManager().getAxisTickMarksStroke());
+    if (stylerPie.isPlotBorderVisible()) {
+      g.setColor(stylerPie.getPlotBorderColor());
+      // g.setStroke(getChartPainter().getstyler().getAxisTickMarksStroke());
       g.draw(rect);
     }
 
