@@ -197,6 +197,11 @@ public abstract class Chart<ST extends Styler, S extends Series> implements Char
     return seriesMap;
   }
 
+  public S removeSeries(String seriesName) {
+
+    return seriesMap.remove(seriesName);
+  }
+
   /**
    * Gets the Chart's styler, which can be used to customize the Chart's appearance
    *
