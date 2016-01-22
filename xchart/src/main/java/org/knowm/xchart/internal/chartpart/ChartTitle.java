@@ -17,7 +17,6 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
@@ -91,8 +90,8 @@ public class ChartTitle implements ChartPart {
     double width = 2 * chart.getStyler().getChartTitlePadding() + textBounds.getWidth();
     double height = 2 * chart.getStyler().getChartTitlePadding() + textBounds.getHeight();
     bounds = new Rectangle2D.Double(xOffset - chart.getStyler().getChartTitlePadding(), yOffset - textBounds.getHeight() - chart.getStyler().getChartTitlePadding(), width, height);
-    g.setColor(Color.green);
-    g.draw(bounds);
+    // g.setColor(Color.green);
+    // g.draw(bounds);
 
   }
 

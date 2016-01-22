@@ -51,6 +51,7 @@ public class TestForIssue127 {
 
     chart.removeSeries("test");
     new SwingWrapper(chart).displayChart();
+    Thread.sleep(1000);
 
     DateFormat sdf = new SimpleDateFormat("dd-HH-mm");
 

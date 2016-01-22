@@ -60,6 +60,14 @@ public class AxisPair<ST extends Styler_AxesChart, S extends Series> implements 
 
   private void prepareForPaint() {
 
+    // set the axis data types, making sure all are compatible
+    xAxis.setAxisDataType(null);
+    yAxis.setAxisDataType(null);
+    for (Series_AxesChart series : chart.getSeriesMap().values()) {
+      xAxis.setAxisDataType(series.getxAxisDataType());
+      yAxis.setAxisDataType(series.getyAxisDataType());
+    }
+
     // calculate axis min and max
     xAxis.resetMinMax();
     yAxis.resetMinMax();

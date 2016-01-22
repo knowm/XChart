@@ -244,7 +244,7 @@ public abstract class Series_AxesChart extends Series {
     return xData;
   }
 
-  public AxisDataType getxAxisType() {
+  public AxisDataType getxAxisDataType() {
 
     return xAxisType;
   }
@@ -254,7 +254,7 @@ public abstract class Series_AxesChart extends Series {
     return yData;
   }
 
-  public AxisDataType getyAxisType() {
+  public AxisDataType getyAxisDataType() {
 
     return yAxisType;
   }

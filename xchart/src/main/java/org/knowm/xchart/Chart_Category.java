@@ -22,7 +22,6 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_AxesChart;
@@ -188,8 +187,8 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
 
     seriesMap.put(seriesName, series);
 
-    getXAxis().setAxisType(series.getxAxisType());
-    getYAxis().setAxisType(AxisDataType.Number);
+    // getXAxis().setAxisType(series.getxAxisDataType());
+    // getYAxis().setAxisType(AxisDataType.Number);
 
     return series;
   }
@@ -261,8 +260,8 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    */
   public void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(),
-        getStyler().getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
+        .getSeriesLines());
     for (Series_Category series : getSeriesMap().values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

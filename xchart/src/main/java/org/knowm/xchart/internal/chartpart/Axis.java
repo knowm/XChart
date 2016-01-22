@@ -101,7 +101,7 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
   /**
    * Reset the default min and max values in preparation for calculating the actual min and max
    */
-  public void resetMinMax() {
+  protected void resetMinMax() {
 
     min = Double.MAX_VALUE;
     max = -Double.MAX_VALUE;
@@ -111,7 +111,7 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
    * @param min
    * @param max
    */
-  public void addMinMax(double min, double max) {
+  protected void addMinMax(double min, double max) {
 
     // System.out.println(min);
     // System.out.println(max);
@@ -125,14 +125,6 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
 
     // System.out.println(this.min);
     // System.out.println(this.max);
-  }
-
-  public void setAxisType(AxisDataType axisDataType) {
-
-    if (this.axisDataType != null && this.axisDataType != axisDataType) {
-      throw new IllegalArgumentException("Different Axes (Date, Number, String) cannot be mixed on the same chart!!");
-    }
-    this.axisDataType = axisDataType;
   }
 
   @Override
@@ -390,6 +382,14 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
   protected AxisDataType getAxisDataType() {
 
     return axisDataType;
+  }
+
+  public void setAxisDataType(AxisDataType axisDataType) {
+
+    if (axisDataType != null && this.axisDataType != null && this.axisDataType != axisDataType) {
+      throw new IllegalArgumentException("Different Axes (e.g. Date, Number, String) cannot be mixed on the same chart!!");
+    }
+    this.axisDataType = axisDataType;
   }
 
   protected double getMin() {
