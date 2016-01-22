@@ -154,9 +154,9 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
       // |
       // ----
       double xOffset = chart.getStyler().getChartPadding();
-      double yOffset = chart.getChartTitle().getBounds().getHeight() < .1 ? chart.getStyler().getChartPadding() : chart.getChartTitle().getBounds().getHeight()
-
-          + chart.getStyler().getChartPadding();
+      // double yOffset = chart.getChartTitle().getBounds().getHeight() < .1 ? chart.getStyler().getChartPadding() : chart.getChartTitle().getBounds().getHeight()
+      // + chart.getStyler().getChartPadding();
+      double yOffset = chart.getChartTitle().getBounds().getHeight() + chart.getStyler().getChartPadding();
 
       /////////////////////////
       int i = 1; // just twice through is all it takes

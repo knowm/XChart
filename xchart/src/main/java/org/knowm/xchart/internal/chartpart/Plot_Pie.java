@@ -48,7 +48,8 @@ public class Plot_Pie<ST extends Styler, S extends Series> extends Plot_ {
     // calculate bounds
     double xOffset = chart.getStyler().getChartPadding();
 
-    double yOffset = chart.getChartTitle().getBounds().getHeight() + 2 * chart.getStyler().getChartPadding();
+    // double yOffset = chart.getChartTitle().getBounds().getHeight() + 2 * chart.getStyler().getChartPadding();
+    double yOffset = chart.getChartTitle().getBounds().getHeight() + chart.getStyler().getChartPadding();
 
     double width =
 
