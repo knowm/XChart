@@ -127,14 +127,14 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       // draw percentage on slice
       double percentage = y.doubleValue() / total * 100;
 
-      TextLayout textLayout = new TextLayout(df.format(percentage) + "%", chart.getStyler().getLegendFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = new TextLayout(df.format(percentage) + "%", stylerPie.getPieFont(), new FontRenderContext(null, true, false));
       Rectangle2D percentageRectangle = textLayout.getBounds();
 
       double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - percentageRectangle.getWidth() / 2;
       double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2 + percentageRectangle.getHeight() / 2;
       double angle = (arcAngle + startAngle) - arcAngle / 2;
-      double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 3.33);
-      double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 3.33);
+      double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
+      double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
 
       g.setColor(stylerPie.getChartFontColor());
       g.setFont(stylerPie.getChartTitleFont());

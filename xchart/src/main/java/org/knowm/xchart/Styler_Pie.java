@@ -16,6 +16,8 @@
  */
 package org.knowm.xchart;
 
+import java.awt.Font;
+
 import org.knowm.xchart.Series_Pie.ChartPieSeriesRenderStyle;
 import org.knowm.xchart.internal.style.Styler;
 import org.knowm.xchart.internal.style.Theme_;
@@ -30,6 +32,8 @@ public class Styler_Pie extends Styler {
   private double pieFillPercentage;
   private boolean isCircular;
   private double startAngleInDegrees;
+  private Font pieFont;
+  private double annotationDistance;
 
   /**
    * Constructor
@@ -46,6 +50,8 @@ public class Styler_Pie extends Styler {
     chartPieSeriesRenderStyle = ChartPieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
     pieFillPercentage = theme.getPieFillPercentage();
     isCircular = theme.isCircular();
+    pieFont = theme.getPieFont();
+    annotationDistance = theme.getAnnotationDistance();
   }
 
   public ChartPieSeriesRenderStyle getChartPieSeriesRenderStyle() {
@@ -106,6 +112,36 @@ public class Styler_Pie extends Styler {
   public void setStartAngleInDegrees(double startAngleInDegrees) {
 
     this.startAngleInDegrees = startAngleInDegrees;
+  }
+
+  public Font getPieFont() {
+
+    return pieFont;
+  }
+
+  /**
+   * Sets the font used on the Pie Chart's annotations
+   *
+   * @param pieFont
+   */
+  public void setPieFont(Font pieFont) {
+
+    this.pieFont = pieFont;
+  }
+
+  public double getAnnotationDistance() {
+
+    return annotationDistance;
+  }
+
+  /**
+   * Sets the distance of the pie chart's annotation where 0 is the center, 1 is at the edge and greater than 1 is outside of the pie chart.
+   *
+   * @param annotationDistance
+   */
+  public void setAnnotationDistance(double annotationDistance) {
+
+    this.annotationDistance = annotationDistance;
   }
 
   /**

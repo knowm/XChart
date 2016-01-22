@@ -140,6 +140,10 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public double getStartAngleInDegrees();
 
+  public Font getPieFont();
+
+  public double getAnnotationDistance();
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   public int getMarkerSize();

@@ -354,6 +354,18 @@ public class Theme_GGPlot2 implements Theme_ {
     return 0;
   }
 
+  @Override
+  public Font getPieFont() {
+
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 15);
+  }
+
+  @Override
+  public double getAnnotationDistance() {
+
+    return .67;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override
