@@ -134,7 +134,7 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Pie Charts ///////////////////////////////
 
-  public double getPieFillPercentage();
+  public double getPieSize();
 
   public boolean isCircular();
 

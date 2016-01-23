@@ -341,7 +341,7 @@ public class Theme_Matlab implements Theme_ {
   // Pie Charts ///////////////////////////////
 
   @Override
-  public double getPieFillPercentage() {
+  public double getPieSize() {
 
     return .90;
   }

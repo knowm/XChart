@@ -337,7 +337,7 @@ public class Theme_GGPlot2 implements Theme_ {
   // Pie Charts ///////////////////////////////
 
   @Override
-  public double getPieFillPercentage() {
+  public double getPieSize() {
 
     return .90;
   }

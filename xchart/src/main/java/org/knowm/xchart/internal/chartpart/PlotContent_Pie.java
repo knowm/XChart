@@ -72,7 +72,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     g.setClip(bounds.createIntersection(rectangle));
 
     // pie bounds
-    double pieFillPercentage = stylerPie.getPieFillPercentage();
+    double pieFillPercentage = stylerPie.getPieSize();
 
     // if (stylerPie.isCircular()) {
     //
@@ -127,7 +127,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       // draw percentage on slice
       double percentage = y.doubleValue() / total * 100;
 
-      TextLayout textLayout = new TextLayout(df.format(percentage) + "%", stylerPie.getPieFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = new TextLayout(df.format(percentage) + "%", stylerPie.getAnnotationFont(), new FontRenderContext(null, true, false));
       Rectangle2D percentageRectangle = textLayout.getBounds();
 
       double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - percentageRectangle.getWidth() / 2;

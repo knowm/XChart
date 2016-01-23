@@ -29,10 +29,10 @@ public class Styler_Pie extends Styler {
 
   private ChartPieSeriesRenderStyle chartPieSeriesRenderStyle;
 
-  private double pieFillPercentage;
+  private double pieSize;
   private boolean isCircular;
   private double startAngleInDegrees;
-  private Font pieFont;
+  private Font annotationFont;
   private double annotationDistance;
 
   /**
@@ -48,9 +48,9 @@ public class Styler_Pie extends Styler {
   protected void setAllStyles() {
 
     chartPieSeriesRenderStyle = ChartPieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
-    pieFillPercentage = theme.getPieFillPercentage();
+    pieSize = theme.getPieSize();
     isCircular = theme.isCircular();
-    pieFont = theme.getPieFont();
+    annotationFont = theme.getPieFont();
     annotationDistance = theme.getAnnotationDistance();
   }
 
@@ -69,19 +69,19 @@ public class Styler_Pie extends Styler {
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
   }
 
-  public double getPieFillPercentage() {
+  public double getPieSize() {
 
-    return pieFillPercentage;
+    return pieSize;
   }
 
   /**
    * Sets the amount of space that the pie chart fills. Full fill is 100%, i.e. 1.0
    *
-   * @param pieFillPercentage
+   * @param pieSize
    */
-  public void setPieFillPercentage(double pieFillPercentage) {
+  public void setPieSize(double pieSize) {
 
-    this.pieFillPercentage = pieFillPercentage;
+    this.pieSize = pieSize;
   }
 
   public boolean isCircular() {
@@ -114,9 +114,9 @@ public class Styler_Pie extends Styler {
     this.startAngleInDegrees = startAngleInDegrees;
   }
 
-  public Font getPieFont() {
+  public Font getAnnotationFont() {
 
-    return pieFont;
+    return annotationFont;
   }
 
   /**
@@ -124,9 +124,9 @@ public class Styler_Pie extends Styler {
    *
    * @param pieFont
    */
-  public void setPieFont(Font pieFont) {
+  public void setAnnotationFont(Font pieFont) {
 
-    this.pieFont = pieFont;
+    this.annotationFont = pieFont;
   }
 
   public double getAnnotationDistance() {
