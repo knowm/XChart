@@ -154,7 +154,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       Shape shape = textLayout.getOutline(null);
       Rectangle2D annotationBounds = shape.getBounds2D();
       double annotationWidth = annotationBounds.getWidth();
-      // System.out.println("annotationWidth= " + annotationWidth);
+      System.out.println("annotationWidth= " + annotationWidth);
       double annotationHeight = annotationBounds.getHeight();
       // System.out.println("annotationHeight= " + annotationHeight);
 
@@ -184,28 +184,48 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
           annotationWillFit = true;
         }
       }
+
+      // draw annotation
       if (annotationWillFit) {
+
         g.setColor(stylerPie.getChartFontColor());
         g.setFont(stylerPie.getChartTitleFont());
         AffineTransform orig = g.getTransform();
         AffineTransform at = new AffineTransform();
-        at.translate(xOffset, yOffset);
+
+        // inside
+        if (stylerPie.getAnnotationDistance() <= 1.0) {
+          at.translate(xOffset, yOffset);
+        }
+
+        // outside
+        else {
+
+          // Tick Mark
+          xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
+          yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
+          // double endPoint = Math.min((2.0 - (stylerPie.getAnnotationDistance() - 1)), 1.95);
+          double endPoint = (2.0 - (stylerPie.getAnnotationDistance() - 1));
+          double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
+          double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / endPoint);
+          double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
+          double yOffsetEnd = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / endPoint);
+
+          g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
+          Shape line = new Line2D.Double(xOffsetStart, yOffsetStart, xOffsetEnd, yOffsetEnd);
+          g.draw(line);
+
+          // annotation
+          at.translate(xOffset - Math.sin(Math.toRadians(angle - 90)) * annotationWidth / 2 + 3, yOffset);
+          // at.translate(xOffset, yOffset);
+
+        }
+
         g.transform(at);
         g.fill(shape);
         g.setTransform(orig);
+
       }
-
-      // Tick Mark
-      xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
-      yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
-      double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
-      double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 1.95);
-      double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
-      double yOffsetEnd = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 1.95);
-
-      g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
-      Shape line = new Line2D.Double(xOffsetStart, yOffsetStart, xOffsetEnd, yOffsetEnd);
-      g.draw(line);
 
       startAngle += arcAngle;
     }
