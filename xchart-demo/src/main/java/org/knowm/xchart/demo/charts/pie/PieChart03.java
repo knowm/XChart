@@ -18,6 +18,7 @@ package org.knowm.xchart.demo.charts.pie;
 
 import org.knowm.xchart.ChartBuilder_Pie;
 import org.knowm.xchart.Chart_Pie;
+import org.knowm.xchart.Styler_Pie.AnnotationType;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.style.Styler.ChartTheme;
@@ -50,6 +51,10 @@ public class PieChart03 implements ExampleChart<Chart_Pie> {
     chart.addSeries("Munich", 34);
     chart.addSeries("Hamburg", 22);
     chart.addSeries("Berlin", 29);
+
+    chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setAnnotationType(AnnotationType.LabelAndPercentage);
+    chart.getStyler().setAnnotationDistance(1.1);
 
     return chart;
   }

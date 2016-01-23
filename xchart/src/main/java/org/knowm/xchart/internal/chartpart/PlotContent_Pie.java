@@ -16,18 +16,21 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.Map;
 
 import org.knowm.xchart.Series_Pie;
 import org.knowm.xchart.Styler_Pie;
+import org.knowm.xchart.Styler_Pie.AnnotationType;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.style.Styler;
 
@@ -124,10 +127,21 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       g.draw(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
       // curValue += y.doubleValue();
 
-      // draw percentage on slice
-      double percentage = y.doubleValue() / total * 100;
+      // draw annotation
+      String annotation = "";
+      if (stylerPie.getAnnotationType() == AnnotationType.Label) {
+        annotation = series.getName();
+      }
+      else if (stylerPie.getAnnotationType() == AnnotationType.LabelAndPercentage) {
+        double percentage = y.doubleValue() / total * 100;
+        annotation = series.getName() + " (" + df.format(percentage) + "%)";
+      }
+      else if (stylerPie.getAnnotationType() == AnnotationType.Percentage) {
+        double percentage = y.doubleValue() / total * 100;
+        annotation = df.format(percentage) + "%";
+      }
 
-      TextLayout textLayout = new TextLayout(df.format(percentage) + "%", stylerPie.getAnnotationFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = new TextLayout(annotation, stylerPie.getAnnotationFont(), new FontRenderContext(null, true, false));
       Rectangle2D percentageRectangle = textLayout.getBounds();
 
       double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - percentageRectangle.getWidth() / 2;
@@ -160,12 +174,12 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       // double max = Math.max(xDiff, yDiff);
       // System.out.println(" ================== ");
       boolean annotationWillFit = false;
-      if (xDiff > yDiff) {// assume more vertically orientated slice
+      if (xDiff > yDiff) { // assume more vertically orientated slice
         if (annotationWidth < xDiff) {
           annotationWillFit = true;
         }
       }
-      else if (xDiff < yDiff) {// assume more horizontally orientated slice
+      else if (xDiff < yDiff) { // assume more horizontally orientated slice
         if (annotationHeight < yDiff) {
           annotationWillFit = true;
         }
@@ -180,17 +194,18 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
         g.fill(shape);
         g.setTransform(orig);
       }
-      // // Tick Mark
-      // xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
-      // yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
-      // double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
-      // double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 1.9);
-      // double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
-      // double yOffsetEnd = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 1.9);
-      //
-      // g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
-      // Shape line = new Line2D.Double(xOffsetStart, yOffsetStart, xOffsetEnd, yOffsetEnd);
-      // g.draw(line);
+
+      // Tick Mark
+      xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
+      yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
+      double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
+      double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 1.95);
+      double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
+      double yOffsetEnd = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 1.95);
+
+      g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
+      Shape line = new Line2D.Double(xOffsetStart, yOffsetStart, xOffsetEnd, yOffsetEnd);
+      g.draw(line);
 
       startAngle += arcAngle;
     }
@@ -198,33 +213,5 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     g.setClip(null);
 
   }
-
-  // private double[] getPercentageVector(Collection<? extends Number> collection) {
-  //
-  // float total = 0.0f;
-  //
-  // double[] vectorCenters = new double[collection.size()];
-  // Iterator<? extends Number> yItr = collection.iterator();
-  //
-  // int counter = 0;
-  // while (yItr.hasNext()) {
-  //
-  // Number next = yItr.next();
-  //
-  // double y = next.doubleValue();
-  // System.out.println(y);
-  // vectorCenters[counter] = vectorCenters[counter] + y;
-  //
-  // total += vectorCenters[counter++];
-  // }
-  //
-  // double[] vectorPercentages = new double[vectorCenters.length];
-  //
-  // for (int i = 0; i < vectorPercentages.length; i++) {
-  // vectorPercentages[i] = vectorCenters[i] / total;
-  // }
-  //
-  // return vectorPercentages;
-  // }
 
 }

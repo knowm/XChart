@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
+import org.knowm.xchart.Styler_Pie.AnnotationType;
 import org.knowm.xchart.internal.style.Styler.LegendPosition;
 import org.knowm.xchart.internal.style.colors.ChartColor;
 import org.knowm.xchart.internal.style.colors.GGPlot2SeriesColors;
@@ -364,6 +365,12 @@ public class Theme_GGPlot2 implements Theme_ {
   public double getAnnotationDistance() {
 
     return .67;
+  }
+
+  @Override
+  public AnnotationType getAnnotationType() {
+
+    return AnnotationType.LabelAndPercentage;
   }
 
   // Line, Scatter, Area Charts ///////////////////////////////

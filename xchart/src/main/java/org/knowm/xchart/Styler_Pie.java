@@ -29,11 +29,17 @@ public class Styler_Pie extends Styler {
 
   private ChartPieSeriesRenderStyle chartPieSeriesRenderStyle;
 
+  public enum AnnotationType {
+
+    Percentage, Label, LabelAndPercentage
+  }
+
   private double pieSize;
   private boolean isCircular;
   private double startAngleInDegrees;
   private Font annotationFont;
   private double annotationDistance;
+  private AnnotationType annotationType;
 
   /**
    * Constructor
@@ -52,6 +58,7 @@ public class Styler_Pie extends Styler {
     isCircular = theme.isCircular();
     annotationFont = theme.getPieFont();
     annotationDistance = theme.getAnnotationDistance();
+    annotationType = theme.getAnnotationType();
   }
 
   public ChartPieSeriesRenderStyle getChartPieSeriesRenderStyle() {
@@ -142,6 +149,21 @@ public class Styler_Pie extends Styler {
   public void setAnnotationDistance(double annotationDistance) {
 
     this.annotationDistance = annotationDistance;
+  }
+
+  public AnnotationType getAnnotationType() {
+
+    return annotationType;
+  }
+
+  /**
+   * Sets the Pie chart's annotation type
+   *
+   * @param annotationType
+   */
+  public void setAnnotationType(AnnotationType annotationType) {
+
+    this.annotationType = annotationType;
   }
 
   /**

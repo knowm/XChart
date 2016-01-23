@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
+import org.knowm.xchart.Styler_Pie.AnnotationType;
 import org.knowm.xchart.internal.style.Styler.LegendPosition;
 import org.knowm.xchart.internal.style.colors.SeriesColors;
 import org.knowm.xchart.internal.style.lines.SeriesLines;
@@ -143,6 +144,8 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
   public Font getPieFont();
 
   public double getAnnotationDistance();
+
+  AnnotationType getAnnotationType();
 
   // Line, Scatter, Area Charts ///////////////////////////////
 
