@@ -61,6 +61,7 @@ import org.knowm.xchart.demo.charts.line.LineChart06;
 import org.knowm.xchart.demo.charts.line.LineChart07;
 import org.knowm.xchart.demo.charts.pie.PieChart01;
 import org.knowm.xchart.demo.charts.pie.PieChart02;
+import org.knowm.xchart.demo.charts.pie.PieChart03;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart03;
@@ -228,7 +229,10 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart01 - Pie Chart with 4 Slices", new PieChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart012 - Pie Chart Custom Color Palette", new PieChart02().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart02 - Pie Chart Custom Color Palette", new PieChart02().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart03 - Pie Chart Custom GGPlot2 Theme", new PieChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Line category

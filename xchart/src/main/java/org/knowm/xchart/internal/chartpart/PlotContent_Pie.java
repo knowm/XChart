@@ -136,17 +136,50 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
       double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
 
-      g.setColor(stylerPie.getChartFontColor());
-      g.setFont(stylerPie.getChartTitleFont());
-
+      // get annotation width
       Shape shape = textLayout.getOutline(null);
-      AffineTransform orig = g.getTransform();
-      AffineTransform at = new AffineTransform();
-      at.translate(xOffset, yOffset);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
+      Rectangle2D annotationBounds = shape.getBounds2D();
+      double annotationWidth = annotationBounds.getWidth();
+      // System.out.println("annotationWidth= " + annotationWidth);
+      double annotationHeight = annotationBounds.getHeight();
+      // System.out.println("annotationHeight= " + annotationHeight);
 
+      // get slice area
+      double xOffset1 = xCenter + Math.cos(Math.toRadians(startAngle)) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
+      double yOffset1 = yCenter - Math.sin(Math.toRadians(startAngle)) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
+      double xOffset2 = xCenter + Math.cos(Math.toRadians((arcAngle + startAngle))) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
+      double yOffset2 = yCenter - Math.sin(Math.toRadians((arcAngle + startAngle))) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
+      // System.out.println("xOffset1= " + xOffset1);
+      // System.out.println("yOffset1= " + yOffset1);
+      // System.out.println("xOffset2= " + xOffset2);
+      // System.out.println("yOffset2= " + yOffset2);
+      double xDiff = Math.abs(xOffset1 - xOffset2);
+      double yDiff = Math.abs(yOffset1 - yOffset2);
+      // System.out.println("xDiff= " + xDiff);
+      // System.out.println("yDiff= " + yDiff);
+      // double max = Math.max(xDiff, yDiff);
+      // System.out.println(" ================== ");
+      boolean annotationWillFit = false;
+      if (xDiff > yDiff) {// assume more vertically orientated slice
+        if (annotationWidth < xDiff) {
+          annotationWillFit = true;
+        }
+      }
+      else if (xDiff < yDiff) {// assume more horizontally orientated slice
+        if (annotationHeight < yDiff) {
+          annotationWillFit = true;
+        }
+      }
+      if (annotationWillFit) {
+        g.setColor(stylerPie.getChartFontColor());
+        g.setFont(stylerPie.getChartTitleFont());
+        AffineTransform orig = g.getTransform();
+        AffineTransform at = new AffineTransform();
+        at.translate(xOffset, yOffset);
+        g.transform(at);
+        g.fill(shape);
+        g.setTransform(orig);
+      }
       // // Tick Mark
       // xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
       // yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
