@@ -20,13 +20,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 
 /**
- * A Series containing X and Y data to be plotted on a Chart
+ * A Series containing category data to be plotted on a Chart
  *
  * @author timmolter
  */
@@ -34,7 +34,15 @@ public class Series_Category extends Series_AxesChart {
 
   public enum ChartCategorySeriesRenderStyle implements RenderableSeries {
 
-    Line(LegendRenderType.Line), Area(LegendRenderType.Line), Scatter(LegendRenderType.Scatter), Bar(LegendRenderType.Box);
+    Line(LegendRenderType.Line),
+
+    Area(LegendRenderType.Line),
+
+    Scatter(LegendRenderType.Scatter),
+
+    Bar(LegendRenderType.Box),
+
+    Stick(LegendRenderType.Line);
 
     private final LegendRenderType legendRenderType;
 

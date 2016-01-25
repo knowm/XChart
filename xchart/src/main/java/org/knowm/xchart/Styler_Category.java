@@ -39,7 +39,7 @@ public class Styler_Category extends Styler_AxesChart {
   @Override
   protected void setAllStyles() {
 
-    chartCategorySeriesRenderStyle = ChartCategorySeriesRenderStyle.Bar; // set default to bar
+    this.chartCategorySeriesRenderStyle = ChartCategorySeriesRenderStyle.Bar; // set default to bar
   }
 
   public ChartCategorySeriesRenderStyle getChartCategorySeriesRenderStyle() {
@@ -48,9 +48,9 @@ public class Styler_Category extends Styler_AxesChart {
   }
 
   /**
-   * Sets the default series render style for the chart (line, scatter, area, etc.) You can override the series render style individually on each Series object.
+   * Sets the default series render style for the chart (bar, stick, line, scatter, area, etc.) You can override the series render style individually on each Series object.
    *
-   * @param chartXYSeriesRenderStyle
+   * @param chartCategorySeriesRenderStyle
    */
   public void setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
 

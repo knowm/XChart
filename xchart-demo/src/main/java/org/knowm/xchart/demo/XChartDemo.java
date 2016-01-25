@@ -69,6 +69,7 @@ import org.knowm.xchart.demo.charts.scatter.ScatterChart01;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart02;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart03;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart04;
+import org.knowm.xchart.demo.charts.stick.StickChart01;
 import org.knowm.xchart.demo.charts.theme.ThemeChart01;
 import org.knowm.xchart.demo.charts.theme.ThemeChart02;
 import org.knowm.xchart.demo.charts.theme.ThemeChart03;
@@ -305,6 +306,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart09 - Category chart with Bar, Line and Scatter Series", new BarChart09().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    // Stick category
+    category = new DefaultMutableTreeNode("Stick Charts");
+    top.add(category);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("StickChart01 - Stick", new StickChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Theme category

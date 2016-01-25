@@ -16,16 +16,20 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import java.awt.Graphics2D;
+
 import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.style.Styler_AxesChart;
-import org.knowm.xchart.Styler_Category;
 
 /**
  * @author timmolter
  */
 public class Plot_Category<ST extends Styler_AxesChart, S extends Series> extends Plot_AxesChart {
+
+  Styler_Category stylerCategory;
 
   /**
    * Constructor
@@ -35,19 +39,22 @@ public class Plot_Category<ST extends Styler_AxesChart, S extends Series> extend
   public Plot_Category(Chart<Styler_Category, Series_Category> chart) {
 
     super(chart);
+    stylerCategory = chart.getStyler();
+  }
 
-    Styler_Category stylerCategory = chart.getStyler();
+  @Override
+  public void paint(Graphics2D g) {
 
-    if (ChartCategorySeriesRenderStyle.Bar.equals(stylerCategory.getChartCategorySeriesRenderStyle())) {
+    if (ChartCategorySeriesRenderStyle.Bar.equals(stylerCategory.getChartCategorySeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Stick.equals(stylerCategory
+        .getChartCategorySeriesRenderStyle())) {
 
       this.plotContent = new PlotContent_Category_Bar<Styler_Category, Series_Category>(chart);
-
     }
     else {
       this.plotContent = new PlotContent_Category_Line_Area_Scatter<Styler_Category, Series_Category>(chart);
-
     }
 
+    super.paint(g);
   }
 
 }

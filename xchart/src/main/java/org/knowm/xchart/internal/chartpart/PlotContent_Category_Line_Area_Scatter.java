@@ -48,7 +48,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
   protected PlotContent_Category_Line_Area_Scatter(Chart<Styler_Category, Series_Category> chart) {
 
     super(chart);
-    this.stylerCategory = stylerCategory;
+    this.stylerCategory = chart.getStyler();
   }
 
   @Override
@@ -106,13 +106,15 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
     }
+    System.out.println("yMin = " + yMin);
+    System.out.println("yMax = " + yMax);
 
-    Map<String, Series_Category> map = chart.getSeriesMap();
+    Map<String, Series_Category> seriesMap = chart.getSeriesMap();
 
-    int numCategories = map.size();
+    int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
 
-    for (Series_Category series : map.values()) {
+    for (Series_Category series : seriesMap.values()) {
 
       // data points
       Collection<? extends Number> yData = series.getYData();
@@ -154,7 +156,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         else {
           y = yOrig;
         }
-        // System.out.println(y);
+        System.out.println(y);
 
         double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
@@ -165,11 +167,10 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
         double xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
         double yOffset = bounds.getY() + yTransform;
-        // System.out.println(xTransform);
-        // System.out.println(xOffset);
-        // System.out.println(yTransform);
-        // System.out.println(yOffset);
-        // System.out.println("---");
+        System.out.println(xOffset);
+        System.out.println(yTransform);
+        System.out.println(yOffset);
+        System.out.println("---");
 
         // paint line
         if (ChartCategorySeriesRenderStyle.Line.equals(series.getChartCategorySeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
@@ -203,6 +204,21 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           if (xOffset < previousX) {
             throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
           }
+        }
+
+        // paint stick
+        if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+
+          if (series.getLineStyle() != SeriesLines.NONE) {
+
+            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
+
+            g.setColor(series.getLineColor());
+            g.setStroke(series.getLineStyle());
+            Shape line = new Line2D.Double(xOffset, yBottomOfArea, xOffset, yOffset);
+            g.draw(line);
+          }
+
         }
 
         previousX = xOffset;

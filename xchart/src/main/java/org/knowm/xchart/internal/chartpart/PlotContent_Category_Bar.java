@@ -43,7 +43,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
   /**
    * Constructor
    *
-   * @param plot
+   * @param chart
    */
   protected PlotContent_Category_Bar(Chart<Styler_Category, Series_Category> chart) {
 
@@ -173,13 +173,23 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           double barWidthPercentage = stylerCategory.getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
+          if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+            xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
+          }
+          else {
+            xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
+          }
         }
         else {
           double barWidthPercentage = stylerCategory.getBarWidthPercentage();
           barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
+          if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+            xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + seriesCounter * barMargin + gridStep / chart.getSeriesMap().size() / 2;
+          }
+          else {
+            xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
+          }
         }
 
         // paint series
@@ -198,6 +208,29 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           }
           else {
             g.draw(path);
+          }
+        }
+        else if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+
+          // paint line
+          if (series.getLineStyle() != SeriesLines.NONE) {
+
+            g.setColor(series.getLineColor());
+            g.setStroke(series.getLineStyle());
+            Shape line = new Line2D.Double(xOffset, zeroOffset, xOffset, yOffset);
+            g.draw(line);
+          }
+
+          // paint marker
+          if (series.getMarker() != null) {
+            g.setColor(series.getMarkerColor());
+
+            if (y <= 0) {
+              series.getMarker().paint(g, xOffset, zeroOffset, stylerCategory.getMarkerSize());
+            }
+            else {
+              series.getMarker().paint(g, xOffset, yOffset, stylerCategory.getMarkerSize());
+            }
           }
         }
         else {
