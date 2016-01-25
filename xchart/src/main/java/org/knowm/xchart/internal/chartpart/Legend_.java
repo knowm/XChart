@@ -72,7 +72,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // We call get bounds hint because sometimes the Axis object needs it to know it's bounds (if Legend is outside Plot). If it's null, we just need to calulate it before painting, because the paint
     // methods needs the bounds.
     if (bounds == null) { // No other part asked for the bounds yet. Probably because it's an "inside" legend location
-      bounds = getBoundsHint(); // Actually, the only information contained in thsi bounds is the width and height.
+      bounds = getBoundsHint(); // Actually, the only information contained in this bounds is the width and height.
     }
 
     // legend draw position
@@ -135,6 +135,10 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     Map<String, S> map = chart.getSeriesMap();
     for (Series series : map.values()) {
+
+      if (series.isShowInLegend()) {
+        continue;
+      }
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
 

@@ -66,6 +66,10 @@ public class Legend_Pie<ST extends Styler_AxesChart, S extends Series> extends L
     Map<String, Series> map = chart.getSeriesMap();
     for (Series series : map.values()) {
 
+      if (series.isShowInLegend()) {
+        continue;
+      }
+
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
 
       float legendEntryHeight = 0;

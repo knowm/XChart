@@ -36,6 +36,7 @@ import org.knowm.xchart.internal.style.markers.SeriesMarkers;
  * <ul>
  * <li>A Line Chart created from multiple category series types
  * <li>GGPlot2 Theme
+ * <li>disabling some series shown in legend
  */
 public class LineChart07 implements ExampleChart {
 
@@ -97,7 +98,7 @@ public class LineChart07 implements ExampleChart {
     for (int i = 0; i < seriesNames.length; i++) {
       Series_Category series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
       series.setMarker(SeriesMarkers.NONE);
-      // series.setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
+      series.setShowInLegend(i % 2 == 0);
     }
 
     return chart;

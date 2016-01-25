@@ -21,7 +21,7 @@ import java.awt.Color;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 
 /**
- * A Series containing X and Y data to be plotted on a Chart
+ * A Series containing data to be plotted on a Chart
  *
  * @author timmolter
  */
@@ -29,10 +29,11 @@ public abstract class Series {
 
   public abstract LegendRenderType getLegendRenderType();
 
-  private String name = "";
+  private final String name;
 
-  /** Fill Color */
   private Color fillColor;
+
+  private boolean showInLegend;
 
   /**
    * Constructor
@@ -46,7 +47,6 @@ public abstract class Series {
       throw new IllegalArgumentException("Series name cannot be null or zero-length!!!");
     }
     this.name = name;
-
   }
 
   public Color getFillColor() {
@@ -62,6 +62,16 @@ public abstract class Series {
   public String getName() {
 
     return name;
+  }
+
+  public boolean isShowInLegend() {
+
+    return showInLegend;
+  }
+
+  public void setShowInLegend(boolean showInLegend) {
+
+    this.showInLegend = showInLegend;
   }
 
 }
