@@ -154,7 +154,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       Shape shape = textLayout.getOutline(null);
       Rectangle2D annotationBounds = shape.getBounds2D();
       double annotationWidth = annotationBounds.getWidth();
-      System.out.println("annotationWidth= " + annotationWidth);
+      // System.out.println("annotationWidth= " + annotationWidth);
       double annotationHeight = annotationBounds.getHeight();
       // System.out.println("annotationHeight= " + annotationHeight);
 
@@ -174,12 +174,12 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       // double max = Math.max(xDiff, yDiff);
       // System.out.println(" ================== ");
       boolean annotationWillFit = false;
-      if (xDiff > yDiff) { // assume more vertically orientated slice
+      if (xDiff >= yDiff) { // assume more vertically orientated slice
         if (annotationWidth < xDiff) {
           annotationWillFit = true;
         }
       }
-      else if (xDiff < yDiff) { // assume more horizontally orientated slice
+      else if (xDiff <= yDiff) { // assume more horizontally orientated slice
         if (annotationHeight < yDiff) {
           annotationWillFit = true;
         }
@@ -205,7 +205,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
           xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
           yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
           // double endPoint = Math.min((2.0 - (stylerPie.getAnnotationDistance() - 1)), 1.95);
-          double endPoint = (2.0 - (stylerPie.getAnnotationDistance() - 1));
+          double endPoint = (3.0 - stylerPie.getAnnotationDistance());
           double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
           double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / endPoint);
           double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
@@ -217,7 +217,6 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
 
           // annotation
           at.translate(xOffset - Math.sin(Math.toRadians(angle - 90)) * annotationWidth / 2 + 3, yOffset);
-          // at.translate(xOffset, yOffset);
 
         }
 
@@ -226,6 +225,14 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
         g.setTransform(orig);
 
       }
+      // else {
+      // System.out.println("Won't fit.");
+      // System.out.println("xDiff= " + xDiff);
+      // System.out.println("yDiff= " + yDiff);
+      // System.out.println("annotationWidth= " + annotationWidth);
+      // System.out.println("annotationHeight= " + annotationHeight);
+      //
+      // }
 
       startAngle += arcAngle;
     }

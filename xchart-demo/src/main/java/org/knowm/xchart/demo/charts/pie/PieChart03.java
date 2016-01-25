@@ -55,6 +55,7 @@ public class PieChart03 implements ExampleChart<Chart_Pie> {
     chart.getStyler().setLegendVisible(false);
     chart.getStyler().setAnnotationType(AnnotationType.LabelAndPercentage);
     chart.getStyler().setAnnotationDistance(1.15);
+    chart.getStyler().setPieSize(.7);
 
     return chart;
   }
