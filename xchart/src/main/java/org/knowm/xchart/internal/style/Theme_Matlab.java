@@ -209,6 +209,12 @@ public class Theme_Matlab implements Theme_ {
   }
 
   @Override
+  public int getPlotMargin() {
+
+    return 3;
+  }
+
+  @Override
   public Color getAxisTickMarksColor() {
 
     return ChartColor.getAWTColor(ChartColor.BLACK);
@@ -236,12 +242,6 @@ public class Theme_Matlab implements Theme_ {
   public boolean isAxisTicksMarksVisible() {
 
     return false;
-  }
-
-  @Override
-  public int getPlotPadding() {
-
-    return 3;
   }
 
   @Override
@@ -319,6 +319,12 @@ public class Theme_Matlab implements Theme_ {
 
   }
 
+  @Override
+  public double getPlotContentSize() {
+
+    return .92;
+  }
+
   // Bar Charts ///////////////////////////////
 
   @Override
@@ -340,12 +346,6 @@ public class Theme_Matlab implements Theme_ {
   }
 
   // Pie Charts ///////////////////////////////
-
-  @Override
-  public double getPieSize() {
-
-    return .90;
-  }
 
   @Override
   public boolean isCircular() {

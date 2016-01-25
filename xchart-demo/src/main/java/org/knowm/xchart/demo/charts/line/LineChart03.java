@@ -90,7 +90,7 @@ public class LineChart03 implements ExampleChart {
 
     chart.getStyler().setAxisTickMarkLength(15);
 
-    chart.getStyler().setPlotPadding(20);
+    chart.getStyler().setPlotMargin(20);
 
     chart.getStyler().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.getStyler().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));

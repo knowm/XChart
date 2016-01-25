@@ -41,7 +41,7 @@ public abstract class Styler_AxesChart extends Styler {
   private Color axisTickLabelsColor;
   private boolean isAxisTicksLineVisible;
   private boolean isAxisTicksMarksVisible;
-  private int plotPadding;
+  private int plotMargin;
   private int axisTitlePadding;
   private int xAxisTickMarkSpacingHint;
   private int yAxisTickMarkSpacingHint;
@@ -51,7 +51,6 @@ public abstract class Styler_AxesChart extends Styler {
   private Double xAxisMax;
   private Double yAxisMin;
   private Double yAxisMax;
-  private double axisTickSpacePercentage;
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
   private int xAxisLabelRotation = 0;
@@ -102,7 +101,7 @@ public abstract class Styler_AxesChart extends Styler {
     axisTickLabelsColor = theme.getAxisTickLabelsColor();
     isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
     isAxisTicksMarksVisible = theme.isAxisTicksMarksVisible();
-    plotPadding = theme.getPlotPadding();
+    plotMargin = theme.getPlotMargin();
     axisTitlePadding = theme.getAxisTitlePadding();
     xAxisTickMarkSpacingHint = theme.getXAxisTickMarkSpacingHint();
     yAxisTickMarkSpacingHint = theme.getYAxisTickMarkSpacingHint();
@@ -112,7 +111,6 @@ public abstract class Styler_AxesChart extends Styler {
     xAxisMax = null;
     yAxisMin = null;
     yAxisMax = null;
-    axisTickSpacePercentage = .92;
 
     // Chart Plot Area ///////////////////////////////
     isPlotGridVerticalLinesVisible = theme.isPlotGridVerticalLinesVisible();
@@ -284,7 +282,6 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTickPadding
    */
-
   public void setAxisTickPadding(int axisTickPadding) {
 
     this.axisTickPadding = axisTickPadding;
@@ -376,19 +373,19 @@ public abstract class Styler_AxesChart extends Styler {
   }
 
   /**
-   * sets the padding between the tick marks and the plot area
+   * sets the margin around the plot area
    *
-   * @param plotPadding
+   * @param plotMargin
    */
 
-  public void setPlotPadding(int plotPadding) {
+  public void setPlotMargin(int plotMargin) {
 
-    this.plotPadding = plotPadding;
+    this.plotMargin = plotMargin;
   }
 
-  public int getPlotPadding() {
+  public int getPlotMargin() {
 
-    return plotPadding;
+    return plotMargin;
   }
 
   /**
@@ -509,16 +506,6 @@ public abstract class Styler_AxesChart extends Styler {
   public Double getYAxisMax() {
 
     return yAxisMax;
-  }
-
-  public void setAxisTickSpacePercentage(double axisTickSpacePercentage) {
-
-    this.axisTickSpacePercentage = axisTickSpacePercentage;
-  }
-
-  public double getAxisTickSpacePercentage() {
-
-    return axisTickSpacePercentage;
   }
 
   public TextAlignment getXAxisLabelAlignment() {

@@ -205,6 +205,12 @@ public class Theme_GGPlot2 implements Theme_ {
   }
 
   @Override
+  public int getPlotMargin() {
+
+    return 0;
+  }
+
+  @Override
   public boolean isAxisTicksLineVisible() {
 
     return false;
@@ -214,12 +220,6 @@ public class Theme_GGPlot2 implements Theme_ {
   public boolean isAxisTicksMarksVisible() {
 
     return true;
-  }
-
-  @Override
-  public int getPlotPadding() {
-
-    return 0;
   }
 
   @Override
@@ -315,6 +315,12 @@ public class Theme_GGPlot2 implements Theme_ {
     return new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
   }
 
+  @Override
+  public double getPlotContentSize() {
+
+    return .92;
+  }
+
   // Bar Charts ///////////////////////////////
 
   @Override
@@ -336,12 +342,6 @@ public class Theme_GGPlot2 implements Theme_ {
   }
 
   // Pie Charts ///////////////////////////////
-
-  @Override
-  public double getPieSize() {
-
-    return .90;
-  }
 
   @Override
   public boolean isCircular() {

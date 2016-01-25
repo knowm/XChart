@@ -34,6 +34,7 @@ import org.knowm.xchart.internal.style.Styler.LegendPosition;
  * <li>All positive values
  * <li>Single series
  * <li>Place legend at Inside-NW position
+ * <li>Bars touch X-Axis
  */
 public class BarChart01 implements ExampleChart {
 
@@ -53,6 +54,7 @@ public class BarChart01 implements ExampleChart {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setPlotContentSize(1.0);
 
     return chart;
   }

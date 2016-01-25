@@ -82,11 +82,11 @@ public class PlotContent_XY<ST extends Styler_AxesChart, S extends Series> exten
     // g.setClip(bounds.createIntersection(g.getClipBounds()));
 
     // X-Axis
-    double xTickSpace = stylerXY.getAxisTickSpacePercentage() * bounds.getWidth();
+    double xTickSpace = stylerXY.getPlotContentSize() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = stylerXY.getAxisTickSpacePercentage() * bounds.getHeight();
+    double yTickSpace = stylerXY.getPlotContentSize() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     double xMin = chart.getXAxis().getMin();

@@ -85,11 +85,11 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
     // g.setClip(bounds.createIntersection(g.getClipBounds()));
 
     // X-Axis
-    double xTickSpace = stylerCategory.getAxisTickSpacePercentage() * bounds.getWidth();
+    double xTickSpace = stylerCategory.getPlotContentSize() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = stylerCategory.getAxisTickSpacePercentage() * bounds.getHeight();
+    double yTickSpace = stylerCategory.getPlotContentSize() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
 
     double xMin = chart.getAxisPair().getXAxis().getMin();

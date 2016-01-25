@@ -75,7 +75,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     g.setClip(bounds.createIntersection(rectangle));
 
     // pie bounds
-    double pieFillPercentage = stylerPie.getPieSize();
+    double pieFillPercentage = stylerPie.getPlotContentSize();
 
     // if (stylerPie.isCircular()) {
     //

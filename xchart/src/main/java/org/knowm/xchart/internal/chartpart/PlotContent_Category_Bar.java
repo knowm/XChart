@@ -67,11 +67,11 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     g.setClip(bounds.createIntersection(rectangle));
 
     // X-Axis
-    double xTickSpace = stylerCategory.getAxisTickSpacePercentage() * bounds.getWidth();
+    double xTickSpace = stylerCategory.getPlotContentSize() * bounds.getWidth();
     double xLeftMargin = Utils.getTickStartOffset(bounds.getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = stylerCategory.getAxisTickSpacePercentage() * bounds.getHeight();
+    double yTickSpace = stylerCategory.getPlotContentSize() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
     Map<String, Series_Category> seriesMap = chart.getSeriesMap();

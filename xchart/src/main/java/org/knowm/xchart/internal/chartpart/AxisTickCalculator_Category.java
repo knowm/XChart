@@ -52,7 +52,7 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
   private void calculate(List<?> categories, AxisDataType axisType) {
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int) (styler.getAxisTickSpacePercentage() * workingSpace); // in plot space
+    int tickSpace = (int) (styler.getPlotContentSize() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);

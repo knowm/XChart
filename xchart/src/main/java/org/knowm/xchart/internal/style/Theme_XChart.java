@@ -206,6 +206,12 @@ public class Theme_XChart implements Theme_ {
   }
 
   @Override
+  public int getPlotMargin() {
+
+    return 4;
+  }
+
+  @Override
   public Color getAxisTickMarksColor() {
 
     return ChartColor.getAWTColor(ChartColor.DARK_GREY);
@@ -233,12 +239,6 @@ public class Theme_XChart implements Theme_ {
   public boolean isAxisTicksMarksVisible() {
 
     return true;
-  }
-
-  @Override
-  public int getPlotPadding() {
-
-    return 4;
   }
 
   @Override
@@ -315,6 +315,12 @@ public class Theme_XChart implements Theme_ {
     return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
   }
 
+  @Override
+  public double getPlotContentSize() {
+
+    return .92;
+  }
+
   // Bar Charts ///////////////////////////////
 
   @Override
@@ -336,12 +342,6 @@ public class Theme_XChart implements Theme_ {
   }
 
   // Pie Charts ///////////////////////////////
-
-  @Override
-  public double getPieSize() {
-
-    return .90;
-  }
 
   @Override
   public boolean isCircular() {

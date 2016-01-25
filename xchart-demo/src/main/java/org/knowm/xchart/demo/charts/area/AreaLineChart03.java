@@ -94,8 +94,8 @@ public class AreaLineChart03 implements ExampleChart {
     chart.getStyler().setYAxisLabelAlignment(Styler.TextAlignment.Right);
     chart.getStyler().setYAxisDecimalPattern("$ #,###.##");
 
-    chart.getStyler().setPlotPadding(0);
-    chart.getStyler().setAxisTickSpacePercentage(.95);
+    chart.getStyler().setPlotMargin(0);
+    chart.getStyler().setPlotContentSize(.95);
     // chart.getStyleManager().setYAxisMax(1620725 * 1.15); // We want to ensure there is a % of padding on the top of the chart
     return chart;
   }

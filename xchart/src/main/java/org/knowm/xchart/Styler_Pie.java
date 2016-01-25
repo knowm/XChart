@@ -34,7 +34,6 @@ public class Styler_Pie extends Styler {
     Percentage, Label, LabelAndPercentage
   }
 
-  private double pieSize;
   private boolean isCircular;
   private double startAngleInDegrees;
   private Font annotationFont;
@@ -54,7 +53,6 @@ public class Styler_Pie extends Styler {
   protected void setAllStyles() {
 
     chartPieSeriesRenderStyle = ChartPieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
-    pieSize = theme.getPieSize();
     isCircular = theme.isCircular();
     annotationFont = theme.getPieFont();
     annotationDistance = theme.getAnnotationDistance();
@@ -74,21 +72,6 @@ public class Styler_Pie extends Styler {
   public void setChartPieSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
 
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
-  }
-
-  public double getPieSize() {
-
-    return pieSize;
-  }
-
-  /**
-   * Sets the amount of space that the pie chart fills. Full fill is 100%, i.e. 1.0
-   *
-   * @param pieSize
-   */
-  public void setPieSize(double pieSize) {
-
-    this.pieSize = pieSize;
   }
 
   public boolean isCircular() {

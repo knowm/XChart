@@ -49,7 +49,7 @@ public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
     // calculate bounds
     double xOffset = chart.getYAxis().getBounds().getX() + chart.getYAxis().getBounds().getWidth()
 
-        + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotPadding() : 0);
+        + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0);
 
     double yOffset = chart.getYAxis().getBounds().getY();
     double width = chart.getXAxis().getBounds().getWidth();

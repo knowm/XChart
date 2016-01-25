@@ -99,7 +99,6 @@ public class LineChart07 implements ExampleChart {
       series.setMarker(SeriesMarkers.NONE);
       // series.setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
     }
-    chart.getStyler().setYAxisLogarithmic(true);
 
     return chart;
   }

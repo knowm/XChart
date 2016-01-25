@@ -167,13 +167,13 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
 
                 - 2 * chart.getStyler().getChartPadding()
 
-                - (chart.getStyler().isYAxisTicksVisible() ? (chart.getStyler().getPlotPadding()) : 0)
+                - (chart.getStyler().isYAxisTicksVisible() ? (chart.getStyler().getPlotMargin()) : 0)
 
                 - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE && chart.getStyler().isLegendVisible() ? chart.getStyler().getChartPadding() : 0)
 
         ;
 
-        height = chart.getHeight() - yOffset - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - chart.getStyler().getPlotPadding() - chart.getStyler().getChartPadding();
+        height = chart.getHeight() - yOffset - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - chart.getStyler().getPlotMargin() - chart.getStyler().getChartPadding();
 
         width = getYAxisWidthHint(height);
         // System.out.println("width after: " + width);
@@ -208,8 +208,8 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
       // calculate paint zone
       // |____________________|
 
-      double xOffset = chart.getYAxis().getBounds().getWidth() + (chart.getStyler().isYAxisTicksVisible() ? chart.getStyler().getPlotPadding() : 0) + chart.getStyler().getChartPadding();
-      double yOffset = chart.getYAxis().getBounds().getY() + chart.getYAxis().getBounds().getHeight() + chart.getStyler().getPlotPadding();
+      double xOffset = chart.getYAxis().getBounds().getWidth() + (chart.getStyler().isYAxisTicksVisible() ? chart.getStyler().getPlotMargin() : 0) + chart.getStyler().getChartPadding();
+      double yOffset = chart.getYAxis().getBounds().getY() + chart.getYAxis().getBounds().getHeight() + chart.getStyler().getPlotMargin();
 
       double width =
 
@@ -221,7 +221,7 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
 
               - 2 * chart.getStyler().getChartPadding()
 
-              - (chart.getStyler().isYAxisTicksVisible() ? (chart.getStyler().getPlotPadding()) : 0)
+              - (chart.getStyler().isYAxisTicksVisible() ? (chart.getStyler().getPlotMargin()) : 0)
 
               - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE && chart.getStyler().isLegendVisible() ? chart.getStyler().getChartPadding() : 0)
 
@@ -230,7 +230,7 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
       // double height = this.getXAxisHeightHint(width);
       // System.out.println("height: " + height);
       // the Y-Axis was already draw at this point so we know how much vertical room is left for the X-Axis
-      double height = chart.getHeight() - chart.getYAxis().getBounds().getY() - chart.getYAxis().getBounds().getHeight() - chart.getStyler().getChartPadding() - chart.getStyler().getPlotPadding();
+      double height = chart.getHeight() - chart.getYAxis().getBounds().getY() - chart.getYAxis().getBounds().getHeight() - chart.getStyler().getChartPadding() - chart.getStyler().getPlotMargin();
       // System.out.println("height2: " + height2);
 
       Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);

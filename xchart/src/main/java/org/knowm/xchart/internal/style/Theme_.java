@@ -99,8 +99,6 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public int getAxisTitlePadding();
 
-  public int getPlotPadding();
-
   public int getXAxisTickMarkSpacingHint();
 
   public int getYAxisTickMarkSpacingHint();
@@ -125,6 +123,10 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public boolean isPlotTicksMarksVisible();
 
+  public double getPlotContentSize();
+
+  public int getPlotMargin();
+
   // Bar Charts ///////////////////////////////
 
   public double getBarWidthPercentage();
@@ -134,8 +136,6 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
   public boolean isBarFilled();
 
   // Pie Charts ///////////////////////////////
-
-  public double getPieSize();
 
   public boolean isCircular();
 

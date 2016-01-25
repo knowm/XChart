@@ -91,6 +91,7 @@ public abstract class Styler {
   private Color plotBackgroundColor;
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
+  private double plotContentSize = .92;
 
   protected void setAllStyles() {
 
@@ -123,6 +124,7 @@ public abstract class Styler {
     plotBackgroundColor = theme.getPlotBackgroundColor();
     plotBorderColor = theme.getPlotBorderColor();
     isPlotBorderVisible = theme.isPlotBorderVisible();
+    plotContentSize = theme.getPlotContentSize();
   }
 
   // Chart Style ///////////////////////////////
@@ -451,6 +453,25 @@ public abstract class Styler {
   public boolean isPlotBorderVisible() {
 
     return isPlotBorderVisible;
+  }
+
+  public double getPlotContentSize() {
+
+    return plotContentSize;
+  }
+
+  /**
+   * Sets the content size of the plot inside the plot area of the chart. To fill the area 100%, use a value of 1.0.
+   *
+   * @param plotContentSize - Valid range is between 0 and 1.
+   */
+  public void setPlotContentSize(double plotContentSize) {
+
+    if (plotContentSize < 0 || plotContentSize > 1) {
+      throw new IllegalArgumentException("Plot content size must be tween 0 and 1!!!");
+    }
+
+    this.plotContentSize = plotContentSize;
   }
 
 }

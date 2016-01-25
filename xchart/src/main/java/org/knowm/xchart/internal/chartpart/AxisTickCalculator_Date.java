@@ -118,7 +118,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
   private void calculate() {
 
     // tick space - a percentage of the working space available for ticks
-    double tickSpace = styler.getAxisTickSpacePercentage() * workingSpace; // in plot space
+    double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space
 
     // this prevents an infinite loop when the plot gets sized really small.
     if (tickSpace < styler.getXAxisTickMarkSpacingHint()) {
