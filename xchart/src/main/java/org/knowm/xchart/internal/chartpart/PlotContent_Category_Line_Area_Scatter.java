@@ -106,8 +106,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
     }
-    System.out.println("yMin = " + yMin);
-    System.out.println("yMax = " + yMax);
+    // System.out.println("yMin = " + yMin);
+    // System.out.println("yMax = " + yMax);
 
     Map<String, Series_Category> seriesMap = chart.getSeriesMap();
 
@@ -167,10 +167,10 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
         double xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
         double yOffset = bounds.getY() + yTransform;
-        System.out.println(xOffset);
-        System.out.println(yTransform);
-        System.out.println(yOffset);
-        System.out.println("---");
+        // System.out.println(xOffset);
+        // System.out.println(yTransform);
+        // System.out.println(yOffset);
+        // System.out.println("---");
 
         // paint line
         if (ChartCategorySeriesRenderStyle.Line.equals(series.getChartCategorySeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
