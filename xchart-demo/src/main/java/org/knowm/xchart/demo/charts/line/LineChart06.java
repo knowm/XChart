@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +18,13 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Logarithmic Y-Axis with Error Bars
@@ -53,23 +54,23 @@ public class LineChart06 implements ExampleChart {
 
     int[] errdata = new int[] { 50, 20, 10, 52, 9, 2, 1 };
 
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
-    chart.getStyleManager().setYAxisLogarithmic(true);
+    chart.getStyler().setYAxisLogarithmic(true);
 
-    chart.getStyleManager().setYAxisMin(.08);
+    chart.getStyler().setYAxisMin(.08);
 
-    chart.getStyleManager().setYAxisMax(1000);
+    chart.getStyler().setYAxisMax(1000);
 
-    chart.getStyleManager().setErrorBarsColor(Color.black);
+    chart.getStyler().setErrorBarsColor(Color.black);
 
-    Series series1 = chart.addSeries("Error bar\ntest data", xData, yData1, errdata);
+    Series_XY series1 = chart.addSeries("Error bar\ntest data", xData, yData1, errdata);
 
-    series1.setLineStyle(SeriesLineStyle.SOLID);
+    series1.setLineStyle(SeriesLines.SOLID);
 
-    series1.setMarker(SeriesMarker.DIAMOND);
+    series1.setMarker(SeriesMarkers.DIAMOND);
 
-    series1.setMarkerColor(Color.MAGENTA);
+    series1.setMarkerColor(Color.GREEN);
 
     return chart;
   }

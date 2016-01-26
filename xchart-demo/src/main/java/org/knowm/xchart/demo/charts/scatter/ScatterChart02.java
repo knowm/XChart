@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,11 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.StyleManager.ChartType;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Logarithmic Data
@@ -35,7 +36,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <li>Logarithmic X-Axis
  * <li>Place legend at Inside-NW position
  * <li>Formatting of number with large magnitude but small differences
- * 
+ *
  * @author timmolter
  */
 public class ScatterChart02 implements ExampleChart {
@@ -61,13 +62,13 @@ public class ScatterChart02 implements ExampleChart {
     }
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
-    chart.setChartTitle("Logarithmic Data");
-    chart.getStyleManager().setChartType(ChartType.Scatter);
-    chart.getStyleManager().setXAxisLogarithmic(true);
+    Chart_XY chart = new Chart_XY(800, 600);
+    chart.setTitle("Logarithmic Data");
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
+    chart.getStyler().setXAxisLogarithmic(true);
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideN);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideN);
 
     // Series
     chart.addSeries("logarithmic data", xData, yData);

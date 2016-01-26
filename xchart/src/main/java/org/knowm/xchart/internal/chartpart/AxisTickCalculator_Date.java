@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,16 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for date axes
  *
  * @author timmolter
  */
-public class AxisTickCalculator_Date extends AxisTickCalculator {
+public class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
   private static final long MILLIS_SCALE = TimeUnit.MILLISECONDS.toMillis(1L);
   private static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(1L);
@@ -106,11 +106,11 @@ public class AxisTickCalculator_Date extends AxisTickCalculator {
    * @param workingSpace
    * @param minValue
    * @param maxValue
-   * @param styleManager
+   * @param styler
    */
-  public AxisTickCalculator_Date(Direction axisDirection, double workingSpace, double minValue, double maxValue, StyleManager styleManager) {
+  public AxisTickCalculator_Date(Direction axisDirection, double workingSpace, double minValue, double maxValue, Styler_AxesChart styler) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, styleManager);
+    super(axisDirection, workingSpace, minValue, maxValue, styler);
 
     calculate();
   }
@@ -118,10 +118,10 @@ public class AxisTickCalculator_Date extends AxisTickCalculator {
   private void calculate() {
 
     // tick space - a percentage of the working space available for ticks
-    double tickSpace = styleManager.getAxisTickSpacePercentage() * workingSpace; // in plot space
+    double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space
 
     // this prevents an infinite loop when the plot gets sized really small.
-    if (tickSpace < styleManager.getXAxisTickMarkSpacingHint()) {
+    if (tickSpace < styler.getXAxisTickMarkSpacingHint()) {
       // System.out.println("Returning!");
       return;
     }
@@ -134,7 +134,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator {
     // System.out.println("span: " + span);
 
     // Generate the labels first, see if they "look" OK and reiterate with an increased tickSpacingHint
-    int tickSpacingHint = styleManager.getXAxisTickMarkSpacingHint();
+    int tickSpacingHint = styler.getXAxisTickMarkSpacingHint();
     int gridStepInChartSpace = 0;
 
     // System.out.println("calculating ticks...");
@@ -185,13 +185,13 @@ public class AxisTickCalculator_Date extends AxisTickCalculator {
 
       // Define Date Pattern
       // override pattern if one was explicitly given
-      if (styleManager.getDatePattern() != null) {
-        datePattern = styleManager.getDatePattern();
+      if (styler.getDatePattern() != null) {
+        datePattern = styler.getDatePattern();
       }
       // System.out.println("datePattern: " + datePattern);
 
-      SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styleManager.getLocale());
-      simpleDateformat.setTimeZone(styleManager.getTimezone());
+      SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styler.getLocale());
+      simpleDateformat.setTimeZone(styler.getTimezone());
 
       // return simpleDateformat.format(value);
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,14 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Scatter and Line
@@ -49,35 +50,35 @@ public class LineChart05 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("LineChart05");
+    chart.setTitle("LineChart05");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
 
     double[] xData = new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 5, 6 };
     double[] yData = new double[] { 106, 44, 26, 10, 7.5, 3.4, .88 };
     double[] yData2 = new double[] { 102, 49, 23.6, 11.3, 5.4, 2.6, 1.25 };
 
-    Series series = chart.addSeries("A", xData, yData);
-    series.setLineStyle(SeriesLineStyle.NONE);
-    series.setMarker(SeriesMarker.DIAMOND);
+    Series_XY series = chart.addSeries("A", xData, yData);
+    series.setLineStyle(SeriesLines.NONE);
+    series.setMarker(SeriesMarkers.DIAMOND);
     series.setMarkerColor(Color.BLACK);
 
-    Series series2 = chart.addSeries("B", xData, yData2);
-    series2.setMarker(SeriesMarker.NONE);
-    series2.setLineStyle(SeriesLineStyle.DASH_DASH);
+    Series_XY series2 = chart.addSeries("B", xData, yData2);
+    series2.setMarker(SeriesMarkers.NONE);
+    series2.setLineStyle(SeriesLines.DASH_DASH);
     series2.setLineColor(Color.BLACK);
 
-    chart.getStyleManager().setYAxisLogarithmic(true);
+    chart.getStyler().setYAxisLogarithmic(true);
 
-    chart.getStyleManager().setYAxisMin(0.01);
-    chart.getStyleManager().setYAxisMax(1000);
+    chart.getStyler().setYAxisMin(0.01);
+    chart.getStyler().setYAxisMax(1000);
 
-    chart.getStyleManager().setXAxisMin(2);
-    chart.getStyleManager().setXAxisMax(7);
+    chart.getStyler().setXAxisMin(2);
+    chart.getStyler().setXAxisMax(7);
 
     return chart;
   }

@@ -2,6 +2,8 @@
 
 XChart is a light weight Java library for plotting data.
 
+**NOTE: Version 3.0.0 is currently under development and close to release. There are many API changes in 3.0.0, so if you want to use the develop snapshot jars, make sure to use the example code on the develop branch as a guide! For version 2.6.1, make sure to read the README file on the master branch!**
+
 ## Description
 
 XChart is a light-weight and convenient library for plotting data designed to go from data to chart in the least amount of time possible and to take the guess-work out of customizing the chart style.
@@ -57,9 +59,10 @@ XChart ships with three different themes: Default **XChart**, **GGPlot2** and **
 * [x] Area charts
 * [x] Bar charts
 * [x] Histogram charts
+* [x] Pie charts
 * [x] Error bars
 * [x] Logarithmic axes
-* [x] Date and category X-Axis
+* [x] Number, Date and category X-Axis
 * [x] Multiple series
 * [x] Extensive customization
 * [x] Themes - XChart, GGPlot2, Matlab
@@ -109,7 +112,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>2.7.0-SNAPSHOT</version>
+      <version>3.0.0-SNAPSHOT</version>
     </dependency>
 ```
 

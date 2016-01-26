@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +18,12 @@ package org.knowm.xchart.standalone;
 
 import java.awt.Color;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.internal.style.XChartTheme;
+import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * @author timmolter
@@ -44,39 +44,39 @@ public class ErrorBarLogTest {
     // double[] errdata = new double[] { 1, .699, .301, 2, 1, .699, 0.301 };
     double[] errdata = new double[] { 50, 20, 10, 52, 9, 2, 1 };
 
-    Chart mychart = new Chart(1200, 800);
+    Chart_XY mychart = new Chart_XY(1200, 800);
 
-    mychart.getStyleManager().setYAxisLogarithmic(true); // set log or linear Y axis
+    mychart.getStyler().setYAxisLogarithmic(true); // set log or linear Y axis
 
-    mychart.getStyleManager().setYAxisMin(.08);
+    mychart.getStyler().setYAxisMin(.08);
 
-    mychart.getStyleManager().setYAxisMax(1000);
+    mychart.getStyler().setYAxisMax(1000);
 
-    mychart.getStyleManager().setErrorBarsColor(Color.black);
+    mychart.getStyler().setErrorBarsColor(Color.black);
 
-    Series series1 = mychart.addSeries("Error bar test data", xData, yData1, errdata);
+    Series_XY series1 = mychart.addSeries("Error bar test data", xData, yData1, errdata);
 
-    Series series2 = mychart.addSeries("Y+error", xData, yData2);
+    Series_XY series2 = mychart.addSeries("Y+error", xData, yData2);
 
-    Series series3 = mychart.addSeries("Y-error", xData, yData3);
+    Series_XY series3 = mychart.addSeries("Y-error", xData, yData3);
 
-    series1.setLineStyle(SeriesLineStyle.SOLID);
+    series1.setLineStyle(SeriesLines.SOLID);
 
-    series1.setMarker(SeriesMarker.DIAMOND);
+    series1.setMarker(SeriesMarkers.DIAMOND);
 
     series1.setMarkerColor(Color.MAGENTA);
 
-    series2.setLineStyle(SeriesLineStyle.DASH_DASH);
+    series2.setLineStyle(SeriesLines.DASH_DASH);
 
-    series2.setMarker(SeriesMarker.NONE);
+    series2.setMarker(SeriesMarkers.NONE);
 
-    series2.setLineColor(XChartTheme.RED);
+    series2.setLineColor(XChartSeriesColors.RED);
 
-    series3.setLineStyle(SeriesLineStyle.DASH_DASH);
+    series3.setLineStyle(SeriesLines.DASH_DASH);
 
-    series3.setMarker(SeriesMarker.NONE);
+    series3.setMarker(SeriesMarkers.NONE);
 
-    series3.setLineColor(XChartTheme.RED);
+    series3.setLineColor(XChartSeriesColors.RED);
 
     new SwingWrapper(mychart).displayChart();
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,13 +19,14 @@ package org.knowm.xchart.demo.charts.line;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.style.XChartTheme;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Sine wave with customized series style
@@ -57,18 +58,18 @@ public class LineChart02 implements ExampleChart {
     }
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setLegendVisible(false);
+    chart.getStyler().setChartTitleVisible(false);
+    chart.getStyler().setLegendVisible(false);
 
     // Series 1
-    Series series1 = chart.addSeries("y=sin(x)", xData, yData);
-    series1.setLineColor(XChartTheme.PURPLE);
-    series1.setLineStyle(SeriesLineStyle.DASH_DASH);
-    series1.setMarkerColor(XChartTheme.GREEN);
-    series1.setMarker(SeriesMarker.SQUARE);
+    Series_XY series1 = chart.addSeries("y=sin(x)", xData, yData);
+    series1.setLineColor(XChartSeriesColors.PURPLE);
+    series1.setLineStyle(SeriesLines.DASH_DASH);
+    series1.setMarkerColor(XChartSeriesColors.GREEN);
+    series1.setMarker(SeriesMarkers.SQUARE);
 
     return chart;
   }

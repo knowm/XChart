@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,21 +25,23 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.knowm.xchart.internal.Series_AxesChart;
+
 /**
  * This class is used to export Chart data to a folder containing one or more CSV files. The parent folder's name is the title of the chart. Each
  * series becomes a CSV file in the folder. The series' name becomes the CSV files' name.
- * 
+ *
  * @author timmolter
  */
 public class CSVExporter {
 
   /**
    * Write a Chart series as rows in a CSV file.
-   * 
+   *
    * @param series
    * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
    */
-  public static void writeCSVRows(Series series, String path2Dir) {
+  public static void writeCSVRows(Series_AxesChart series, String path2Dir) {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
     Writer out = null;
@@ -71,11 +73,11 @@ public class CSVExporter {
 
   /**
    * Write a Chart series as columns in a CSV file.
-   * 
+   *
    * @param series
    * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
    */
-  public static void writeCSVColumns(Series series, String path2Dir) {
+  public static void writeCSVColumns(Series_AxesChart series, String path2Dir) {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
     Writer out = null;

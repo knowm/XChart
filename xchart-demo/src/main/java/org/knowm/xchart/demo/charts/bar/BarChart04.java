@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,11 @@ package org.knowm.xchart.demo.charts.bar;
 
 import java.util.Arrays;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.ChartBuilder_Category;
+import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Missing Point in Series
@@ -48,12 +48,12 @@ public class BarChart04 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
-    chart.addCategorySeries("female", Arrays.asList(new Integer[] { 10, 20, 30, 40, 50 }), Arrays.asList(new Integer[] { 50, 10, 20, 40, 35 }));
-    chart.addCategorySeries("male", Arrays.asList(new Integer[] { 10, 20, 30, 40, 50 }), Arrays.asList(new Integer[] { 40, 30, 20, null, 60 }));
+    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
+    chart.addSeries("female", Arrays.asList(new Integer[] { 10, 20, 30, 40, 50 }), Arrays.asList(new Integer[] { 50, 10, 20, 40, 35 }));
+    chart.addSeries("male", Arrays.asList(new Integer[] { 10, 20, 30, 40, 50 }), Arrays.asList(new Integer[] { 40, 30, 20, null, 60 }));
 
-    chart.getStyleManager().setYAxisMin(5);
-    chart.getStyleManager().setYAxisMax(70);
+    chart.getStyler().setYAxisMin(5);
+    chart.getStyler().setYAxisMax(70);
 
     return chart;
   }

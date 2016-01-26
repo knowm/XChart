@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -60,6 +60,8 @@ import org.knowm.xchart.demo.charts.line.LineChart05;
 import org.knowm.xchart.demo.charts.line.LineChart06;
 import org.knowm.xchart.demo.charts.line.LineChart07;
 import org.knowm.xchart.demo.charts.pie.PieChart01;
+import org.knowm.xchart.demo.charts.pie.PieChart02;
+import org.knowm.xchart.demo.charts.pie.PieChart03;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart03;
@@ -67,6 +69,7 @@ import org.knowm.xchart.demo.charts.scatter.ScatterChart01;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart02;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart03;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart04;
+import org.knowm.xchart.demo.charts.stick.StickChart01;
 import org.knowm.xchart.demo.charts.theme.ThemeChart01;
 import org.knowm.xchart.demo.charts.theme.ThemeChart02;
 import org.knowm.xchart.demo.charts.theme.ThemeChart03;
@@ -227,6 +230,12 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart01 - Pie Chart with 4 Slices", new PieChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart02 - Pie Chart Custom Color Palette", new PieChart02().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart03 - Pie Chart Custom GGPlot2 Theme", new PieChart03().getChart()));
+    category.add(defaultMutableTreeNode);
+
     // Line category
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
@@ -297,6 +306,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart09 - Category chart with Bar, Line and Scatter Series", new BarChart09().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    // Stick category
+    category = new DefaultMutableTreeNode("Stick Charts");
+    top.add(category);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("StickChart01 - Stick", new StickChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Theme category

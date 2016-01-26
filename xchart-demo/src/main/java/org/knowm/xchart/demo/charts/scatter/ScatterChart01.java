@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,11 +20,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.StyleManager.ChartType;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Gaussian Blob
@@ -58,13 +59,13 @@ public class ScatterChart01 implements ExampleChart {
     }
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
-    chart.getStyleManager().setChartType(ChartType.Scatter);
+    Chart_XY chart = new Chart_XY(800, 600);
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSW);
-    chart.getStyleManager().setMarkerSize(16);
+    chart.getStyler().setChartTitleVisible(false);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyler().setMarkerSize(16);
 
     // Series
     chart.addSeries("Gaussian Blob", xData, yData);

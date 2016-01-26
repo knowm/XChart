@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,11 +16,10 @@
  */
 package org.knowm.xchart.internal.style;
 
-import java.util.List;
+import java.awt.BasicStroke;
+import java.awt.Color;
 
-import org.knowm.xchart.SeriesColor;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
+import org.knowm.xchart.internal.style.markers.Marker;
 
 /**
  * Cycles through the different colors, markers, and strokes in a predetermined way
@@ -29,22 +28,16 @@ import org.knowm.xchart.SeriesMarker;
  *
  * @author timmolter
  */
-public abstract class SeriesColorMarkerLineStyleCycler {
+public class SeriesColorMarkerLineStyleCycler {
 
-  public abstract List<SeriesColor> getSeriesColorList();
-
-  public abstract List<SeriesMarker> getSeriesMarkerList();
-
-  public abstract List<SeriesLineStyle> getLineStyleList();
-
-  /** a List holding the SeriesColors */
-  private final List<SeriesColor> seriesColorList;
+  /** a List holding the Colors */
+  private final Color[] seriesColorList;
 
   /** a map holding the SeriesMarkers */
-  private final List<SeriesMarker> seriesMarkerList;
+  private final Marker[] seriesMarkerList;
 
   /** a map holding the SeriesLineStyles */
-  private final List<SeriesLineStyle> seriesLineStyleList;
+  private final BasicStroke[] seriesLineStyleList;
 
   /** an internal counter */
   private int colorCounter = 0;
@@ -54,39 +47,39 @@ public abstract class SeriesColorMarkerLineStyleCycler {
   /**
    * Constructor
    */
-  public SeriesColorMarkerLineStyleCycler() {
+  public SeriesColorMarkerLineStyleCycler(Color[] seriesColorList, Marker[] seriesMarkerList, BasicStroke[] seriesLineStyleList) {
 
-    seriesColorList = getSeriesColorList();
-    seriesMarkerList = getSeriesMarkerList();
-    seriesLineStyleList = getLineStyleList();
+    this.seriesColorList = seriesColorList;
+    this.seriesMarkerList = seriesMarkerList;
+    this.seriesLineStyleList = seriesLineStyleList;
   }
 
   /**
-   * Get the next SeriesColorMarkerLineStyle
+   * Get the next ColorMarkerLineStyle
    *
-   * @return the next SeriesColorMarkerLineStyle
+   * @return the next ColorMarkerLineStyle
    */
   public SeriesColorMarkerLineStyle getNextSeriesColorMarkerLineStyle() {
 
     // 1. Color - cycle through colors one by one
-    if (colorCounter >= seriesColorList.size()) {
+    if (colorCounter >= seriesColorList.length) {
       colorCounter = 0;
       strokeCounter++;
     }
-    SeriesColor seriesColor = seriesColorList.get(colorCounter++);
+    Color seriesColor = seriesColorList[colorCounter++];
 
     // 2. Stroke - cycle through strokes one by one but only after a color cycle
-    if (strokeCounter >= seriesLineStyleList.size()) {
+    if (strokeCounter >= seriesLineStyleList.length) {
       strokeCounter = 0;
     }
-    SeriesLineStyle seriesLineStyle = seriesLineStyleList.get(strokeCounter);
+    BasicStroke seriesLineStyle = seriesLineStyleList[strokeCounter];
 
     // 3. Marker - cycle through markers one by one
-    if (markerCounter >= seriesMarkerList.size()) {
+    if (markerCounter >= seriesMarkerList.length) {
       markerCounter = 0;
     }
-    SeriesMarker marker = seriesMarkerList.get(markerCounter++);
+    Marker marker = seriesMarkerList[markerCounter++];
 
-    return new SeriesColorMarkerLineStyle(seriesColor.getColor(), marker.getMarker(), seriesLineStyle.getBasicStroke());
+    return new SeriesColorMarkerLineStyle(seriesColor, marker, seriesLineStyle);
   }
 }

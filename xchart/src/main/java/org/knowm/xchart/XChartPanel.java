@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -40,6 +41,9 @@ import javax.swing.filechooser.FileFilter;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -94,6 +98,7 @@ public class XChartPanel extends JPanel {
   }
 
   public Chart getChart() {
+
     return this.chart;
   }
 
@@ -290,7 +295,8 @@ public class XChartPanel extends JPanel {
    */
   public Series updateSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
 
-    Series series = chart.getSeriesMap().get(seriesName);
+    Map<String, Series_AxesChart> seriesMap = chart.getSeriesMap();
+    Series_AxesChart series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
     }

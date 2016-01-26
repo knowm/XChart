@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,10 +24,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
+import org.knowm.xchart.ChartBuilder_XY;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Second Scale
@@ -45,8 +46,8 @@ public class DateChart02 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).title("Second Scale").build();
-    chart.getStyleManager().setLegendVisible(false);
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Second Scale").build();
+    chart.getStyler().setLegendVisible(false);
 
     // generate data
     List<Date> xData = new ArrayList<Date>();

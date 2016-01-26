@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,13 +20,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.ChartBuilder_XY;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Error Bars
@@ -63,18 +63,18 @@ public class ScatterChart04 implements ExampleChart {
     }
 
     // Create Chart
-    Chart chart = new ChartBuilder().width(800).height(600).title("ScatterChart04").xAxisTitle("X").yAxisTitle("Y").chartType(ChartType.Scatter).build();
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("ScatterChart04").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyleManager().setChartTitleVisible(false);
-    chart.getStyleManager().setLegendVisible(false);
-    chart.getStyleManager().setAxisTitlesVisible(false);
-    chart.getStyleManager().setXAxisDecimalPattern("0.0000000");
+    chart.getStyler().setChartTitleVisible(false);
+    chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setAxisTitlesVisible(false);
+    chart.getStyler().setXAxisDecimalPattern("0.0000000");
 
     // Series
-    Series series = chart.addSeries("10^(-x)", xData, yData, errorBars);
+    Series_XY series = chart.addSeries("10^(-x)", xData, yData, errorBars);
     series.setMarkerColor(Color.RED);
-    series.setMarker(SeriesMarker.SQUARE);
+    series.setMarker(SeriesMarkers.SQUARE);
 
     return chart;
   }

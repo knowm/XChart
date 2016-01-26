@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,22 +20,22 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * @author timmolter
  */
 public class NumberFormatter {
 
-  private final StyleManager styleManager;
+  private final Styler_AxesChart styler;
 
   /**
    * Constructor
    */
-  public NumberFormatter(StyleManager styleManager) {
+  public NumberFormatter(Styler_AxesChart styler) {
 
-    this.styleManager = styleManager;
+    this.styler = styler;
   }
 
   public String getFormatPattern(BigDecimal value, double min, double max) {
@@ -121,20 +121,20 @@ public class NumberFormatter {
    */
   public String formatNumber(BigDecimal value, double min, double max, Direction axisDirection) {
 
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
 
     String decimalPattern;
 
-    if (axisDirection == Direction.X && styleManager.getXAxisDecimalPattern() != null) {
+    if (axisDirection == Direction.X && styler.getXAxisDecimalPattern() != null) {
 
-      decimalPattern = styleManager.getXAxisDecimalPattern();
+      decimalPattern = styler.getXAxisDecimalPattern();
     }
-    else if (axisDirection == Direction.Y && styleManager.getYAxisDecimalPattern() != null) {
-      decimalPattern = styleManager.getYAxisDecimalPattern();
+    else if (axisDirection == Direction.Y && styler.getYAxisDecimalPattern() != null) {
+      decimalPattern = styler.getYAxisDecimalPattern();
     }
-    else if (styleManager.getDecimalPattern() != null) {
+    else if (styler.getDecimalPattern() != null) {
 
-      decimalPattern = styleManager.getDecimalPattern();
+      decimalPattern = styler.getDecimalPattern();
     }
     else {
       decimalPattern = getFormatPattern(value, min, max);
@@ -155,20 +155,20 @@ public class NumberFormatter {
    */
   public String formatLogNumber(double value, Direction axisDirection) {
 
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(styleManager.getLocale());
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
 
     String decimalPattern;
 
-    if (axisDirection == Direction.X && styleManager.getXAxisDecimalPattern() != null) {
+    if (axisDirection == Direction.X && styler.getXAxisDecimalPattern() != null) {
 
-      decimalPattern = styleManager.getXAxisDecimalPattern();
+      decimalPattern = styler.getXAxisDecimalPattern();
     }
-    else if (axisDirection == Direction.Y && styleManager.getYAxisDecimalPattern() != null) {
-      decimalPattern = styleManager.getYAxisDecimalPattern();
+    else if (axisDirection == Direction.Y && styler.getYAxisDecimalPattern() != null) {
+      decimalPattern = styler.getYAxisDecimalPattern();
     }
-    else if (styleManager.getDecimalPattern() != null) {
+    else if (styler.getDecimalPattern() != null) {
 
-      decimalPattern = styleManager.getDecimalPattern();
+      decimalPattern = styler.getDecimalPattern();
     }
     else {
       if (Math.abs(value) > 1000.0 || Math.abs(value) < 0.001) {

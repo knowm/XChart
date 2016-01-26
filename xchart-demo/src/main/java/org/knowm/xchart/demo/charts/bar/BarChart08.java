@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
+import org.knowm.xchart.ChartBuilder_Category;
+import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.Histogram;
-import org.knowm.xchart.StyleManager.ChartType;
-import org.knowm.xchart.StyleManager.LegendPosition;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Histogram with Error Bars
@@ -49,14 +49,14 @@ public class BarChart08 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(800).height(600).title("Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
+    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
     Histogram histogram1 = new Histogram(getGaussianData(10000), 10, -10, 10);
-    chart.addCategorySeries("histogram", histogram1.getxAxisData(), histogram1.getyAxisData(), getFakeErrorData(histogram1.getxAxisData().size()));
+    chart.addSeries("histogram", histogram1.getxAxisData(), histogram1.getyAxisData(), getFakeErrorData(histogram1.getxAxisData().size()));
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyleManager().setBarWidthPercentage(.96);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setBarWidthPercentage(.96);
 
     return chart;
   }

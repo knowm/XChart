@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,7 @@ package org.knowm.xchart.internal.style;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
-import org.knowm.xchart.internal.markers.Marker;
+import org.knowm.xchart.internal.style.markers.Marker;
 
 /**
  * A DTO to hold the Series' Color, Marker, and LineStyle

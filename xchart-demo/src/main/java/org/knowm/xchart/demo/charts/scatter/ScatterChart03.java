@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +16,10 @@
  */
 package org.knowm.xchart.demo.charts.scatter;
 
-import org.knowm.xchart.Chart;
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Single point
@@ -40,10 +41,10 @@ public class ScatterChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
     // Customize Chart
-    chart.setChartTitle("Single Point");
+    chart.setTitle("Single Point");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
 

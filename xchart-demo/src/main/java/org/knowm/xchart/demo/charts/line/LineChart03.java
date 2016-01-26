@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,15 +26,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartColor;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.SeriesLineStyle;
-import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.style.XChartTheme;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.internal.style.colors.ChartColor;
+import org.knowm.xchart.internal.style.colors.XChartSeriesColors;
+import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Extensive Chart Customization
@@ -52,7 +53,7 @@ public class LineChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(800, 600);
+    Chart_XY chart = new Chart_XY(800, 600);
 
     // generates linear data
     List<Date> xData = new ArrayList<Date>();
@@ -72,40 +73,40 @@ public class LineChart03 implements ExampleChart {
     }
 
     // Customize Chart
-    chart.setChartTitle("LineChart03");
+    chart.setTitle("LineChart03");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");
-    chart.getStyleManager().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
-    chart.getStyleManager().setPlotGridLinesColor(new Color(255, 255, 255));
-    chart.getStyleManager().setChartBackgroundColor(Color.WHITE);
-    chart.getStyleManager().setLegendBackgroundColor(Color.PINK);
-    chart.getStyleManager().setChartFontColor(Color.MAGENTA);
-    chart.getStyleManager().setChartTitleBoxBackgroundColor(new Color(0, 222, 0));
-    chart.getStyleManager().setChartTitleBoxVisible(true);
-    chart.getStyleManager().setChartTitleBoxBorderColor(Color.BLACK);
-    chart.getStyleManager().setPlotGridLinesVisible(false);
+    chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
+    chart.getStyler().setPlotGridLinesColor(new Color(255, 255, 255));
+    chart.getStyler().setChartBackgroundColor(Color.WHITE);
+    chart.getStyler().setLegendBackgroundColor(Color.PINK);
+    chart.getStyler().setChartFontColor(Color.MAGENTA);
+    chart.getStyler().setChartTitleBoxBackgroundColor(new Color(0, 222, 0));
+    chart.getStyler().setChartTitleBoxVisible(true);
+    chart.getStyler().setChartTitleBoxBorderColor(Color.BLACK);
+    chart.getStyler().setPlotGridLinesVisible(false);
 
-    chart.getStyleManager().setAxisTickPadding(20);
+    chart.getStyler().setAxisTickPadding(20);
 
-    chart.getStyleManager().setAxisTickMarkLength(15);
+    chart.getStyler().setAxisTickMarkLength(15);
 
-    chart.getStyleManager().setPlotPadding(20);
+    chart.getStyler().setPlotMargin(20);
 
-    chart.getStyleManager().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
-    chart.getStyleManager().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
-    chart.getStyleManager().setLegendSeriesLineLength(12);
-    chart.getStyleManager().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
-    chart.getStyleManager().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
-    chart.getStyleManager().setDatePattern("dd-MMM");
-    chart.getStyleManager().setDecimalPattern("#0.000");
-    chart.getStyleManager().setLocale(Locale.GERMAN);
+    chart.getStyler().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
+    chart.getStyler().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
+    chart.getStyler().setLegendPosition(LegendPosition.InsideSE);
+    chart.getStyler().setLegendSeriesLineLength(12);
+    chart.getStyler().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
+    chart.getStyler().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
+    chart.getStyler().setDatePattern("dd-MMM");
+    chart.getStyler().setDecimalPattern("#0.000");
+    chart.getStyler().setLocale(Locale.GERMAN);
 
-    Series series = chart.addSeries("Fake Data", xData, yData);
-    series.setLineColor(XChartTheme.BLUE);
+    Series_XY series = chart.addSeries("Fake Data", xData, yData);
+    series.setLineColor(XChartSeriesColors.BLUE);
     series.setMarkerColor(Color.ORANGE);
-    series.setMarker(SeriesMarker.CIRCLE);
-    series.setLineStyle(SeriesLineStyle.SOLID);
+    series.setMarker(SeriesMarkers.CIRCLE);
+    series.setLineStyle(SeriesLines.SOLID);
 
     return chart;
   }

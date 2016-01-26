@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,12 +23,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.StyleManager.ChartTheme;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
 
 /**
  * This class is used to create a Chart object from a folder containing one or more CSV files. The parent folder's name becomes the title of the
  * chart. Each CSV file in the folder becomes a series on the chart. the CSV file's name becomes the series' name.
- * 
+ *
  * @author timmolter
  */
 public class CSVImporter {
@@ -46,15 +46,15 @@ public class CSVImporter {
    * @param chartTheme
    * @return
    */
-  public static Chart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height, ChartTheme chartTheme) {
+  public static Chart_XY getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height, ChartTheme chartTheme) {
 
     // 1. get the directory, name chart the dir name
-    Chart chart = null;
+    Chart_XY chart = null;
     if (chartTheme != null) {
-      chart = new Chart(width, height, chartTheme);
+      chart = new Chart_XY(width, height, chartTheme);
     }
     else {
-      chart = new Chart(width, height);
+      chart = new Chart_XY(width, height);
     }
 
     // 2. get all the csv files in the dir
@@ -89,14 +89,14 @@ public class CSVImporter {
    * @param height
    * @return
    */
-  public static Chart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
+  public static Chart_XY getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
 
     return getChartFromCSVDir(path2Directory, dataOrientation, width, height, null);
   }
 
   /**
    * Get the series's data from a file
-   * 
+   *
    * @param csvFile
    * @return
    */
@@ -189,7 +189,7 @@ public class CSVImporter {
 
   /**
    * This method returns the files found in the given directory matching the given regular expression.
-   * 
+   *
    * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
    * @param regex - ex. ".*.csv"
    * @return File[] - an array of files
@@ -213,7 +213,7 @@ public class CSVImporter {
 
   /**
    * This method returns the Files found in the given directory
-   * 
+   *
    * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
    * @return File[] - an array of files
    */

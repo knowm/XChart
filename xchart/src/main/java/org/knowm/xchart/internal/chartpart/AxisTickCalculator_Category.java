@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,17 +21,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.knowm.xchart.StyleManager;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.AxisType;
+import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.style.Styler_AxesChart;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for String axes
  *
  * @author timmolter
  */
-public class AxisTickCalculator_Category extends AxisTickCalculator {
+public class AxisTickCalculator_Category extends AxisTickCalculator_ {
 
   /**
    * Constructor
@@ -40,19 +40,19 @@ public class AxisTickCalculator_Category extends AxisTickCalculator {
    * @param workingSpace
    * @param categories
    * @param axisType
-   * @param styleManager
+   * @param styler
    */
-  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, AxisType axisType, StyleManager styleManager) {
+  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, AxisDataType axisType, Styler_AxesChart styler) {
 
-    super(axisDirection, workingSpace, Double.NaN, Double.NaN, styleManager);
+    super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
 
     calculate(categories, axisType);
   }
 
-  private void calculate(List<?> categories, AxisType axisType) {
+  private void calculate(List<?> categories, AxisDataType axisType) {
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int) (styleManager.getAxisTickSpacePercentage() * workingSpace); // in plot space
+    int tickSpace = (int) (styler.getPlotContentSize() * workingSpace); // in plot space
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
@@ -64,29 +64,29 @@ public class AxisTickCalculator_Category extends AxisTickCalculator {
     // set up String formatters that may be encountered
     NumberFormatter numberFormatter = null;
     SimpleDateFormat simpleDateformat = null;
-    if (axisType == AxisType.Number) {
-      numberFormatter = new NumberFormatter(styleManager);
+    if (axisType == AxisDataType.Number) {
+      numberFormatter = new NumberFormatter(styler);
     }
-    else if (axisType == AxisType.Date) {
-      if (styleManager.getDatePattern() == null) {
+    else if (axisType == AxisDataType.Date) {
+      if (styler.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
       }
-      simpleDateformat = new SimpleDateFormat(styleManager.getDatePattern(), styleManager.getLocale());
-      simpleDateformat.setTimeZone(styleManager.getTimezone());
+      simpleDateformat = new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
+      simpleDateformat.setTimeZone(styler.getTimezone());
     }
 
     int counter = 0;
 
     for (Object category : categories) {
-      if (axisType == AxisType.String) {
+      if (axisType == AxisDataType.String) {
         tickLabels.add(category.toString());
         double tickLabelPosition = margin + firstPosition + gridStep * counter++;
         tickLocations.add(tickLabelPosition);
       }
-      else if (axisType == AxisType.Number) {
+      else if (axisType == AxisDataType.Number) {
         tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
       }
-      else if (axisType == AxisType.Date) {
+      else if (axisType == AxisDataType.Date) {
 
         tickLabels.add(simpleDateformat.format((((Date) category).getTime())));
       }

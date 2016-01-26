@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,9 +16,8 @@
  */
 package org.knowm.xchart.standalone;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.StyleManager.ChartType;
+import org.knowm.xchart.ChartBuilder_Category;
+import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.SwingWrapper;
 
 /**
@@ -33,9 +32,9 @@ public class TestForIssue111 {
     // int[] x = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
     // int[] y = new int[] { 1, 0, 1, 0, 1, 0, 0, 0 };
 
-    Chart chart = new ChartBuilder().chartType(ChartType.Bar).width(640).height(480).build();
+    Chart_Category chart = new ChartBuilder_Category().width(640).height(480).build();
     chart.addSeries("test", x, y);
-    chart.getStyleManager().setLegendVisible(false);
+    chart.getStyler().setLegendVisible(false);
     new SwingWrapper(chart).displayChart();
   }
 

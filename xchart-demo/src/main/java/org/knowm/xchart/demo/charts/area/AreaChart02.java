@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,13 @@ package org.knowm.xchart.demo.charts.area;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.ChartBuilder;
-import org.knowm.xchart.StyleManager.ChartType;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.ChartBuilder_XY;
+import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
 
 /**
  * Null Y-Axis Data Points
@@ -48,7 +49,7 @@ public class AreaChart02 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new ChartBuilder().chartType(ChartType.Area).width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
 
     List<Integer> xData = new ArrayList<Integer>();
     List<Integer> yData = new ArrayList<Integer>();
@@ -73,7 +74,8 @@ public class AreaChart02 implements ExampleChart {
     chart.addSeries("a", xData, yData);
 
     // Customize Chart
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 
     return chart;
   }

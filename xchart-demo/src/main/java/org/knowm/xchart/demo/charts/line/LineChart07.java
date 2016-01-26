@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,15 +19,15 @@ package org.knowm.xchart.demo.charts.line;
 import java.util.Arrays;
 import java.util.List;
 
-import org.knowm.xchart.Chart;
-import org.knowm.xchart.Series;
-import org.knowm.xchart.Series.SeriesType;
-import org.knowm.xchart.SeriesMarker;
-import org.knowm.xchart.StyleManager.ChartTheme;
-import org.knowm.xchart.StyleManager.ChartType;
-import org.knowm.xchart.StyleManager.LegendPosition;
+import org.knowm.xchart.Chart_Category;
+import org.knowm.xchart.Series_Category;
+import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Line chart with multiple Category Series
@@ -36,6 +36,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <ul>
  * <li>A Line Chart created from multiple category series types
  * <li>GGPlot2 Theme
+ * <li>disabling some series shown in legend
  */
 public class LineChart07 implements ExampleChart {
 
@@ -50,17 +51,17 @@ public class LineChart07 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart chart = new Chart(1024, 768, ChartTheme.GGPlot2);
-    chart.getStyleManager().setChartType(ChartType.Line);
+    Chart_Category chart = new Chart_Category(1024, 768, ChartTheme.GGPlot2);
+    chart.getStyler().setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
 
     // Customize Chart
-    chart.setChartTitle("ThreadPoolBenchmark");
+    chart.setTitle("ThreadPoolBenchmark");
     chart.setXAxisTitle("Threads");
     chart.setYAxisTitle("Executions");
-    chart.getStyleManager().setXAxisLabelRotation(270);
-    chart.getStyleManager().setLegendPosition(LegendPosition.OutsideE);
-    chart.getStyleManager().setBarWidthPercentage(0);
-    chart.getStyleManager().setBarsOverlapped(true);
+    chart.getStyler().setXAxisLabelRotation(270);
+    chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
+    chart.getStyler().setBarWidthPercentage(0);
+    chart.getStyler().setBarsOverlapped(true);
 
     // Declare data
     List<String> xAxisKeys = Arrays.asList(new String[] { "release-0.5", "release-0.6", "release-0.7", "release-0.8", "release-0.9", "release-1.0.0", "release-1.1.0", "release-1.2.0", "release-1.3.0",
@@ -95,11 +96,10 @@ public class LineChart07 implements ExampleChart {
 
     // Add data series to chart
     for (int i = 0; i < seriesNames.length; i++) {
-      Series series = chart.addCategorySeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
-      series.setMarker(SeriesMarker.NONE);
-      series.setSeriesType(SeriesType.Line);
+      Series_Category series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
+      series.setMarker(SeriesMarkers.NONE);
+      series.setShowInLegend(i % 2 == 0);
     }
-    chart.getStyleManager().setYAxisLogarithmic(true);
 
     return chart;
   }
