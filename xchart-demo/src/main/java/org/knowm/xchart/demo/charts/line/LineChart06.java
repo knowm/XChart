@@ -18,6 +18,7 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
@@ -48,28 +49,22 @@ public class LineChart06 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    int[] xData = new int[] { 0, 1, 2, 3, 4, 5, 6 };
+    // Create Chart
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).build();
 
-    int[] yData1 = new int[] { 100, 100, 100, 60, 10, 10, 10 };
-
-    int[] errdata = new int[] { 50, 20, 10, 52, 9, 2, 1 };
-
-    Chart_XY chart = new Chart_XY(800, 600);
-
+    // Customize Chart
     chart.getStyler().setYAxisLogarithmic(true);
-
     chart.getStyler().setYAxisMin(.08);
-
     chart.getStyler().setYAxisMax(1000);
-
     chart.getStyler().setErrorBarsColor(Color.black);
 
+    // Series
+    int[] xData = new int[] { 0, 1, 2, 3, 4, 5, 6 };
+    int[] yData1 = new int[] { 100, 100, 100, 60, 10, 10, 10 };
+    int[] errdata = new int[] { 50, 20, 10, 52, 9, 2, 1 };
     Series_XY series1 = chart.addSeries("Error bar\ntest data", xData, yData1, errdata);
-
     series1.setLineStyle(SeriesLines.SOLID);
-
     series1.setMarker(SeriesMarkers.DIAMOND);
-
     series1.setMarkerColor(Color.GREEN);
 
     return chart;

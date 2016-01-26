@@ -60,6 +60,12 @@ public class BarChart02 implements ExampleChart {
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().theme(ChartTheme.Matlab).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
 
+    // Customize Chart
+    chart.getStyler().setPlotGridLinesVisible(false);
+    chart.getStyler().setBarFilled(false);
+    chart.getStyler().setDatePattern("YYYY");
+
+    // Series
     List<Date> xData = new ArrayList<Date>();
     List<Number> yData = new ArrayList<Number>();
 
@@ -77,9 +83,6 @@ public class BarChart02 implements ExampleChart {
     }
     Series_Category series = chart.addSeries("Model 77", xData, yData);
     series.setLineColor(MatlabSeriesColors.RED);
-    chart.getStyler().setPlotGridLinesVisible(false);
-    chart.getStyler().setBarFilled(false);
-    chart.getStyler().setDatePattern("YYYY");
 
     return chart;
   }

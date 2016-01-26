@@ -50,11 +50,13 @@ public class BarChart01 implements ExampleChart {
 
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Score Histogram").xAxisTitle("Score").yAxisTitle("Number").build();
-    chart.addSeries("test 1", Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 }), Arrays.asList(new Integer[] { 4, 5, 9, 6, 5 }));
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setPlotContentSize(1.0);
+
+    // Series
+    chart.addSeries("test 1", Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 }), Arrays.asList(new Integer[] { 4, 5, 9, 6, 5 }));
 
     return chart;
   }

@@ -45,14 +45,6 @@ public class StickChart01 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    // generates Log data
-    List<Integer> xData = new ArrayList<Integer>();
-    List<Integer> yData = new ArrayList<Integer>();
-    for (int i = -3; i <= 24; i++) {
-      xData.add(i);
-      yData.add(i);
-    }
-
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Stick").build();
 
@@ -62,6 +54,12 @@ public class StickChart01 implements ExampleChart {
     chart.getStyler().setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Stick);
 
     // Series
+    List<Integer> xData = new ArrayList<Integer>();
+    List<Integer> yData = new ArrayList<Integer>();
+    for (int i = -3; i <= 24; i++) {
+      xData.add(i);
+      yData.add(i);
+    }
     chart.addSeries("data", xData, yData);
 
     return chart;

@@ -47,6 +47,9 @@ public class ThemeChart02 implements ExampleChart {
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.GGPlot2).title("GGPlot2 Theme").xAxisTitle("X").yAxisTitle("Y").build();
 
+    // Customize Chart
+
+    // Series
     chart.addSeries("vertical", new double[] { 1, 1 }, new double[] { -10, 10 });
     chart.addSeries("horizontal", new double[] { -10, 10 }, new double[] { 0, 0 });
 

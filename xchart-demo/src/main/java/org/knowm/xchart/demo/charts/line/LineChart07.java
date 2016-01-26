@@ -19,6 +19,7 @@ package org.knowm.xchart.demo.charts.line;
 import java.util.Arrays;
 import java.util.List;
 
+import org.knowm.xchart.ChartBuilder_Category;
 import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
@@ -51,13 +52,10 @@ public class LineChart07 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_Category chart = new Chart_Category(1024, 768, ChartTheme.GGPlot2);
-    chart.getStyler().setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
+    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();
 
     // Customize Chart
-    chart.setTitle("ThreadPoolBenchmark");
-    chart.setXAxisTitle("Threads");
-    chart.setYAxisTitle("Executions");
+    chart.getStyler().setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
     chart.getStyler().setXAxisLabelRotation(270);
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
     chart.getStyler().setBarWidthPercentage(0);
@@ -94,7 +92,7 @@ public class LineChart07 implements ExampleChart {
                                                             119480, 119269, 118983, 119290, 119304, 119161, 119875, 118830, 119517, 119980, 119502, 120883, 118953, 119461, 120753, 120526, 120967,
                                                             120244, 122381, 121084, 122404, 121761, 121546, 161230, 160123, 160534 } };
 
-    // Add data series to chart
+    // Series
     for (int i = 0; i < seriesNames.length; i++) {
       Series_Category series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
       series.setMarker(SeriesMarkers.NONE);

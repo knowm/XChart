@@ -19,10 +19,12 @@ package org.knowm.xchart.demo.charts.theme;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.style.Styler.ChartTheme;
 
 /**
  * Default XChart Theme
@@ -44,8 +46,12 @@ public class ThemeChart01 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(800, 600);
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.XChart).title("XChart Theme").xAxisTitle("X").yAxisTitle("Y").build();
 
+    // Customize Chart
+    chart.getStyler().setMarkerSize(11);
+
+    // Series
     for (int i = 1; i <= 14; i++) {
 
       // generates linear data
@@ -57,14 +63,8 @@ public class ThemeChart01 implements ExampleChart {
         yData.add(2 * i * x - i * b);
       }
 
-      // Customize Chart
-      chart.setTitle("XChart Theme");
-      chart.setXAxisTitle("X");
-      chart.setYAxisTitle("Y");
-
       String seriesName = "y=" + 2 * i + "x-" + i * b + "b";
       chart.addSeries(seriesName, xData, yData);
-      chart.getStyler().setMarkerSize(11);
 
     }
     return chart;

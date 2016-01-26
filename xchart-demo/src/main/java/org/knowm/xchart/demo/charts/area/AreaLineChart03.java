@@ -56,7 +56,12 @@ public class AreaLineChart03 implements ExampleChart {
     chart.setYAxisTitle("Amount");
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Line);
+    chart.getStyler().setYAxisLabelAlignment(Styler.TextAlignment.Right);
+    chart.getStyler().setYAxisDecimalPattern("$ #,###.##");
+    chart.getStyler().setPlotMargin(0);
+    chart.getStyler().setPlotContentSize(.95);
 
+    // Series
     // @formatter:off
     double[] xAges = new double[] { 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
         88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100 };
@@ -90,13 +95,6 @@ public class AreaLineChart03 implements ExampleChart {
 
     Series_XY seriesPercentile25th = chart.addSeries("25th Percentile", xAges, yPercentile25th);
     seriesPercentile25th.setMarker(SeriesMarkers.NONE);
-
-    chart.getStyler().setYAxisLabelAlignment(Styler.TextAlignment.Right);
-    chart.getStyler().setYAxisDecimalPattern("$ #,###.##");
-
-    chart.getStyler().setPlotMargin(0);
-    chart.getStyler().setPlotContentSize(.95);
-    // chart.getStyleManager().setYAxisMax(1620725 * 1.15); // We want to ensure there is a % of padding on the top of the chart
     return chart;
   }
 

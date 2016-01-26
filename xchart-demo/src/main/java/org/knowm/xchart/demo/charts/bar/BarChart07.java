@@ -52,14 +52,15 @@ public class BarChart07 implements ExampleChart {
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
+    // Customize Chart
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setBarWidthPercentage(.96);
+
+    // Series
     Histogram histogram1 = new Histogram(getGaussianData(1000), 10, -30, 30);
     chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
     Histogram histogram2 = new Histogram(getGaussianData(1000), 10, -30, 30);
     chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
-
-    // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setBarWidthPercentage(.96);
 
     return chart;
   }
@@ -70,7 +71,6 @@ public class BarChart07 implements ExampleChart {
     Random r = new Random();
     for (int i = 0; i < count; i++) {
       data.add((int) (r.nextGaussian() * 10));
-      // data.add(r.nextDouble() * 60 - 30);
     }
     return data;
   }

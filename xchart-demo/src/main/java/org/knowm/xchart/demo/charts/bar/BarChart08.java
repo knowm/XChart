@@ -51,12 +51,13 @@ public class BarChart08 implements ExampleChart {
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
-    Histogram histogram1 = new Histogram(getGaussianData(10000), 10, -10, 10);
-    chart.addSeries("histogram", histogram1.getxAxisData(), histogram1.getyAxisData(), getFakeErrorData(histogram1.getxAxisData().size()));
-
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setBarWidthPercentage(.96);
+
+    // Series
+    Histogram histogram1 = new Histogram(getGaussianData(10000), 10, -10, 10);
+    chart.addSeries("histogram", histogram1.getxAxisData(), histogram1.getyAxisData(), getFakeErrorData(histogram1.getxAxisData().size()));
 
     return chart;
   }

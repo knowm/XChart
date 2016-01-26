@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
@@ -59,10 +60,10 @@ public class ScatterChart01 implements ExampleChart {
     }
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(800, 600);
-    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).build();
 
     // Customize Chart
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
     chart.getStyler().setChartTitleVisible(false);
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
     chart.getStyler().setMarkerSize(16);

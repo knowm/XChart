@@ -49,6 +49,10 @@ public class BarChart05 implements ExampleChart {
 
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Temperature vs. Color").xAxisTitle("Color").yAxisTitle("Temperature").theme(ChartTheme.GGPlot2).build();
+
+    // Customize Chart
+
+    // Series
     chart.addSeries("fish", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { -40, 30, 20, 60,
         60 })));
     chart.addSeries("worms", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { 50, 10, -20, 40,

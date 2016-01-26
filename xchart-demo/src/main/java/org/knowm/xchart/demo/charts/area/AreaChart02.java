@@ -51,6 +51,11 @@ public class AreaChart02 implements ExampleChart {
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
 
+    // Customize Chart
+    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+
+    // Series
     List<Integer> xData = new ArrayList<Integer>();
     List<Integer> yData = new ArrayList<Integer>();
     for (int i = 0; i < 5; i++) {
@@ -72,10 +77,6 @@ public class AreaChart02 implements ExampleChart {
     yData.add(90);
 
     chart.addSeries("a", xData, yData);
-
-    // Customize Chart
-    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 
     return chart;
   }

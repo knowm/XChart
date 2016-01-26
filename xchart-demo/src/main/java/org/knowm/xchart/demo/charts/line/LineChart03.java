@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
@@ -53,29 +54,9 @@ public class LineChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(800, 600);
-
-    // generates linear data
-    List<Date> xData = new ArrayList<Date>();
-    List<Double> yData = new ArrayList<Double>();
-
-    DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-    Date date = null;
-    for (int i = 1; i <= 10; i++) {
-
-      try {
-        date = sdf.parse(i + ".10.2008");
-      } catch (ParseException e) {
-        e.printStackTrace();
-      }
-      xData.add(date);
-      yData.add(Math.random() * i);
-    }
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("LineChart03").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.setTitle("LineChart03");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
     chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
     chart.getStyler().setPlotGridLinesColor(new Color(255, 255, 255));
     chart.getStyler().setChartBackgroundColor(Color.WHITE);
@@ -102,6 +83,24 @@ public class LineChart03 implements ExampleChart {
     chart.getStyler().setDecimalPattern("#0.000");
     chart.getStyler().setLocale(Locale.GERMAN);
 
+    // generates linear data
+    List<Date> xData = new ArrayList<Date>();
+    List<Double> yData = new ArrayList<Double>();
+
+    DateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+    Date date = null;
+    for (int i = 1; i <= 10; i++) {
+
+      try {
+        date = sdf.parse(i + ".10.2008");
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+      xData.add(date);
+      yData.add(Math.random() * i);
+    }
+
+    // Series
     Series_XY series = chart.addSeries("Fake Data", xData, yData);
     series.setLineColor(XChartSeriesColors.BLUE);
     series.setMarkerColor(Color.ORANGE);

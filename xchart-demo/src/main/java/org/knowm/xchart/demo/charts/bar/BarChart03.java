@@ -45,6 +45,10 @@ public class BarChart03 implements ExampleChart {
 
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Score vs. Age").xAxisTitle("Age").yAxisTitle("Score").build();
+
+    // Customize Chart
+
+    // Series
     chart.addSeries("males", new int[] { 10, 20, 30, 40 }, new int[] { 40, -30, -20, -60 });
 
     return chart;

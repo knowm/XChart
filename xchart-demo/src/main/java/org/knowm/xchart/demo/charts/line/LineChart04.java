@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.demo.charts.line;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
@@ -41,21 +42,18 @@ public class LineChart04 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(800, 600);
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("LineChart04").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.setTitle("LineChart04");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
     chart.getStyler().setLegendVisible(false);
 
+    // Series
     for (int i = 0; i < 200; i++) {
       Series_XY series = chart.addSeries("A" + i, new double[] { Math.random() / 1000, Math.random() / 1000 }, new double[] { Math.random() / -1000, Math.random() / -1000 });
       series.setLineColor(XChartSeriesColors.BLUE);
       series.setLineStyle(SeriesLines.SOLID);
       series.setMarker(SeriesMarkers.CIRCLE);
       series.setMarkerColor(XChartSeriesColors.BLUE);
-
     }
 
     return chart;

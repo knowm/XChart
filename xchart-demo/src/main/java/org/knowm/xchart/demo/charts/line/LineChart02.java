@@ -19,6 +19,7 @@ package org.knowm.xchart.demo.charts.line;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
@@ -47,6 +48,13 @@ public class LineChart02 implements ExampleChart {
   @Override
   public Chart getChart() {
 
+    // Create Chart
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).build();
+
+    // Customize Chart
+    chart.getStyler().setChartTitleVisible(false);
+    chart.getStyler().setLegendVisible(false);
+
     // generates sine data
     int size = 30;
     List<Integer> xData = new ArrayList<Integer>();
@@ -57,19 +65,12 @@ public class LineChart02 implements ExampleChart {
       yData.add(-.000001 * Math.sin(radians));
     }
 
-    // Create Chart
-    Chart_XY chart = new Chart_XY(800, 600);
-
-    // Customize Chart
-    chart.getStyler().setChartTitleVisible(false);
-    chart.getStyler().setLegendVisible(false);
-
-    // Series 1
-    Series_XY series1 = chart.addSeries("y=sin(x)", xData, yData);
-    series1.setLineColor(XChartSeriesColors.PURPLE);
-    series1.setLineStyle(SeriesLines.DASH_DASH);
-    series1.setMarkerColor(XChartSeriesColors.GREEN);
-    series1.setMarker(SeriesMarkers.SQUARE);
+    // Series
+    Series_XY series = chart.addSeries("y=sin(x)", xData, yData);
+    series.setLineColor(XChartSeriesColors.PURPLE);
+    series.setLineStyle(SeriesLines.DASH_DASH);
+    series.setMarkerColor(XChartSeriesColors.GREEN);
+    series.setMarker(SeriesMarkers.SQUARE);
 
     return chart;
   }

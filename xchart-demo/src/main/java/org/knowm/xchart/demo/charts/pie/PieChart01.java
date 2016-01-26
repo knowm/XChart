@@ -43,6 +43,10 @@ public class PieChart01 implements ExampleChart<Chart_Pie> {
 
     // Create Chart
     Chart_Pie chart = new ChartBuilder_Pie().width(400).height(500).title(getClass().getSimpleName()).build();
+
+    // Customize Chart
+
+    // Series
     chart.addSeries("Pennies", 100);
     chart.addSeries("Nickels", 100);
     chart.addSeries("Dimes", 100);

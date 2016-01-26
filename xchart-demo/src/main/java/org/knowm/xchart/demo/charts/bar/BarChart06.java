@@ -51,15 +51,16 @@ public class BarChart06 implements ExampleChart {
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
-    Histogram histogram1 = new Histogram(getGaussianData(10000), 30, -30, 30);
-    Histogram histogram2 = new Histogram(getGaussianData(5000), 30, -30, 30);
-    chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
-    chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
-
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setBarWidthPercentage(.96);
     chart.getStyler().setBarsOverlapped(true);
+
+    // Series
+    Histogram histogram1 = new Histogram(getGaussianData(10000), 30, -30, 30);
+    Histogram histogram2 = new Histogram(getGaussianData(5000), 30, -30, 30);
+    chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
+    chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
     return chart;
   }

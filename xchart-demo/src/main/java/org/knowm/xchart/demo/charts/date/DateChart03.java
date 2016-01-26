@@ -47,9 +47,11 @@ public class DateChart03 implements ExampleChart {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Minute Scale").build();
+
+    // Customize Chart
     chart.getStyler().setLegendVisible(false);
 
-    // generate data
+    // Series
     List<Date> xData = new ArrayList<Date>();
     List<Double> yData = new ArrayList<Double>();
 

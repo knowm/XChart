@@ -46,16 +46,19 @@ public class PieChart03 implements ExampleChart<Chart_Pie> {
 
     // Create Chart
     Chart_Pie chart = new ChartBuilder_Pie().width(400).height(500).title(getClass().getSimpleName()).theme(ChartTheme.GGPlot2).build();
+
+    // Customize Chart
+    chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setAnnotationType(AnnotationType.LabelAndPercentage);
+    chart.getStyler().setAnnotationDistance(1.15);
+    chart.getStyler().setPlotContentSize(.7);
+
+    // Series
     chart.addSeries("Prague", 2);
     chart.addSeries("Dresden", 4);
     chart.addSeries("Munich", 34);
     chart.addSeries("Hamburg", 22);
     chart.addSeries("Berlin", 29);
-
-    chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setAnnotationType(AnnotationType.LabelAndPercentage);
-    chart.getStyler().setAnnotationDistance(1.15);
-    chart.getStyler().setPlotContentSize(.7);
 
     return chart;
   }

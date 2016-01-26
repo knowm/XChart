@@ -18,6 +18,7 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
@@ -50,14 +51,17 @@ public class LineChart05 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(800, 600);
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("LineChart05").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.setTitle("LineChart05");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyler().setYAxisLogarithmic(true);
+    chart.getStyler().setYAxisMin(0.01);
+    chart.getStyler().setYAxisMax(1000);
+    chart.getStyler().setXAxisMin(2);
+    chart.getStyler().setXAxisMax(7);
 
+    // Series
     double[] xData = new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 5, 6 };
     double[] yData = new double[] { 106, 44, 26, 10, 7.5, 3.4, .88 };
     double[] yData2 = new double[] { 102, 49, 23.6, 11.3, 5.4, 2.6, 1.25 };
@@ -71,14 +75,6 @@ public class LineChart05 implements ExampleChart {
     series2.setMarker(SeriesMarkers.NONE);
     series2.setLineStyle(SeriesLines.DASH_DASH);
     series2.setLineColor(Color.BLACK);
-
-    chart.getStyler().setYAxisLogarithmic(true);
-
-    chart.getStyler().setYAxisMin(0.01);
-    chart.getStyler().setYAxisMax(1000);
-
-    chart.getStyler().setXAxisMin(2);
-    chart.getStyler().setXAxisMax(7);
 
     return chart;
   }

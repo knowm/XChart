@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.demo.charts.scatter;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -41,12 +42,7 @@ public class ScatterChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(800, 600);
-
-    // Customize Chart
-    chart.setTitle("Single Point");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Single Point").xAxisTitle("X").yAxisTitle("Y").build();
 
     chart.addSeries("single point (1,1)", new double[] { 1 }, new double[] { 1 });
 

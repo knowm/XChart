@@ -51,6 +51,13 @@ public class BarChart09 implements ExampleChart {
 
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Value vs. Letter").xAxisTitle("Letter").yAxisTitle("Value").theme(ChartTheme.GGPlot2).build();
+
+    // Customize Chart
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setBarWidthPercentage(.55);
+    chart.getStyler().setBarsOverlapped(true);
+
+    // Series
     chart.addSeries("China", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 11, 23, 20, 36, 5 })));
     Series_Category series2 = chart.addSeries("Korea", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 25, 22,
         38, 7 })), new ArrayList<Number>(Arrays.asList(new Number[] { 1, 3, 2, 1, 2 })));
@@ -58,11 +65,6 @@ public class BarChart09 implements ExampleChart {
     Series_Category series3 = chart.addSeries("World Ave.", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 20, 22,
         18, 36, 32 })));
     series3.setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Scatter);
-
-    // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setBarWidthPercentage(.55);
-    chart.getStyler().setBarsOverlapped(true);
 
     return chart;
   }
