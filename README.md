@@ -8,7 +8,7 @@ XChart is a light weight Java library for plotting data.
 
 XChart is a light-weight and convenient library for plotting data designed to go from data to chart in the least amount of time possible and to take the guess-work out of customizing the chart style.
 
-Usage is very simple: Create a `Chart` instance, add a series of data to it, and either save it or display it.
+Basic usage is very simple: Create a `Chart` instance via `QuickChart`, add a series of data to it, and either display it or save it as a bitmap.  
 
 ## Simplest Example
 
@@ -34,22 +34,6 @@ Usage is very simple: Create a `Chart` instance, add a series of data to it, and
 
 Charts can be saved as JPG, PNG, GIF, BMP, EPS, SVG, and PDF.
 
-## Chart Customization
-
-All the styling options can be found in one of two possible places: 1) the Chart's `StyleManager` or 2) the series' `set` methods. With this chart customization design, all customization options can be quickly "discovered" using an IDE's built in "Content Assist". With centralized styling like this, there is no need to hunt around the entire charting API to find that one customization you're looking for - it's all right in one spot!
-
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Chart_Customization.png)
- 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Series_Customization.png)
- 
-## Chart Themes
-
-XChart ships with three different themes: Default **XChart**, **GGPlot2** and **Matlab**. Using a different theme is as simple as setting the Chart's theme with the `theme` method of the `ChartBuilder`.
-
-    Chart chart = new ChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
-
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Themes.png)
-
 ## Features
 
 * [x] No required additional dependencies
@@ -62,7 +46,7 @@ XChart ships with three different themes: Default **XChart**, **GGPlot2** and **
 * [x] Pie charts
 * [x] Error bars
 * [x] Logarithmic axes
-* [x] Number, Date and category X-Axis
+* [x] Number, Date and Category X-Axis
 * [x] Multiple series
 * [x] Extensive customization
 * [x] Themes - XChart, GGPlot2, Matlab
@@ -75,6 +59,52 @@ XChart ships with three different themes: Default **XChart**, **GGPlot2** and **
 * [x] Export SVG, EPS and PDF using optional de.erichseifert.vectorgraphics2d library
 * [x] Real-time charts
 * [x] Java 6 and up
+
+## Chart Types
+
+Currently, there are three major chart types: `Chart_XY`, `Chart_Category` and `Chart_Pie`. Each type has its corresponding `ChartBuilder`, `Styler` and `Series`.
+
+| Chart Type | Builder | Styler | Series | Allowed X-Axis Data Types | Default Series Render Style |
+|---|---|---|---|---|---|
+| Chart_XY | ChartBuilder_XY | Styler_XY | Series_XY | Number, Date | Line |
+| Chart_Category | ChartBuilder_Category | Styler_Category | Series_Category | Number, Date, String | Bar |
+| Chart_Pie | ChartBuilder_Pie | Styler_Pie | Series_Pie | String | Pie |
+
+The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
+
+### Chart_XY
+
+`Chart_XY` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals. 
+
+Series render styles include: `Line`, `Scatter` and `Area`.
+
+### Chart_Category 
+
+`Chart_Category` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. For the X-Axis, each category is given its own tick mark.  
+
+Series render styles include: `Bar`, `Line`, `Scatter`, `Area` and `Stick`.
+
+### Chart_Pie
+
+`Chart_Pie` charts take String data types for the pie slice name and Number data types for the pie slice value.  
+
+Series render styles include: `Pie` and in the near future `Donut`.
+
+## Chart Customization
+
+All the styling options can be found in one of two possible places: 1) the Chart's `Styler` or 2) the series' `set` methods. With this chart customization design, all customization options can be quickly "discovered" using an IDE's built in "Content Assist". With centralized styling like this, there is no need to hunt around the entire charting API to find that one customization you're looking for - it's all right in one spot!
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Chart_Customization.png)
+ 
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Series_Customization.png)
+ 
+## Chart Themes
+
+XChart ships with three different themes: Default `XChart`, `GGPlot2` and `Matlab`. Using a different theme is as simple as setting the Chart's theme with the `theme` method of the `ChartBuilder`.
+
+    Chart chart = new ChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Themes.png)
 
 ## What's Next?
 
@@ -96,7 +126,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>2.6.1</version>
+        <version>3.0.0</version>
     </dependency>
 ```
 
@@ -112,7 +142,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>3.0.1-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -123,7 +153,7 @@ Snapshots can be manually downloaded from Sonatyope: [https://oss.sonatype.org/c
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "2.6.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.0.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 (SBT/Ivy does not seem to respect the optional [VectorGraphics2D](https://github.com/eseifert/vectorgraphics2d) dependency and as it does not exist in Maven Central the build will fail unless it is excluded or available in a local repository.)
 
@@ -143,7 +173,7 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "2.6.0" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-2.6.1.jar:xchart-2.6.1.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-3.0.0.jar:xchart-3.0.0.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 

@@ -248,7 +248,7 @@ public abstract class Styler_AxesChart extends Styler {
   /**
    * Set the x- and y-axis tick label font
    *
-   * @param foxAxisTicksFontnt
+   * @param axisTicksFont
    */
 
   public void setAxisTickLabelsFont(Font axisTicksFont) {
@@ -262,7 +262,7 @@ public abstract class Styler_AxesChart extends Styler {
   }
 
   /**
-   * set the axis tick mark length
+   * Set the axis tick mark length
    *
    * @param axisTickMarkLength
    */
