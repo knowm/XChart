@@ -57,8 +57,8 @@ public class BarChart06 implements ExampleChart {
     chart.getStyler().setBarsOverlapped(true);
 
     // Series
-    Histogram histogram1 = new Histogram(getGaussianData(10000), 30, -30, 30);
-    Histogram histogram2 = new Histogram(getGaussianData(5000), 30, -30, 30);
+    Histogram histogram1 = new Histogram(getGaussianData(10000), 20, -20, 20);
+    Histogram histogram2 = new Histogram(getGaussianData(5000), 20, -20, 20);
     chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
     chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
@@ -71,7 +71,6 @@ public class BarChart06 implements ExampleChart {
     Random r = new Random();
     for (int i = 0; i < count; i++) {
       data.add(r.nextGaussian() * 10);
-      // data.add(r.nextDouble() * 60 - 30);
     }
     return data;
   }

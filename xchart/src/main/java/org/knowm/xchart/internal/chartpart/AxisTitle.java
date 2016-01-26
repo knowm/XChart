@@ -85,8 +85,8 @@ public class AxisTitle<ST extends Styler_AxesChart, S extends Series> implements
         // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
-        bounds = new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight() + chart.getStyler()
-            .getAxisTitlePadding(), nonRotatedRectangle.getWidth());
+        bounds = new Rectangle2D.Double(xOffset - nonRotatedRectangle.getHeight(), yOffset - nonRotatedRectangle.getWidth(), nonRotatedRectangle.getHeight() + chart.getStyler().getAxisTitlePadding(),
+            nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
       }

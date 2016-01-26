@@ -82,8 +82,8 @@ public class AxisTickMarks<ST extends Styler_AxesChart, S extends Series> implem
       // Line
       if (chart.getStyler().isAxisTicksLineVisible()) {
 
-        Shape line = new Line2D.Double(xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset, xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset + chart.getYAxis()
-            .getPaintZone().getHeight());
+        Shape line = new Line2D.Double(xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset, xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset + chart.getYAxis().getPaintZone()
+            .getHeight());
         g.draw(line);
 
       }
@@ -120,8 +120,8 @@ public class AxisTickMarks<ST extends Styler_AxesChart, S extends Series> implem
       if (chart.getStyler().isAxisTicksLineVisible()) {
 
         g.setStroke(chart.getStyler().getAxisTickMarksStroke());
-        g.drawLine((int) xOffset, (int) (yOffset - chart.getStyler().getAxisTickMarkLength()), (int) (xOffset + chart.getXAxis().getPaintZone().getWidth()), (int) (yOffset - chart
-            .getStyler().getAxisTickMarkLength()));
+        g.drawLine((int) xOffset, (int) (yOffset - chart.getStyler().getAxisTickMarkLength()), (int) (xOffset + chart.getXAxis().getPaintZone().getWidth()), (int) (yOffset - chart.getStyler()
+            .getAxisTickMarkLength()));
       }
 
     }

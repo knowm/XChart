@@ -21,7 +21,6 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.knowm.xchart.Histogram;
 
 /**
  * @author timmolter
