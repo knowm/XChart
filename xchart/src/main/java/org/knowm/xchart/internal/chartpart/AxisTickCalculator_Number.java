@@ -143,6 +143,8 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       try {
         firstPosition = BigDecimal.valueOf(getFirstPosition(cleanedGridStep.doubleValue()));
       } catch (java.lang.NumberFormatException e) {
+        System.out.println("exponent: " + exponent);
+        System.out.println("gridStep: " + gridStep);
         System.out.println("cleanedGridStep: " + cleanedGridStep);
         System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
         System.out.println("NumberFormatException caused by this number: " + getFirstPosition(cleanedGridStep.doubleValue()));

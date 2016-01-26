@@ -335,12 +335,6 @@ public class Theme_GGPlot2 implements Theme_ {
     return false;
   }
 
-  @Override
-  public boolean isBarFilled() {
-
-    return true;
-  }
-
   // Pie Charts ///////////////////////////////
 
   @Override

@@ -115,13 +115,11 @@ public class Legend_AxesChart<ST extends Styler_AxesChart, S extends Series> ext
 
         // paint little box
         Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
-        if (stylerAxesChart.isBarFilled()) {
-          g.setColor(series.getFillColor());
-          g.fill(rectSmall);
-        }
-
-        g.setColor(series.getLineColor());
-        g.draw(rectSmall);
+        // g.setStroke(series.getLineStyle());
+        // g.setColor(series.getLineColor());
+        // g.draw(rectSmall);
+        g.setColor(series.getFillColor());
+        g.fill(rectSmall);
         // // debug box
         // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
         // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));

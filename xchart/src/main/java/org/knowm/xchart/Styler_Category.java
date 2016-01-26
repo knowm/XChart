@@ -27,6 +27,10 @@ public class Styler_Category extends Styler_AxesChart {
 
   private ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle;
 
+  // Bar Charts ///////////////////////////////
+  private double barWidthPercentage;
+  private boolean isBarsOverlapped;
+
   /**
    * Constructor
    */
@@ -40,9 +44,13 @@ public class Styler_Category extends Styler_AxesChart {
   protected void setAllStyles() {
 
     this.chartCategorySeriesRenderStyle = ChartCategorySeriesRenderStyle.Bar; // set default to bar
+
+    // Bar Charts ///////////////////////////////
+    barWidthPercentage = theme.getBarWidthPercentage();
+    isBarsOverlapped = theme.isBarsOverlapped();
   }
 
-  public ChartCategorySeriesRenderStyle getChartCategorySeriesRenderStyle() {
+  public ChartCategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
 
     return chartCategorySeriesRenderStyle;
   }
@@ -52,9 +60,41 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param chartCategorySeriesRenderStyle
    */
-  public void setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
+  public void setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = chartCategorySeriesRenderStyle;
+  }
+
+  // Bar Charts ///////////////////////////////
+
+  /**
+   * set the width of a single bar in a bar chart. full width is 100%, i.e. 1.0
+   *
+   * @param barWidthPercentage
+   */
+  public void setBarWidthPercentage(double barWidthPercentage) {
+
+    this.barWidthPercentage = barWidthPercentage;
+  }
+
+  public double getBarWidthPercentage() {
+
+    return barWidthPercentage;
+  }
+
+  /**
+   * set whether or no bars are overlapped. Otherwise they are places side-by-side
+   *
+   * @param isBarsOverlapped
+   */
+  public void setBarsOverlapped(boolean isBarsOverlapped) {
+
+    this.isBarsOverlapped = isBarsOverlapped;
+  }
+
+  public boolean isBarsOverlapped() {
+
+    return isBarsOverlapped;
   }
 
   /**

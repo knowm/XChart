@@ -112,7 +112,7 @@ public class AxisPair<ST extends Styler_AxesChart, S extends Series> implements 
     if (chart.getStyler() instanceof Styler_Category) {
 
       Styler_Category stylerCategory = (Styler_Category) chart.getStyler();
-      if (stylerCategory.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
+      if (stylerCategory.getDefaultSeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
         // override min/max value for bar charts' Y-Axis
         // There is a special case where it's desired to anchor the axis min or max to zero, like in the case of bar charts. This flag enables that feature.
         if (yAxis.getMin() > 0.0) {

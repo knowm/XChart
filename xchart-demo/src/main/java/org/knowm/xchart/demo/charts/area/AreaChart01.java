@@ -51,7 +51,7 @@ public class AreaChart01 implements ExampleChart {
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
     chart.getStyler().setAxisTitlesVisible(false);
-    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
 
     // Series
     chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });

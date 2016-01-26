@@ -52,7 +52,7 @@ public class AreaChart02 implements ExampleChart {
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 
     // Series

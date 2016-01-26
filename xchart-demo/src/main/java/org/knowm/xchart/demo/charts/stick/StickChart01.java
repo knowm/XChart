@@ -51,7 +51,7 @@ public class StickChart01 implements ExampleChart {
     // Customize Chart
     chart.getStyler().setChartTitleVisible(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Stick);
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.Stick);
 
     // Series
     List<Integer> xData = new ArrayList<Integer>();

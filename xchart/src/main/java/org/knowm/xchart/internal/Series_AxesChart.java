@@ -59,7 +59,7 @@ public abstract class Series_AxesChart extends Series {
   private BasicStroke stroke;
 
   /** Line Color */
-  private Color strokeColor;
+  private Color lineColor;
 
   /** Marker Style */
   private Marker marker;
@@ -213,7 +213,7 @@ public abstract class Series_AxesChart extends Series {
    */
   public Series setLineColor(java.awt.Color color) {
 
-    strokeColor = color;
+    this.lineColor = color;
     return this;
   }
 
@@ -296,7 +296,7 @@ public abstract class Series_AxesChart extends Series {
 
   public Color getLineColor() {
 
-    return strokeColor;
+    return lineColor;
   }
 
   public Color getMarkerColor() {

@@ -59,7 +59,7 @@ public class Styler_Pie extends Styler {
     annotationType = theme.getAnnotationType();
   }
 
-  public ChartPieSeriesRenderStyle getChartPieSeriesRenderStyle() {
+  public ChartPieSeriesRenderStyle getDefaultSeriesRenderStyle() {
 
     return chartPieSeriesRenderStyle;
   }
@@ -69,7 +69,7 @@ public class Styler_Pie extends Styler {
    *
    * @param chartPieSeriesRenderStyle
    */
-  public void setChartPieSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
+  public void setDefaultSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
 
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
   }

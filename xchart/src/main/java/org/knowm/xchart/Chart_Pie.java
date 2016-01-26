@@ -123,7 +123,7 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
     for (Series_Pie seriesPie : getSeriesMap().values()) {
       Series_Pie.ChartPieSeriesRenderStyle seriesType = seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
-        seriesPie.setChartPieSeriesRenderStyle(getStyler().getChartPieSeriesRenderStyle());
+        seriesPie.setChartPieSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }
     setSeriesStyles();

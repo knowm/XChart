@@ -66,7 +66,7 @@ public class ScatterChart02 implements ExampleChart {
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Logarithmic Data").build();
 
     // Customize Chart
-    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
     chart.getStyler().setXAxisLogarithmic(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideN);
 

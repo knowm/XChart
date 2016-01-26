@@ -45,8 +45,8 @@ public class Plot_Category<ST extends Styler_AxesChart, S extends Series> extend
   @Override
   public void paint(Graphics2D g) {
 
-    if (ChartCategorySeriesRenderStyle.Bar.equals(stylerCategory.getChartCategorySeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Stick.equals(stylerCategory
-        .getChartCategorySeriesRenderStyle())) {
+    if (ChartCategorySeriesRenderStyle.Bar.equals(stylerCategory.getDefaultSeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Stick.equals(stylerCategory
+        .getDefaultSeriesRenderStyle())) {
 
       this.plotContent = new PlotContent_Category_Bar<Styler_Category, Series_Category>(chart);
     }

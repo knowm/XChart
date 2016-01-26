@@ -133,8 +133,6 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public boolean isBarsOverlapped();
 
-  public boolean isBarFilled();
-
   // Pie Charts ///////////////////////////////
 
   public boolean isCircular();

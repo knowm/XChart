@@ -194,21 +194,20 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
         // paint series
         if (series.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
+
           // paint bar
-          g.setColor(series.getLineColor());
           Path2D.Double path = new Path2D.Double();
           path.moveTo(xOffset, yOffset);
           path.lineTo(xOffset + barWidth, yOffset);
           path.lineTo(xOffset + barWidth, zeroOffset);
           path.lineTo(xOffset, zeroOffset);
           path.closePath();
-          g.setStroke(series.getLineStyle());
-          if (stylerCategory.isBarFilled()) {
-            g.fill(path);
-          }
-          else {
-            g.draw(path);
-          }
+
+          // g.setStroke(series.getLineStyle());
+          // g.setColor(series.getLineColor());
+          // g.draw(path);
+          g.setColor(series.getFillColor());
+          g.fill(path);
         }
         else if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
 

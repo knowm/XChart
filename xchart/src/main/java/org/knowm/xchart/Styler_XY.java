@@ -42,7 +42,7 @@ public class Styler_XY extends Styler_AxesChart {
     chartXYSeriesRenderStyle = ChartXYSeriesRenderStyle.Line; // set default to line
   }
 
-  public ChartXYSeriesRenderStyle getChartXYSeriesRenderStyle() {
+  public ChartXYSeriesRenderStyle getDefaultSeriesRenderStyle() {
 
     return chartXYSeriesRenderStyle;
   }
@@ -52,7 +52,7 @@ public class Styler_XY extends Styler_AxesChart {
    *
    * @param chartXYSeriesRenderStyle
    */
-  public void setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
+  public void setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartXYSeriesRenderStyle = chartXYSeriesRenderStyle;
   }

@@ -55,7 +55,7 @@ public class LineChart07 implements ExampleChart {
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();
 
     // Customize Chart
-    chart.getStyler().setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
     chart.getStyler().setXAxisLabelRotation(270);
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
     chart.getStyler().setBarWidthPercentage(0);

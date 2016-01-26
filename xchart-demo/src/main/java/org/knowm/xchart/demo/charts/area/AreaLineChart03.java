@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.demo.charts.area;
 
+import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
@@ -48,14 +49,11 @@ public class AreaLineChart03 implements ExampleChart {
   public Chart getChart() {
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(800, 600);
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("Age").yAxisTitle("Amount").build();
 
     // Customize Chart
-    chart.setTitle(getClass().getSimpleName());
-    chart.setXAxisTitle("Age");
-    chart.setYAxisTitle("Amount");
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Line);
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Line);
     chart.getStyler().setYAxisLabelAlignment(Styler.TextAlignment.Right);
     chart.getStyler().setYAxisDecimalPattern("$ #,###.##");
     chart.getStyler().setPlotMargin(0);

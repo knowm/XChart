@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.demo.charts.bar;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,7 +63,6 @@ public class BarChart02 implements ExampleChart {
 
     // Customize Chart
     chart.getStyler().setPlotGridLinesVisible(false);
-    chart.getStyler().setBarFilled(false);
     chart.getStyler().setDatePattern("YYYY");
 
     // Series
@@ -83,6 +83,7 @@ public class BarChart02 implements ExampleChart {
     }
     Series_Category series = chart.addSeries("Model 77", xData, yData);
     series.setLineColor(MatlabSeriesColors.RED);
+    series.setFillColor(new Color(230, 150, 150));
 
     return chart;
   }

@@ -236,7 +236,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
     for (Series_Category seriesCategory : getSeriesMap().values()) {
       Series_Category.ChartCategorySeriesRenderStyle seriesType = seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
-        seriesCategory.setChartCategorySeriesRenderStyle(getStyler().getChartCategorySeriesRenderStyle());
+        seriesCategory.setChartCategorySeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }
     setSeriesStyles();

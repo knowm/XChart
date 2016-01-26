@@ -335,12 +335,6 @@ public class Theme_XChart implements Theme_ {
     return false;
   }
 
-  @Override
-  public boolean isBarFilled() {
-
-    return true;
-  }
-
   // Pie Charts ///////////////////////////////
 
   @Override

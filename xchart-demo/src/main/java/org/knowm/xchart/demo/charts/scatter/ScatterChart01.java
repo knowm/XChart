@@ -63,7 +63,7 @@ public class ScatterChart01 implements ExampleChart {
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).build();
 
     // Customize Chart
-    chart.getStyler().setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
     chart.getStyler().setChartTitleVisible(false);
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
     chart.getStyler().setMarkerSize(16);

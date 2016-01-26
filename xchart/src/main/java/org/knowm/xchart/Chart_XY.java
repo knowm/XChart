@@ -236,7 +236,7 @@ public class Chart_XY extends Chart<Styler_XY, Series_XY> {
     for (Series_XY seriesXY : getSeriesMap().values()) {
       Series_XY.ChartXYSeriesRenderStyle chartXYSeriesRenderStyle = seriesXY.getChartXYSeriesRenderStyle(); // would be directly set
       if (chartXYSeriesRenderStyle == null) { // wasn't overridden, use default from Style Manager
-        seriesXY.setChartXYSeriesRenderStyle(getStyler().getChartXYSeriesRenderStyle());
+        seriesXY.setChartXYSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }
     setSeriesStyles();
