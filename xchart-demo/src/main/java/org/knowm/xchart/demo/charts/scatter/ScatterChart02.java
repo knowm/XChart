@@ -52,16 +52,6 @@ public class ScatterChart02 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    List<Double> xData = new ArrayList<Double>();
-    List<Double> yData = new ArrayList<Double>();
-    Random random = new Random();
-    int size = 400;
-    for (int i = 0; i < size; i++) {
-      double nextRandom = random.nextDouble();
-      xData.add(Math.pow(10, nextRandom * 10));
-      yData.add(1000000000.0 + nextRandom);
-    }
-
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Logarithmic Data").build();
 
@@ -71,6 +61,15 @@ public class ScatterChart02 implements ExampleChart {
     chart.getStyler().setLegendPosition(LegendPosition.InsideN);
 
     // Series
+    List<Double> xData = new ArrayList<Double>();
+    List<Double> yData = new ArrayList<Double>();
+    Random random = new Random();
+    int size = 400;
+    for (int i = 0; i < size; i++) {
+      double nextRandom = random.nextDouble();
+      xData.add(Math.pow(10, nextRandom * 10));
+      yData.add(1000000000.0 + nextRandom);
+    }
     chart.addSeries("logarithmic data", xData, yData);
 
     return chart;

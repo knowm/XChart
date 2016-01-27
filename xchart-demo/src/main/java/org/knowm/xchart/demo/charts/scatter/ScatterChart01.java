@@ -50,15 +50,6 @@ public class ScatterChart01 implements ExampleChart {
   @Override
   public Chart getChart() {
 
-    List<Double> xData = new LinkedList<Double>();
-    List<Double> yData = new LinkedList<Double>();
-    Random random = new Random();
-    int size = 1000;
-    for (int i = 0; i < size; i++) {
-      xData.add(random.nextGaussian() / 1000);
-      yData.add(-1000000 + random.nextGaussian());
-    }
-
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).build();
 
@@ -69,6 +60,14 @@ public class ScatterChart01 implements ExampleChart {
     chart.getStyler().setMarkerSize(16);
 
     // Series
+    List<Double> xData = new LinkedList<Double>();
+    List<Double> yData = new LinkedList<Double>();
+    Random random = new Random();
+    int size = 1000;
+    for (int i = 0; i < size; i++) {
+      xData.add(random.nextGaussian() / 1000);
+      yData.add(-1000000 + random.nextGaussian());
+    }
     chart.addSeries("Gaussian Blob", xData, yData);
 
     return chart;

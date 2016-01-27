@@ -39,6 +39,11 @@ import org.knowm.xchart.internal.style.lines.SeriesLines;
 import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
+ * Customized Chart
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>
  * Extensive Chart Customization
  */
 public class LineChart03 implements ExampleChart {

@@ -34,7 +34,7 @@ import org.knowm.xchart.internal.style.Styler.LegendPosition;
  * <li>All positive values
  * <li>Single series
  * <li>Place legend at Inside-NW position
- * <li>Bars touch X-Axis
+ * <li>Bars span 100% allowed space
  */
 public class BarChart01 implements ExampleChart {
 
