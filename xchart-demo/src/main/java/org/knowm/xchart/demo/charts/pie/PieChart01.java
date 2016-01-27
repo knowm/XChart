@@ -42,7 +42,7 @@ public class PieChart01 implements ExampleChart<Chart_Pie> {
   public Chart_Pie getChart() {
 
     // Create Chart
-    Chart_Pie chart = new ChartBuilder_Pie().width(400).height(500).title(getClass().getSimpleName()).build();
+    Chart_Pie chart = new ChartBuilder_Pie().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
 

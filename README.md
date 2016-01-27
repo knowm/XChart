@@ -74,17 +74,23 @@ The different Stylers contain chart styling methods specific to the correspondin
 
 ### Chart_XY
 
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/Chart_XY.png)
+
 `Chart_XY` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals. 
 
 Series render styles include: `Line`, `Scatter` and `Area`.
 
 ### Chart_Category 
 
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/Chart_Category.png)
+
 `Chart_Category` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. For the X-Axis, each category is given its own tick mark.  
 
 Series render styles include: `Bar`, `Line`, `Scatter`, `Area` and `Stick`.
 
 ### Chart_Pie
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/Chart_Pie.png)
 
 `Chart_Pie` charts take String data types for the pie slice name and Number data types for the pie slice value.  
 

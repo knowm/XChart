@@ -45,7 +45,7 @@ public class PieChart03 implements ExampleChart<Chart_Pie> {
   public Chart_Pie getChart() {
 
     // Create Chart
-    Chart_Pie chart = new ChartBuilder_Pie().width(400).height(500).title(getClass().getSimpleName()).theme(ChartTheme.GGPlot2).build();
+    Chart_Pie chart = new ChartBuilder_Pie().width(800).height(600).title(getClass().getSimpleName()).theme(ChartTheme.GGPlot2).build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
