@@ -2,8 +2,6 @@
 
 XChart is a light weight Java library for plotting data.
 
-**NOTE: Version 3.0.0 is currently under development and close to release. There are many API changes in 3.0.0, so if you want to use the develop snapshot jars, make sure to use the example code on the develop branch as a guide! For version 2.6.1, make sure to read the README file on the master branch!**
-
 ## Description
 
 XChart is a light-weight and convenient library for plotting data designed to go from data to chart in the least amount of time possible and to take the guess-work out of customizing the chart style.
