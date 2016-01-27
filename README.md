@@ -35,7 +35,7 @@ Charts can be saved as JPG, PNG, GIF, BMP, EPS, SVG, and PDF.
 ## Features
 
 * [x] No required additional dependencies
-* [x] ~100KB Jar
+* [x] ~164KB Jar
 * [x] Line charts
 * [x] Scatter charts
 * [x] Area charts
