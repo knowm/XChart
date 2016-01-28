@@ -52,9 +52,9 @@ import org.knowm.xchart.internal.chartpart.Chart;
  *
  * @author timmolter
  */
-public class XChartPanel extends JPanel {
+public class XChartPanel<T extends Chart> extends JPanel {
 
-  private final Chart chart;
+  private final T chart;
   private final Dimension preferredSize;
   private String saveAsString = "Save As...";
 
@@ -63,7 +63,7 @@ public class XChartPanel extends JPanel {
    *
    * @param chart
    */
-  public XChartPanel(final Chart chart) {
+  public XChartPanel(final T chart) {
 
     this.chart = chart;
     preferredSize = new Dimension(chart.getWidth(), chart.getHeight());
@@ -97,7 +97,7 @@ public class XChartPanel extends JPanel {
     g2d.dispose();
   }
 
-  public Chart getChart() {
+  public T getChart() {
 
     return this.chart;
   }
