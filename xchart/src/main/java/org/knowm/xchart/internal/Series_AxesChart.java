@@ -220,11 +220,11 @@ public abstract class Series_AxesChart extends Series {
   /**
    * Sets the marker for the series
    *
-   * @param seriesMarker
+   * @param marker
    */
-  public Series setMarker(Marker seriesMarker) {
+  public Series setMarker(Marker marker) {
 
-    this.marker = seriesMarker;
+    this.marker = marker;
     return this;
   }
 
