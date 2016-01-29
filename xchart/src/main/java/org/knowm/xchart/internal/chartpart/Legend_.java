@@ -136,7 +136,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     Map<String, S> map = chart.getSeriesMap();
     for (Series series : map.values()) {
 
-      if (series.isShowInLegend()) {
+      if (!series.isShowInLegend()) {
         continue;
       }
 

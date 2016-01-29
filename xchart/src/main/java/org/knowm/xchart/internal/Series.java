@@ -33,7 +33,7 @@ public abstract class Series {
 
   private Color fillColor;
 
-  private boolean showInLegend;
+  private boolean showInLegend = true;
 
   /**
    * Constructor

@@ -69,7 +69,7 @@ public class Legend_AxesChart<ST extends Styler_AxesChart, S extends Series> ext
     Map<String, Series_AxesChart> map = chart.getSeriesMap();
     for (Series_AxesChart series : map.values()) {
 
-      if (series.isShowInLegend()) {
+      if (!series.isShowInLegend()) {
         continue;
       }
 
