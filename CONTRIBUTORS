@@ -17,12 +17,15 @@ The following list of authors was automatically generated from the XChart projec
     git log --format='%aN' | sort -u
 
 Alex Nugent
+Anthony Quiros
 Bryan Cardillo
+Carlos Lopez-Camey
 Chiamh
 Christoffer SOOP
 Hwaipy Li
 Martin Crawford
 Michael Stummvoll
+Mike Jensen
 Nicolas Roduit
 Niklas Polke
 Ross Jourdain
