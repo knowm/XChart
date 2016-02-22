@@ -33,7 +33,7 @@ import org.knowm.xchart.internal.style.Styler.ChartTheme;
  * <ul>
  * <li>Building a Chart with ChartBuilder
  * <li>Applying the Matlab Theme to the Chart
- * <li>Vertical and Horizontal Lines
+ * <li>Generating Gaussian Bell Curve Data
  */
 public class ThemeChart03 implements ExampleChart {
 
