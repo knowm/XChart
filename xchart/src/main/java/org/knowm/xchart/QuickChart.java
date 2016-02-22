@@ -49,7 +49,7 @@ public final class QuickChart {
    * @param yData An array containing Y-Axis data
    * @return a Chart Object
    */
-  public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, double[] xData, double[] yData) {
+  public static Chart_XY getChart(String chartTitle, String xTitle, String yTitle, String seriesName, double[] xData, double[] yData) {
 
     double[][] yData2d = { yData };
     if (seriesName == null) {
@@ -71,7 +71,7 @@ public final class QuickChart {
    * @param yData An array of double arrays containing multiple Y-Axis data
    * @return a Chart Object
    */
-  public static Chart getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
+  public static Chart_XY getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
 
     // Create Chart
     Chart_XY chart = new Chart_XY(WIDTH, HEIGHT);

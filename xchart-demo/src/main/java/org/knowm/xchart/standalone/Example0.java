@@ -16,9 +16,9 @@
  */
 package org.knowm.xchart.standalone;
 
+import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Creates a simple Chart using QuickChart
@@ -31,7 +31,7 @@ public class Example0 {
     double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
     // Create Chart
-    Chart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+    Chart_XY chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
 
     // Show it
     new SwingWrapper(chart).displayChart();

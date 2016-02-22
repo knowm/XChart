@@ -30,11 +30,11 @@ import org.knowm.xchart.internal.chartpart.Chart;
  *
  * @author timmolter
  */
-public class SwingWrapper {
+public class SwingWrapper<T extends Chart> {
 
   private String windowTitle = "XChart";
 
-  private List<Chart> charts = new ArrayList<Chart>();
+  private List<T> charts = new ArrayList<T>();
   private int numRows;
   private int numColumns;
 
@@ -43,7 +43,7 @@ public class SwingWrapper {
    *
    * @param chart
    */
-  public SwingWrapper(Chart chart) {
+  public SwingWrapper(T chart) {
 
     this.charts.add(chart);
   }
@@ -53,7 +53,7 @@ public class SwingWrapper {
    *
    * @param charts
    */
-  public SwingWrapper(List<Chart> charts) {
+  public SwingWrapper(List<T> charts) {
 
     this.charts = charts;
 
@@ -68,7 +68,7 @@ public class SwingWrapper {
    * @param numRows - the number of rows
    * @param numColumns - the number of columns
    */
-  public SwingWrapper(List<Chart> charts, int numRows, int numColumns) {
+  public SwingWrapper(List<T> charts, int numRows, int numColumns) {
 
     this.charts = charts;
     this.numRows = numRows;
@@ -103,7 +103,7 @@ public class SwingWrapper {
       public void run() {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel chartPanel = new XChartPanel(charts.get(0));
+        JPanel chartPanel = new XChartPanel<T>(charts.get(0));
         frame.add(chartPanel);
 
         // Display the window.
@@ -146,9 +146,9 @@ public class SwingWrapper {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
 
-        for (Chart chart : charts) {
+        for (T chart : charts) {
           if (chart != null) {
-            JPanel chartPanel = new XChartPanel(chart);
+            JPanel chartPanel = new XChartPanel<T>(chart);
             frame.add(chartPanel);
           }
           else {

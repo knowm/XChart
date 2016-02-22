@@ -28,7 +28,7 @@ import de.erichseifert.vectorgraphics2d.VectorGraphics2D;
 
 /**
  * A helper class with static methods for saving Charts as bitmaps
- * 
+ *
  * @author timmolter
  */
 public final class VectorGraphicsEncoder {
