@@ -25,22 +25,58 @@ import java.awt.Color;
  */
 public enum ChartColor {
 
-  /** BLACK */
-  BLACK(new Color(0, 0, 0)),
+	/** BLACK */
+	BLACK(new Color(0, 0, 0)),
+	
+	/** DARK_GREY */
+	DARK_GREY(new Color(130, 130, 130)),
+	
+	/** GREY */
+	GREY(new Color(210, 210, 210)),
+	
+	/** LIGHT_GREY */
+	LIGHT_GREY(new Color(230, 230, 230)),
+	
+	/** WHITE */
+	WHITE(new Color(255, 255, 255)),
+	
+	/** HONEY_DEW */
+	HONEY_DEW(new Color(240, 255, 240)),
+	
+	/** IVORY_1 - KREM */
+	IVORY_1(new Color(255, 255, 240)),
+	
+	/** ANTIQUE_WHITE_1 */
+	ANTIQUE_WHITE_1(new Color(255, 239, 219)),
 
-  /** DARK_GREY */
-  DARK_GREY(new Color(130, 130, 130)),
+  	/** SEE_SHEL_1 */
+  	SEE_SHEL_1(new Color(255, 245, 238)),
+	
+  	/** ROSYBROWN */
+  	ROSYBROWN(new Color(188, 143, 143)),
+	
+  	/** DARK_ORANGE */
+  	DARK_ORANGE (new Color(255, 140, 0)),
+  
+  	/** SAGI_SALMON*/
+  	SAGI_SALMON (new Color(198, 113, 113)),
 
-  /** GREY */
-  GREY(new Color(210, 210, 210)),
-
-  /** LIGHT_GREY */
-  LIGHT_GREY(new Color(230, 230, 230)),
-
-  /** WHITE */
-  WHITE(new Color(255, 255, 255));
-
-  Color color;
+  	/** SGI_SLATE_BLUE */
+  	SGI_SLATE_BLUE(new Color(113, 113, 198)),
+  	
+  	/** SGI_SLATE_BLUE */
+  	SGI_CHART_REUSE(new Color(113, 198, 113)),
+	
+  	/** LIGHT_BLUE */
+  	LIGHT_BLUE (new Color(135, 206, 250)),
+  	
+  	/** LIGHT_BLUE1 */
+  	LIGHT_BLUE_1 (new Color(176, 226, 255)),
+	
+  	/** DODGE_BLUE_4*/
+  	DODGE_BLUE_4 (new Color(16, 78, 139));
+  	
+	Color color;
 
   /**
    * Get a AWT Color Object
