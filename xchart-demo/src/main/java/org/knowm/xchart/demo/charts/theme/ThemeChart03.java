@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -59,14 +60,14 @@ public class ThemeChart03 implements ExampleChart {
     for (int i = 0; i < 640; i++) {
       xData.add(i);
     }
-    List<Double> y1Data = getYAxis(xData, 320, 60);
-    List<Double> y2Data = getYAxis(xData, 320, 100);
+    List<Double> y1Data = getYAxis(xData, 320, 160);
+    List<Double> y2Data = getYAxis(xData, 320, 320);
     List<Double> y3Data = new ArrayList<Double>(xData.size());
     for (int i = 0; i < 640; i++) {
       y3Data.add(y1Data.get(i) - y2Data.get(i));
     }
 
-    chart.addSeries("Gaussian 1", xData, y1Data);
+    Series_XY series = chart.addSeries("Gaussian 1", xData, y1Data);
     chart.addSeries("Gaussian 2", xData, y2Data);
     chart.addSeries("Difference", xData, y3Data);
 

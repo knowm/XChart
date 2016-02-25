@@ -225,7 +225,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         previousY = yOffset;
 
         // paint marker
-        if (series.getMarker() != null) {
+        if ((stylerCategory.shouldShowMarkers() || ChartCategorySeriesRenderStyle.Scatter == series.getChartCategorySeriesRenderStyle()) && series.getMarker() != null) { // if set to Marker.NONE, the
+                                                                                                                                                                          // marker is null
           g.setColor(series.getMarkerColor());
           series.getMarker().paint(g, xOffset, yOffset, stylerCategory.getMarkerSize());
         }

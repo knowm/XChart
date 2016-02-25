@@ -28,7 +28,7 @@ public class MatlabSeriesMarkers implements SeriesMarkers {
    */
   public MatlabSeriesMarkers() {
 
-    seriesMarkers = new Marker[] { NONE };
+    seriesMarkers = new Marker[] { CIRCLE, SQUARE, DIAMOND };
   }
 
   @Override

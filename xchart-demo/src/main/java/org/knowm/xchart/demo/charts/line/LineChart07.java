@@ -28,7 +28,6 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.Styler.ChartTheme;
 import org.knowm.xchart.internal.style.Styler.LegendPosition;
-import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Line chart with multiple Category Series
@@ -60,6 +59,7 @@ public class LineChart07 implements ExampleChart {
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
     chart.getStyler().setBarWidthPercentage(0);
     chart.getStyler().setBarsOverlapped(true);
+    chart.getStyler().setShowMarkers(false);
 
     // Declare data
     List<String> xAxisKeys = Arrays.asList(new String[] { "release-0.5", "release-0.6", "release-0.7", "release-0.8", "release-0.9", "release-1.0.0", "release-1.1.0", "release-1.2.0", "release-1.3.0",
@@ -95,7 +95,6 @@ public class LineChart07 implements ExampleChart {
     // Series
     for (int i = 0; i < seriesNames.length; i++) {
       Series_Category series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
-      series.setMarker(SeriesMarkers.NONE);
       series.setShowInLegend(i % 2 == 0);
     }
 

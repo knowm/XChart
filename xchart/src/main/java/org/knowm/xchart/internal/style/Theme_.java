@@ -149,6 +149,8 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public int getMarkerSize();
 
+  public boolean showMarkers();
+
   // Error Bars ///////////////////////////////
 
   public Color getErrorBarsColor();

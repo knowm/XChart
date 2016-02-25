@@ -64,6 +64,7 @@ public abstract class Styler_AxesChart extends Styler {
 
   // Line, Scatter, Area Charts ///////////////////////////////
   private int markerSize;
+  private boolean showMarkers;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -116,6 +117,7 @@ public abstract class Styler_AxesChart extends Styler {
 
     // Line, Scatter, Area Charts ///////////////////////////////
     markerSize = theme.getMarkerSize();
+    showMarkers = theme.showMarkers();
 
     // Error Bars ///////////////////////////////
     errorBarsColor = theme.getErrorBarsColor();
@@ -617,6 +619,21 @@ public abstract class Styler_AxesChart extends Styler {
   public int getMarkerSize() {
 
     return markerSize;
+  }
+
+  /**
+   * Sets if markers should be shown for the whole chart
+   *
+   * @param showMarkers
+   */
+  public void setShowMarkers(boolean showMarkers) {
+
+    this.showMarkers = showMarkers;
+  }
+
+  public boolean shouldShowMarkers() {
+
+    return showMarkers;
   }
 
   // Error Bars ///////////////////////////////

@@ -379,6 +379,12 @@ public class Theme_Matlab implements Theme_ {
     return 8;
   }
 
+  @Override
+  public boolean showMarkers() {
+
+    return false;
+  }
+
   // Error Bars ///////////////////////////////
 
   @Override

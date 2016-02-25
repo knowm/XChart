@@ -375,6 +375,12 @@ public class Theme_XChart implements Theme_ {
     return 8;
   }
 
+  @Override
+  public boolean showMarkers() {
+
+    return true;
+  }
+
   // Error Bars ///////////////////////////////
 
   @Override
