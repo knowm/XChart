@@ -63,9 +63,9 @@ public class LineChart01 implements ExampleChart {
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setYAxisLogarithmic(true);
     chart.getStyler().setXAxisLabelRotation(45);
-    // chart.getStyleManager().setXAxisLabelAlignment(TextAlignment.Right);
-    // chart.getStyleManager().setXAxisLabelRotation(90);
-    // chart.getStyleManager().setXAxisLabelRotation(0);
+    // chart.getStyler().setXAxisLabelAlignment(TextAlignment.Right);
+    // chart.getStyler().setXAxisLabelRotation(90);
+    // chart.getStyler().setXAxisLabelRotation(0);
 
     // Series
     chart.addSeries("10^x", xData, yData);
