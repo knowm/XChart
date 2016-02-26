@@ -173,23 +173,13 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           double barWidthPercentage = stylerCategory.getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
-            xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
-          }
-          else {
-            xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
-          }
+          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
         }
         else {
           double barWidthPercentage = stylerCategory.getBarWidthPercentage();
           barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
-            xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + seriesCounter * barMargin + gridStep / chart.getSeriesMap().size() / 2;
-          }
-          else {
-            xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
-          }
+          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
         }
 
         // paint series
@@ -216,19 +206,21 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
             g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
-            Shape line = new Line2D.Double(xOffset, zeroOffset, xOffset, yOffset);
+            Shape line = new Line2D.Double(xOffset + barWidth / 2, zeroOffset, xOffset + barWidth / 2, yOffset);
             g.draw(line);
           }
 
           // paint marker
-          if (series.getMarker() != null) {
+          // if (series.getMarker() != null) {
+          if (stylerCategory.shouldShowMarkers() && series.getMarker() != null) { // if set to Marker.NONE,
+                                                                                  // the
             g.setColor(series.getMarkerColor());
 
             if (y <= 0) {
-              series.getMarker().paint(g, xOffset, zeroOffset, stylerCategory.getMarkerSize());
+              series.getMarker().paint(g, xOffset + barWidth / 2, zeroOffset, stylerCategory.getMarkerSize());
             }
             else {
-              series.getMarker().paint(g, xOffset, yOffset, stylerCategory.getMarkerSize());
+              series.getMarker().paint(g, xOffset + barWidth / 2, yOffset, stylerCategory.getMarkerSize());
             }
           }
         }
