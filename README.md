@@ -6,9 +6,9 @@ XChart is a light weight Java library for plotting data.
 
 XChart is a light-weight and convenient library for plotting data designed to go from data to chart in the least amount of time possible and to take the guess-work out of customizing the chart style.
 
-Basic usage is very simple: Create a `Chart` instance via `QuickChart`, add a series of data to it, and either display it or save it as a bitmap.  
-
 ## Simplest Example
+
+Create a `Chart` instance via `QuickChart`, add a series of data to it, and either display it or save it as a bitmap.  
 
 ```java
 
@@ -30,7 +30,79 @@ Basic usage is very simple: Create a `Chart` instance via `QuickChart`, add a se
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Simplest.png)
 
-Charts can be saved as JPG, PNG, GIF, BMP, EPS, SVG, and PDF.
+## Intermediate Example
+
+Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, style series, and display chart.
+
+```java
+
+    // Create Chart
+    Chart_XY chart = new ChartBuilder_XY().width(600).height(500).title("Gaussian Blobs").xAxisTitle("X").yAxisTitle("Y").build();
+
+    // Customize Chart
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
+    chart.getStyler().setChartTitleVisible(false);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyler().setMarkerSize(16);
+
+    // Series
+    chart.addSeries("Gaussian Blob 1", getGaussian(1000, 1, 10), getGaussian(1000, 1, 10));
+    Series_XY series = chart.addSeries("Gaussian Blob 2", getGaussian(1000, 1, 10), getGaussian(1000, 0, 5));
+    series.setMarker(SeriesMarkers.DIAMOND);
+
+    new SwingWrapper(chart).displayChart();
+```
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Intermediate.png)
+
+## Advanced Example
+
+Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, add chart to `XChartPanel`, embed in Java Swing App, and display GUI.
+
+```java
+    // Create Chart
+    final Chart_XY chart = new ChartBuilder_XY().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
+
+    // Customize Chart
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
+    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+
+    // Series
+    chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });
+    chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
+    chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
+
+    // Create and set up the window.
+    final JFrame frame = new JFrame("Advanced Example");
+
+    // Schedule a job for the event-dispatching thread:
+    // creating and showing this application's GUI.
+    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+      @Override
+      public void run() {
+
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); // <-- you need this for now
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel chartPanel = new XChartPanel(chart);
+        frame.add(chartPanel);
+
+        JLabel label = new JLabel("Blah blah blah.", SwingConstants.CENTER);
+
+        frame.add(label);
+
+        // Display the window.
+        frame.pack();
+        frame.setVisible(true);
+      }
+    });
+```
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Advanced.png)
+
+
+To make it real-time, simply call `updateSeries` on the `XChartPanel` instance.
 
 ## Features
 
@@ -106,7 +178,7 @@ All the styling options can be found in one of two possible places: 1) the Chart
 
 XChart ships with three different themes: Default `XChart`, `GGPlot2` and `Matlab`. Using a different theme is as simple as setting the Chart's theme with the `theme` method of the `ChartBuilder`.
 
-    Chart chart = new ChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
+    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.Matlab).build();
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Themes.png)
 
@@ -177,7 +249,7 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.0.1" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-3.0.1.jar:xchart-3.0.1.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-3.0.2.jar:xchart-3.0.2.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 
