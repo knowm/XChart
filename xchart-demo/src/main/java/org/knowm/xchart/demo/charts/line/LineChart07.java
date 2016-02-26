@@ -57,8 +57,8 @@ public class LineChart07 implements ExampleChart {
     chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
     chart.getStyler().setXAxisLabelRotation(270);
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
-    chart.getStyler().setBarWidthPercentage(0);
-    chart.getStyler().setBarsOverlapped(true);
+    chart.getStyler().setAvailableSpaceFill(0);
+    chart.getStyler().setOverlapped(true);
     chart.getStyler().setShowMarkers(false);
 
     // Declare data

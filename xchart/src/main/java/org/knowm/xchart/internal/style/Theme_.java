@@ -129,9 +129,9 @@ public interface Theme_ extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Bar Charts ///////////////////////////////
 
-  public double getBarWidthPercentage();
+  public double getAvailableSpaceFill();
 
-  public boolean isBarsOverlapped();
+  public boolean isOverlapped();
 
   // Pie Charts ///////////////////////////////
 

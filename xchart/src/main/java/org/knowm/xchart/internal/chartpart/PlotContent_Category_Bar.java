@@ -169,14 +169,14 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         double xOffset;
         double barWidth;
 
-        if (stylerCategory.isBarsOverlapped()) {
-          double barWidthPercentage = stylerCategory.getBarWidthPercentage();
+        if (stylerCategory.isOverlapped()) {
+          double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
         }
         else {
-          double barWidthPercentage = stylerCategory.getBarWidthPercentage();
+          double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
           barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
           xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;

@@ -54,7 +54,7 @@ public class BarChart07 implements ExampleChart {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setBarWidthPercentage(.96);
+    chart.getStyler().setAvailableSpaceFill(.96);
 
     // Series
     Histogram histogram1 = new Histogram(getGaussianData(1000), 10, -30, 30);

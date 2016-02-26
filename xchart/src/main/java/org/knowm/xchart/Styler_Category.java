@@ -27,9 +27,8 @@ public class Styler_Category extends Styler_AxesChart {
 
   private ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle;
 
-  // Bar Charts ///////////////////////////////
-  private double barWidthPercentage;
-  private boolean isBarsOverlapped;
+  private double availableSpaceFill;
+  private boolean isOverlapped;
 
   /**
    * Constructor
@@ -45,9 +44,8 @@ public class Styler_Category extends Styler_AxesChart {
 
     this.chartCategorySeriesRenderStyle = ChartCategorySeriesRenderStyle.Bar; // set default to bar
 
-    // Bar Charts ///////////////////////////////
-    barWidthPercentage = theme.getBarWidthPercentage();
-    isBarsOverlapped = theme.isBarsOverlapped();
+    availableSpaceFill = theme.getAvailableSpaceFill();
+    isOverlapped = theme.isOverlapped();
   }
 
   public ChartCategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -65,36 +63,35 @@ public class Styler_Category extends Styler_AxesChart {
     this.chartCategorySeriesRenderStyle = chartCategorySeriesRenderStyle;
   }
 
-  // Bar Charts ///////////////////////////////
+  public double getAvailableSpaceFill() {
 
-  /**
-   * set the width of a single bar in a bar chart. full width is 100%, i.e. 1.0
-   *
-   * @param barWidthPercentage
-   */
-  public void setBarWidthPercentage(double barWidthPercentage) {
-
-    this.barWidthPercentage = barWidthPercentage;
-  }
-
-  public double getBarWidthPercentage() {
-
-    return barWidthPercentage;
+    return availableSpaceFill;
   }
 
   /**
-   * set whether or no bars are overlapped. Otherwise they are places side-by-side
+   * Sets the available space for rendering each category as a percentage. For a bar chart with one series, it will be the width of the bar as a percentage of the maximum space alloted for the bar. If
+   * there are three series and three bars, the three bars will share the available space. This affects all category series render types, not only bar charts. Full width is 100%, i.e. 1.0
    *
-   * @param isBarsOverlapped
+   * @param availableSpaceFill
    */
-  public void setBarsOverlapped(boolean isBarsOverlapped) {
+  public void setAvailableSpaceFill(double availableSpaceFill) {
 
-    this.isBarsOverlapped = isBarsOverlapped;
+    this.availableSpaceFill = availableSpaceFill;
   }
 
-  public boolean isBarsOverlapped() {
+  public boolean isOverlapped() {
 
-    return isBarsOverlapped;
+    return isOverlapped;
+  }
+
+  /**
+   * set whether or not series renderings (i.e. bars, stick, etc.) are overlapped. Otherwise they are placed side-by-side.
+   *
+   * @param isOverlapped
+   */
+  public void setOverlapped(boolean isOverlapped) {
+
+    this.isOverlapped = isOverlapped;
   }
 
   /**

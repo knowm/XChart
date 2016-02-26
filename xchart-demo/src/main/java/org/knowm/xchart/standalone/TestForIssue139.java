@@ -38,7 +38,7 @@ public class TestForIssue139 {
     chart.getStyler().setLegendVisible(false);
     chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.Stick);
     // chart.getStyler().setBarsOverlapped(true);
-    chart.getStyler().setBarWidthPercentage(.25);
+    chart.getStyler().setAvailableSpaceFill(.25);
 
     chart.addSeries("A", x, a);
     chart.addSeries("B", x, b);

@@ -54,8 +54,8 @@ public class BarChart09 implements ExampleChart {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setBarWidthPercentage(.55);
-    chart.getStyler().setBarsOverlapped(true);
+    chart.getStyler().setAvailableSpaceFill(.55);
+    chart.getStyler().setOverlapped(true);
 
     // Series
     chart.addSeries("China", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 11, 23, 20, 36, 5 })));

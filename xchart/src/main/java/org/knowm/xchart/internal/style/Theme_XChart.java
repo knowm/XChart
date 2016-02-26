@@ -321,16 +321,16 @@ public class Theme_XChart implements Theme_ {
     return .92;
   }
 
-  // Bar Charts ///////////////////////////////
+  // Category Charts ///////////////////////////////
 
   @Override
-  public double getBarWidthPercentage() {
+  public double getAvailableSpaceFill() {
 
     return 0.9;
   }
 
   @Override
-  public boolean isBarsOverlapped() {
+  public boolean isOverlapped() {
 
     return false;
   }
