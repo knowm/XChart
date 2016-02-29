@@ -23,3 +23,7 @@ Issues
 
 - LinkedBar doesn't render properly due to the way bar charts are drawn; see pic
 - Outline is kinda ugly 
+
+![LinkedBar](https://github.com/billyshea/XChart/blob/develop/LinkedBar.png?raw=true)
+![LinkedBar02](https://github.com/billyshea/XChart/blob/develop/LinkedBar02.png?raw=true)
+![LinkedBar03](https://github.com/billyshea/XChart/blob/develop/LinkedBar03.png?raw=true)
