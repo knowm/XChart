@@ -21,6 +21,7 @@ import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.Color;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -110,7 +111,9 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }
-
+	
+	  double prevyOffset = 0.0; //for LinkedBar
+	  double prevxOffset = 0.0; //for LinkedBar
       int categoryCounter = 0;
       while (yItr.hasNext()) {
 
@@ -161,25 +164,36 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
         double yTransform = bounds.getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
         // double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
-
+		
         double yOffset = bounds.getY() + yTransform;
 
         double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
         double zeroOffset = bounds.getY() + zeroTransform;
         double xOffset;
         double barWidth;
+        double fullStep; //for LinkedBar
 
-        if (stylerCategory.isOverlapped()) {
-          double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
+        if (stylerCategory.isBarsOverlapped()) {
+          double barWidthPercentage = stylerCategory.getBarWidthPercentage();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
+          if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+            xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
+          }
+          else {
+            xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
+          }
         }
         else {
-          double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
+          double barWidthPercentage = 1.0; //stylerCategory.getBarWidthPercentage();
           barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
+          if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+            xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + seriesCounter * barMargin + gridStep / chart.getSeriesMap().size() / 2;
+          }
+          else {
+            xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
+          }
         }
 
         // paint series
@@ -187,10 +201,10 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
           // paint bar
           Path2D.Double path = new Path2D.Double();
-          path.moveTo(xOffset, yOffset);
-          path.lineTo(xOffset + barWidth, yOffset);
-          path.lineTo(xOffset + barWidth, zeroOffset);
-          path.lineTo(xOffset, zeroOffset);
+          path.moveTo(xOffset, yOffset); //top left
+          path.lineTo(xOffset + barWidth, yOffset); //top right
+          path.lineTo(xOffset + barWidth, zeroOffset); //bottom right
+          path.lineTo(xOffset, zeroOffset); //bottom left
           path.closePath();
 
           // g.setStroke(series.getLineStyle());
@@ -206,23 +220,58 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
             g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
-            Shape line = new Line2D.Double(xOffset + barWidth / 2, zeroOffset, xOffset + barWidth / 2, yOffset);
+            Shape line = new Line2D.Double(xOffset, zeroOffset, xOffset, yOffset);
             g.draw(line);
           }
 
           // paint marker
-          // if (series.getMarker() != null) {
-          if (stylerCategory.shouldShowMarkers() && series.getMarker() != null) { // if set to Marker.NONE,
-                                                                                  // the
+          if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
 
             if (y <= 0) {
-              series.getMarker().paint(g, xOffset + barWidth / 2, zeroOffset, stylerCategory.getMarkerSize());
+              series.getMarker().paint(g, xOffset, zeroOffset, stylerCategory.getMarkerSize());
             }
             else {
-              series.getMarker().paint(g, xOffset + barWidth / 2, yOffset, stylerCategory.getMarkerSize());
+              series.getMarker().paint(g, xOffset, yOffset, stylerCategory.getMarkerSize());
             }
           }
+        }
+        else if (series.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.LinkedBar) {
+
+          // LinkedBar style
+          // Graphs should resemble a normal bar chart 
+          // with "outside lines" only, with option to fill collor or not
+          // Examples: 
+          // https://cloud.githubusercontent.com/assets/7406678/4288360/6bc5b3ce-3dab-11e4-9a5a-f138d8b1fbe6.png
+          // https://cloud.githubusercontent.com/assets/7406678/4288364/7688a956-3dab-11e4-90b0-c25bd2860ae8.png
+          // @billyshea
+          Path2D.Double path = new Path2D.Double();
+
+          if (yItr.hasNext()) {
+          path.moveTo(xOffset + barWidth, yOffset); //top right
+          path.lineTo(xOffset, yOffset); //top left
+          if ( prevyOffset == 0.0 ) {
+          path.lineTo(xOffset, zeroOffset); } //close leftmost bar
+          else {
+          path.lineTo(xOffset, prevyOffset); } }// line to previous point
+          
+		  else {
+		  path.moveTo(xOffset + barWidth, zeroOffset); //close rightmost bar
+          path.lineTo(xOffset + barWidth, yOffset); //top right
+          path.lineTo(xOffset, yOffset); //top left
+		  path.lineTo(xOffset, prevyOffset); }//bottom left
+
+
+          g.setStroke(series.getLineStyle());
+          g.setColor(series.getLineColor());
+          g.draw(path);
+          
+		  g.setColor(new Color(0,0,0,0));
+          path.lineTo(xOffset, zeroOffset);
+          path.lineTo(xOffset + barWidth, zeroOffset);
+          g.draw(path);
+          g.setColor(series.getFillColor());
+          g.fill(path);
         }
         else {
 
@@ -284,7 +333,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           line = new Line2D.Double(errorBarOffset - 3, topEBOffset, errorBarOffset + 3, topEBOffset);
           g.draw(line);
         }
-
+		prevyOffset = yOffset; //for LinkedBar
+		prevxOffset = xOffset; //for LinkedBar
       }
       seriesCounter++;
     }
