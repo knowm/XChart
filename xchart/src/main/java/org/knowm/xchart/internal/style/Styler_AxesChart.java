@@ -514,7 +514,7 @@ public abstract class Styler_AxesChart extends Styler {
   // Chart Plot Area ///////////////////////////////
 
   /**
-   * sets the visibility of the gridlines on the plot area
+   * sets the visibility of the gridlines inside the plot area
    *
    * @param isPlotGridLinesVisible
    */

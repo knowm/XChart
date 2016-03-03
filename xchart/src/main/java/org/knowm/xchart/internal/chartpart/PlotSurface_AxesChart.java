@@ -67,6 +67,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
     // paint grid lines and/or inner plot ticks
 
     // horizontal
+
     if (stylerAxesChart.isPlotGridHorizontalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {
 
       List<Double> yAxisTickLocations = chart.getYAxis().getAxisTickCalculator().getTickLocations();
@@ -101,7 +102,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
 
     // vertical
 
-    if ((stylerAxesChart.isPlotGridVerticalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible())) {
+    if (stylerAxesChart.isPlotGridVerticalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {
 
       List<Double> xAxisTickLocations = chart.getXAxis().getAxisTickCalculator().getTickLocations();
       for (int i = 0; i < xAxisTickLocations.size(); i++) {
@@ -113,6 +114,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
 
           // draw lines
           if (stylerAxesChart.isPlotGridVerticalLinesVisible()) {
+
             g.setColor(stylerAxesChart.getPlotGridLinesColor());
             g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
 
