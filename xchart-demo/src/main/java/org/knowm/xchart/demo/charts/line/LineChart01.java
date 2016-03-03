@@ -63,6 +63,7 @@ public class LineChart01 implements ExampleChart {
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setYAxisLogarithmic(true);
     chart.getStyler().setXAxisLabelRotation(45);
+
     // chart.getStyler().setXAxisLabelAlignment(TextAlignment.Right);
     // chart.getStyler().setXAxisLabelRotation(90);
     // chart.getStyler().setXAxisLabelRotation(0);

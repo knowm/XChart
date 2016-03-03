@@ -32,6 +32,10 @@ import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Hour Scale
+ * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Hiding Y-Axis Axis Ticks (labels, tick marks, tick line)
  */
 public class DateChart04 implements ExampleChart {
 
@@ -50,6 +54,7 @@ public class DateChart04 implements ExampleChart {
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setYAxisTicksVisible(false);
 
     // Series
     List<Date> xData = new ArrayList<Date>();

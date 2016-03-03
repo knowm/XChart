@@ -269,14 +269,15 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
       titleHeight = rectangle.getHeight() + stylerAxesChart.getAxisTitlePadding();
     }
 
+    this.axisTickCalculator = getAxisTickCalculator(workingSpace);
+
     // Axis tick labels
     double axisTickLabelsHeight = 0.0;
-    if (stylerAxesChart.isXAxisTicksVisible() || stylerAxesChart.isPlotGridVerticalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {
+    if (stylerAxesChart.isXAxisTicksVisible()) {
 
       // get some real tick labels
       // System.out.println("XAxisHeightHint");
       // System.out.println("workingSpace: " + workingSpace);
-      this.axisTickCalculator = getAxisTickCalculator(workingSpace);
 
       String sampleLabel = "";
       // find the longest String in all the labels
@@ -309,14 +310,15 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
       titleHeight = rectangle.getHeight() + stylerAxesChart.getAxisTitlePadding();
     }
 
+    this.axisTickCalculator = getAxisTickCalculator(workingSpace);
+
     // Axis tick labels
     double axisTickLabelsHeight = 0.0;
-    if (stylerAxesChart.isYAxisTicksVisible() || stylerAxesChart.isPlotGridHorizontalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {
+    if (stylerAxesChart.isYAxisTicksVisible()) {
 
       // get some real tick labels
       // System.out.println("XAxisHeightHint");
       // System.out.println("workingSpace: " + workingSpace);
-      this.axisTickCalculator = getAxisTickCalculator(workingSpace);
 
       String sampleLabel = "";
       // find the longest String in all the labels
