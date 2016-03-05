@@ -92,9 +92,20 @@ public class StackedBarChart {
     }
 
     public Chart_Category addChartElements(Chart_Category chart) {
+        return addChartElements(chart, true);
+    }
+    
+    /**
+     * Adds data elements to chart 
+     * 
+     * @param chart Chart to render
+     * @param overlapped true if stacked false if placed side by side
+     * @return 
+     */
+    public Chart_Category addChartElements(Chart_Category chart, boolean overlapped) {
 
         // Customize Chart
-        chart.getStyler().setBarsOverlapped(true);// keep it true for stackbar , due to overlaping
+        chart.getStyler().setBarsOverlapped(overlapped);
 
         int i = 0;
         for (String label : labels) {
