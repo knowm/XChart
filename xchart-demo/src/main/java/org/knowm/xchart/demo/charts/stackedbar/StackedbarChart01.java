@@ -51,7 +51,7 @@ public class StackedbarChart01 implements ExampleChart {
          List<Double> slugs = new ArrayList<Double>(Arrays.asList(new Double[]{6.0, 1.0, 3.0, 2.0, 1.0}));
          
          StackedBarChart stackedBarChart = new StackedBarChart(labels, xData, fish, worms, birds, ants, slugs);
-         chart = stackedBarChart.addChartElements(chart);
+         chart = stackedBarChart.addChartElements(chart, true);
          return chart;
 
     }
