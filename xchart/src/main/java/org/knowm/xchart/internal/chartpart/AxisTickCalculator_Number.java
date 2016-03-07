@@ -136,7 +136,8 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       // System.out.println("gridStepInChartSpace: " + gridStepInChartSpace);
 
       BigDecimal gridStepBigDecimal = BigDecimal.valueOf(gridStep);
-      BigDecimal cleanedGridStep = gridStepBigDecimal.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
+      int scale = Math.max(10, gridStepBigDecimal.scale());
+      BigDecimal cleanedGridStep = gridStepBigDecimal.setScale(scale, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
       // TODO figure this out. It happens once in a blue moon.
       BigDecimal firstPosition = null;
