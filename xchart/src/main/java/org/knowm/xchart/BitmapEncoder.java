@@ -129,10 +129,14 @@ public final class BitmapEncoder {
 
       File file = new File(addFileExtension(fileName, bitmapFormat));
       FileImageOutputStream output = new FileImageOutputStream(file);
-      writer.setOutput(output);
-      IIOImage image = new IIOImage(bufferedImage, null, metadata);
-      writer.write(null, image, iwp);
-      writer.dispose();
+	  try {
+		writer.setOutput(output);
+		IIOImage image = new IIOImage(bufferedImage, null, metadata);
+		writer.write(null, image, iwp);
+		writer.dispose();
+		} finally {
+		output.close();
+		}
     }
   }
 
