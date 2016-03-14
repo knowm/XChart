@@ -26,10 +26,10 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_AxesChart;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.knowm.xchart.internal.style.Styler.ChartTheme;
-import org.knowm.xchart.internal.style.Theme_;
+import org.knowm.xchart.style.SeriesColorMarkerLineStyle;
+import org.knowm.xchart.style.SeriesColorMarkerLineStyleCycler;
+import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Theme_;
 
 /**
  * @author timmolter

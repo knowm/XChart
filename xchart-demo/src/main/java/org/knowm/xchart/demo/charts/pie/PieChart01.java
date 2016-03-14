@@ -35,7 +35,7 @@ public class PieChart01 implements ExampleChart<Chart_Pie> {
 
     ExampleChart<Chart_Pie> exampleChart = new PieChart01();
     Chart_Pie chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<Chart_Pie>(chart).displayChart();
   }
 
   @Override

@@ -23,9 +23,8 @@ import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.lines.SeriesLines;
-import org.knowm.xchart.internal.style.markers.SeriesMarkers;
+import org.knowm.xchart.style.lines.SeriesLines;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Logarithmic Y-Axis with Error Bars
@@ -37,17 +36,17 @@ import org.knowm.xchart.internal.style.markers.SeriesMarkers;
  * <li>Setting min and max values for Y-Axis
  * <li>Multi-line series labels in legend
  */
-public class LineChart06 implements ExampleChart {
+public class LineChart06 implements ExampleChart<Chart_XY> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart06();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_XY> exampleChart = new LineChart06();
+    Chart_XY chart = exampleChart.getChart();
+    new SwingWrapper<Chart_XY>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).build();

@@ -25,7 +25,7 @@ import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * @author timmolter

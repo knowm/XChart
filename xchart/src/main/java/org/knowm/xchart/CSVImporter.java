@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * This class is used to create a Chart object from a folder containing one or more CSV files. The parent folder's name becomes the title of the

@@ -19,7 +19,7 @@ package org.knowm.xchart.internal.chartpart;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.Styler_XY;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.Styler_AxesChart;
+import org.knowm.xchart.style.Styler_AxesChart;
 
 /**
  * @author timmolter

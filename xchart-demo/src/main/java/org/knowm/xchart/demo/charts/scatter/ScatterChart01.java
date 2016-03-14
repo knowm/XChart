@@ -25,8 +25,7 @@ import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Gaussian Blob
@@ -38,17 +37,17 @@ import org.knowm.xchart.internal.style.Styler.LegendPosition;
  * <li>Setting marker size
  * <li>Formatting of negative numbers with large magnitude but small differences
  */
-public class ScatterChart01 implements ExampleChart {
+public class ScatterChart01 implements ExampleChart<Chart_XY> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new ScatterChart01();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_XY> exampleChart = new ScatterChart01();
+    Chart_XY chart = exampleChart.getChart();
+    new SwingWrapper<Chart_XY>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).build();

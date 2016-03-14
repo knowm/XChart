@@ -25,8 +25,7 @@ import org.knowm.xchart.Chart_Category;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Histogram Not Overlapped
@@ -37,17 +36,17 @@ import org.knowm.xchart.internal.style.Styler.LegendPosition;
  * <li>Bar Chart styles - not overlapped, bar width
  * <li>Integer data values
  */
-public class BarChart07 implements ExampleChart {
+public class BarChart07 implements ExampleChart<Chart_Category> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new BarChart07();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_Category> exampleChart = new BarChart07();
+    Chart_Category chart = exampleChart.getChart();
+    new SwingWrapper<Chart_Category>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_Category getChart() {
 
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();

@@ -23,8 +23,7 @@ import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * Default XChart Theme
@@ -33,17 +32,17 @@ import org.knowm.xchart.internal.style.Styler.ChartTheme;
  * <ul>
  * <li>Setting marker size
  */
-public class ThemeChart01 implements ExampleChart {
+public class ThemeChart01 implements ExampleChart<Chart_XY> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new ThemeChart01();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_XY> exampleChart = new ThemeChart01();
+    Chart_XY chart = exampleChart.getChart();
+    new SwingWrapper<Chart_XY>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.XChart).title("XChart Theme").xAxisTitle("X").yAxisTitle("Y").build();

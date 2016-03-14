@@ -19,7 +19,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.Styler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * @author timmolter

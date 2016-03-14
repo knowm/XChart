@@ -19,9 +19,9 @@ import java.io.IOException;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
+import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * @author timmolter

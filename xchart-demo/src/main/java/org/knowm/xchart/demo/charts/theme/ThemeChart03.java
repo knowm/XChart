@@ -24,9 +24,8 @@ import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.ChartTheme;
-import org.knowm.xchart.internal.style.markers.SeriesMarkers;
+import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Matlab Theme
@@ -37,17 +36,17 @@ import org.knowm.xchart.internal.style.markers.SeriesMarkers;
  * <li>Applying the Matlab Theme to the Chart
  * <li>Generating Gaussian Bell Curve Data
  */
-public class ThemeChart03 implements ExampleChart {
+public class ThemeChart03 implements ExampleChart<Chart_XY> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new ThemeChart03();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_XY> exampleChart = new ThemeChart03();
+    Chart_XY chart = exampleChart.getChart();
+    new SwingWrapper<Chart_XY>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();

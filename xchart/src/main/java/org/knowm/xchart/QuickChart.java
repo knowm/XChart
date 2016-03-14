@@ -19,7 +19,7 @@ package org.knowm.xchart;
 import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.markers.SeriesMarkers;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * A convenience class for making Charts with one line of code

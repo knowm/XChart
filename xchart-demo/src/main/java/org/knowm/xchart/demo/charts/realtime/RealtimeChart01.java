@@ -26,7 +26,6 @@ import javax.swing.JFrame;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Realtime
@@ -88,7 +87,7 @@ public class RealtimeChart01 implements ExampleChart {
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     yData = getRandomData(5);
 

@@ -21,7 +21,7 @@ import org.knowm.xchart.Chart_Pie;
 import org.knowm.xchart.Styler_Pie.AnnotationType;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * Pie Chart with 5 Slices and customization
@@ -38,7 +38,7 @@ public class PieChart03 implements ExampleChart<Chart_Pie> {
 
     ExampleChart<Chart_Pie> exampleChart = new PieChart03();
     Chart_Pie chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<Chart_Pie>(chart).displayChart();
   }
 
   @Override

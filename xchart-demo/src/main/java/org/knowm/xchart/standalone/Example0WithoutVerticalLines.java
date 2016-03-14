@@ -24,7 +24,7 @@ import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.markers.SeriesMarkers;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Creates a simple Chart using QuickChart

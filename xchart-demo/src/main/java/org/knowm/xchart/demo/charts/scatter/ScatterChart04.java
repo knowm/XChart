@@ -26,8 +26,7 @@ import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.markers.SeriesMarkers;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Error Bars
@@ -40,17 +39,17 @@ import org.knowm.xchart.internal.style.markers.SeriesMarkers;
  * <li>Setting Series Marker and Marker Color
  * <li>Using a custom decimal pattern
  */
-public class ScatterChart04 implements ExampleChart {
+public class ScatterChart04 implements ExampleChart<Chart_XY> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new ScatterChart04();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_XY> exampleChart = new ScatterChart04();
+    Chart_XY chart = exampleChart.getChart();
+    new SwingWrapper<Chart_XY>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("ScatterChart04").xAxisTitle("X").yAxisTitle("Y").build();

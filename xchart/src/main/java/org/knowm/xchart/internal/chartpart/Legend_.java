@@ -27,7 +27,7 @@ import java.util.Map;
 
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.style.Styler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * @author timmolter

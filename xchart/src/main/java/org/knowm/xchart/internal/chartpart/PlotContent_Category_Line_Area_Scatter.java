@@ -30,8 +30,8 @@ import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.style.Styler;
-import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
  * @author timmolter
@@ -156,7 +156,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         else {
           y = yOrig;
         }
-        System.out.println(y);
+        // System.out.println(y);
 
         double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 

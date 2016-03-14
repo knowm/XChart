@@ -28,7 +28,6 @@ import org.knowm.xchart.ChartBuilder_XY;
 import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * Year scale
@@ -38,17 +37,17 @@ import org.knowm.xchart.internal.chartpart.Chart;
  * <li>Rotated X-Axis labels
  * <li>Setting a custom date formatter String
  */
-public class DateChart08 implements ExampleChart {
+public class DateChart08 implements ExampleChart<Chart_XY> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new DateChart08();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_XY> exampleChart = new DateChart08();
+    Chart_XY chart = exampleChart.getChart();
+    new SwingWrapper<Chart_XY>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Rotated Tick Labels").build();

@@ -22,7 +22,7 @@ import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY;
 import org.knowm.xchart.VectorGraphicsEncoder;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
-import org.knowm.xchart.internal.style.markers.SeriesMarkers;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Creates a simple Chart and saves it as a PNG and JPEG image file.

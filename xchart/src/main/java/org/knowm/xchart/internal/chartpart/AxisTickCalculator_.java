@@ -25,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.Styler_AxesChart;
+import org.knowm.xchart.style.Styler_AxesChart;
 
 /**
  * @author timmolter

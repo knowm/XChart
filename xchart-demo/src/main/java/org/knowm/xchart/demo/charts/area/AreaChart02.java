@@ -24,8 +24,7 @@ import org.knowm.xchart.Chart_XY;
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Null Y-Axis Data Points
@@ -36,17 +35,17 @@ import org.knowm.xchart.internal.style.Styler.LegendPosition;
  * <li>null Y-Axis values
  * <li>ChartBuilder
  */
-public class AreaChart02 implements ExampleChart {
+public class AreaChart02 implements ExampleChart<Chart_XY> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new AreaChart02();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_XY> exampleChart = new AreaChart02();
+    Chart_XY chart = exampleChart.getChart();
+    new SwingWrapper<Chart_XY>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     // Create Chart
     Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();

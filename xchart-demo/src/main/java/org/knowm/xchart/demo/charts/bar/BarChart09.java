@@ -25,9 +25,8 @@ import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.ChartTheme;
-import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Category chart with Bar, Line and Scatter Series
@@ -37,17 +36,17 @@ import org.knowm.xchart.internal.style.Styler.LegendPosition;
  * <li>Mixed series types - Bar, Line and Scatter
  * <li>Bar Chart styles - overlapped, bar width
  */
-public class BarChart09 implements ExampleChart {
+public class BarChart09 implements ExampleChart<Chart_Category> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new BarChart09();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_Category> exampleChart = new BarChart09();
+    Chart_Category chart = exampleChart.getChart();
+    new SwingWrapper<Chart_Category>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_Category getChart() {
 
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Value vs. Letter").xAxisTitle("Letter").yAxisTitle("Value").theme(ChartTheme.GGPlot2).build();

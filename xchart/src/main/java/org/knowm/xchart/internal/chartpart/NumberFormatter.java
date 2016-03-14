@@ -21,7 +21,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.Styler_AxesChart;
+import org.knowm.xchart.style.Styler_AxesChart;
 
 /**
  * @author timmolter

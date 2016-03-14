@@ -90,7 +90,7 @@ public class RealtimeChart02 implements ExampleChart {
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_XY getChart() {
 
     xData = getMonotonicallyIncreasingData(5);
     yData = getRandomData(5);

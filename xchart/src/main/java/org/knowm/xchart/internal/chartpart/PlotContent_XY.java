@@ -32,8 +32,8 @@ import org.knowm.xchart.Styler_XY;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
-import org.knowm.xchart.internal.style.Styler_AxesChart;
-import org.knowm.xchart.internal.style.lines.SeriesLines;
+import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
  * @author timmolter

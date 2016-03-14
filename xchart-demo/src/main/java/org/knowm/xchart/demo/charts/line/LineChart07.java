@@ -25,10 +25,9 @@ import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.ChartTheme;
-import org.knowm.xchart.internal.style.Styler.LegendPosition;
-import org.knowm.xchart.internal.style.markers.SeriesMarkers;
+import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Line chart with multiple Category Series
@@ -39,17 +38,17 @@ import org.knowm.xchart.internal.style.markers.SeriesMarkers;
  * <li>GGPlot2 Theme
  * <li>disabling some series shown in legend
  */
-public class LineChart07 implements ExampleChart {
+public class LineChart07 implements ExampleChart<Chart_Category> {
 
   public static void main(String[] args) {
 
-    ExampleChart exampleChart = new LineChart07();
-    Chart chart = exampleChart.getChart();
-    new SwingWrapper(chart).displayChart();
+    ExampleChart<Chart_Category> exampleChart = new LineChart07();
+    Chart_Category chart = exampleChart.getChart();
+    new SwingWrapper<Chart_Category>(chart).displayChart();
   }
 
   @Override
-  public Chart getChart() {
+  public Chart_Category getChart() {
 
     // Create Chart
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();

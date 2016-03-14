@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.style.Styler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * An XChart Chart

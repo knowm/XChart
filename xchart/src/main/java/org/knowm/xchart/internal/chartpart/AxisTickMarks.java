@@ -21,10 +21,10 @@ import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
+import org.knowm.xchart.Series_AxesChart;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.internal.style.Styler_AxesChart;
+import org.knowm.xchart.style.Styler_AxesChart;
 
 /**
  * Axis tick marks. This includes the little tick marks and the line that hugs the plot area.
