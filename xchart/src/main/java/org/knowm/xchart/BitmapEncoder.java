@@ -59,7 +59,7 @@ public final class BitmapEncoder {
 
   /**
    * Only adds the extension of the BitmapFormat to the filename if the filename doesn't already have it.
-   * 
+   *
    * @param fileName
    * @param bitmapFormat
    * @return filename (if extension already exists), otherwise;: filename + "." + extension
@@ -87,8 +87,11 @@ public final class BitmapEncoder {
     BufferedImage bufferedImage = getBufferedImage(chart);
 
     OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
-    ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), out);
-    out.close();
+    try {
+      ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), out);
+    } finally {
+      out.close();
+    }
   }
 
   /**
@@ -131,8 +134,12 @@ public final class BitmapEncoder {
       FileImageOutputStream output = new FileImageOutputStream(file);
       writer.setOutput(output);
       IIOImage image = new IIOImage(bufferedImage, null, metadata);
-      writer.write(null, image, iwp);
-      writer.dispose();
+      try {
+        writer.write(null, image, iwp);
+        writer.dispose();
+      } finally {
+        output.close();
+      }
     }
   }
 
@@ -211,10 +218,12 @@ public final class BitmapEncoder {
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), baos);
-    baos.flush();
-    imageInBytes = baos.toByteArray();
-    baos.close();
-
+    try {
+      baos.flush();
+      imageInBytes = baos.toByteArray();
+    } finally {
+      baos.close();
+    }
     return imageInBytes;
   }
 
