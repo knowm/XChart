@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.demo.charts.theme;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +74,9 @@ public class ThemeChart03 implements ExampleChart<Chart_XY> {
     series.setMarker(SeriesMarkers.NONE);
     series = chart.addSeries("Difference", xData, y3Data);
     series.setMarker(SeriesMarkers.NONE);
+    // series.setLineStyle(new BasicStroke(5.0f));
+    series.setLineColor(Color.pink);
+    series.setLineWidth(10.0f);
 
     return chart;
   }

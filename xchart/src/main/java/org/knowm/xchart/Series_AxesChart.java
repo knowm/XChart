@@ -62,6 +62,9 @@ public abstract class Series_AxesChart extends Series {
   /** Line Color */
   private Color lineColor;
 
+  /** Line Width */
+  private float lineWidth = -1.0f;
+
   /** Marker Style */
   private Marker marker;
 
@@ -204,6 +207,9 @@ public abstract class Series_AxesChart extends Series {
   public Series_AxesChart setLineStyle(BasicStroke basicStroke) {
 
     stroke = basicStroke;
+    if (this.lineWidth > 0.0f) {
+      this.stroke = new BasicStroke(lineWidth, this.stroke.getEndCap(), this.stroke.getLineJoin(), this.stroke.getMiterLimit(), this.stroke.getDashArray(), this.stroke.getDashPhase());
+    }
     return this;
   }
 
@@ -215,6 +221,17 @@ public abstract class Series_AxesChart extends Series {
   public Series_AxesChart setLineColor(java.awt.Color color) {
 
     this.lineColor = color;
+    return this;
+  }
+
+  /**
+   * Set the line width of the series
+   *
+   * @param color
+   */
+  public Series_AxesChart setLineWidth(float lineWidth) {
+
+    this.lineWidth = lineWidth;
     return this;
   }
 
@@ -298,6 +315,11 @@ public abstract class Series_AxesChart extends Series {
   public Color getLineColor() {
 
     return lineColor;
+  }
+
+  public float getLineWidth() {
+
+    return lineWidth;
   }
 
   public Color getMarkerColor() {
