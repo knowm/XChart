@@ -224,7 +224,7 @@ public class PlotContent_XY<ST extends Styler_AxesChart, S extends Series> exten
         previousY = yOffset;
 
         // paint marker
-        if ((stylerXY.shouldShowMarkers() || ChartXYSeriesRenderStyle.Scatter == series.getChartXYSeriesRenderStyle()) && series.getMarker() != null) { // if set to Marker.NONE, the marker is null
+        if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
           series.getMarker().paint(g, xOffset, yOffset, stylerXY.getMarkerSize());
         }

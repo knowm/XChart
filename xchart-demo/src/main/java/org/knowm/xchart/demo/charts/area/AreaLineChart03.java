@@ -25,6 +25,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.Styler;
 import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Combination Line & Area Chart
@@ -34,7 +35,7 @@ import org.knowm.xchart.internal.style.Styler.LegendPosition;
  * <li>Combination of Line and Area series
  * <li>Axis Label Alignment
  * <li>Ensuring a chart axis on a tick
- * <li>Turning off series markers for entire chart
+ * <li>Turning off series markers
  */
 public class AreaLineChart03 implements ExampleChart {
 
@@ -58,7 +59,6 @@ public class AreaLineChart03 implements ExampleChart {
     chart.getStyler().setYAxisDecimalPattern("$ #,###.##");
     chart.getStyler().setPlotMargin(0);
     chart.getStyler().setPlotContentSize(.95);
-    chart.getStyler().setShowMarkers(false);
 
     // Series
     // @formatter:off
@@ -84,6 +84,7 @@ public class AreaLineChart03 implements ExampleChart {
 
     Series_XY seriesLiability = chart.addSeries("Liability", xAges, yLiability);
     seriesLiability.setChartXYSeriesRenderStyle(Series_XY.ChartXYSeriesRenderStyle.Area);
+    seriesLiability.setMarker(SeriesMarkers.NONE);
 
     chart.addSeries("75th Percentile", xAges, yPercentile75th);
     chart.addSeries("50th Percentile", xAges, yPercentile50th);

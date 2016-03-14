@@ -26,6 +26,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.internal.style.markers.SeriesMarkers;
 
 /**
  * Matlab Theme
@@ -68,8 +69,11 @@ public class ThemeChart03 implements ExampleChart {
     }
 
     Series_XY series = chart.addSeries("Gaussian 1", xData, y1Data);
-    chart.addSeries("Gaussian 2", xData, y2Data);
-    chart.addSeries("Difference", xData, y3Data);
+    series.setMarker(SeriesMarkers.NONE);
+    series = chart.addSeries("Gaussian 2", xData, y2Data);
+    series.setMarker(SeriesMarkers.NONE);
+    series = chart.addSeries("Difference", xData, y3Data);
+    series.setMarker(SeriesMarkers.NONE);
 
     return chart;
   }

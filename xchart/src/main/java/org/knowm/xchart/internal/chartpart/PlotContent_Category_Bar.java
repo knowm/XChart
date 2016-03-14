@@ -212,8 +212,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
           // paint marker
           // if (series.getMarker() != null) {
-          if (stylerCategory.shouldShowMarkers() && series.getMarker() != null) { // if set to Marker.NONE,
-                                                                                  // the
+          if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
 
             if (y <= 0) {

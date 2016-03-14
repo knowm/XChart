@@ -77,6 +77,5 @@ public class DateChart04 implements ExampleChart {
     chart.addSeries("blah", xData, yData);
 
     return chart;
-
   }
 }
