@@ -18,7 +18,6 @@ package org.knowm.xchart;
 
 import java.util.List;
 
-import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
@@ -108,7 +107,7 @@ public final class QuickChart {
    * @param yData A Collection containing Y-Axis data
    * @return a Chart Object
    */
-  public static Chart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<? extends Number> xData, List<? extends Number> yData) {
+  public static Chart_XY getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<? extends Number> xData, List<? extends Number> yData) {
 
     // Create Chart
     Chart_XY chart = new Chart_XY(WIDTH, HEIGHT);

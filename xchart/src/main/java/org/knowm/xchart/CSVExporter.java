@@ -136,7 +136,7 @@ public class CSVExporter {
     if (collection == null) {
       return null;
     }
-    Iterator iterator = collection.iterator();
+    Iterator<? extends Object> iterator = collection.iterator();
     // handle null, zero and one elements before building a buffer
     if (iterator == null) {
       return null;

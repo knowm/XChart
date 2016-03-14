@@ -140,7 +140,6 @@ public class CSVImporter {
 
     BufferedReader bufferedReader = null;
     try {
-      int counter = 0;
       String line = null;
       bufferedReader = new BufferedReader(new FileReader(csvFile));
       while ((line = bufferedReader.readLine()) != null) {

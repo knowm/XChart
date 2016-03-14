@@ -28,8 +28,8 @@ import org.knowm.xchart.internal.chartpart.Legend_AxesChart;
 import org.knowm.xchart.internal.chartpart.Plot_XY;
 import org.knowm.xchart.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.style.SeriesColorMarkerLineStyleCycler;
-import org.knowm.xchart.style.Styler_XY;
 import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler_XY;
 import org.knowm.xchart.style.Theme_;
 
 /**
