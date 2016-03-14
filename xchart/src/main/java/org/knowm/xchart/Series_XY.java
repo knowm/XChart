@@ -72,9 +72,10 @@ public class Series_XY extends Series_AxesChart {
     return chartXYSeriesRenderStyle;
   }
 
-  public void setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
+  public Series_XY setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartXYSeriesRenderStyle = chartXYSeriesRenderStyle;
+    return this;
   }
 
   @Override

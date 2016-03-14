@@ -27,10 +27,10 @@ import java.util.Map;
 
 import org.knowm.xchart.Series_Category;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
-import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler_Category;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**

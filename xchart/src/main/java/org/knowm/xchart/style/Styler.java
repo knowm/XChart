@@ -134,9 +134,10 @@ public abstract class Styler {
    *
    * @param color
    */
-  public void setChartBackgroundColor(Color color) {
+  public Styler setChartBackgroundColor(Color color) {
 
     this.chartBackgroundColor = color;
+    return this;
   }
 
   public Color getChartBackgroundColor() {
@@ -149,9 +150,10 @@ public abstract class Styler {
    *
    * @param color
    */
-  public void setChartFontColor(Color color) {
+  public Styler setChartFontColor(Color color) {
 
     this.chartFontColor = color;
+    return this;
   }
 
   public Color getChartFontColor() {
@@ -164,9 +166,10 @@ public abstract class Styler {
    *
    * @param chartPadding
    */
-  public void setChartPadding(int chartPadding) {
+  public Styler setChartPadding(int chartPadding) {
 
     this.chartPadding = chartPadding;
+    return this;
   }
 
   public int getChartPadding() {
@@ -181,9 +184,10 @@ public abstract class Styler {
     return seriesColors;
   }
 
-  public void setSeriesColors(Color[] seriesColors) {
+  public Styler setSeriesColors(Color[] seriesColors) {
 
     this.seriesColors = seriesColors;
+    return this;
   }
 
   public BasicStroke[] getSeriesLines() {
@@ -191,9 +195,10 @@ public abstract class Styler {
     return seriesLines;
   }
 
-  public void setSeriesLines(BasicStroke[] seriesLines) {
+  public Styler setSeriesLines(BasicStroke[] seriesLines) {
 
     this.seriesLines = seriesLines;
+    return this;
   }
 
   public Marker[] getSeriesMarkers() {
@@ -201,9 +206,10 @@ public abstract class Styler {
     return seriesMarkers;
   }
 
-  public void setSeriesMarkers(Marker[] seriesMarkers) {
+  public Styler setSeriesMarkers(Marker[] seriesMarkers) {
 
     this.seriesMarkers = seriesMarkers;
+    return this;
   }
 
   /**
@@ -211,9 +217,10 @@ public abstract class Styler {
    *
    * @param font
    */
-  public void setChartTitleFont(Font chartTitleFont) {
+  public Styler setChartTitleFont(Font chartTitleFont) {
 
     this.chartTitleFont = chartTitleFont;
+    return this;
   }
 
   public Font getChartTitleFont() {
@@ -226,9 +233,10 @@ public abstract class Styler {
    *
    * @param isChartTitleVisible
    */
-  public void setChartTitleVisible(boolean isChartTitleVisible) {
+  public Styler setChartTitleVisible(boolean isChartTitleVisible) {
 
     this.isChartTitleVisible = isChartTitleVisible;
+    return this;
   }
 
   public boolean isChartTitleVisible() {
@@ -241,9 +249,10 @@ public abstract class Styler {
    *
    * @param isChartTitleBoxVisible
    */
-  public void setChartTitleBoxVisible(boolean isChartTitleBoxVisible) {
+  public Styler setChartTitleBoxVisible(boolean isChartTitleBoxVisible) {
 
     this.isChartTitleBoxVisible = isChartTitleBoxVisible;
+    return this;
   }
 
   public boolean isChartTitleBoxVisible() {
@@ -256,9 +265,10 @@ public abstract class Styler {
    *
    * @param chartTitleBoxBackgroundColor
    */
-  public void setChartTitleBoxBackgroundColor(Color chartTitleBoxBackgroundColor) {
+  public Styler setChartTitleBoxBackgroundColor(Color chartTitleBoxBackgroundColor) {
 
     this.chartTitleBoxBackgroundColor = chartTitleBoxBackgroundColor;
+    return this;
   }
 
   public Color getChartTitleBoxBackgroundColor() {
@@ -271,9 +281,10 @@ public abstract class Styler {
    *
    * @param chartTitleBoxBorderColor
    */
-  public void setChartTitleBoxBorderColor(Color chartTitleBoxBorderColor) {
+  public Styler setChartTitleBoxBorderColor(Color chartTitleBoxBorderColor) {
 
     this.chartTitleBoxBorderColor = chartTitleBoxBorderColor;
+    return this;
   }
 
   public Color getChartTitleBoxBorderColor() {
@@ -286,9 +297,10 @@ public abstract class Styler {
    *
    * @param chartTitlePadding
    */
-  public void setChartTitlePadding(int chartTitlePadding) {
+  public Styler setChartTitlePadding(int chartTitlePadding) {
 
     this.chartTitlePadding = chartTitlePadding;
+    return this;
   }
 
   public int getChartTitlePadding() {
@@ -303,9 +315,10 @@ public abstract class Styler {
    *
    * @param color
    */
-  public void setLegendBackgroundColor(Color color) {
+  public Styler setLegendBackgroundColor(Color color) {
 
     this.legendBackgroundColor = color;
+    return this;
   }
 
   public Color getLegendBackgroundColor() {
@@ -323,9 +336,10 @@ public abstract class Styler {
     return legendBorderColor;
   }
 
-  public void setLegendBorderColor(Color legendBorderColor) {
+  public Styler setLegendBorderColor(Color legendBorderColor) {
 
     this.legendBorderColor = legendBorderColor;
+    return this;
   }
 
   /**
@@ -333,9 +347,10 @@ public abstract class Styler {
    *
    * @param font
    */
-  public void setLegendFont(Font font) {
+  public Styler setLegendFont(Font font) {
 
     this.legendFont = font;
+    return this;
   }
 
   public Font getLegendFont() {
@@ -348,9 +363,10 @@ public abstract class Styler {
    *
    * @param isLegendVisible
    */
-  public void setLegendVisible(boolean isLegendVisible) {
+  public Styler setLegendVisible(boolean isLegendVisible) {
 
     this.isLegendVisible = isLegendVisible;
+    return this;
   }
 
   public boolean isLegendVisible() {
@@ -363,9 +379,10 @@ public abstract class Styler {
    *
    * @param legendPadding
    */
-  public void setLegendPadding(int legendPadding) {
+  public Styler setLegendPadding(int legendPadding) {
 
     this.legendPadding = legendPadding;
+    return this;
   }
 
   public int getLegendPadding() {
@@ -378,7 +395,7 @@ public abstract class Styler {
    *
    * @param legendPadding
    */
-  public void setLegendSeriesLineLength(int legendSeriesLineLength) {
+  public Styler setLegendSeriesLineLength(int legendSeriesLineLength) {
 
     if (legendSeriesLineLength < 0) {
       this.legendSeriesLineLength = 0;
@@ -386,6 +403,7 @@ public abstract class Styler {
     else {
       this.legendSeriesLineLength = legendSeriesLineLength;
     }
+    return this;
   }
 
   public int getLegendSeriesLineLength() {
@@ -398,9 +416,10 @@ public abstract class Styler {
    *
    * @param legendPosition
    */
-  public void setLegendPosition(LegendPosition legendPosition) {
+  public Styler setLegendPosition(LegendPosition legendPosition) {
 
     this.legendPosition = legendPosition;
+    return this;
   }
 
   public LegendPosition getLegendPosition() {
@@ -415,9 +434,10 @@ public abstract class Styler {
    *
    * @param plotBackgroundColor
    */
-  public void setPlotBackgroundColor(Color plotBackgroundColor) {
+  public Styler setPlotBackgroundColor(Color plotBackgroundColor) {
 
     this.plotBackgroundColor = plotBackgroundColor;
+    return this;
   }
 
   public Color getPlotBackgroundColor() {
@@ -430,9 +450,10 @@ public abstract class Styler {
    *
    * @param plotBorderColor
    */
-  public void setPlotBorderColor(Color plotBorderColor) {
+  public Styler setPlotBorderColor(Color plotBorderColor) {
 
     this.plotBorderColor = plotBorderColor;
+    return this;
   }
 
   public Color getPlotBorderColor() {
@@ -445,9 +466,10 @@ public abstract class Styler {
    *
    * @param isPlotBorderVisible
    */
-  public void setPlotBorderVisible(boolean isPlotBorderVisible) {
+  public Styler setPlotBorderVisible(boolean isPlotBorderVisible) {
 
     this.isPlotBorderVisible = isPlotBorderVisible;
+    return this;
   }
 
   public boolean isPlotBorderVisible() {
@@ -465,13 +487,14 @@ public abstract class Styler {
    *
    * @param plotContentSize - Valid range is between 0 and 1.
    */
-  public void setPlotContentSize(double plotContentSize) {
+  public Styler setPlotContentSize(double plotContentSize) {
 
     if (plotContentSize < 0 || plotContentSize > 1) {
       throw new IllegalArgumentException("Plot content size must be tween 0 and 1!!!");
     }
 
     this.plotContentSize = plotContentSize;
+    return this;
   }
 
 }

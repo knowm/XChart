@@ -14,11 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart;
+package org.knowm.xchart.style;
 
 import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
-import org.knowm.xchart.style.Styler_AxesChart;
-import org.knowm.xchart.style.Theme_;
 
 /**
  * @author timmolter
@@ -52,9 +50,10 @@ public class Styler_XY extends Styler_AxesChart {
    *
    * @param chartXYSeriesRenderStyle
    */
-  public void setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
+  public Styler_XY setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartXYSeriesRenderStyle = chartXYSeriesRenderStyle;
+    return this;
   }
 
   /**
@@ -62,7 +61,7 @@ public class Styler_XY extends Styler_AxesChart {
    *
    * @param theme
    */
-  protected void setTheme(Theme_ theme) {
+  public void setTheme(Theme_ theme) {
 
     this.theme = theme;
     super.setAllStyles();

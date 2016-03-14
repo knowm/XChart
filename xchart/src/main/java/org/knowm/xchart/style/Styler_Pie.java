@@ -14,13 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart;
+package org.knowm.xchart.style;
 
 import java.awt.Font;
 
 import org.knowm.xchart.Series_Pie.ChartPieSeriesRenderStyle;
-import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Theme_;
 
 /**
  * @author timmolter
@@ -69,9 +67,10 @@ public class Styler_Pie extends Styler {
    *
    * @param chartPieSeriesRenderStyle
    */
-  public void setDefaultSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
+  public Styler_Pie setDefaultSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
 
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
+    return this;
   }
 
   public boolean isCircular() {
@@ -84,9 +83,10 @@ public class Styler_Pie extends Styler {
    *
    * @param isCircular
    */
-  public void setCircular(boolean isCircular) {
+  public Styler_Pie setCircular(boolean isCircular) {
 
     this.isCircular = isCircular;
+    return this;
   }
 
   public double getStartAngleInDegrees() {
@@ -99,9 +99,10 @@ public class Styler_Pie extends Styler {
    *
    * @param startAngleInDegrees
    */
-  public void setStartAngleInDegrees(double startAngleInDegrees) {
+  public Styler_Pie setStartAngleInDegrees(double startAngleInDegrees) {
 
     this.startAngleInDegrees = startAngleInDegrees;
+    return this;
   }
 
   public Font getAnnotationFont() {
@@ -114,9 +115,10 @@ public class Styler_Pie extends Styler {
    *
    * @param pieFont
    */
-  public void setAnnotationFont(Font pieFont) {
+  public Styler_Pie setAnnotationFont(Font pieFont) {
 
     this.annotationFont = pieFont;
+    return this;
   }
 
   public double getAnnotationDistance() {
@@ -144,9 +146,10 @@ public class Styler_Pie extends Styler {
    *
    * @param annotationType
    */
-  public void setAnnotationType(AnnotationType annotationType) {
+  public Styler_Pie setAnnotationType(AnnotationType annotationType) {
 
     this.annotationType = annotationType;
+    return this;
   }
 
   /**
@@ -154,7 +157,7 @@ public class Styler_Pie extends Styler {
    *
    * @param theme
    */
-  protected void setTheme(Theme_ theme) {
+  public void setTheme(Theme_ theme) {
 
     this.theme = theme;
     super.setAllStyles();

@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Styler_XY;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.style.Styler_XY;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**

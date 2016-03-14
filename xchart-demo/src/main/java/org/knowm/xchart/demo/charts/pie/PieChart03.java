@@ -18,10 +18,10 @@ package org.knowm.xchart.demo.charts.pie;
 
 import org.knowm.xchart.ChartBuilder_Pie;
 import org.knowm.xchart.Chart_Pie;
-import org.knowm.xchart.Styler_Pie.AnnotationType;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler_Pie.AnnotationType;
 
 /**
  * Pie Chart with 5 Slices and customization

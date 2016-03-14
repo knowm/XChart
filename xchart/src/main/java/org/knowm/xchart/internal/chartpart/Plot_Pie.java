@@ -20,9 +20,9 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.Series_Pie;
-import org.knowm.xchart.Styler_Pie;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler_Pie;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**

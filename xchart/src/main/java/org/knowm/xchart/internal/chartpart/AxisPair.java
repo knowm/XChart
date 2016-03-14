@@ -21,9 +21,9 @@ import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.Series_AxesChart;
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
-import org.knowm.xchart.Styler_Category;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.Styler_Category;
 
 /**
  * @author timmolter

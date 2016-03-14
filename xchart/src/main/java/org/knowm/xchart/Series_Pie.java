@@ -65,9 +65,10 @@ public class Series_Pie extends Series {
     return chartPieSeriesRenderStyle;
   }
 
-  public void setChartPieSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
+  public Series_Pie setChartPieSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
 
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
+    return this;
   }
 
   @Override

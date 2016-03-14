@@ -77,9 +77,10 @@ public class Series_Category extends Series_AxesChart {
     return chartCategorySeriesRenderStyle;
   }
 
-  public void setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartXYSeriesRenderStyle) {
+  public Series_Category setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = chartXYSeriesRenderStyle;
+    return this;
   }
 
   @Override

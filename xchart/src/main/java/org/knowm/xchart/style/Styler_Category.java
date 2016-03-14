@@ -14,11 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart;
+package org.knowm.xchart.style;
 
 import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
-import org.knowm.xchart.style.Styler_AxesChart;
-import org.knowm.xchart.style.Theme_;
 
 /**
  * @author timmolter
@@ -58,9 +56,10 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param chartCategorySeriesRenderStyle
    */
-  public void setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
+  public Styler_Category setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = chartCategorySeriesRenderStyle;
+    return this;
   }
 
   public double getAvailableSpaceFill() {
@@ -74,9 +73,10 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param availableSpaceFill
    */
-  public void setAvailableSpaceFill(double availableSpaceFill) {
+  public Styler_Category setAvailableSpaceFill(double availableSpaceFill) {
 
     this.availableSpaceFill = availableSpaceFill;
+    return this;
   }
 
   public boolean isOverlapped() {
@@ -89,9 +89,10 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param isOverlapped
    */
-  public void setOverlapped(boolean isOverlapped) {
+  public Styler_Category setOverlapped(boolean isOverlapped) {
 
     this.isOverlapped = isOverlapped;
+    return this;
   }
 
   /**
@@ -99,7 +100,7 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param theme
    */
-  protected void setTheme(Theme_ theme) {
+  public void setTheme(Theme_ theme) {
 
     this.theme = theme;
     super.setAllStyles();

@@ -29,10 +29,10 @@ import java.text.DecimalFormat;
 import java.util.Map;
 
 import org.knowm.xchart.Series_Pie;
-import org.knowm.xchart.Styler_Pie;
-import org.knowm.xchart.Styler_Pie.AnnotationType;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler_Pie;
+import org.knowm.xchart.style.Styler_Pie.AnnotationType;
 
 /**
  * @author timmolter

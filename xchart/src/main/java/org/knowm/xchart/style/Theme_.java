@@ -20,8 +20,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
-import org.knowm.xchart.Styler_Pie.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler_Pie.AnnotationType;
 import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;

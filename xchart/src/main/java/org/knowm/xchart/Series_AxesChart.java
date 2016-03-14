@@ -201,7 +201,7 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param basicStroke
    */
-  public Series setLineStyle(BasicStroke basicStroke) {
+  public Series_AxesChart setLineStyle(BasicStroke basicStroke) {
 
     stroke = basicStroke;
     return this;
@@ -212,7 +212,7 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param color
    */
-  public Series setLineColor(java.awt.Color color) {
+  public Series_AxesChart setLineColor(java.awt.Color color) {
 
     this.lineColor = color;
     return this;
@@ -223,7 +223,7 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param marker
    */
-  public Series setMarker(Marker marker) {
+  public Series_AxesChart setMarker(Marker marker) {
 
     this.marker = marker;
     return this;
@@ -234,7 +234,7 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param color
    */
-  public Series setMarkerColor(java.awt.Color color) {
+  public Series_AxesChart setMarkerColor(java.awt.Color color) {
 
     this.markerColor = color;
     return this;
