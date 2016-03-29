@@ -122,7 +122,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
 
     // set the series types if they are not set. Legend and Plot need it.
     for (PieSeries seriesPie : getSeriesMap().values()) {
-      PieSeries.ChartPieSeriesRenderStyle seriesType = seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
+      PieSeries.PieSeriesRenderStyle seriesType = seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
         seriesPie.setChartPieSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }

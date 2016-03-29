@@ -16,14 +16,14 @@
  */
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 
 /**
  * @author timmolter
  */
 public class XYStyler extends AxesChartStyler {
 
-  private ChartXYSeriesRenderStyle chartXYSeriesRenderStyle;
+  private XYSeriesRenderStyle chartXYSeriesRenderStyle;
 
   /**
    * Constructor
@@ -37,10 +37,10 @@ public class XYStyler extends AxesChartStyler {
   @Override
   protected void setAllStyles() {
 
-    chartXYSeriesRenderStyle = ChartXYSeriesRenderStyle.Line; // set default to line
+    chartXYSeriesRenderStyle = XYSeriesRenderStyle.Line; // set default to line
   }
 
-  public ChartXYSeriesRenderStyle getDefaultSeriesRenderStyle() {
+  public XYSeriesRenderStyle getDefaultSeriesRenderStyle() {
 
     return chartXYSeriesRenderStyle;
   }
@@ -50,7 +50,7 @@ public class XYStyler extends AxesChartStyler {
    *
    * @param chartXYSeriesRenderStyle
    */
-  public XYStyler setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
+  public XYStyler setDefaultSeriesRenderStyle(XYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartXYSeriesRenderStyle = chartXYSeriesRenderStyle;
     return this;

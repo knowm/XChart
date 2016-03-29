@@ -18,14 +18,14 @@ package org.knowm.xchart.style;
 
 import java.awt.Font;
 
-import org.knowm.xchart.PieSeries.ChartPieSeriesRenderStyle;
+import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 
 /**
  * @author timmolter
  */
 public class PieStyler extends Styler {
 
-  private ChartPieSeriesRenderStyle chartPieSeriesRenderStyle;
+  private PieSeriesRenderStyle chartPieSeriesRenderStyle;
 
   public enum AnnotationType {
 
@@ -50,14 +50,14 @@ public class PieStyler extends Styler {
   @Override
   protected void setAllStyles() {
 
-    chartPieSeriesRenderStyle = ChartPieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
+    chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
     isCircular = theme.isCircular();
     annotationFont = theme.getPieFont();
     annotationDistance = theme.getAnnotationDistance();
     annotationType = theme.getAnnotationType();
   }
 
-  public ChartPieSeriesRenderStyle getDefaultSeriesRenderStyle() {
+  public PieSeriesRenderStyle getDefaultSeriesRenderStyle() {
 
     return chartPieSeriesRenderStyle;
   }
@@ -67,7 +67,7 @@ public class PieStyler extends Styler {
    *
    * @param chartPieSeriesRenderStyle
    */
-  public PieStyler setDefaultSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
+  public PieStyler setDefaultSeriesRenderStyle(PieSeriesRenderStyle chartPieSeriesRenderStyle) {
 
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
     return this;

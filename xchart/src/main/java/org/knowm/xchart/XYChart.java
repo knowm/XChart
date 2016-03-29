@@ -235,7 +235,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
     // set the series render styles if they are not set. Legend and Plot need it.
     for (XYSeries seriesXY : getSeriesMap().values()) {
-      XYSeries.ChartXYSeriesRenderStyle chartXYSeriesRenderStyle = seriesXY.getChartXYSeriesRenderStyle(); // would be directly set
+      XYSeries.XYSeriesRenderStyle chartXYSeriesRenderStyle = seriesXY.getChartXYSeriesRenderStyle(); // would be directly set
       if (chartXYSeriesRenderStyle == null) { // wasn't overridden, use default from Style Manager
         seriesXY.setChartXYSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }

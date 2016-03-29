@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.knowm.xchart.CategorySeries;
-import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.Styler;
@@ -173,7 +173,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         // System.out.println("---");
 
         // paint line
-        if (ChartCategorySeriesRenderStyle.Line.equals(series.getChartCategorySeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
+        if (CategorySeriesRenderStyle.Line.equals(series.getChartCategorySeriesRenderStyle()) || CategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
 
           if (series.getLineStyle() != SeriesLines.NONE) {
 
@@ -187,7 +187,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         }
 
         // paint area
-        if (ChartCategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
+        if (CategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
@@ -207,7 +207,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         }
 
         // paint stick
-        if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+        if (CategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
 
           if (series.getLineStyle() != SeriesLines.NONE) {
 

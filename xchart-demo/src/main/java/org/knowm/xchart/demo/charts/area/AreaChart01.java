@@ -18,7 +18,7 @@ package org.knowm.xchart.demo.charts.area;
 
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -50,7 +50,7 @@ public class AreaChart01 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
     chart.getStyler().setAxisTitlesVisible(false);
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
 
     // Series
     chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });

@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.knowm.xchart.CategorySeries;
-import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.Styler;
@@ -183,7 +183,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         }
 
         // paint series
-        if (series.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
+        if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
 
           // paint bar
           Path2D.Double path = new Path2D.Double();
@@ -199,7 +199,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           g.setColor(series.getFillColor());
           g.fill(path);
         }
-        else if (ChartCategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+        else if (CategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
 
           // paint line
           if (series.getLineStyle() != SeriesLines.NONE) {
@@ -226,7 +226,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         else {
 
           // paint line
-          if (series.getChartCategorySeriesRenderStyle() == ChartCategorySeriesRenderStyle.Line) {
+          if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Line) {
 
             if (series.getLineStyle() != SeriesLines.NONE) {
 

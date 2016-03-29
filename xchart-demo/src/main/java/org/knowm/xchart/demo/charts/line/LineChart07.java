@@ -22,7 +22,7 @@ import java.util.List;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategorySeries;
-import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -54,7 +54,7 @@ public class LineChart07 implements ExampleChart<CategoryChart> {
     CategoryChart chart = new CategoryChartBuilder().width(800).height(600).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();
 
     // Customize Chart
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
+    chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Line);
     chart.getStyler().setXAxisLabelRotation(270);
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
     chart.getStyler().setAvailableSpaceFill(0);

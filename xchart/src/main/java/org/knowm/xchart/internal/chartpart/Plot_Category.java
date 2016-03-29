@@ -19,7 +19,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 
 import org.knowm.xchart.CategorySeries;
-import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
@@ -45,7 +45,7 @@ public class Plot_Category<ST extends AxesChartStyler, S extends Series> extends
   @Override
   public void paint(Graphics2D g) {
 
-    if (ChartCategorySeriesRenderStyle.Bar.equals(stylerCategory.getDefaultSeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Stick.equals(stylerCategory.getDefaultSeriesRenderStyle())) {
+    if (CategorySeriesRenderStyle.Bar.equals(stylerCategory.getDefaultSeriesRenderStyle()) || CategorySeriesRenderStyle.Stick.equals(stylerCategory.getDefaultSeriesRenderStyle())) {
 
       this.plotContent = new PlotContent_Category_Bar<CategoryStyler, CategorySeries>(chart);
     }

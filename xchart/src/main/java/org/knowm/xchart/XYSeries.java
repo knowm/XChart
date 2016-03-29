@@ -32,7 +32,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  */
 public class XYSeries extends Series_AxesChart {
 
-  public enum ChartXYSeriesRenderStyle implements RenderableSeries {
+  public enum XYSeriesRenderStyle implements RenderableSeries {
 
     Line(LegendRenderType.Line),
 
@@ -42,7 +42,7 @@ public class XYSeries extends Series_AxesChart {
 
     private final LegendRenderType legendRenderType;
 
-    private ChartXYSeriesRenderStyle(LegendRenderType legendRenderType) {
+    private XYSeriesRenderStyle(LegendRenderType legendRenderType) {
       this.legendRenderType = legendRenderType;
     }
 
@@ -53,7 +53,7 @@ public class XYSeries extends Series_AxesChart {
     }
   }
 
-  private ChartXYSeriesRenderStyle chartXYSeriesRenderStyle = null;
+  private XYSeriesRenderStyle chartXYSeriesRenderStyle = null;
 
   /**
    * Constructor
@@ -68,12 +68,12 @@ public class XYSeries extends Series_AxesChart {
     super(name, xData, yData, errorBars);
   }
 
-  public ChartXYSeriesRenderStyle getChartXYSeriesRenderStyle() {
+  public XYSeriesRenderStyle getChartXYSeriesRenderStyle() {
 
     return chartXYSeriesRenderStyle;
   }
 
-  public XYSeries setChartXYSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
+  public XYSeries setChartXYSeriesRenderStyle(XYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartXYSeriesRenderStyle = chartXYSeriesRenderStyle;
     return this;

@@ -16,14 +16,14 @@
  */
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 
 /**
  * @author timmolter
  */
 public class CategoryStyler extends AxesChartStyler {
 
-  private ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle;
+  private CategorySeriesRenderStyle chartCategorySeriesRenderStyle;
 
   private double availableSpaceFill;
   private boolean isOverlapped;
@@ -40,13 +40,13 @@ public class CategoryStyler extends AxesChartStyler {
   @Override
   protected void setAllStyles() {
 
-    this.chartCategorySeriesRenderStyle = ChartCategorySeriesRenderStyle.Bar; // set default to bar
+    this.chartCategorySeriesRenderStyle = CategorySeriesRenderStyle.Bar; // set default to bar
 
     availableSpaceFill = theme.getAvailableSpaceFill();
     isOverlapped = theme.isOverlapped();
   }
 
-  public ChartCategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
+  public CategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
 
     return chartCategorySeriesRenderStyle;
   }
@@ -56,7 +56,7 @@ public class CategoryStyler extends AxesChartStyler {
    *
    * @param chartCategorySeriesRenderStyle
    */
-  public CategoryStyler setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
+  public CategoryStyler setDefaultSeriesRenderStyle(CategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = chartCategorySeriesRenderStyle;
     return this;

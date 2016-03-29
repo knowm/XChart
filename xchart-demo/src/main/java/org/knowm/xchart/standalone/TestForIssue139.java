@@ -18,7 +18,7 @@ package org.knowm.xchart.standalone;
 
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 
 /**
@@ -36,7 +36,7 @@ public class TestForIssue139 {
     CategoryChart chart = new CategoryChartBuilder().width(640).height(480).build();
 
     chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.Stick);
+    chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Stick);
     // chart.getStyler().setBarsOverlapped(true);
     chart.getStyler().setAvailableSpaceFill(.25);
 

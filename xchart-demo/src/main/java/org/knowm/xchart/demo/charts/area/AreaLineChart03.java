@@ -19,7 +19,7 @@ package org.knowm.xchart.demo.charts.area;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
@@ -53,7 +53,7 @@ public class AreaLineChart03 implements ExampleChart<XYChart> {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Line);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
     chart.getStyler().setYAxisLabelAlignment(Styler.TextAlignment.Right);
     chart.getStyler().setYAxisDecimalPattern("$ #,###.##");
     chart.getStyler().setPlotMargin(0);
@@ -82,7 +82,7 @@ public class AreaLineChart03 implements ExampleChart<XYChart> {
     // @formatter:on
 
     XYSeries seriesLiability = chart.addSeries("Liability", xAges, yLiability);
-    seriesLiability.setChartXYSeriesRenderStyle(XYSeries.ChartXYSeriesRenderStyle.Area);
+    seriesLiability.setChartXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
     seriesLiability.setMarker(SeriesMarkers.NONE);
 
     chart.addSeries("75th Percentile", xAges, yPercentile75th);

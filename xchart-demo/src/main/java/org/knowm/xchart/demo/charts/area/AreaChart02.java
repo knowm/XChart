@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -51,7 +51,7 @@ public class AreaChart02 implements ExampleChart<XYChart> {
     XYChart chart = new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
 
     // Series

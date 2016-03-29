@@ -235,7 +235,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
     // set the series render styles if they are not set. Legend and Plot need it.
     for (CategorySeries seriesCategory : getSeriesMap().values()) {
-      CategorySeries.ChartCategorySeriesRenderStyle seriesType = seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
+      CategorySeries.CategorySeriesRenderStyle seriesType = seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
         seriesCategory.setChartCategorySeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }

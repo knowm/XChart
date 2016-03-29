@@ -26,7 +26,7 @@ import java.util.Random;
 
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
@@ -50,7 +50,7 @@ public class DateChart02 implements ExampleChart<XYChart> {
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
 
     // Series
     List<Date> xData = new ArrayList<Date>();

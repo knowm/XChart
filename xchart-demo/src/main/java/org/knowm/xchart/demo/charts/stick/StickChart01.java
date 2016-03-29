@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -51,7 +51,7 @@ public class StickChart01 implements ExampleChart<CategoryChart> {
     // Customize Chart
     chart.getStyler().setChartTitleVisible(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.Stick);
+    chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Stick);
 
     // Series
     List<Integer> xData = new ArrayList<Integer>();

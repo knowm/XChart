@@ -27,13 +27,13 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  */
 public class PieSeries extends Series {
 
-  public enum ChartPieSeriesRenderStyle implements RenderableSeries {
+  public enum PieSeriesRenderStyle implements RenderableSeries {
 
     Pie(LegendRenderType.Box);
 
     private final LegendRenderType legendRenderType;
 
-    private ChartPieSeriesRenderStyle(LegendRenderType legendRenderType) {
+    private PieSeriesRenderStyle(LegendRenderType legendRenderType) {
       this.legendRenderType = legendRenderType;
     }
 
@@ -44,7 +44,7 @@ public class PieSeries extends Series {
     }
   }
 
-  private ChartPieSeriesRenderStyle chartPieSeriesRenderStyle = null;
+  private PieSeriesRenderStyle chartPieSeriesRenderStyle = null;
 
   private Number value;
 
@@ -60,12 +60,12 @@ public class PieSeries extends Series {
     this.value = value;
   }
 
-  public ChartPieSeriesRenderStyle getChartPieSeriesRenderStyle() {
+  public PieSeriesRenderStyle getChartPieSeriesRenderStyle() {
 
     return chartPieSeriesRenderStyle;
   }
 
-  public PieSeries setChartPieSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
+  public PieSeries setChartPieSeriesRenderStyle(PieSeriesRenderStyle chartPieSeriesRenderStyle) {
 
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
     return this;

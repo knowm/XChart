@@ -22,7 +22,7 @@ import java.util.Random;
 
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -53,7 +53,7 @@ public class ScatterChart01 implements ExampleChart<XYChart> {
     XYChart chart = new XYChartBuilder().width(800).height(600).build();
 
     // Customize Chart
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
     chart.getStyler().setChartTitleVisible(false);
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
     chart.getStyler().setMarkerSize(16);

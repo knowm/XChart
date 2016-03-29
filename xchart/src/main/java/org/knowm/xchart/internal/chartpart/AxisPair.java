@@ -19,7 +19,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -112,7 +112,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     if (chart.getStyler() instanceof CategoryStyler) {
 
       CategoryStyler stylerCategory = (CategoryStyler) chart.getStyler();
-      if (stylerCategory.getDefaultSeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
+      if (stylerCategory.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
         // override min/max value for bar charts' Y-Axis
         // There is a special case where it's desired to anchor the axis min or max to zero, like in the case of bar charts. This flag enables that feature.
         if (yAxis.getMin() > 0.0) {

@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
@@ -39,7 +39,7 @@ public class AdvancedExample {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
 
     // Series
     chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });

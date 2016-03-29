@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
@@ -186,7 +186,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
         // paint line
 
-        boolean isSeriesLineOrArea = (ChartXYSeriesRenderStyle.Line == series.getChartXYSeriesRenderStyle()) || (ChartXYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle());
+        boolean isSeriesLineOrArea = (XYSeriesRenderStyle.Line == series.getChartXYSeriesRenderStyle()) || (XYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle());
 
         if (isSeriesLineOrArea) {
           if (series.getLineStyle() != SeriesLines.NONE) {
@@ -201,7 +201,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         }
 
         // paint area
-        if (ChartXYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle()) {
+        if (XYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
