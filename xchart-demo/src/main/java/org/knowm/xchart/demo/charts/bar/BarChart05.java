@@ -19,14 +19,14 @@ package org.knowm.xchart.demo.charts.bar;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
- * GGPlot2 Theme
+ * GGPlot2 Theme Bar chart
  * <p>
  * Demonstrates the following:
  * <ul>
