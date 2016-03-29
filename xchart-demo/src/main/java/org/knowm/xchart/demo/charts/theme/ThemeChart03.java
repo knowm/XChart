@@ -16,14 +16,13 @@
  */
 package org.knowm.xchart.demo.charts.theme;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.markers.SeriesMarkers;
@@ -74,9 +73,6 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
     series.setMarker(SeriesMarkers.NONE);
     series = chart.addSeries("Difference", xData, y3Data);
     series.setMarker(SeriesMarkers.NONE);
-    // series.setLineStyle(new BasicStroke(5.0f));
-    series.setLineColor(Color.pink);
-    series.setLineWidth(10.0f);
 
     return chart;
   }
