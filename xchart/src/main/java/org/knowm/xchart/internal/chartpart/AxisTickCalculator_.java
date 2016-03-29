@@ -25,7 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * @author timmolter
@@ -46,7 +46,7 @@ public abstract class AxisTickCalculator_ {
 
   protected final double maxValue;
 
-  protected final Styler_AxesChart styler;
+  protected final AxesChartStyler styler;
 
   /**
    * Constructor
@@ -57,7 +57,7 @@ public abstract class AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_(Direction axisDirection, double workingSpace, double minValue, double maxValue, Styler_AxesChart styler) {
+  public AxisTickCalculator_(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;

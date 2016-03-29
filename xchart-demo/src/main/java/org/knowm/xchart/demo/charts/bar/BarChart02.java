@@ -25,9 +25,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.ChartBuilder_Category;
-import org.knowm.xchart.Chart_Category;
-import org.knowm.xchart.Series_Category;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -45,20 +45,20 @@ import org.knowm.xchart.style.colors.MatlabSeriesColors;
  * <li>Change series color
  * <li>MATLAB Theme
  */
-public class BarChart02 implements ExampleChart<Chart_Category> {
+public class BarChart02 implements ExampleChart<CategoryChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_Category> exampleChart = new BarChart02();
-    Chart_Category chart = exampleChart.getChart();
-    new SwingWrapper<Chart_Category>(chart).displayChart();
+    ExampleChart<CategoryChart> exampleChart = new BarChart02();
+    CategoryChart chart = exampleChart.getChart();
+    new SwingWrapper<CategoryChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_Category getChart() {
+  public CategoryChart getChart() {
 
     // Create Chart
-    Chart_Category chart = new ChartBuilder_Category().theme(ChartTheme.Matlab).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
+    CategoryChart chart = new CategoryChartBuilder().theme(ChartTheme.Matlab).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
 
     // Customize Chart
     chart.getStyler().setPlotGridLinesVisible(false);
@@ -80,7 +80,7 @@ public class BarChart02 implements ExampleChart<Chart_Category> {
       xData.add(date);
       yData.add(-1 * 0.00000001 * ((random.nextInt(i) + 1)));
     }
-    Series_Category series = chart.addSeries("Model 77", xData, yData);
+    CategorySeries series = chart.addSeries("Model 77", xData, yData);
     series.setLineColor(MatlabSeriesColors.RED);
     series.setFillColor(new Color(230, 150, 150));
 

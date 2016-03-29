@@ -18,25 +18,25 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 
-import org.knowm.xchart.Series_Category;
-import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.Styler_AxesChart;
-import org.knowm.xchart.style.Styler_Category;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.CategoryStyler;
 
 /**
  * @author timmolter
  */
-public class Plot_Category<ST extends Styler_AxesChart, S extends Series> extends Plot_AxesChart {
+public class Plot_Category<ST extends AxesChartStyler, S extends Series> extends Plot_AxesChart {
 
-  Styler_Category stylerCategory;
+  CategoryStyler stylerCategory;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Plot_Category(Chart<Styler_Category, Series_Category> chart) {
+  public Plot_Category(Chart<CategoryStyler, CategorySeries> chart) {
 
     super(chart);
     stylerCategory = chart.getStyler();
@@ -47,10 +47,10 @@ public class Plot_Category<ST extends Styler_AxesChart, S extends Series> extend
 
     if (ChartCategorySeriesRenderStyle.Bar.equals(stylerCategory.getDefaultSeriesRenderStyle()) || ChartCategorySeriesRenderStyle.Stick.equals(stylerCategory.getDefaultSeriesRenderStyle())) {
 
-      this.plotContent = new PlotContent_Category_Bar<Styler_Category, Series_Category>(chart);
+      this.plotContent = new PlotContent_Category_Bar<CategoryStyler, CategorySeries>(chart);
     }
     else {
-      this.plotContent = new PlotContent_Category_Line_Area_Scatter<Styler_Category, Series_Category>(chart);
+      this.plotContent = new PlotContent_Category_Line_Area_Scatter<CategoryStyler, CategorySeries>(chart);
     }
 
     super.paint(g);

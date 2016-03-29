@@ -19,8 +19,8 @@ package org.knowm.xchart.demo.charts.line;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -34,17 +34,17 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * <li>Building a Chart with ChartBuilder
  * <li>Place legend at Inside-NW position
  */
-public class LineChart01 implements ExampleChart<Chart_XY> {
+public class LineChart01 implements ExampleChart<XYChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_XY> exampleChart = new LineChart01();
-    Chart_XY chart = exampleChart.getChart();
-    new SwingWrapper<Chart_XY>(chart).displayChart();
+    ExampleChart<XYChart> exampleChart = new LineChart01();
+    XYChart chart = exampleChart.getChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_XY getChart() {
+  public XYChart getChart() {
 
     // generates Log data
     List<Integer> xData = new ArrayList<Integer>();
@@ -55,7 +55,7 @@ public class LineChart01 implements ExampleChart<Chart_XY> {
     }
 
     // Create Chart
-    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Powers of Ten").xAxisTitle("Power").yAxisTitle("Value").build();
+    XYChart chart = new XYChartBuilder().width(800).height(600).title("Powers of Ten").xAxisTitle("Power").yAxisTitle("Value").build();
 
     // Customize Chart
     chart.getStyler().setChartTitleVisible(true);

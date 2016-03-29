@@ -19,28 +19,28 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * @author timmolter
  */
 public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
 
-  Styler_AxesChart stylerAxesChart;
+  AxesChartStyler stylerAxesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Plot_AxesChart(Chart<Styler_AxesChart, Series_XY> chart) {
+  public Plot_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
     stylerAxesChart = chart.getStyler();
-    this.plotSurface = new PlotSurface_AxesChart<Styler_AxesChart, Series_XY>(chart);
+    this.plotSurface = new PlotSurface_AxesChart<AxesChartStyler, XYSeries>(chart);
   }
 
   @Override

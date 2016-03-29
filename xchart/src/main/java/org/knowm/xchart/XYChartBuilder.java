@@ -21,20 +21,35 @@ import org.knowm.xchart.internal.ChartBuilder;
 /**
  * @author timmolter
  */
-public class ChartBuilder_Pie extends ChartBuilder<ChartBuilder_Pie, Chart_Pie> {
+public class XYChartBuilder extends ChartBuilder<XYChartBuilder, XYChart> {
 
-  public ChartBuilder_Pie() {
+  String xAxisTitle = "";
+  String yAxisTitle = "";
+
+  public XYChartBuilder() {
 
   }
 
+  public XYChartBuilder xAxisTitle(String xAxisTitle) {
+
+    this.xAxisTitle = xAxisTitle;
+    return this;
+  }
+
+  public XYChartBuilder yAxisTitle(String yAxisTitle) {
+
+    this.yAxisTitle = yAxisTitle;
+    return this;
+  }
+
   /**
-   * return fully built ChartPie
+   * return fully built ChartXY
    *
-   * @return a ChartPie
+   * @return a ChartXY
    */
   @Override
-  public Chart_Pie build() {
+  public XYChart build() {
 
-    return new Chart_Pie(this);
+    return new XYChart(this);
   }
 }

@@ -16,12 +16,12 @@
  */
 package org.knowm.xchart.demo.charts.pie;
 
-import org.knowm.xchart.ChartBuilder_Pie;
-import org.knowm.xchart.Chart_Pie;
+import org.knowm.xchart.PieChartBuilder;
+import org.knowm.xchart.PieChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Styler_Pie.AnnotationType;
+import org.knowm.xchart.style.PieStyler.AnnotationType;
 
 /**
  * Pie Chart with 5 Slices and customization
@@ -32,20 +32,20 @@ import org.knowm.xchart.style.Styler_Pie.AnnotationType;
  * <li>ChartBuilderPie
  * <li>GGPlot2 Theme
  */
-public class PieChart03 implements ExampleChart<Chart_Pie> {
+public class PieChart03 implements ExampleChart<PieChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_Pie> exampleChart = new PieChart03();
-    Chart_Pie chart = exampleChart.getChart();
-    new SwingWrapper<Chart_Pie>(chart).displayChart();
+    ExampleChart<PieChart> exampleChart = new PieChart03();
+    PieChart chart = exampleChart.getChart();
+    new SwingWrapper<PieChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_Pie getChart() {
+  public PieChart getChart() {
 
     // Create Chart
-    Chart_Pie chart = new ChartBuilder_Pie().width(800).height(600).title(getClass().getSimpleName()).theme(ChartTheme.GGPlot2).build();
+    PieChart chart = new PieChartBuilder().width(800).height(600).title(getClass().getSimpleName()).theme(ChartTheme.GGPlot2).build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);

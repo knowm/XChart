@@ -21,19 +21,19 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * @author timmolter
  */
 public class NumberFormatter {
 
-  private final Styler_AxesChart styler;
+  private final AxesChartStyler styler;
 
   /**
    * Constructor
    */
-  public NumberFormatter(Styler_AxesChart styler) {
+  public NumberFormatter(AxesChartStyler styler) {
 
     this.styler = styler;
   }

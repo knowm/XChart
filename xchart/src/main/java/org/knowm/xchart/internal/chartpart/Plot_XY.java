@@ -16,25 +16,25 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.Styler_AxesChart;
-import org.knowm.xchart.style.Styler_XY;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.XYStyler;
 
 /**
  * @author timmolter
  */
-public class Plot_XY<ST extends Styler_AxesChart, S extends Series> extends Plot_AxesChart {
+public class Plot_XY<ST extends AxesChartStyler, S extends Series> extends Plot_AxesChart {
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Plot_XY(Chart<Styler_XY, Series_XY> chart) {
+  public Plot_XY(Chart<XYStyler, XYSeries> chart) {
 
     super(chart);
-    this.plotContent = new PlotContent_XY<Styler_XY, Series_XY>(chart);
+    this.plotContent = new PlotContent_XY<XYStyler, XYSeries>(chart);
   }
 
 }

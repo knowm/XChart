@@ -16,8 +16,8 @@
  */
 package org.knowm.xchart.demo.charts.bar;
 
-import org.knowm.xchart.ChartBuilder_Category;
-import org.knowm.xchart.Chart_Category;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
@@ -30,20 +30,20 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <li>Positive and negative values
  * <li>Single series
  */
-public class BarChart03 implements ExampleChart<Chart_Category> {
+public class BarChart03 implements ExampleChart<CategoryChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_Category> exampleChart = new BarChart03();
-    Chart_Category chart = exampleChart.getChart();
-    new SwingWrapper<Chart_Category>(chart).displayChart();
+    ExampleChart<CategoryChart> exampleChart = new BarChart03();
+    CategoryChart chart = exampleChart.getChart();
+    new SwingWrapper<CategoryChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_Category getChart() {
+  public CategoryChart getChart() {
 
     // Create Chart
-    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Score vs. Age").xAxisTitle("Age").yAxisTitle("Score").build();
+    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("Score vs. Age").xAxisTitle("Age").yAxisTitle("Score").build();
 
     // Customize Chart
 

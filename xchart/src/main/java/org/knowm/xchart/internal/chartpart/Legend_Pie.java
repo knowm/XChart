@@ -25,24 +25,24 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
-import org.knowm.xchart.Series_Pie;
+import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.Styler_AxesChart;
-import org.knowm.xchart.style.Styler_Pie;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.PieStyler;
 
 /**
  * @author timmolter
  */
-public class Legend_Pie<ST extends Styler_AxesChart, S extends Series> extends Legend_ {
+public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
-  Styler_Pie stylerPie;
+  PieStyler stylerPie;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Legend_Pie(Chart<Styler_Pie, Series_Pie> chart) {
+  public Legend_Pie(Chart<PieStyler, PieSeries> chart) {
 
     super(chart);
     stylerPie = chart.getStyler();

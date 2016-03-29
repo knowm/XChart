@@ -24,7 +24,7 @@ import java.util.List;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for String axes
@@ -42,7 +42,7 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
    * @param axisType
    * @param styler
    */
-  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, AxisDataType axisType, Styler_AxesChart styler) {
+  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, AxisDataType axisType, AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
 

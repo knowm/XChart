@@ -46,15 +46,15 @@ public class CSVImporter {
    * @param chartTheme
    * @return
    */
-  public static Chart_XY getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height, ChartTheme chartTheme) {
+  public static XYChart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height, ChartTheme chartTheme) {
 
     // 1. get the directory, name chart the dir name
-    Chart_XY chart = null;
+    XYChart chart = null;
     if (chartTheme != null) {
-      chart = new Chart_XY(width, height, chartTheme);
+      chart = new XYChart(width, height, chartTheme);
     }
     else {
-      chart = new Chart_XY(width, height);
+      chart = new XYChart(width, height);
     }
 
     // 2. get all the csv files in the dir
@@ -89,7 +89,7 @@ public class CSVImporter {
    * @param height
    * @return
    */
-  public static Chart_XY getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
+  public static XYChart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
 
     return getChartFromCSVDir(path2Directory, dataOrientation, width, height, null);
   }

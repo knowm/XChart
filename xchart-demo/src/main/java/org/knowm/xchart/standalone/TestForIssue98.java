@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.style.Styler_XY;
+import org.knowm.xchart.style.XYStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
@@ -32,8 +32,8 @@ public class TestForIssue98 {
 
   public static void main(String[] args) throws IOException {
 
-    final Chart_XY chart = new Chart_XY(1920, 1080);
-    Styler_XY manager = chart.getStyler();
+    final XYChart chart = new XYChart(1920, 1080);
+    XYStyler manager = chart.getStyler();
     manager.setLegendPosition(LegendPosition.InsideNW);
     manager.setYAxisLogarithmic(true);
 

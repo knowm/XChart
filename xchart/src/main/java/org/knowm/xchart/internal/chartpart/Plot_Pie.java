@@ -19,10 +19,10 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.Series_Pie;
+import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler_Pie;
+import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
@@ -35,11 +35,11 @@ public class Plot_Pie<ST extends Styler, S extends Series> extends Plot_ {
    *
    * @param chart
    */
-  public Plot_Pie(Chart<Styler_Pie, Series_Pie> chart) {
+  public Plot_Pie(Chart<PieStyler, PieSeries> chart) {
 
     super(chart);
-    this.plotContent = new PlotContent_Pie<Styler_Pie, Series_Pie>(chart);
-    this.plotSurface = new PlotSurface_Pie<Styler_Pie, Series_Pie>(chart);
+    this.plotContent = new PlotContent_Pie<PieStyler, PieSeries>(chart);
+    this.plotSurface = new PlotSurface_Pie<PieStyler, PieSeries>(chart);
   }
 
   @Override

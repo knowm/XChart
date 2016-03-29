@@ -19,10 +19,10 @@ package org.knowm.xchart.demo.charts.bar;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.knowm.xchart.ChartBuilder_Category;
-import org.knowm.xchart.Chart_Category;
-import org.knowm.xchart.Series_Category;
-import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -36,20 +36,20 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * <li>Mixed series types - Bar, Line and Scatter
  * <li>Bar Chart styles - overlapped, bar width
  */
-public class BarChart09 implements ExampleChart<Chart_Category> {
+public class BarChart09 implements ExampleChart<CategoryChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_Category> exampleChart = new BarChart09();
-    Chart_Category chart = exampleChart.getChart();
-    new SwingWrapper<Chart_Category>(chart).displayChart();
+    ExampleChart<CategoryChart> exampleChart = new BarChart09();
+    CategoryChart chart = exampleChart.getChart();
+    new SwingWrapper<CategoryChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_Category getChart() {
+  public CategoryChart getChart() {
 
     // Create Chart
-    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Value vs. Letter").xAxisTitle("Letter").yAxisTitle("Value").theme(ChartTheme.GGPlot2).build();
+    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("Value vs. Letter").xAxisTitle("Letter").yAxisTitle("Value").theme(ChartTheme.GGPlot2).build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
@@ -58,10 +58,10 @@ public class BarChart09 implements ExampleChart<Chart_Category> {
 
     // Series
     chart.addSeries("China", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 11, 23, 20, 36, 5 })));
-    Series_Category series2 = chart.addSeries("Korea", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 25, 22,
+    CategorySeries series2 = chart.addSeries("Korea", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 25, 22,
         38, 7 })), new ArrayList<Number>(Arrays.asList(new Number[] { 1, 3, 2, 1, 2 })));
     series2.setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
-    Series_Category series3 = chart.addSeries("World Ave.", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 20, 22,
+    CategorySeries series3 = chart.addSeries("World Ave.", new ArrayList<String>(Arrays.asList(new String[] { "A", "B", "C", "D", "E" })), new ArrayList<Number>(Arrays.asList(new Number[] { 20, 22,
         18, 36, 32 })));
     series3.setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle.Scatter);
 

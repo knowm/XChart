@@ -16,8 +16,8 @@
  */
 package org.knowm.xchart.demo.charts.theme;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -31,20 +31,20 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  * <li>Applying the GGPlot2 Theme to the Chart
  * <li>Vertical and Horizontal Lines
  */
-public class ThemeChart02 implements ExampleChart<Chart_XY> {
+public class ThemeChart02 implements ExampleChart<XYChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_XY> exampleChart = new ThemeChart02();
-    Chart_XY chart = exampleChart.getChart();
-    new SwingWrapper<Chart_XY>(chart).displayChart();
+    ExampleChart<XYChart> exampleChart = new ThemeChart02();
+    XYChart chart = exampleChart.getChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_XY getChart() {
+  public XYChart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.GGPlot2).title("GGPlot2 Theme").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart = new XYChartBuilder().width(800).height(600).theme(ChartTheme.GGPlot2).title("GGPlot2 Theme").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
 

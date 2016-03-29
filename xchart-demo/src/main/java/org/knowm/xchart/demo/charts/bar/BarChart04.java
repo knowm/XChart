@@ -18,8 +18,8 @@ package org.knowm.xchart.demo.charts.bar;
 
 import java.util.Arrays;
 
-import org.knowm.xchart.ChartBuilder_Category;
-import org.knowm.xchart.Chart_Category;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
@@ -34,20 +34,20 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <li>Missing point in series
  * <li>Manually setting y-axis min and max values
  */
-public class BarChart04 implements ExampleChart<Chart_Category> {
+public class BarChart04 implements ExampleChart<CategoryChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_Category> exampleChart = new BarChart04();
-    Chart_Category chart = exampleChart.getChart();
-    new SwingWrapper<Chart_Category>(chart).displayChart();
+    ExampleChart<CategoryChart> exampleChart = new BarChart04();
+    CategoryChart chart = exampleChart.getChart();
+    new SwingWrapper<CategoryChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_Category getChart() {
+  public CategoryChart getChart() {
 
     // Create Chart
-    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
+    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
 
     // Customize Chart
     chart.getStyler().setYAxisMin(5);

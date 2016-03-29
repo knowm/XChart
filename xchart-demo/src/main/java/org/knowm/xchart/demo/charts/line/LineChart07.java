@@ -19,10 +19,10 @@ package org.knowm.xchart.demo.charts.line;
 import java.util.Arrays;
 import java.util.List;
 
-import org.knowm.xchart.ChartBuilder_Category;
-import org.knowm.xchart.Chart_Category;
-import org.knowm.xchart.Series_Category;
-import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -38,20 +38,20 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * <li>GGPlot2 Theme
  * <li>disabling some series shown in legend
  */
-public class LineChart07 implements ExampleChart<Chart_Category> {
+public class LineChart07 implements ExampleChart<CategoryChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_Category> exampleChart = new LineChart07();
-    Chart_Category chart = exampleChart.getChart();
-    new SwingWrapper<Chart_Category>(chart).displayChart();
+    ExampleChart<CategoryChart> exampleChart = new LineChart07();
+    CategoryChart chart = exampleChart.getChart();
+    new SwingWrapper<CategoryChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_Category getChart() {
+  public CategoryChart getChart() {
 
     // Create Chart
-    Chart_Category chart = new ChartBuilder_Category().width(800).height(600).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();
+    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();
 
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.Line);
@@ -93,7 +93,7 @@ public class LineChart07 implements ExampleChart<Chart_Category> {
 
     // Series
     for (int i = 0; i < seriesNames.length; i++) {
-      Series_Category series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
+      CategorySeries series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
       series.setShowInLegend(i % 2 == 0);
       series.setMarker(SeriesMarkers.NONE);
     }

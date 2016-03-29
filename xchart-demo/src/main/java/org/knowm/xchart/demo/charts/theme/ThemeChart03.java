@@ -20,9 +20,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -37,20 +37,20 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * <li>Applying the Matlab Theme to the Chart
  * <li>Generating Gaussian Bell Curve Data
  */
-public class ThemeChart03 implements ExampleChart<Chart_XY> {
+public class ThemeChart03 implements ExampleChart<XYChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_XY> exampleChart = new ThemeChart03();
-    Chart_XY chart = exampleChart.getChart();
-    new SwingWrapper<Chart_XY>(chart).displayChart();
+    ExampleChart<XYChart> exampleChart = new ThemeChart03();
+    XYChart chart = exampleChart.getChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_XY getChart() {
+  public XYChart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart = new XYChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setPlotGridLinesVisible(false);
@@ -68,7 +68,7 @@ public class ThemeChart03 implements ExampleChart<Chart_XY> {
       y3Data.add(y1Data.get(i) - y2Data.get(i));
     }
 
-    Series_XY series = chart.addSeries("Gaussian 1", xData, y1Data);
+    XYSeries series = chart.addSeries("Gaussian 1", xData, y1Data);
     series.setMarker(SeriesMarkers.NONE);
     series = chart.addSeries("Gaussian 2", xData, y2Data);
     series.setMarker(SeriesMarkers.NONE);

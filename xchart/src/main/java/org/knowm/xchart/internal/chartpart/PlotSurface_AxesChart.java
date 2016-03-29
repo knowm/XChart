@@ -22,10 +22,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * Draws the plot background, the plot border and the horizontal and vertical grid lines
@@ -34,14 +34,14 @@ import org.knowm.xchart.style.Styler_AxesChart;
  */
 public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends PlotSurface_ {
 
-  private final Styler_AxesChart stylerAxesChart;
+  private final AxesChartStyler stylerAxesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotSurface_AxesChart(Chart<Styler_AxesChart, Series_XY> chart) {
+  protected PlotSurface_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
     this.stylerAxesChart = chart.getStyler();

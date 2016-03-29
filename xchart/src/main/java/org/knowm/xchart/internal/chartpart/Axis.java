@@ -24,28 +24,28 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import org.knowm.xchart.Series_AxesChart;
 import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
-import org.knowm.xchart.style.Styler_AxesChart;
-import org.knowm.xchart.style.Styler_Category;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.CategoryStyler;
 
 /**
  * Axis
  *
  * @author timmolter
  */
-public class Axis<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
+public class Axis<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
   public enum AxisDataType {
 
     Number, Date, String;
   }
 
-  private final Chart<Styler_AxesChart, Series_AxesChart> chart;
+  private final Chart<AxesChartStyler, Series_AxesChart> chart;
   private Rectangle2D bounds;
 
-  private final Styler_AxesChart stylerAxesChart;
+  private final AxesChartStyler stylerAxesChart;
 
   /** the paint zone */
   private Rectangle2D paintZone;
@@ -59,10 +59,10 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
   private AxisDataType axisDataType;
 
   /** the axis title */
-  private AxisTitle<Styler_AxesChart, Series_AxesChart> axisTitle;
+  private AxisTitle<AxesChartStyler, Series_AxesChart> axisTitle;
 
   /** the axis tick */
-  private AxisTick<Styler_AxesChart, Series_AxesChart> axisTick;
+  private AxisTick<AxesChartStyler, Series_AxesChart> axisTick;
 
   /** the axis tick calculator */
   private AxisTickCalculator_ axisTickCalculator;
@@ -90,14 +90,14 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
    * @param chart the Chart
    * @param direction the axis direction (X or Y)
    */
-  public Axis(Chart<Styler_AxesChart, Series_AxesChart> chart, Direction direction) {
+  public Axis(Chart<AxesChartStyler, Series_AxesChart> chart, Direction direction) {
 
     this.chart = chart;
     this.stylerAxesChart = chart.getStyler();
 
     this.direction = direction;
-    axisTitle = new AxisTitle<Styler_AxesChart, Series_AxesChart>(chart, direction);
-    axisTick = new AxisTick<Styler_AxesChart, Series_AxesChart>(chart, direction);
+    axisTitle = new AxisTitle<AxesChartStyler, Series_AxesChart>(chart, direction);
+    axisTick = new AxisTick<AxesChartStyler, Series_AxesChart>(chart, direction);
     // resetMinMax();
   }
 
@@ -342,7 +342,7 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
     // X-Axis
     if (getDirection() == Direction.X) {
 
-      if (stylerAxesChart instanceof Styler_Category) {
+      if (stylerAxesChart instanceof CategoryStyler) {
 
         List<?> categories = (List<?>) chart.getSeriesMap().values().iterator().next().getXData();
         AxisDataType axisType = chart.getAxisPair().getXAxis().getAxisDataType();
@@ -414,7 +414,7 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
     this.max = max;
   }
 
-  protected AxisTick<Styler_AxesChart, Series_AxesChart> getAxisTick() {
+  protected AxisTick<AxesChartStyler, Series_AxesChart> getAxisTick() {
 
     return axisTick;
   }
@@ -424,7 +424,7 @@ public class Axis<ST extends Styler_AxesChart, S extends Series> implements Char
     return direction;
   }
 
-  protected AxisTitle<Styler_AxesChart, Series_AxesChart> getAxisTitle() {
+  protected AxisTitle<AxesChartStyler, Series_AxesChart> getAxisTitle() {
 
     return axisTitle;
   }

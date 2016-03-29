@@ -25,7 +25,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  *
  * @author timmolter
  */
-public class Series_Pie extends Series {
+public class PieSeries extends Series {
 
   public enum ChartPieSeriesRenderStyle implements RenderableSeries {
 
@@ -54,7 +54,7 @@ public class Series_Pie extends Series {
    * @param name
    * @param value
    */
-  public Series_Pie(String name, Number value) {
+  public PieSeries(String name, Number value) {
 
     super(name);
     this.value = value;
@@ -65,7 +65,7 @@ public class Series_Pie extends Series {
     return chartPieSeriesRenderStyle;
   }
 
-  public Series_Pie setChartPieSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
+  public PieSeries setChartPieSeriesRenderStyle(ChartPieSeriesRenderStyle chartPieSeriesRenderStyle) {
 
     this.chartPieSeriesRenderStyle = chartPieSeriesRenderStyle;
     return this;

@@ -19,34 +19,34 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.Series_AxesChart;
-import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.Styler_AxesChart;
-import org.knowm.xchart.style.Styler_Category;
+import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.CategoryStyler;
 
 /**
  * @author timmolter
  */
-public class AxisPair<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
+public class AxisPair<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
-  private final Chart<Styler_AxesChart, Series_AxesChart> chart;
+  private final Chart<AxesChartStyler, Series_AxesChart> chart;
 
-  private final Axis<Styler_AxesChart, Series_AxesChart> xAxis;
-  private final Axis<Styler_AxesChart, Series_AxesChart> yAxis;
+  private final Axis<AxesChartStyler, Series_AxesChart> xAxis;
+  private final Axis<AxesChartStyler, Series_AxesChart> yAxis;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public AxisPair(Chart<Styler_AxesChart, Series_AxesChart> chart) {
+  public AxisPair(Chart<AxesChartStyler, Series_AxesChart> chart) {
 
     this.chart = chart;
 
     // add axes
-    xAxis = new Axis<Styler_AxesChart, Series_AxesChart>(chart, Axis.Direction.X);
-    yAxis = new Axis<Styler_AxesChart, Series_AxesChart>(chart, Axis.Direction.Y);
+    xAxis = new Axis<AxesChartStyler, Series_AxesChart>(chart, Axis.Direction.X);
+    yAxis = new Axis<AxesChartStyler, Series_AxesChart>(chart, Axis.Direction.Y);
   }
 
   @Override
@@ -109,9 +109,9 @@ public class AxisPair<ST extends Styler_AxesChart, S extends Series> implements 
     double overrideYAxisMinValue = yAxis.getMin();
     double overrideYAxisMaxValue = yAxis.getMax();
 
-    if (chart.getStyler() instanceof Styler_Category) {
+    if (chart.getStyler() instanceof CategoryStyler) {
 
-      Styler_Category stylerCategory = (Styler_Category) chart.getStyler();
+      CategoryStyler stylerCategory = (CategoryStyler) chart.getStyler();
       if (stylerCategory.getDefaultSeriesRenderStyle() == ChartCategorySeriesRenderStyle.Bar) {
         // override min/max value for bar charts' Y-Axis
         // There is a special case where it's desired to anchor the axis min or max to zero, like in the case of bar charts. This flag enables that feature.
@@ -155,12 +155,12 @@ public class AxisPair<ST extends Styler_AxesChart, S extends Series> implements 
 
   // Getters & Setters /////////////////////////////////////////////////
 
-  protected Axis<Styler_AxesChart, Series_AxesChart> getXAxis() {
+  protected Axis<AxesChartStyler, Series_AxesChart> getXAxis() {
 
     return xAxis;
   }
 
-  protected Axis<Styler_AxesChart, Series_AxesChart> getYAxis() {
+  protected Axis<AxesChartStyler, Series_AxesChart> getYAxis() {
 
     return yAxis;
   }

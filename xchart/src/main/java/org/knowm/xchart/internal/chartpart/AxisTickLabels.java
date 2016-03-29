@@ -25,17 +25,17 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.knowm.xchart.Series_AxesChart;
 import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * Axis tick labels
  */
-public class AxisTickLabels<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
+public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
-  private final Chart<Styler_AxesChart, Series_AxesChart> chart;
+  private final Chart<AxesChartStyler, Series_AxesChart> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
@@ -45,7 +45,7 @@ public class AxisTickLabels<ST extends Styler_AxesChart, S extends Series> imple
    * @param chart
    * @param direction
    */
-  protected AxisTickLabels(Chart<Styler_AxesChart, Series_AxesChart> chart, Direction direction) {
+  protected AxisTickLabels(Chart<AxesChartStyler, Series_AxesChart> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;

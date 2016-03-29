@@ -18,8 +18,8 @@ package org.knowm.xchart.standalone;
 
 import java.awt.Color;
 
-import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -44,7 +44,7 @@ public class ErrorBarLogTest {
     // double[] errdata = new double[] { 1, .699, .301, 2, 1, .699, 0.301 };
     double[] errdata = new double[] { 50, 20, 10, 52, 9, 2, 1 };
 
-    Chart_XY mychart = new Chart_XY(1200, 800);
+    XYChart mychart = new XYChart(1200, 800);
 
     mychart.getStyler().setYAxisLogarithmic(true); // set log or linear Y axis
 
@@ -54,11 +54,11 @@ public class ErrorBarLogTest {
 
     mychart.getStyler().setErrorBarsColor(Color.black);
 
-    Series_XY series1 = mychart.addSeries("Error bar test data", xData, yData1, errdata);
+    XYSeries series1 = mychart.addSeries("Error bar test data", xData, yData1, errdata);
 
-    Series_XY series2 = mychart.addSeries("Y+error", xData, yData2);
+    XYSeries series2 = mychart.addSeries("Y+error", xData, yData2);
 
-    Series_XY series3 = mychart.addSeries("Y-error", xData, yData3);
+    XYSeries series3 = mychart.addSeries("Y-error", xData, yData3);
 
     series1.setLineStyle(SeriesLines.SOLID);
 

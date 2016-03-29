@@ -48,7 +48,7 @@ public final class QuickChart {
    * @param yData An array containing Y-Axis data
    * @return a Chart Object
    */
-  public static Chart_XY getChart(String chartTitle, String xTitle, String yTitle, String seriesName, double[] xData, double[] yData) {
+  public static XYChart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, double[] xData, double[] yData) {
 
     double[][] yData2d = { yData };
     if (seriesName == null) {
@@ -70,10 +70,10 @@ public final class QuickChart {
    * @param yData An array of double arrays containing multiple Y-Axis data
    * @return a Chart Object
    */
-  public static Chart_XY getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
+  public static XYChart getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(WIDTH, HEIGHT);
+    XYChart chart = new XYChart(WIDTH, HEIGHT);
 
     // Customize Chart
     chart.setTitle(chartTitle);
@@ -82,7 +82,7 @@ public final class QuickChart {
 
     // Series
     for (int i = 0; i < yData.length; i++) {
-      Series_XY series;
+      XYSeries series;
       if (seriesNames != null) {
         series = chart.addSeries(seriesNames[i], xData, yData[i]);
       }
@@ -107,17 +107,17 @@ public final class QuickChart {
    * @param yData A Collection containing Y-Axis data
    * @return a Chart Object
    */
-  public static Chart_XY getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<? extends Number> xData, List<? extends Number> yData) {
+  public static XYChart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<? extends Number> xData, List<? extends Number> yData) {
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(WIDTH, HEIGHT);
+    XYChart chart = new XYChart(WIDTH, HEIGHT);
 
     // Customize Chart
     chart.setTitle(chartTitle);
     chart.setXAxisTitle(xTitle);
     chart.setYAxisTitle(yTitle);
 
-    Series_XY series = chart.addSeries(seriesName, xData, yData);
+    XYSeries series = chart.addSeries(seriesName, xData, yData);
     series.setMarker(SeriesMarkers.NONE);
 
     return chart;

@@ -16,12 +16,12 @@
  */
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
 
 /**
  * @author timmolter
  */
-public class Styler_Category extends Styler_AxesChart {
+public class CategoryStyler extends AxesChartStyler {
 
   private ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle;
 
@@ -31,7 +31,7 @@ public class Styler_Category extends Styler_AxesChart {
   /**
    * Constructor
    */
-  public Styler_Category() {
+  public CategoryStyler() {
 
     this.setAllStyles();
     super.setAllStyles();
@@ -56,7 +56,7 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param chartCategorySeriesRenderStyle
    */
-  public Styler_Category setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
+  public CategoryStyler setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle chartCategorySeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = chartCategorySeriesRenderStyle;
     return this;
@@ -73,7 +73,7 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param availableSpaceFill
    */
-  public Styler_Category setAvailableSpaceFill(double availableSpaceFill) {
+  public CategoryStyler setAvailableSpaceFill(double availableSpaceFill) {
 
     this.availableSpaceFill = availableSpaceFill;
     return this;
@@ -89,7 +89,7 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param isOverlapped
    */
-  public Styler_Category setOverlapped(boolean isOverlapped) {
+  public CategoryStyler setOverlapped(boolean isOverlapped) {
 
     this.isOverlapped = isOverlapped;
     return this;
@@ -100,13 +100,13 @@ public class Styler_Category extends Styler_AxesChart {
    *
    * @param theme
    */
-  public void setTheme(Theme_ theme) {
+  public void setTheme(Theme theme) {
 
     this.theme = theme;
     super.setAllStyles();
   }
 
-  public Theme_ getTheme() {
+  public Theme getTheme() {
 
     return theme;
   }

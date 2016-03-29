@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
+import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 
@@ -29,7 +30,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  *
  * @author timmolter
  */
-public class Series_Category extends Series_AxesChart {
+public class CategorySeries extends Series_AxesChart {
 
   public enum ChartCategorySeriesRenderStyle implements RenderableSeries {
 
@@ -66,7 +67,7 @@ public class Series_Category extends Series_AxesChart {
    * @param yData
    * @param errorBars
    */
-  public Series_Category(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public CategorySeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
     super(name, xData, yData, errorBars);
 
@@ -77,7 +78,7 @@ public class Series_Category extends Series_AxesChart {
     return chartCategorySeriesRenderStyle;
   }
 
-  public Series_Category setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartXYSeriesRenderStyle) {
+  public CategorySeries setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = chartXYSeriesRenderStyle;
     return this;

@@ -22,24 +22,24 @@ import java.awt.Font;
 import java.awt.Stroke;
 
 import org.knowm.xchart.style.Styler.LegendPosition;
-import org.knowm.xchart.style.Styler_Pie.AnnotationType;
+import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.colors.ChartColor;
-import org.knowm.xchart.style.colors.MatlabSeriesColors;
-import org.knowm.xchart.style.lines.MatlabSeriesLines;
+import org.knowm.xchart.style.colors.XChartSeriesColors;
+import org.knowm.xchart.style.lines.XChartSeriesLines;
 import org.knowm.xchart.style.markers.Marker;
-import org.knowm.xchart.style.markers.MatlabSeriesMarkers;
+import org.knowm.xchart.style.markers.XChartSeriesMarkers;
 
 /**
  * @author timmolter
  */
-public class Theme_Matlab implements Theme_ {
+public class XChartTheme implements Theme {
 
   // Chart Style ///////////////////////////////
 
   @Override
   public Color getChartBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.getAWTColor(ChartColor.GREY);
   }
 
   @Override
@@ -55,24 +55,21 @@ public class Theme_Matlab implements Theme_ {
   }
 
   @Override
+  public Color[] getSeriesColors() {
+
+    return new XChartSeriesColors().getSeriesColors();
+  }
+
+  @Override
   public Marker[] getSeriesMarkers() {
 
-    return new MatlabSeriesMarkers().getSeriesMarkers();
-
+    return new XChartSeriesMarkers().getSeriesMarkers();
   }
 
   @Override
   public BasicStroke[] getSeriesLines() {
 
-    return new MatlabSeriesLines().getSeriesLines();
-
-  }
-
-  @Override
-  public Color[] getSeriesColors() {
-
-    return new MatlabSeriesColors().getSeriesColors();
-
+    return new XChartSeriesLines().getSeriesLines();
   }
 
   // Chart Title ///////////////////////////////
@@ -98,13 +95,13 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public Color getChartTitleBoxBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.getAWTColor(ChartColor.GREY);
   }
 
   @Override
   public Color getChartTitleBoxBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.getAWTColor(ChartColor.GREY);
   }
 
   @Override
@@ -137,7 +134,7 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public Color getLegendBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
   @Override
@@ -175,7 +172,7 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public Font getAxisTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+    return new Font(Font.SANS_SERIF, Font.BOLD, 12);
   }
 
   @Override
@@ -193,13 +190,13 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public Font getAxisTickLabelsFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+    return new Font(Font.SANS_SERIF, Font.BOLD, 12);
   }
 
   @Override
   public int getAxisTickMarkLength() {
 
-    return 5;
+    return 3;
   }
 
   @Override
@@ -211,13 +208,13 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public int getPlotMargin() {
 
-    return 3;
+    return 4;
   }
 
   @Override
   public Color getAxisTickMarksColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
   @Override
@@ -235,13 +232,13 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public boolean isAxisTicksLineVisible() {
 
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAxisTicksMarksVisible() {
 
-    return false;
+    return true;
   }
 
   @Override
@@ -291,7 +288,7 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public Color getPlotBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
   @Override
@@ -303,20 +300,19 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public boolean isPlotTicksMarksVisible() {
 
-    return true;
+    return false;
   }
 
   @Override
   public Color getPlotGridLinesColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.getAWTColor(ChartColor.GREY);
   }
 
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.CAP_ROUND, 10.0f, new float[] { 1.0f, 2.0f }, 0.0f);
-
+    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
   }
 
   @Override
@@ -368,7 +364,7 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public AnnotationType getAnnotationType() {
 
-    return AnnotationType.Label;
+    return AnnotationType.Percentage;
   }
 
   // Line, Scatter, Area Charts ///////////////////////////////
@@ -382,7 +378,7 @@ public class Theme_Matlab implements Theme_ {
   @Override
   public boolean showMarkers() {
 
-    return false;
+    return true;
   }
 
   // Error Bars ///////////////////////////////

@@ -21,22 +21,22 @@ import org.knowm.xchart.internal.ChartBuilder;
 /**
  * @author timmolter
  */
-public class ChartBuilder_Category extends ChartBuilder<ChartBuilder_Category, Chart_Category> {
+public class CategoryChartBuilder extends ChartBuilder<CategoryChartBuilder, CategoryChart> {
 
   String xAxisTitle = "";
   String yAxisTitle = "";
 
-  public ChartBuilder_Category() {
+  public CategoryChartBuilder() {
 
   }
 
-  public ChartBuilder_Category xAxisTitle(String xAxisTitle) {
+  public CategoryChartBuilder xAxisTitle(String xAxisTitle) {
 
     this.xAxisTitle = xAxisTitle;
     return this;
   }
 
-  public ChartBuilder_Category yAxisTitle(String yAxisTitle) {
+  public CategoryChartBuilder yAxisTitle(String yAxisTitle) {
 
     this.yAxisTitle = yAxisTitle;
     return this;
@@ -48,8 +48,8 @@ public class ChartBuilder_Category extends ChartBuilder<ChartBuilder_Category, C
    * @return a Chart_Category
    */
   @Override
-  public Chart_Category build() {
+  public CategoryChart build() {
 
-    return new Chart_Category(this);
+    return new CategoryChart(this);
   }
 }

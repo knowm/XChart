@@ -22,24 +22,24 @@ import java.awt.Font;
 import java.awt.Stroke;
 
 import org.knowm.xchart.style.Styler.LegendPosition;
-import org.knowm.xchart.style.Styler_Pie.AnnotationType;
+import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.colors.ChartColor;
-import org.knowm.xchart.style.colors.XChartSeriesColors;
-import org.knowm.xchart.style.lines.XChartSeriesLines;
+import org.knowm.xchart.style.colors.GGPlot2SeriesColors;
+import org.knowm.xchart.style.lines.GGPlot2SeriesLines;
+import org.knowm.xchart.style.markers.GGPlot2SeriesMarkers;
 import org.knowm.xchart.style.markers.Marker;
-import org.knowm.xchart.style.markers.XChartSeriesMarkers;
 
 /**
  * @author timmolter
  */
-public class Theme_XChart implements Theme_ {
+public class GGPlot2Theme implements Theme {
 
   // Chart Style ///////////////////////////////
 
   @Override
   public Color getChartBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
@@ -55,29 +55,29 @@ public class Theme_XChart implements Theme_ {
   }
 
   @Override
-  public Color[] getSeriesColors() {
-
-    return new XChartSeriesColors().getSeriesColors();
-  }
-
-  @Override
   public Marker[] getSeriesMarkers() {
 
-    return new XChartSeriesMarkers().getSeriesMarkers();
+    return new GGPlot2SeriesMarkers().getSeriesMarkers();
+
   }
 
   @Override
   public BasicStroke[] getSeriesLines() {
 
-    return new XChartSeriesLines().getSeriesLines();
+    return new GGPlot2SeriesLines().getSeriesLines();
   }
 
+  @Override
+  public Color[] getSeriesColors() {
+
+    return new GGPlot2SeriesColors().getSeriesColors();
+  }
   // Chart Title ///////////////////////////////
 
   @Override
   public Font getChartTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.BOLD, 14);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
   }
 
   @Override
@@ -89,7 +89,7 @@ public class Theme_XChart implements Theme_ {
   @Override
   public boolean isChartTitleBoxVisible() {
 
-    return false;
+    return true;
   }
 
   @Override
@@ -115,7 +115,7 @@ public class Theme_XChart implements Theme_ {
   @Override
   public Font getLegendFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 11);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
   }
 
   @Override
@@ -128,13 +128,12 @@ public class Theme_XChart implements Theme_ {
   public Color getLegendBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.WHITE);
-
   }
 
   @Override
   public Color getLegendBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
@@ -172,7 +171,7 @@ public class Theme_XChart implements Theme_ {
   @Override
   public Font getAxisTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.BOLD, 12);
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
   }
 
   @Override
@@ -190,55 +189,56 @@ public class Theme_XChart implements Theme_ {
   @Override
   public Font getAxisTickLabelsFont() {
 
-    return new Font(Font.SANS_SERIF, Font.BOLD, 12);
+    return new Font(Font.SANS_SERIF, Font.BOLD, 13);
   }
 
   @Override
   public int getAxisTickMarkLength() {
 
-    return 3;
+    return 8;
   }
 
   @Override
   public int getAxisTickPadding() {
 
-    return 4;
+    return 5;
   }
 
   @Override
   public int getPlotMargin() {
 
-    return 4;
-  }
-
-  @Override
-  public Color getAxisTickMarksColor() {
-
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
-  }
-
-  @Override
-  public Stroke getAxisTickMarksStroke() {
-
-    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
-  }
-
-  @Override
-  public Color getAxisTickLabelsColor() {
-
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return 0;
   }
 
   @Override
   public boolean isAxisTicksLineVisible() {
 
-    return true;
+    return false;
   }
 
   @Override
   public boolean isAxisTicksMarksVisible() {
 
     return true;
+  }
+
+  @Override
+  public Color getAxisTickMarksColor() {
+
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+
+  }
+
+  @Override
+  public Stroke getAxisTickMarksStroke() {
+
+    return new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
+  }
+
+  @Override
+  public Color getAxisTickLabelsColor() {
+
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
   @Override
@@ -282,19 +282,19 @@ public class Theme_XChart implements Theme_ {
   @Override
   public Color getPlotBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
   }
 
   @Override
   public Color getPlotBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
   public boolean isPlotBorderVisible() {
 
-    return true;
+    return false;
   }
 
   @Override
@@ -306,13 +306,13 @@ public class Theme_XChart implements Theme_ {
   @Override
   public Color getPlotGridLinesColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
+    return new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
   }
 
   @Override
@@ -364,7 +364,7 @@ public class Theme_XChart implements Theme_ {
   @Override
   public AnnotationType getAnnotationType() {
 
-    return AnnotationType.Percentage;
+    return AnnotationType.LabelAndPercentage;
   }
 
   // Line, Scatter, Area Charts ///////////////////////////////
@@ -386,7 +386,7 @@ public class Theme_XChart implements Theme_ {
   @Override
   public Color getErrorBarsColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
   @Override

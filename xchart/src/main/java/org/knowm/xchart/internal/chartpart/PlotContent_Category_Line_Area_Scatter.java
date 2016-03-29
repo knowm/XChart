@@ -25,12 +25,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.knowm.xchart.Series_Category;
-import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler_Category;
+import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -38,14 +38,14 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  Styler_Category stylerCategory;
+  CategoryStyler stylerCategory;
 
   /**
    * Constructor
    *
    * @param plot
    */
-  protected PlotContent_Category_Line_Area_Scatter(Chart<Styler_Category, Series_Category> chart) {
+  protected PlotContent_Category_Line_Area_Scatter(Chart<CategoryStyler, CategorySeries> chart) {
 
     super(chart);
     this.stylerCategory = chart.getStyler();
@@ -109,12 +109,12 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
     // System.out.println("yMin = " + yMin);
     // System.out.println("yMax = " + yMax);
 
-    Map<String, Series_Category> seriesMap = chart.getSeriesMap();
+    Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
 
     int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
 
-    for (Series_Category series : seriesMap.values()) {
+    for (CategorySeries series : seriesMap.values()) {
 
       // data points
       Collection<? extends Number> yData = series.getYData();

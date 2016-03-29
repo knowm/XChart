@@ -26,26 +26,26 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
-import org.knowm.xchart.Series_AxesChart;
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
  * @author timmolter
  */
-public class Legend_AxesChart<ST extends Styler_AxesChart, S extends Series> extends Legend_ {
+public class Legend_AxesChart<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
-  Styler_AxesChart stylerAxesChart;
+  AxesChartStyler stylerAxesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Legend_AxesChart(Chart<Styler_AxesChart, Series_XY> chart) {
+  public Legend_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
     stylerAxesChart = chart.getStyler();

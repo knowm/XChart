@@ -25,16 +25,16 @@ import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;
-import org.knowm.xchart.style.SeriesColorMarkerLineStyle;
-import org.knowm.xchart.style.SeriesColorMarkerLineStyleCycler;
-import org.knowm.xchart.style.Styler_Pie;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
+import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme_;
+import org.knowm.xchart.style.Theme;
 
 /**
  * @author timmolter
  */
-public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
+public class PieChart extends Chart<PieStyler, PieSeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -42,9 +42,9 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
    * @param width
    * @param height
    */
-  public Chart_Pie(int width, int height) {
+  public PieChart(int width, int height) {
 
-    super(width, height, new Styler_Pie());
+    super(width, height, new PieStyler());
     plot = new Plot_Pie(this);
     legend = new Legend_Pie(this);
   }
@@ -56,7 +56,7 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
    * @param height
    * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
-  public Chart_Pie(int width, int height, Theme_ theme) {
+  public PieChart(int width, int height, Theme theme) {
 
     this(width, height);
     styler.setTheme(theme);
@@ -69,7 +69,7 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
    * @param height
    * @param chartTheme - pass in the desired ChartTheme enum
    */
-  public Chart_Pie(int width, int height, ChartTheme chartTheme) {
+  public PieChart(int width, int height, ChartTheme chartTheme) {
 
     this(width, height, chartTheme.newInstance(chartTheme));
   }
@@ -79,7 +79,7 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
    *
    * @param chartBuilder
    */
-  public Chart_Pie(ChartBuilder_Pie chartBuilder) {
+  public PieChart(PieChartBuilder chartBuilder) {
 
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);
@@ -92,9 +92,9 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
    * @param value
    * @return
    */
-  public Series_Pie addSeries(String seriesName, Number value) {
+  public PieSeries addSeries(String seriesName, Number value) {
 
-    Series_Pie series = new Series_Pie(seriesName, value);
+    PieSeries series = new PieSeries(seriesName, value);
 
     if (seriesMap.keySet().contains(seriesName)) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
@@ -121,8 +121,8 @@ public class Chart_Pie extends Chart<Styler_Pie, Series_Pie> {
     // }
 
     // set the series types if they are not set. Legend and Plot need it.
-    for (Series_Pie seriesPie : getSeriesMap().values()) {
-      Series_Pie.ChartPieSeriesRenderStyle seriesType = seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
+    for (PieSeries seriesPie : getSeriesMap().values()) {
+      PieSeries.ChartPieSeriesRenderStyle seriesType = seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
         seriesPie.setChartPieSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }

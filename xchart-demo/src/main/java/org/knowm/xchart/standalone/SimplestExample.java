@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 
@@ -34,10 +34,10 @@ public class SimplestExample {
     double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
     // Create Chart
-    Chart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
 
     // Show it
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
 
     // Save it
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);

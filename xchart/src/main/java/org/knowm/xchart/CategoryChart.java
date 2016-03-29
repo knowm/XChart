@@ -26,16 +26,16 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_AxesChart;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
-import org.knowm.xchart.style.SeriesColorMarkerLineStyle;
-import org.knowm.xchart.style.SeriesColorMarkerLineStyleCycler;
-import org.knowm.xchart.style.Styler_Category;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
+import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
+import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme_;
+import org.knowm.xchart.style.Theme;
 
 /**
  * @author timmolter
  */
-public class Chart_Category extends Chart<Styler_Category, Series_Category> {
+public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -43,9 +43,9 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param width
    * @param height
    */
-  public Chart_Category(int width, int height) {
+  public CategoryChart(int width, int height) {
 
-    super(width, height, new Styler_Category());
+    super(width, height, new CategoryStyler());
     axisPair = new AxisPair(this);
     plot = new Plot_Category(this);
     legend = new Legend_AxesChart(this);
@@ -58,7 +58,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param height
    * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
-  public Chart_Category(int width, int height, Theme_ theme) {
+  public CategoryChart(int width, int height, Theme theme) {
 
     this(width, height);
     styler.setTheme(theme);
@@ -71,7 +71,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param height
    * @param chartTheme - pass in the desired ChartTheme enum
    */
-  public Chart_Category(int width, int height, ChartTheme chartTheme) {
+  public CategoryChart(int width, int height, ChartTheme chartTheme) {
 
     this(width, height, chartTheme.newInstance(chartTheme));
   }
@@ -81,7 +81,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    *
    * @param chartBuilder
    */
-  public Chart_Category(ChartBuilder_Category chartBuilder) {
+  public CategoryChart(CategoryChartBuilder chartBuilder) {
 
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);
@@ -97,7 +97,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param xData the Y-Axis data
    * @return A Series object that you can set properties on
    */
-  public Series_Category addSeries(String seriesName, double[] xData, double[] yData) {
+  public CategorySeries addSeries(String seriesName, double[] xData, double[] yData) {
 
     return addSeries(seriesName, xData, yData, null);
   }
@@ -111,7 +111,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public Series_Category addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
+  public CategorySeries addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
     return addSeries(seriesName, getNumberListFromDoubleArray(xData), getNumberListFromDoubleArray(yData), getNumberListFromDoubleArray(errorBars));
   }
@@ -124,7 +124,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param xData the Y-Axis data
    * @return A Series object that you can set properties on
    */
-  public Series_Category addSeries(String seriesName, int[] xData, int[] yData) {
+  public CategorySeries addSeries(String seriesName, int[] xData, int[] yData) {
 
     return addSeries(seriesName, xData, yData, null);
   }
@@ -138,7 +138,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public Series_Category addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
+  public CategorySeries addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
 
     return addSeries(seriesName, getNumberListFromIntArray(xData), getNumberListFromIntArray(yData), getNumberListFromIntArray(errorBars));
   }
@@ -151,7 +151,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
-  public Series_Category addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {
+  public CategorySeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {
 
     return addSeries(seriesName, xData, yData, null);
   }
@@ -165,12 +165,12 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public Series_Category addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public CategorySeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
     // Sanity checks
     sanityCheck(seriesName, xData, yData, errorBars);
 
-    Series_Category series = null;
+    CategorySeries series = null;
     if (xData != null) {
 
       // Sanity check
@@ -180,10 +180,10 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
 
       // inspect the series to see what kind of data it contains (Number, Date)
 
-      series = new Series_Category(seriesName, xData, yData, errorBars);
+      series = new CategorySeries(seriesName, xData, yData, errorBars);
     }
     else { // generate xData
-      series = new Series_Category(seriesName, getGeneratedData(yData.size()), yData, errorBars);
+      series = new CategorySeries(seriesName, getGeneratedData(yData.size()), yData, errorBars);
     }
 
     seriesMap.put(seriesName, series);
@@ -234,8 +234,8 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
     // }
 
     // set the series render styles if they are not set. Legend and Plot need it.
-    for (Series_Category seriesCategory : getSeriesMap().values()) {
-      Series_Category.ChartCategorySeriesRenderStyle seriesType = seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
+    for (CategorySeries seriesCategory : getSeriesMap().values()) {
+      CategorySeries.ChartCategorySeriesRenderStyle seriesType = seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
         seriesCategory.setChartCategorySeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
@@ -263,7 +263,7 @@ public class Chart_Category extends Chart<Styler_Category, Series_Category> {
 
     SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
         .getSeriesLines());
-    for (Series_Category series : getSeriesMap().values()) {
+    for (CategorySeries series : getSeriesMap().values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 

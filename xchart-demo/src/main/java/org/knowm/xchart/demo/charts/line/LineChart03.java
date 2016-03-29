@@ -26,9 +26,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -45,20 +45,20 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * <li>
  * Extensive Chart Customization
  */
-public class LineChart03 implements ExampleChart<Chart_XY> {
+public class LineChart03 implements ExampleChart<XYChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_XY> exampleChart = new LineChart03();
-    Chart_XY chart = exampleChart.getChart();
-    new SwingWrapper<Chart_XY>(chart).displayChart();
+    ExampleChart<XYChart> exampleChart = new LineChart03();
+    XYChart chart = exampleChart.getChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_XY getChart() {
+  public XYChart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("LineChart03").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart = new XYChartBuilder().width(800).height(600).title("LineChart03").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
@@ -105,7 +105,7 @@ public class LineChart03 implements ExampleChart<Chart_XY> {
     }
 
     // Series
-    Series_XY series = chart.addSeries("Fake Data", xData, yData);
+    XYSeries series = chart.addSeries("Fake Data", xData, yData);
     series.setLineColor(XChartSeriesColors.BLUE);
     series.setMarkerColor(Color.ORANGE);
     series.setMarker(SeriesMarkers.CIRCLE);

@@ -28,18 +28,18 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.Map;
 
-import org.knowm.xchart.Series_Pie;
+import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler_Pie;
-import org.knowm.xchart.style.Styler_Pie.AnnotationType;
+import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.style.PieStyler.AnnotationType;
 
 /**
  * @author timmolter
  */
 public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  Styler_Pie stylerPie;
+  PieStyler stylerPie;
   DecimalFormat df = new DecimalFormat("#.0");
 
   /**
@@ -47,7 +47,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
    *
    * @param plot
    */
-  protected PlotContent_Pie(Chart<Styler_Pie, Series_Pie> chart) {
+  protected PlotContent_Pie(Chart<PieStyler, PieSeries> chart) {
 
     super(chart);
     stylerPie = chart.getStyler();
@@ -103,8 +103,8 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     // get total
     double total = 0.0;
 
-    Map<String, Series_Pie> map = chart.getSeriesMap();
-    for (Series_Pie series : map.values()) {
+    Map<String, PieSeries> map = chart.getSeriesMap();
+    for (PieSeries series : map.values()) {
 
       total += series.getValue().doubleValue();
     }
@@ -115,7 +115,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     double startAngle = stylerPie.getStartAngleInDegrees() + 90;
 
     map = chart.getSeriesMap();
-    for (Series_Pie series : map.values()) {
+    for (PieSeries series : map.values()) {
 
       Number y = series.getValue();
 

@@ -16,10 +16,10 @@
  */
 package org.knowm.xchart.demo.charts.area;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Series_XY;
-import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
@@ -36,20 +36,20 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * <li>Ensuring a chart axis on a tick
  * <li>Turning off series markers
  */
-public class AreaLineChart03 implements ExampleChart<Chart_XY> {
+public class AreaLineChart03 implements ExampleChart<XYChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_XY> exampleChart = new AreaLineChart03();
-    Chart_XY chart = exampleChart.getChart();
-    new SwingWrapper<Chart_XY>(chart).displayChart();
+    ExampleChart<XYChart> exampleChart = new AreaLineChart03();
+    XYChart chart = exampleChart.getChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_XY getChart() {
+  public XYChart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("Age").yAxisTitle("Amount").build();
+    XYChart chart = new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("Age").yAxisTitle("Amount").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
@@ -81,8 +81,8 @@ public class AreaLineChart03 implements ExampleChart<Chart_XY> {
         565197, 496959, 421280, 358113, 276518, 195571, 109514, 13876, 29, 0, 0, 0, 0 };
     // @formatter:on
 
-    Series_XY seriesLiability = chart.addSeries("Liability", xAges, yLiability);
-    seriesLiability.setChartXYSeriesRenderStyle(Series_XY.ChartXYSeriesRenderStyle.Area);
+    XYSeries seriesLiability = chart.addSeries("Liability", xAges, yLiability);
+    seriesLiability.setChartXYSeriesRenderStyle(XYSeries.ChartXYSeriesRenderStyle.Area);
     seriesLiability.setMarker(SeriesMarkers.NONE);
 
     chart.addSeries("75th Percentile", xAges, yPercentile75th);

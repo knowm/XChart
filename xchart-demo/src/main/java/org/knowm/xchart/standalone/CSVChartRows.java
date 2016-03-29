@@ -19,7 +19,7 @@ package org.knowm.xchart.standalone;
 import org.knowm.xchart.CSVExporter;
 import org.knowm.xchart.CSVImporter;
 import org.knowm.xchart.CSVImporter.DataOrientation;
-import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.SwingWrapper;
 
 /**
@@ -30,7 +30,7 @@ public class CSVChartRows {
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart_XY chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartRows/", DataOrientation.Rows, 600, 400);
+    XYChart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartRows/", DataOrientation.Rows, 600, 400);
 
     CSVExporter.writeCSVRows(chart.getSeriesMap().get("series1"), "./CSV/CSVChartRowsExport/");
 

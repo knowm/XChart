@@ -16,8 +16,8 @@
  */
 package org.knowm.xchart.standalone;
 
-import org.knowm.xchart.ChartBuilder_Category;
-import org.knowm.xchart.Chart_Category;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.SwingWrapper;
 
 /**
@@ -32,7 +32,7 @@ public class TestForIssue111 {
     // int[] x = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
     // int[] y = new int[] { 1, 0, 1, 0, 1, 0, 0, 0 };
 
-    Chart_Category chart = new ChartBuilder_Category().width(640).height(480).build();
+    CategoryChart chart = new CategoryChartBuilder().width(640).height(480).build();
     chart.addSeries("test", x, y);
     chart.getStyler().setLegendVisible(false);
     new SwingWrapper(chart).displayChart();

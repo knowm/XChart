@@ -24,9 +24,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.markers.SeriesMarkers;
@@ -39,20 +39,20 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * <li>Millisecond Scale
  * <li>Series with no Markers
  */
-public class DateChart01 implements ExampleChart<Chart_XY> {
+public class DateChart01 implements ExampleChart<XYChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_XY> exampleChart = new DateChart01();
-    Chart_XY chart = exampleChart.getChart();
-    new SwingWrapper<Chart_XY>(chart).displayChart();
+    ExampleChart<XYChart> exampleChart = new DateChart01();
+    XYChart chart = exampleChart.getChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_XY getChart() {
+  public XYChart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("Millisecond Scale").build();
+    XYChart chart = new XYChartBuilder().width(800).height(600).title("Millisecond Scale").build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
@@ -79,7 +79,7 @@ public class DateChart01 implements ExampleChart<Chart_XY> {
       yData.add(Math.random() * i);
     }
 
-    Series_XY series = chart.addSeries("blah", xData, yData);
+    XYSeries series = chart.addSeries("blah", xData, yData);
     series.setMarker(SeriesMarkers.NONE);
 
     return chart;

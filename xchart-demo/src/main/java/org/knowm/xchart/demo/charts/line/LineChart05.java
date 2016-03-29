@@ -18,9 +18,9 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -37,20 +37,20 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * <li>Logarithmic Y-Axis
  * <li>An X-Axis min value clipping off the series
  */
-public class LineChart05 implements ExampleChart<Chart_XY> {
+public class LineChart05 implements ExampleChart<XYChart> {
 
   public static void main(String[] args) {
 
-    ExampleChart<Chart_XY> exampleChart = new LineChart05();
-    Chart_XY chart = exampleChart.getChart();
-    new SwingWrapper<Chart_XY>(chart).displayChart();
+    ExampleChart<XYChart> exampleChart = new LineChart05();
+    XYChart chart = exampleChart.getChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
   }
 
   @Override
-  public Chart_XY getChart() {
+  public XYChart getChart() {
 
     // Create Chart
-    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).title("LineChart05").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart = new XYChartBuilder().width(800).height(600).title("LineChart05").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
@@ -65,12 +65,12 @@ public class LineChart05 implements ExampleChart<Chart_XY> {
     double[] yData = new double[] { 106, 44, 26, 10, 7.5, 3.4, .88 };
     double[] yData2 = new double[] { 102, 49, 23.6, 11.3, 5.4, 2.6, 1.25 };
 
-    Series_XY series = chart.addSeries("A", xData, yData);
+    XYSeries series = chart.addSeries("A", xData, yData);
     series.setLineStyle(SeriesLines.NONE);
     series.setMarker(SeriesMarkers.DIAMOND);
     series.setMarkerColor(Color.BLACK);
 
-    Series_XY series2 = chart.addSeries("B", xData, yData2);
+    XYSeries series2 = chart.addSeries("B", xData, yData2);
     series2.setMarker(SeriesMarkers.NONE);
     series2.setLineStyle(SeriesLines.DASH_DASH);
     series2.setLineColor(Color.BLACK);

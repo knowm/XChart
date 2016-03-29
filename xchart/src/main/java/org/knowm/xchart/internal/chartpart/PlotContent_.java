@@ -21,12 +21,12 @@ import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * @author timmolter
  */
-public abstract class PlotContent_<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
+public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
   protected final Chart<ST, S> chart;
 

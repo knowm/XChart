@@ -21,9 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
@@ -35,7 +35,7 @@ public class AdvancedExample {
   public static void main(String[] args) {
 
     // Create Chart
-    final Chart_XY chart = new ChartBuilder_XY().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
+    final XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNE);

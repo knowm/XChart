@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for date axes
@@ -108,7 +108,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_Date(Direction axisDirection, double workingSpace, double minValue, double maxValue, Styler_AxesChart styler) {
+  public AxisTickCalculator_Date(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
 

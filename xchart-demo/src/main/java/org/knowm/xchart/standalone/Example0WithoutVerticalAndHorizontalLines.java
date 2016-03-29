@@ -19,11 +19,10 @@ package org.knowm.xchart.standalone;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.xchart.ChartBuilder_XY;
-import org.knowm.xchart.Chart_XY;
-import org.knowm.xchart.Series_XY;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
@@ -37,19 +36,19 @@ public class Example0WithoutVerticalAndHorizontalLines {
 
     int numCharts = 4;
 
-    List<Chart> charts = new ArrayList<Chart>();
+    List<XYChart> charts = new ArrayList<XYChart>();
 
     for (int i = 0; i < numCharts; i++) {
-      Chart_XY chart = new ChartBuilder_XY().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
+      XYChart chart = new XYChartBuilder().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
       chart.getStyler().setYAxisMin(-10);
       chart.getStyler().setYAxisMax(10);
       chart.getStyler().setPlotGridVerticalLinesVisible(false);
       chart.getStyler().setPlotGridHorizontalLinesVisible(false);
-      Series_XY series = chart.addSeries("" + i, null, getRandomWalk(200));
+      XYSeries series = chart.addSeries("" + i, null, getRandomWalk(200));
       series.setMarker(SeriesMarkers.NONE);
       charts.add(chart);
     }
-    new SwingWrapper(charts).displayChartMatrix();
+    new SwingWrapper<XYChart>(charts).displayChartMatrix();
   }
 
   /**

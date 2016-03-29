@@ -24,7 +24,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
 
-import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
@@ -37,7 +37,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <li>fixed window
  * <li>error bars
  */
-public class RealtimeChart03 implements ExampleChart {
+public class RealtimeChart03 implements ExampleChart<XYChart> {
 
   private List<Integer> xData = new CopyOnWriteArrayList<Integer>();
   private List<Double> yData = new CopyOnWriteArrayList<Double>();
@@ -49,7 +49,7 @@ public class RealtimeChart03 implements ExampleChart {
 
     // Setup the panel
     final RealtimeChart03 realtimeChart03 = new RealtimeChart03();
-    final XChartPanel chartPanel = realtimeChart03.buildPanel();
+    final XChartPanel<XYChart> chartPanel = realtimeChart03.buildPanel();
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
@@ -86,13 +86,13 @@ public class RealtimeChart03 implements ExampleChart {
 
   }
 
-  public XChartPanel buildPanel() {
+  public XChartPanel<XYChart> buildPanel() {
 
-    return new XChartPanel(getChart());
+    return new XChartPanel<XYChart>(getChart());
   }
 
   @Override
-  public Chart_XY getChart() {
+  public XYChart getChart() {
 
     yData.add(0.0);
     for (int i = 0; i < 50; i++) {
@@ -111,7 +111,7 @@ public class RealtimeChart03 implements ExampleChart {
     }
 
     // Create Chart
-    Chart_XY chart = new Chart_XY(500, 400);
+    XYChart chart = new XYChart(500, 400);
     chart.setTitle("Sample Real-time Chart");
     chart.setXAxisTitle("X");
     chart.setYAxisTitle("Y");

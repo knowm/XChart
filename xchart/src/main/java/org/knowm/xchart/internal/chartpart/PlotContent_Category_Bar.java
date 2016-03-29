@@ -25,12 +25,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.knowm.xchart.Series_Category;
-import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.CategorySeries.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler_Category;
+import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -38,14 +38,14 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_Category_Bar<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  Styler_Category stylerCategory;
+  CategoryStyler stylerCategory;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotContent_Category_Bar(Chart<Styler_Category, Series_Category> chart) {
+  protected PlotContent_Category_Bar(Chart<CategoryStyler, CategorySeries> chart) {
 
     super(chart);
     this.stylerCategory = chart.getStyler();
@@ -74,7 +74,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     double yTickSpace = stylerCategory.getPlotContentSize() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
-    Map<String, Series_Category> seriesMap = chart.getSeriesMap();
+    Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
     int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
 
@@ -98,7 +98,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
     // plot series
     int seriesCounter = 0;
-    for (Series_Category series : seriesMap.values()) {
+    for (CategorySeries series : seriesMap.values()) {
 
       // for line series
       double previousX = -Double.MAX_VALUE;

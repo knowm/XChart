@@ -38,18 +38,18 @@ public abstract class Styler {
 
     XChart, GGPlot2, Matlab;
 
-    public Theme_ newInstance(ChartTheme chartTheme) {
+    public Theme newInstance(ChartTheme chartTheme) {
 
       switch (chartTheme) {
       case GGPlot2:
-        return new Theme_GGPlot2();
+        return new GGPlot2Theme();
 
       case Matlab:
-        return new Theme_Matlab();
+        return new MatlabTheme();
 
       case XChart:
       default:
-        return new Theme_XChart();
+        return new XChartTheme();
       }
     }
   }
@@ -60,7 +60,7 @@ public abstract class Styler {
   }
 
   /** the default Theme */
-  protected Theme_ theme = new Theme_XChart();
+  protected Theme theme = new XChartTheme();
 
   // Chart Style ///////////////////////////////
   private Color chartBackgroundColor;

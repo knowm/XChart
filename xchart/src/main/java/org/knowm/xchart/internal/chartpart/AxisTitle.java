@@ -23,17 +23,17 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.Series_AxesChart;
 import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.style.Styler_AxesChart;
+import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * AxisTitle
  */
-public class AxisTitle<ST extends Styler_AxesChart, S extends Series> implements ChartPart {
+public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
-  private final Chart<Styler_AxesChart, Series_AxesChart> chart;
+  private final Chart<AxesChartStyler, Series_AxesChart> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
@@ -43,7 +43,7 @@ public class AxisTitle<ST extends Styler_AxesChart, S extends Series> implements
    * @param chart the Chart
    * @param direction the Direction
    */
-  protected AxisTitle(Chart<Styler_AxesChart, Series_AxesChart> chart, Direction direction) {
+  protected AxisTitle(Chart<AxesChartStyler, Series_AxesChart> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;

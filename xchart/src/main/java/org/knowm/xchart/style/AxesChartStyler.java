@@ -25,7 +25,7 @@ import java.util.TimeZone;
 /**
  * @author timmolter
  */
-public abstract class Styler_AxesChart extends Styler {
+public abstract class AxesChartStyler extends Styler {
 
   // Chart Axes ///////////////////////////////
   private boolean xAxisTitleVisible;
@@ -137,7 +137,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isVisible
    */
-  public Styler_AxesChart setXAxisTitleVisible(boolean xAxisTitleVisible) {
+  public AxesChartStyler setXAxisTitleVisible(boolean xAxisTitleVisible) {
 
     this.xAxisTitleVisible = xAxisTitleVisible;
     return this;
@@ -153,7 +153,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isVisible
    */
-  public Styler_AxesChart setYAxisTitleVisible(boolean yAxisTitleVisible) {
+  public AxesChartStyler setYAxisTitleVisible(boolean yAxisTitleVisible) {
 
     this.yAxisTitleVisible = yAxisTitleVisible;
     return this;
@@ -169,7 +169,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isVisible
    */
-  public Styler_AxesChart setAxisTitlesVisible(boolean isVisible) {
+  public AxesChartStyler setAxisTitlesVisible(boolean isVisible) {
 
     this.xAxisTitleVisible = isVisible;
     this.yAxisTitleVisible = isVisible;
@@ -181,7 +181,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTitleFont
    */
-  public Styler_AxesChart setAxisTitleFont(Font axisTitleFont) {
+  public AxesChartStyler setAxisTitleFont(Font axisTitleFont) {
 
     this.axisTitleFont = axisTitleFont;
     return this;
@@ -197,7 +197,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isVisible
    */
-  public Styler_AxesChart setXAxisTicksVisible(boolean xAxisTicksVisible) {
+  public AxesChartStyler setXAxisTicksVisible(boolean xAxisTicksVisible) {
 
     this.xAxisTicksVisible = xAxisTicksVisible;
     return this;
@@ -213,7 +213,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isVisible
    */
-  public Styler_AxesChart setYAxisTicksVisible(boolean yAxisTicksVisible) {
+  public AxesChartStyler setYAxisTicksVisible(boolean yAxisTicksVisible) {
 
     this.yAxisTicksVisible = yAxisTicksVisible;
     return this;
@@ -229,7 +229,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isVisible
    */
-  public Styler_AxesChart setAxisTicksVisible(boolean isVisible) {
+  public AxesChartStyler setAxisTicksVisible(boolean isVisible) {
 
     this.xAxisTicksVisible = isVisible;
     this.yAxisTicksVisible = isVisible;
@@ -241,7 +241,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTicksFont
    */
-  public Styler_AxesChart setAxisTickLabelsFont(Font axisTicksFont) {
+  public AxesChartStyler setAxisTickLabelsFont(Font axisTicksFont) {
 
     this.axisTickLabelsFont = axisTicksFont;
     return this;
@@ -257,7 +257,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTickMarkLength
    */
-  public Styler_AxesChart setAxisTickMarkLength(int axisTickMarkLength) {
+  public AxesChartStyler setAxisTickMarkLength(int axisTickMarkLength) {
 
     this.axisTickMarkLength = axisTickMarkLength;
     return this;
@@ -273,7 +273,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTickPadding
    */
-  public Styler_AxesChart setAxisTickPadding(int axisTickPadding) {
+  public AxesChartStyler setAxisTickPadding(int axisTickPadding) {
 
     this.axisTickPadding = axisTickPadding;
     return this;
@@ -289,7 +289,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTickColor
    */
-  public Styler_AxesChart setAxisTickMarksColor(Color axisTickColor) {
+  public AxesChartStyler setAxisTickMarksColor(Color axisTickColor) {
 
     this.axisTickMarksColor = axisTickColor;
     return this;
@@ -305,7 +305,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTickMarksStroke
    */
-  public Styler_AxesChart setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
+  public AxesChartStyler setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
 
     this.axisTickMarksStroke = axisTickMarksStroke;
     return this;
@@ -321,7 +321,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTickLabelsColor
    */
-  public Styler_AxesChart setAxisTickLabelsColor(Color axisTickLabelsColor) {
+  public AxesChartStyler setAxisTickLabelsColor(Color axisTickLabelsColor) {
 
     this.axisTickLabelsColor = axisTickLabelsColor;
     return this;
@@ -337,7 +337,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isAxisTicksLineVisible
    */
-  public Styler_AxesChart setAxisTicksLineVisible(boolean isAxisTicksLineVisible) {
+  public AxesChartStyler setAxisTicksLineVisible(boolean isAxisTicksLineVisible) {
 
     this.isAxisTicksLineVisible = isAxisTicksLineVisible;
     return this;
@@ -353,7 +353,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isAxisTicksMarksVisible
    */
-  public Styler_AxesChart setAxisTicksMarksVisible(boolean isAxisTicksMarksVisible) {
+  public AxesChartStyler setAxisTicksMarksVisible(boolean isAxisTicksMarksVisible) {
 
     this.isAxisTicksMarksVisible = isAxisTicksMarksVisible;
     return this;
@@ -369,7 +369,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param plotMargin
    */
-  public Styler_AxesChart setPlotMargin(int plotMargin) {
+  public AxesChartStyler setPlotMargin(int plotMargin) {
 
     this.plotMargin = plotMargin;
     return this;
@@ -385,7 +385,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param axisTitlePadding
    */
-  public Styler_AxesChart setAxisTitlePadding(int axisTitlePadding) {
+  public AxesChartStyler setAxisTitlePadding(int axisTitlePadding) {
 
     this.axisTitlePadding = axisTitlePadding;
     return this;
@@ -401,7 +401,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param xAxisTickMarkSpacingHint
    */
-  public Styler_AxesChart setXAxisTickMarkSpacingHint(int xAxisTickMarkSpacingHint) {
+  public AxesChartStyler setXAxisTickMarkSpacingHint(int xAxisTickMarkSpacingHint) {
 
     this.xAxisTickMarkSpacingHint = xAxisTickMarkSpacingHint;
     return this;
@@ -417,7 +417,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param xAxisTickMarkSpacingHint
    */
-  public Styler_AxesChart setYAxisTickMarkSpacingHint(int yAxisTickMarkSpacingHint) {
+  public AxesChartStyler setYAxisTickMarkSpacingHint(int yAxisTickMarkSpacingHint) {
 
     this.yAxisTickMarkSpacingHint = yAxisTickMarkSpacingHint;
     return this;
@@ -433,7 +433,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isxAxisLogarithmic
    */
-  public Styler_AxesChart setXAxisLogarithmic(boolean isXAxisLogarithmic) {
+  public AxesChartStyler setXAxisLogarithmic(boolean isXAxisLogarithmic) {
 
     this.isXAxisLogarithmic = isXAxisLogarithmic;
     return this;
@@ -449,7 +449,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isyAxisLogarithmic
    */
-  public Styler_AxesChart setYAxisLogarithmic(boolean isYAxisLogarithmic) {
+  public AxesChartStyler setYAxisLogarithmic(boolean isYAxisLogarithmic) {
 
     this.isYAxisLogarithmic = isYAxisLogarithmic;
     return this;
@@ -460,7 +460,7 @@ public abstract class Styler_AxesChart extends Styler {
     return isYAxisLogarithmic;
   }
 
-  public Styler_AxesChart setXAxisMin(double xAxisMin) {
+  public AxesChartStyler setXAxisMin(double xAxisMin) {
 
     this.xAxisMin = xAxisMin;
     return this;
@@ -471,7 +471,7 @@ public abstract class Styler_AxesChart extends Styler {
     return xAxisMin;
   }
 
-  public Styler_AxesChart setXAxisMax(double xAxisMax) {
+  public AxesChartStyler setXAxisMax(double xAxisMax) {
 
     this.xAxisMax = xAxisMax;
     return this;
@@ -482,7 +482,7 @@ public abstract class Styler_AxesChart extends Styler {
     return xAxisMax;
   }
 
-  public Styler_AxesChart setYAxisMin(double yAxisMin) {
+  public AxesChartStyler setYAxisMin(double yAxisMin) {
 
     this.yAxisMin = yAxisMin;
     return this;
@@ -493,7 +493,7 @@ public abstract class Styler_AxesChart extends Styler {
     return yAxisMin;
   }
 
-  public Styler_AxesChart setYAxisMax(double yAxisMax) {
+  public AxesChartStyler setYAxisMax(double yAxisMax) {
 
     this.yAxisMax = yAxisMax;
     return this;
@@ -519,7 +519,7 @@ public abstract class Styler_AxesChart extends Styler {
     return yAxisLabelAlignment;
   }
 
-  public Styler_AxesChart setYAxisLabelAlignment(TextAlignment yAxisLabelAlignment) {
+  public AxesChartStyler setYAxisLabelAlignment(TextAlignment yAxisLabelAlignment) {
 
     this.yAxisLabelAlignment = yAxisLabelAlignment;
     return this;
@@ -530,7 +530,7 @@ public abstract class Styler_AxesChart extends Styler {
     return xAxisLabelRotation;
   }
 
-  public Styler_AxesChart setXAxisLabelRotation(int xAxisLabelRotation) {
+  public AxesChartStyler setXAxisLabelRotation(int xAxisLabelRotation) {
 
     this.xAxisLabelRotation = xAxisLabelRotation;
     return this;
@@ -543,7 +543,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isPlotGridLinesVisible
    */
-  public Styler_AxesChart setPlotGridLinesVisible(boolean isPlotGridLinesVisible) {
+  public AxesChartStyler setPlotGridLinesVisible(boolean isPlotGridLinesVisible) {
 
     this.isPlotGridHorizontalLinesVisible = isPlotGridLinesVisible;
     this.isPlotGridVerticalLinesVisible = isPlotGridLinesVisible;
@@ -560,7 +560,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isPlotGridLinesVisible
    */
-  public Styler_AxesChart setPlotGridHorizontalLinesVisible(boolean isPlotGridHorizontalLinesVisible) {
+  public AxesChartStyler setPlotGridHorizontalLinesVisible(boolean isPlotGridHorizontalLinesVisible) {
 
     this.isPlotGridHorizontalLinesVisible = isPlotGridHorizontalLinesVisible;
     return this;
@@ -576,7 +576,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isPlotGridLinesVisible
    */
-  public Styler_AxesChart setPlotGridVerticalLinesVisible(boolean isPlotGridVerticalLinesVisible) {
+  public AxesChartStyler setPlotGridVerticalLinesVisible(boolean isPlotGridVerticalLinesVisible) {
 
     this.isPlotGridVerticalLinesVisible = isPlotGridVerticalLinesVisible;
     return this;
@@ -592,7 +592,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param isPlotTicksMarksVisible
    */
-  public Styler_AxesChart setPlotTicksMarksVisible(boolean isPlotTicksMarksVisible) {
+  public AxesChartStyler setPlotTicksMarksVisible(boolean isPlotTicksMarksVisible) {
 
     this.isPlotTicksMarksVisible = isPlotTicksMarksVisible;
     return this;
@@ -608,7 +608,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param plotGridLinesColor
    */
-  public Styler_AxesChart setPlotGridLinesColor(Color plotGridLinesColor) {
+  public AxesChartStyler setPlotGridLinesColor(Color plotGridLinesColor) {
 
     this.plotGridLinesColor = plotGridLinesColor;
     return this;
@@ -624,7 +624,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param plotGridLinesStroke
    */
-  public Styler_AxesChart setPlotGridLinesStroke(Stroke plotGridLinesStroke) {
+  public AxesChartStyler setPlotGridLinesStroke(Stroke plotGridLinesStroke) {
 
     this.plotGridLinesStroke = plotGridLinesStroke;
     return this;
@@ -642,7 +642,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param markerSize
    */
-  public Styler_AxesChart setMarkerSize(int markerSize) {
+  public AxesChartStyler setMarkerSize(int markerSize) {
 
     this.markerSize = markerSize;
     return this;
@@ -660,7 +660,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param errorBarsColor
    */
-  public Styler_AxesChart setErrorBarsColor(Color errorBarsColor) {
+  public AxesChartStyler setErrorBarsColor(Color errorBarsColor) {
 
     this.errorBarsColor = errorBarsColor;
     return this;
@@ -676,7 +676,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @return
    */
-  public Styler_AxesChart setErrorBarsColorSeriesColor(boolean isErrorBarsColorSeriesColor) {
+  public AxesChartStyler setErrorBarsColorSeriesColor(boolean isErrorBarsColorSeriesColor) {
 
     this.isErrorBarsColorSeriesColor = isErrorBarsColorSeriesColor;
     return this;
@@ -694,7 +694,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param locale - the locale to use when formatting Strings and dates for the axis tick labels
    */
-  public Styler_AxesChart setLocale(Locale locale) {
+  public AxesChartStyler setLocale(Locale locale) {
 
     this.locale = locale;
     return this;
@@ -710,7 +710,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param timezone the timezone to use when formatting date data
    */
-  public Styler_AxesChart setTimezone(TimeZone timezone) {
+  public AxesChartStyler setTimezone(TimeZone timezone) {
 
     this.timezone = timezone;
     return this;
@@ -726,7 +726,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param pattern - the pattern describing the date and time format
    */
-  public Styler_AxesChart setDatePattern(String datePattern) {
+  public AxesChartStyler setDatePattern(String datePattern) {
 
     this.datePattern = datePattern;
     return this;
@@ -742,7 +742,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param pattern - the pattern describing the decimal format
    */
-  public Styler_AxesChart setDecimalPattern(String decimalPattern) {
+  public AxesChartStyler setDecimalPattern(String decimalPattern) {
 
     this.decimalPattern = decimalPattern;
     return this;
@@ -763,7 +763,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param xAxisDecimalPattern
    */
-  public Styler_AxesChart setXAxisDecimalPattern(String xAxisDecimalPattern) {
+  public AxesChartStyler setXAxisDecimalPattern(String xAxisDecimalPattern) {
 
     this.xAxisDecimalPattern = xAxisDecimalPattern;
     return this;
@@ -779,7 +779,7 @@ public abstract class Styler_AxesChart extends Styler {
    *
    * @param yAxisDecimalPattern
    */
-  public Styler_AxesChart setYAxisDecimalPattern(String yAxisDecimalPattern) {
+  public AxesChartStyler setYAxisDecimalPattern(String yAxisDecimalPattern) {
 
     this.yAxisDecimalPattern = yAxisDecimalPattern;
     return this;

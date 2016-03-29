@@ -16,19 +16,19 @@
  */
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.Series_XY.ChartXYSeriesRenderStyle;
+import org.knowm.xchart.XYSeries.ChartXYSeriesRenderStyle;
 
 /**
  * @author timmolter
  */
-public class Styler_XY extends Styler_AxesChart {
+public class XYStyler extends AxesChartStyler {
 
   private ChartXYSeriesRenderStyle chartXYSeriesRenderStyle;
 
   /**
    * Constructor
    */
-  public Styler_XY() {
+  public XYStyler() {
 
     this.setAllStyles();
     super.setAllStyles();
@@ -50,7 +50,7 @@ public class Styler_XY extends Styler_AxesChart {
    *
    * @param chartXYSeriesRenderStyle
    */
-  public Styler_XY setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
+  public XYStyler setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartXYSeriesRenderStyle = chartXYSeriesRenderStyle;
     return this;
@@ -61,13 +61,13 @@ public class Styler_XY extends Styler_AxesChart {
    *
    * @param theme
    */
-  public void setTheme(Theme_ theme) {
+  public void setTheme(Theme theme) {
 
     this.theme = theme;
     super.setAllStyles();
   }
 
-  public Theme_ getTheme() {
+  public Theme getTheme() {
 
     return theme;
   }

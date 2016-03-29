@@ -24,15 +24,15 @@ import org.knowm.xchart.internal.chartpart.Chart;
 public final class ChartInfo {
 
   private final String exampleChartName;
-  private final Chart exampleChart;
+  private final Chart<?, ?> exampleChart;
 
   /**
    * Constructor
-   * 
+   *
    * @param exampleChartName
    * @param exampleChart
    */
-  public ChartInfo(String exampleChartName, Chart exampleChart) {
+  public ChartInfo(String exampleChartName, Chart<?, ?> exampleChart) {
 
     this.exampleChartName = exampleChartName;
     this.exampleChart = exampleChart;
@@ -43,7 +43,7 @@ public final class ChartInfo {
     return exampleChartName;
   }
 
-  public Chart getExampleChart() {
+  public Chart<?, ?> getExampleChart() {
 
     return exampleChart;
   }

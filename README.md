@@ -37,7 +37,7 @@ Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, style se
 ```java
 
     // Create Chart
-    Chart_XY chart = new ChartBuilder_XY().width(600).height(500).title("Gaussian Blobs").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart = new XYChartBuilder().width(600).height(500).title("Gaussian Blobs").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
@@ -47,7 +47,7 @@ Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, style se
 
     // Series
     chart.addSeries("Gaussian Blob 1", getGaussian(1000, 1, 10), getGaussian(1000, 1, 10));
-    Series_XY series = chart.addSeries("Gaussian Blob 2", getGaussian(1000, 1, 10), getGaussian(1000, 0, 5));
+    XYSeries series = chart.addSeries("Gaussian Blob 2", getGaussian(1000, 1, 10), getGaussian(1000, 0, 5));
     series.setMarker(SeriesMarkers.DIAMOND);
 
     new SwingWrapper(chart).displayChart();
@@ -61,7 +61,7 @@ Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, add char
 
 ```java
     // Create Chart
-    final Chart_XY chart = new ChartBuilder_XY().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
+    final XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
@@ -132,37 +132,37 @@ To make it real-time, simply call `updateSeries` on the `XChartPanel` instance.
 
 ## Chart Types
 
-Currently, there are three major chart types: `Chart_XY`, `Chart_Category` and `Chart_Pie`. Each type has its corresponding `ChartBuilder`, `Styler` and `Series`.
+Currently, there are three major chart types: `XYChart`, `CategoryChart` and `PieChart`. Each type has its corresponding `ChartBuilder`, `Styler` and `Series`.
 
 | Chart Type | Builder | Styler | Series | Allowed X-Axis Data Types | Default Series Render Style |
 |---|---|---|---|---|---|
-| Chart_XY | ChartBuilder_XY | Styler_XY | Series_XY | Number, Date | Line |
-| Chart_Category | ChartBuilder_Category | Styler_Category | Series_Category | Number, Date, String | Bar |
-| Chart_Pie | ChartBuilder_Pie | Styler_Pie | Series_Pie | String | Pie |
+| XYChart | XYChartBuilder | XYStyler | XYSeries | Number, Date | Line |
+| CategoryChart | CategoryChartBuilder | CategoryStyler | CategorySeries | Number, Date, String | Bar |
+| PieChart | PieChartBuilder | PieStyler | PieSeries | String | Pie |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
 
-### Chart_XY
+### XYChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/Chart_XY.png)
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XYChart.png)
 
-`Chart_XY` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals. 
+`XYChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals. 
 
 Series render styles include: `Line`, `Scatter` and `Area`.
 
-### Chart_Category 
+### CategoryChart 
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/Chart_Category.png)
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/CategoryChart.png)
 
-`Chart_Category` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. For the X-Axis, each category is given its own tick mark.  
+`CategoryChart` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. For the X-Axis, each category is given its own tick mark.  
 
 Series render styles include: `Bar`, `Line`, `Scatter`, `Area` and `Stick`.
 
-### Chart_Pie
+### PieChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/Chart_Pie.png)
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/PieChart.png)
 
-`Chart_Pie` charts take String data types for the pie slice name and Number data types for the pie slice value.  
+`PieChart` charts take String data types for the pie slice name and Number data types for the pie slice value.  
 
 Series render styles include: `Pie` and in the near future `Donut`.
 
@@ -178,7 +178,7 @@ All the styling options can be found in one of two possible places: 1) the Chart
 
 XChart ships with three different themes: Default `XChart`, `GGPlot2` and `Matlab`. Using a different theme is as simple as setting the Chart's theme with the `theme` method of the `ChartBuilder`.
 
-    Chart_XY chart = new ChartBuilder_XY().width(800).height(600).theme(ChartTheme.Matlab).build();
+    XYChart chart = new XYChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Themes.png)
 

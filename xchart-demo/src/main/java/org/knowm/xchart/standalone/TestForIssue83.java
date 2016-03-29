@@ -18,7 +18,7 @@ package org.knowm.xchart.standalone;
 
 import java.io.IOException;
 
-import org.knowm.xchart.Chart_XY;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -31,7 +31,7 @@ public class TestForIssue83 {
 
   public static void main(String[] args) throws IOException {
 
-    final Chart_XY chart = new Chart_XY(500, 580);
+    final XYChart chart = new XYChart(500, 580);
     final Styler styleManager = chart.getStyler();
     styleManager.setLegendPosition(LegendPosition.InsideNW);
     styleManager.setLegendVisible(false);
