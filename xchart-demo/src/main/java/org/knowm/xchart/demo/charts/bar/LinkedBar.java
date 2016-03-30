@@ -25,7 +25,7 @@ import org.knowm.xchart.Series_Category.ChartCategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * GGPlot2 Theme
@@ -52,7 +52,7 @@ public class LinkedBar implements ExampleChart {
     Chart_Category chart = new ChartBuilder_Category().width(800).height(600).title("Temperature vs. Color").xAxisTitle("Color").yAxisTitle("Temperature").theme(ChartTheme.GGPlot2).build();
     // Customize Chart
 	chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.LinkedBar);
-	chart.getStyler().setBarWidthPercentage(1.0);
+	chart.getStyler().setAvailableSpaceFill(1.0);
 	
     // Series
     chart.addSeries("fish", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { -40, 30, 20, 60,
