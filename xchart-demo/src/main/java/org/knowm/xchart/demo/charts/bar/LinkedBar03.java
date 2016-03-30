@@ -28,7 +28,8 @@ import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Histogram Overlapped
@@ -56,8 +57,8 @@ public class LinkedBar03 implements ExampleChart {
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(ChartCategorySeriesRenderStyle.LinkedBar);
 	chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setBarWidthPercentage(.96);
-    chart.getStyler().setBarsOverlapped(true);
+    chart.getStyler().setAvailableSpaceFill(.96);
+    chart.getStyler().setOverlapped(true);
 
     // Series
     Histogram histogram1 = new Histogram(getGaussianData(10000), 20, -20, 20);
