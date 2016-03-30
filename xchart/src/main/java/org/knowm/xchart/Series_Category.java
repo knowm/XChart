@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
@@ -45,7 +44,6 @@ public class Series_Category extends Series_AxesChart {
     Stick(LegendRenderType.Line),
 
 	LinkedBar(LegendRenderType.Box);
-
 
     private final LegendRenderType legendRenderType;
 
@@ -81,9 +79,10 @@ public class Series_Category extends Series_AxesChart {
     return chartCategorySeriesRenderStyle;
   }
 
-  public void setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartXYSeriesRenderStyle) {
+  public Series_Category setChartCategorySeriesRenderStyle(ChartCategorySeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = chartXYSeriesRenderStyle;
+    return this;
   }
 
   @Override
