@@ -23,8 +23,8 @@ import org.knowm.xchart.internal.chartpart.Chart;
 
 import de.erichseifert.vectorgraphics2d.EPSGraphics2D;
 import de.erichseifert.vectorgraphics2d.PDFGraphics2D;
+import de.erichseifert.vectorgraphics2d.ProcessingPipeline;
 import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
-import de.erichseifert.vectorgraphics2d.VectorGraphics2D;
 
 /**
  * A helper class with static methods for saving Charts as bitmaps
@@ -46,7 +46,7 @@ public final class VectorGraphicsEncoder {
 
   public static void saveVectorGraphic(Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
 
-    VectorGraphics2D g = null;
+    ProcessingPipeline g = null;
 
     switch (vectorGraphicsFormat) {
     case EPS:
