@@ -204,10 +204,10 @@ public final class BitmapEncoder {
   }
 
   /**
-   * Generates a byte[] for a given chart, PNG compressed
+   * Generates a byte[] for a given chart
    *
    * @param chart
-   * @return a byte[] for a given chart, PNG compressed
+   * @return a byte[] for a given chart
    * @throws IOException
    */
   public static byte[] getBitmapBytes(Chart chart, BitmapFormat bitmapFormat) throws IOException {
