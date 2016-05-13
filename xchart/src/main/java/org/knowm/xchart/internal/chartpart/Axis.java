@@ -47,14 +47,6 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
   private final AxesChartStyler stylerAxesChart;
 
-  /** the paint zone */
-  private Rectangle2D paintZone;
-
-  protected Rectangle2D getPaintZone() {
-
-    return paintZone;
-  }
-
   /** the axisDataType */
   private AxisDataType axisDataType;
 
@@ -133,7 +125,6 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   @Override
   public void paint(Graphics2D g) {
 
-    paintZone = new Rectangle2D.Double();
     bounds = new Rectangle2D.Double();
 
     // determine Axis bounds
@@ -185,21 +176,18 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
       /////////////////////////
 
-      Rectangle2D yAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
-      this.paintZone = yAxisRectangle;
-      // g.setColor(Color.green);
-      // g.draw(yAxisRectangle);
+      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
+      // g.setColor(Color.yellow);
+      // g.draw(bounds);
 
       // fill in Axis with sub-components
       axisTitle.paint(g);
       axisTick.paint(g);
 
-      xOffset = paintZone.getX();
-      yOffset = paintZone.getY();
+      // now we know the real bounds width after ticks and title are painted
       width = (stylerAxesChart.isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + axisTick.getBounds().getWidth();
-      height = paintZone.getHeight();
-      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
+      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
@@ -234,21 +222,14 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       double height = chart.getHeight() - chart.getYAxis().getBounds().getY() - chart.getYAxis().getBounds().getHeight() - stylerAxesChart.getChartPadding() - stylerAxesChart.getPlotMargin();
       // System.out.println("height2: " + height2);
 
-      Rectangle2D xAxisRectangle = new Rectangle2D.Double(xOffset, yOffset, width, height);
-
-      // the paint zone
-      this.paintZone = xAxisRectangle;
-      // g.setColor(Color.green);
-      // g.draw(xAxisRectangle);
-
-      // now paint the X-Axis given the above paint zone
-      this.axisTickCalculator = getAxisTickCalculator(paintZone.getWidth());
-      axisTitle.paint(g);
-      axisTick.paint(g);
-
-      bounds = paintZone;
+      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
       // g.setColor(Color.yellow);
       // g.draw(bounds);
+
+      // now paint the X-Axis given the above paint zone
+      this.axisTickCalculator = getAxisTickCalculator(bounds.getWidth());
+      axisTitle.paint(g);
+      axisTick.paint(g);
 
     }
   }

@@ -62,8 +62,8 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
 
       double xWidth = chart.getYAxis().getAxisTitle().getBounds().getWidth();
       double xOffset = chart.getYAxis().getAxisTitle().getBounds().getX() + xWidth;
-      double yOffset = chart.getYAxis().getPaintZone().getY();
-      double height = chart.getYAxis().getPaintZone().getHeight();
+      double yOffset = chart.getYAxis().getBounds().getY();
+      double height = chart.getYAxis().getBounds().getHeight();
       double maxTickLabelWidth = 0;
       Map<Double, TextLayout> axisLabelTextLayouts = new HashMap<Double, TextLayout>();
 
@@ -125,9 +125,9 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
     // X-Axis
     else if (direction == Axis.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
 
-      double xOffset = chart.getXAxis().getPaintZone().getX();
+      double xOffset = chart.getXAxis().getBounds().getX();
       double yOffset = chart.getXAxis().getAxisTitle().getBounds().getY();
-      double width = chart.getXAxis().getPaintZone().getWidth();
+      double width = chart.getXAxis().getBounds().getWidth();
       double maxTickLabelHeight = 0;
 
       // System.out.println("axisTick.getTickLabels().size(): " + axisTick.getTickLabels().size());
