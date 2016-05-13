@@ -26,9 +26,9 @@ import java.util.List;
 
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
-import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Axis
@@ -139,8 +139,6 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
 
-      // first determine the height of
-
       // calculate paint zone
       // ----
       // |
@@ -244,12 +242,14 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // g.draw(xAxisRectangle);
 
       // now paint the X-Axis given the above paint zone
+      this.axisTickCalculator = getAxisTickCalculator(paintZone.getWidth());
       axisTitle.paint(g);
       axisTick.paint(g);
 
       bounds = paintZone;
       // g.setColor(Color.yellow);
       // g.draw(bounds);
+
     }
   }
 
@@ -348,7 +348,6 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
         AxisDataType axisType = chart.getAxisPair().getXAxis().getAxisDataType();
 
         return new AxisTickCalculator_Category(getDirection(), workingSpace, categories, axisType, stylerAxesChart);
-
       }
       else if (getAxisDataType() == AxisDataType.Date) {
 

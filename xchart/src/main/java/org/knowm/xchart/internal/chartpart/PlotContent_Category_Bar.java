@@ -29,8 +29,8 @@ import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -68,15 +68,17 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
     // X-Axis
     double xTickSpace = stylerCategory.getPlotContentSize() * bounds.getWidth();
+    // System.out.println("xTickSpace: " + xTickSpace);
     double xLeftMargin = Utils.getTickStartOffset(bounds.getWidth(), xTickSpace);
+    // System.out.println("xLeftMargin: " + xLeftMargin);
+    Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
+    int numCategories = seriesMap.values().iterator().next().getXData().size();
+    double gridStep = xTickSpace / numCategories;
+    // System.out.println("gridStep: " + gridStep);
 
     // Y-Axis
     double yTickSpace = stylerCategory.getPlotContentSize() * bounds.getHeight();
     double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
-
-    Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
-    int numCategories = seriesMap.values().iterator().next().getXData().size();
-    double gridStep = xTickSpace / numCategories;
 
     double yMin = chart.getAxisPair().getYAxis().getMin();
     double yMax = chart.getAxisPair().getYAxis().getMax();

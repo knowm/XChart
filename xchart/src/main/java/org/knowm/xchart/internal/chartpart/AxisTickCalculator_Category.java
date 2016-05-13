@@ -52,13 +52,17 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
   private void calculate(List<?> categories, AxisDataType axisType) {
 
     // tick space - a percentage of the working space available for ticks
-    int tickSpace = (int) (styler.getPlotContentSize() * workingSpace); // in plot space
+    double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space
+    // System.out.println("workingSpace: " + workingSpace);
+    // System.out.println("tickSpace: " + tickSpace);
 
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
+    // System.out.println("Margin: " + margin);
 
     // generate all tickLabels and tickLocations from the first to last position
-    double gridStep = (tickSpace / (double) categories.size());
+    double gridStep = (tickSpace / categories.size());
+    // System.out.println("GridStep: " + gridStep);
     double firstPosition = gridStep / 2.0;
 
     // set up String formatters that may be encountered
@@ -80,17 +84,15 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
     for (Object category : categories) {
       if (axisType == AxisDataType.String) {
         tickLabels.add(category.toString());
-        double tickLabelPosition = margin + firstPosition + gridStep * counter++;
-        tickLocations.add(tickLabelPosition);
       }
       else if (axisType == AxisDataType.Number) {
         tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
       }
       else if (axisType == AxisDataType.Date) {
-
         tickLabels.add(simpleDateformat.format((((Date) category).getTime())));
       }
-      double tickLabelPosition = (int) (margin + firstPosition + gridStep * counter++);
+
+      double tickLabelPosition = margin + firstPosition + gridStep * counter++;
       tickLocations.add(tickLabelPosition);
     }
 
