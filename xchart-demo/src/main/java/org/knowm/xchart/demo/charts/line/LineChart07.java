@@ -19,8 +19,8 @@ package org.knowm.xchart.demo.charts.line;
 import java.util.Arrays;
 import java.util.List;
 
-import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;

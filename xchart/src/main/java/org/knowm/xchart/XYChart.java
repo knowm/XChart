@@ -29,8 +29,8 @@ import org.knowm.xchart.internal.chartpart.Plot_XY;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.XYStyler;
 import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.XYStyler;
 
 /**
  * @author timmolter

@@ -16,8 +16,8 @@
  */
 package org.knowm.xchart.standalone;
 
-import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 
 /**

@@ -24,9 +24,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYChart;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**

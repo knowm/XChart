@@ -18,9 +18,9 @@ package org.knowm.xchart.standalone;
 
 import java.awt.Color;
 
+import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;

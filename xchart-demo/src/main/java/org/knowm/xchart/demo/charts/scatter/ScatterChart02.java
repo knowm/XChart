@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 

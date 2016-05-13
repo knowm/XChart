@@ -22,8 +22,8 @@ import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * Draws the plot background and the plot border

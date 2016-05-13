@@ -20,8 +20,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 

@@ -21,8 +21,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
-import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.XChartSeriesLines;

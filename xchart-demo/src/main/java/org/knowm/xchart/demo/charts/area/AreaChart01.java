@@ -16,10 +16,10 @@
  */
 package org.knowm.xchart.demo.charts.area;
 
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 

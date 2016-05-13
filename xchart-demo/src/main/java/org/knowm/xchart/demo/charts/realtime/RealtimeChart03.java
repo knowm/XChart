@@ -24,8 +24,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
 
-import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**

@@ -20,10 +20,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.knowm.xchart.XYChart;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.style.XYStyler;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.XYStyler;
 
 /**
  * @author timmolter

@@ -18,10 +18,10 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
 
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.lines.SeriesLines;

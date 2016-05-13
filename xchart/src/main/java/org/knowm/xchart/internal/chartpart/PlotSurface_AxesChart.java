@@ -24,8 +24,8 @@ import java.util.List;
 
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * Draws the plot background, the plot border and the horizontal and vertical grid lines
