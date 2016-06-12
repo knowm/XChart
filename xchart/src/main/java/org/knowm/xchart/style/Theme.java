@@ -159,4 +159,10 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public boolean isErrorBarsColorSeriesColor();
 
+  // Annotations ///////////////////////////////
+
+  public Font getAnnotationFont();
+
+  public boolean hasAnnotations();
+
 }

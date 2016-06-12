@@ -93,6 +93,10 @@ public abstract class Styler {
   private boolean isPlotBorderVisible;
   private double plotContentSize = .92;
 
+  // Annotations ///////////////////////////////
+  private Font annotationsFont;
+  private boolean showAnnotations;
+
   protected void setAllStyles() {
 
     // Chart Style ///////////////////////////////
@@ -125,6 +129,9 @@ public abstract class Styler {
     plotBorderColor = theme.getPlotBorderColor();
     isPlotBorderVisible = theme.isPlotBorderVisible();
     plotContentSize = theme.getPlotContentSize();
+
+    // Annotations ///////////////////////////////
+    annotationsFont = theme.getAnnotationFont();
   }
 
   // Chart Style ///////////////////////////////
@@ -495,6 +502,38 @@ public abstract class Styler {
 
     this.plotContentSize = plotContentSize;
     return this;
+  }
+
+  // Annotations ///////////////////////////////
+
+  public boolean hasAnnotations() {
+
+    return showAnnotations;
+  }
+
+  /**
+   * Sets if annotations should be added to charts. Each chart type has a different annotation type
+   *
+   * @param showAnnotations
+   */
+  public void setHasAnnotations(boolean showAnnotations) {
+
+    this.showAnnotations = showAnnotations;
+  }
+
+  public Font getAnnotationsFont() {
+
+    return annotationsFont;
+  }
+
+  /**
+   * Sets the Font used for chart annotations
+   *
+   * @param annotationsFont
+   */
+  public void setAnnotationsFont(Font annotationsFont) {
+
+    this.annotationsFont = annotationsFont;
   }
 
 }

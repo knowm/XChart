@@ -16,8 +16,6 @@
  */
 package org.knowm.xchart.style;
 
-import java.awt.Font;
-
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 
 /**
@@ -34,7 +32,6 @@ public class PieStyler extends Styler {
 
   private boolean isCircular;
   private double startAngleInDegrees;
-  private Font annotationFont;
   private double annotationDistance;
   private AnnotationType annotationType;
   private boolean drawAllAnnotations;
@@ -53,7 +50,6 @@ public class PieStyler extends Styler {
 
     this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
     this.isCircular = theme.isCircular();
-    this.annotationFont = theme.getPieFont();
     this.annotationDistance = theme.getAnnotationDistance();
     this.annotationType = theme.getAnnotationType();
     this.drawAllAnnotations = theme.isDrawAllAnnotations();
@@ -104,22 +100,6 @@ public class PieStyler extends Styler {
   public PieStyler setStartAngleInDegrees(double startAngleInDegrees) {
 
     this.startAngleInDegrees = startAngleInDegrees;
-    return this;
-  }
-
-  public Font getAnnotationFont() {
-
-    return annotationFont;
-  }
-
-  /**
-   * Sets the font used on the Pie Chart's annotations
-   *
-   * @param pieFont
-   */
-  public PieStyler setAnnotationFont(Font pieFont) {
-
-    this.annotationFont = pieFont;
     return this;
   }
 

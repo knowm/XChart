@@ -405,4 +405,19 @@ public class MatlabTheme implements Theme {
     return false;
   }
 
+  // Annotations ///////////////////////////////
+
+  @Override
+  public Font getAnnotationFont() {
+
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+
+  }
+
+  @Override
+  public boolean hasAnnotations() {
+
+    return false;
+  }
+
 }

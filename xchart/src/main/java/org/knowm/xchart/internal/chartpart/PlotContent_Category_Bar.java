@@ -18,9 +18,13 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -77,9 +81,6 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     // System.out.println("gridStep: " + gridStep);
 
     // Y-Axis
-    double yTickSpace = stylerCategory.getPlotContentSize() * bounds.getHeight();
-    double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
-
     double yMin = chart.getAxisPair().getYAxis().getMin();
     double yMax = chart.getAxisPair().getYAxis().getMax();
 
@@ -97,6 +98,10 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     // System.out.println(yMin);
     // System.out.println(yMax);
     // System.out.println("chartForm: " + chartForm);
+
+    double yTickSpace = stylerCategory.getPlotContentSize() * bounds.getHeight();
+
+    double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
 
     // plot series
     int seriesCounter = 0;
@@ -198,8 +203,41 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           // g.setStroke(series.getLineStyle());
           // g.setColor(series.getLineColor());
           // g.draw(path);
+
           g.setColor(series.getFillColor());
           g.fill(path);
+
+          if (stylerCategory.hasAnnotations() && next != null) {
+
+            DecimalFormat twoPlaces = new DecimalFormat("#.#");
+            if (stylerCategory.getYAxisDecimalPattern() != null) {
+              twoPlaces = new DecimalFormat(stylerCategory.getYAxisDecimalPattern());
+            }
+            String numberAsString = twoPlaces.format(next);
+
+            TextLayout textLayout = new TextLayout(numberAsString, stylerCategory.getAnnotationsFont(), new FontRenderContext(null, true, false));
+            Rectangle2D annotationRectangle = textLayout.getBounds();
+
+            double annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;
+            double annotationY;
+            if (next.doubleValue() >= 0.0) {
+              annotationY = yOffset - 4;
+            }
+            else {
+              annotationY = zeroOffset + 4 + annotationRectangle.getHeight();
+            }
+            Shape shape = textLayout.getOutline(null);
+            g.setColor(stylerCategory.getChartFontColor());
+            g.setFont(stylerCategory.getAnnotationsFont());
+            AffineTransform orig = g.getTransform();
+            AffineTransform at = new AffineTransform();
+            at.translate(annotationX, annotationY);
+            g.transform(at);
+            g.fill(shape);
+            g.setTransform(orig);
+
+          }
+
         }
         else if (CategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
 

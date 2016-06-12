@@ -127,103 +127,105 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       g.draw(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
       // curValue += y.doubleValue();
 
-      // draw annotation
-      String annotation = "";
-      if (stylerPie.getAnnotationType() == AnnotationType.Label) {
-        annotation = series.getName();
-      }
-      else if (stylerPie.getAnnotationType() == AnnotationType.LabelAndPercentage) {
-        double percentage = y.doubleValue() / total * 100;
-        annotation = series.getName() + " (" + df.format(percentage) + "%)";
-      }
-      else if (stylerPie.getAnnotationType() == AnnotationType.Percentage) {
-        double percentage = y.doubleValue() / total * 100;
-        annotation = df.format(percentage) + "%";
-      }
+      if (stylerPie.hasAnnotations()) {
 
-      TextLayout textLayout = new TextLayout(annotation, stylerPie.getAnnotationFont(), new FontRenderContext(null, true, false));
-      Rectangle2D percentageRectangle = textLayout.getBounds();
-
-      double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - percentageRectangle.getWidth() / 2;
-      double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2 + percentageRectangle.getHeight() / 2;
-      double angle = (arcAngle + startAngle) - arcAngle / 2;
-      double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
-      double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
-
-      // get annotation width
-      Shape shape = textLayout.getOutline(null);
-      Rectangle2D annotationBounds = shape.getBounds2D();
-      double annotationWidth = annotationBounds.getWidth();
-      // System.out.println("annotationWidth= " + annotationWidth);
-      double annotationHeight = annotationBounds.getHeight();
-      // System.out.println("annotationHeight= " + annotationHeight);
-
-      // get slice area
-      double xOffset1 = xCenter + Math.cos(Math.toRadians(startAngle)) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
-      double yOffset1 = yCenter - Math.sin(Math.toRadians(startAngle)) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
-      double xOffset2 = xCenter + Math.cos(Math.toRadians((arcAngle + startAngle))) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
-      double yOffset2 = yCenter - Math.sin(Math.toRadians((arcAngle + startAngle))) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
-      // System.out.println("xOffset1= " + xOffset1);
-      // System.out.println("yOffset1= " + yOffset1);
-      // System.out.println("xOffset2= " + xOffset2);
-      // System.out.println("yOffset2= " + yOffset2);
-      double xDiff = Math.abs(xOffset1 - xOffset2);
-      double yDiff = Math.abs(yOffset1 - yOffset2);
-      // System.out.println("xDiff= " + xDiff);
-      // System.out.println("yDiff= " + yDiff);
-      // double max = Math.max(xDiff, yDiff);
-      // System.out.println(" ================== ");
-      boolean annotationWillFit = false;
-      if (xDiff >= yDiff) { // assume more vertically orientated slice
-        if (annotationWidth < xDiff) {
-          annotationWillFit = true;
+        // draw annotation
+        String annotation = "";
+        if (stylerPie.getAnnotationType() == AnnotationType.Label) {
+          annotation = series.getName();
         }
-      }
-      else if (xDiff <= yDiff) { // assume more horizontally orientated slice
-        if (annotationHeight < yDiff) {
-          annotationWillFit = true;
+        else if (stylerPie.getAnnotationType() == AnnotationType.LabelAndPercentage) {
+          double percentage = y.doubleValue() / total * 100;
+          annotation = series.getName() + " (" + df.format(percentage) + "%)";
         }
-      }
-
-      // draw annotation
-      if (stylerPie.isDrawAllAnnotations() || annotationWillFit) {
-
-        g.setColor(stylerPie.getChartFontColor());
-        g.setFont(stylerPie.getChartTitleFont());
-        AffineTransform orig = g.getTransform();
-        AffineTransform at = new AffineTransform();
-
-        // inside
-        if (stylerPie.getAnnotationDistance() <= 1.0) {
-          at.translate(xOffset, yOffset);
+        else if (stylerPie.getAnnotationType() == AnnotationType.Percentage) {
+          double percentage = y.doubleValue() / total * 100;
+          annotation = df.format(percentage) + "%";
         }
 
-        // outside
-        else {
+        TextLayout textLayout = new TextLayout(annotation, stylerPie.getAnnotationsFont(), new FontRenderContext(null, true, false));
+        Rectangle2D annotationRectangle = textLayout.getBounds();
 
-          // Tick Mark
-          xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
-          yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
-          // double endPoint = Math.min((2.0 - (stylerPie.getAnnotationDistance() - 1)), 1.95);
-          double endPoint = (3.0 - stylerPie.getAnnotationDistance());
-          double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
-          double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / endPoint);
-          double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
-          double yOffsetEnd = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / endPoint);
+        double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - annotationRectangle.getWidth() / 2;
+        double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2 + annotationRectangle.getHeight() / 2;
+        double angle = (arcAngle + startAngle) - arcAngle / 2;
+        double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
+        double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
 
-          g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
-          Shape line = new Line2D.Double(xOffsetStart, yOffsetStart, xOffsetEnd, yOffsetEnd);
-          g.draw(line);
+        // get annotation width
+        Shape shape = textLayout.getOutline(null);
+        Rectangle2D annotationBounds = shape.getBounds2D();
+        double annotationWidth = annotationBounds.getWidth();
+        // System.out.println("annotationWidth= " + annotationWidth);
+        double annotationHeight = annotationBounds.getHeight();
+        // System.out.println("annotationHeight= " + annotationHeight);
 
-          // annotation
-          at.translate(xOffset - Math.sin(Math.toRadians(angle - 90)) * annotationWidth / 2 + 3, yOffset);
-
+        // get slice area
+        double xOffset1 = xCenter + Math.cos(Math.toRadians(startAngle)) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
+        double yOffset1 = yCenter - Math.sin(Math.toRadians(startAngle)) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
+        double xOffset2 = xCenter + Math.cos(Math.toRadians((arcAngle + startAngle))) * (pieBounds.getWidth() / 2 * stylerPie.getAnnotationDistance());
+        double yOffset2 = yCenter - Math.sin(Math.toRadians((arcAngle + startAngle))) * (pieBounds.getHeight() / 2 * stylerPie.getAnnotationDistance());
+        // System.out.println("xOffset1= " + xOffset1);
+        // System.out.println("yOffset1= " + yOffset1);
+        // System.out.println("xOffset2= " + xOffset2);
+        // System.out.println("yOffset2= " + yOffset2);
+        double xDiff = Math.abs(xOffset1 - xOffset2);
+        double yDiff = Math.abs(yOffset1 - yOffset2);
+        // System.out.println("xDiff= " + xDiff);
+        // System.out.println("yDiff= " + yDiff);
+        // double max = Math.max(xDiff, yDiff);
+        // System.out.println(" ================== ");
+        boolean annotationWillFit = false;
+        if (xDiff >= yDiff) { // assume more vertically orientated slice
+          if (annotationWidth < xDiff) {
+            annotationWillFit = true;
+          }
+        }
+        else if (xDiff <= yDiff) { // assume more horizontally orientated slice
+          if (annotationHeight < yDiff) {
+            annotationWillFit = true;
+          }
         }
 
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
+        // draw annotation
+        if (stylerPie.isDrawAllAnnotations() || annotationWillFit) {
 
+          g.setColor(stylerPie.getChartFontColor());
+          g.setFont(stylerPie.getAnnotationsFont());
+          AffineTransform orig = g.getTransform();
+          AffineTransform at = new AffineTransform();
+
+          // inside
+          if (stylerPie.getAnnotationDistance() <= 1.0) {
+            at.translate(xOffset, yOffset);
+          }
+
+          // outside
+          else {
+
+            // Tick Mark
+            xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
+            yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
+            // double endPoint = Math.min((2.0 - (stylerPie.getAnnotationDistance() - 1)), 1.95);
+            double endPoint = (3.0 - stylerPie.getAnnotationDistance());
+            double xOffsetStart = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2.01);
+            double xOffsetEnd = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / endPoint);
+            double yOffsetStart = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2.01);
+            double yOffsetEnd = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / endPoint);
+
+            g.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
+            Shape line = new Line2D.Double(xOffsetStart, yOffsetStart, xOffsetEnd, yOffsetEnd);
+            g.draw(line);
+
+            // annotation
+            at.translate(xOffset - Math.sin(Math.toRadians(angle - 90)) * annotationWidth / 2 + 3, yOffset);
+
+          }
+
+          g.transform(at);
+          g.fill(shape);
+          g.setTransform(orig);
+        }
       }
       // else {
       // System.out.println("Won't fit.");

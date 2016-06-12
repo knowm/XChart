@@ -33,7 +33,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * <li>All positive values
  * <li>Single series
  * <li>Place legend at Inside-NW position
- * <li>Bars span 100% allowed space
+ * <li>Bar Chart Annotations
  */
 public class BarChart01 implements ExampleChart<CategoryChart> {
 
@@ -52,7 +52,7 @@ public class BarChart01 implements ExampleChart<CategoryChart> {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setPlotContentSize(1.0);
+    chart.getStyler().setHasAnnotations(true);
 
     // Series
     chart.addSeries("test 1", Arrays.asList(new Integer[] { 0, 1, 2, 3, 4 }), Arrays.asList(new Integer[] { 4, 5, 9, 6, 5 }));

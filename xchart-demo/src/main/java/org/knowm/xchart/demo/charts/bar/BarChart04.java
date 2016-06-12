@@ -33,6 +33,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <li>Multiple series
  * <li>Missing point in series
  * <li>Manually setting y-axis min and max values
+ * <li>Bar Chart Annotations
  */
 public class BarChart04 implements ExampleChart<CategoryChart> {
 
@@ -52,6 +53,7 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
     // Customize Chart
     chart.getStyler().setYAxisMin(5);
     chart.getStyler().setYAxisMax(70);
+    chart.getStyler().setHasAnnotations(true);
 
     // Series
     chart.addSeries("female", Arrays.asList(new Integer[] { 10, 20, 30, 40, 50 }), Arrays.asList(new Integer[] { 50, 10, 20, 40, 35 }));
