@@ -37,6 +37,7 @@ public class PieStyler extends Styler {
   private Font annotationFont;
   private double annotationDistance;
   private AnnotationType annotationType;
+  private boolean drawAllAnnotations;
 
   /**
    * Constructor
@@ -50,11 +51,12 @@ public class PieStyler extends Styler {
   @Override
   protected void setAllStyles() {
 
-    chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
-    isCircular = theme.isCircular();
-    annotationFont = theme.getPieFont();
-    annotationDistance = theme.getAnnotationDistance();
-    annotationType = theme.getAnnotationType();
+    this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
+    this.isCircular = theme.isCircular();
+    this.annotationFont = theme.getPieFont();
+    this.annotationDistance = theme.getAnnotationDistance();
+    this.annotationType = theme.getAnnotationType();
+    this.drawAllAnnotations = theme.isDrawAllAnnotations();
   }
 
   public PieSeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -150,6 +152,24 @@ public class PieStyler extends Styler {
 
     this.annotationType = annotationType;
     return this;
+  }
+
+  public boolean isDrawAllAnnotations() {
+
+    return drawAllAnnotations;
+  }
+
+  /**
+   * By default, only the annotations that will "fit", as determined algorithmically, will be drawn. Otherwise, you can end up with annotations drawn overlapping. If `drawAllAnnotations` is set true
+   * with this method, it will override the algorithmic determination, and always draw all the annotations, one for each slice. You can also try playing around with the method `setStartAngleInDegrees`
+   * so the the slices are orientated in a more optimal way. You can also try changing the font size. Also, you can order the slices so that a small slice is followed by a larger slice, while setting
+   * this method with `true`.
+   *
+   * @param drawAllAnnotations
+   */
+  public void setDrawAllAnnotations(boolean drawAllAnnotations) {
+
+    this.drawAllAnnotations = drawAllAnnotations;
   }
 
   /**

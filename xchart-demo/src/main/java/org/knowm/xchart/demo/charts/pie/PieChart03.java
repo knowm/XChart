@@ -29,8 +29,9 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  * Demonstrates the following:
  * <ul>
  * <li>Pie Chart
- * <li>ChartBuilderPie
+ * <li>PieChartBuilder
  * <li>GGPlot2 Theme
+ * <li>Setting start angle
  */
 public class PieChart03 implements ExampleChart<PieChart> {
 
@@ -52,6 +53,7 @@ public class PieChart03 implements ExampleChart<PieChart> {
     chart.getStyler().setAnnotationType(AnnotationType.LabelAndPercentage);
     chart.getStyler().setAnnotationDistance(1.15);
     chart.getStyler().setPlotContentSize(.7);
+    chart.getStyler().setStartAngleInDegrees(90);
 
     // Series
     chart.addSeries("Prague", 2);

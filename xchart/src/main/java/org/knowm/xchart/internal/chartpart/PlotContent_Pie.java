@@ -186,7 +186,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       }
 
       // draw annotation
-      if (annotationWillFit) {
+      if (stylerPie.isDrawAllAnnotations() || annotationWillFit) {
 
         g.setColor(stylerPie.getChartFontColor());
         g.setFont(stylerPie.getChartTitleFont());

@@ -367,6 +367,12 @@ public class XChartTheme implements Theme {
     return AnnotationType.Percentage;
   }
 
+  @Override
+  public boolean isDrawAllAnnotations() {
+
+    return false;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override

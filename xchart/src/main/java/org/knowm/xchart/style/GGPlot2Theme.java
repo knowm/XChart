@@ -367,6 +367,12 @@ public class GGPlot2Theme implements Theme {
     return AnnotationType.LabelAndPercentage;
   }
 
+  @Override
+  public boolean isDrawAllAnnotations() {
+
+    return false;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override

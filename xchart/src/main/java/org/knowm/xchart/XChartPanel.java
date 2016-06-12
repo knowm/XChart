@@ -317,4 +317,5 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
     return series;
   }
+
 }

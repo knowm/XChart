@@ -371,6 +371,12 @@ public class MatlabTheme implements Theme {
     return AnnotationType.Label;
   }
 
+  @Override
+  public boolean isDrawAllAnnotations() {
+
+    return false;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override

@@ -143,7 +143,9 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public double getAnnotationDistance();
 
-  AnnotationType getAnnotationType();
+  public AnnotationType getAnnotationType();
+
+  public boolean isDrawAllAnnotations();
 
   // Line, Scatter, Area Charts ///////////////////////////////
 
