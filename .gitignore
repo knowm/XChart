@@ -27,7 +27,7 @@ log/
 xchart-demo/*.png
 *.jpg
 *.bmp
-*.gif
+xchart-demo/*.gif
 *.svg
 *.pdf
 *.eps

@@ -107,7 +107,7 @@ To make it real-time, simply call `updateSeries` on the `XChartPanel` instance.
 ## Features
 
 * [x] No required additional dependencies
-* [x] ~164KB Jar
+* [x] ~179KB Jar
 * [x] Line charts
 * [x] Scatter charts
 * [x] Area charts
@@ -116,6 +116,7 @@ To make it real-time, simply call `updateSeries` on the `XChartPanel` instance.
 * [x] Pie charts
 * [x] Donut charts
 * [x] Bubble charts
+* [x] Stick charts
 * [x] Error bars
 * [x] Logarithmic axes
 * [x] Number, Date, Bubble and Category X-Axis
@@ -166,7 +167,15 @@ Series render styles include: `Bar`, `Line`, `Scatter`, `Area` and `Stick`.
 
 `PieChart` charts take String data types for the pie slice name and Number data types for the pie slice value.  
 
-Series render styles include: `Pie` and in the near future `Donut`.
+Series render styles include: `Pie` and `Donut`.
+
+### BubbleChart
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Real_Time_Bubble_Chart.gif)
+
+`BubbleChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. Number data types are taken for the bubble sizes. 
+
+Series render styles include: `Round` and in the near future `Square`.
 
 ## Chart Customization
 
