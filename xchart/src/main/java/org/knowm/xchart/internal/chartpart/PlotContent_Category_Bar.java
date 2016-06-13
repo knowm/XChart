@@ -56,24 +56,12 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
   }
 
   @Override
-  public void paint(Graphics2D g) {
-
-    Rectangle2D bounds = getBounds();
-    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-    // g.setColor(Color.red);
-    // g.draw(bounds);
-
-    // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
-    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, chart.getWidth(), chart.getHeight());
-    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-    // g.setColor(Color.green);
-    // g.draw(rectangle);
-    g.setClip(bounds.createIntersection(rectangle));
+  public void doPaint(Graphics2D g) {
 
     // X-Axis
-    double xTickSpace = stylerCategory.getPlotContentSize() * bounds.getWidth();
+    double xTickSpace = stylerCategory.getPlotContentSize() * getBounds().getWidth();
     // System.out.println("xTickSpace: " + xTickSpace);
-    double xLeftMargin = Utils.getTickStartOffset(bounds.getWidth(), xTickSpace);
+    double xLeftMargin = Utils.getTickStartOffset(getBounds().getWidth(), xTickSpace);
     // System.out.println("xLeftMargin: " + xLeftMargin);
     Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
     int numCategories = seriesMap.values().iterator().next().getXData().size();
@@ -99,9 +87,9 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     // System.out.println(yMax);
     // System.out.println("chartForm: " + chartForm);
 
-    double yTickSpace = stylerCategory.getPlotContentSize() * bounds.getHeight();
+    double yTickSpace = stylerCategory.getPlotContentSize() * getBounds().getHeight();
 
-    double yTopMargin = Utils.getTickStartOffset(bounds.getHeight(), yTickSpace);
+    double yTopMargin = Utils.getTickStartOffset(getBounds().getHeight(), yTickSpace);
 
     // plot series
     int seriesCounter = 0;
@@ -166,13 +154,13 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           break;
         }
 
-        double yTransform = bounds.getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
+        double yTransform = getBounds().getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
         // double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
-        double yOffset = bounds.getY() + yTransform;
+        double yOffset = getBounds().getY() + yTransform;
 
-        double zeroTransform = bounds.getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
-        double zeroOffset = bounds.getY() + zeroTransform;
+        double zeroTransform = getBounds().getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
+        double zeroOffset = getBounds().getY() + zeroTransform;
         double xOffset;
         double barWidth;
 
@@ -180,13 +168,13 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
+          xOffset = getBounds().getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
         }
         else {
           double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
           barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = bounds.getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
+          xOffset = getBounds().getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
         }
 
         // paint series
@@ -306,13 +294,13 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
           // Top value
           double topValue = y + eb;
-          double topEBTransform = bounds.getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
-          double topEBOffset = bounds.getY() + topEBTransform;
+          double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
+          double topEBOffset = getBounds().getY() + topEBTransform;
 
           // Bottom value
           double bottomValue = y - eb;
-          double bottomEBTransform = bounds.getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
-          double bottomEBOffset = bounds.getY() + bottomEBTransform;
+          double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
+          double bottomEBOffset = getBounds().getY() + bottomEBTransform;
 
           // Draw it
           double errorBarOffset = xOffset + barWidth / 2;
@@ -327,7 +315,6 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
       }
       seriesCounter++;
     }
-    g.setClip(null);
   }
 
 }

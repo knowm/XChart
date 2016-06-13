@@ -17,7 +17,9 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
+import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.Series;
@@ -32,6 +34,8 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
 
   protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
+  public abstract void doPaint(Graphics2D g);
+
   /**
    * Constructor
    *
@@ -43,9 +47,44 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
   }
 
   @Override
+  public void paint(Graphics2D g) {
+
+    Rectangle2D bounds = getBounds();
+    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    // g.setColor(Color.red);
+    // g.draw(bounds);
+
+    // if the area to draw a chart on is so small, don't even bother
+    if (bounds.getWidth() < 30) {
+      return;
+    }
+
+    // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
+    g.setClip(bounds.createIntersection(bounds));
+
+    doPaint(g);
+
+    g.setClip(null);
+
+  }
+
+  @Override
   public Rectangle2D getBounds() {
 
     return chart.getPlot().getBounds();
+  }
+
+  /**
+   * Closes a path for area charts if one is available.
+   */
+  void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
+
+    if (path != null) {
+      double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
+      path.lineTo(previousX, yBottomOfArea);
+      path.closePath();
+      g.fill(path);
+    }
   }
 
 }

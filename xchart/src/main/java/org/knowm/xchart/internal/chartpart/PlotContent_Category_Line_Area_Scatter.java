@@ -20,7 +20,6 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -52,45 +51,20 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void doPaint(Graphics2D g) {
 
     // logarithmic
     // if (stylerCategory.isYAxisLogarithmic()) {
     // throw new IllegalArgumentException("Category Charts cannot have logarithmic axes!!! (Not Yet Implemented)");
     // }
 
-    Rectangle2D bounds = getBounds();
-    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-    // g.setColor(Color.red);
-    // g.draw(bounds);
-
-    // if the area to draw a chart on is so small, don't even bother
-    if (bounds.getWidth() < 30) {
-      return;
-    }
-
-    // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
-
-    // Rectangle rectangle = g.getClipBounds();
-    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-    // g.setColor(Color.green);
-    // g.draw(rectangle);
-
-    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, chart.getWidth(), chart.getHeight());
-    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-    // g.setColor(Color.green);
-    // g.draw(rectangle);
-    g.setClip(bounds.createIntersection(rectangle));
-
-    // g.setClip(bounds.createIntersection(g.getClipBounds()));
-
     // X-Axis
-    double xTickSpace = stylerCategory.getPlotContentSize() * bounds.getWidth();
-    double xLeftMargin = Utils.getTickStartOffset((int) bounds.getWidth(), xTickSpace);
+    double xTickSpace = stylerCategory.getPlotContentSize() * getBounds().getWidth();
+    double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = stylerCategory.getPlotContentSize() * bounds.getHeight();
-    double yTopMargin = Utils.getTickStartOffset((int) bounds.getHeight(), yTickSpace);
+    double yTickSpace = stylerCategory.getPlotContentSize() * getBounds().getHeight();
+    double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
     double xMin = chart.getAxisPair().getXAxis().getMin();
     double xMax = chart.getAxisPair().getXAxis().getMax();
@@ -137,7 +111,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         if (next == null) {
 
           // for area charts
-          closePath(g, path, previousX, bounds, yTopMargin);
+          closePath(g, path, previousX, getBounds(), yTopMargin);
           path = null;
 
           previousX = -Double.MAX_VALUE;
@@ -158,15 +132,15 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         }
         // System.out.println(y);
 
-        double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+        double yTransform = getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
         // a check if all y data are the exact same values
         if (Math.abs(yMax - yMin) / 5 == 0.0) {
-          yTransform = bounds.getHeight() / 2.0;
+          yTransform = getBounds().getHeight() / 2.0;
         }
 
-        double xOffset = bounds.getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
-        double yOffset = bounds.getY() + yTransform;
+        double xOffset = getBounds().getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
+        double yOffset = getBounds().getY() + yTransform;
         // System.out.println(xOffset);
         // System.out.println(yTransform);
         // System.out.println(yOffset);
@@ -192,7 +166,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
             g.setColor(series.getFillColor());
-            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
+            double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
 
             if (path == null) {
               path = new Path2D.Double();
@@ -211,7 +185,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
           if (series.getLineStyle() != SeriesLines.NONE) {
 
-            double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
+            double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
 
             g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
@@ -253,8 +227,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           else {
             topValue = y + eb;
           }
-          double topEBTransform = bounds.getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
-          double topEBOffset = bounds.getY() + topEBTransform;
+          double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
+          double topEBOffset = getBounds().getY() + topEBTransform;
 
           // Bottom value
           double bottomValue = 0.0;
@@ -266,8 +240,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           else {
             bottomValue = y - eb;
           }
-          double bottomEBTransform = bounds.getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
-          double bottomEBOffset = bounds.getY() + bottomEBTransform;
+          double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
+          double bottomEBOffset = getBounds().getY() + bottomEBTransform;
 
           // Draw it
           Shape line = new Line2D.Double(xOffset, topEBOffset, xOffset, bottomEBOffset);
@@ -280,23 +254,9 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       }
 
       // close any open path for area charts
-      closePath(g, path, previousX, bounds, yTopMargin);
+      closePath(g, path, previousX, getBounds(), yTopMargin);
     }
-    g.setClip(null);
 
-  }
-
-  /**
-   * Closes a path for area charts if one is available.
-   */
-  private void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
-
-    if (path != null) {
-      double yBottomOfArea = bounds.getY() + bounds.getHeight() - yTopMargin;
-      path.lineTo(previousX, yBottomOfArea);
-      path.closePath();
-      g.fill(path);
-    }
   }
 
 }

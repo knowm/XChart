@@ -57,38 +57,20 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void doPaint(Graphics2D g) {
 
-    // plot area bounds
-    Rectangle2D bounds = getBounds();
-    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-    // g.setColor(Color.red);
-    // g.draw(bounds);
-
-    // if the area to draw a chart on is so small, don't even bother
-    if (bounds.getWidth() < 30) {
-      return;
-    }
-
-    // clip bounds TODO Do we need this? Can we move it to the parent class for all subclasses?
-    Rectangle2D rectangle = new Rectangle2D.Double(0, 0, chart.getWidth(), chart.getHeight());
-    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-    // g.setColor(Color.green);
-    // g.draw(rectangle);
-    g.setClip(bounds.createIntersection(rectangle));
-
-    // pie bounds
+    // pie getBounds()
     double pieFillPercentage = stylerPie.getPlotContentSize();
 
     double halfBorderPercentage = (1 - pieFillPercentage) / 2.0;
-    double width = stylerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getWidth();
-    double height = stylerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getHeight();
+    double width = stylerPie.isCircular() ? Math.min(getBounds().getWidth(), getBounds().getHeight()) : getBounds().getWidth();
+    double height = stylerPie.isCircular() ? Math.min(getBounds().getWidth(), getBounds().getHeight()) : getBounds().getHeight();
 
     Rectangle2D pieBounds = new Rectangle2D.Double(
 
-        bounds.getX() + bounds.getWidth() / 2 - width / 2 + halfBorderPercentage * width,
+        getBounds().getX() + getBounds().getWidth() / 2 - width / 2 + halfBorderPercentage * width,
 
-        bounds.getY() + bounds.getHeight() / 2 - height / 2 + halfBorderPercentage * height,
+        getBounds().getY() + getBounds().getHeight() / 2 - height / 2 + halfBorderPercentage * height,
 
         width * pieFillPercentage,
 
@@ -251,8 +233,6 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
 
       startAngle += arcAngle;
     }
-
-    g.setClip(null);
 
   }
 
