@@ -72,9 +72,9 @@ public abstract class Series_AxesChart extends Series {
    * @param xAxisType
    * @param yData
    * @param yAxisType
-   * @param errorBars
+   * @param newExtraValues
    */
-  public Series_AxesChart(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public Series_AxesChart(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> newExtraValues) {
 
     super(name);
 

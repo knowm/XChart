@@ -141,7 +141,8 @@ Currently, there are three major chart types: `XYChart`, `CategoryChart` and `Pi
 |---|---|---|---|---|---|
 | XYChart | XYChartBuilder | XYStyler | XYSeries | Number, Date | Line |
 | CategoryChart | CategoryChartBuilder | CategoryStyler | CategorySeries | Number, Date, String | Bar |
-| PieChart | PieChartBuilder | PieStyler | PieSeries | String | Pie |
+| PieChart | PieChartBuilder | PieStyler | PieSeries | String | Pie, Donut |
+| BubbleChart | BubbleChartBuilder | BubbleStyler | BubbleSeries | Number, Date  | Round |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
 
@@ -173,9 +174,13 @@ Series render styles include: `Pie` and `Donut`.
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Real_Time_Bubble_Chart.gif)
 
-`BubbleChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. Number data types are taken for the bubble sizes. 
+`BubbleChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis and bubble sizes. 
 
 Series render styles include: `Round` and in the near future `Square`.
+
+## Real-time Java Charts using XChart
+
+The above image shows a real-time bubble chart. Real-time charts are as simple as calling `replaceData` on one or more series objects and triggering a redraw of the `JPanel` containing the chart. There are several real-time chart demos, all of which can be found here: <https://github.com/timmolter/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime>.
 
 ## Chart Customization
 
