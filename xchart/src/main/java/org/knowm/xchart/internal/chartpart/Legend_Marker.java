@@ -64,8 +64,6 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, (series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize()));
 
-      // ////// paint series render graphic /////////
-
       // paint line and marker
       if (series.getLegendRenderType() != LegendRenderType.Box) {
 
@@ -77,17 +75,10 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
           g.draw(line);
         }
 
-        // // debug box
-        // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, styler.getLegendSeriesLineLength(), blockHeight);
-        // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-        // g.setColor(Color.red);
-        // g.draw(boundsTemp);
-
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
           series.getMarker().paint(g, startx + chart.getStyler().getLegendSeriesLineLength() / 2.0, starty + legendEntryHeight / 2.0, stylerAxesChart.getMarkerSize());
-
         }
       }
       else { // bar/pie type series
@@ -96,20 +87,9 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
         Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
         g.setColor(series.getFillColor());
         g.fill(rectSmall);
-        // g.setStroke(series.getLineStyle());
-        // g.setColor(series.getLineColor());
-        // g.draw(rectSmall);
-
-        // // debug box
-        // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
-        // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-        // g.setColor(Color.red);
-        // g.draw(boundsTemp);
       }
 
-      //
-      // ////// paint series text /////////
-
+      // paint series text
       if (series.getLegendRenderType() != LegendRenderType.Box) {
 
         double x = startx + chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding();
@@ -118,7 +98,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       }
       else { // bar/pie type series
 
-        final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
+        double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
         paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
 
       }
