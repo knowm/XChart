@@ -239,7 +239,6 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           }
 
           // paint marker
-          // if (series.getMarker() != null) {
           if (series.getMarker() != null) {
             g.setColor(series.getMarkerColor());
 
@@ -266,6 +265,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
               }
             }
           }
+
           previousX = xOffset + barWidth / 2;
           previousY = yOffset;
 

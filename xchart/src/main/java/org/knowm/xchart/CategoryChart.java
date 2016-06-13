@@ -276,6 +276,12 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       if (series.getFillColor() == null) { // wasn't set manually
         series.setFillColor(seriesColorMarkerLineStyle.getColor());
       }
+      if (series.getMarker() == null) { // wasn't set manually
+        series.setMarker(seriesColorMarkerLineStyle.getMarker());
+      }
+      if (series.getMarkerColor() == null) { // wasn't set manually
+        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
+      }
     }
   }
 
