@@ -61,44 +61,17 @@ public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Le
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);
 
-      // ////// paint series render graphic /////////
-
-      // bar/pie type series
-
       // paint little box
-      if (series.getFillColor() != null) {
-        g.setColor(series.getFillColor());
-        Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
-        g.fill(rectSmall);
-      }
-      // // debug box
-      // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
-      // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-      // g.setColor(Color.red);
-      // g.draw(boundsTemp);
+      Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+      g.setColor(series.getFillColor());
+      g.fill(rectSmall);
 
-      //
-      // ////// paint series text /////////
-
-      g.setColor(chart.getStyler().getChartFontColor());
-
-      double multiLineOffset = 0.0;
-
-      // bar/pie type series
-
+      // paint series text
       final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
-
       paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
-
       starty += legendEntryHeight + chart.getStyler().getLegendPadding();
 
     }
-
-    // bounds
-    bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
-
-    // g.setColor(Color.blue);
-    // g.draw(bounds);
 
   }
 

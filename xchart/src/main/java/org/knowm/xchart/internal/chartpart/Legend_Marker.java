@@ -99,6 +99,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
         // g.setStroke(series.getLineStyle());
         // g.setColor(series.getLineColor());
         // g.draw(rectSmall);
+
         // // debug box
         // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
         // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
@@ -108,10 +109,6 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
 
       //
       // ////// paint series text /////////
-
-      g.setColor(chart.getStyler().getChartFontColor());
-
-      double multiLineOffset = 0.0;
 
       if (series.getLegendRenderType() != LegendRenderType.Box) {
 
@@ -128,12 +125,6 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       starty += legendEntryHeight + chart.getStyler().getLegendPadding();
 
     }
-
-    // bounds
-    bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
-
-    // g.setColor(Color.blue);
-    // g.draw(bounds);
 
   }
 

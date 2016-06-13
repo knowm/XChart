@@ -123,6 +123,11 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     g.draw(rect);
 
     doPaint(g);
+
+    // bounds
+    bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
+    // g.setColor(Color.blue);
+    // g.draw(bounds);
   }
 
   /**
@@ -226,6 +231,9 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   }
 
   void paintSeriesText(Graphics2D g, Map<String, Rectangle2D> seriesTextBounds, int markerSize, double x, double starty) {
+
+    g.setColor(chart.getStyler().getChartFontColor());
+    g.setFont(chart.getStyler().getLegendFont());
 
     double multiLineOffset = 0.0;
 

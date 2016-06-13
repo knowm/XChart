@@ -71,22 +71,12 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
       g.setColor(series.getLineColor());
       g.draw(rectSmall);
 
-      // ////// paint series text /////////
-
-      g.setColor(chart.getStyler().getChartFontColor());
-
+      // paint series text
       final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
-
       paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
-
       starty += legendEntryHeight + chart.getStyler().getLegendPadding();
 
     }
-
-    // bounds
-    bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
-    // g.setColor(Color.blue);
-    // g.draw(bounds);
 
   }
 
