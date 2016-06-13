@@ -30,7 +30,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
- * Line chart with multiple Category Series
+ * Category Chart with Line Rendering
  * <p>
  * Demonstrates the following:
  * <ul>
