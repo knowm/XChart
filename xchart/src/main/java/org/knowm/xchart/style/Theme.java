@@ -163,6 +163,4 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public Font getAnnotationFont();
 
-  public boolean hasAnnotations();
-
 }

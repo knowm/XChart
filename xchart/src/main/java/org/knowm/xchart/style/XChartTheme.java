@@ -410,10 +410,4 @@ public class XChartTheme implements Theme {
 
   }
 
-  @Override
-  public boolean hasAnnotations() {
-
-    return false;
-  }
-
 }

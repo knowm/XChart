@@ -83,51 +83,54 @@ public abstract class AxesChartStyler extends Styler {
     super.setAllStyles();
 
     // axes
-    xAxisTitleVisible = theme.isXAxisTitleVisible();
-    yAxisTitleVisible = theme.isYAxisTitleVisible();
-    axisTitleFont = theme.getAxisTitleFont();
-    xAxisTicksVisible = theme.isXAxisTicksVisible();
-    yAxisTicksVisible = theme.isYAxisTicksVisible();
-    axisTickLabelsFont = theme.getAxisTickLabelsFont();
-    axisTickMarkLength = theme.getAxisTickMarkLength();
-    axisTickPadding = theme.getAxisTickPadding();
-    axisTickMarksColor = theme.getAxisTickMarksColor();
-    axisTickMarksStroke = theme.getAxisTickMarksStroke();
-    axisTickLabelsColor = theme.getAxisTickLabelsColor();
-    isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
-    isAxisTicksMarksVisible = theme.isAxisTicksMarksVisible();
-    plotMargin = theme.getPlotMargin();
-    axisTitlePadding = theme.getAxisTitlePadding();
-    xAxisTickMarkSpacingHint = theme.getXAxisTickMarkSpacingHint();
-    yAxisTickMarkSpacingHint = theme.getYAxisTickMarkSpacingHint();
-    isXAxisLogarithmic = false;
-    isYAxisLogarithmic = false;
-    xAxisMin = null;
-    xAxisMax = null;
-    yAxisMin = null;
-    yAxisMax = null;
+    this.xAxisTitleVisible = theme.isXAxisTitleVisible();
+    this.yAxisTitleVisible = theme.isYAxisTitleVisible();
+    this.axisTitleFont = theme.getAxisTitleFont();
+    this.xAxisTicksVisible = theme.isXAxisTicksVisible();
+    this.yAxisTicksVisible = theme.isYAxisTicksVisible();
+    this.axisTickLabelsFont = theme.getAxisTickLabelsFont();
+    this.axisTickMarkLength = theme.getAxisTickMarkLength();
+    this.axisTickPadding = theme.getAxisTickPadding();
+    this.axisTickMarksColor = theme.getAxisTickMarksColor();
+    this.axisTickMarksStroke = theme.getAxisTickMarksStroke();
+    this.axisTickLabelsColor = theme.getAxisTickLabelsColor();
+    this.isAxisTicksLineVisible = theme.isAxisTicksLineVisible();
+    this.isAxisTicksMarksVisible = theme.isAxisTicksMarksVisible();
+    this.plotMargin = theme.getPlotMargin();
+    this.axisTitlePadding = theme.getAxisTitlePadding();
+    this.xAxisTickMarkSpacingHint = theme.getXAxisTickMarkSpacingHint();
+    this.yAxisTickMarkSpacingHint = theme.getYAxisTickMarkSpacingHint();
+    this.isXAxisLogarithmic = false;
+    this.isYAxisLogarithmic = false;
+    this.xAxisMin = null;
+    this.xAxisMax = null;
+    this.yAxisMin = null;
+    this.yAxisMax = null;
 
     // Chart Plot Area ///////////////////////////////
-    isPlotGridVerticalLinesVisible = theme.isPlotGridVerticalLinesVisible();
-    isPlotGridHorizontalLinesVisible = theme.isPlotGridHorizontalLinesVisible();
-    isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
-    plotGridLinesColor = theme.getPlotGridLinesColor();
-    plotGridLinesStroke = theme.getPlotGridLinesStroke();
+    this.isPlotGridVerticalLinesVisible = theme.isPlotGridVerticalLinesVisible();
+    this.isPlotGridHorizontalLinesVisible = theme.isPlotGridHorizontalLinesVisible();
+    this.isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
+    this.plotGridLinesColor = theme.getPlotGridLinesColor();
+    this.plotGridLinesStroke = theme.getPlotGridLinesStroke();
 
     // Line, Scatter, Area Charts ///////////////////////////////
-    markerSize = theme.getMarkerSize();
+    this.markerSize = theme.getMarkerSize();
 
     // Error Bars ///////////////////////////////
-    errorBarsColor = theme.getErrorBarsColor();
-    isErrorBarsColorSeriesColor = theme.isErrorBarsColorSeriesColor();
+    this.errorBarsColor = theme.getErrorBarsColor();
+    this.isErrorBarsColorSeriesColor = theme.isErrorBarsColorSeriesColor();
 
     // Formatting ////////////////////////////////
-    locale = Locale.getDefault();
-    timezone = TimeZone.getDefault();
-    datePattern = null; // if not null, this override pattern will be used
-    decimalPattern = null;
-    xAxisDecimalPattern = null;
-    yAxisDecimalPattern = null;
+    this.locale = Locale.getDefault();
+    this.timezone = TimeZone.getDefault();
+    this.datePattern = null; // if not null, this override pattern will be used
+    this.decimalPattern = null;
+    this.xAxisDecimalPattern = null;
+    this.yAxisDecimalPattern = null;
+
+    // Annotations ////////////////////////////////
+    this.hasAnnotations = false;
   }
 
   // Chart Axes ///////////////////////////////

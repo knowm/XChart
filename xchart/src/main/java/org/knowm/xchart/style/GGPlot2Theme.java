@@ -410,10 +410,4 @@ public class GGPlot2Theme implements Theme {
 
   }
 
-  @Override
-  public boolean hasAnnotations() {
-
-    return false;
-  }
-
 }

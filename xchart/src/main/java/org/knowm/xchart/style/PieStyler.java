@@ -53,6 +53,9 @@ public class PieStyler extends Styler {
     this.annotationDistance = theme.getAnnotationDistance();
     this.annotationType = theme.getAnnotationType();
     this.drawAllAnnotations = theme.isDrawAllAnnotations();
+
+    // Annotations ////////////////////////////////
+    this.hasAnnotations = true;
   }
 
   public PieSeriesRenderStyle getDefaultSeriesRenderStyle() {

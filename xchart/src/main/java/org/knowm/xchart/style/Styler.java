@@ -95,7 +95,7 @@ public abstract class Styler {
 
   // Annotations ///////////////////////////////
   private Font annotationsFont;
-  private boolean showAnnotations;
+  public boolean hasAnnotations;
 
   protected void setAllStyles() {
 
@@ -506,9 +506,9 @@ public abstract class Styler {
 
   // Annotations ///////////////////////////////
 
-  public boolean hasAnnotations() {
+  public Boolean hasAnnotations() {
 
-    return showAnnotations;
+    return hasAnnotations;
   }
 
   /**
@@ -516,9 +516,9 @@ public abstract class Styler {
    *
    * @param showAnnotations
    */
-  public void setHasAnnotations(boolean showAnnotations) {
+  public void setHasAnnotations(boolean hasAnnotations) {
 
-    this.showAnnotations = showAnnotations;
+    this.hasAnnotations = hasAnnotations;
   }
 
   public Font getAnnotationsFont() {

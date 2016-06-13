@@ -414,10 +414,4 @@ public class MatlabTheme implements Theme {
 
   }
 
-  @Override
-  public boolean hasAnnotations() {
-
-    return false;
-  }
-
 }
