@@ -67,6 +67,7 @@ import org.knowm.xchart.demo.charts.pie.PieChart04;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart03;
+import org.knowm.xchart.demo.charts.realtime.RealtimeChart04;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart01;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart02;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart03;
@@ -96,6 +97,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
   final RealtimeChart01 realtimeChart01 = new RealtimeChart01();
   final RealtimeChart02 realtimeChart02 = new RealtimeChart02();
   final RealtimeChart03 realtimeChart03 = new RealtimeChart03();
+  final RealtimeChart04 realtimeChart04 = new RealtimeChart04();
   Timer timer = new Timer();
 
   /**
@@ -192,6 +194,20 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
             realtimeChart03.updateData();
             chartPanel.updateSeries(RealtimeChart02.SERIES_NAME, null, realtimeChart03.getyData(), realtimeChart03.getErrorBars());
+          }
+        };
+        timer = new Timer();
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
+      }
+      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart04")) {
+        // set up real-time chart simulated data feed
+        TimerTask chartUpdaterTask = new TimerTask() {
+
+          @Override
+          public void run() {
+
+            realtimeChart04.updateData();
+            chartPanel.updateSeries(RealtimeChart02.SERIES_NAME, null, realtimeChart04.getyData(), realtimeChart04.getbubbleData());
           }
         };
         timer = new Timer();
@@ -379,6 +395,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart03 - Updating With Error Bars", realtimeChart03.getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart04 - Real-time Bubble Chart", realtimeChart04.getChart()));
     category.add(defaultMutableTreeNode);
 
   }
