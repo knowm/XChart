@@ -373,6 +373,12 @@ public class XChartTheme implements Theme {
     return false;
   }
 
+  @Override
+  public double getDonutThickness() {
+
+    return .33;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override
@@ -407,7 +413,6 @@ public class XChartTheme implements Theme {
   public Font getAnnotationFont() {
 
     return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-
   }
 
 }

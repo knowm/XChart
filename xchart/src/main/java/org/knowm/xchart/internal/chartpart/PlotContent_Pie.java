@@ -23,12 +23,15 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.Map;
 
 import org.knowm.xchart.PieSeries;
+import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
@@ -77,11 +80,6 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     // pie bounds
     double pieFillPercentage = stylerPie.getPlotContentSize();
 
-    // if (stylerPie.isCircular()) {
-    //
-    // double pieDiameter = Math.min(bounds.getWidth(), bounds.getHeight());
-    // }
-
     double halfBorderPercentage = (1 - pieFillPercentage) / 2.0;
     double width = stylerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getWidth();
     double height = stylerPie.isCircular() ? Math.min(bounds.getWidth(), bounds.getHeight()) : bounds.getHeight();
@@ -119,12 +117,27 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
 
       Number y = series.getValue();
 
-      // draw slice
+      // draw slice/donut
       double arcAngle = (y.doubleValue() * 360 / total);
       g.setColor(series.getFillColor());
-      g.fill(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
-      g.setColor(stylerPie.getPlotBackgroundColor());
-      g.draw(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
+
+      // slice
+      if (PieSeriesRenderStyle.Pie == series.getChartPieSeriesRenderStyle()) {
+
+        g.fill(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
+        g.setColor(stylerPie.getPlotBackgroundColor());
+        g.draw(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
+      }
+
+      // donut
+      else {
+
+        Shape donutSlice = getDonutSliceShape(pieBounds, stylerPie.getDonutThickness(), startAngle, arcAngle);
+        g.fill(donutSlice);
+        g.setColor(stylerPie.getPlotBackgroundColor());
+        g.draw(donutSlice);
+      }
+
       // curValue += y.doubleValue();
 
       if (stylerPie.hasAnnotations()) {
@@ -243,4 +256,32 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
 
   }
 
+  private Shape getDonutSliceShape(Rectangle2D pieBounds, double thickness, double start, double extent) {
+
+    thickness = thickness / 2;
+
+    GeneralPath generalPath = new GeneralPath();
+    GeneralPath dummy = new GeneralPath(); // used to find arc endpoints
+
+    Shape outer = new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), start, extent, Arc2D.OPEN);
+    Shape inner = new Arc2D.Double(pieBounds.getX() + pieBounds.getWidth() * thickness, pieBounds.getY() + pieBounds.getHeight() * thickness, pieBounds.getWidth() - 2 * pieBounds.getWidth()
+        * thickness, pieBounds.getHeight() - 2 * pieBounds.getHeight() * thickness, start + extent, -extent, Arc2D.OPEN);
+    generalPath.append(outer, false);
+
+    dummy.append(new Arc2D.Double(pieBounds.getX() + pieBounds.getWidth() * thickness, pieBounds.getY() + pieBounds.getHeight() * thickness, pieBounds.getWidth() - 2 * pieBounds.getWidth()
+        * thickness, pieBounds.getHeight() - 2 * pieBounds.getHeight() * thickness, start, extent, Arc2D.OPEN), false);
+
+    Point2D point = dummy.getCurrentPoint();
+
+    if (point != null) {
+      generalPath.lineTo(point.getX(), point.getY());
+    }
+    generalPath.append(inner, false);
+
+    dummy.append(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), start + extent, -extent, Arc2D.OPEN), false);
+
+    point = dummy.getCurrentPoint();
+    generalPath.lineTo(point.getX(), point.getY());
+    return generalPath;
+  }
 }

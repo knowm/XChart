@@ -147,6 +147,8 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   public boolean isDrawAllAnnotations();
 
+  public double getDonutThickness();
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   public int getMarkerSize();

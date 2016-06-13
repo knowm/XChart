@@ -35,6 +35,7 @@ public class PieStyler extends Styler {
   private double annotationDistance;
   private AnnotationType annotationType;
   private boolean drawAllAnnotations;
+  private double donutThickness;
 
   /**
    * Constructor
@@ -48,11 +49,12 @@ public class PieStyler extends Styler {
   @Override
   protected void setAllStyles() {
 
-    this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie; // set default to pie, donut may be a future one
+    this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie;
     this.isCircular = theme.isCircular();
     this.annotationDistance = theme.getAnnotationDistance();
     this.annotationType = theme.getAnnotationType();
     this.drawAllAnnotations = theme.isDrawAllAnnotations();
+    this.donutThickness = theme.getDonutThickness();
 
     // Annotations ////////////////////////////////
     this.hasAnnotations = true;
@@ -153,6 +155,21 @@ public class PieStyler extends Styler {
   public void setDrawAllAnnotations(boolean drawAllAnnotations) {
 
     this.drawAllAnnotations = drawAllAnnotations;
+  }
+
+  public double getDonutThickness() {
+
+    return donutThickness;
+  }
+
+  /**
+   * Sets the thickness of the donut ring for donut style pie chart series.
+   *
+   * @param donutThickness - Valid range is between 0 and 1.
+   */
+  public void setDonutThickness(double donutThickness) {
+
+    this.donutThickness = donutThickness;
   }
 
   /**

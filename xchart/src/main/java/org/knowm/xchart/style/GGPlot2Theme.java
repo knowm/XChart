@@ -373,6 +373,12 @@ public class GGPlot2Theme implements Theme {
     return false;
   }
 
+  @Override
+  public double getDonutThickness() {
+
+    return .25;
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override

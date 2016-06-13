@@ -29,7 +29,9 @@ public class PieSeries extends Series {
 
   public enum PieSeriesRenderStyle implements RenderableSeries {
 
-    Pie(LegendRenderType.Box);
+    Pie(LegendRenderType.Box),
+
+    Donut(LegendRenderType.Box);
 
     private final LegendRenderType legendRenderType;
 
