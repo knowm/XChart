@@ -21,6 +21,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,6 +36,8 @@ import org.knowm.xchart.style.Styler;
 public abstract class Legend_<ST extends Styler, S extends Series> implements ChartPart {
 
   public abstract double getSeriesLegendRenderGraphicHeight(Series series);
+
+  public abstract void doPaint(Graphics2D g);
 
   protected static final int LEGEND_MARGIN = 6;
   protected static final int BOX_SIZE = 20;
@@ -59,6 +62,10 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
   @Override
   public void paint(Graphics2D g) {
+
+    if (!chart.getStyler().isLegendVisible()) {
+      return;
+    }
 
     if (chart.getSeriesMap().isEmpty()) {
       return;
@@ -114,6 +121,8 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
     g.setColor(chart.getStyler().getLegendBorderColor());
     g.draw(rect);
+
+    doPaint(g);
   }
 
   /**
@@ -201,6 +210,47 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       seriesTextBounds.put(line, bounds);
     }
     return seriesTextBounds;
+  }
+
+  float getLegendEntryHeight(Map<String, Rectangle2D> seriesTextBounds, int markerSize) {
+
+    float legendEntryHeight = 0;
+    for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
+      legendEntryHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
+    }
+    legendEntryHeight -= MULTI_LINE_SPACE;
+
+    legendEntryHeight = Math.max(legendEntryHeight, markerSize);
+
+    return legendEntryHeight;
+  }
+
+  void paintSeriesText(Graphics2D g, Map<String, Rectangle2D> seriesTextBounds, int markerSize, double x, double starty) {
+
+    double multiLineOffset = 0.0;
+
+    for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
+
+      double height = entry.getValue().getHeight();
+      double centerOffsetY = (Math.max(markerSize, height) - height) / 2.0;
+
+      FontRenderContext frc = g.getFontRenderContext();
+      TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
+      Shape shape = tl.getOutline(null);
+      AffineTransform orig = g.getTransform();
+      AffineTransform at = new AffineTransform();
+      at.translate(x, starty + height + centerOffsetY + multiLineOffset);
+      g.transform(at);
+      g.fill(shape);
+      g.setTransform(orig);
+
+      // // debug box
+      // Rectangle2D boundsTemp = new Rectangle2D.Double(x, starty + centerOffsetY, entry.getValue().getWidth(), height);
+      // g.setColor(Color.blue);
+      // g.draw(boundsTemp);
+      multiLineOffset += height + MULTI_LINE_SPACE;
+
+    }
   }
 
 }

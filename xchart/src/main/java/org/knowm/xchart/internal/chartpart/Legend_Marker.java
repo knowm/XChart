@@ -16,12 +16,8 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
@@ -52,15 +48,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
   }
 
   @Override
-  public void paint(Graphics2D g) {
-
-    if (!chart.getStyler().isLegendVisible()) {
-      return;
-    }
-
-    super.paint(g);
-
-    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
+  public void doPaint(Graphics2D g) {
 
     // Draw legend content inside legend box
     double startx = xOffset + chart.getStyler().getLegendPadding();
@@ -74,16 +62,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       }
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
-
-      float legendEntryHeight = 0;
-      double legendTextContentMaxWidth = 0; // TODO 3.0.0 don't need this
-      for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
-        legendEntryHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
-        legendTextContentMaxWidth = Math.max(legendTextContentMaxWidth, entry.getValue().getWidth());
-      }
-      legendEntryHeight -= MULTI_LINE_SPACE;
-
-      legendEntryHeight = Math.max(legendEntryHeight, (series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize()));
+      float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, (series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize()));
 
       // ////// paint series render graphic /////////
 
@@ -137,55 +116,14 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       if (series.getLegendRenderType() != LegendRenderType.Box) {
 
         double x = startx + chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding();
-        for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
-
-          double height = entry.getValue().getHeight();
-          double centerOffsetY = (Math.max(stylerAxesChart.getMarkerSize(), height) - height) / 2.0;
-
-          FontRenderContext frc = g.getFontRenderContext();
-          TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
-          Shape shape = tl.getOutline(null);
-          AffineTransform orig = g.getTransform();
-          AffineTransform at = new AffineTransform();
-          at.translate(x, starty + height + centerOffsetY + multiLineOffset);
-          g.transform(at);
-          g.fill(shape);
-          g.setTransform(orig);
-
-          // // debug box
-          // Rectangle2D boundsTemp = new Rectangle2D.Double(x, starty + centerOffsetY + multiLineOffset, entry.getValue().getWidth(), height);
-          // g.setColor(Color.blue);
-          // g.draw(boundsTemp);
-
-          multiLineOffset += height + MULTI_LINE_SPACE;
-        }
+        paintSeriesText(g, seriesTextBounds, stylerAxesChart.getMarkerSize(), x, starty);
 
       }
       else { // bar/pie type series
 
         final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
-        for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
+        paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
 
-          double height = entry.getValue().getHeight();
-          double centerOffsetY = (Math.max(BOX_SIZE, height) - height) / 2.0;
-
-          FontRenderContext frc = g.getFontRenderContext();
-          TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
-          Shape shape = tl.getOutline(null);
-          AffineTransform orig = g.getTransform();
-          AffineTransform at = new AffineTransform();
-          at.translate(x, starty + height + centerOffsetY + multiLineOffset);
-          g.transform(at);
-          g.fill(shape);
-          g.setTransform(orig);
-
-          // // debug box
-          // Rectangle2D boundsTemp = new Rectangle2D.Double(x, starty + centerOffsetY, entry.getValue().getWidth(), height);
-          // g.setColor(Color.blue);
-          // g.draw(boundsTemp);
-          multiLineOffset += height + MULTI_LINE_SPACE;
-
-        }
       }
       starty += legendEntryHeight + chart.getStyler().getLegendPadding();
 
