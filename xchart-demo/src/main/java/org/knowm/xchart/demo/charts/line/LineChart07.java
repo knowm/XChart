@@ -27,7 +27,6 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Styler.LegendPosition;
-import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Category Chart with Line Rendering
@@ -95,7 +94,6 @@ public class LineChart07 implements ExampleChart<CategoryChart> {
     for (int i = 0; i < seriesNames.length; i++) {
       CategorySeries series = chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
       series.setShowInLegend(i % 2 == 0);
-      series.setMarker(SeriesMarkers.NONE);
     }
 
     return chart;

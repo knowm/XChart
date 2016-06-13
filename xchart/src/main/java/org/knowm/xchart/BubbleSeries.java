@@ -20,29 +20,25 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.Series_Markers;
+import org.knowm.xchart.internal.Series_Bubble;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 
 /**
- * A Series containing X and Y data to be plotted on a Chart
+ * A Series containing X, Y and bubble size data to be plotted on a Chart
  *
  * @author timmolter
  */
-public class XYSeries extends Series_Markers {
+public class BubbleSeries extends Series_Bubble {
 
-  public enum XYSeriesRenderStyle implements RenderableSeries {
+  public enum BubbleSeriesRenderStyle implements RenderableSeries {
 
-    Line(LegendRenderType.Line),
-
-    Area(LegendRenderType.Line),
-
-    Scatter(LegendRenderType.Scatter);
+    Round(LegendRenderType.Box);
 
     private final LegendRenderType legendRenderType;
 
-    private XYSeriesRenderStyle(LegendRenderType legendRenderType) {
+    private BubbleSeriesRenderStyle(LegendRenderType legendRenderType) {
       this.legendRenderType = legendRenderType;
     }
 
@@ -53,7 +49,9 @@ public class XYSeries extends Series_Markers {
     }
   }
 
-  private XYSeriesRenderStyle xyChartSeriesRenderStyle = null;
+  private BubbleSeriesRenderStyle bubbleSeriesRenderStyle = null;
+
+  private Number value;
 
   /**
    * Constructor
@@ -61,28 +59,37 @@ public class XYSeries extends Series_Markers {
    * @param name
    * @param xData
    * @param yData
-   * @param errorBars
+   * @param bubbleSizes
    */
-  public XYSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public BubbleSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleSizes) {
 
-    super(name, xData, yData, errorBars);
+    super(name, xData, yData, bubbleSizes);
   }
 
-  public XYSeriesRenderStyle getXYSeriesRenderStyle() {
+  public BubbleSeriesRenderStyle getBubbleSeriesRenderStyle() {
 
-    return xyChartSeriesRenderStyle;
+    return bubbleSeriesRenderStyle;
   }
 
-  public XYSeries setXYSeriesRenderStyle(XYSeriesRenderStyle chartXYSeriesRenderStyle) {
+  public void setBubbleSeriesRenderStyle(BubbleSeriesRenderStyle bubbleSeriesRenderStyle) {
 
-    this.xyChartSeriesRenderStyle = chartXYSeriesRenderStyle;
-    return this;
+    this.bubbleSeriesRenderStyle = bubbleSeriesRenderStyle;
   }
 
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    return xyChartSeriesRenderStyle.getLegendRenderType();
+    return bubbleSeriesRenderStyle.getLegendRenderType();
+  }
+
+  public Number getValue() {
+
+    return value;
+  }
+
+  public void setValue(Number value) {
+
+    this.value = value;
   }
 
   @Override

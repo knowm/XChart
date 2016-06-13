@@ -101,7 +101,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
       Iterator<? extends Number> yItr = series.getYData().iterator();
       Iterator<? extends Number> ebItr = null;
-      Collection<? extends Number> errorBars = series.getErrorBars();
+      Collection<? extends Number> errorBars = series.getExtraValues();
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }
@@ -188,12 +188,12 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           path.lineTo(xOffset, zeroOffset);
           path.closePath();
 
+          g.setColor(series.getFillColor());
+          g.fill(path);
+
           // g.setStroke(series.getLineStyle());
           // g.setColor(series.getLineColor());
           // g.draw(path);
-
-          g.setColor(series.getFillColor());
-          g.fill(path);
 
           if (stylerCategory.hasAnnotations() && next != null) {
 

@@ -91,7 +91,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
       Iterator<? extends Number> ebItr = null;
-      Collection<? extends Number> errorBars = series.getErrorBars();
+      Collection<? extends Number> errorBars = series.getExtraValues();
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }
@@ -160,7 +160,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
         // paint line
 
-        boolean isSeriesLineOrArea = (XYSeriesRenderStyle.Line == series.getChartXYSeriesRenderStyle()) || (XYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle());
+        boolean isSeriesLineOrArea = (XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()) || (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle());
 
         if (isSeriesLineOrArea) {
           if (series.getLineStyle() != SeriesLines.NONE) {
@@ -175,7 +175,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         }
 
         // paint area
-        if (XYSeriesRenderStyle.Area == series.getChartXYSeriesRenderStyle()) {
+        if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 

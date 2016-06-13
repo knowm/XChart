@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.Series_Markers;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
@@ -30,7 +30,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  *
  * @author timmolter
  */
-public class CategorySeries extends Series_AxesChart {
+public class CategorySeries extends Series_Markers {
 
   public enum CategorySeriesRenderStyle implements RenderableSeries {
 

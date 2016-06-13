@@ -16,6 +16,8 @@
  */
 package org.knowm.xchart;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -24,18 +26,18 @@ import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.Legend_Marker;
-import org.knowm.xchart.internal.chartpart.Plot_XY;
+import org.knowm.xchart.internal.chartpart.Legend_Bubble;
+import org.knowm.xchart.internal.chartpart.Plot_Bubble;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
+import org.knowm.xchart.style.BubbleStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
-import org.knowm.xchart.style.XYStyler;
 
 /**
  * @author timmolter
  */
-public class XYChart extends Chart<XYStyler, XYSeries> {
+public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -43,12 +45,12 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param width
    * @param height
    */
-  public XYChart(int width, int height) {
+  public BubbleChart(int width, int height) {
 
-    super(width, height, new XYStyler());
+    super(width, height, new BubbleStyler());
     axisPair = new AxisPair(this);
-    plot = new Plot_XY(this);
-    legend = new Legend_Marker(this);
+    plot = new Plot_Bubble(this);
+    legend = new Legend_Bubble(this);
   }
 
   /**
@@ -58,7 +60,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param height
    * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
-  public XYChart(int width, int height, Theme theme) {
+  public BubbleChart(int width, int height, Theme theme) {
 
     this(width, height);
     styler.setTheme(theme);
@@ -71,7 +73,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param height
    * @param chartTheme - pass in the desired ChartTheme enum
    */
-  public XYChart(int width, int height, ChartTheme chartTheme) {
+  public BubbleChart(int width, int height, ChartTheme chartTheme) {
 
     this(width, height, chartTheme.newInstance(chartTheme));
   }
@@ -81,96 +83,42 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param chartBuilder
    */
-  public XYChart(XYChartBuilder chartBuilder) {
+  public BubbleChart(BubbleChartBuilder chartBuilder) {
 
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);
-    setXAxisTitle(chartBuilder.xAxisTitle);
-    setYAxisTitle(chartBuilder.yAxisTitle);
   }
 
   /**
-   * Add a series for a X-Y type chart using Lists
-   *
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param yData the Y-Axis data
-   * @return A Series object that you can set properties on
-   */
-  public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {
-
-    return addSeries(seriesName, xData, yData, null);
-  }
-
-  /**
-   * Add a series for a X-Y type chart using using double arrays
+   * Add a series for a Bubble type chart using using double arrays
    *
    * @param seriesName
    * @param xData the X-Axis data
    * @param xData the Y-Axis data
+   * @param bubbleData the bubble data
    * @return A Series object that you can set properties on
    */
-  public XYSeries addSeries(String seriesName, double[] xData, double[] yData) {
+  public BubbleSeries addSeries(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
 
-    return addSeries(seriesName, xData, yData, null);
+    return addSeries(seriesName, getNumberListFromDoubleArray(xData), getNumberListFromDoubleArray(yData), getNumberListFromDoubleArray(bubbleData));
   }
 
   /**
-   * Add a series for a X-Y type chart using using double arrays with error bars
+   * Add a series for a Bubble type chart using using Lists
    *
    * @param seriesName
    * @param xData the X-Axis data
    * @param xData the Y-Axis data
-   * @param errorBars the error bar data
+   * @param bubbleData the bubble data
    * @return A Series object that you can set properties on
+   * @return
    */
-  public XYSeries addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
-
-    return addSeries(seriesName, getNumberListFromDoubleArray(xData), getNumberListFromDoubleArray(yData), getNumberListFromDoubleArray(errorBars));
-  }
-
-  /**
-   * Add a series for a X-Y type chart using using int arrays
-   *
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param xData the Y-Axis data
-   * @return A Series object that you can set properties on
-   */
-  public XYSeries addSeries(String seriesName, int[] xData, int[] yData) {
-
-    return addSeries(seriesName, xData, yData, null);
-  }
-
-  /**
-   * Add a series for a X-Y type chart using using int arrays with error bars
-   *
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param xData the Y-Axis data
-   * @param errorBars the error bar data
-   * @return A Series object that you can set properties on
-   */
-  public XYSeries addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
-
-    return addSeries(seriesName, getNumberListFromIntArray(xData), getNumberListFromIntArray(yData), getNumberListFromIntArray(errorBars));
-  }
-
-  /**
-   * Add a series for a X-Y type chart using Lists with error bars
-   *
-   * @param seriesName
-   * @param xData the X-Axis data
-   * @param yData the Y-Axis data
-   * @param errorBars the error bar data
-   * @return A Series object that you can set properties on
-   */
-  public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public BubbleSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleData) {
 
     // Sanity checks
-    sanityCheck(seriesName, xData, yData, errorBars);
+    sanityCheck(seriesName, xData, yData, bubbleData);
 
-    XYSeries series = null;
+    BubbleSeries series = null;
     if (xData != null) {
 
       // Sanity check
@@ -178,10 +126,10 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
         throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
 
-      series = new XYSeries(seriesName, xData, yData, errorBars);
+      series = new BubbleSeries(seriesName, xData, yData, bubbleData);
     }
     else { // generate xData
-      series = new XYSeries(seriesName, getGeneratedData(yData.size()), yData, errorBars);
+      series = new BubbleSeries(seriesName, getGeneratedData(yData.size()), yData, bubbleData);
     }
 
     seriesMap.put(seriesName, series);
@@ -193,7 +141,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   // Internal Members and Methods ///////////////////
   ///////////////////////////////////////////////////
 
-  private void sanityCheck(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  private void sanityCheck(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleData) {
 
     if (seriesMap.keySet().contains(seriesName)) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
@@ -207,8 +155,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     if (xData != null && xData.size() == 0) {
       throw new IllegalArgumentException("X-Axis data cannot be empty!!! >" + seriesName);
     }
-    if (errorBars != null && errorBars.size() != yData.size()) {
-      throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!! >" + seriesName);
+    if (bubbleData.size() != yData.size()) {
+      throw new IllegalArgumentException("Bubble Data and Y-Axis sizes are not the same!!! >" + seriesName);
     }
   }
 
@@ -228,11 +176,11 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     // throw new RuntimeException("No series defined for Chart!!!");
     // }
 
-    // set the series render styles if they are not set. Legend and Plot need it.
-    for (XYSeries seriesXY : getSeriesMap().values()) {
-      XYSeries.XYSeriesRenderStyle chartXYSeriesRenderStyle = seriesXY.getXYSeriesRenderStyle(); // would be directly set
-      if (chartXYSeriesRenderStyle == null) { // wasn't overridden, use default from Style Manager
-        seriesXY.setXYSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
+    // set the series types if they are not set. Legend and Plot need it.
+    for (BubbleSeries bubbleSeries : getSeriesMap().values()) {
+      BubbleSeries.BubbleSeriesRenderStyle seriesType = bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
+      if (seriesType == null) { // wasn't overridden, use default from Style Manager
+        bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }
     setSeriesStyles();
@@ -252,16 +200,24 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   }
 
   /**
-   * set the series color, marker and line style based on theme
+   * set the series color based on theme
    */
   public void setSeriesStyles() {
 
     SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
         .getSeriesLines());
-    for (XYSeries series : getSeriesMap().values()) {
+    for (BubbleSeries series : getSeriesMap().values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 
+      /** Line Style */
+      BasicStroke stroke;
+
+      /** Line Color */
+      Color lineColor;
+
+      /** Line Width */
+      float lineWidth = -1.0f;
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
       }
@@ -270,12 +226,6 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
       }
       if (series.getFillColor() == null) { // wasn't set manually
         series.setFillColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getMarker() == null) { // wasn't set manually
-        series.setMarker(seriesColorMarkerLineStyle.getMarker());
-      }
-      if (series.getMarkerColor() == null) { // wasn't set manually
-        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
     }
   }

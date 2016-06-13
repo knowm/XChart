@@ -21,35 +21,35 @@ import org.knowm.xchart.internal.ChartBuilder;
 /**
  * @author timmolter
  */
-public class XYChartBuilder extends ChartBuilder<XYChartBuilder, XYChart> {
+public class BubbleChartBuilder extends ChartBuilder<BubbleChartBuilder, BubbleChart> {
 
   String xAxisTitle = "";
   String yAxisTitle = "";
 
-  public XYChartBuilder() {
+  public BubbleChartBuilder() {
 
   }
 
-  public XYChartBuilder xAxisTitle(String xAxisTitle) {
+  public BubbleChartBuilder xAxisTitle(String xAxisTitle) {
 
     this.xAxisTitle = xAxisTitle;
     return this;
   }
 
-  public XYChartBuilder yAxisTitle(String yAxisTitle) {
+  public BubbleChartBuilder yAxisTitle(String yAxisTitle) {
 
     this.yAxisTitle = yAxisTitle;
     return this;
   }
 
   /**
-   * return fully built XYChart
+   * return fully built BubbleChart
    *
-   * @return a XYChart
+   * @return a BubbleChart
    */
   @Override
-  public XYChart build() {
+  public BubbleChart build() {
 
-    return new XYChart(this);
+    return new BubbleChart(this);
   }
 }

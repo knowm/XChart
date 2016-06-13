@@ -16,19 +16,19 @@
  */
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.knowm.xchart.BubbleSeries.BubbleSeriesRenderStyle;
 
 /**
  * @author timmolter
  */
-public class XYStyler extends AxesChartStyler {
+public class BubbleStyler extends AxesChartStyler {
 
-  private XYSeriesRenderStyle xySeriesRenderStyle;
+  private BubbleSeriesRenderStyle bubbleChartSeriesRenderStyle;
 
   /**
    * Constructor
    */
-  public XYStyler() {
+  public BubbleStyler() {
 
     this.setAllStyles();
     super.setAllStyles();
@@ -37,22 +37,22 @@ public class XYStyler extends AxesChartStyler {
   @Override
   protected void setAllStyles() {
 
-    xySeriesRenderStyle = XYSeriesRenderStyle.Line; // set default to line
+    bubbleChartSeriesRenderStyle = BubbleSeriesRenderStyle.Round; // set default to Round
   }
 
-  public XYSeriesRenderStyle getDefaultSeriesRenderStyle() {
+  public BubbleSeriesRenderStyle getDefaultSeriesRenderStyle() {
 
-    return xySeriesRenderStyle;
+    return bubbleChartSeriesRenderStyle;
   }
 
   /**
-   * Sets the default series render style for the chart (line, scatter, area, etc.) You can override the series render style individually on each Series object.
+   * Sets the default series render style for the chart (Round is the only one for now) You can override the series render style individually on each Series object.
    *
-   * @param xySeriesRenderStyle
+   * @param chartXYSeriesRenderStyle
    */
-  public XYStyler setDefaultSeriesRenderStyle(XYSeriesRenderStyle xySeriesRenderStyle) {
+  public BubbleStyler setDefaultSeriesRenderStyle(BubbleSeriesRenderStyle bubbleChartSeriesRenderStyle) {
 
-    this.xySeriesRenderStyle = xySeriesRenderStyle;
+    this.bubbleChartSeriesRenderStyle = bubbleChartSeriesRenderStyle;
     return this;
   }
 

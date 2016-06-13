@@ -14,42 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart;
+package org.knowm.xchart.internal.chartpart;
 
-import org.knowm.xchart.internal.ChartBuilder;
+import org.knowm.xchart.BubbleSeries;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.BubbleStyler;
 
 /**
  * @author timmolter
  */
-public class XYChartBuilder extends ChartBuilder<XYChartBuilder, XYChart> {
-
-  String xAxisTitle = "";
-  String yAxisTitle = "";
-
-  public XYChartBuilder() {
-
-  }
-
-  public XYChartBuilder xAxisTitle(String xAxisTitle) {
-
-    this.xAxisTitle = xAxisTitle;
-    return this;
-  }
-
-  public XYChartBuilder yAxisTitle(String yAxisTitle) {
-
-    this.yAxisTitle = yAxisTitle;
-    return this;
-  }
+public class Plot_Bubble<ST extends AxesChartStyler, S extends Series> extends Plot_AxesChart {
 
   /**
-   * return fully built XYChart
+   * Constructor
    *
-   * @return a XYChart
+   * @param chart
    */
-  @Override
-  public XYChart build() {
+  public Plot_Bubble(Chart<BubbleStyler, BubbleSeries> chart) {
 
-    return new XYChart(this);
+    super(chart);
+    this.plotContent = new PlotContent_Bubble<BubbleStyler, BubbleSeries>(chart);
   }
+
 }

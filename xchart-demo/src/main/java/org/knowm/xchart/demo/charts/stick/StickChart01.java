@@ -27,7 +27,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
- * Stick Chart
+ * Basic Stick Chart
  * <p>
  * Demonstrates the following:
  * <ul>

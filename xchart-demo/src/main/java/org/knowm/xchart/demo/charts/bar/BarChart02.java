@@ -31,7 +31,6 @@ import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.colors.MatlabSeriesColors;
 
 /**
  * Date Categories
@@ -81,7 +80,6 @@ public class BarChart02 implements ExampleChart<CategoryChart> {
       yData.add(-1 * 0.00000001 * ((random.nextInt(i) + 1)));
     }
     CategorySeries series = chart.addSeries("Model 77", xData, yData);
-    series.setLineColor(MatlabSeriesColors.RED);
     series.setFillColor(new Color(230, 150, 150));
 
     return chart;

@@ -28,7 +28,7 @@ import java.util.Map;
 
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.Series_Markers;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -36,7 +36,7 @@ import org.knowm.xchart.style.lines.SeriesLines;
 /**
  * @author timmolter
  */
-public class Legend_AxesChart<ST extends AxesChartStyler, S extends Series> extends Legend_ {
+public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
   AxesChartStyler stylerAxesChart;
 
@@ -45,7 +45,7 @@ public class Legend_AxesChart<ST extends AxesChartStyler, S extends Series> exte
    *
    * @param chart
    */
-  public Legend_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
+  public Legend_Marker(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
     stylerAxesChart = chart.getStyler();
@@ -66,8 +66,8 @@ public class Legend_AxesChart<ST extends AxesChartStyler, S extends Series> exte
     double startx = xOffset + chart.getStyler().getLegendPadding();
     double starty = yOffset + chart.getStyler().getLegendPadding();
 
-    Map<String, Series_AxesChart> map = chart.getSeriesMap();
-    for (Series_AxesChart series : map.values()) {
+    Map<String, Series_Markers> map = chart.getSeriesMap();
+    for (Series_Markers series : map.values()) {
 
       if (!series.isShowInLegend()) {
         continue;
@@ -115,11 +115,11 @@ public class Legend_AxesChart<ST extends AxesChartStyler, S extends Series> exte
 
         // paint little box
         Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+        g.setColor(series.getFillColor());
+        g.fill(rectSmall);
         // g.setStroke(series.getLineStyle());
         // g.setColor(series.getLineColor());
         // g.draw(rectSmall);
-        g.setColor(series.getFillColor());
-        g.fill(rectSmall);
         // // debug box
         // Rectangle2D boundsTemp = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
         // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));

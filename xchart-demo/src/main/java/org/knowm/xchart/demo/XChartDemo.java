@@ -44,6 +44,7 @@ import org.knowm.xchart.demo.charts.bar.BarChart06;
 import org.knowm.xchart.demo.charts.bar.BarChart07;
 import org.knowm.xchart.demo.charts.bar.BarChart08;
 import org.knowm.xchart.demo.charts.bar.BarChart09;
+import org.knowm.xchart.demo.charts.bubble.BubbleChart01;
 import org.knowm.xchart.demo.charts.date.DateChart01;
 import org.knowm.xchart.demo.charts.date.DateChart02;
 import org.knowm.xchart.demo.charts.date.DateChart03;
@@ -316,7 +317,14 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category = new DefaultMutableTreeNode("Stick Charts");
     top.add(category);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("StickChart01 - Stick", new StickChart01().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("StickChart01 - Basic Stick Chart", new StickChart01().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    // Bubble category
+    category = new DefaultMutableTreeNode("Bubble Charts");
+    top.add(category);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BubbleChart01 - Basic Bubble Chart", new BubbleChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Theme category

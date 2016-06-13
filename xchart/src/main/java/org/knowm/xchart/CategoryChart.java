@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.Legend_AxesChart;
+import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -48,7 +48,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     super(width, height, new CategoryStyler());
     axisPair = new AxisPair(this);
     plot = new Plot_Category(this);
-    legend = new Legend_AxesChart(this);
+    legend = new Legend_Marker(this);
   }
 
   /**
@@ -275,12 +275,6 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       }
       if (series.getFillColor() == null) { // wasn't set manually
         series.setFillColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getMarker() == null) { // wasn't set manually
-        series.setMarker(seriesColorMarkerLineStyle.getMarker());
-      }
-      if (series.getMarkerColor() == null) { // wasn't set manually
-        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
     }
   }

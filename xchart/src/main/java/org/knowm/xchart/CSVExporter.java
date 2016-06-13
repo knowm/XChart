@@ -52,8 +52,8 @@ public class CSVExporter {
       out.write(csv);
       csv = join(series.getYData(), ",") + System.getProperty("line.separator");
       out.write(csv);
-      if (series.getErrorBars() != null) {
-        csv = join(series.getErrorBars(), ",") + System.getProperty("line.separator");
+      if (series.getExtraValues() != null) {
+        csv = join(series.getExtraValues(), ",") + System.getProperty("line.separator");
         out.write(csv);
       }
 
@@ -86,7 +86,7 @@ public class CSVExporter {
       out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
       Collection<?> xData = series.getXData();
       Collection<? extends Number> yData = series.getYData();
-      Collection<? extends Number> errorBarData = series.getErrorBars();
+      Collection<? extends Number> errorBarData = series.getExtraValues();
       Iterator<?> itrx = xData.iterator();
       Iterator<? extends Number> itry = yData.iterator();
       Iterator<? extends Number> itrErrorBar = null;

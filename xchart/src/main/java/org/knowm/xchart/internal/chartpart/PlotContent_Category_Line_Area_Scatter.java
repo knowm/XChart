@@ -98,7 +98,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
       Iterator<? extends Number> yItr = yData.iterator();
       Iterator<? extends Number> ebItr = null;
-      Collection<? extends Number> errorBars = series.getErrorBars();
+      Collection<? extends Number> errorBars = series.getExtraValues();
       if (errorBars != null) {
         ebItr = errorBars.iterator();
       }

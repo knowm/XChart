@@ -21,7 +21,7 @@ import java.awt.Color;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 
 /**
- * A Series containing data to be plotted on a Chart
+ * A Series to be plotted on a Chart
  *
  * @author timmolter
  */
