@@ -126,7 +126,7 @@ To make it real-time, simply call `updateSeries` on the `XChartPanel` instance.
 * [x] CSV import and export
 * [x] High resolution chart export
 * [x] Export as PNG, JPG, BMP, GIF with custom DPI setting
-* [x] Export SVG, EPS and PDF using optional de.erichseifert.vectorgraphics2d library
+* [x] Export SVG, EPS and PDF using optional `de.erichseifert.vectorgraphics2d` library
 * [x] Real-time charts
 * [x] Java 6 and up
 
@@ -202,7 +202,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
     </dependency>
 ```
 
@@ -218,7 +218,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.0.4-SNAPSHOT</version>
+      <version>3.0.5-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -249,7 +249,7 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.0.1" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-3.0.3.jar:xchart-3.0.3.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-3.0.4.jar:xchart-3.0.4.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 
