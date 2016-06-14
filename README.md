@@ -141,7 +141,7 @@ Currently, there are three major chart types: `XYChart`, `CategoryChart` and `Pi
 |---|---|---|---|---|---|
 | XYChart | XYChartBuilder | XYStyler | XYSeries | Number, Date | Line |
 | CategoryChart | CategoryChartBuilder | CategoryStyler | CategorySeries | Number, Date, String | Bar |
-| PieChart | PieChartBuilder | PieStyler | PieSeries | String | Pie, Donut |
+| PieChart | PieChartBuilder | PieStyler | PieSeries | String | Pie |
 | BubbleChart | BubbleChartBuilder | BubbleStyler | BubbleSeries | Number, Date  | Round |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
@@ -247,7 +247,6 @@ To use XChart with the Scala Build Tool (SBT) add the following to your build.sb
 ```scala
 libraryDependencies += "org.knowm.xchart" % "xchart" % "3.1.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
-(SBT/Ivy does not seem to respect the optional [VectorGraphics2D](https://github.com/eseifert/vectorgraphics2d) dependency and as it does not exist in Maven Central the build will fail unless it is excluded or available in a local repository.)
 
 ## Building
 
