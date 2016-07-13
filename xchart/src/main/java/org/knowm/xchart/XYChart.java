@@ -22,6 +22,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
@@ -126,7 +127,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    */
   public XYSeries addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
-    return addSeries(seriesName, getNumberListFromDoubleArray(xData), getNumberListFromDoubleArray(yData), getNumberListFromDoubleArray(errorBars));
+    return addSeries(seriesName, Utils.getNumberListFromDoubleArray(xData), Utils.getNumberListFromDoubleArray(yData), Utils.getNumberListFromDoubleArray(errorBars));
   }
 
   /**
@@ -153,7 +154,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    */
   public XYSeries addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
 
-    return addSeries(seriesName, getNumberListFromIntArray(xData), getNumberListFromIntArray(yData), getNumberListFromIntArray(errorBars));
+    return addSeries(seriesName, Utils.getNumberListFromIntArray(xData), Utils.getNumberListFromIntArray(yData), Utils.getNumberListFromIntArray(errorBars));
   }
 
   /**
@@ -181,7 +182,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
       series = new XYSeries(seriesName, xData, yData, errorBars);
     }
     else { // generate xData
-      series = new XYSeries(seriesName, getGeneratedData(yData.size()), yData, errorBars);
+      series = new XYSeries(seriesName, Utils.getGeneratedData(yData.size()), yData, errorBars);
     }
 
     seriesMap.put(seriesName, series);

@@ -35,6 +35,7 @@ public class SwingWrapper<T extends Chart> {
   private String windowTitle = "XChart";
 
   private List<T> charts = new ArrayList<T>();
+  private List<XChartPanel<T>> chartPanels = new ArrayList<XChartPanel<T>>();
   private int numRows;
   private int numColumns;
 
@@ -103,7 +104,8 @@ public class SwingWrapper<T extends Chart> {
       public void run() {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel chartPanel = new XChartPanel<T>(charts.get(0));
+        XChartPanel<T> chartPanel = new XChartPanel<T>(charts.get(0));
+        chartPanels.add(chartPanel);
         frame.add(chartPanel);
 
         // Display the window.
@@ -148,7 +150,8 @@ public class SwingWrapper<T extends Chart> {
 
         for (T chart : charts) {
           if (chart != null) {
-            JPanel chartPanel = new XChartPanel<T>(chart);
+            XChartPanel<T> chartPanel = new XChartPanel<T>(chart);
+            chartPanels.add(chartPanel);
             frame.add(chartPanel);
           }
           else {
@@ -167,4 +170,24 @@ public class SwingWrapper<T extends Chart> {
     return frame;
   }
 
+  /**
+   * Get the default XChartPanel. This is the only one for single panel chart displays and the first panel in matrix chart displays
+   *
+   * @return
+   */
+  public XChartPanel<T> getXChartPanel() {
+
+    return chartPanels.get(0);
+  }
+
+  /**
+   * Get the XChartPanel given the provided index.
+   *
+   * @param index
+   * @return
+   */
+  public XChartPanel<T> getXChartPanel(int index) {
+
+    return chartPanels.get(index);
+  }
 }

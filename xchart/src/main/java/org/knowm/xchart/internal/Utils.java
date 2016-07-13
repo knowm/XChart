@@ -16,6 +16,9 @@
  */
 package org.knowm.xchart.internal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author timmolter
  */
@@ -30,7 +33,7 @@ public class Utils {
 
   /**
    * Gets the offset for the beginning of the tick marks
-   * 
+   *
    * @param workingSpace
    * @param tickSpace
    * @return
@@ -52,4 +55,44 @@ public class Utils {
     }
   }
 
+  public static List<Double> getNumberListFromDoubleArray(double[] data) {
+
+    if (data == null) {
+      return null;
+    }
+
+    List<Double> dataNumber = null;
+    if (data != null) {
+      dataNumber = new ArrayList<Double>();
+      for (double d : data) {
+        dataNumber.add(new Double(d));
+      }
+    }
+    return dataNumber;
+  }
+
+  public static List<Double> getNumberListFromIntArray(int[] data) {
+
+    if (data == null) {
+      return null;
+    }
+
+    List<Double> dataNumber = null;
+    if (data != null) {
+      dataNumber = new ArrayList<Double>();
+      for (double d : data) {
+        dataNumber.add(new Double(d));
+      }
+    }
+    return dataNumber;
+  }
+
+  public static List<Double> getGeneratedData(int length) {
+
+    List<Double> generatedData = new ArrayList<Double>();
+    for (int i = 1; i < length + 1; i++) {
+      generatedData.add((double) i);
+    }
+    return generatedData;
+  }
 }

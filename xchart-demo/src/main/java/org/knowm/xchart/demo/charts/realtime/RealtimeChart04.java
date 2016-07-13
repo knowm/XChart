@@ -75,7 +75,7 @@ public class RealtimeChart04 implements ExampleChart<BubbleChart> {
       public void run() {
 
         realtimeChart04.updateData();
-        chartPanel.updateSeries(SERIES_NAME, null, realtimeChart04.getyData(), realtimeChart04.getbubbleData());
+        chartPanel.updateXYSeries(SERIES_NAME, null, realtimeChart04.getyData(), realtimeChart04.getbubbleData());
 
       }
     };

@@ -24,6 +24,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Bubble;
@@ -100,7 +101,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    */
   public BubbleSeries addSeries(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
 
-    return addSeries(seriesName, getNumberListFromDoubleArray(xData), getNumberListFromDoubleArray(yData), getNumberListFromDoubleArray(bubbleData));
+    return addSeries(seriesName, Utils.getNumberListFromDoubleArray(xData), Utils.getNumberListFromDoubleArray(yData), Utils.getNumberListFromDoubleArray(bubbleData));
   }
 
   /**
@@ -129,7 +130,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
       series = new BubbleSeries(seriesName, xData, yData, bubbleData);
     }
     else { // generate xData
-      series = new BubbleSeries(seriesName, getGeneratedData(yData.size()), yData, bubbleData);
+      series = new BubbleSeries(seriesName, Utils.getGeneratedData(yData.size()), yData, bubbleData);
     }
 
     seriesMap.put(seriesName, series);

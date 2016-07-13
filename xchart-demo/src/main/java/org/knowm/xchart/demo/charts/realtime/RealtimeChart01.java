@@ -71,7 +71,7 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
       public void run() {
 
         realtimeChart01.updateData();
-        chartPanel.updateSeries(SERIES_NAME, null, realtimeChart01.getyData(), null);
+        chartPanel.updateXYSeries(SERIES_NAME, null, realtimeChart01.getyData(), null);
 
       }
     };

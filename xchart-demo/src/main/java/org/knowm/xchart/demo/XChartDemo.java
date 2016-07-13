@@ -165,7 +165,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
           public void run() {
 
             realtimeChart01.updateData();
-            chartPanel.updateSeries(RealtimeChart01.SERIES_NAME, null, realtimeChart01.getyData(), null);
+            chartPanel.updateXYSeries(RealtimeChart01.SERIES_NAME, null, realtimeChart01.getyData(), null);
           }
         };
         timer = new Timer();
@@ -179,7 +179,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
           public void run() {
 
             realtimeChart02.updateData();
-            chartPanel.updateSeries(RealtimeChart02.SERIES_NAME, realtimeChart02.getxData(), realtimeChart02.getyData(), null);
+            chartPanel.updateXYSeries(RealtimeChart02.SERIES_NAME, realtimeChart02.getxData(), realtimeChart02.getyData(), null);
           }
         };
         timer = new Timer();
@@ -193,7 +193,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
           public void run() {
 
             realtimeChart03.updateData();
-            chartPanel.updateSeries(RealtimeChart02.SERIES_NAME, null, realtimeChart03.getyData(), realtimeChart03.getErrorBars());
+            chartPanel.updateXYSeries(RealtimeChart02.SERIES_NAME, null, realtimeChart03.getyData(), realtimeChart03.getErrorBars());
           }
         };
         timer = new Timer();
@@ -207,7 +207,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
           public void run() {
 
             realtimeChart04.updateData();
-            chartPanel.updateSeries(RealtimeChart02.SERIES_NAME, null, realtimeChart04.getyData(), realtimeChart04.getbubbleData());
+            chartPanel.updateXYSeries(RealtimeChart02.SERIES_NAME, null, realtimeChart04.getyData(), realtimeChart04.getbubbleData());
           }
         };
         timer = new Timer();

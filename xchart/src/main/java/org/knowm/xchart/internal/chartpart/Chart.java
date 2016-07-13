@@ -18,9 +18,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.knowm.xchart.internal.Series;
@@ -66,47 +64,6 @@ public abstract class Chart<ST extends Styler, S extends Series> implements Char
     this.styler = styler;
 
     this.chartTitle = new ChartTitle(this);
-  }
-
-  public List<Double> getNumberListFromDoubleArray(double[] data) {
-
-    if (data == null) {
-      return null;
-    }
-
-    List<Double> dataNumber = null;
-    if (data != null) {
-      dataNumber = new ArrayList<Double>();
-      for (double d : data) {
-        dataNumber.add(new Double(d));
-      }
-    }
-    return dataNumber;
-  }
-
-  public List<Double> getNumberListFromIntArray(int[] data) {
-
-    if (data == null) {
-      return null;
-    }
-
-    List<Double> dataNumber = null;
-    if (data != null) {
-      dataNumber = new ArrayList<Double>();
-      for (double d : data) {
-        dataNumber.add(new Double(d));
-      }
-    }
-    return dataNumber;
-  }
-
-  public List<Double> getGeneratedData(int length) {
-
-    List<Double> generatedData = new ArrayList<Double>();
-    for (int i = 1; i < length + 1; i++) {
-      generatedData.add((double) i);
-    }
-    return generatedData;
   }
 
   /** Meta Data Getters and Setters */

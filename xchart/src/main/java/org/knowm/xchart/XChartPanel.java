@@ -41,7 +41,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
-import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
@@ -292,10 +292,10 @@ public class XChartPanel<T extends Chart> extends JPanel {
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public Series_AxesChart updateSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
+  public XYSeries updateXYSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
 
-    Map<String, Series_AxesChart> seriesMap = chart.getSeriesMap();
-    Series_AxesChart series = seriesMap.get(seriesName);
+    Map<String, XYSeries> seriesMap = chart.getSeriesMap();
+    XYSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
     }
@@ -316,6 +316,21 @@ public class XChartPanel<T extends Chart> extends JPanel {
     repaint();
 
     return series;
+  }
+
+  /**
+   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   *
+   * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newYData
+   * @param newErrorBarData - set null if there are no error bars
+   * @return
+   */
+  public XYSeries updateXYSeriesString(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
+
+    return updateXYSeries(seriesName, Utils.getNumberListFromDoubleArray(newXData), Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(newErrorBarData));
   }
 
 }

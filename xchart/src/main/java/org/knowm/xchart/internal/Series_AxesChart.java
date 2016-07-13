@@ -86,6 +86,13 @@ public abstract class Series_AxesChart extends Series {
     calculateMinMax();
   }
 
+  /**
+   * This is an internal method which shouldn't be called from client code. Use XChartPanel.updateXYSeries instead!
+   *
+   * @param newXData
+   * @param newYData
+   * @param newExtraValues
+   */
   public void replaceData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
 
     // Sanity check
