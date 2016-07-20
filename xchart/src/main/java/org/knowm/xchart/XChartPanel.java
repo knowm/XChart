@@ -104,7 +104,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
   @Override
   public Dimension getPreferredSize() {
 
-    return this.preferredSize;
+    return preferredSize;
   }
 
   private class SaveAction extends AbstractAction {
@@ -328,7 +328,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public XYSeries updateXYSeriesString(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
+  public XYSeries updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
 
     return updateXYSeries(seriesName, Utils.getNumberListFromDoubleArray(newXData), Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(newErrorBarData));
   }
