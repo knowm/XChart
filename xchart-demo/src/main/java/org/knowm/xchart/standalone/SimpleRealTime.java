@@ -16,9 +16,6 @@
  */
 package org.knowm.xchart.standalone;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
@@ -30,11 +27,10 @@ public class SimpleRealTime {
 
   public static void main(String[] args) throws Exception {
 
-    double[] xData = new double[] { 0.0, 1.0, 2.0 };
-    double[] yData = new double[] { 2.0, 1.0, 0.0 };
+    final double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
     // Create Chart
-    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", null, yData);
 
     // Show it
     final SwingWrapper<XYChart> sw = new SwingWrapper(chart);
@@ -44,18 +40,16 @@ public class SimpleRealTime {
     for (int i = 0; i < 1000; i++) {
 
       Thread.sleep(100);
-
-      final List<Double> data = new ArrayList<Double>(3);
-      data.add(yData[0] + i);
-      data.add(yData[1] + i);
-      data.add(yData[2] + i);
+      yData[0]++;
+      yData[1]++;
+      yData[2]++;
 
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
         @Override
         public void run() {
 
-          sw.getXChartPanel().updateXYSeries("y(x)", null, data, null);
+          sw.getXChartPanel().updateXYSeries("y(x)", null, yData, null);
         }
       });
     }
