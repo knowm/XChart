@@ -61,7 +61,7 @@ public class BarChart02 implements ExampleChart<CategoryChart> {
 
     // Customize Chart
     chart.getStyler().setPlotGridLinesVisible(false);
-    chart.getStyler().setDatePattern("YYYY");
+    chart.getStyler().setDatePattern("yyyy");
 
     // Series
     List<Date> xData = new ArrayList<Date>();
