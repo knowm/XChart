@@ -224,11 +224,6 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   @Override
   public void paint(Graphics2D g) {
 
-    // Sanity checks
-    // if (getSeriesMap().isEmpty()) {
-    // throw new RuntimeException("No series defined for Chart!!!");
-    // }
-
     // set the series render styles if they are not set. Legend and Plot need it.
     for (XYSeries seriesXY : getSeriesMap().values()) {
       XYSeries.XYSeriesRenderStyle chartXYSeriesRenderStyle = seriesXY.getXYSeriesRenderStyle(); // would be directly set
