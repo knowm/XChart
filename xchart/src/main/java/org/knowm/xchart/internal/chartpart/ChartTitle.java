@@ -90,7 +90,7 @@ public class ChartTitle implements ChartPart {
     double width = 2 * chart.getStyler().getChartTitlePadding() + textBounds.getWidth();
     double height = 2 * chart.getStyler().getChartTitlePadding() + textBounds.getHeight();
     bounds = new Rectangle2D.Double(xOffset - chart.getStyler().getChartTitlePadding(), yOffset - textBounds.getHeight() - chart.getStyler().getChartTitlePadding(), width, height);
-    // g.setColor(Color.green);
+    // g.setColor(Color.blue);
     // g.draw(bounds);
 
   }
