@@ -64,12 +64,26 @@ public class LineChart02 implements ExampleChart<XYChart> {
       yData.add(-.000001 * Math.sin(radians));
     }
 
+    // generates cos data
+    List<Integer> xData2 = new ArrayList<Integer>();
+    List<Double> yData2 = new ArrayList<Double>();
+    for (int i = 0; i <= size; i++) {
+      double radians = (Math.PI / (size / 2) * i);
+      xData2.add(i - size / 2);
+      yData2.add(-.000001 * Math.cos(radians));
+    }
+
     // Series
     XYSeries series = chart.addSeries("y=sin(x)", xData, yData);
     series.setLineColor(XChartSeriesColors.PURPLE);
     series.setLineStyle(SeriesLines.DASH_DASH);
     series.setMarkerColor(XChartSeriesColors.GREEN);
     series.setMarker(SeriesMarkers.SQUARE);
+
+    series = chart.addSeries("y=cos(x)", xData2, yData2);
+    series.setLineColor(XChartSeriesColors.PINK);
+    series.setLineWidth(5);
+    series.setMarker(SeriesMarkers.NONE);
 
     return chart;
   }
