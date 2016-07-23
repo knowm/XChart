@@ -57,13 +57,6 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
     g.setColor(stylerAxesChart.getPlotBackgroundColor());
     g.fill(rect);
 
-    // paint plot border
-    if (stylerAxesChart.isPlotBorderVisible()) {
-      g.setColor(stylerAxesChart.getPlotBorderColor());
-      // g.setStroke(getChartPainter().getstyler().getAxisTickMarksStroke());
-      g.draw(rect);
-    }
-
     // paint grid lines and/or inner plot ticks
 
     // horizontal
@@ -81,9 +74,11 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
           if (stylerAxesChart.isPlotGridHorizontalLinesVisible()) {
 
             g.setColor(stylerAxesChart.getPlotGridLinesColor());
-            g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
-            Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
+            // g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
+            Shape line = stylerAxesChart.getPlotGridLinesStroke().createStrokedShape(new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset));
+            // Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
             g.draw(line);
+            // g.drawLine((int) bounds.getX(), (int) yOffset, (int) (bounds.getX() + bounds.getWidth()), (int) yOffset);
           }
 
           // tick marks
@@ -116,9 +111,10 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
           if (stylerAxesChart.isPlotGridVerticalLinesVisible()) {
 
             g.setColor(stylerAxesChart.getPlotGridLinesColor());
-            g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
-
-            Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
+            // g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
+            // System.out.println();
+            Shape line = stylerAxesChart.getPlotGridLinesStroke().createStrokedShape(new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight()));
+            // Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
             g.draw(line);
           }
           // tick marks
@@ -134,6 +130,13 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
           }
         }
       }
+    }
+
+    // paint plot border
+    if (stylerAxesChart.isPlotBorderVisible()) {
+      g.setColor(stylerAxesChart.getPlotBorderColor());
+      g.setStroke(SOLID_STROKE);
+      g.draw(rect);
     }
   }
 

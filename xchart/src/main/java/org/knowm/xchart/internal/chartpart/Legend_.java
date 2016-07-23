@@ -16,7 +16,6 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
@@ -118,7 +117,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
     g.setColor(chart.getStyler().getLegendBackgroundColor());
     g.fill(rect);
-    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f));
+    g.setStroke(SOLID_STROKE);
     g.setColor(chart.getStyler().getLegendBorderColor());
     g.draw(rect);
 

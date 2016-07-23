@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
@@ -25,6 +26,8 @@ import java.awt.geom.Rectangle2D;
  * @author timmolter
  */
 public interface ChartPart {
+
+  public static BasicStroke SOLID_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
 
   public Rectangle2D getBounds();
 

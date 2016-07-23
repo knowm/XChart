@@ -46,7 +46,7 @@ public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    // g.setColor(Color.green);
+    // g.setColor(Color.red);
     // g.draw(bounds);
 
     plotSurface.paint(g);
