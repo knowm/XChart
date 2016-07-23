@@ -54,6 +54,7 @@ public class BarChart06 implements ExampleChart<CategoryChart> {
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setAvailableSpaceFill(.96);
     chart.getStyler().setOverlapped(true);
+    chart.getStyler().setPlotGridVerticalLinesVisible(false);
 
     // Series
     Histogram histogram1 = new Histogram(getGaussianData(10000), 20, -20, 20);

@@ -54,6 +54,7 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
     chart.getStyler().setYAxisMin(5);
     chart.getStyler().setYAxisMax(70);
     chart.getStyler().setHasAnnotations(true);
+    chart.getStyler().setPlotGridVerticalLinesVisible(false);
 
     // Series
     chart.addSeries("female", Arrays.asList(new Integer[] { 10, 20, 30, 40, 50 }), Arrays.asList(new Integer[] { 50, 10, 20, 40, 35 }));

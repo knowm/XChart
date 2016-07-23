@@ -50,6 +50,7 @@ public class BarChart05 implements ExampleChart<CategoryChart> {
     CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("Temperature vs. Color").xAxisTitle("Color").yAxisTitle("Temperature").theme(ChartTheme.GGPlot2).build();
 
     // Customize Chart
+    chart.getStyler().setPlotGridVerticalLinesVisible(false);
 
     // Series
     chart.addSeries("fish", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { -40, 30, 20, 60,
