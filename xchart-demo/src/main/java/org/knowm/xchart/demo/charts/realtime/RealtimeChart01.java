@@ -21,9 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.swing.JFrame;
-
-import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
@@ -32,7 +30,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>real-time chart updates
+ * <li>real-time chart updates with SwingWrapper
  * <li>fixed window
  */
 public class RealtimeChart01 implements ExampleChart<XYChart> {
@@ -46,25 +44,13 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
 
     // Setup the panel
     final RealtimeChart01 realtimeChart01 = new RealtimeChart01();
-    final XChartPanel<XYChart> chartPanel = realtimeChart01.buildPanel();
+    realtimeChart01.go();
+  }
 
-    // Schedule a job for the event-dispatching thread:
-    // creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+  private void go() {
 
-      @Override
-      public void run() {
-
-        // Create and set up the window.
-        JFrame frame = new JFrame("XChart");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(chartPanel);
-
-        // Display the window.
-        frame.pack();
-        frame.setVisible(true);
-      }
-    });
+    final SwingWrapper<XYChart> swingWrapper = new SwingWrapper<XYChart>(getChart());
+    swingWrapper.displayChart();
 
     // Simulate a data feed
     TimerTask chartUpdaterTask = new TimerTask() {
@@ -72,20 +58,20 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
       @Override
       public void run() {
 
-        realtimeChart01.updateData();
-        chartPanel.revalidate();
-        chartPanel.repaint();
+        updateData();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+          @Override
+          public void run() {
+
+            swingWrapper.repaintChart();
+          }
+        });
       }
     };
 
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-
-  }
-
-  public XChartPanel<XYChart> buildPanel() {
-
-    return new XChartPanel<XYChart>(getChart());
   }
 
   @Override
@@ -101,15 +87,6 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
     xyChart.addSeries(SERIES_NAME, null, yData);
 
     return xyChart;
-  }
-
-  private List<Double> getRandomData(int numPoints) {
-
-    List<Double> data = new CopyOnWriteArrayList<Double>();
-    for (int i = 0; i < numPoints; i++) {
-      data.add(Math.random() * 100);
-    }
-    return data;
   }
 
   public void updateData() {
@@ -128,4 +105,12 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
 
   }
 
+  private List<Double> getRandomData(int numPoints) {
+
+    List<Double> data = new CopyOnWriteArrayList<Double>();
+    for (int i = 0; i < numPoints; i++) {
+      data.add(Math.random() * 100);
+    }
+    return data;
+  }
 }

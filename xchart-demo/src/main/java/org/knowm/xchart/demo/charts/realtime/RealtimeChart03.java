@@ -33,7 +33,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>real-time chart updates
+ * <li>real-time chart updates with JFrame
  * <li>fixed window
  * <li>error bars
  */

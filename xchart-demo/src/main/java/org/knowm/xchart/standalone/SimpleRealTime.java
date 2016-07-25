@@ -35,7 +35,6 @@ public class SimpleRealTime {
 
     // Show it
     final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
-
     sw.displayChart();
 
     for (int i = 0; i < 10000; i++) {
