@@ -24,6 +24,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JFrame;
 
 import org.knowm.xchart.BubbleChart;
+import org.knowm.xchart.BubbleChartBuilder;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -36,7 +37,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  * <li>real-time chart updates
  * <li>multiple series
  * <li>Bubble chart
- * <li>GGPlot2 chart
+ * <li>GGPlot2 theme
  */
 public class RealtimeChart04 implements ExampleChart<BubbleChart> {
 
@@ -99,10 +100,7 @@ public class RealtimeChart04 implements ExampleChart<BubbleChart> {
     bubbleData = getRandomData(5);
 
     // Create Chart
-    bubbleChart = new BubbleChart(500, 400, ChartTheme.GGPlot2);
-    bubbleChart.setTitle("Real-time Bubble Chart");
-    bubbleChart.setXAxisTitle("X");
-    bubbleChart.setYAxisTitle("Y");
+    bubbleChart = new BubbleChartBuilder().width(500).height(400).theme(ChartTheme.GGPlot2).xAxisTitle("X").yAxisTitle("Y").title("Real-time Bubble Chart").build();
 
     bubbleChart.addSeries(SERIES_NAME, null, yData, bubbleData);
 

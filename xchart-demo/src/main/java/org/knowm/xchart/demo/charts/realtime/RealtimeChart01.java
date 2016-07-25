@@ -23,10 +23,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
- * Realtime
+ * Real-time XY Chart
  * <p>
  * Demonstrates the following:
  * <ul>
@@ -59,6 +61,7 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
       public void run() {
 
         updateData();
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
           @Override
@@ -80,10 +83,7 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
     yData = getRandomData(5);
 
     // Create Chart
-    xyChart = new XYChart(500, 400);
-    xyChart.setTitle("Sample Real-time Chart");
-    xyChart.setXAxisTitle("X");
-    xyChart.setYAxisTitle("Y");
+    xyChart = new XYChartBuilder().width(500).height(400).theme(ChartTheme.Matlab).title("Real-time XY Chart").build();
     xyChart.addSeries(SERIES_NAME, null, yData);
 
     return xyChart;

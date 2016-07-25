@@ -16,56 +16,44 @@
  */
 package org.knowm.xchart.demo.charts.realtime;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.swing.JFrame;
-
-import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
+import org.knowm.xchart.PieChart;
+import org.knowm.xchart.PieChartBuilder;
+import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
+import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
- * Realtime
+ * Real-time Pie Chart
  * <p>
  * Demonstrates the following:
  * <ul>
- * <li>real-time chart updates with JFrame
- * <li>dynamic window
+ * <li>real-time chart updates with SwingWrapper
+ * <li>Matlab theme
+ * <li>Pie Chart
  */
-public class RealtimeChart02 implements ExampleChart<XYChart> {
+public class RealtimeChart02 implements ExampleChart<PieChart> {
 
-  private XYChart xyChart;
-
-  public static final String SERIES_NAME = "series1";
-  private List<Integer> xData;
-  private List<Double> yData;
+  private PieChart pieChart;
 
   public static void main(String[] args) {
 
     // Setup the panel
-    final RealtimeChart02 realtimeChart02 = new RealtimeChart02();
-    final XChartPanel<XYChart> chartPanel = realtimeChart02.buildPanel();
+    final RealtimeChart02 realtimeChart01 = new RealtimeChart02();
+    realtimeChart01.go();
+  }
 
-    // Schedule a job for the event-dispatching thread:
-    // creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+  private void go() {
 
-      @Override
-      public void run() {
-
-        // Create and set up the window.
-        JFrame frame = new JFrame("XChart");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(chartPanel);
-
-        // Display the window.
-        frame.pack();
-        frame.setVisible(true);
-      }
-    });
+    final SwingWrapper<PieChart> swingWrapper = new SwingWrapper<PieChart>(getChart());
+    swingWrapper.displayChart();
 
     // Simulate a data feed
     TimerTask chartUpdaterTask = new TimerTask() {
@@ -73,73 +61,62 @@ public class RealtimeChart02 implements ExampleChart<XYChart> {
       @Override
       public void run() {
 
-        realtimeChart02.updateData();
-        chartPanel.revalidate();
-        chartPanel.repaint();
+        updateData();
+
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+          @Override
+          public void run() {
+
+            swingWrapper.repaintChart();
+          }
+        });
       }
     };
 
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-
-  }
-
-  public XChartPanel<XYChart> buildPanel() {
-
-    return new XChartPanel<XYChart>(getChart());
   }
 
   @Override
-  public XYChart getChart() {
-
-    xData = getMonotonicallyIncreasingData(5);
-    yData = getRandomData(5);
+  public PieChart getChart() {
 
     // Create Chart
-    xyChart = new XYChart(500, 400);
-    xyChart.setTitle("Sample Real-time Chart");
-    xyChart.setXAxisTitle("X");
-    xyChart.setYAxisTitle("Y");
-    xyChart.addSeries(SERIES_NAME, xData, yData);
+    pieChart = new PieChartBuilder().width(500).height(400).theme(ChartTheme.Matlab).title("Real-time Pie Chart").build();
 
-    return xyChart;
-  }
+    // Customize Chart
+    pieChart.getStyler().setLegendVisible(false);
+    pieChart.getStyler().setAnnotationType(AnnotationType.LabelAndPercentage);
+    pieChart.getStyler().setAnnotationDistance(1.22);
+    pieChart.getStyler().setPlotContentSize(.7);
+    pieChart.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
 
-  private List<Double> getRandomData(int numPoints) {
-
-    List<Double> data = new CopyOnWriteArrayList<Double>();
-    for (int i = 0; i < numPoints; i++) {
-      data.add(Math.random() * 100);
+    Map<String, Number> pieData = getRandomData();
+    for (Entry<String, Number> entry : pieData.entrySet()) {
+      pieChart.addSeries(entry.getKey(), entry.getValue());
     }
-    return data;
-  }
-
-  private List<Integer> getMonotonicallyIncreasingData(int numPoints) {
-
-    List<Integer> data = new CopyOnWriteArrayList<Integer>();
-    for (int i = 0; i < numPoints; i++) {
-      data.add(i);
-    }
-    return data;
+    return pieChart;
   }
 
   public void updateData() {
 
-    // Get some new data
-    List<Double> newData = getRandomData(1);
-
-    yData.addAll(newData);
-
-    // Limit the total number of points
-    while (yData.size() > 20) {
-      yData.remove(0);
+    Map<String, Number> pieData = getRandomData();
+    for (Entry<String, Number> entry : pieData.entrySet()) {
+      pieChart.updatePieSeries(entry.getKey(), entry.getValue());
     }
-
-    xData.add(xData.get(xData.size() - 1) + 1);
-    while (xData.size() > 20) {
-      xData.remove(0);
-    }
-    xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
   }
 
+  private Map<String, Number> getRandomData() {
+
+    Map<String, Number> pieData = new HashMap<String, Number>();
+
+    pieData.put("A", Math.random() * 100);
+    pieData.put("B", Math.random() * 100);
+    pieData.put("C", Math.random() * 100);
+    pieData.put("D", Math.random() * 100);
+    pieData.put("E", Math.random() * 100);
+
+    return pieData;
+
+  }
 }

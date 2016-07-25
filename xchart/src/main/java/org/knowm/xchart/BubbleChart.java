@@ -138,7 +138,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
   }
 
   /**
-   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   * Update a series by updating the X-Axis, Y-Axis and bubble data
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
@@ -170,7 +170,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
   }
 
   /**
-   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   * Update a series by updating the X-Axis, Y-Axis and bubble data
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers starting from

@@ -392,13 +392,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category = new DefaultMutableTreeNode("Real-time Charts");
     top.add(category);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart01 - Fixed X-Axis Window", realtimeChart01.getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart01 - Real-time XY Chart", realtimeChart01.getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart02 - Updating X-Axis Window", realtimeChart02.getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart02 - Real-time Pie Chart", realtimeChart02.getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart03 - Updating With Error Bars", realtimeChart03.getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart03 - Real-time XY Chart with Error Bars", realtimeChart03.getChart()));
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart04 - Real-time Bubble Chart", realtimeChart04.getChart()));

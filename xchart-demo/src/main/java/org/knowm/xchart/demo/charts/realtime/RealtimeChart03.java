@@ -26,10 +26,11 @@ import javax.swing.JFrame;
 
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
- * Realtime
+ * Real-time XY Chart with Error Bars
  * <p>
  * Demonstrates the following:
  * <ul>
@@ -112,10 +113,8 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
     }
 
     // Create Chart
-    xyChart = new XYChart(500, 400);
-    xyChart.setTitle("Sample Real-time Chart");
-    xyChart.setXAxisTitle("X");
-    xyChart.setYAxisTitle("Y");
+    xyChart = new XYChartBuilder().width(500).height(400).xAxisTitle("X").yAxisTitle("Y").title("Real-time XY Chart with Error Bars").build();
+
     xyChart.addSeries(SERIES_NAME, xData, yData, errorBars);
 
     return xyChart;
@@ -137,6 +136,6 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
     errorBars.add(20 * Math.random());
     errorBars.remove(0);
 
-    xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
+    xyChart.updateXYSeries(SERIES_NAME, xData, yData, errorBars);
   }
 }

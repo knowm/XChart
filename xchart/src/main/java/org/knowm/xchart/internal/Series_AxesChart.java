@@ -87,7 +87,7 @@ public abstract class Series_AxesChart extends Series {
   }
 
   /**
-   * This is an internal method which shouldn't be called from client code. Use XChartPanel.updateXYSeries instead!
+   * This is an internal method which shouldn't be called from client code. Use XYChart.updateXYSeries or CategoryChart.updateXYSeries instead!
    *
    * @param newXData
    * @param newYData

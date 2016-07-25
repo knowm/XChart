@@ -62,6 +62,16 @@ public class PieSeries extends Series {
     this.value = value;
   }
 
+  /**
+   * *This is an internal method which shouldn't be called from client code. Use PieChart.updatePieSeries instead!
+   *
+   * @param value
+   */
+  public void replaceData(Number value) {
+
+    this.value = value;
+  }
+
   public PieSeriesRenderStyle getChartPieSeriesRenderStyle() {
 
     return chartPieSeriesRenderStyle;

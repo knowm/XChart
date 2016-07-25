@@ -17,6 +17,7 @@
 package org.knowm.xchart;
 
 import java.awt.Graphics2D;
+import java.util.Map;
 
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -97,6 +98,25 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
       throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
     }
     seriesMap.put(seriesName, series);
+
+    return series;
+  }
+
+  /**
+   * Update a series by updating the pie slide value
+   *
+   * @param seriesName
+   * @param value
+   * @return
+   */
+  public PieSeries updatePieSeries(String seriesName, Number value) {
+
+    Map<String, PieSeries> seriesMap = getSeriesMap();
+    PieSeries series = seriesMap.get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    series.replaceData(value);
 
     return series;
   }
