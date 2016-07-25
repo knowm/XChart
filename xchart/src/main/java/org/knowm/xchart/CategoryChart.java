@@ -17,7 +17,9 @@
 package org.knowm.xchart;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
@@ -176,8 +178,6 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
 
-      // inspect the series to see what kind of data it contains (Number, Date)
-
       series = new CategorySeries(seriesName, xData, yData, errorBars);
     }
     else { // generate xData
@@ -186,12 +186,55 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
     seriesMap.put(seriesName, series);
 
-    // getXAxis().setAxisType(series.getxAxisDataType());
-    // getYAxis().setAxisType(AxisDataType.Number);
+    return series;
+  }
+
+  /**
+   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   *
+   * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newYData
+   * @param newErrorBarData - set null if there are no error bars
+   * @return
+   */
+  public CategorySeries updateCategorySeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
+
+    Map<String, CategorySeries> seriesMap = getSeriesMap();
+    CategorySeries series = seriesMap.get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    if (newXData == null) {
+      // generate X-Data
+      List<Integer> generatedXData = new ArrayList<Integer>();
+      for (int i = 1; i <= newYData.size(); i++) {
+        generatedXData.add(i);
+      }
+      series.replaceData(generatedXData, newYData, newErrorBarData);
+    }
+    else {
+      series.replaceData(newXData, newYData, newErrorBarData);
+    }
 
     return series;
   }
 
+  /**
+   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   *
+   * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newYData
+   * @param newErrorBarData - set null if there are no error bars
+   * @return
+   */
+  public CategorySeries updateCategorySeries(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
+
+    return updateCategorySeries(seriesName, Utils.getNumberListFromDoubleArray(newXData), Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(newErrorBarData));
+  }
   ///////////////////////////////////////////////////
   // Internal Members and Methods ///////////////////
   ///////////////////////////////////////////////////

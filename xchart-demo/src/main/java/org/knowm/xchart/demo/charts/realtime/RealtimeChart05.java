@@ -16,42 +16,45 @@
  */
 package org.knowm.xchart.demo.charts.realtime;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
- * Real-time XY Chart
+ * Real-time Category Chart
  * <p>
  * Demonstrates the following:
  * <ul>
  * <li>real-time chart updates with SwingWrapper
- * <li>Matlab Theme
  */
-public class RealtimeChart01 implements ExampleChart<XYChart> {
+public class RealtimeChart05 implements ExampleChart<CategoryChart> {
 
-  private XYChart xyChart;
+  private CategoryChart categoryChart;
 
+  private List<String> xData;
   private List<Double> yData;
   public static final String SERIES_NAME = "series1";
 
   public static void main(String[] args) {
 
     // Setup the panel
-    final RealtimeChart01 realtimeChart01 = new RealtimeChart01();
+    final RealtimeChart05 realtimeChart01 = new RealtimeChart05();
     realtimeChart01.go();
   }
 
   private void go() {
 
-    final SwingWrapper<XYChart> swingWrapper = new SwingWrapper<XYChart>(getChart());
+    final SwingWrapper<CategoryChart> swingWrapper = new SwingWrapper<CategoryChart>(getChart());
     swingWrapper.displayChart();
 
     // Simulate a data feed
@@ -78,38 +81,37 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
   }
 
   @Override
-  public XYChart getChart() {
+  public CategoryChart getChart() {
 
-    yData = getRandomData(5);
+    xData = new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" }));
+    Histogram histogram = new Histogram(getGaussianData(1000), 5, -10, 10);
+    yData = histogram.getyAxisData();
 
     // Create Chart
-    xyChart = new XYChartBuilder().width(500).height(400).theme(ChartTheme.Matlab).title("Real-time XY Chart").build();
-    xyChart.addSeries(SERIES_NAME, null, yData);
+    categoryChart = new CategoryChartBuilder().width(500).height(400).theme(ChartTheme.Matlab).title("Real-time Category Chart").build();
 
-    return xyChart;
+    categoryChart.addSeries(SERIES_NAME, xData, yData);
+
+    return categoryChart;
   }
 
   public void updateData() {
 
     // Get some new data
-    List<Double> newData = getRandomData(1);
 
-    yData.addAll(newData);
+    Histogram histogram = new Histogram(getGaussianData(1000), 5, -10, 10);
+    yData = histogram.getyAxisData();
 
-    // Limit the total number of points
-    while (yData.size() > 20) {
-      yData.remove(0);
-    }
-
-    xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
-
+    categoryChart.updateCategorySeries(SERIES_NAME, xData, yData, null);
   }
 
-  private List<Double> getRandomData(int numPoints) {
+  private List<Double> getGaussianData(int count) {
 
-    List<Double> data = new CopyOnWriteArrayList<Double>();
-    for (int i = 0; i < numPoints; i++) {
-      data.add(Math.random() * 100);
+    List<Double> data = new ArrayList<Double>(count);
+    Random r = new Random();
+    for (int i = 0; i < count; i++) {
+      data.add(r.nextGaussian() * 5);
+      // data.add(r.nextDouble() * 60 - 30);
     }
     return data;
   }
