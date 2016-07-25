@@ -72,6 +72,61 @@ public class CSVExporter {
   }
 
   /**
+   * @param collection
+   * @param separator
+   * @return
+   */
+  private static String join(Collection<? extends Object> collection, String separator) {
+
+    if (collection == null) {
+      return null;
+    }
+    Iterator<? extends Object> iterator = collection.iterator();
+    // handle null, zero and one elements before building a buffer
+    if (iterator == null) {
+      return null;
+    }
+    if (!iterator.hasNext()) {
+      return "";
+    }
+    Object first = iterator.next();
+    if (!iterator.hasNext()) {
+      return first == null ? "" : first.toString();
+    }
+
+    // two or more elements
+    StringBuffer buf = new StringBuffer(256); // Java default is 16, probably too small
+    if (first != null) {
+      buf.append(first);
+    }
+
+    while (iterator.hasNext()) {
+      if (separator != null) {
+        buf.append(separator);
+      }
+      Object obj = iterator.next();
+      if (obj != null) {
+        buf.append(obj);
+      }
+    }
+    return buf.toString();
+
+  }
+
+  /**
+   * Write all XYChart series as columns in separate CSV file.
+   *
+   * @param chart
+   * @param path2Dir
+   */
+  public static void writeCSVColumns(XYChart chart, String path2Dir) {
+
+    for (XYSeries xySeries : chart.getSeriesMap().values()) {
+      writeCSVColumns(xySeries, path2Dir);
+    }
+  }
+
+  /**
    * Write a Chart series as columns in a CSV file.
    *
    * @param series
@@ -128,45 +183,4 @@ public class CSVExporter {
 
   }
 
-  /**
-   * @param collection
-   * @param separator
-   * @return
-   */
-  private static String join(Collection<? extends Object> collection, String separator) {
-
-    if (collection == null) {
-      return null;
-    }
-    Iterator<? extends Object> iterator = collection.iterator();
-    // handle null, zero and one elements before building a buffer
-    if (iterator == null) {
-      return null;
-    }
-    if (!iterator.hasNext()) {
-      return "";
-    }
-    Object first = iterator.next();
-    if (!iterator.hasNext()) {
-      return first == null ? "" : first.toString();
-    }
-
-    // two or more elements
-    StringBuffer buf = new StringBuffer(256); // Java default is 16, probably too small
-    if (first != null) {
-      buf.append(first);
-    }
-
-    while (iterator.hasNext()) {
-      if (separator != null) {
-        buf.append(separator);
-      }
-      Object obj = iterator.next();
-      if (obj != null) {
-        buf.append(obj);
-      }
-    }
-    return buf.toString();
-
-  }
 }

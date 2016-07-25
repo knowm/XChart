@@ -43,7 +43,7 @@ import org.knowm.xchart.internal.chartpart.Chart;
 /**
  * A Swing JPanel that contains a Chart
  * <p>
- * Right-click + Save As... or ctrl+S pops up a Save As dialog box for saving the chart as a JPeg or PNG file.
+ * Right-click + Save As... or ctrl+S pops up a Save As dialog box for saving the chart as PNG, JPEG, etc. file.
  *
  * @author timmolter
  */
@@ -52,6 +52,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
   private final T chart;
   private final Dimension preferredSize;
   private String saveAsString = "Save As...";
+  private String exportAsString = "Export As...";
 
   /**
    * Constructor
@@ -70,6 +71,11 @@ public class XChartPanel<T extends Chart> extends JPanel {
     KeyStroke ctrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlS, "save");
     this.getActionMap().put("save", new SaveAction());
+
+    // Control+E key listener for saving chart
+    KeyStroke ctrlE = KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+    this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlE, "export");
+    this.getActionMap().put("export", new ExportAction());
   }
 
   /**
@@ -80,6 +86,16 @@ public class XChartPanel<T extends Chart> extends JPanel {
   public void setSaveAsString(String saveAsString) {
 
     this.saveAsString = saveAsString;
+  }
+
+  /**
+   * Set the "Export As..." String if you want to localize it.
+   *
+   * @param exportAsString
+   */
+  public void setExportAsString(String exportAsString) {
+
+    this.exportAsString = exportAsString;
   }
 
   @Override
@@ -117,12 +133,26 @@ public class XChartPanel<T extends Chart> extends JPanel {
     }
   }
 
+  private class ExportAction extends AbstractAction {
+
+    public ExportAction() {
+
+      super("export");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+      showExportAsDialog();
+    }
+  }
+
   private void showSaveAsDialog() {
 
     JFileChooser fileChooser = new JFileChooser();
-    fileChooser.addChoosableFileFilter(new SuffixSaveFilter("jpg"));
-    FileFilter pngFileFilter = new SuffixSaveFilter("png");
+    FileFilter pngFileFilter = new SuffixSaveFilter("png"); // default
     fileChooser.addChoosableFileFilter(pngFileFilter);
+    fileChooser.addChoosableFileFilter(new SuffixSaveFilter("jpg"));
     fileChooser.addChoosableFileFilter(new SuffixSaveFilter("bmp"));
     fileChooser.addChoosableFileFilter(new SuffixSaveFilter("gif"));
 
@@ -173,8 +203,27 @@ public class XChartPanel<T extends Chart> extends JPanel {
         } catch (IOException e) {
           e.printStackTrace();
         }
+
       }
 
+    }
+  }
+
+  private void showExportAsDialog() {
+
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    fileChooser.setAcceptAllFileFilterUsed(false);
+    fileChooser.setDialogTitle("Export");
+
+    if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+
+      File theFileToSave = fileChooser.getSelectedFile();
+      try {
+        CSVExporter.writeCSVColumns((XYChart) chart, theFileToSave.getCanonicalPath().toString() + File.separatorChar);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 
@@ -242,6 +291,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
   private class XChartPanelPopupMenu extends JPopupMenu {
 
     JMenuItem saveAsMenuItem;
+    JMenuItem exportAsMenuItem;
 
     public XChartPanelPopupMenu() {
 
@@ -275,6 +325,39 @@ public class XChartPanel<T extends Chart> extends JPanel {
         }
       });
       add(saveAsMenuItem);
+
+      if (chart instanceof XYChart) {
+        exportAsMenuItem = new JMenuItem(exportAsString);
+        exportAsMenuItem.addMouseListener(new MouseListener() {
+
+          @Override
+          public void mouseReleased(MouseEvent e) {
+
+            showExportAsDialog();
+          }
+
+          @Override
+          public void mousePressed(MouseEvent e) {
+
+          }
+
+          @Override
+          public void mouseExited(MouseEvent e) {
+
+          }
+
+          @Override
+          public void mouseEntered(MouseEvent e) {
+
+          }
+
+          @Override
+          public void mouseClicked(MouseEvent e) {
+
+          }
+        });
+        add(exportAsMenuItem);
+      }
     }
   }
 
