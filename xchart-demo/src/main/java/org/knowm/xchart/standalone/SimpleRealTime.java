@@ -31,10 +31,10 @@ public class SimpleRealTime {
     double[][] initdata = getSineData(phase);
 
     // Create Chart
-    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", initdata[0], initdata[1]);
+    final XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", initdata[0], initdata[1]);
 
     // Show it
-    final SwingWrapper<XYChart> sw = new SwingWrapper(chart);
+    final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
 
     sw.displayChart();
 
@@ -51,7 +51,8 @@ public class SimpleRealTime {
         @Override
         public void run() {
 
-          sw.getXChartPanel().updateXYSeries("y(x)", data[0], data[1], null);
+          chart.updateXYSeries("y(x)", data[0], data[1], null);
+          sw.repaintChart();
         }
       });
     }

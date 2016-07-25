@@ -27,9 +27,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -41,7 +38,6 @@ import javax.swing.filechooser.FileFilter;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
-import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
@@ -280,57 +276,6 @@ public class XChartPanel<T extends Chart> extends JPanel {
       });
       add(saveAsMenuItem);
     }
-  }
-
-  /**
-   * Update a series by updating the X-Axis, Y-Axis and error bar data
-   *
-   * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
-   * @param newYData
-   * @param newErrorBarData - set null if there are no error bars
-   * @return
-   */
-  public XYSeries updateXYSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
-
-    Map<String, XYSeries> seriesMap = chart.getSeriesMap();
-    XYSeries series = seriesMap.get(seriesName);
-    if (series == null) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
-    }
-    if (newXData == null) {
-      // generate X-Data
-      List<Integer> generatedXData = new ArrayList<Integer>();
-      for (int i = 1; i <= newYData.size(); i++) {
-        generatedXData.add(i);
-      }
-      series.replaceData(generatedXData, newYData, newErrorBarData);
-    }
-    else {
-      series.replaceData(newXData, newYData, newErrorBarData);
-    }
-
-    // Re-display the chart
-    revalidate();
-    repaint();
-
-    return series;
-  }
-
-  /**
-   * Update a series by updating the X-Axis, Y-Axis and error bar data
-   *
-   * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
-   * @param newYData
-   * @param newErrorBarData - set null if there are no error bars
-   * @return
-   */
-  public XYSeries updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
-
-    return updateXYSeries(seriesName, Utils.getNumberListFromDoubleArray(newXData), Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(newErrorBarData));
   }
 
 }

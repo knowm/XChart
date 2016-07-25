@@ -17,10 +17,9 @@
 package org.knowm.xchart;
 
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
@@ -190,6 +189,53 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     return series;
   }
 
+  /**
+   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   *
+   * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newYData
+   * @param newErrorBarData - set null if there are no error bars
+   * @return
+   */
+  public XYSeries updateXYSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
+
+    Map<String, XYSeries> seriesMap = getSeriesMap();
+    XYSeries series = seriesMap.get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    if (newXData == null) {
+      // generate X-Data
+      List<Integer> generatedXData = new ArrayList<Integer>();
+      for (int i = 1; i <= newYData.size(); i++) {
+        generatedXData.add(i);
+      }
+      series.replaceData(generatedXData, newYData, newErrorBarData);
+    }
+    else {
+      series.replaceData(newXData, newYData, newErrorBarData);
+    }
+
+    return series;
+  }
+
+  /**
+   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   *
+   * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newYData
+   * @param newErrorBarData - set null if there are no error bars
+   * @return
+   */
+  public XYSeries updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
+
+    return updateXYSeries(seriesName, Utils.getNumberListFromDoubleArray(newXData), Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(newErrorBarData));
+  }
+
   ///////////////////////////////////////////////////
   // Internal Members and Methods ///////////////////
   ///////////////////////////////////////////////////
@@ -230,18 +276,10 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
     paintBackground(g);
 
-    // paint chart main background
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-    g.setColor(styler.getChartBackgroundColor());
-    Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
-    g.fill(rect);
-
     axisPair.paint(g);
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-
-    g.dispose();
   }
 
   /**

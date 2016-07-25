@@ -37,6 +37,8 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  */
 public class RealtimeChart01 implements ExampleChart<XYChart> {
 
+  private XYChart xyChart;
+
   private List<Double> yData;
   public static final String SERIES_NAME = "series1";
 
@@ -71,8 +73,8 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
       public void run() {
 
         realtimeChart01.updateData();
-        chartPanel.updateXYSeries(SERIES_NAME, null, realtimeChart01.getyData(), null);
-
+        chartPanel.revalidate();
+        chartPanel.repaint();
       }
     };
 
@@ -92,13 +94,13 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
     yData = getRandomData(5);
 
     // Create Chart
-    XYChart chart = new XYChart(500, 400);
-    chart.setTitle("Sample Real-time Chart");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
-    chart.addSeries(SERIES_NAME, null, yData);
+    xyChart = new XYChart(500, 400);
+    xyChart.setTitle("Sample Real-time Chart");
+    xyChart.setXAxisTitle("X");
+    xyChart.setYAxisTitle("Y");
+    xyChart.addSeries(SERIES_NAME, null, yData);
 
-    return chart;
+    return xyChart;
   }
 
   private List<Double> getRandomData(int numPoints) {
@@ -122,10 +124,8 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
       yData.remove(0);
     }
 
+    xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
+
   }
 
-  public List<Double> getyData() {
-
-    return yData;
-  }
 }

@@ -37,6 +37,8 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  */
 public class RealtimeChart02 implements ExampleChart<XYChart> {
 
+  private XYChart xyChart;
+
   public static final String SERIES_NAME = "series1";
   private List<Integer> xData;
   private List<Double> yData;
@@ -72,8 +74,8 @@ public class RealtimeChart02 implements ExampleChart<XYChart> {
       public void run() {
 
         realtimeChart02.updateData();
-        chartPanel.updateXYSeries(SERIES_NAME, realtimeChart02.getxData(), realtimeChart02.getyData(), null);
-
+        chartPanel.revalidate();
+        chartPanel.repaint();
       }
     };
 
@@ -94,13 +96,13 @@ public class RealtimeChart02 implements ExampleChart<XYChart> {
     yData = getRandomData(5);
 
     // Create Chart
-    XYChart chart = new XYChart(500, 400);
-    chart.setTitle("Sample Real-time Chart");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
-    chart.addSeries(SERIES_NAME, xData, yData);
+    xyChart = new XYChart(500, 400);
+    xyChart.setTitle("Sample Real-time Chart");
+    xyChart.setXAxisTitle("X");
+    xyChart.setYAxisTitle("Y");
+    xyChart.addSeries(SERIES_NAME, xData, yData);
 
-    return chart;
+    return xyChart;
   }
 
   private List<Double> getRandomData(int numPoints) {
@@ -137,15 +139,7 @@ public class RealtimeChart02 implements ExampleChart<XYChart> {
     while (xData.size() > 20) {
       xData.remove(0);
     }
+    xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
   }
 
-  public List<Double> getyData() {
-
-    return yData;
-  }
-
-  public List<Integer> getxData() {
-
-    return xData;
-  }
 }

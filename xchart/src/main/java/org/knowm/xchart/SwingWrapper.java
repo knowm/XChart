@@ -173,21 +173,40 @@ public class SwingWrapper<T extends Chart> {
   /**
    * Get the default XChartPanel. This is the only one for single panel chart displays and the first panel in matrix chart displays
    *
-   * @return
+   * @return the XChartPanel
    */
   public XChartPanel<T> getXChartPanel() {
 
-    return chartPanels.get(0);
+    return getXChartPanel(0);
+  }
+
+  /**
+   * Repaint the default XChartPanel. This is the only one for single panel chart displays and the first panel in matrix chart displays
+   */
+  public void repaintChart() {
+
+    repaintChart(0);
   }
 
   /**
    * Get the XChartPanel given the provided index.
    *
    * @param index
-   * @return
+   * @return the XChartPanel
    */
   public XChartPanel<T> getXChartPanel(int index) {
 
     return chartPanels.get(index);
+  }
+
+  /**
+   * Repaint the XChartPanel given the provided index.
+   *
+   * @param index
+   */
+  public void repaintChart(int index) {
+
+    chartPanels.get(index).revalidate();
+    chartPanels.get(index).repaint();
   }
 }

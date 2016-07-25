@@ -121,8 +121,6 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-
-    g.dispose();
   }
 
   /**

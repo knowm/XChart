@@ -40,6 +40,8 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  */
 public class RealtimeChart04 implements ExampleChart<BubbleChart> {
 
+  private BubbleChart bubbleChart;
+
   private List<Double> yData;
   private List<Double> bubbleData;
   public static final String SERIES_NAME = "series1";
@@ -75,8 +77,8 @@ public class RealtimeChart04 implements ExampleChart<BubbleChart> {
       public void run() {
 
         realtimeChart04.updateData();
-        chartPanel.updateXYSeries(SERIES_NAME, null, realtimeChart04.getyData(), realtimeChart04.getbubbleData());
-
+        chartPanel.revalidate();
+        chartPanel.repaint();
       }
     };
 
@@ -97,14 +99,14 @@ public class RealtimeChart04 implements ExampleChart<BubbleChart> {
     bubbleData = getRandomData(5);
 
     // Create Chart
-    BubbleChart chart = new BubbleChart(500, 400, ChartTheme.GGPlot2);
-    chart.setTitle("Real-time Bubble Chart");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
+    bubbleChart = new BubbleChart(500, 400, ChartTheme.GGPlot2);
+    bubbleChart.setTitle("Real-time Bubble Chart");
+    bubbleChart.setXAxisTitle("X");
+    bubbleChart.setYAxisTitle("Y");
 
-    chart.addSeries(SERIES_NAME, null, yData, bubbleData);
+    bubbleChart.addSeries(SERIES_NAME, null, yData, bubbleData);
 
-    return chart;
+    return bubbleChart;
   }
 
   private List<Double> getRandomData(int numPoints) {
@@ -133,16 +135,8 @@ public class RealtimeChart04 implements ExampleChart<BubbleChart> {
     while (bubbleData.size() > 20) {
       bubbleData.remove(0);
     }
+    bubbleChart.updateBubbleSeries(SERIES_NAME, null, yData, bubbleData);
 
   }
 
-  public List<Double> getyData() {
-
-    return yData;
-  }
-
-  public List<Double> getbubbleData() {
-
-    return bubbleData;
-  }
 }

@@ -19,7 +19,9 @@ package org.knowm.xchart;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
@@ -135,6 +137,52 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     return series;
   }
 
+  /**
+   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   *
+   * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newYData
+   * @param newBubbleData - set null if there are no error bars
+   * @return
+   */
+  public BubbleSeries updateBubbleSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newBubbleData) {
+
+    Map<String, BubbleSeries> seriesMap = getSeriesMap();
+    BubbleSeries series = seriesMap.get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    if (newXData == null) {
+      // generate X-Data
+      List<Integer> generatedXData = new ArrayList<Integer>();
+      for (int i = 1; i <= newYData.size(); i++) {
+        generatedXData.add(i);
+      }
+      series.replaceData(generatedXData, newYData, newBubbleData);
+    }
+    else {
+      series.replaceData(newXData, newYData, newBubbleData);
+    }
+
+    return series;
+  }
+
+  /**
+   * Update a series by updating the X-Axis, Y-Axis and error bar data
+   *
+   * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newYData
+   * @param newBubbleData - set null if there are no error bars
+   * @return
+   */
+  public BubbleSeries updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
+
+    return updateBubbleSeries(seriesName, Utils.getNumberListFromDoubleArray(newXData), Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(newBubbleData));
+  }
   ///////////////////////////////////////////////////
   // Internal Members and Methods ///////////////////
   ///////////////////////////////////////////////////
@@ -179,8 +227,6 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-
-    g.dispose();
   }
 
   /**

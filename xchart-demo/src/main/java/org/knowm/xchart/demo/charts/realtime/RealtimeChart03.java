@@ -39,6 +39,8 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  */
 public class RealtimeChart03 implements ExampleChart<XYChart> {
 
+  private XYChart xyChart;
+
   private List<Integer> xData = new CopyOnWriteArrayList<Integer>();
   private List<Double> yData = new CopyOnWriteArrayList<Double>();
   private List<Double> errorBars = new CopyOnWriteArrayList<Double>();
@@ -76,14 +78,13 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
       public void run() {
 
         realtimeChart03.updateData();
-        chartPanel.updateXYSeries(SERIES_NAME, realtimeChart03.xData, realtimeChart03.getyData(), realtimeChart03.errorBars);
-
+        chartPanel.revalidate();
+        chartPanel.repaint();
       }
     };
 
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-
   }
 
   public XChartPanel<XYChart> buildPanel() {
@@ -111,13 +112,13 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
     }
 
     // Create Chart
-    XYChart chart = new XYChart(500, 400);
-    chart.setTitle("Sample Real-time Chart");
-    chart.setXAxisTitle("X");
-    chart.setYAxisTitle("Y");
-    chart.addSeries(SERIES_NAME, xData, yData, errorBars);
+    xyChart = new XYChart(500, 400);
+    xyChart.setTitle("Sample Real-time Chart");
+    xyChart.setXAxisTitle("X");
+    xyChart.setYAxisTitle("Y");
+    xyChart.addSeries(SERIES_NAME, xData, yData, errorBars);
 
-    return chart;
+    return xyChart;
   }
 
   private Double getRandomWalk(double lastPoint) {
@@ -136,15 +137,6 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
     errorBars.add(20 * Math.random());
     errorBars.remove(0);
 
-  }
-
-  public List<Double> getyData() {
-
-    return yData;
-  }
-
-  public List<Double> getErrorBars() {
-
-    return errorBars;
+    xyChart.updateXYSeries(SERIES_NAME, null, yData, null);
   }
 }

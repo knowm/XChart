@@ -236,8 +236,6 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-
-    g.dispose();
   }
 
   /**
