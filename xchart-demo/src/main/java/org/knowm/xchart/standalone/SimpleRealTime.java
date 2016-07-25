@@ -27,32 +27,46 @@ public class SimpleRealTime {
 
   public static void main(String[] args) throws Exception {
 
-    final double[] yData = new double[] { 2.0, 1.0, 0.0 };
+    double phase = 0;
+    double[][] initdata = getSineData(phase);
 
     // Create Chart
-    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", null, yData);
+    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", initdata[0], initdata[1]);
 
     // Show it
     final SwingWrapper<XYChart> sw = new SwingWrapper(chart);
 
     sw.displayChart();
 
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 10000; i++) {
 
-      Thread.sleep(100);
-      yData[0]++;
-      yData[1]++;
-      yData[2]++;
+      phase += Math.PI * 2 + 1 / 50.0;
+
+      Thread.sleep(10);
+
+      final double[][] data = getSineData(phase);
 
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
         @Override
         public void run() {
 
-          sw.getXChartPanel().updateXYSeries("y(x)", null, yData, null);
+          sw.getXChartPanel().updateXYSeries("y(x)", data[0], data[1], null);
         }
       });
     }
 
+  }
+
+  private static double[][] getSineData(double phase) {
+
+    double[] xData = new double[100];
+    double[] yData = new double[100];
+    for (int i = 0; i < xData.length; i++) {
+      double radians = phase + (Math.PI / (xData.length / 2) * i);
+      xData[i] = phase + i - xData.length / 2;
+      yData[i] = Math.sin(radians);
+    }
+    return new double[][] { xData, yData };
   }
 }
