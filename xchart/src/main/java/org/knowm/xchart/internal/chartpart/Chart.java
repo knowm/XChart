@@ -17,6 +17,8 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -64,6 +66,15 @@ public abstract class Chart<ST extends Styler, S extends Series> implements Char
     this.styler = styler;
 
     this.chartTitle = new ChartTitle(this);
+  }
+
+  public void paintBackground(Graphics2D g) {
+
+    // paint chart main background
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
+    g.setColor(styler.getChartBackgroundColor());
+    Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
+    g.fill(rect);
   }
 
   /** Meta Data Getters and Setters */
@@ -173,5 +184,11 @@ public abstract class Chart<ST extends Styler, S extends Series> implements Char
   public Rectangle2D getBounds() {
 
     return new Rectangle2D.Double(0, 0, width, height);
+  }
+
+  @Override
+  public void paint(Graphics2D g) {
+
+    // not used for chart
   }
 }

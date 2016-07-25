@@ -17,9 +17,6 @@
 package org.knowm.xchart;
 
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -109,16 +106,6 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
 
     setWidth(width);
     setHeight(height);
-    paint(g);
-  }
-
-  @Override
-  public void paint(Graphics2D g) {
-
-    // Sanity checks
-    // if (getSeriesMap().isEmpty()) {
-    // throw new RuntimeException("No series defined for Chart!!!");
-    // }
 
     // set the series types if they are not set. Legend and Plot need it.
     for (PieSeries seriesPie : getSeriesMap().values()) {
@@ -129,11 +116,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     }
     setSeriesStyles();
 
-    // paint chart main background
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
-    g.setColor(styler.getChartBackgroundColor());
-    Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
-    g.fill(rect);
+    paintBackground(g);
 
     plot.paint(g);
     chartTitle.paint(g);

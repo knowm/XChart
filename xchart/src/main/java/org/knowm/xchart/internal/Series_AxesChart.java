@@ -158,7 +158,7 @@ public abstract class Series_AxesChart extends Series {
 
     stroke = basicStroke;
     if (this.lineWidth > 0.0f) {
-      this.stroke = new BasicStroke(lineWidth, this.stroke.getEndCap(), this.stroke.getLineJoin(), this.stroke.getMiterLimit(), this.stroke.getDashArray(), this.stroke.getDashPhase());
+      stroke = new BasicStroke(lineWidth, this.stroke.getEndCap(), this.stroke.getLineJoin(), this.stroke.getMiterLimit(), this.stroke.getDashArray(), this.stroke.getDashPhase());
     }
     return this;
   }

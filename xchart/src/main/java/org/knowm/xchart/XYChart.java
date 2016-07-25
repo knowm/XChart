@@ -218,20 +218,17 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
     setWidth(width);
     setHeight(height);
-    paint(g);
-  }
-
-  @Override
-  public void paint(Graphics2D g) {
 
     // set the series render styles if they are not set. Legend and Plot need it.
-    for (XYSeries seriesXY : getSeriesMap().values()) {
-      XYSeries.XYSeriesRenderStyle chartXYSeriesRenderStyle = seriesXY.getXYSeriesRenderStyle(); // would be directly set
+    for (XYSeries xySeries : getSeriesMap().values()) {
+      XYSeries.XYSeriesRenderStyle chartXYSeriesRenderStyle = xySeries.getXYSeriesRenderStyle(); // would be directly set
       if (chartXYSeriesRenderStyle == null) { // wasn't overridden, use default from Style Manager
-        seriesXY.setXYSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
+        xySeries.setXYSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }
     setSeriesStyles();
+
+    paintBackground(g);
 
     // paint chart main background
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
