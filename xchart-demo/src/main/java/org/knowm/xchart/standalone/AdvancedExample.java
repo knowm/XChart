@@ -15,7 +15,8 @@
  */
 package org.knowm.xchart.standalone;
 
-import javax.swing.BoxLayout;
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,9 +47,6 @@ public class AdvancedExample {
     chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
     chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
 
-    // Create and set up the window.
-    final JFrame frame = new JFrame("Advanced Example");
-
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
     javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -56,15 +54,18 @@ public class AdvancedExample {
       @Override
       public void run() {
 
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); // <-- you need this for now
-
+        // Create and set up the window.
+        JFrame frame = new JFrame("Advanced Example");
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel chartPanel = new XChartPanel(chart);
-        frame.add(chartPanel);
 
+        // chart
+        JPanel chartPanel = new XChartPanel<XYChart>(chart);
+        frame.add(chartPanel, BorderLayout.CENTER);
+
+        // label
         JLabel label = new JLabel("Blah blah blah.", SwingConstants.CENTER);
-
-        frame.add(label);
+        frame.add(label, BorderLayout.SOUTH);
 
         // Display the window.
         frame.pack();
@@ -72,5 +73,4 @@ public class AdvancedExample {
       }
     });
   }
-
 }

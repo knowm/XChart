@@ -60,20 +60,18 @@ Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, style se
 Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, add chart to `XChartPanel`, embed in Java Swing App, and display GUI.
 
 ```java
+
     // Create Chart
     final XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Area);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
 
     // Series
     chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });
     chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
     chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
-
-    // Create and set up the window.
-    final JFrame frame = new JFrame("Advanced Example");
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
@@ -82,27 +80,30 @@ Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, add char
       @Override
       public void run() {
 
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS)); // <-- you need this for now
-
+        // Create and set up the window.
+        JFrame frame = new JFrame("Advanced Example");
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel chartPanel = new XChartPanel(chart);
-        frame.add(chartPanel);
 
+        // chart
+        JPanel chartPanel = new XChartPanel<XYChart>(chart);
+        frame.add(chartPanel, BorderLayout.CENTER);
+
+        // label
         JLabel label = new JLabel("Blah blah blah.", SwingConstants.CENTER);
-
-        frame.add(label);
+        frame.add(label, BorderLayout.SOUTH);
 
         // Display the window.
         frame.pack();
         frame.setVisible(true);
       }
     });
+
 ```
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Advanced.png)
 
-
-To make it real-time, simply call `updateSeries` on the `XChartPanel` instance.
+To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to update the series data, followed by `revalidate()` and `repaint()` on the `XChartPanel` instance to repaint.
 
 ## Features
 
