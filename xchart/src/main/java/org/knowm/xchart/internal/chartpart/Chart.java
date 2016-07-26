@@ -31,7 +31,7 @@ import org.knowm.xchart.style.Styler;
  *
  * @author timmolter
  */
-public abstract class Chart<ST extends Styler, S extends Series> implements ChartPart {
+public abstract class Chart<ST extends Styler, S extends Series> {
 
   public abstract void paint(Graphics2D g, int width, int height);
 
@@ -180,15 +180,4 @@ public abstract class Chart<ST extends Styler, S extends Series> implements Char
     return styler;
   }
 
-  @Override
-  public Rectangle2D getBounds() {
-
-    return new Rectangle2D.Double(0, 0, width, height);
-  }
-
-  @Override
-  public void paint(Graphics2D g) {
-
-    // not used for chart
-  }
 }

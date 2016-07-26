@@ -231,7 +231,7 @@ public final class BitmapEncoder {
 
     BufferedImage bufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
     Graphics2D graphics2D = bufferedImage.createGraphics();
-    chart.paint(graphics2D);
+    chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
     return bufferedImage;
   }
 
