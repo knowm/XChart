@@ -17,6 +17,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 import org.knowm.xchart.internal.Utils;
@@ -129,15 +130,20 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
         // gridStep = 1.0 * 10 ** exponent
         gridStep = Utils.pow(10, exponent);
       }
+
       //////////////////////////
+      // System.out.println("******************");
       // System.out.println("gridStep: " + gridStep);
       // System.out.println("***gridStepInChartSpace: " + gridStep / span * tickSpace);
       gridStepInChartSpace = (int) (gridStep / span * tickSpace);
       // System.out.println("gridStepInChartSpace: " + gridStepInChartSpace);
-
-      BigDecimal gridStepBigDecimal = BigDecimal.valueOf(gridStep);
-      int scale = Math.max(10, gridStepBigDecimal.scale());
-      BigDecimal cleanedGridStep = gridStepBigDecimal.setScale(scale, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
+      BigDecimal gridStepBigDecimal = new BigDecimal(gridStep, MathContext.DECIMAL64);
+      // BigDecimal gridStepBigDecimal = BigDecimal.valueOf(gridStep);
+      int scale = Math.min(10, gridStepBigDecimal.scale());
+      // int scale = gridStepBigDecimal.scale();
+      // System.out.println("scale: " + scale);
+      BigDecimal cleanedGridStep0 = gridStepBigDecimal.setScale(scale, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
+      BigDecimal cleanedGridStep = cleanedGridStep0.setScale(scale, BigDecimal.ROUND_DOWN).stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
       // TODO figure this out. It happens once in a blue moon.
       BigDecimal firstPosition = null;
