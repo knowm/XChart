@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.standalone;
+package org.knowm.xchart.standalone.csv;
 
 import org.knowm.xchart.CSVExporter;
 import org.knowm.xchart.CSVImporter;
@@ -25,14 +25,14 @@ import org.knowm.xchart.XYChart;
 /**
  * @author timmolter
  */
-public class CSVChartRows {
+public class CSVChartColumns {
 
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    XYChart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartRows/", DataOrientation.Rows, 600, 400);
+    XYChart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartColumns/", DataOrientation.Columns, 600, 600);
 
-    CSVExporter.writeCSVRows(chart.getSeriesMap().get("series1"), "./CSV/CSVChartRowsExport/");
+    CSVExporter.writeCSVColumns(chart.getSeriesMap().get("series1"), "./CSV/CSVChartColumnsExport/");
 
     // Show it
     new SwingWrapper(chart).displayChart();

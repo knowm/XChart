@@ -14,37 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.standalone;
+package org.knowm.xchart.standalone.csv;
 
-import java.io.IOException;
-
-import org.knowm.xchart.BitmapEncoder;
-import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.CSVExporter;
+import org.knowm.xchart.CSVImporter;
+import org.knowm.xchart.CSVImporter.DataOrientation;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
 /**
  * @author timmolter
  */
-public class SimplestExample {
+public class CSVChartRows {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
 
-    double[] xData = new double[] { 0.0, 1.0, 2.0 };
-    double[] yData = new double[] { 2.0, 1.0, 0.0 };
+    // import chart from a folder containing CSV files
+    XYChart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartRows/", DataOrientation.Rows, 600, 400);
 
-    // Create Chart
-    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+    CSVExporter.writeCSVRows(chart.getSeriesMap().get("series1"), "./CSV/CSVChartRowsExport/");
 
     // Show it
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper(chart).displayChart();
 
-    // Save it
-    BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
-
-    // or save it in high-res
-    BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
   }
-
 }
