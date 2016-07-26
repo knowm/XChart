@@ -181,7 +181,7 @@ Series render styles include: `Round` and in the near future `Square`.
 
 ## Real-time Java Charts using XChart
 
-The above image shows a real-time bubble chart. Real-time charts are as simple as calling `replaceData` on one or more series objects and triggering a redraw of the `JPanel` containing the chart. There are several real-time chart demos, all of which can be found here: <https://github.com/timmolter/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime>.
+The above image shows a real-time bubble chart. Creating real-time charts is as simple as calling `updateXYSeries` for one or more series objects through the `XYChart` instance and triggering a redraw of the `JPanel` containing the chart. This works for all chart types. There are several real-time chart demos, all of which can be found here: <https://github.com/timmolter/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime>.
 
 ## Chart Customization
 
