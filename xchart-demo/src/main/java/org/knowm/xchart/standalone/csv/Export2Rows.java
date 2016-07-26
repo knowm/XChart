@@ -25,17 +25,21 @@ import org.knowm.xchart.XYChart;
 /**
  * @author timmolter
  */
-public class CSVChartColumns {
+public class Export2Rows {
 
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    XYChart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartColumns/", DataOrientation.Columns, 600, 600);
+    XYChart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartRows/", DataOrientation.Rows, 600, 400);
 
-    CSVExporter.writeCSVColumns(chart.getSeriesMap().get("series1"), "./CSV/CSVChartColumnsExport/");
+    // export a single series
+    CSVExporter.writeCSVRows(chart.getSeriesMap().get("series1"), "./CSV/CSVChartRowsExport/");
+
+    // export all series
+    CSVExporter.writeCSVRows(chart, "./CSV/CSVChartRowsExport/");
 
     // Show it
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
 
   }
 }

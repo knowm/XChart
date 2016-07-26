@@ -25,8 +25,6 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.knowm.xchart.internal.Series_AxesChart;
-
 /**
  * This class is used to export Chart data to a folder containing one or more CSV files. The parent folder's name is the title of the chart. Each
  * series becomes a CSV file in the folder. The series' name becomes the CSV files' name.
@@ -36,12 +34,25 @@ import org.knowm.xchart.internal.Series_AxesChart;
 public class CSVExporter {
 
   /**
-   * Write a Chart series as rows in a CSV file.
+   * Export all XYChart series as rows in separate CSV files.
+   *
+   * @param chart
+   * @param path2Dir
+   */
+  public static void writeCSVRows(XYChart chart, String path2Dir) {
+
+    for (XYSeries xySeries : chart.getSeriesMap().values()) {
+      writeCSVRows(xySeries, path2Dir);
+    }
+  }
+
+  /**
+   * Export a XYChart series into rows in a CSV file.
    *
    * @param series
    * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
    */
-  public static void writeCSVRows(Series_AxesChart series, String path2Dir) {
+  public static void writeCSVRows(XYSeries series, String path2Dir) {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
     Writer out = null;
@@ -72,6 +83,8 @@ public class CSVExporter {
   }
 
   /**
+   * Joins a collection into an entire row of comma separated values.
+   *
    * @param collection
    * @param separator
    * @return
@@ -114,7 +127,7 @@ public class CSVExporter {
   }
 
   /**
-   * Write all XYChart series as columns in separate CSV file.
+   * Export all XYChart series as columns in separate CSV files.
    *
    * @param chart
    * @param path2Dir
@@ -127,12 +140,12 @@ public class CSVExporter {
   }
 
   /**
-   * Write a Chart series as columns in a CSV file.
+   * Export a Chart series in columns in a CSV file.
    *
    * @param series
    * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
    */
-  public static void writeCSVColumns(Series_AxesChart series, String path2Dir) {
+  public static void writeCSVColumns(XYSeries series, String path2Dir) {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
     Writer out = null;
@@ -161,6 +174,7 @@ public class CSVExporter {
         if (errorBarValue != null) {
           sb.append(errorBarValue + ",");
         }
+        sb.setLength(sb.length() - 1);
         sb.append(System.getProperty("line.separator"));
 
         // String csv = xDataPoint + "," + yDataPoint + errorBarValue == null ? "" : ("," + errorBarValue) + System.getProperty("line.separator");
