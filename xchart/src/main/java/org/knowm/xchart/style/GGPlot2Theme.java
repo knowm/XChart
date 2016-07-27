@@ -72,6 +72,7 @@ public class GGPlot2Theme implements Theme {
 
     return new GGPlot2SeriesColors().getSeriesColors();
   }
+
   // Chart Title ///////////////////////////////
 
   @Override

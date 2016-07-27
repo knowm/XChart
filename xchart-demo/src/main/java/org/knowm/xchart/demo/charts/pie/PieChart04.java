@@ -24,7 +24,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 
 /**
- * Donut Chart
+ * Pie Chart with Donut Style
  * <p>
  * Demonstrates the following:
  * <ul>
@@ -45,7 +45,7 @@ public class PieChart04 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+    PieChart chart = new PieChartBuilder().width(800).height(600).title("Pie Chart with Donut Style").build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);

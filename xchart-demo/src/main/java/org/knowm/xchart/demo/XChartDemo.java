@@ -272,10 +272,10 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart02 - Pie Chart Custom Color Palette", new PieChart02().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart03 - Pie Chart Custom GGPlot2 Theme", new PieChart03().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart03 - Pie Chart GGPlot2 Theme", new PieChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart04 - Donut Chart", new PieChart04().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart04 - Pie Chart with Donut Style", new PieChart04().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Line category

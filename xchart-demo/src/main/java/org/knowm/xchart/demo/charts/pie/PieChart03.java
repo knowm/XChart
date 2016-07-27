@@ -24,7 +24,7 @@ import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
- * Pie Chart with 5 Slices and customization
+ * Pie Chart GGPlot2 Theme
  * <p>
  * Demonstrates the following:
  * <ul>
@@ -46,7 +46,7 @@ public class PieChart03 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600).title(getClass().getSimpleName()).theme(ChartTheme.GGPlot2).build();
+    PieChart chart = new PieChartBuilder().width(800).height(600).title("Pie Chart GGPlot2 Theme").theme(ChartTheme.GGPlot2).build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);

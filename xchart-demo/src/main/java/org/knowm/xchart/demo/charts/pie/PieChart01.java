@@ -43,7 +43,7 @@ public class PieChart01 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+    PieChart chart = new PieChartBuilder().width(800).height(600).title("Pie Chart with 4 Slices").build();
 
     // Customize Chart
     chart.getStyler().setCircular(false);
