@@ -21,7 +21,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
 /**
- * Creates a simple real-time Chart using QuickChart
+ * Creates a simple real-time chart
  */
 public class SimpleRealTime {
 
@@ -31,17 +31,17 @@ public class SimpleRealTime {
     double[][] initdata = getSineData(phase);
 
     // Create Chart
-    final XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", initdata[0], initdata[1]);
+    final XYChart chart = QuickChart.getChart("Simple XChart Real-time Demo", "Radians", "Sine", "sine", initdata[0], initdata[1]);
 
     // Show it
     final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
     sw.displayChart();
 
-    for (int i = 0; i < 10000; i++) {
+    while (true) {
 
-      phase += Math.PI * 2 + 1 / 50.0;
+      phase += 2 * Math.PI * 2 / 20.0;
 
-      Thread.sleep(10);
+      Thread.sleep(100);
 
       final double[][] data = getSineData(phase);
 
@@ -50,7 +50,7 @@ public class SimpleRealTime {
         @Override
         public void run() {
 
-          chart.updateXYSeries("y(x)", data[0], data[1], null);
+          chart.updateXYSeries("sine", data[0], data[1], null);
           sw.repaintChart();
         }
       });
@@ -63,8 +63,8 @@ public class SimpleRealTime {
     double[] xData = new double[100];
     double[] yData = new double[100];
     for (int i = 0; i < xData.length; i++) {
-      double radians = phase + (Math.PI / (xData.length / 2) * i);
-      xData[i] = phase + i - xData.length / 2;
+      double radians = phase + (2 * Math.PI / xData.length * i);
+      xData[i] = radians;
       yData[i] = Math.sin(radians);
     }
     return new double[][] { xData, yData };
