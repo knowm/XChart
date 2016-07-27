@@ -81,9 +81,9 @@ public class AreaLineChart03 implements ExampleChart<XYChart> {
         565197, 496959, 421280, 358113, 276518, 195571, 109514, 13876, 29, 0, 0, 0, 0 };
     // @formatter:on
 
-    XYSeries seriesLiability = chart.addSeries("Liability", xAges, yLiability);
-    seriesLiability.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
-    seriesLiability.setMarker(SeriesMarkers.NONE);
+    XYSeries series = chart.addSeries("Liability", xAges, yLiability);
+    series.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
+    series.setMarker(SeriesMarkers.NONE);
 
     chart.addSeries("75th Percentile", xAges, yPercentile75th);
     chart.addSeries("50th Percentile", xAges, yPercentile50th);

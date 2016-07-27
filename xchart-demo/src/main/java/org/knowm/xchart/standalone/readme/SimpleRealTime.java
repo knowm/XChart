@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.standalone;
+package org.knowm.xchart.standalone.readme;
 
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;

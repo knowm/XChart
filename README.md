@@ -8,7 +8,7 @@ XChart is a light-weight and convenient library for plotting data designed to go
 
 ## Simplest Example
 
-Create a `Chart` instance via `QuickChart`, add a series of data to it, and either display it or save it as a bitmap.  
+Create a `XYChart` instance via `QuickChart`, add a series of data to it, and either display it or save it as a bitmap.  
 
 ```java
 
@@ -16,7 +16,7 @@ Create a `Chart` instance via `QuickChart`, add a series of data to it, and eith
     double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
     // Create Chart
-    Chart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
 
     // Show it
     new SwingWrapper(chart).displayChart();
@@ -32,7 +32,7 @@ Create a `Chart` instance via `QuickChart`, add a series of data to it, and eith
 
 ## Intermediate Example
 
-Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, style series, and display chart.
+Create a `XYChart` via a `XYChartBuilder`, style chart, add a series to it, style series, and display chart.
 
 ```java
 
@@ -57,7 +57,7 @@ Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, style se
 
 ## Advanced Example
 
-Create a `Chart` via a `ChartBuilder`, style chart, add a series to it, add chart to `XChartPanel`, embed in Java Swing App, and display GUI.
+Create a `XYChart` via a `XYChartBuilder`, style chart, add a series to it, add chart to `XChartPanel`, embed in Java Swing App, and display GUI.
 
 ```java
 
@@ -173,7 +173,7 @@ Series render styles include: `Pie` and `Donut`.
 
 ### BubbleChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Real_Time_Bubble_Chart.gif)
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Bubble_Chart.png)
 
 `BubbleChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis and bubble sizes. 
 
@@ -181,7 +181,61 @@ Series render styles include: `Round` and in the near future `Square`.
 
 ## Real-time Java Charts using XChart
 
-The above image shows a real-time bubble chart. Creating real-time charts is as simple as calling `updateXYSeries` for one or more series objects through the `XYChart` instance and triggering a redraw of the `JPanel` containing the chart. This works for all chart types. There are several real-time chart demos, all of which can be found here: <https://github.com/timmolter/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime>.
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChartSimpleRealtime.png)
+
+Creating real-time charts is as simple as calling `updateXYSeries` for one or more series objects through the `XYChart` instance and triggering a redraw of the `JPanel` containing the chart. This works for all chart types including `XYChart`, `CategoryChart`, `BubbleChart` and `PieChart`, for which example source code can be found here: <https://github.com/timmolter/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime>. Examples demonstrate using the `SwingWrapper` with `repaintChart()` method as well as `XChartPanel` with `revalidate()` and `repaint()`. 
+
+The following sample code used to generate the above real-time chart can be found [here](https://github.com/timmolter/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/standalone/SimpleRealTime.java).
+
+```java
+public class SimpleRealTime {
+
+  public static void main(String[] args) throws Exception {
+
+    double phase = 0;
+    double[][] initdata = getSineData(phase);
+
+    // Create Chart
+    final XYChart chart = QuickChart.getChart("Simple XChart Real-time Demo", "Radians", "Sine", "sine", initdata[0], initdata[1]);
+
+    // Show it
+    final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
+    sw.displayChart();
+
+    while (true) {
+
+      phase += 2 * Math.PI * 2 / 20.0;
+
+      Thread.sleep(100);
+
+      final double[][] data = getSineData(phase);
+
+      javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+        @Override
+        public void run() {
+
+          chart.updateXYSeries("sine", data[0], data[1], null);
+          sw.repaintChart();
+        }
+      });
+    }
+
+  }
+
+  private static double[][] getSineData(double phase) {
+
+    double[] xData = new double[100];
+    double[] yData = new double[100];
+    for (int i = 0; i < xData.length; i++) {
+      double radians = phase + (2 * Math.PI / xData.length * i);
+      xData[i] = radians;
+      yData[i] = Math.sin(radians);
+    }
+    return new double[][] { xData, yData };
+  }
+}
+```
 
 ## Chart Customization
 
