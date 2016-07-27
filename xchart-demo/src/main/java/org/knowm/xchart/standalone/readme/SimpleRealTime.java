@@ -45,15 +45,8 @@ public class SimpleRealTime {
 
       final double[][] data = getSineData(phase);
 
-      javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-        @Override
-        public void run() {
-
-          chart.updateXYSeries("sine", data[0], data[1], null);
-          sw.repaintChart();
-        }
-      });
+      chart.updateXYSeries("sine", data[0], data[1], null);
+      sw.repaintChart();
     }
 
   }
