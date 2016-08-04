@@ -22,7 +22,7 @@ import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes, values associated with each X-Y point, could be used for bubble sizes for example, but error bars, as the min and max
- * are cacluated differently. no markers.
+ * are calculated differently. No markers.
  *
  * @author timmolter
  */
@@ -36,9 +36,7 @@ public abstract class Series_Bubble extends Series_AxesChart {
    *
    * @param name
    * @param xData
-   * @param xAxisType
    * @param yData
-   * @param yAxisType
    * @param extraValues
    */
   public Series_Bubble(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues) {

@@ -90,7 +90,6 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     this.direction = direction;
     axisTitle = new AxisTitle<AxesChartStyler, Series_AxesChart>(chart, direction);
     axisTick = new AxisTick<AxesChartStyler, Series_AxesChart>(chart, direction);
-    // resetMinMax();
   }
 
   /**

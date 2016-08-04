@@ -45,9 +45,7 @@ public abstract class Series_Markers extends Series_AxesChart {
    *
    * @param name
    * @param xData
-   * @param xAxisType
    * @param yData
-   * @param yAxisType
    * @param errorBars
    */
   public Series_Markers(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {

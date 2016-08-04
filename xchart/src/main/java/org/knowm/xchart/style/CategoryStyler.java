@@ -27,6 +27,7 @@ public class CategoryStyler extends AxesChartStyler {
 
   private double availableSpaceFill;
   private boolean isOverlapped;
+  private boolean isStacked;
 
   /**
    * Constructor
@@ -93,6 +94,21 @@ public class CategoryStyler extends AxesChartStyler {
 
     this.isOverlapped = isOverlapped;
     return this;
+  }
+
+  public boolean isStacked() {
+
+    return isStacked;
+  }
+
+  /**
+   * Set whether or not series renderings (i.e. bars, stick, etc.) are stacked.
+   *
+   * @param isStacked
+   */
+  public void setStacked(boolean isStacked) {
+
+    this.isStacked = isStacked;
   }
 
   /**

@@ -18,6 +18,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Iterator;
 
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Series;
@@ -72,7 +73,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     xAxis.resetMinMax();
     yAxis.resetMinMax();
 
-    // if no series, we still want to plot an empty plot with axes. Since there are no min an max with no series added, we just fake it arbirarily.
+    // if no series, we still want to plot an empty plot with axes. Since there are no min and max with no series added, we just fake it arbitrarily.
     if (chart.getSeriesMap() == null || chart.getSeriesMap().size() < 1) {
       xAxis.addMinMax(-1, 1);
       yAxis.addMinMax(-1, 1);
@@ -102,6 +103,9 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     }
   }
 
+  /**
+   * Here we can add special case min max calculations and take care of manual min max settings.
+   */
   public void overrideMinMax() {
 
     double overrideXAxisMinValue = xAxis.getMin();
@@ -111,8 +115,58 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
     if (chart.getStyler() instanceof CategoryStyler) {
 
-      CategoryStyler stylerCategory = (CategoryStyler) chart.getStyler();
-      if (stylerCategory.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+      CategoryStyler categoryStyler = (CategoryStyler) chart.getStyler();
+      if (categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+
+        // if stacked, we need to completely re-calculate min and max.
+        if (categoryStyler.isStacked()) {
+          int numCategories = chart.getSeriesMap().values().iterator().next().getXData().size();
+          double[] accumulatedStackOffsetPos = new double[numCategories];
+          double[] accumulatedStackOffsetNeg = new double[numCategories];
+          for (Series_AxesChart series : chart.getSeriesMap().values()) {
+
+            int categoryCounter = 0;
+            Iterator<? extends Number> yItr = series.getYData().iterator();
+            while (yItr.hasNext()) {
+
+              Number next = yItr.next();
+              // skip when a value is null
+              if (next == null) {
+                categoryCounter++;
+                continue;
+              }
+
+              if (next.doubleValue() > 0) {
+                accumulatedStackOffsetPos[categoryCounter] += next.doubleValue();
+              }
+              else if (next.doubleValue() < 0) {
+                accumulatedStackOffsetNeg[categoryCounter] += next.doubleValue();
+              }
+              categoryCounter++;
+            }
+
+          }
+
+          double max = accumulatedStackOffsetPos[0];
+          for (int i = 1; i < accumulatedStackOffsetPos.length; i++) {
+            if (accumulatedStackOffsetPos[i] > max) {
+              max = accumulatedStackOffsetPos[i];
+            }
+          }
+
+          double min = accumulatedStackOffsetNeg[0];
+          for (int i = 1; i < accumulatedStackOffsetNeg.length; i++) {
+            if (accumulatedStackOffsetNeg[i] < min) {
+              min = accumulatedStackOffsetNeg[i];
+            }
+          }
+
+          overrideYAxisMaxValue = max;
+          overrideYAxisMinValue = min;
+          System.out.println("overrideYAxisMaxValue: " + overrideYAxisMaxValue);
+          System.out.println("overrideYAxisMinValue: " + overrideYAxisMinValue);
+        }
+
         // override min/max value for bar charts' Y-Axis
         // There is a special case where it's desired to anchor the axis min or max to zero, like in the case of bar charts. This flag enables that feature.
         if (yAxis.getMin() > 0.0) {
@@ -122,6 +176,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
           overrideYAxisMaxValue = 0.0;
         }
       }
+
     }
 
     // override min and maxValue if specified

@@ -93,6 +93,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
     // plot series
     int seriesCounter = 0;
+    double[] accumulatedStackOffsetPos = new double[numCategories];
+    double[] accumulatedStackOffsetNeg = new double[numCategories];
     for (CategorySeries series : seriesMap.values()) {
 
       // for line series
@@ -110,6 +112,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
       while (yItr.hasNext()) {
 
         Number next = yItr.next();
+        // skip when a value is null
         if (next == null) {
 
           previousX = -Double.MAX_VALUE;
@@ -117,6 +120,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           categoryCounter++;
           continue;
         }
+
         double y = next.doubleValue();
 
         double yTop = 0.0;
@@ -130,6 +134,11 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           }
           yTop = y;
           yBottom = yMin;
+          if (stylerCategory.isStacked()) {
+            yTop += accumulatedStackOffsetPos[categoryCounter];
+            yBottom += accumulatedStackOffsetPos[categoryCounter];
+            accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
+          }
           break;
         case -1: // negative chart
           // check for points off the chart draw area due to a custom yMin
@@ -139,15 +148,30 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           }
           yTop = yMax;
           yBottom = y;
+          if (stylerCategory.isStacked()) {
+            yTop -= accumulatedStackOffsetNeg[categoryCounter];
+            yBottom -= accumulatedStackOffsetNeg[categoryCounter];
+            accumulatedStackOffsetNeg[categoryCounter] += (yTop - yBottom);
+          }
           break;
         case 0: // span chart
           if (y >= 0.0) { // positive
             yTop = y;
             yBottom = 0.0;
+            if (stylerCategory.isStacked()) {
+              yTop += accumulatedStackOffsetPos[categoryCounter];
+              yBottom += accumulatedStackOffsetPos[categoryCounter];
+              accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
+            }
           }
           else {
             yTop = 0.0;
             yBottom = y;
+            if (stylerCategory.isStacked()) {
+              yTop -= accumulatedStackOffsetNeg[categoryCounter];
+              yBottom -= accumulatedStackOffsetNeg[categoryCounter];
+              accumulatedStackOffsetNeg[categoryCounter] += (yTop - yBottom);
+            }
           }
           break;
         default:
@@ -164,7 +188,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         double xOffset;
         double barWidth;
 
-        if (stylerCategory.isOverlapped()) {
+        if (stylerCategory.isOverlapped() || stylerCategory.isStacked()) {
           double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
@@ -293,14 +317,11 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           g.setStroke(errorBarStroke);
 
           // Top value
-          double topValue = y + eb;
-          double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
-          double topEBOffset = getBounds().getY() + topEBTransform;
+          double errorBarLength = ((eb) / (yMax - yMin) * yTickSpace);
+          double topEBOffset = yOffset - errorBarLength;
 
           // Bottom value
-          double bottomValue = y - eb;
-          double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
-          double bottomEBOffset = getBounds().getY() + bottomEBTransform;
+          double bottomEBOffset = yOffset + errorBarLength;
 
           // Draw it
           double errorBarOffset = xOffset + barWidth / 2;

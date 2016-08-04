@@ -70,7 +70,6 @@ public class CategorySeries extends Series_Markers {
   public CategorySeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
     super(name, xData, yData, errorBars);
-
   }
 
   public CategorySeriesRenderStyle getChartCategorySeriesRenderStyle() {
