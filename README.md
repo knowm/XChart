@@ -183,9 +183,9 @@ Series render styles include: `Round` and in the near future `Square`.
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_SimpleRealtime.gif)
 
-Creating real-time charts is as simple as calling `updateXYSeries` for one or more series objects through the `XYChart` instance and triggering a redraw of the `JPanel` containing the chart. This works for all chart types including `XYChart`, `CategoryChart`, `BubbleChart` and `PieChart`, for which example source code can be found here: <https://github.com/timmolter/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime>. Examples demonstrate using the `SwingWrapper` with `repaintChart()` method as well as `XChartPanel` with `revalidate()` and `repaint()`. 
+Creating real-time charts is as simple as calling `updateXYSeries` for one or more series objects through the `XYChart` instance and triggering a redraw of the `JPanel` containing the chart. This works for all chart types including `XYChart`, `CategoryChart`, `BubbleChart` and `PieChart`, for which example source code can be found [here](https://github.com/timmolter/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime). Examples demonstrate using the `SwingWrapper` with `repaintChart()` method as well as `XChartPanel` with `revalidate()` and `repaint()`. 
 
-The following sample code used to generate the above real-time chart can be found [here](https://github.com/timmolter/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/standalone/SimpleRealTime.java).
+The following sample code used to generate the above real-time chart can be found [here](https://github.com/timmolter/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/standalone/readme/SimpleRealTime.java).
 
 ```java
     public class SimpleRealTime {

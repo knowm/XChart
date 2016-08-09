@@ -158,6 +158,7 @@
 				<version>2.10.4</version>
 				<configuration>
 					<additionalparam>-Xdoclint:none</additionalparam>
+				          <excludePackageNames>org.knowm.xchart.internal.*</excludePackageNames>
 				</configuration>
 			</plugin>
 			<!-- for deploying to Maven Central -->
