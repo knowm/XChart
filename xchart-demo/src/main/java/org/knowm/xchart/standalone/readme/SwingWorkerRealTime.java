@@ -30,7 +30,7 @@ import org.knowm.xchart.XYChart;
  */
 public class SwingWorkerRealTime {
 
-  HysteresisCaptureWorker hysteresisCaptureWorker;
+  MySwingWorker mySwingWorker;
   SwingWrapper<XYChart> sw;
   XYChart chart;
 
@@ -51,15 +51,15 @@ public class SwingWorkerRealTime {
     sw = new SwingWrapper<XYChart>(chart);
     sw.displayChart();
 
-    hysteresisCaptureWorker = new HysteresisCaptureWorker();
-    hysteresisCaptureWorker.execute();
+    mySwingWorker = new MySwingWorker();
+    mySwingWorker.execute();
   }
 
-  private class HysteresisCaptureWorker extends SwingWorker<Boolean, double[]> {
+  private class MySwingWorker extends SwingWorker<Boolean, double[]> {
 
     LinkedList<Double> fifo = new LinkedList<Double>();
 
-    public HysteresisCaptureWorker() {
+    public MySwingWorker() {
 
       fifo.add(0.0);
     }
@@ -84,7 +84,7 @@ public class SwingWorkerRealTime {
           Thread.sleep(5);
         } catch (InterruptedException e) {
           // eat it. caught when interrupt is called
-          System.out.println("HysteresisCaptureWorker shut down.");
+          System.out.println("MySwingWorker shut down.");
         }
 
       }
