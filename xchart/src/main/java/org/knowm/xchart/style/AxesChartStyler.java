@@ -463,7 +463,7 @@ public abstract class AxesChartStyler extends Styler {
     return isYAxisLogarithmic;
   }
 
-  public AxesChartStyler setXAxisMin(double xAxisMin) {
+  public AxesChartStyler setXAxisMin(Double xAxisMin) {
 
     this.xAxisMin = xAxisMin;
     return this;
@@ -474,7 +474,7 @@ public abstract class AxesChartStyler extends Styler {
     return xAxisMin;
   }
 
-  public AxesChartStyler setXAxisMax(double xAxisMax) {
+  public AxesChartStyler setXAxisMax(Double xAxisMax) {
 
     this.xAxisMax = xAxisMax;
     return this;
@@ -485,7 +485,7 @@ public abstract class AxesChartStyler extends Styler {
     return xAxisMax;
   }
 
-  public AxesChartStyler setYAxisMin(double yAxisMin) {
+  public AxesChartStyler setYAxisMin(Double yAxisMin) {
 
     this.yAxisMin = yAxisMin;
     return this;
@@ -496,7 +496,7 @@ public abstract class AxesChartStyler extends Styler {
     return yAxisMin;
   }
 
-  public AxesChartStyler setYAxisMax(double yAxisMax) {
+  public AxesChartStyler setYAxisMax(Double yAxisMax) {
 
     this.yAxisMax = yAxisMax;
     return this;
