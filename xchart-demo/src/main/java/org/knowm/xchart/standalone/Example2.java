@@ -40,8 +40,8 @@ public class Example2 {
 
     for (int i = 0; i < numCharts; i++) {
       XYChart chart = new XYChartBuilder().xAxisTitle("X").yAxisTitle("Y").width(600).height(400).build();
-      chart.getStyler().setYAxisMin(-10);
-      chart.getStyler().setYAxisMax(10);
+      chart.getStyler().setYAxisMin(-10.0);
+      chart.getStyler().setYAxisMax(10.0);
       XYSeries series = chart.addSeries("" + i, null, getRandomWalk(200));
       series.setMarker(SeriesMarkers.NONE);
       charts.add(chart);

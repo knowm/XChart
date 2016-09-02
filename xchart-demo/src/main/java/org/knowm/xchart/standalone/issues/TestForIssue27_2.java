@@ -50,7 +50,7 @@ public class TestForIssue27_2 {
 
     mychart.getStyler().setYAxisMin(.08);
 
-    mychart.getStyler().setYAxisMax(1000);
+    mychart.getStyler().setYAxisMax(1000.0);
 
     mychart.getStyler().setErrorBarsColor(Color.black);
 

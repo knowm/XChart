@@ -51,8 +51,8 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
     CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
 
     // Customize Chart
-    chart.getStyler().setYAxisMin(5);
-    chart.getStyler().setYAxisMax(70);
+    chart.getStyler().setYAxisMin(5.0);
+    chart.getStyler().setYAxisMax(70.0);
     chart.getStyler().setHasAnnotations(true);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
 

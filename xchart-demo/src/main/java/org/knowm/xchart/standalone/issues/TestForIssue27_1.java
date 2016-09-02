@@ -40,8 +40,8 @@ public class TestForIssue27_1 {
     double[] yData3 = new double[] { 150, 120, 110, 100, 90, 70, 60 };
 
     XYChart mychart = new XYChart(900, 700);
-    mychart.getStyler().setYAxisMin(0);
-    mychart.getStyler().setYAxisMax(150);
+    mychart.getStyler().setYAxisMin(0.0);
+    mychart.getStyler().setYAxisMax(150.0);
     mychart.getStyler().setErrorBarsColor(Color.black);
     XYSeries series1 = mychart.addSeries("Error bar test data", xData, yData1, errdata);
     XYSeries series2 = mychart.addSeries("Y+error", xData, yData2);

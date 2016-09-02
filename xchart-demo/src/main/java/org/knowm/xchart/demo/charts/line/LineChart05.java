@@ -56,9 +56,9 @@ public class LineChart05 implements ExampleChart<XYChart> {
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
     chart.getStyler().setYAxisLogarithmic(true);
     chart.getStyler().setYAxisMin(0.01);
-    chart.getStyler().setYAxisMax(1000);
-    chart.getStyler().setXAxisMin(2);
-    chart.getStyler().setXAxisMax(7);
+    chart.getStyler().setYAxisMax(1000.0);
+    chart.getStyler().setXAxisMin(2.0);
+    chart.getStyler().setXAxisMax(7.0);
 
     // Series
     double[] xData = new double[] { 0.0, 1.0, 2.0, 3.0, 4.0, 5, 6 };

@@ -54,7 +54,7 @@ public class LineChart06 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setYAxisLogarithmic(true);
     chart.getStyler().setYAxisMin(.08);
-    chart.getStyler().setYAxisMax(1000);
+    chart.getStyler().setYAxisMax(1000.0);
     chart.getStyler().setErrorBarsColor(Color.black);
 
     // Series
