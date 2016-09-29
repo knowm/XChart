@@ -77,6 +77,7 @@ import org.knowm.xchart.demo.charts.stick.StickChart01;
 import org.knowm.xchart.demo.charts.theme.ThemeChart01;
 import org.knowm.xchart.demo.charts.theme.ThemeChart02;
 import org.knowm.xchart.demo.charts.theme.ThemeChart03;
+import org.knowm.xchart.demo.charts.theme.ThemeChart04;
 
 /**
  * Class containing all XChart example charts
@@ -375,6 +376,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ThemeChart03 - Matlab Theme", new ThemeChart03().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ThemeChart04 - My Custom Theme", new ThemeChart04().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Date category
