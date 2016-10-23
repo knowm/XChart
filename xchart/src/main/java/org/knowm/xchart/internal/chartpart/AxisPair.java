@@ -163,8 +163,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
           overrideYAxisMaxValue = max;
           overrideYAxisMinValue = min;
-          System.out.println("overrideYAxisMaxValue: " + overrideYAxisMaxValue);
-          System.out.println("overrideYAxisMinValue: " + overrideYAxisMinValue);
+          // System.out.println("overrideYAxisMaxValue: " + overrideYAxisMaxValue);
+          // System.out.println("overrideYAxisMinValue: " + overrideYAxisMinValue);
         }
 
         // override min/max value for bar charts' Y-Axis
