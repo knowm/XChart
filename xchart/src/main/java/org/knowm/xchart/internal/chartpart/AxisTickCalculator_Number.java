@@ -142,6 +142,7 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       int scale = Math.min(10, gridStepBigDecimal.scale());
       // int scale = gridStepBigDecimal.scale();
       // System.out.println("scale: " + scale);
+      // int scale = gridStepBigDecimal.scale();
       BigDecimal cleanedGridStep0 = gridStepBigDecimal.setScale(scale, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
       BigDecimal cleanedGridStep = cleanedGridStep0.setScale(scale, BigDecimal.ROUND_DOWN).stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
@@ -150,11 +151,18 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       try {
         firstPosition = BigDecimal.valueOf(getFirstPosition(cleanedGridStep.doubleValue()));
       } catch (java.lang.NumberFormatException e) {
-        System.out.println("exponent: " + exponent);
-        System.out.println("gridStep: " + gridStep);
-        System.out.println("cleanedGridStep: " + cleanedGridStep);
-        System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
-        System.out.println("NumberFormatException caused by this number: " + getFirstPosition(cleanedGridStep.doubleValue()));
+
+        // This happens when the data values are almost the same but differ by a very tiny amount. See TestForFlatData.java
+        tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf((maxValue + minValue) / 2.0), minValue, maxValue, axisDirection));
+        tickLocations.add(workingSpace / 2.0);
+        return;
+
+        // System.out.println("scale: " + scale);
+        // System.out.println("exponent: " + exponent);
+        // System.out.println("gridStep: " + gridStep);
+        // System.out.println("cleanedGridStep: " + cleanedGridStep);
+        // System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
+        // System.out.println("NumberFormatException caused by this number: " + getFirstPosition(cleanedGridStep.doubleValue()));
       }
       // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
       BigDecimal cleanedFirstPosition = firstPosition.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
