@@ -53,7 +53,7 @@ public class XYSeries extends Series_Markers {
     }
   }
 
-  private XYSeriesRenderStyle xyChartSeriesRenderStyle = null;
+  private XYSeriesRenderStyle xySeriesRenderStyle = null;
 
   /**
    * Constructor
@@ -70,19 +70,19 @@ public class XYSeries extends Series_Markers {
 
   public XYSeriesRenderStyle getXYSeriesRenderStyle() {
 
-    return xyChartSeriesRenderStyle;
+    return xySeriesRenderStyle;
   }
 
   public XYSeries setXYSeriesRenderStyle(XYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
-    this.xyChartSeriesRenderStyle = chartXYSeriesRenderStyle;
+    this.xySeriesRenderStyle = chartXYSeriesRenderStyle;
     return this;
   }
 
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    return xyChartSeriesRenderStyle.getLegendRenderType();
+    return xySeriesRenderStyle.getLegendRenderType();
   }
 
   @Override

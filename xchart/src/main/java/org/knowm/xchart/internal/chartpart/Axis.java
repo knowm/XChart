@@ -98,7 +98,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   protected void resetMinMax() {
 
     min = Double.MAX_VALUE;
-    max = -Double.MAX_VALUE;
+    max = -1 * Double.MAX_VALUE;
   }
 
   /**

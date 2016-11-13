@@ -146,24 +146,35 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       BigDecimal cleanedGridStep0 = gridStepBigDecimal.setScale(scale, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
       BigDecimal cleanedGridStep = cleanedGridStep0.setScale(scale, BigDecimal.ROUND_DOWN).stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
-      // TODO figure this out. It happens once in a blue moon.
-      BigDecimal firstPosition = null;
-      try {
-        firstPosition = BigDecimal.valueOf(getFirstPosition(cleanedGridStep.doubleValue()));
-      } catch (java.lang.NumberFormatException e) {
 
-        // This happens when the data values are almost the same but differ by a very tiny amount. See TestForFlatData.java
+      BigDecimal firstPosition = null;
+      double firstPositionAsDouble = getFirstPosition(cleanedGridStep.doubleValue());
+      if (firstPositionAsDouble == Double.NaN) {
+        // This happens when the data values are almost the same but differ by a very tiny amount.
+        // The solution for now is to create a single axis label and tick at the average value
         tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf((maxValue + minValue) / 2.0), minValue, maxValue, axisDirection));
         tickLocations.add(workingSpace / 2.0);
         return;
-
-        // System.out.println("scale: " + scale);
-        // System.out.println("exponent: " + exponent);
-        // System.out.println("gridStep: " + gridStep);
-        // System.out.println("cleanedGridStep: " + cleanedGridStep);
-        // System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
-        // System.out.println("NumberFormatException caused by this number: " + getFirstPosition(cleanedGridStep.doubleValue()));
       }
+      else if (firstPositionAsDouble == Double.NEGATIVE_INFINITY) {
+        firstPosition = BigDecimal.valueOf(-1 * Double.MAX_VALUE);
+      }
+      else {
+        try {
+          firstPosition = BigDecimal.valueOf(firstPositionAsDouble);
+        } catch (java.lang.NumberFormatException e) {
+
+          System.out.println("Some debug stuff. This happens once in a blue moon, and I don't know why.");
+          System.out.println("scale: " + scale);
+          System.out.println("exponent: " + exponent);
+          System.out.println("gridStep: " + gridStep);
+          System.out.println("cleanedGridStep: " + cleanedGridStep);
+          System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
+          System.out.println("NumberFormatException caused by this number: " + getFirstPosition(cleanedGridStep.doubleValue()));
+
+        }
+      }
+
       // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
       BigDecimal cleanedFirstPosition = firstPosition.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);

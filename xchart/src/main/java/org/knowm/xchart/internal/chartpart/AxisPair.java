@@ -101,6 +101,14 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       // System.out.println(getMin());
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic Y-Axis!!!");
     }
+    // infinity checks
+    if (xAxis.getMin() == Double.POSITIVE_INFINITY || yAxis.getMin() == Double.POSITIVE_INFINITY || xAxis.getMax() == Double.POSITIVE_INFINITY || yAxis.getMax() == Double.POSITIVE_INFINITY) {
+      throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
+    }
+    if (xAxis.getMin() == Double.NEGATIVE_INFINITY || yAxis.getMin() == Double.NEGATIVE_INFINITY || xAxis.getMax() == Double.NEGATIVE_INFINITY || yAxis.getMax() == Double.NEGATIVE_INFINITY) {
+      throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.NEGATIVE_INFINITY!!!");
+    }
+
   }
 
   /**
