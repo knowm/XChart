@@ -16,11 +16,7 @@
  */
 package org.knowm.xchart;
 
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import org.knowm.xchart.graphics.Graphics;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -31,6 +27,10 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
 import org.knowm.xchart.style.XYStyler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author timmolter
@@ -260,7 +260,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   }
 
   @Override
-  public void paint(Graphics2D g, int width, int height) {
+  public void paint(Graphics g, int width, int height) {
 
     setWidth(width);
     setHeight(height);

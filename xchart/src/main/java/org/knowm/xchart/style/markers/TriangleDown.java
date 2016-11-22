@@ -16,7 +16,8 @@
  */
 package org.knowm.xchart.style.markers;
 
-import java.awt.Graphics2D;
+import org.knowm.xchart.graphics.Graphics;
+
 import java.awt.geom.Path2D;
 
 /**
@@ -25,7 +26,7 @@ import java.awt.geom.Path2D;
 public class TriangleDown extends Marker {
 
   @Override
-  public void paint(Graphics2D g, double xOffset, double yOffset, int markerSize) {
+  public void paint(Graphics g, double xOffset, double yOffset, int markerSize) {
 
     g.setStroke(stroke);
     double halfSize = (double) markerSize / 2;

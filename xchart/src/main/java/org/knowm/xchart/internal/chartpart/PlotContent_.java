@@ -16,14 +16,15 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.style.AxesChartStyler;
+
 import java.awt.BasicStroke;
-import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * @author timmolter
@@ -34,7 +35,7 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
 
   protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
-  public abstract void doPaint(Graphics2D g);
+  public abstract void doPaint(Graphics g);
 
   /**
    * Constructor
@@ -47,9 +48,9 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
-    Rectangle2D bounds = getBounds();
+    Rectangle2D bounds = getBounds(g.getRenderContext());
     // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     // g.setColor(Color.red);
     // g.draw(bounds);
@@ -69,18 +70,18 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(RenderContext rc) {
 
-    return chart.getPlot().getBounds();
+    return chart.getPlot().getBounds(rc);
   }
 
   /**
    * Closes a path for area charts if one is available.
    */
-  void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
+  void closePath(Graphics g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
 
     if (path != null) {
-      double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
+      double yBottomOfArea = getBounds(g.getRenderContext()).getY() + getBounds(g.getRenderContext()).getHeight() - yTopMargin;
       path.lineTo(previousX, yBottomOfArea);
       path.closePath();
       g.fill(path);

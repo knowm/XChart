@@ -16,13 +16,14 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
+
+import java.awt.geom.Rectangle2D;
 
 /**
  * An axis tick
@@ -54,13 +55,13 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(RenderContext rc) {
 
     return bounds;
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     if (direction == Axis.Direction.Y && chart.getStyler().isYAxisTicksVisible()) {
 
@@ -69,13 +70,13 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
 
       bounds = new Rectangle2D.Double(
 
-          axisTickLabels.getBounds().getX(),
+          axisTickLabels.getBounds(g.getRenderContext()).getX(),
 
-          axisTickLabels.getBounds().getY(),
+          axisTickLabels.getBounds(g.getRenderContext()).getY(),
 
-          axisTickLabels.getBounds().getWidth() + chart.getStyler().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
+          axisTickLabels.getBounds(g.getRenderContext()).getWidth() + chart.getStyler().getAxisTickPadding() + axisTickMarks.getBounds(g.getRenderContext()).getWidth(),
 
-          axisTickMarks.getBounds().getHeight()
+          axisTickMarks.getBounds(g.getRenderContext()).getHeight()
 
       );
 
@@ -90,13 +91,13 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
 
       bounds = new Rectangle2D.Double(
 
-          axisTickMarks.getBounds().getX(),
+          axisTickMarks.getBounds(g.getRenderContext()).getX(),
 
-          axisTickMarks.getBounds().getY(),
+          axisTickMarks.getBounds(g.getRenderContext()).getY(),
 
-          axisTickLabels.getBounds().getWidth(),
+          axisTickLabels.getBounds(g.getRenderContext()).getWidth(),
 
-          axisTickMarks.getBounds().getHeight() + chart.getStyler().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()
+          axisTickMarks.getBounds(g.getRenderContext()).getHeight() + chart.getStyler().getAxisTickPadding() + axisTickLabels.getBounds(g.getRenderContext()).getHeight()
 
       );
 

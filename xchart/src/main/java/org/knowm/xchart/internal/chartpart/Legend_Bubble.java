@@ -16,17 +16,18 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Map;
-
 import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_Bubble;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.style.AxesChartStyler;
+
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Map;
 
 /**
  * @author timmolter
@@ -47,7 +48,7 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
   }
 
   @Override
-  public void doPaint(Graphics2D g) {
+  public void doPaint(Graphics g) {
 
     // Draw legend content inside legend box
     double startx = xOffset + chart.getStyler().getLegendPadding();
@@ -60,7 +61,7 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
         continue;
       }
 
-      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
+      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(g.getRenderContext(), series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);
 
       // paint little circle
@@ -81,10 +82,10 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(RenderContext rc) {
 
     if (bounds == null) { // was not drawn fully yet, just need the height hint. The Axis object may be asking for it.
-      bounds = getBoundsHint();
+      bounds = getBoundsHint(rc);
     }
     return bounds;
   }

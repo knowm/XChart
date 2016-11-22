@@ -16,8 +16,9 @@
  */
 package org.knowm.xchart.style;
 
+import org.knowm.xchart.Font;
+
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Stroke;
 import java.util.Locale;
 import java.util.TimeZone;

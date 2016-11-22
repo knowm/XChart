@@ -16,15 +16,16 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Iterator;
-
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
+
+import java.awt.geom.Rectangle2D;
+import java.util.Iterator;
 
 /**
  * @author timmolter
@@ -51,7 +52,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     prepareForPaint();
 
@@ -221,7 +222,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(RenderContext rc) {
 
     return null; // should never be called
   }

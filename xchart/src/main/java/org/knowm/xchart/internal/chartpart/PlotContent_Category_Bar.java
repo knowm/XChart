@@ -16,10 +16,17 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
+import org.knowm.xchart.font.TextLayout;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.lines.SeriesLines;
+
 import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -28,14 +35,6 @@ import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.knowm.xchart.CategorySeries;
-import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.style.CategoryStyler;
-import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
  * @author timmolter
@@ -56,12 +55,12 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
   }
 
   @Override
-  public void doPaint(Graphics2D g) {
+  public void doPaint(Graphics g) {
 
     // X-Axis
-    double xTickSpace = stylerCategory.getPlotContentSize() * getBounds().getWidth();
+    double xTickSpace = stylerCategory.getPlotContentSize() * getBounds(g.getRenderContext()).getWidth();
     // System.out.println("xTickSpace: " + xTickSpace);
-    double xLeftMargin = Utils.getTickStartOffset(getBounds().getWidth(), xTickSpace);
+    double xLeftMargin = Utils.getTickStartOffset(getBounds(g.getRenderContext()).getWidth(), xTickSpace);
     // System.out.println("xLeftMargin: " + xLeftMargin);
     Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
     int numCategories = seriesMap.values().iterator().next().getXData().size();
@@ -87,9 +86,9 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     // System.out.println(yMax);
     // System.out.println("chartForm: " + chartForm);
 
-    double yTickSpace = stylerCategory.getPlotContentSize() * getBounds().getHeight();
+    double yTickSpace = stylerCategory.getPlotContentSize() * getBounds(g.getRenderContext()).getHeight();
 
-    double yTopMargin = Utils.getTickStartOffset(getBounds().getHeight(), yTickSpace);
+    double yTopMargin = Utils.getTickStartOffset(getBounds(g.getRenderContext()).getHeight(), yTickSpace);
 
     // plot series
     int seriesCounter = 0;
@@ -178,13 +177,13 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           break;
         }
 
-        double yTransform = getBounds().getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
+        double yTransform = getBounds(g.getRenderContext()).getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
         // double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
-        double yOffset = getBounds().getY() + yTransform;
+        double yOffset = getBounds(g.getRenderContext()).getY() + yTransform;
 
-        double zeroTransform = getBounds().getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
-        double zeroOffset = getBounds().getY() + zeroTransform;
+        double zeroTransform = getBounds(g.getRenderContext()).getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
+        double zeroOffset = getBounds(g.getRenderContext()).getY() + zeroTransform;
         double xOffset;
         double barWidth;
 
@@ -192,13 +191,13 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
           barWidth = gridStep * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = getBounds().getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
+          xOffset = getBounds(g.getRenderContext()).getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
         }
         else {
           double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
           barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
           double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-          xOffset = getBounds().getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
+          xOffset = getBounds(g.getRenderContext()).getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
         }
 
         // paint series
@@ -227,7 +226,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
             }
             String numberAsString = twoPlaces.format(next);
 
-            TextLayout textLayout = new TextLayout(numberAsString, stylerCategory.getAnnotationsFont(), new FontRenderContext(null, true, false));
+            TextLayout textLayout = g.getTextLayout(numberAsString, stylerCategory.getAnnotationsFont());
             Rectangle2D annotationRectangle = textLayout.getBounds();
 
             double annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;

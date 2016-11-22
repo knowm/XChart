@@ -16,17 +16,17 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-
+import org.knowm.xchart.font.TextLayout;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
+
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 /**
  * AxisTitle
@@ -50,7 +50,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     bounds = new Rectangle2D.Double();
 
@@ -61,14 +61,13 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
       if (chart.getyYAxisTitle() != null && !chart.getyYAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isYAxisTitleVisible()) {
 
-        FontRenderContext frc = g.getFontRenderContext();
-        TextLayout nonRotatedTextLayout = new TextLayout(chart.getyYAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
+        TextLayout nonRotatedTextLayout = g.getTextLayout(chart.getyYAxisTitle(), chart.getStyler().getAxisTitleFont());
         Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
 
         // ///////////////////////////////////////////////
 
-        int xOffset = (int) (chart.getYAxis().getBounds().getX() + nonRotatedRectangle.getHeight());
-        int yOffset = (int) ((chart.getYAxis().getBounds().getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + chart.getYAxis().getBounds().getY());
+        int xOffset = (int) (chart.getYAxis().getBounds(g.getRenderContext()).getX() + nonRotatedRectangle.getHeight());
+        int yOffset = (int) ((chart.getYAxis().getBounds(g.getRenderContext()).getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + chart.getYAxis().getBounds(g.getRenderContext()).getY());
 
         AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.PI / 2, 0, 0);
         Shape shape = nonRotatedTextLayout.getOutline(rot);
@@ -91,7 +90,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
         // g.draw(bounds);
       }
       else {
-        bounds = new Rectangle2D.Double(chart.getYAxis().getBounds().getX(), chart.getYAxis().getBounds().getY(), 0, chart.getYAxis().getBounds().getHeight());
+        bounds = new Rectangle2D.Double(chart.getYAxis().getBounds(g.getRenderContext()).getX(), chart.getYAxis().getBounds(g.getRenderContext()).getY(), 0, chart.getYAxis().getBounds(g.getRenderContext()).getHeight());
       }
 
     }
@@ -99,13 +98,12 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
       if (chart.getXAxisTitle() != null && !chart.getXAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isXAxisTitleVisible()) {
 
-        FontRenderContext frc = g.getFontRenderContext();
-        TextLayout textLayout = new TextLayout(chart.getXAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
+        TextLayout textLayout = g.getTextLayout(chart.getXAxisTitle(), chart.getStyler().getAxisTitleFont());
         Rectangle2D rectangle = textLayout.getBounds();
         // System.out.println(rectangle);
 
-        double xOffset = chart.getXAxis().getBounds().getX() + (chart.getXAxis().getBounds().getWidth() - rectangle.getWidth()) / 2.0;
-        double yOffset = chart.getXAxis().getBounds().getY() + chart.getXAxis().getBounds().getHeight() - rectangle.getHeight();
+        double xOffset = chart.getXAxis().getBounds(g.getRenderContext()).getX() + (chart.getXAxis().getBounds(g.getRenderContext()).getWidth() - rectangle.getWidth()) / 2.0;
+        double yOffset = chart.getXAxis().getBounds(g.getRenderContext()).getY() + chart.getXAxis().getBounds(g.getRenderContext()).getHeight() - rectangle.getHeight();
 
         // textLayout.draw(g, (float) xOffset, (float) (yOffset - rectangle.getY()));
         Shape shape = textLayout.getOutline(null);
@@ -122,7 +120,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
       }
       else {
-        bounds = new Rectangle2D.Double(chart.getXAxis().getBounds().getX(), chart.getXAxis().getBounds().getY() + chart.getXAxis().getBounds().getHeight(), chart.getXAxis().getBounds().getWidth(),
+        bounds = new Rectangle2D.Double(chart.getXAxis().getBounds(g.getRenderContext()).getX(), chart.getXAxis().getBounds(g.getRenderContext()).getY() + chart.getXAxis().getBounds(g.getRenderContext()).getHeight(), chart.getXAxis().getBounds(g.getRenderContext()).getWidth(),
             0);
         // g.setColor(Color.blue);
         // g.draw(bounds);
@@ -132,7 +130,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(RenderContext rc) {
 
     return bounds;
   }

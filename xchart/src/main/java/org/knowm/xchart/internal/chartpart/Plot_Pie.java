@@ -16,14 +16,14 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.PieSeries;
+import org.knowm.xchart.graphics.Graphics;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
+
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author timmolter
@@ -43,25 +43,25 @@ public class Plot_Pie<ST extends Styler, S extends Series> extends Plot_ {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     // calculate bounds
     double xOffset = chart.getStyler().getChartPadding();
 
     // double yOffset = chart.getChartTitle().getBounds().getHeight() + 2 * chart.getStyler().getChartPadding();
-    double yOffset = chart.getChartTitle().getBounds().getHeight() + chart.getStyler().getChartPadding();
+    double yOffset = chart.getChartTitle().getBounds(g.getRenderContext()).getHeight() + chart.getStyler().getChartPadding();
 
     double width =
 
         chart.getWidth()
 
-            - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0)
+            - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds(g.getRenderContext()).getWidth() : 0)
 
             - 2 * chart.getStyler().getChartPadding()
 
             - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE && chart.getStyler().isLegendVisible() ? chart.getStyler().getChartPadding() : 0);
 
-    double height = chart.getHeight() - chart.getChartTitle().getBounds().getHeight() - 2 * chart.getStyler().getChartPadding();
+    double height = chart.getHeight() - chart.getChartTitle().getBounds(g.getRenderContext()).getHeight() - 2 * chart.getStyler().getChartPadding();
 
     this.bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 

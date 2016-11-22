@@ -16,6 +16,11 @@
  */
 package org.knowm.xchart;
 
+import org.knowm.xchart.BitmapEncoder.BitmapFormat;
+import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
+import org.knowm.xchart.graphics.Java2DGraphics;
+import org.knowm.xchart.internal.chartpart.Chart;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -28,17 +33,8 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-
-import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
-import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -104,7 +100,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
     super.paintComponent(g);
 
     Graphics2D g2d = (Graphics2D) g.create();
-    chart.paint(g2d, getWidth(), getHeight());
+    chart.paint(new Java2DGraphics(g2d), getWidth(), getHeight());
     g2d.dispose();
   }
 

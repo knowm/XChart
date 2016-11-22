@@ -16,9 +16,7 @@
  */
 package org.knowm.xchart;
 
-import java.awt.Graphics2D;
-import java.util.Map;
-
+import org.knowm.xchart.graphics.Graphics;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
@@ -28,6 +26,8 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
+
+import java.util.Map;
 
 /**
  * @author timmolter
@@ -122,7 +122,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
   }
 
   @Override
-  public void paint(Graphics2D g, int width, int height) {
+  public void paint(Graphics g, int width, int height) {
 
     setWidth(width);
     setHeight(height);
