@@ -16,11 +16,12 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import org.knowm.xchart.font.TextLayout;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
+
 import java.awt.BasicStroke;
-import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
@@ -43,7 +44,7 @@ public class ChartTitle implements ChartPart {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     g.setFont(chart.getStyler().getChartTitleFont());
 
@@ -52,18 +53,17 @@ public class ChartTitle implements ChartPart {
     }
 
     // create rectangle first for sizing
-    FontRenderContext frc = g.getFontRenderContext();
-    TextLayout textLayout = new TextLayout(chart.getTitle(), chart.getStyler().getChartTitleFont(), frc);
+    TextLayout textLayout = g.getTextLayout(chart.getTitle(), chart.getStyler().getChartTitleFont());
     Rectangle2D textBounds = textLayout.getBounds();
 
-    double xOffset = chart.getPlot().getBounds().getX(); // of plot left edge
+    double xOffset = chart.getPlot().getBounds(g.getRenderContext()).getX(); // of plot left edge
     double yOffset = chart.getStyler().getChartPadding();
 
     // title box
     if (chart.getStyler().isChartTitleBoxVisible()) {
 
       // paint the chart title box
-      double chartTitleBoxWidth = chart.getPlot().getBounds().getWidth();
+      double chartTitleBoxWidth = chart.getPlot().getBounds(g.getRenderContext()).getWidth();
       double chartTitleBoxHeight = textBounds.getHeight() + 2 * chart.getStyler().getChartTitlePadding();
 
       g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
@@ -75,7 +75,7 @@ public class ChartTitle implements ChartPart {
     }
 
     // paint title
-    xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - textBounds.getWidth()) / 2.0;
+    xOffset = chart.getPlot().getBounds(g.getRenderContext()).getX() + (chart.getPlot().getBounds(g.getRenderContext()).getWidth() - textBounds.getWidth()) / 2.0;
     yOffset = chart.getStyler().getChartPadding() + textBounds.getHeight() + chart.getStyler().getChartTitlePadding();
 
     g.setColor(chart.getStyler().getChartFontColor());
@@ -100,11 +100,11 @@ public class ChartTitle implements ChartPart {
    *
    * @return
    */
-  private Rectangle2D getBoundsHint() {
+  private Rectangle2D getBoundsHint(RenderContext rc) {
 
     if (chart.getStyler().isChartTitleVisible() && chart.getTitle().length() > 0) {
 
-      TextLayout textLayout = new TextLayout(chart.getTitle(), chart.getStyler().getChartTitleFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = rc.getTextLayout(chart.getTitle(), chart.getStyler().getChartTitleFont());
       Rectangle2D rectangle = textLayout.getBounds();
       double width = 2 * chart.getStyler().getChartTitlePadding() + rectangle.getWidth();
       double height = 2 * chart.getStyler().getChartTitlePadding() + rectangle.getHeight();
@@ -117,10 +117,10 @@ public class ChartTitle implements ChartPart {
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(final RenderContext rc) {
 
     if (bounds == null) { // was not drawn fully yet, just need the height hint. The Plot object will be asking for it.
-      bounds = getBoundsHint();
+      bounds = getBoundsHint(rc);
     }
     return bounds;
   }

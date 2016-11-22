@@ -16,7 +16,7 @@
  */
 package org.knowm.xchart.style.markers;
 
-import java.awt.Graphics2D;
+import org.knowm.xchart.graphics.Graphics;
 
 /**
  * @author timmolter
@@ -24,7 +24,7 @@ import java.awt.Graphics2D;
 public class None extends Marker {
 
   @Override
-  public void paint(Graphics2D g, double xOffset, double yOffset, int markerSize) {
+  public void paint(Graphics g, double xOffset, double yOffset, int markerSize) {
 
     // do nothing!
 

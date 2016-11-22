@@ -16,8 +16,10 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
+
 import java.awt.BasicStroke;
-import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -29,8 +31,8 @@ public interface ChartPart {
 
   public static BasicStroke SOLID_STROKE = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
 
-  public Rectangle2D getBounds();
+  public Rectangle2D getBounds(RenderContext rc);
 
-  public void paint(final Graphics2D g);
+  public void paint(final Graphics g);
 
 }

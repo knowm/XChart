@@ -16,11 +16,12 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler;
+
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author timmolter
@@ -44,7 +45,7 @@ public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     // g.setColor(Color.red);
     // g.draw(bounds);
@@ -58,7 +59,7 @@ public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(RenderContext rc) {
 
     return bounds;
   }

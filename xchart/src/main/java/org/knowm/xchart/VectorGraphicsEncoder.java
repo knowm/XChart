@@ -16,15 +16,16 @@
  */
 package org.knowm.xchart;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import org.knowm.xchart.internal.chartpart.Chart;
-
 import de.erichseifert.vectorgraphics2d.EPSGraphics2D;
 import de.erichseifert.vectorgraphics2d.PDFGraphics2D;
 import de.erichseifert.vectorgraphics2d.ProcessingPipeline;
 import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
+
+import org.knowm.xchart.graphics.Java2DGraphics;
+import org.knowm.xchart.internal.chartpart.Chart;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * A helper class with static methods for saving Charts as bitmaps
@@ -63,7 +64,7 @@ public final class VectorGraphicsEncoder {
       break;
     }
 
-    chart.paint(g, chart.getWidth(), chart.getHeight());
+    chart.paint(new Java2DGraphics(g), chart.getWidth(), chart.getHeight());
 
     // Write the vector graphic output to a file
     FileOutputStream file = new FileOutputStream(fileName + "." + vectorGraphicsFormat.toString().toLowerCase());

@@ -16,11 +16,19 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import org.knowm.xchart.PieSeries;
+import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
+import org.knowm.xchart.font.Java2DTextLayout;
+import org.knowm.xchart.font.TextLayout;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.Styler;
+
 import java.awt.BasicStroke;
-import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
@@ -29,13 +37,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.Map;
-
-import org.knowm.xchart.PieSeries;
-import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.PieStyler;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
-import org.knowm.xchart.style.Styler;
 
 /**
  * @author timmolter
@@ -57,20 +58,20 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
   }
 
   @Override
-  public void doPaint(Graphics2D g) {
+  public void doPaint(Graphics g) {
 
     // pie getBounds()
     double pieFillPercentage = stylerPie.getPlotContentSize();
 
     double halfBorderPercentage = (1 - pieFillPercentage) / 2.0;
-    double width = stylerPie.isCircular() ? Math.min(getBounds().getWidth(), getBounds().getHeight()) : getBounds().getWidth();
-    double height = stylerPie.isCircular() ? Math.min(getBounds().getWidth(), getBounds().getHeight()) : getBounds().getHeight();
+    double width = stylerPie.isCircular() ? Math.min(getBounds(g.getRenderContext()).getWidth(), getBounds(g.getRenderContext()).getHeight()) : getBounds(g.getRenderContext()).getWidth();
+    double height = stylerPie.isCircular() ? Math.min(getBounds(g.getRenderContext()).getWidth(), getBounds(g.getRenderContext()).getHeight()) : getBounds(g.getRenderContext()).getHeight();
 
     Rectangle2D pieBounds = new Rectangle2D.Double(
 
-        getBounds().getX() + getBounds().getWidth() / 2 - width / 2 + halfBorderPercentage * width,
+        getBounds(g.getRenderContext()).getX() + getBounds(g.getRenderContext()).getWidth() / 2 - width / 2 + halfBorderPercentage * width,
 
-        getBounds().getY() + getBounds().getHeight() / 2 - height / 2 + halfBorderPercentage * height,
+        getBounds(g.getRenderContext()).getY() + getBounds(g.getRenderContext()).getHeight() / 2 - height / 2 + halfBorderPercentage * height,
 
         width * pieFillPercentage,
 
@@ -138,7 +139,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
           annotation = df.format(percentage) + "%";
         }
 
-        TextLayout textLayout = new TextLayout(annotation, stylerPie.getAnnotationsFont(), new FontRenderContext(null, true, false));
+        TextLayout textLayout = g.getTextLayout(annotation, stylerPie.getAnnotationsFont());
         Rectangle2D annotationRectangle = textLayout.getBounds();
 
         double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - annotationRectangle.getWidth() / 2;

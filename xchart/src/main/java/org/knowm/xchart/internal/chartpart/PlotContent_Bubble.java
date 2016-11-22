@@ -16,20 +16,20 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
+import org.knowm.xchart.BubbleSeries;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.BubbleStyler;
+
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.knowm.xchart.BubbleSeries;
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.BubbleStyler;
 
 /**
  * @author timmolter
@@ -50,15 +50,15 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
   }
 
   @Override
-  public void doPaint(Graphics2D g) {
+  public void doPaint(Graphics g) {
 
     // X-Axis
-    double xTickSpace = stylerBubble.getPlotContentSize() * getBounds().getWidth();
-    double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
+    double xTickSpace = stylerBubble.getPlotContentSize() * getBounds(g.getRenderContext()).getWidth();
+    double xLeftMargin = Utils.getTickStartOffset((int) getBounds(g.getRenderContext()).getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = stylerBubble.getPlotContentSize() * getBounds().getHeight();
-    double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
+    double yTickSpace = stylerBubble.getPlotContentSize() * getBounds(g.getRenderContext()).getHeight();
+    double yTopMargin = Utils.getTickStartOffset((int) getBounds(g.getRenderContext()).getHeight(), yTickSpace);
 
     double xMin = chart.getXAxis().getMin();
     double xMax = chart.getXAxis().getMax();
@@ -130,20 +130,20 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
         // System.out.println(y);
 
         double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
-        double yTransform = getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+        double yTransform = getBounds(g.getRenderContext()).getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
         // a check if all x data are the exact same values
         if (Math.abs(xMax - xMin) / 5 == 0.0) {
-          xTransform = getBounds().getWidth() / 2.0;
+          xTransform = getBounds(g.getRenderContext()).getWidth() / 2.0;
         }
 
         // a check if all y data are the exact same values
         if (Math.abs(yMax - yMin) / 5 == 0.0) {
-          yTransform = getBounds().getHeight() / 2.0;
+          yTransform = getBounds(g.getRenderContext()).getHeight() / 2.0;
         }
 
-        double xOffset = getBounds().getX() + xTransform;
-        double yOffset = getBounds().getY() + yTransform;
+        double xOffset = getBounds(g.getRenderContext()).getX() + xTransform;
+        double yOffset = getBounds(g.getRenderContext()).getY() + yTransform;
         // System.out.println(xTransform);
         // System.out.println(xOffset);
         // System.out.println(yTransform);

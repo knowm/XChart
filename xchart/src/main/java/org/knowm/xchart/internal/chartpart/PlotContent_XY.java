@@ -16,7 +16,16 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
+import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.XYStyler;
+import org.knowm.xchart.style.lines.SeriesLines;
+
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -24,15 +33,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.XYStyler;
-import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
  * @author timmolter
@@ -53,15 +53,15 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
   }
 
   @Override
-  public void doPaint(Graphics2D g) {
+  public void doPaint(Graphics g) {
 
     // X-Axis
-    double xTickSpace = stylerXY.getPlotContentSize() * getBounds().getWidth();
-    double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
+    double xTickSpace = stylerXY.getPlotContentSize() * getBounds(g.getRenderContext()).getWidth();
+    double xLeftMargin = Utils.getTickStartOffset((int) getBounds(g.getRenderContext()).getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = stylerXY.getPlotContentSize() * getBounds().getHeight();
-    double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
+    double yTickSpace = stylerXY.getPlotContentSize() * getBounds(g.getRenderContext()).getHeight();
+    double yTopMargin = Utils.getTickStartOffset((int) getBounds(g.getRenderContext()).getHeight(), yTickSpace);
 
     double xMin = chart.getXAxis().getMin();
     double xMax = chart.getXAxis().getMax();
@@ -116,7 +116,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         if (next == null) {
 
           // for area charts
-          closePath(g, path, previousX, getBounds(), yTopMargin);
+          closePath(g, path, previousX, getBounds(g.getRenderContext()), yTopMargin);
           path = null;
 
           previousX = -Double.MAX_VALUE;
@@ -138,20 +138,20 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         // System.out.println(y);
 
         double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
-        double yTransform = getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+        double yTransform = getBounds(g.getRenderContext()).getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
         // a check if all x data are the exact same values
         if (Math.abs(xMax - xMin) / 5 == 0.0) {
-          xTransform = getBounds().getWidth() / 2.0;
+          xTransform = getBounds(g.getRenderContext()).getWidth() / 2.0;
         }
 
         // a check if all y data are the exact same values
         if (Math.abs(yMax - yMin) / 5 == 0.0) {
-          yTransform = getBounds().getHeight() / 2.0;
+          yTransform = getBounds(g.getRenderContext()).getHeight() / 2.0;
         }
 
-        double xOffset = getBounds().getX() + xTransform;
-        double yOffset = getBounds().getY() + yTransform;
+        double xOffset = getBounds(g.getRenderContext()).getX() + xTransform;
+        double yOffset = getBounds(g.getRenderContext()).getY() + yTransform;
         // System.out.println(xTransform);
         // System.out.println(xOffset);
         // System.out.println(yTransform);
@@ -180,7 +180,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
             g.setColor(series.getFillColor());
-            double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
+            double yBottomOfArea = getBounds(g.getRenderContext()).getY() + getBounds(g.getRenderContext()).getHeight() - yTopMargin;
 
             if (path == null) {
               path = new Path2D.Double();
@@ -226,8 +226,8 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           else {
             topValue = y + eb;
           }
-          double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
-          double topEBOffset = getBounds().getY() + topEBTransform;
+          double topEBTransform = getBounds(g.getRenderContext()).getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
+          double topEBOffset = getBounds(g.getRenderContext()).getY() + topEBTransform;
 
           // Bottom value
           double bottomValue = 0.0;
@@ -239,8 +239,8 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           else {
             bottomValue = y - eb;
           }
-          double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
-          double bottomEBOffset = getBounds().getY() + bottomEBTransform;
+          double bottomEBTransform = getBounds(g.getRenderContext()).getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
+          double bottomEBOffset = getBounds(g.getRenderContext()).getY() + bottomEBTransform;
 
           // Draw it
           Shape line = new Line2D.Double(xOffset, topEBOffset, xOffset, bottomEBOffset);
@@ -253,7 +253,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
       }
 
       // close any open path for area charts
-      closePath(g, path, previousX, getBounds(), yTopMargin);
+      closePath(g, path, previousX, getBounds(g.getRenderContext()), yTopMargin);
     }
 
   }

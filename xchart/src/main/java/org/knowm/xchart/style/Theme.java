@@ -16,153 +16,153 @@
  */
 package org.knowm.xchart.style;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Stroke;
-
+import org.knowm.xchart.Font;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
+import java.awt.Color;
+import java.awt.Stroke;
+
 /**
  * @author timmolter
  */
-public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
+public abstract class Theme implements SeriesMarkers, SeriesLines, SeriesColors {
 
   // Chart Style ///////////////////////////////
 
-  public Color getChartBackgroundColor();
+  public abstract Color getChartBackgroundColor();
 
-  public Color getChartFontColor();
+  public abstract Color getChartFontColor();
 
-  public int getChartPadding();
+  public abstract int getChartPadding();
 
   // Chart Title ///////////////////////////////
 
-  public Font getChartTitleFont();
+  public abstract Font getChartTitleFont();
 
-  public boolean isChartTitleVisible();
+  public abstract boolean isChartTitleVisible();
 
-  public boolean isChartTitleBoxVisible();
+  public abstract boolean isChartTitleBoxVisible();
 
-  public Color getChartTitleBoxBackgroundColor();
+  public abstract Color getChartTitleBoxBackgroundColor();
 
-  public Color getChartTitleBoxBorderColor();
+  public abstract Color getChartTitleBoxBorderColor();
 
-  public int getChartTitlePadding();
+  public abstract int getChartTitlePadding();
 
   // Chart Legend ///////////////////////////////
 
-  public Font getLegendFont();
+  public abstract Font getLegendFont();
 
-  public boolean isLegendVisible();
+  public abstract boolean isLegendVisible();
 
-  public Color getLegendBackgroundColor();
+  public abstract Color getLegendBackgroundColor();
 
-  public Color getLegendBorderColor();
+  public abstract Color getLegendBorderColor();
 
-  public int getLegendPadding();
+  public abstract int getLegendPadding();
 
-  public int getLegendSeriesLineLength();
+  public abstract int getLegendSeriesLineLength();
 
-  public LegendPosition getLegendPosition();
+  public abstract LegendPosition getLegendPosition();
 
   // Chart Axes ///////////////////////////////
 
-  public boolean isXAxisTitleVisible();
+  public abstract boolean isXAxisTitleVisible();
 
-  public boolean isYAxisTitleVisible();
+  public abstract boolean isYAxisTitleVisible();
 
-  public Font getAxisTitleFont();
+  public abstract Font getAxisTitleFont();
 
-  public boolean isXAxisTicksVisible();
+  public abstract boolean isXAxisTicksVisible();
 
-  public boolean isYAxisTicksVisible();
+  public abstract boolean isYAxisTicksVisible();
 
-  public Font getAxisTickLabelsFont();
+  public abstract Font getAxisTickLabelsFont();
 
-  public int getAxisTickMarkLength();
+  public abstract int getAxisTickMarkLength();
 
-  public int getAxisTickPadding();
+  public abstract int getAxisTickPadding();
 
-  public Color getAxisTickMarksColor();
+  public abstract Color getAxisTickMarksColor();
 
-  public Stroke getAxisTickMarksStroke();
+  public abstract Stroke getAxisTickMarksStroke();
 
-  public Color getAxisTickLabelsColor();
+  public abstract Color getAxisTickLabelsColor();
 
-  public boolean isAxisTicksLineVisible();
+  public abstract boolean isAxisTicksLineVisible();
 
-  public boolean isAxisTicksMarksVisible();
+  public abstract boolean isAxisTicksMarksVisible();
 
-  public int getAxisTitlePadding();
+  public abstract int getAxisTitlePadding();
 
-  public int getXAxisTickMarkSpacingHint();
+  public abstract int getXAxisTickMarkSpacingHint();
 
-  public int getYAxisTickMarkSpacingHint();
+  public abstract int getYAxisTickMarkSpacingHint();
 
   // Chart Plot Area ///////////////////////////////
 
-  public boolean isPlotGridLinesVisible();
+  public abstract boolean isPlotGridLinesVisible();
 
-  public boolean isPlotGridVerticalLinesVisible();
+  public abstract boolean isPlotGridVerticalLinesVisible();
 
-  public boolean isPlotGridHorizontalLinesVisible();
+  public abstract boolean isPlotGridHorizontalLinesVisible();
 
-  public Color getPlotBackgroundColor();
+  public abstract Color getPlotBackgroundColor();
 
-  public Color getPlotBorderColor();
+  public abstract Color getPlotBorderColor();
 
-  public boolean isPlotBorderVisible();
+  public abstract boolean isPlotBorderVisible();
 
-  public Color getPlotGridLinesColor();
+  public abstract Color getPlotGridLinesColor();
 
-  public Stroke getPlotGridLinesStroke();
+  public abstract Stroke getPlotGridLinesStroke();
 
-  public boolean isPlotTicksMarksVisible();
+  public abstract boolean isPlotTicksMarksVisible();
 
-  public double getPlotContentSize();
+  public abstract double getPlotContentSize();
 
-  public int getPlotMargin();
+  public abstract int getPlotMargin();
 
   // Bar Charts ///////////////////////////////
 
-  public double getAvailableSpaceFill();
+  public abstract double getAvailableSpaceFill();
 
-  public boolean isOverlapped();
+  public abstract boolean isOverlapped();
 
   // Pie Charts ///////////////////////////////
 
-  public boolean isCircular();
+  public abstract boolean isCircular();
 
-  public double getStartAngleInDegrees();
+  public abstract double getStartAngleInDegrees();
 
-  public Font getPieFont();
+  public abstract Font getPieFont();
 
-  public double getAnnotationDistance();
+  public abstract double getAnnotationDistance();
 
-  public AnnotationType getAnnotationType();
+  public abstract AnnotationType getAnnotationType();
 
-  public boolean isDrawAllAnnotations();
+  public abstract boolean isDrawAllAnnotations();
 
-  public double getDonutThickness();
+  public abstract double getDonutThickness();
 
   // Line, Scatter, Area Charts ///////////////////////////////
 
-  public int getMarkerSize();
+  public abstract int getMarkerSize();
 
-  public boolean showMarkers();
+  public abstract boolean showMarkers();
 
   // Error Bars ///////////////////////////////
 
-  public Color getErrorBarsColor();
+  public abstract Color getErrorBarsColor();
 
-  public boolean isErrorBarsColorSeriesColor();
+  public abstract boolean isErrorBarsColorSeriesColor();
 
   // Annotations ///////////////////////////////
 
-  public Font getAnnotationFont();
+  public abstract Font getAnnotationFont();
 
 }

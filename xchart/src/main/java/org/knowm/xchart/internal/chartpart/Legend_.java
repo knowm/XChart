@@ -16,18 +16,18 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
+import org.knowm.xchart.font.TextLayout;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
+import org.knowm.xchart.style.Styler;
+
 import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.style.Styler;
 
 /**
  * @author timmolter
@@ -36,7 +36,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
   public abstract double getSeriesLegendRenderGraphicHeight(Series series);
 
-  public abstract void doPaint(Graphics2D g);
+  public abstract void doPaint(Graphics g);
 
   protected static final int LEGEND_MARGIN = 6;
   protected static final int BOX_SIZE = 20;
@@ -60,7 +60,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     if (!chart.getStyler().isLegendVisible()) {
       return;
@@ -71,14 +71,14 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     }
 
     // if the area to draw a chart on is so small, don't even bother
-    if (chart.getPlot().getBounds().getWidth() < 30) {
+    if (chart.getPlot().getBounds(g.getRenderContext()).getWidth() < 30) {
       return;
     }
 
     // We call get bounds hint because sometimes the Axis object needs it to know it's bounds (if Legend is outside Plot). If it's null, we just need to calulate it before painting, because the paint
     // methods needs the bounds.
     if (bounds == null) { // No other part asked for the bounds yet. Probably because it's an "inside" legend location
-      bounds = getBoundsHint(); // Actually, the only information contained in this bounds is the width and height.
+      bounds = getBoundsHint(g.getRenderContext()); // Actually, the only information contained in this bounds is the width and height.
     }
 
     // legend draw position
@@ -86,27 +86,27 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     switch (chart.getStyler().getLegendPosition()) {
     case OutsideE:
       xOffset = chart.getWidth() - bounds.getWidth() - chart.getStyler().getChartPadding();
-      yOffset = chart.getPlot().getBounds().getY() + (chart.getPlot().getBounds().getHeight() - bounds.getHeight()) / 2.0;
+      yOffset = chart.getPlot().getBounds(g.getRenderContext()).getY() + (chart.getPlot().getBounds(g.getRenderContext()).getHeight() - bounds.getHeight()) / 2.0;
       break;
     case InsideNW:
-      xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      xOffset = chart.getPlot().getBounds(g.getRenderContext()).getX() + LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds(g.getRenderContext()).getY() + LEGEND_MARGIN;
       break;
     case InsideNE:
-      xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      xOffset = chart.getPlot().getBounds(g.getRenderContext()).getX() + chart.getPlot().getBounds(g.getRenderContext()).getWidth() - bounds.getWidth() - LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds(g.getRenderContext()).getY() + LEGEND_MARGIN;
       break;
     case InsideSE:
-      xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+      xOffset = chart.getPlot().getBounds(g.getRenderContext()).getX() + chart.getPlot().getBounds(g.getRenderContext()).getWidth() - bounds.getWidth() - LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds(g.getRenderContext()).getY() + chart.getPlot().getBounds(g.getRenderContext()).getHeight() - bounds.getHeight() - LEGEND_MARGIN;
       break;
     case InsideSW:
-      xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+      xOffset = chart.getPlot().getBounds(g.getRenderContext()).getX() + LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds(g.getRenderContext()).getY() + chart.getPlot().getBounds(g.getRenderContext()).getHeight() - bounds.getHeight() - LEGEND_MARGIN;
       break;
     case InsideN:
-      xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+      xOffset = chart.getPlot().getBounds(g.getRenderContext()).getX() + (chart.getPlot().getBounds(g.getRenderContext()).getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
+      yOffset = chart.getPlot().getBounds(g.getRenderContext()).getY() + LEGEND_MARGIN;
       break;
 
     default:
@@ -132,7 +132,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   /**
    * determine the width and height of the chart legend
    */
-  public Rectangle2D getBoundsHint() {
+  public Rectangle2D getBoundsHint(RenderContext rc) {
 
     if (!chart.getStyler().isLegendVisible()) {
       return new Rectangle2D.Double(); // Constructs a new Rectangle2D, initialized to location (0, 0) and size (0, 0).
@@ -153,7 +153,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
         continue;
       }
 
-      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
+      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(rc, series);
 
       double legendEntryHeight = 0; // could be multi-line
       for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
@@ -195,7 +195,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
    * @param series
    * @return
    */
-  protected Map<String, Rectangle2D> getSeriesTextBounds(Series series) {
+  protected Map<String, Rectangle2D> getSeriesTextBounds(RenderContext rc, Series series) {
 
     // FontMetrics fontMetrics = g.getFontMetrics(getChartPainter().getstyler().getLegendFont());
     // float fontDescent = fontMetrics.getDescent();
@@ -203,7 +203,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     String lines[] = series.getName().split("\\n");
     Map<String, Rectangle2D> seriesTextBounds = new LinkedHashMap<String, Rectangle2D>(lines.length);
     for (String line : lines) {
-      TextLayout textLayout = new TextLayout(line, chart.getStyler().getLegendFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = rc.getTextLayout(line, chart.getStyler().getLegendFont());
       Shape shape = textLayout.getOutline(null);
       Rectangle2D bounds = shape.getBounds2D();
       // System.out.println(tl.getAscent());
@@ -229,7 +229,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     return legendEntryHeight;
   }
 
-  void paintSeriesText(Graphics2D g, Map<String, Rectangle2D> seriesTextBounds, int markerSize, double x, double starty) {
+  void paintSeriesText(Graphics g, Map<String, Rectangle2D> seriesTextBounds, int markerSize, double x, double starty) {
 
     g.setColor(chart.getStyler().getChartFontColor());
     g.setFont(chart.getStyler().getLegendFont());
@@ -241,9 +241,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       double height = entry.getValue().getHeight();
       double centerOffsetY = (Math.max(markerSize, height) - height) / 2.0;
 
-      FontRenderContext frc = g.getFontRenderContext();
-      TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
-      Shape shape = tl.getOutline(null);
+      Shape shape = g.getTextLayout(entry.getKey(), chart.getStyler().getLegendFont()).getOutline(null);
       AffineTransform orig = g.getTransform();
       AffineTransform at = new AffineTransform();
       at.translate(x, starty + height + centerOffsetY + multiLineOffset);

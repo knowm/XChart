@@ -16,13 +16,15 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
@@ -42,14 +44,14 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_Number(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
+  public AxisTickCalculator_Number(final RenderContext rc, Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
     numberFormatter = new NumberFormatter(styler);
-    calculate();
+    calculate(rc);
   }
 
-  private void calculate() {
+  private void calculate(final RenderContext rc) {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
@@ -182,7 +184,7 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
         tickLocations.add(tickLabelPosition);
         // }
       }
-    } while (!willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    } while (!willLabelsFitInTickSpaceHint(rc, tickLabels, gridStepInChartSpace));
 
   }
 

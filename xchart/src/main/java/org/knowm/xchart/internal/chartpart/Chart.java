@@ -16,15 +16,14 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.style.Styler;
+
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.Styler;
 
 /**
  * An XChart Chart
@@ -33,7 +32,7 @@ import org.knowm.xchart.style.Styler;
  */
 public abstract class Chart<ST extends Styler, S extends Series> {
 
-  public abstract void paint(Graphics2D g, int width, int height);
+  public abstract void paint(Graphics g, int width, int height);
 
   protected ST styler;
 
@@ -68,10 +67,9 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.chartTitle = new ChartTitle(this);
   }
 
-  public void paintBackground(Graphics2D g) {
+  public void paintBackground(Graphics g) {
 
     // paint chart main background
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
     g.setColor(styler.getChartBackgroundColor());
     Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
     g.fill(rect);

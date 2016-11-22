@@ -16,11 +16,7 @@
  */
 package org.knowm.xchart.style;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Stroke;
-
+import org.knowm.xchart.Font;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.ChartColor;
@@ -29,10 +25,14 @@ import org.knowm.xchart.style.lines.GGPlot2SeriesLines;
 import org.knowm.xchart.style.markers.GGPlot2SeriesMarkers;
 import org.knowm.xchart.style.markers.Marker;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Stroke;
+
 /**
  * @author timmolter
  */
-public class GGPlot2Theme implements Theme {
+public class GGPlot2Theme extends Theme {
 
   // Chart Style ///////////////////////////////
 

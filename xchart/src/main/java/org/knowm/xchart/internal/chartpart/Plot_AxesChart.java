@@ -16,13 +16,13 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.graphics.Graphics;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
+
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author timmolter
@@ -44,16 +44,16 @@ public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     // calculate bounds
-    double xOffset = chart.getYAxis().getBounds().getX() + chart.getYAxis().getBounds().getWidth()
+    double xOffset = chart.getYAxis().getBounds(g.getRenderContext()).getX() + chart.getYAxis().getBounds(g.getRenderContext()).getWidth()
 
         + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0);
 
-    double yOffset = chart.getYAxis().getBounds().getY();
-    double width = chart.getXAxis().getBounds().getWidth();
-    double height = chart.getYAxis().getBounds().getHeight();
+    double yOffset = chart.getYAxis().getBounds(g.getRenderContext()).getY();
+    double width = chart.getXAxis().getBounds(g.getRenderContext()).getWidth();
+    double height = chart.getYAxis().getBounds(g.getRenderContext()).getHeight();
     this.bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
     super.paint(g);

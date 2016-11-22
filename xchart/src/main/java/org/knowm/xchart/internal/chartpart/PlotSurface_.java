@@ -16,10 +16,11 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.geom.Rectangle2D;
-
+import org.knowm.xchart.graphics.RenderContext;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.style.Styler;
+
+import java.awt.geom.Rectangle2D;
 
 /**
  * @author timmolter
@@ -39,8 +40,8 @@ public abstract class PlotSurface_<ST extends Styler, S extends Series> implemen
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(RenderContext rc) {
 
-    return chart.getPlot().getBounds();
+    return chart.getPlot().getBounds(rc);
   }
 }

@@ -16,11 +16,11 @@
  */
 package org.knowm.xchart.style;
 
+import org.knowm.xchart.Font;
+import org.knowm.xchart.style.markers.Marker;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
-
-import org.knowm.xchart.style.markers.Marker;
 
 /**
  * The styler is used to manage all things related to styling of the vast number of Chart components

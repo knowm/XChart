@@ -16,6 +16,9 @@
  */
 package org.knowm.xchart;
 
+import org.knowm.xchart.graphics.Java2DGraphics;
+import org.knowm.xchart.internal.chartpart.Chart;
+
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -36,8 +39,6 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.FileImageOutputStream;
-
-import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A helper class with static methods for saving Charts as bitmaps
@@ -115,7 +116,7 @@ public final class BitmapEncoder {
     at.scale(scaleFactor, scaleFactor);
     graphics2D.setTransform(at);
 
-    chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
+    chart.paint(new Java2DGraphics(graphics2D), chart.getWidth(), chart.getHeight());
     Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(bitmapFormat.toString().toLowerCase());
     if (writers.hasNext()) {
       ImageWriter writer = writers.next();
@@ -176,7 +177,6 @@ public final class BitmapEncoder {
    *
    * @param chart
    * @param fileName
-   * @param bitmapFormat
    * @param quality - a float between 0 and 1 (1 = maximum quality)
    * @throws FileNotFoundException
    * @throws IOException
@@ -231,7 +231,7 @@ public final class BitmapEncoder {
 
     BufferedImage bufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
     Graphics2D graphics2D = bufferedImage.createGraphics();
-    chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
+    chart.paint(new Java2DGraphics(graphics2D), chart.getWidth(), chart.getHeight());
     return bufferedImage;
   }
 

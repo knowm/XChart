@@ -16,16 +16,16 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
+import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.Styler;
+
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-
-import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.Styler;
 
 /**
  * Draws the plot background, the plot border and the horizontal and vertical grid lines
@@ -48,9 +48,9 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
-    Rectangle2D bounds = getBounds();
+    Rectangle2D bounds = getBounds(g.getRenderContext());
 
     // paint plot background
     Shape rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());

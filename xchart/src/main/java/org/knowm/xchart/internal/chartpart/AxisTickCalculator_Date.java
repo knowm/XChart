@@ -16,14 +16,16 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
+import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.style.AxesChartStyler;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
-import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for date axes
@@ -108,14 +110,14 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_Date(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
+  public AxisTickCalculator_Date(final RenderContext rc, Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
 
-    calculate();
+    calculate(rc);
   }
 
-  private void calculate() {
+  private void calculate(final RenderContext rc) {
 
     // tick space - a percentage of the working space available for ticks
     double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space
@@ -211,7 +213,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
         tickLocations.add(tickLabelPosition);
         // }
       }
-    } while (!willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    } while (!willLabelsFitInTickSpaceHint(rc, tickLabels, gridStepInChartSpace));
   }
 
   static class TimeSpan {

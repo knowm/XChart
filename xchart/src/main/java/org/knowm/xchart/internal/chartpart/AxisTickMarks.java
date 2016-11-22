@@ -16,15 +16,16 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-
+import org.knowm.xchart.graphics.Graphics;
+import org.knowm.xchart.graphics.RenderContext;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_AxesChart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
+
+import java.awt.Shape;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Axis tick marks. This includes the little tick marks and the line that hugs the plot area.
@@ -48,19 +49,19 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics g) {
 
     g.setColor(chart.getStyler().getAxisTickMarksColor());
     g.setStroke(chart.getStyler().getAxisTickMarksStroke());
 
     if (direction == Axis.Direction.Y && chart.getStyler().isYAxisTicksVisible()) { // Y-Axis
 
-      double xOffset = chart.getYAxis().getAxisTick().getAxisTickLabels().getBounds().getX() + chart.getYAxis().getAxisTick().getAxisTickLabels().getBounds().getWidth() + chart.getStyler()
+      double xOffset = chart.getYAxis().getAxisTick().getAxisTickLabels().getBounds(g.getRenderContext()).getX() + chart.getYAxis().getAxisTick().getAxisTickLabels().getBounds(g.getRenderContext()).getWidth() + chart.getStyler()
           .getAxisTickPadding();
-      double yOffset = chart.getYAxis().getBounds().getY();
+      double yOffset = chart.getYAxis().getBounds(g.getRenderContext()).getY();
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset, chart.getStyler().getAxisTickMarkLength(), chart.getYAxis().getBounds().getHeight());
+      bounds = new Rectangle2D.Double(xOffset, yOffset, chart.getStyler().getAxisTickMarkLength(), chart.getYAxis().getBounds(g.getRenderContext()).getHeight());
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
@@ -70,7 +71,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
         for (int i = 0; i < chart.getYAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
           double tickLocation = chart.getYAxis().getAxisTickCalculator().getTickLocations().get(i);
-          double flippedTickLocation = yOffset + chart.getYAxis().getBounds().getHeight() - tickLocation;
+          double flippedTickLocation = yOffset + chart.getYAxis().getBounds(g.getRenderContext()).getHeight() - tickLocation;
           if (flippedTickLocation > bounds.getY() && flippedTickLocation < bounds.getY() + bounds.getHeight()) {
 
             Shape line = new Line2D.Double(xOffset, flippedTickLocation, xOffset + chart.getStyler().getAxisTickMarkLength(), flippedTickLocation);
@@ -82,7 +83,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
       // Line
       if (chart.getStyler().isAxisTicksLineVisible()) {
 
-        Shape line = new Line2D.Double(xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset, xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset + chart.getYAxis().getBounds()
+        Shape line = new Line2D.Double(xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset, xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset + chart.getYAxis().getBounds(g.getRenderContext())
             .getHeight());
         g.draw(line);
 
@@ -92,11 +93,11 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
     // X-Axis
     else if (direction == Axis.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
 
-      double xOffset = chart.getXAxis().getBounds().getX();
-      double yOffset = chart.getXAxis().getAxisTick().getAxisTickLabels().getBounds().getY() - chart.getStyler().getAxisTickPadding();
+      double xOffset = chart.getXAxis().getBounds(g.getRenderContext()).getX();
+      double yOffset = chart.getXAxis().getAxisTick().getAxisTickLabels().getBounds(g.getRenderContext()).getY() - chart.getStyler().getAxisTickPadding();
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset - chart.getStyler().getAxisTickMarkLength(), chart.getXAxis().getBounds().getWidth(), chart.getStyler().getAxisTickMarkLength());
+      bounds = new Rectangle2D.Double(xOffset, yOffset - chart.getStyler().getAxisTickMarkLength(), chart.getXAxis().getBounds(g.getRenderContext()).getWidth(), chart.getStyler().getAxisTickMarkLength());
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
@@ -120,7 +121,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
       if (chart.getStyler().isAxisTicksLineVisible()) {
 
         g.setStroke(chart.getStyler().getAxisTickMarksStroke());
-        g.drawLine((int) xOffset, (int) (yOffset - chart.getStyler().getAxisTickMarkLength()), (int) (xOffset + chart.getXAxis().getBounds().getWidth()), (int) (yOffset - chart.getStyler()
+        g.drawLine((int) xOffset, (int) (yOffset - chart.getStyler().getAxisTickMarkLength()), (int) (xOffset + chart.getXAxis().getBounds(g.getRenderContext()).getWidth()), (int) (yOffset - chart.getStyler()
             .getAxisTickMarkLength()));
       }
 
@@ -132,7 +133,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
   }
 
   @Override
-  public Rectangle2D getBounds() {
+  public Rectangle2D getBounds(RenderContext rc) {
 
     return bounds;
   }
