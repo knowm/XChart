@@ -157,7 +157,12 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         case 0: // span chart
           if (y >= 0.0) { // positive
             yTop = y;
-            yBottom = 0.0;
+            if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+              yBottom = 0.0;
+            }
+            else {
+              yBottom = y;
+            }
             if (stylerCategory.isStacked()) {
               yTop += accumulatedStackOffsetPos[categoryCounter];
               yBottom += accumulatedStackOffsetPos[categoryCounter];
@@ -165,7 +170,12 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
             }
           }
           else {
-            yTop = 0.0;
+            if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+              yTop = 0.0;
+            }
+            else {
+              yTop = y; // yTransform uses yTop, and for non-bars, it's the same as yBottom.
+            }
             yBottom = y;
             if (stylerCategory.isStacked()) {
               yTop -= accumulatedStackOffsetNeg[categoryCounter];
@@ -179,8 +189,6 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         }
 
         double yTransform = getBounds().getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
-        // double yTransform = bounds.getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
-
         double yOffset = getBounds().getY() + yTransform;
 
         double zeroTransform = getBounds().getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
@@ -253,9 +261,10 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         }
         else if (CategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
 
-          // paint line
+          // paint stick
           if (series.getLineStyle() != SeriesLines.NONE) {
 
+            System.out.println(yOffset);
             g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
             Shape line = new Line2D.Double(xOffset + barWidth / 2, zeroOffset, xOffset + barWidth / 2, yOffset);

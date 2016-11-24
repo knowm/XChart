@@ -37,33 +37,28 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  CategoryStyler stylerCategory;
+  CategoryStyler categoryStyler;
 
   /**
    * Constructor
    *
-   * @param plot
+   * @param chart
    */
   protected PlotContent_Category_Line_Area_Scatter(Chart<CategoryStyler, CategorySeries> chart) {
 
     super(chart);
-    this.stylerCategory = chart.getStyler();
+    this.categoryStyler = chart.getStyler();
   }
 
   @Override
   public void doPaint(Graphics2D g) {
 
-    // logarithmic
-    // if (stylerCategory.isYAxisLogarithmic()) {
-    // throw new IllegalArgumentException("Category Charts cannot have logarithmic axes!!! (Not Yet Implemented)");
-    // }
-
     // X-Axis
-    double xTickSpace = stylerCategory.getPlotContentSize() * getBounds().getWidth();
+    double xTickSpace = categoryStyler.getPlotContentSize() * getBounds().getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = stylerCategory.getPlotContentSize() * getBounds().getHeight();
+    double yTickSpace = categoryStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
     double xMin = chart.getAxisPair().getXAxis().getMin();
@@ -72,11 +67,11 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
     double yMax = chart.getAxisPair().getYAxis().getMax();
 
     // logarithmic
-    if (stylerCategory.isXAxisLogarithmic()) {
+    if (categoryStyler.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
       xMax = Math.log10(xMax);
     }
-    if (stylerCategory.isYAxisLogarithmic()) {
+    if (categoryStyler.isYAxisLogarithmic()) {
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
     }
@@ -104,8 +99,10 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       }
       Path2D.Double path = null;
 
-      int categoryCounter = 0;
+      int categoryCounter = -1;
       while (yItr.hasNext()) {
+
+        categoryCounter++;
 
         Number next = yItr.next();
         if (next == null) {
@@ -124,7 +121,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         double y = 0.0;
 
         // System.out.println(y);
-        if (stylerCategory.isYAxisLogarithmic()) {
+        if (categoryStyler.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         }
         else {
@@ -139,7 +136,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           yTransform = getBounds().getHeight() / 2.0;
         }
 
-        double xOffset = getBounds().getX() + xLeftMargin + categoryCounter++ * gridStep + gridStep / 2;
+        double xOffset = getBounds().getX() + xLeftMargin + categoryCounter * gridStep + gridStep / 2;
         double yOffset = getBounds().getY() + yTransform;
         // System.out.println(xOffset);
         // System.out.println(yTransform);
@@ -147,6 +144,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         // System.out.println("---");
 
         // paint line
+        // System.out.println(series.getChartCategorySeriesRenderStyle());
         if (CategorySeriesRenderStyle.Line.equals(series.getChartCategorySeriesRenderStyle()) || CategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
 
           if (series.getLineStyle() != SeriesLines.NONE) {
@@ -198,10 +196,12 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         previousX = xOffset;
         previousY = yOffset;
 
+        System.out.println(previousY);
+
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset, stylerCategory.getMarkerSize());
+          series.getMarker().paint(g, xOffset, yOffset, categoryStyler.getMarkerSize());
         }
 
         // paint error bars
@@ -210,17 +210,17 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (stylerCategory.isErrorBarsColorSeriesColor()) {
+          if (categoryStyler.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getLineColor());
           }
           else {
-            g.setColor(stylerCategory.getErrorBarsColor());
+            g.setColor(categoryStyler.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 
           // Top value
           double topValue = 0.0;
-          if (stylerCategory.isYAxisLogarithmic()) {
+          if (categoryStyler.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
           }
@@ -232,7 +232,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
           // Bottom value
           double bottomValue = 0.0;
-          if (stylerCategory.isYAxisLogarithmic()) {
+          if (categoryStyler.isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
