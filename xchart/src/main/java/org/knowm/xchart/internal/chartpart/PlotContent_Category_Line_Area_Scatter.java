@@ -196,8 +196,6 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         previousX = xOffset;
         previousY = yOffset;
 
-        System.out.println(previousY);
-
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
