@@ -33,9 +33,9 @@ public class TestForIssue167 implements ExampleChart<CategoryChart> {
   public static void main(String[] args) {
 
     ExampleChart<CategoryChart> exampleChart = new TestForIssue167();
-    // CategoryChart chart = exampleChart.getChart();
+    CategoryChart chart = exampleChart.getChart();
     CategoryChart chart2 = ((TestForIssue167) exampleChart).getChart2();
-    // new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<CategoryChart>(chart).displayChart();
     new SwingWrapper<CategoryChart>(chart2).displayChart();
   }
 

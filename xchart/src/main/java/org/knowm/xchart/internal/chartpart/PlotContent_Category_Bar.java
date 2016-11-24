@@ -157,7 +157,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         case 0: // span chart
           if (y >= 0.0) { // positive
             yTop = y;
-            if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+            if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar || series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick) {
               yBottom = 0.0;
             }
             else {
@@ -170,11 +170,11 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
             }
           }
           else {
-            if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+            if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar || series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick) {
               yTop = 0.0;
             }
             else {
-              yTop = y; // yTransform uses yTop, and for non-bars, it's the same as yBottom.
+              yTop = y; // yTransform uses yTop, and for non-bars and stick, it's the same as yBottom.
             }
             yBottom = y;
             if (stylerCategory.isStacked()) {
@@ -264,7 +264,6 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           // paint stick
           if (series.getLineStyle() != SeriesLines.NONE) {
 
-            System.out.println(yOffset);
             g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
             Shape line = new Line2D.Double(xOffset + barWidth / 2, zeroOffset, xOffset + barWidth / 2, yOffset);
