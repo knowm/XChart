@@ -82,17 +82,28 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static void saveBitmap(Chart chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
-
-    BufferedImage bufferedImage = getBufferedImage(chart);
-
-    OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
-    try {
-      ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), out);
-    } finally {
-      out.close();
+    public static void saveBitmap(Chart chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
+        OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
+        try {
+            saveBitmap(chart, out, bitmapFormat);
+        } finally {
+            out.close();
+        }
     }
-  }
+  
+  /**
+   * Write a Chart into a given stream. Does not close the target stream automatically at the end of the operation
+   *
+   * @param chart
+   * @param targetStream
+   * @param bitmapFormat
+   * @throws IOException
+   */
+    public static void saveBitmap(Chart chart, OutputStream targetStream, BitmapFormat bitmapFormat)
+            throws IOException {
+        BufferedImage bufferedImage = getBufferedImage(chart);
+        ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
+    }  
 
   /**
    * Save a chart as a PNG with a custom DPI. The default DPI is 72, which is fine for displaying charts on a computer monitor, but for printing
