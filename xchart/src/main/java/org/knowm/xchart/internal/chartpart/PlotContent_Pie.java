@@ -130,7 +130,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
           annotation = series.getName();
         }
         else if (stylerPie.getAnnotationType() == AnnotationType.Value) {
-          annotation = y.doubleValue();
+          annotation = String.valueOf(y.intValue());
         }
         else if (stylerPie.getAnnotationType() == AnnotationType.LabelAndPercentage) {
           double percentage = y.doubleValue() / total * 100;
