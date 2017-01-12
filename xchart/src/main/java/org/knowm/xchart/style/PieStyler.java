@@ -27,7 +27,7 @@ public class PieStyler extends Styler {
 
   public enum AnnotationType {
 
-    Percentage, Label, LabelAndPercentage
+    Value, Percentage, Label, LabelAndPercentage
   }
 
   private boolean isCircular;
