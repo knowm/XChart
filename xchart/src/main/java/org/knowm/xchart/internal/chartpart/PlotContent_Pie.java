@@ -86,6 +86,9 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     Map<String, PieSeries> map = chart.getSeriesMap();
     for (PieSeries series : map.values()) {
 
+      if (!series.isEnabled()) {
+        continue;
+      }
       total += series.getValue().doubleValue();
     }
 
@@ -96,6 +99,10 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
 
     map = chart.getSeriesMap();
     for (PieSeries series : map.values()) {
+
+      if (!series.isEnabled()) {
+        continue;
+      }
 
       Number y = series.getValue();
 

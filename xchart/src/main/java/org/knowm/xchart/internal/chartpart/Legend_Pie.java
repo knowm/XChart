@@ -57,6 +57,9 @@ public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Le
       if (!series.isShowInLegend()) {
         continue;
       }
+      if (!series.isEnabled()) {
+        continue;
+      }
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);

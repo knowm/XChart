@@ -59,6 +59,9 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
       if (!series.isShowInLegend()) {
         continue;
       }
+      if (!series.isEnabled()) {
+        continue;
+      }
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);

@@ -60,6 +60,9 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       if (!series.isShowInLegend()) {
         continue;
       }
+      if (!series.isEnabled()) {
+        continue;
+      }
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, (series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize()));

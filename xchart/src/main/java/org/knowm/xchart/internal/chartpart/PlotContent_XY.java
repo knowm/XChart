@@ -81,6 +81,10 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
     Map<String, XYSeries> map = chart.getSeriesMap();
     for (XYSeries series : map.values()) {
 
+      if (!series.isEnabled()) {
+        continue;
+      }
+
       // data points
       Collection<?> xData = series.getXData();
       Collection<? extends Number> yData = series.getYData();

@@ -86,6 +86,9 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
         // System.out.println(series.getyMin());
         // System.out.println(series.getyMax());
         // System.out.println("****");
+        if (!series.isEnabled()) {
+          continue;
+        }
         xAxis.addMinMax(series.getXMin(), series.getXMax());
         yAxis.addMinMax(series.getYMin(), series.getYMax());
       }
@@ -132,6 +135,10 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
           double[] accumulatedStackOffsetPos = new double[numCategories];
           double[] accumulatedStackOffsetNeg = new double[numCategories];
           for (Series_AxesChart series : chart.getSeriesMap().values()) {
+
+            if (!series.isEnabled()) {
+              continue;
+            }
 
             int categoryCounter = 0;
             Iterator<? extends Number> yItr = series.getYData().iterator();

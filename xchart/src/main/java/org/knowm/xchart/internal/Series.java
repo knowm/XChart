@@ -35,6 +35,8 @@ public abstract class Series {
 
   private boolean showInLegend = true;
 
+  private boolean isEnabled = true;
+
   /**
    * Constructor
    *
@@ -72,6 +74,16 @@ public abstract class Series {
   public void setShowInLegend(boolean showInLegend) {
 
     this.showInLegend = showInLegend;
+  }
+
+  public boolean isEnabled() {
+
+    return isEnabled;
+  }
+
+  public void setEnabled(boolean isEnabled) {
+
+    this.isEnabled = isEnabled;
   }
 
 }

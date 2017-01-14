@@ -152,6 +152,9 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       if (!series.isShowInLegend()) {
         continue;
       }
+      if (!series.isEnabled()) {
+        continue;
+      }
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
 

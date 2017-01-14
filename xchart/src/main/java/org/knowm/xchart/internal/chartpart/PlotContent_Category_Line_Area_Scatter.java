@@ -85,6 +85,10 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
     for (CategorySeries series : seriesMap.values()) {
 
+      if (!series.isEnabled()) {
+        continue;
+      }
+
       // data points
       Collection<? extends Number> yData = series.getYData();
 

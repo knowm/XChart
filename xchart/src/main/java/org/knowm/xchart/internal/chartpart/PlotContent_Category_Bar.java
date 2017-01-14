@@ -97,6 +97,10 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     double[] accumulatedStackOffsetNeg = new double[numCategories];
     for (CategorySeries series : seriesMap.values()) {
 
+      if (!series.isEnabled()) {
+        continue;
+      }
+
       // for line series
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
@@ -223,9 +227,20 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           g.setColor(series.getFillColor());
           g.fill(path);
 
+          // TODO maybe we want outlines of the bars?
+          // if (series.getLineColor() != null) {
+          // path = new Path2D.Double();
+          // int halfLineWidth = (int) (series.getLineStyle().getLineWidth() / 2 + .1);
+          // path.moveTo(xOffset + halfLineWidth, yOffset + halfLineWidth);
+          // path.lineTo(xOffset + halfLineWidth + barWidth - halfLineWidth * 2, yOffset + halfLineWidth);
+          // path.lineTo(xOffset + halfLineWidth + barWidth - halfLineWidth * 2, zeroOffset - halfLineWidth);
+          // path.lineTo(xOffset + halfLineWidth, zeroOffset - halfLineWidth);
+          // path.closePath();
+          //
           // g.setStroke(series.getLineStyle());
           // g.setColor(series.getLineColor());
           // g.draw(path);
+          // }
 
           if (stylerCategory.hasAnnotations() && next != null) {
 

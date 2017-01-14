@@ -78,6 +78,10 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
     Map<String, BubbleSeries> map = chart.getSeriesMap();
     for (BubbleSeries series : map.values()) {
 
+      if (!series.isEnabled()) {
+        continue;
+      }
+
       // data points
       Collection<?> xData = series.getXData();
       Collection<? extends Number> yData = series.getYData();
