@@ -82,6 +82,53 @@ public class CSVImporter {
     return chart;
   }
 
+  public static SeriesData getSeriesDataFromCSVFile(String path2CSVFile, DataOrientation dataOrientation) {
+
+    // 1. get csv file in the dir
+    File csvFile = new File(path2CSVFile);
+
+    // 2. Create Series
+    String[] xAndYData = null;
+    if (dataOrientation == DataOrientation.Rows) {
+      xAndYData = getSeriesDataFromCSVRows(csvFile);
+    }
+    else {
+      xAndYData = getSeriesDataFromCSVColumns(csvFile);
+    }
+    return new SeriesData(getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
+
+  }
+
+  public static class SeriesData {
+
+    private final List<Number> xAxisData;
+    private final List<Number> yAxisData;
+    private final String seriesName;
+
+    public SeriesData(List<Number> xAxisData, List<Number> yAxisData, String seriesName) {
+
+      this.xAxisData = xAxisData;
+      this.yAxisData = yAxisData;
+      this.seriesName = seriesName;
+    }
+
+    public List<Number> getxAxisData() {
+
+      return xAxisData;
+    }
+
+    public List<Number> getyAxisData() {
+
+      return yAxisData;
+    }
+
+    public String getSeriesName() {
+
+      return seriesName;
+    }
+
+  }
+
   /**
    * @param path2Directory
    * @param dataOrientation
@@ -207,7 +254,6 @@ public class CSVImporter {
     }
 
     return matchingFiles.toArray(new File[matchingFiles.size()]);
-
   }
 
   /**
