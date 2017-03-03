@@ -40,6 +40,8 @@ public class CategorySeries extends Series_Markers {
 
     Scatter(LegendRenderType.Scatter),
 
+    SteppedBar(LegendRenderType.Line),
+    
     Bar(LegendRenderType.Box),
 
     Stick(LegendRenderType.Line);
