@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.knowm.xchart.CategorySeries;
@@ -73,22 +74,40 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 	  }
   }
   
-  private static void drawStepBar(Graphics2D g, CategorySeries series, Path2D.Double path, ArrayList<Point2D.Double> returnPath){
+  private static void drawStepBar(Graphics2D g, CategorySeries series, ArrayList<Point2D.Double> path, ArrayList<Point2D.Double> returnPath){
+	  
 	  Collections.reverse(returnPath);
-
-	  //At the last center (0) point before drawing the path
-	  Point2D.Double returnStart = returnPath.remove(0);
-	  path.lineTo(returnStart.getX(), returnStart.getY());
-
-	  drawStepBarLine(g, series, path);
-
-	  //Add the rest of the returnPath so we can
-	  //draw the fill
-	  for (Point2D.Double point : returnPath){
-	  	   path.lineTo(point.x, point.y);
+	  
+	  //The last point will be a duplicate of the first.
+	  //Pop it before adding all to the main path
+	  returnPath.remove( returnPath.size()-1);
+	  path.addAll(returnPath);
+	  
+	  Path2D.Double drawPath = new Path2D.Double();
+	  
+	  //Start draw path from first point, which can then be discarded
+	  Point2D.Double startPoint = path.remove(0);
+	  drawPath.moveTo(startPoint.getX(), startPoint.getY());
+	  
+	  //Prepare complete fill path
+	  for (int i = 0; i < path.size(); i++){
+		  
+		  Point2D.Double currentPoint = path.get(i);
+		  drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
 	  }
-
-	  drawStepBarFill(g, series, path); 
+	  drawStepBarFill(g, series, drawPath); 
+	  
+	  //Remove the bottom portion and draw only the upper outline
+	  drawPath.reset();
+	  drawPath.moveTo(startPoint.getX(), startPoint.getY());
+	  List<Point2D.Double> linePath = path.subList(0, path.size() - returnPath.size() + 1);
+	  for (int i = 0; i < linePath.size(); i++){
+		  
+		  Point2D.Double currentPoint = linePath.get(i);
+		  drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
+	  }
+	  
+	  drawStepBarLine(g, series, drawPath);
   }
   
 
@@ -151,7 +170,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
       //Stepped bars are drawn in chunks
       //rather than for each inidivdual bar
-      Path2D.Double steppedPath = null;
+      ArrayList<Point2D.Double> steppedPath = null;
       ArrayList<Point2D.Double> steppedReturnPath = null;
       
       int categoryCounter = 0;
@@ -283,9 +302,9 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         	
         	//Init in first iteration
     		if (steppedPath == null){
-    			steppedPath = new Path2D.Double();
+    			steppedPath = new ArrayList<Point2D.Double>();
     			steppedReturnPath = new ArrayList<Point2D.Double>();
-    			steppedPath.moveTo(xOffset, yCenter); 
+    			steppedPath.add( new Point2D.Double(xOffset, yCenter) ); 
     		}
     		else if (stylerCategory.isStacked()){
     			//If a section of a stacked graph has changed from positive
@@ -294,9 +313,10 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 			   if ( (previousY > 0 && y < 0) || (previousY < 0 && y > 0)  ){
 				   	drawStepBar(g,series,steppedPath,steppedReturnPath);
 				  
-			   		steppedPath.reset();
+			   		steppedPath.clear();
 			 		steppedReturnPath.clear();
-			 		steppedPath.moveTo(xOffset, yCenter); 
+			 		steppedPath.add( new Point2D.Double(xOffset, yCenter) ); 
+
 			   }
     		}
         		
@@ -313,9 +333,9 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         	}
         		
         	//Draw the vertical line to the new y position, and the horizontal flat of the bar.
-        	steppedPath.lineTo(xOffset,  yTip);
-        	steppedPath.lineTo(xOffset + stepLength, yTip);
-
+        	steppedPath.add( new Point2D.Double(xOffset, yTip) ); 
+        	steppedPath.add( new Point2D.Double(xOffset + stepLength, yTip) ); 
+        	
         	 //Add the corresponding centerline (or equivalent) to the return path
         	//Could be simplfied and removed for non-stacked graphs
         	steppedReturnPath.add(new Point2D.Double(xOffset, yCenter));

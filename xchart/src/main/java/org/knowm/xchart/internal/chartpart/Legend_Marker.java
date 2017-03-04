@@ -103,9 +103,10 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
     	    g.setColor(series.getLineColor());
     	    
     	    // Only respect the existing stroke width up to BOX_OUTLINE_WIDTH, as the legend box is very small.
+    	    //Note the simplified coversion of line width from user space to device space.
     	    BasicStroke existingLineStyle = series.getLineStyle();
     	    BasicStroke newLineStyle = new BasicStroke(
-    	    											existingLineStyle.getLineWidth()> BOX_OUTLINE_WIDTH ? BOX_OUTLINE_WIDTH : existingLineStyle.getLineWidth(), 
+    	    											existingLineStyle.getLineWidth() > BOX_OUTLINE_WIDTH * 0.5f ? BOX_OUTLINE_WIDTH *0.5f : existingLineStyle.getLineWidth(), 
     	    											existingLineStyle.getEndCap(),
     	    											existingLineStyle.getLineJoin(), 
     	    											existingLineStyle.getMiterLimit(),
