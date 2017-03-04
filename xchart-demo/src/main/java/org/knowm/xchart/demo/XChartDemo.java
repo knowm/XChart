@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -86,16 +86,24 @@ import org.knowm.xchart.demo.charts.theme.ThemeChart04;
  */
 public class XChartDemo extends JPanel implements TreeSelectionListener {
 
-  /** The main split frame */
+  /**
+   * The main split frame
+   */
   private JSplitPane splitPane;
 
-  /** The tree */
+  /**
+   * The tree
+   */
   private JTree tree;
 
-  /** The panel for chart */
+  /**
+   * The panel for chart
+   */
   private XChartPanel chartPanel;
 
-  /** real-time chart example */
+  /**
+   * real-time chart example
+   */
   final RealtimeChart01 realtimeChart01 = new RealtimeChart01();
   final RealtimeChart02 realtimeChart02 = new RealtimeChart02();
   final RealtimeChart03 realtimeChart03 = new RealtimeChart03();
@@ -138,7 +146,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
     // Add the split pane to this panel.
     add(splitPane);
-
   }
 
   @Override
@@ -427,7 +434,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart05 - Real-time Category Chart", realtimeChart05.getChart()));
     category.add(defaultMutableTreeNode);
-
   }
 
   /**

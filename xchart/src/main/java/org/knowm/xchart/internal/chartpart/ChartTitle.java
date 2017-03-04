@@ -98,7 +98,7 @@ public class ChartTitle implements ChartPart {
   /**
    * get the height of the chart title including the chart title padding
    *
-   * @return
+   * @return a Rectangle2D defining the height of the chart title including the chart title padding
    */
   private Rectangle2D getBoundsHint() {
 

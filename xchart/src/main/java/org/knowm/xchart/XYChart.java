@@ -45,8 +45,20 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    */
   public XYChart(int width, int height) {
 
+
+
     super(width, height, new XYStyler());
+
+    // long start = System.currentTimeMillis();
+    //
+    // long t1 = System.currentTimeMillis();
+    // System.out.println("t1 = " + (t1 - start));
+    //
+    // long t2 = System.currentTimeMillis();
+    // System.out.println("t2 = " + (t2 - t1));
+
     axisPair = new AxisPair(this);
+
     plot = new Plot_XY(this);
     legend = new Legend_Marker(this);
   }

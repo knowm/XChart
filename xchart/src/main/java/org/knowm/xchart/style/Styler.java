@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,15 +41,15 @@ public abstract class Styler {
     public Theme newInstance(ChartTheme chartTheme) {
 
       switch (chartTheme) {
-      case GGPlot2:
-        return new GGPlot2Theme();
+        case GGPlot2:
+          return new GGPlot2Theme();
 
-      case Matlab:
-        return new MatlabTheme();
+        case Matlab:
+          return new MatlabTheme();
 
-      case XChart:
-      default:
-        return new XChartTheme();
+        case XChart:
+        default:
+          return new XChartTheme();
       }
     }
   }
@@ -102,6 +102,7 @@ public abstract class Styler {
     // Chart Style ///////////////////////////////
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
+
     chartPadding = theme.getChartPadding();
     seriesColors = theme.getSeriesColors();
     seriesLines = theme.getSeriesLines();
@@ -535,5 +536,4 @@ public abstract class Styler {
 
     this.annotationsFont = annotationsFont;
   }
-
 }

@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -43,19 +43,19 @@ public final class QuickChart {
    * @param chartTitle the Chart title
    * @param xTitle The X-Axis title
    * @param yTitle The Y-Axis title
-   * @param seriesNames The name of the series
+   * @param seriesName The name of the series
    * @param xData An array containing the X-Axis data
    * @param yData An array containing Y-Axis data
    * @return a Chart Object
    */
   public static XYChart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, double[] xData, double[] yData) {
 
-    double[][] yData2d = { yData };
+    double[][] yData2d = {yData};
     if (seriesName == null) {
       return getChart(chartTitle, xTitle, yTitle, null, xData, yData2d);
     }
     else {
-      return getChart(chartTitle, xTitle, yTitle, new String[] { seriesName }, xData, yData2d);
+      return getChart(chartTitle, xTitle, yTitle, new String[]{seriesName}, xData, yData2d);
     }
   }
 
@@ -92,7 +92,6 @@ public final class QuickChart {
       }
       series.setMarker(SeriesMarkers.NONE);
     }
-
     return chart;
   }
 
@@ -102,7 +101,7 @@ public final class QuickChart {
    * @param chartTitle the Chart title
    * @param xTitle The X-Axis title
    * @param yTitle The Y-Axis title
-   * @param seriesNames The name of the series
+   * @param seriesName The name of the series
    * @param xData A Collection containing the X-Axis data
    * @param yData A Collection containing Y-Axis data
    * @return a Chart Object
@@ -121,7 +120,5 @@ public final class QuickChart {
     series.setMarker(SeriesMarkers.NONE);
 
     return chart;
-
   }
-
 }
