@@ -136,6 +136,9 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
         if (stylerPie.getAnnotationType() == AnnotationType.Label) {
           annotation = series.getName();
         }
+        else if (stylerPie.getAnnotationType() == AnnotationType.Value) {
+          annotation = String.valueOf(y.intValue());
+        }
         else if (stylerPie.getAnnotationType() == AnnotationType.LabelAndPercentage) {
           double percentage = y.doubleValue() / total * 100;
           annotation = series.getName() + " (" + df.format(percentage) + "%)";
