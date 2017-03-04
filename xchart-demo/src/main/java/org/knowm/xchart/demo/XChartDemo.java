@@ -44,6 +44,9 @@ import org.knowm.xchart.demo.charts.bar.BarChart06;
 import org.knowm.xchart.demo.charts.bar.BarChart07;
 import org.knowm.xchart.demo.charts.bar.BarChart08;
 import org.knowm.xchart.demo.charts.bar.BarChart09;
+import org.knowm.xchart.demo.charts.bar.BarChart10;
+import org.knowm.xchart.demo.charts.bar.BarChart11;
+import org.knowm.xchart.demo.charts.bar.BarChart12;
 import org.knowm.xchart.demo.charts.bubble.BubbleChart01;
 import org.knowm.xchart.demo.charts.date.DateChart01;
 import org.knowm.xchart.demo.charts.date.DateChart02;
@@ -349,6 +352,15 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart09 - Category chart with Bar, Line and Scatter Series", new BarChart09().getChart()));
+    category.add(defaultMutableTreeNode);
+    
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart10 - Stepped Bars with Line Styling", new BarChart10().getChart()));
+    category.add(defaultMutableTreeNode);
+    
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart11 - Stacked Stepped Bars", new BarChart11().getChart()));
+    category.add(defaultMutableTreeNode);
+    
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart12 - Stepped Bars Not Overlapped", new BarChart12().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Stick category
