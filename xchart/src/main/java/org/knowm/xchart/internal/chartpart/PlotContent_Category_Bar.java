@@ -338,6 +338,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           g.fill(path);
 
           // TODO maybe we want outlines of the bars?
+          // Legend markers now also draw the outline. It has been disabled for CategorySeriesRenderStyle.Bar
+          // in Legend_Marker.java. Modify accordingly if you are enabling bar outlines.
           // if (series.getLineColor() != null) {
           // path = new Path2D.Double();
           // int halfLineWidth = (int) (series.getLineStyle().getLineWidth() / 2 + .1);

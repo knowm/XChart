@@ -16,12 +16,16 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Series;
 import org.knowm.xchart.internal.Series_Markers;
@@ -56,7 +60,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
 
     Map<String, Series_Markers> map = chart.getSeriesMap();
     for (Series_Markers series : map.values()) {
-
+       	
       if (!series.isShowInLegend()) {
         continue;
       }
@@ -86,10 +90,43 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       }
       else { // bar/pie type series
 
-        // paint little box
+        // paint inner box
         Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
         g.setColor(series.getFillColor());
         g.fill(rectSmall);
+        
+        //Draw outline
+        //At the time of writing CategorySeriesRenderStyle.Bar does not support outlines. To reflect this any LineColor value should be ignored.
+        if ( !(series instanceof CategorySeries &&((CategorySeries) series).getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) )
+        {
+            // paint outer box
+    	    g.setColor(series.getLineColor());
+    	    
+    	    // Only respect the existing stroke width up to BOX_OUTLINE_WIDTH, as the legend box is very small.
+    	    BasicStroke existingLineStyle = series.getLineStyle();
+    	    BasicStroke newLineStyle = new BasicStroke(
+    	    											existingLineStyle.getLineWidth()> BOX_OUTLINE_WIDTH ? BOX_OUTLINE_WIDTH : existingLineStyle.getLineWidth(), 
+    	    											existingLineStyle.getEndCap(),
+    	    											existingLineStyle.getLineJoin(), 
+    	    											existingLineStyle.getMiterLimit(),
+    	    											existingLineStyle.getDashArray(),
+    	    											existingLineStyle.getDashPhase()		
+    	    		);
+     
+    	    g.setPaint(series.getLineColor());
+    	    g.setStroke(newLineStyle);
+    	    
+    	    Path2D.Double outlinePath = new Path2D.Double();
+    	    
+    	    double lineOffset = existingLineStyle.getLineWidth() * 0.5 ;
+    	    outlinePath.moveTo(startx+lineOffset, starty+lineOffset);
+    	    outlinePath.lineTo(startx+lineOffset, starty+BOX_SIZE-lineOffset);
+    	    outlinePath.lineTo(startx+BOX_SIZE-lineOffset, starty+BOX_SIZE-lineOffset);
+    	    outlinePath.lineTo(startx+BOX_SIZE-lineOffset, starty+lineOffset);
+    	    outlinePath.closePath();
+    	    
+    	    g.draw(outlinePath);
+        }
       }
 
       // paint series text

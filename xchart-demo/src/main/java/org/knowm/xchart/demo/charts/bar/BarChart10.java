@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.demo.charts.bar;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * <ul>
  * <li>Histogram
  * <li>Bar Chart styles - overlapped
+ * <li>Custom Line Style
  * <li>Render style - Stepped Bars
  */
 public class BarChart10 implements ExampleChart<CategoryChart> {
@@ -74,9 +76,24 @@ public class BarChart10 implements ExampleChart<CategoryChart> {
     series2.setChartCategorySeriesRenderStyle( CategorySeriesRenderStyle.SteppedBar);
     series1.setChartCategorySeriesRenderStyle( CategorySeriesRenderStyle.SteppedBar);
     
+    //Remove the outline from the first series
+    series1.setLineColor(new Color(0,0,0,0));
+    
     //Make the fill of the second series transparent, leaving us with only the outline
     series2.setFillColor(new Color(0,0,0,0));
    
+    //Also give it a nice dotted-line apperance
+    BasicStroke baseLineStyle = new BasicStroke();
+    BasicStroke newLineStyle = new BasicStroke(
+    		2f, 
+    		baseLineStyle.getEndCap(),
+    		baseLineStyle.getLineJoin(), 
+    		baseLineStyle.getMiterLimit(),
+    		new float[]{5,5},
+    		baseLineStyle.getDashPhase()		
+    		);
+    
+    series2.setLineStyle(newLineStyle);
     
     return chart;
   }

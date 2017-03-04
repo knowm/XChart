@@ -40,6 +40,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
   protected static final int LEGEND_MARGIN = 6;
   protected static final int BOX_SIZE = 20;
+  protected static final int BOX_OUTLINE_WIDTH = 5;
   protected static final int MULTI_LINE_SPACE = 3;
 
   protected Chart<ST, S> chart;
