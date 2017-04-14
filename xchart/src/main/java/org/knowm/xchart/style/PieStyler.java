@@ -27,7 +27,7 @@ public class PieStyler extends Styler {
 
   public enum AnnotationType {
 
-    Percentage, Label, LabelAndPercentage
+    Value, Percentage, Label, LabelAndPercentage
   }
 
   private boolean isCircular;
@@ -152,9 +152,10 @@ public class PieStyler extends Styler {
    *
    * @param drawAllAnnotations
    */
-  public void setDrawAllAnnotations(boolean drawAllAnnotations) {
+  public PieStyler setDrawAllAnnotations(boolean drawAllAnnotations) {
 
     this.drawAllAnnotations = drawAllAnnotations;
+    return this;
   }
 
   public double getDonutThickness() {
@@ -177,10 +178,11 @@ public class PieStyler extends Styler {
    *
    * @param theme
    */
-  public void setTheme(Theme theme) {
+  public PieStyler setTheme(Theme theme) {
 
     this.theme = theme;
     super.setAllStyles();
+    return this;
   }
 
   public Theme getTheme() {

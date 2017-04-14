@@ -41,7 +41,6 @@ public abstract class Series {
    * Constructor
    *
    * @param name
-   * @param seriesColorMarkerLineStyle
    */
   public Series(String name) {
 

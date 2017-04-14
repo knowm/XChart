@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -73,7 +73,6 @@ public abstract class AxesChartStyler extends Styler {
   private Locale locale;
   private TimeZone timezone;
   private String datePattern;
-  private String decimalPattern;
   private String xAxisDecimalPattern;
   private String yAxisDecimalPattern;
 
@@ -125,7 +124,6 @@ public abstract class AxesChartStyler extends Styler {
     this.locale = Locale.getDefault();
     this.timezone = TimeZone.getDefault();
     this.datePattern = null; // if not null, this override pattern will be used
-    this.decimalPattern = null;
     this.xAxisDecimalPattern = null;
     this.yAxisDecimalPattern = null;
 
@@ -740,22 +738,6 @@ public abstract class AxesChartStyler extends Styler {
     return datePattern;
   }
 
-  /**
-   * Set the decimal formatter for all tick labels
-   *
-   * @param decimalPattern - the pattern describing the decimal format
-   */
-  public AxesChartStyler setDecimalPattern(String decimalPattern) {
-
-    this.decimalPattern = decimalPattern;
-    return this;
-  }
-
-  public String getDecimalPattern() {
-
-    return decimalPattern;
-  }
-
   public String getXAxisDecimalPattern() {
 
     return xAxisDecimalPattern;
@@ -787,5 +769,4 @@ public abstract class AxesChartStyler extends Styler {
     this.yAxisDecimalPattern = yAxisDecimalPattern;
     return this;
   }
-
 }

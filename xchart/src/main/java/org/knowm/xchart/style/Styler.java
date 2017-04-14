@@ -59,7 +59,9 @@ public abstract class Styler {
     Left, Centre, Right;
   }
 
-  /** the default Theme */
+  /**
+   * the default Theme
+   */
   protected Theme theme = new XChartTheme();
 
   // Chart Style ///////////////////////////////
@@ -95,7 +97,9 @@ public abstract class Styler {
 
   // Annotations ///////////////////////////////
   private Font annotationsFont;
-  public boolean hasAnnotations;
+  public boolean hasAnnotations = false; // set by subclass
+
+  private String decimalPattern;
 
   protected void setAllStyles() {
 
@@ -133,6 +137,9 @@ public abstract class Styler {
 
     // Annotations ///////////////////////////////
     annotationsFont = theme.getAnnotationFont();
+
+    // Formatting
+    decimalPattern = null;
   }
 
   // Chart Style ///////////////////////////////
@@ -223,7 +230,8 @@ public abstract class Styler {
   /**
    * Set the chart title font
    *
-   * @param font
+   * @param chartTitleFont
+   * @return
    */
   public Styler setChartTitleFont(Font chartTitleFont) {
 
@@ -401,7 +409,8 @@ public abstract class Styler {
   /**
    * Set the chart legend series line length
    *
-   * @param legendPadding
+   * @param legendSeriesLineLength
+   * @return
    */
   public Styler setLegendSeriesLineLength(int legendSeriesLineLength) {
 
@@ -515,11 +524,12 @@ public abstract class Styler {
   /**
    * Sets if annotations should be added to charts. Each chart type has a different annotation type
    *
-   * @param showAnnotations
+   * @param hasAnnotations
    */
-  public void setHasAnnotations(boolean hasAnnotations) {
+  public Styler setHasAnnotations(boolean hasAnnotations) {
 
     this.hasAnnotations = hasAnnotations;
+    return this;
   }
 
   public Font getAnnotationsFont() {
@@ -532,8 +542,25 @@ public abstract class Styler {
    *
    * @param annotationsFont
    */
-  public void setAnnotationsFont(Font annotationsFont) {
+  public Styler setAnnotationsFont(Font annotationsFont) {
 
     this.annotationsFont = annotationsFont;
+    return this;
+  }
+
+  /**
+   * Set the decimal formatter for all numbers on the chart rendered as Strings
+   *
+   * @param decimalPattern - the pattern describing the decimal format
+   */
+  public Styler setDecimalPattern(String decimalPattern) {
+
+    this.decimalPattern = decimalPattern;
+    return this;
+  }
+
+  public String getDecimalPattern() {
+
+    return decimalPattern;
   }
 }
