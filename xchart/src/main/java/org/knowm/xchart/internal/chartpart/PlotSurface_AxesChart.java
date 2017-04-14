@@ -56,7 +56,6 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
     Shape rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
     g.setColor(stylerAxesChart.getPlotBackgroundColor());
     g.fill(rect);
-
     // paint grid lines and/or inner plot ticks
 
     // horizontal
@@ -65,7 +64,6 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
 
       List<Double> yAxisTickLocations = chart.getYAxis().getAxisTickCalculator().getTickLocations();
       for (int i = 0; i < yAxisTickLocations.size(); i++) {
-
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocations.get(i);
 
         if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
@@ -74,8 +72,9 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
           if (stylerAxesChart.isPlotGridHorizontalLinesVisible()) {
 
             g.setColor(stylerAxesChart.getPlotGridLinesColor());
-            // g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
+            g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
             Shape line = stylerAxesChart.getPlotGridLinesStroke().createStrokedShape(new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset));
+            // g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
             // Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
             g.draw(line);
             // g.drawLine((int) bounds.getX(), (int) yOffset, (int) (bounds.getX() + bounds.getWidth()), (int) yOffset);
@@ -111,6 +110,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
           if (stylerAxesChart.isPlotGridVerticalLinesVisible()) {
 
             g.setColor(stylerAxesChart.getPlotGridLinesColor());
+            g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
             // g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
             // System.out.println();
             Shape line = stylerAxesChart.getPlotGridLinesStroke().createStrokedShape(new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight()));

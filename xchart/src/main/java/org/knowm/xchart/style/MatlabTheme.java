@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,21 +58,18 @@ public class MatlabTheme implements Theme {
   public Marker[] getSeriesMarkers() {
 
     return new MatlabSeriesMarkers().getSeriesMarkers();
-
   }
 
   @Override
   public BasicStroke[] getSeriesLines() {
 
     return new MatlabSeriesLines().getSeriesLines();
-
   }
 
   @Override
   public Color[] getSeriesColors() {
 
     return new MatlabSeriesColors().getSeriesColors();
-
   }
 
   // Chart Title ///////////////////////////////
@@ -131,7 +128,6 @@ public class MatlabTheme implements Theme {
   public Color getLegendBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.WHITE);
-
   }
 
   @Override
@@ -223,7 +219,7 @@ public class MatlabTheme implements Theme {
   @Override
   public Stroke getAxisTickMarksStroke() {
 
-    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
+    return new BasicStroke(.5f);
   }
 
   @Override
@@ -315,8 +311,7 @@ public class MatlabTheme implements Theme {
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(0.25f, BasicStroke.CAP_BUTT, BasicStroke.CAP_ROUND, 10.0f, new float[] { 1.0f, 2.0f }, 0.0f);
-
+    return new BasicStroke(.5f, BasicStroke.CAP_BUTT, BasicStroke.CAP_ROUND, 10.0f, new float[]{1f, 3.0f}, 0.0f);
   }
 
   @Override
@@ -417,7 +412,5 @@ public class MatlabTheme implements Theme {
   public Font getAnnotationFont() {
 
     return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-
   }
-
 }

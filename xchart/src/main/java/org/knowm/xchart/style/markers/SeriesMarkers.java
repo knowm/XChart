@@ -21,13 +21,13 @@ package org.knowm.xchart.style.markers;
  */
 public interface SeriesMarkers {
 
-  public static Marker NONE = new None();
-  public static Marker CIRCLE = new Circle();
-  public static Marker DIAMOND = new Diamond();
-  public static Marker SQUARE = new Square();
-  public static Marker TRIANGLE_DOWN = new TriangleDown();
-  public static Marker TRIANGLE_UP = new TriangleUp();
+  Marker NONE = new None();
+  Marker CIRCLE = new Circle();
+  Marker DIAMOND = new Diamond();
+  Marker SQUARE = new Square();
+  Marker TRIANGLE_DOWN = new TriangleDown();
+  Marker TRIANGLE_UP = new TriangleUp();
 
-  public Marker[] getSeriesMarkers();
+  Marker[] getSeriesMarkers();
 
 }

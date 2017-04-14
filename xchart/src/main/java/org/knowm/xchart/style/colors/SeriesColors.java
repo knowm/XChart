@@ -23,6 +23,6 @@ import java.awt.Color;
  */
 public interface SeriesColors {
 
-  public Color[] getSeriesColors();
+  Color[] getSeriesColors();
 
 }

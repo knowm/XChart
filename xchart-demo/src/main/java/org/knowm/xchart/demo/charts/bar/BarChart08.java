@@ -25,6 +25,7 @@ import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
@@ -48,7 +49,7 @@ public class BarChart08 implements ExampleChart<CategoryChart> {
   public CategoryChart getChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
+    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("Histogram").xAxisTitle("Mean").theme(ChartTheme.Matlab).yAxisTitle("Count").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);

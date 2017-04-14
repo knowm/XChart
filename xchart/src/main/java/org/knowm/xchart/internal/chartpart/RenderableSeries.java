@@ -21,11 +21,11 @@ package org.knowm.xchart.internal.chartpart;
  */
 public interface RenderableSeries {
 
-  public enum LegendRenderType {
+  enum LegendRenderType {
 
     Line, Scatter, Box
   }
 
-  public LegendRenderType getLegendRenderType();
+  LegendRenderType getLegendRenderType();
 
 }
