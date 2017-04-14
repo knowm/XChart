@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -111,7 +111,6 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     if (xAxis.getMin() == Double.NEGATIVE_INFINITY || yAxis.getMin() == Double.NEGATIVE_INFINITY || xAxis.getMax() == Double.NEGATIVE_INFINITY || yAxis.getMax() == Double.NEGATIVE_INFINITY) {
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.NEGATIVE_INFINITY!!!");
     }
-
   }
 
   /**
@@ -159,7 +158,6 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
               }
               categoryCounter++;
             }
-
           }
 
           double max = accumulatedStackOffsetPos[0];
@@ -191,7 +189,6 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
           overrideYAxisMaxValue = 0.0;
         }
       }
-
     }
 
     // override min and maxValue if specified
@@ -220,7 +217,6 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     xAxis.setMax(overrideXAxisMaxValue);
     yAxis.setMin(overrideYAxisMinValue);
     yAxis.setMax(overrideYAxisMaxValue);
-
   }
 
   // Getters & Setters /////////////////////////////////////////////////

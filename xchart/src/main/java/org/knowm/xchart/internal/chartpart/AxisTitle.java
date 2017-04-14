@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
   /**
    * Constructor
    *
-   * @param chart the Chart
+   * @param chart     the Chart
    * @param direction the Direction
    */
   protected AxisTitle(Chart<AxesChartStyler, Series_AxesChart> chart, Direction direction) {
@@ -93,7 +93,6 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
       else {
         bounds = new Rectangle2D.Double(chart.getYAxis().getBounds().getX(), chart.getYAxis().getBounds().getY(), 0, chart.getYAxis().getBounds().getHeight());
       }
-
     }
     else {
 

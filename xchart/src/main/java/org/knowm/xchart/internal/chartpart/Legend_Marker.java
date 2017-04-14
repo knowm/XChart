@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -60,7 +60,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
 
     Map<String, Series_Markers> map = chart.getSeriesMap();
     for (Series_Markers series : map.values()) {
-       	
+
       if (!series.isShowInLegend()) {
         continue;
       }
@@ -94,39 +94,38 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
         Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
         g.setColor(series.getFillColor());
         g.fill(rectSmall);
-        
+
         //Draw outline
         //At the time of writing CategorySeriesRenderStyle.Bar does not support outlines. To reflect this any LineColor value should be ignored.
-        if ( !(series instanceof CategorySeries &&((CategorySeries) series).getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) )
-        {
-            // paint outer box
-    	    g.setColor(series.getLineColor());
-    	    
-    	    // Only respect the existing stroke width up to BOX_OUTLINE_WIDTH, as the legend box is very small.
-    	    //Note the simplified coversion of line width from user space to device space.
-    	    BasicStroke existingLineStyle = series.getLineStyle();
-    	    BasicStroke newLineStyle = new BasicStroke(
-    	    											existingLineStyle.getLineWidth() > BOX_OUTLINE_WIDTH * 0.5f ? BOX_OUTLINE_WIDTH *0.5f : existingLineStyle.getLineWidth(), 
-    	    											existingLineStyle.getEndCap(),
-    	    											existingLineStyle.getLineJoin(), 
-    	    											existingLineStyle.getMiterLimit(),
-    	    											existingLineStyle.getDashArray(),
-    	    											existingLineStyle.getDashPhase()		
-    	    		);
-     
-    	    g.setPaint(series.getLineColor());
-    	    g.setStroke(newLineStyle);
-    	    
-    	    Path2D.Double outlinePath = new Path2D.Double();
-    	    
-    	    double lineOffset = existingLineStyle.getLineWidth() * 0.5 ;
-    	    outlinePath.moveTo(startx+lineOffset, starty+lineOffset);
-    	    outlinePath.lineTo(startx+lineOffset, starty+BOX_SIZE-lineOffset);
-    	    outlinePath.lineTo(startx+BOX_SIZE-lineOffset, starty+BOX_SIZE-lineOffset);
-    	    outlinePath.lineTo(startx+BOX_SIZE-lineOffset, starty+lineOffset);
-    	    outlinePath.closePath();
-    	    
-    	    g.draw(outlinePath);
+        if (!(series instanceof CategorySeries && ((CategorySeries) series).getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar)) {
+          // paint outer box
+          g.setColor(series.getLineColor());
+
+          // Only respect the existing stroke width up to BOX_OUTLINE_WIDTH, as the legend box is very small.
+          //Note the simplified coversion of line width from user space to device space.
+          BasicStroke existingLineStyle = series.getLineStyle();
+          BasicStroke newLineStyle = new BasicStroke(
+              existingLineStyle.getLineWidth() > BOX_OUTLINE_WIDTH * 0.5f ? BOX_OUTLINE_WIDTH * 0.5f : existingLineStyle.getLineWidth(),
+              existingLineStyle.getEndCap(),
+              existingLineStyle.getLineJoin(),
+              existingLineStyle.getMiterLimit(),
+              existingLineStyle.getDashArray(),
+              existingLineStyle.getDashPhase()
+          );
+
+          g.setPaint(series.getLineColor());
+          g.setStroke(newLineStyle);
+
+          Path2D.Double outlinePath = new Path2D.Double();
+
+          double lineOffset = existingLineStyle.getLineWidth() * 0.5;
+          outlinePath.moveTo(startx + lineOffset, starty + lineOffset);
+          outlinePath.lineTo(startx + lineOffset, starty + BOX_SIZE - lineOffset);
+          outlinePath.lineTo(startx + BOX_SIZE - lineOffset, starty + BOX_SIZE - lineOffset);
+          outlinePath.lineTo(startx + BOX_SIZE - lineOffset, starty + lineOffset);
+          outlinePath.closePath();
+
+          g.draw(outlinePath);
         }
       }
 
@@ -135,18 +134,14 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
 
         double x = startx + chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding();
         paintSeriesText(g, seriesTextBounds, stylerAxesChart.getMarkerSize(), x, starty);
-
       }
       else { // bar/pie type series
 
         double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
         paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
-
       }
       starty += legendEntryHeight + chart.getStyler().getLegendPadding();
-
     }
-
   }
 
   @Override

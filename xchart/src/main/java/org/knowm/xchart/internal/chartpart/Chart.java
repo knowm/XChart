@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,14 +37,18 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   protected ST styler;
 
-  /** Meta Data */
+  /**
+   * Meta Data
+   */
   private int width;
   private int height;
   private String title = "";
   private String xAxisTitle = "";
   private String yAxisTitle = "";
 
-  /** Chart Parts */
+  /**
+   * Chart Parts
+   */
   protected ChartTitle chartTitle;
   protected Legend_ legend;
   protected Plot_ plot;
@@ -77,7 +81,9 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     g.fill(rect);
   }
 
-  /** Meta Data Getters and Setters */
+  /**
+   * Meta Data Getters and Setters
+   */
   public int getWidth() {
 
     return width;
@@ -128,7 +134,9 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.yAxisTitle = yAxisTitle;
   }
 
-  /** Chart Parts Getters */
+  /**
+   * Chart Parts Getters
+   */
 
   protected ChartTitle getChartTitle() {
 
@@ -179,5 +187,4 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return styler;
   }
-
 }

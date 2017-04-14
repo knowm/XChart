@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,7 +58,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    *
    * @param width
    * @param height
-   * @param theme - pass in a instance of Theme class, probably a custom Theme.
+   * @param theme  - pass in a instance of Theme class, probably a custom Theme.
    */
   public BubbleChart(int width, int height, Theme theme) {
 
@@ -93,8 +93,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * Add a series for a Bubble type chart using using double arrays
    *
    * @param seriesName
-   * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param xData      the X-Axis data
+   * @param xData      the Y-Axis data
    * @param bubbleData the bubble data
    * @return A Series object that you can set properties on
    */
@@ -107,10 +107,9 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * Add a series for a Bubble type chart using using Lists
    *
    * @param seriesName
-   * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param xData      the X-Axis data
+   * @param xData      the Y-Axis data
    * @param bubbleData the bubble data
-   * @return A Series object that you can set properties on
    * @return
    */
   public BubbleSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleData) {
@@ -141,8 +140,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * Update a series by updating the X-Axis, Y-Axis and bubble data
    *
    * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newXData      - set null to be automatically generated as a list of increasing Integers starting from
+   *                      1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newBubbleData - set null if there are no error bars
    * @return
@@ -173,8 +172,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * Update a series by updating the X-Axis, Y-Axis and bubble data
    *
    * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newXData      - set null to be automatically generated as a list of increasing Integers starting from
+   *                      1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newBubbleData - set null if there are no error bars
    * @return
@@ -259,5 +258,4 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
       }
     }
   }
-
 }

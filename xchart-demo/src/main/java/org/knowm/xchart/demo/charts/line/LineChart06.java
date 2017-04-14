@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,9 +58,9 @@ public class LineChart06 implements ExampleChart<XYChart> {
     chart.getStyler().setErrorBarsColor(Color.black);
 
     // Series
-    int[] xData = new int[] { 0, 1, 2, 3, 4, 5, 6 };
-    int[] yData1 = new int[] { 100, 100, 100, 60, 10, 10, 10 };
-    int[] errdata = new int[] { 50, 20, 10, 52, 9, 2, 1 };
+    int[] xData = new int[]{0, 1, 2, 3, 4, 5, 6};
+    int[] yData1 = new int[]{100, 100, 100, 60, 10, 10, 10};
+    int[] errdata = new int[]{50, 20, 10, 52, 9, 2, 1};
     XYSeries series1 = chart.addSeries("Error bar\ntest data", xData, yData1, errdata);
     series1.setLineStyle(SeriesLines.SOLID);
     series1.setMarker(SeriesMarkers.DIAMOND);
@@ -68,5 +68,4 @@ public class LineChart06 implements ExampleChart<XYChart> {
 
     return chart;
   }
-
 }

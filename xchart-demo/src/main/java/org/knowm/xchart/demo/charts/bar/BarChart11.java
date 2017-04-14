@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -45,29 +45,26 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
     new SwingWrapper<CategoryChart>(chart).displayChart();
   }
 
-  
-  private static int[] getRandomValues(int startRange, int endRange, int count)
-  {
-	  int[] values  = new int[count];
-	  Random rand = new Random();
-	  for (int i = 0; i < count; i++)
-	  {
-		  values[i] = rand.nextInt( endRange - startRange ) + startRange; 
-	  }
-	  return values;
+  private static int[] getRandomValues(int startRange, int endRange, int count) {
+
+    int[] values = new int[count];
+    Random rand = new Random();
+    for (int i = 0; i < count; i++) {
+      values[i] = rand.nextInt(endRange - startRange) + startRange;
+    }
+    return values;
   }
-  
-  private static int[] getLinearValues(int startRange, int endRange, int count)
-  {
-	  int[] values = new int[count];
-	  int step = (endRange - startRange) / count;
-	  for (int i = 0; i < count; i++)
-	  {
-		  values[i] = step*i;
-	  }
-	  return values;
+
+  private static int[] getLinearValues(int startRange, int endRange, int count) {
+
+    int[] values = new int[count];
+    int step = (endRange - startRange) / count;
+    for (int i = 0; i < count; i++) {
+      values[i] = step * i;
+    }
+    return values;
   }
-  
+
   @Override
   public CategoryChart getChart() {
 
@@ -77,21 +74,21 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
     // Customize Chart
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
     chart.getStyler().setStacked(true);
-    
+
     // Series
-    CategorySeries series1 = chart.addSeries("Cats", getLinearValues(0,200,21), getRandomValues(-50,50,21));
-    CategorySeries series2 = chart.addSeries("Hamsters",getLinearValues(0,200,21),  getRandomValues(-50,50,21));
+    CategorySeries series1 = chart.addSeries("Cats", getLinearValues(0, 200, 21), getRandomValues(-50, 50, 21));
+    CategorySeries series2 = chart.addSeries("Hamsters", getLinearValues(0, 200, 21), getRandomValues(-50, 50, 21));
 
     //Set render style to SteppedBar
     series1.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.SteppedBar);
     series2.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.SteppedBar);
-    
+
     //Make the line of series1 transparent
-    series1.setLineColor(new Color(0,0,0,0));
-    
+    series1.setLineColor(new Color(0, 0, 0, 0));
+
     //Make the fill of series 2 transparent
-    series2.setFillColor(new Color(0,0,0,0));
-    
+    series2.setFillColor(new Color(0, 0, 0, 0));
+
     return chart;
   }
 }

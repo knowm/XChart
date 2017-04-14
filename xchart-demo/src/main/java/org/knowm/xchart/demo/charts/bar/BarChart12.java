@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,30 +56,26 @@ public class BarChart12 implements ExampleChart<CategoryChart> {
     // Customize Chart
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
 
-    CategorySeries[] categorySeries = new CategorySeries[5]; 
-    
+    CategorySeries[] categorySeries = new CategorySeries[5];
+
     // Series
-    categorySeries[0] = chart.addSeries("fish", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { -40, 30, 20, 60,
-        60 })));
-    categorySeries[1] = chart.addSeries("worms", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { 50, 10, -20, 40,
-        60 })));
-    categorySeries[2] = chart.addSeries("birds", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { 13, 22, -23, -34,
-        37 })));
-    categorySeries[3] = chart.addSeries("ants", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { 50, 57, -14, -20,
-        31 })));
-    categorySeries[4] = chart.addSeries("slugs", new ArrayList<String>(Arrays.asList(new String[] { "Blue", "Red", "Green", "Yellow", "Orange" })), new ArrayList<Number>(Arrays.asList(new Number[] { -2, 29, 49, -16,
-        -43 })));
+    categorySeries[0] = chart.addSeries("fish", new ArrayList<String>(Arrays.asList(new String[]{"Blue", "Red", "Green", "Yellow", "Orange"})), new ArrayList<Number>(Arrays.asList(new Number[]{-40, 30, 20, 60,
+        60})));
+    categorySeries[1] = chart.addSeries("worms", new ArrayList<String>(Arrays.asList(new String[]{"Blue", "Red", "Green", "Yellow", "Orange"})), new ArrayList<Number>(Arrays.asList(new Number[]{50, 10, -20, 40,
+        60})));
+    categorySeries[2] = chart.addSeries("birds", new ArrayList<String>(Arrays.asList(new String[]{"Blue", "Red", "Green", "Yellow", "Orange"})), new ArrayList<Number>(Arrays.asList(new Number[]{13, 22, -23, -34,
+        37})));
+    categorySeries[3] = chart.addSeries("ants", new ArrayList<String>(Arrays.asList(new String[]{"Blue", "Red", "Green", "Yellow", "Orange"})), new ArrayList<Number>(Arrays.asList(new Number[]{50, 57, -14, -20,
+        31})));
+    categorySeries[4] = chart.addSeries("slugs", new ArrayList<String>(Arrays.asList(new String[]{"Blue", "Red", "Green", "Yellow", "Orange"})), new ArrayList<Number>(Arrays.asList(new Number[]{-2, 29, 49, -16,
+        -43})));
 
-    
     //Set the render style to SteppedBar, and make the fill transparent
-    for (CategorySeries series : categorySeries)
-    {
-    	series.setChartCategorySeriesRenderStyle( CategorySeriesRenderStyle.SteppedBar);
-    	series.setFillColor(new Color(0,0,0,0));
+    for (CategorySeries series : categorySeries) {
+      series.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.SteppedBar);
+      series.setFillColor(new Color(0, 0, 0, 0));
     }
-    
 
-    
     return chart;
   }
 }

@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -99,21 +99,20 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
         double boundWidth = tickLabelBounds.getWidth();
         double xPos;
         switch (chart.getStyler().getYAxisLabelAlignment()) {
-        case Right:
-          xPos = xOffset + maxTickLabelWidth - boundWidth;
-          break;
-        case Centre:
-          xPos = xOffset + (maxTickLabelWidth - boundWidth) / 2;
-          break;
-        case Left:
-        default:
-          xPos = xOffset;
+          case Right:
+            xPos = xOffset + maxTickLabelWidth - boundWidth;
+            break;
+          case Centre:
+            xPos = xOffset + (maxTickLabelWidth - boundWidth) / 2;
+            break;
+          case Left:
+          default:
+            xPos = xOffset;
         }
         at.translate(xPos, flippedTickLocation + tickLabelBounds.getHeight() / 2.0);
         g.transform(at);
         g.fill(shape);
         g.setTransform(orig);
-
       }
 
       // bounds
@@ -154,15 +153,15 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
           AffineTransform at = new AffineTransform();
           double xPos;
           switch (chart.getStyler().getXAxisLabelAlignment()) {
-          case Left:
-            xPos = shiftedTickLocation;
-            break;
-          case Right:
-            xPos = shiftedTickLocation - tickLabelBounds.getWidth();
-            break;
-          case Centre:
-          default:
-            xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
+            case Left:
+              xPos = shiftedTickLocation;
+              break;
+            case Right:
+              xPos = shiftedTickLocation - tickLabelBounds.getWidth();
+              break;
+            case Centre:
+            default:
+              xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
           }
           // System.out.println("tickLabelBounds: " + tickLabelBounds.toString());
           double shiftX = -1 * tickLabelBounds.getX() * Math.sin(Math.toRadians(chart.getStyler().getXAxisLabelRotation()));
@@ -198,7 +197,6 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
     else {
       bounds = new Rectangle2D.Double();
     }
-
   }
 
   @Override

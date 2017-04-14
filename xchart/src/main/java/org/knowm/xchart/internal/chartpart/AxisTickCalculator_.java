@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,10 +32,15 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 public abstract class AxisTickCalculator_ {
 
-  /** the List of tick label position in pixels */
-  protected List<Double> tickLocations = new LinkedList<Double>();;
+  /**
+   * the List of tick label position in pixels
+   */
+  protected List<Double> tickLocations = new LinkedList<Double>();
+  ;
 
-  /** the List of tick label values */
+  /**
+   * the List of tick label values
+   */
   protected List<String> tickLabels = new LinkedList<String>();
 
   protected final Direction axisDirection;
@@ -126,6 +131,5 @@ public abstract class AxisTickCalculator_ {
     // }
 
     return (largestLabelWidth * 1.1 < tickSpacingHint);
-
   }
 }

@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -85,9 +85,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
         Shape line = new Line2D.Double(xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset, xOffset + chart.getStyler().getAxisTickMarkLength(), yOffset + chart.getYAxis().getBounds()
             .getHeight());
         g.draw(line);
-
       }
-
     }
     // X-Axis
     else if (direction == Axis.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
@@ -123,12 +121,10 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
         g.drawLine((int) xOffset, (int) (yOffset - chart.getStyler().getAxisTickMarkLength()), (int) (xOffset + chart.getXAxis().getBounds().getWidth()), (int) (yOffset - chart.getStyler()
             .getAxisTickMarkLength()));
       }
-
     }
     else {
       bounds = new Rectangle2D.Double();
     }
-
   }
 
   @Override

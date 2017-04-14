@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -47,39 +47,55 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
   private final AxesChartStyler stylerAxesChart;
 
-  /** the axisDataType */
+  /**
+   * the axisDataType
+   */
   private AxisDataType axisDataType;
 
-  /** the axis title */
+  /**
+   * the axis title
+   */
   private AxisTitle<AxesChartStyler, Series_AxesChart> axisTitle;
 
-  /** the axis tick */
+  /**
+   * the axis tick
+   */
   private AxisTick<AxesChartStyler, Series_AxesChart> axisTick;
 
-  /** the axis tick calculator */
+  /**
+   * the axis tick calculator
+   */
   private AxisTickCalculator_ axisTickCalculator;
 
-  /** the axis direction */
+  /**
+   * the axis direction
+   */
   private Direction direction;
 
   private double min;
 
   private double max;
 
-  /** An axis direction */
+  /**
+   * An axis direction
+   */
   public enum Direction {
 
-    /** the constant to represent X axis */
+    /**
+     * the constant to represent X axis
+     */
     X,
 
-    /** the constant to represent Y axis */
+    /**
+     * the constant to represent Y axis
+     */
     Y
   }
 
   /**
    * Constructor
    *
-   * @param chart the Chart
+   * @param chart     the Chart
    * @param direction the axis direction (X or Y)
    */
   public Axis(Chart<AxesChartStyler, Series_AxesChart> chart, Direction direction) {
@@ -160,9 +176,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
                 - (stylerAxesChart.isYAxisTicksVisible() ? (stylerAxesChart.getPlotMargin()) : 0)
 
-                - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE && stylerAxesChart.isLegendVisible() ? stylerAxesChart.getChartPadding() : 0)
-
-        ;
+                - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE && stylerAxesChart.isLegendVisible() ? stylerAxesChart.getChartPadding() : 0);
 
         height = chart.getHeight() - yOffset - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - stylerAxesChart.getPlotMargin() - stylerAxesChart.getChartPadding();
 
@@ -211,9 +225,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
               - (stylerAxesChart.isYAxisTicksVisible() ? (stylerAxesChart.getPlotMargin()) : 0)
 
-              - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE && stylerAxesChart.isLegendVisible() ? stylerAxesChart.getChartPadding() : 0)
-
-      ;
+              - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE && stylerAxesChart.isLegendVisible() ? stylerAxesChart.getChartPadding() : 0);
 
       // double height = this.getXAxisHeightHint(width);
       // System.out.println("height: " + height);
@@ -229,7 +241,6 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       this.axisTickCalculator = getAxisTickCalculator(bounds.getWidth());
       axisTitle.paint(g);
       axisTick.paint(g);
-
     }
   }
 
@@ -339,7 +350,6 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       }
       else {
         return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, stylerAxesChart);
-
       }
     }
 
@@ -352,10 +362,8 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       }
       else {
         return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, stylerAxesChart);
-
       }
     }
-
   }
 
   // Getters /////////////////////////////////////////////////

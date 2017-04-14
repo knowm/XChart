@@ -1,5 +1,5 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -360,13 +360,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart09 - Category chart with Bar, Line and Scatter Series", new BarChart09().getChart()));
     category.add(defaultMutableTreeNode);
-    
+
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart10 - Stepped Bars with Line Styling", new BarChart10().getChart()));
     category.add(defaultMutableTreeNode);
-    
+
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart11 - Stacked Stepped Bars", new BarChart11().getChart()));
     category.add(defaultMutableTreeNode);
-    
+
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart12 - Stepped Bars Not Overlapped", new BarChart12().getChart()));
     category.add(defaultMutableTreeNode);
 

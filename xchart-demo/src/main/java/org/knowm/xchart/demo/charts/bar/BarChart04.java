@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -57,8 +57,8 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
 
     // Series
-    chart.addSeries("female", Arrays.asList(new Integer[] { 10, 20, 30, 40, 50 }), Arrays.asList(new Integer[] { 50, 10, 20, 40, 35 }));
-    chart.addSeries("male", Arrays.asList(new Integer[] { 10, 20, 30, 40, 50 }), Arrays.asList(new Integer[] { 40, 30, 20, null, 60 }));
+    chart.addSeries("female", Arrays.asList(new Integer[]{10, 20, 30, 40, 50}), Arrays.asList(new Integer[]{50, 10, 20, 40, 35}));
+    chart.addSeries("male", Arrays.asList(new Integer[]{10, 20, 30, 40, 50}), Arrays.asList(new Integer[]{40, 30, 20, null, 60}));
 
     return chart;
   }

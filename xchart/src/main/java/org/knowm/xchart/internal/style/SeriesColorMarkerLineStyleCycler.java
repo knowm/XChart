@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,16 +30,24 @@ import org.knowm.xchart.style.markers.Marker;
  */
 public class SeriesColorMarkerLineStyleCycler {
 
-  /** a List holding the Colors */
+  /**
+   * a List holding the Colors
+   */
   private final Color[] seriesColorList;
 
-  /** a map holding the SeriesMarkers */
+  /**
+   * a map holding the SeriesMarkers
+   */
   private final Marker[] seriesMarkerList;
 
-  /** a map holding the SeriesLineStyles */
+  /**
+   * a map holding the SeriesLineStyles
+   */
   private final BasicStroke[] seriesLineStyleList;
 
-  /** an internal counter */
+  /**
+   * an internal counter
+   */
   private int colorCounter = 0;
   private int markerCounter = 0;
   private int strokeCounter = 0;

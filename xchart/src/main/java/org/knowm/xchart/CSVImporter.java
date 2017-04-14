@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -96,7 +96,6 @@ public class CSVImporter {
       xAndYData = getSeriesDataFromCSVColumns(csvFile);
     }
     return new SeriesData(getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
-
   }
 
   public static class SeriesData {
@@ -126,7 +125,6 @@ public class CSVImporter {
 
       return seriesName;
     }
-
   }
 
   /**
@@ -159,7 +157,6 @@ public class CSVImporter {
       while ((line = bufferedReader.readLine()) != null) {
         xAndYData[counter++] = line;
       }
-
     } catch (Exception e) {
       System.out.println("Exception while reading csv file: " + e);
     } finally {
@@ -197,7 +194,6 @@ public class CSVImporter {
           xAndYData[2] += dataArray[2] + ",";
         }
       }
-
     } catch (Exception e) {
       System.out.println("Exception while reading csv file: " + e);
     } finally {
@@ -237,7 +233,7 @@ public class CSVImporter {
    * This method returns the files found in the given directory matching the given regular expression.
    *
    * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
-   * @param regex - ex. ".*.csv"
+   * @param regex   - ex. ".*.csv"
    * @return File[] - an array of files
    */
   public static File[] getAllFiles(String dirName, String regex) {
@@ -283,5 +279,4 @@ public class CSVImporter {
       return new File[0];
     }
   }
-
 }

@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,7 +52,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
    *
    * @param width
    * @param height
-   * @param theme - pass in a instance of Theme class, probably a custom Theme.
+   * @param theme  - pass in a instance of Theme class, probably a custom Theme.
    */
   public PieChart(int width, int height, Theme theme) {
 
@@ -159,5 +159,4 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
       }
     }
   }
-
 }

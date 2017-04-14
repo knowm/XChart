@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -57,7 +57,6 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   public Legend_(Chart<ST, S> chart) {
 
     this.chart = chart;
-
   }
 
   @Override
@@ -85,33 +84,33 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // legend draw position
 
     switch (chart.getStyler().getLegendPosition()) {
-    case OutsideE:
-      xOffset = chart.getWidth() - bounds.getWidth() - chart.getStyler().getChartPadding();
-      yOffset = chart.getPlot().getBounds().getY() + (chart.getPlot().getBounds().getHeight() - bounds.getHeight()) / 2.0;
-      break;
-    case InsideNW:
-      xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-      break;
-    case InsideNE:
-      xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-      break;
-    case InsideSE:
-      xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
-      break;
-    case InsideSW:
-      xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
-      break;
-    case InsideN:
-      xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
-      yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-      break;
+      case OutsideE:
+        xOffset = chart.getWidth() - bounds.getWidth() - chart.getStyler().getChartPadding();
+        yOffset = chart.getPlot().getBounds().getY() + (chart.getPlot().getBounds().getHeight() - bounds.getHeight()) / 2.0;
+        break;
+      case InsideNW:
+        xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
+        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+        break;
+      case InsideNE:
+        xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
+        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+        break;
+      case InsideSE:
+        xOffset = chart.getPlot().getBounds().getX() + chart.getPlot().getBounds().getWidth() - bounds.getWidth() - LEGEND_MARGIN;
+        yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+        break;
+      case InsideSW:
+        xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
+        yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+        break;
+      case InsideN:
+        xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
+        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+        break;
 
-    default:
-      break;
+      default:
+        break;
     }
 
     // draw legend box background and border
@@ -192,6 +191,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   }
 
   // TODO possibly cache the first hint result, so as to not re-calculate this.
+
   /**
    * Normally each legend entry just has one line of text, but it can be made multi-line by adding "\\n". This method returns a Map for each single legend entry, which is normally just a Map with one
    * single entry.
@@ -260,8 +260,6 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       // g.setColor(Color.blue);
       // g.draw(boundsTemp);
       multiLineOffset += height + MULTI_LINE_SPACE;
-
     }
   }
-
 }

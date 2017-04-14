@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -128,7 +128,6 @@ public class MyCustomTheme implements Theme {
   public Color getLegendBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.WHITE);
-
   }
 
   @Override
@@ -220,7 +219,7 @@ public class MyCustomTheme implements Theme {
   @Override
   public Stroke getAxisTickMarksStroke() {
 
-    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
+    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[]{3.0f, 0.0f}, 0.0f);
   }
 
   @Override
@@ -312,7 +311,7 @@ public class MyCustomTheme implements Theme {
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(0.25f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 3.0f }, 0.0f);
+    return new BasicStroke(0.25f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[]{3.0f, 3.0f}, 0.0f);
   }
 
   @Override
@@ -414,5 +413,4 @@ public class MyCustomTheme implements Theme {
 
     return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
   }
-
 }

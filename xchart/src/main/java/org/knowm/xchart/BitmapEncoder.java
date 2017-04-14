@@ -1,12 +1,12 @@
 /**
- * Copyright 2015-2016 Knowm Inc. (http://knowm.org) and contributors.
+ * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -82,15 +82,16 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-    public static void saveBitmap(Chart chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
-        OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
-        try {
-            saveBitmap(chart, out, bitmapFormat);
-        } finally {
-            out.close();
-        }
+  public static void saveBitmap(Chart chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
+
+    OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
+    try {
+      saveBitmap(chart, out, bitmapFormat);
+    } finally {
+      out.close();
     }
-  
+  }
+
   /**
    * Write a Chart into a given stream. Does not close the target stream automatically at the end of the operation
    *
@@ -99,11 +100,12 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-    public static void saveBitmap(Chart chart, OutputStream targetStream, BitmapFormat bitmapFormat)
-            throws IOException {
-        BufferedImage bufferedImage = getBufferedImage(chart);
-        ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
-    }  
+  public static void saveBitmap(Chart chart, OutputStream targetStream, BitmapFormat bitmapFormat)
+      throws IOException {
+
+    BufferedImage bufferedImage = getBufferedImage(chart);
+    ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
+  }
 
   /**
    * Save a chart as a PNG with a custom DPI. The default DPI is 72, which is fine for displaying charts on a computer monitor, but for printing
@@ -188,7 +190,7 @@ public final class BitmapEncoder {
    * @param chart
    * @param fileName
    * @param bitmapFormat
-   * @param quality - a float between 0 and 1 (1 = maximum quality)
+   * @param quality      - a float between 0 and 1 (1 = maximum quality)
    * @throws FileNotFoundException
    * @throws IOException
    */
@@ -245,5 +247,4 @@ public final class BitmapEncoder {
     chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
     return bufferedImage;
   }
-
 }
