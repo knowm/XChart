@@ -35,7 +35,7 @@ public class PieSeries extends Series {
 
     private final LegendRenderType legendRenderType;
 
-    private PieSeriesRenderStyle(LegendRenderType legendRenderType) {
+    PieSeriesRenderStyle(LegendRenderType legendRenderType) {
 
       this.legendRenderType = legendRenderType;
     }

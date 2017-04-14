@@ -42,7 +42,7 @@ public class XYSeries extends Series_Markers {
 
     private final LegendRenderType legendRenderType;
 
-    private XYSeriesRenderStyle(LegendRenderType legendRenderType) {
+    XYSeriesRenderStyle(LegendRenderType legendRenderType) {
 
       this.legendRenderType = legendRenderType;
     }

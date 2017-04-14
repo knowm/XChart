@@ -23,6 +23,7 @@ import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -63,7 +64,7 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
 
         // Create and set up the window.
         JFrame frame = new JFrame("XChart");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(chartPanel);
 
         // Display the window.

@@ -54,7 +54,7 @@ public final class BitmapEncoder {
   }
 
   public enum BitmapFormat {
-    PNG, JPG, BMP, GIF;
+    PNG, JPG, BMP, GIF
   }
 
   /**
@@ -189,8 +189,7 @@ public final class BitmapEncoder {
    *
    * @param chart
    * @param fileName
-   * @param bitmapFormat
-   * @param quality      - a float between 0 and 1 (1 = maximum quality)
+   * @param quality  - a float between 0 and 1 (1 = maximum quality)
    * @throws FileNotFoundException
    * @throws IOException
    */

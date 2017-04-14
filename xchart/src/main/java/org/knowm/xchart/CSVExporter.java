@@ -88,16 +88,13 @@ public class CSVExporter {
    * @param separator
    * @return
    */
-  private static String join(Collection<? extends Object> collection, String separator) {
+  private static String join(Collection<?> collection, String separator) {
 
     if (collection == null) {
       return null;
     }
-    Iterator<? extends Object> iterator = collection.iterator();
+    Iterator<?> iterator = collection.iterator();
     // handle null, zero and one elements before building a buffer
-    if (iterator == null) {
-      return null;
-    }
     if (!iterator.hasNext()) {
       return "";
     }
@@ -107,21 +104,21 @@ public class CSVExporter {
     }
 
     // two or more elements
-    StringBuffer buf = new StringBuffer(256); // Java default is 16, probably too small
+    StringBuilder sb = new StringBuilder(256); // Java default is 16, probably too small
     if (first != null) {
-      buf.append(first);
+      sb.append(first);
     }
 
     while (iterator.hasNext()) {
       if (separator != null) {
-        buf.append(separator);
+        sb.append(separator);
       }
       Object obj = iterator.next();
       if (obj != null) {
-        buf.append(obj);
+        sb.append(obj);
       }
     }
-    return buf.toString();
+    return sb.toString();
   }
 
   /**
@@ -167,8 +164,8 @@ public class CSVExporter {
           errorBarValue = itrErrorBar.next();
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(xDataPoint + ",");
-        sb.append(yDataPoint + ",");
+        sb.append(xDataPoint).append(",");
+        sb.append(yDataPoint).append(",");
         if (errorBarValue != null) {
           sb.append(errorBarValue + ",");
         }

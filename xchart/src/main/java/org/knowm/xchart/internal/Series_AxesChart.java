@@ -25,7 +25,7 @@ import java.util.List;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 
 /**
- * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. Extra values allow for error bars of other uses such as bubbles.
+ * A Series containing X and Y data to be plotted on a Chart with X and Y Axes.
  *
  * @author timmolter
  */
@@ -83,12 +83,9 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param name
    * @param xData
-   * @param xAxisType
    * @param yData
-   * @param yAxisType
-   * @param newExtraValues
    */
-  public Series_AxesChart(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> newExtraValues) {
+  public Series_AxesChart(String name, List<?> xData, List<? extends Number> yData) {
 
     super(name);
 
@@ -191,7 +188,7 @@ public abstract class Series_AxesChart extends Series {
   /**
    * Set the line width of the series
    *
-   * @param color
+   * @param lineWidth
    */
   public Series_AxesChart setLineWidth(float lineWidth) {
 

@@ -54,7 +54,7 @@ public abstract class Series_Markers extends Series_AxesChart {
    */
   public Series_Markers(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
 
-    super(name, xData, yData, errorBars);
+    super(name, xData, yData);
 
     this.extraValues = errorBars;
     calculateMinMax();

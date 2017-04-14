@@ -22,6 +22,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import org.knowm.xchart.internal.chartpart.Chart;
 
@@ -103,7 +104,7 @@ public class SwingWrapper<T extends Chart> {
       @Override
       public void run() {
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         XChartPanel<T> chartPanel = new XChartPanel<T>(charts.get(0));
         chartPanels.add(chartPanel);
         frame.add(chartPanel);
@@ -145,7 +146,7 @@ public class SwingWrapper<T extends Chart> {
       @Override
       public void run() {
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
 
         for (T chart : charts) {

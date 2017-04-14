@@ -61,8 +61,7 @@ public class CSVImporter {
     File[] csvFiles = getAllFiles(path2Directory, ".*.csv");
 
     // 3. create a series for each file, naming the series the file name
-    for (int i = 0; i < csvFiles.length; i++) {
-      File csvFile = csvFiles[i];
+    for (File csvFile : csvFiles) {
       String[] xAndYData = null;
       if (dataOrientation == DataOrientation.Rows) {
         xAndYData = getSeriesDataFromCSVRows(csvFile);

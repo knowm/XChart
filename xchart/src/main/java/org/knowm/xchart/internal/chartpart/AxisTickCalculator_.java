@@ -36,7 +36,6 @@ public abstract class AxisTickCalculator_ {
    * the List of tick label position in pixels
    */
   protected List<Double> tickLocations = new LinkedList<Double>();
-  ;
 
   /**
    * the List of tick label values
@@ -81,8 +80,7 @@ public abstract class AxisTickCalculator_ {
 
     // System.out.println("******");
 
-    double firstPosition = minValue - (minValue % gridStep) - gridStep;
-    return firstPosition;
+    return minValue - (minValue % gridStep) - gridStep;
   }
 
   public List<Double> getTickLocations() {
@@ -111,9 +109,9 @@ public abstract class AxisTickCalculator_ {
 
     String sampleLabel = " ";
     // find the longest String in all the labels
-    for (int i = 0; i < tickLabels.size(); i++) {
-      if (tickLabels.get(i) != null && tickLabels.get(i).length() > sampleLabel.length()) {
-        sampleLabel = tickLabels.get(i);
+    for (String tickLabel : tickLabels) {
+      if (tickLabel != null && tickLabel.length() > sampleLabel.length()) {
+        sampleLabel = tickLabel;
       }
     }
     // System.out.println("longestLabel: " + sampleLabel);

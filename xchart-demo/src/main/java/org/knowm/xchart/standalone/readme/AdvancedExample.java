@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -58,7 +59,7 @@ public class AdvancedExample {
         // Create and set up the window.
         JFrame frame = new JFrame("Advanced Example");
         frame.setLayout(new BorderLayout());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // chart
         JPanel chartPanel = new XChartPanel<XYChart>(chart);

@@ -26,7 +26,6 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  */
 public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart> {
 
-  // ChartType chartType = ChartType.XY;
   public int width = 800;
   public int height = 600;
   public String title = "";

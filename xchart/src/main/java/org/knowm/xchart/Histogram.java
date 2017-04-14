@@ -90,7 +90,7 @@ public class Histogram {
     Iterator<? extends Number> itr = originalData.iterator();
     while (itr.hasNext()) {
 
-      double doubleValue = ((Number) itr.next()).doubleValue();
+      double doubleValue = itr.next().doubleValue();
       int bin = (int) ((doubleValue - min) / binSize); // changed this from numBins
       if (bin < 0) { /* this data is smaller than min */
         // System.out.println("less than");

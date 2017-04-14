@@ -81,8 +81,8 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
 
     List<Double> yData = new ArrayList<Double>(xData.size());
 
-    for (int i = 0; i < xData.size(); i++) {
-      yData.add((1 / (std * Math.sqrt(2 * Math.PI))) * Math.exp(-(((xData.get(i) - mean) * (xData.get(i) - mean)) / ((2 * std * std)))));
+    for (Integer integer : xData) {
+      yData.add((1 / (std * Math.sqrt(2 * Math.PI))) * Math.exp(-(((integer - mean) * (integer - mean)) / ((2 * std * std)))));
     }
     return yData;
   }

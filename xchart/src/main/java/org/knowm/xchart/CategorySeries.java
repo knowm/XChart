@@ -48,7 +48,7 @@ public class CategorySeries extends Series_Markers {
 
     private final LegendRenderType legendRenderType;
 
-    private CategorySeriesRenderStyle(LegendRenderType legendRenderType) {
+    CategorySeriesRenderStyle(LegendRenderType legendRenderType) {
 
       this.legendRenderType = legendRenderType;
     }

@@ -15,6 +15,8 @@
  * limitations under the License.
  *
  * Classes in this package are internal and are not intended to be accessed directly. Therefore, they are not included in the JavaDocs.
+ *
+ * Classes in this package are internal and are not intended to be accessed directly. Therefore, they are not included in the JavaDocs.
  */
 /**
  * Classes in this package are internal and are not intended to be accessed directly. Therefore, they are not included in the JavaDocs.

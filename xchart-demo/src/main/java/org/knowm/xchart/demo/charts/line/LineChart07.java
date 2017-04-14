@@ -60,10 +60,10 @@ public class LineChart07 implements ExampleChart<CategoryChart> {
     chart.getStyler().setOverlapped(true);
 
     // Declare data
-    List<String> xAxisKeys = Arrays.asList(new String[]{"release-0.5", "release-0.6", "release-0.7", "release-0.8", "release-0.9", "release-1.0.0", "release-1.1.0", "release-1.2.0", "release-1.3.0",
+    List<String> xAxisKeys = Arrays.asList("release-0.5", "release-0.6", "release-0.7", "release-0.8", "release-0.9", "release-1.0.0", "release-1.1.0", "release-1.2.0", "release-1.3.0",
         "release-2.0.0", "release-2.1.0", "release-2.2.0", "release-2.3.0", "release-2.4.0", "release-2.5.0", "release-2.6.0", "release-3.0.0", "release-3.1.0", "release-3.2.0", "release-3.3.0",
         "release-3.4.0", "release-3.5.0", "release-3.6.0", "release-3.7.0", "release-3.8.0", "release-4.0.0", "release-4.1.0", "release-4.2.0", "release-4.3.0", "release-4.4.0", "release-4.4.1",
-        "release-4.4.2"});
+        "release-4.4.2");
     String[] seriesNames = new String[]{"Threads:4", "Threads:10", "Threads:20", "Threads:50", "Threads:100", "Threads:150", "Threads:200", "Threads:250", "Threads:500", "Threads:750",
         "Threads:1000", "Threads:1500", "Threads:2000", "Threads:2500"};
     Integer[][] dataPerSeries = new Integer[][]{{117355, 117594, 117551, 117719, 116553, 117304, 118945, 119067, 117803, 118080, 117676, 118599, 118224, 119263, 119455, 119393, 117961, 119254,

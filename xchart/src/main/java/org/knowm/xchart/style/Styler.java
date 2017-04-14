@@ -56,7 +56,7 @@ public abstract class Styler {
 
   public enum TextAlignment {
 
-    Left, Centre, Right;
+    Left, Centre, Right
   }
 
   /**

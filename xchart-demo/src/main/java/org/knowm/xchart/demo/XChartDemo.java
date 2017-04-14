@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+import javax.swing.WindowConstants;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -455,7 +456,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
     // Create and set up the window.
     JFrame frame = new JFrame("XChart Demo");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     // Add content to the window.
     frame.add(new XChartDemo());

@@ -311,7 +311,7 @@ public class MatlabTheme implements Theme {
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(.5f, BasicStroke.CAP_BUTT, BasicStroke.CAP_ROUND, 10.0f, new float[]{1f, 3.0f}, 0.0f);
+    return new BasicStroke(.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, new float[]{1f, 3.0f}, 0.0f);
   }
 
   @Override

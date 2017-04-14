@@ -51,5 +51,4 @@ public class HistogramTest {
     assertThat(histogram.getMin()).isEqualTo(-6);
     assertThat(histogram.getNumBins()).isEqualTo(3);
   }
-
 }

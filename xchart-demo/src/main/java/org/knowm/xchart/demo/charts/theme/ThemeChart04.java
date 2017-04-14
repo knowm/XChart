@@ -54,15 +54,14 @@ public class ThemeChart04 implements ExampleChart<XYChart> {
     for (int i = 1; i <= 3; i++) {
 
       // generates circle data
-      double radius = i;
       double x, y;
       List<Number> xData = new ArrayList<Number>();
       List<Number> yData = new ArrayList<Number>();
 
       for (int j = 0; j < 360; j = j + 5) {
 
-        x = radius * Math.cos(Math.toRadians(j));
-        y = radius * Math.sin(Math.toRadians(j));
+        x = (double) i * Math.cos(Math.toRadians(j));
+        y = (double) i * Math.sin(Math.toRadians(j));
         xData.add(x);
         yData.add(y);
       }

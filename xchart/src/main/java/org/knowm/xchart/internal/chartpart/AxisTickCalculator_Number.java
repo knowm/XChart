@@ -90,11 +90,9 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       tickSpacingHint += 5;
       // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
-      double gridStepHint = span / tickSpace * tickSpacingHint;
-
       // gridStepHint --> significand * 10 ** exponent
       // e.g. 724.1 --> 7.241 * 10 ** 2
-      double significand = gridStepHint;
+      double significand = span / tickSpace * tickSpacingHint;
       int exponent = 0;
       if (significand == 0) {
         exponent = 1;

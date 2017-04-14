@@ -38,7 +38,7 @@ public class BubbleSeries extends Series_Bubble {
 
     private final LegendRenderType legendRenderType;
 
-    private BubbleSeriesRenderStyle(LegendRenderType legendRenderType) {
+    BubbleSeriesRenderStyle(LegendRenderType legendRenderType) {
 
       this.legendRenderType = legendRenderType;
     }

@@ -185,7 +185,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     // Legend Box
     double width = legendContentWidth + 2 * chart.getStyler().getLegendPadding();
-    double height = legendContentHeight + 1 * chart.getStyler().getLegendPadding();
+    double height = legendContentHeight + chart.getStyler().getLegendPadding();
 
     return new Rectangle2D.Double(Double.NaN, Double.NaN, width, height); // Double.NaN indicates not sure yet.
   }

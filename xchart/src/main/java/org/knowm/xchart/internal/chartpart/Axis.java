@@ -39,7 +39,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
   public enum AxisDataType {
 
-    Number, Date, String;
+    Number, Date, String
   }
 
   private final Chart<AxesChartStyler, Series_AxesChart> chart;

@@ -57,8 +57,8 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
 
     // Series
-    chart.addSeries("female", Arrays.asList(new Integer[]{10, 20, 30, 40, 50}), Arrays.asList(new Integer[]{50, 10, 20, 40, 35}));
-    chart.addSeries("male", Arrays.asList(new Integer[]{10, 20, 30, 40, 50}), Arrays.asList(new Integer[]{40, 30, 20, null, 60}));
+    chart.addSeries("female", Arrays.asList(10, 20, 30, 40, 50), Arrays.asList(50, 10, 20, 40, 35));
+    chart.addSeries("male", Arrays.asList(10, 20, 30, 40, 50), Arrays.asList(40, 30, 20, null, 60));
 
     return chart;
   }

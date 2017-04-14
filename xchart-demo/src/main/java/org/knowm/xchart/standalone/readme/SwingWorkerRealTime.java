@@ -107,6 +107,7 @@ public class SwingWorkerRealTime {
         Thread.sleep(40 - duration); // 40 ms ==> 25fps
         // Thread.sleep(400 - duration); // 40 ms ==> 2.5fps
       } catch (InterruptedException e) {
+        System.out.println("InterruptedException occurred.");
       }
     }
   }

@@ -37,13 +37,13 @@ public abstract class Series_Bubble extends Series_AxesChart {
    * @param name
    * @param xData
    * @param yData
-   * @param extraValues
+   * @param bubbleSize
    */
-  public Series_Bubble(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues) {
+  public Series_Bubble(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleSize) {
 
-    super(name, xData, yData, extraValues);
+    super(name, xData, yData);
 
-    this.extraValues = extraValues;
+    this.extraValues = bubbleSize;
     calculateMinMax();
   }
 

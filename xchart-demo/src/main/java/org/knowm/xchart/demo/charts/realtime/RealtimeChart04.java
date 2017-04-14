@@ -22,6 +22,7 @@ import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import org.knowm.xchart.BubbleChart;
 import org.knowm.xchart.BubbleChartBuilder;
@@ -62,7 +63,7 @@ public class RealtimeChart04 implements ExampleChart<BubbleChart> {
 
         // Create and set up the window.
         JFrame frame = new JFrame("XChart");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(chartPanel);
 
         // Display the window.

@@ -61,11 +61,9 @@ public class Utils {
     }
 
     List<Double> dataNumber = null;
-    if (data != null) {
-      dataNumber = new ArrayList<Double>();
-      for (double d : data) {
-        dataNumber.add(new Double(d));
-      }
+    dataNumber = new ArrayList<Double>();
+    for (double d : data) {
+      dataNumber.add(d);
     }
     return dataNumber;
   }
@@ -77,11 +75,9 @@ public class Utils {
     }
 
     List<Double> dataNumber = null;
-    if (data != null) {
-      dataNumber = new ArrayList<Double>();
-      for (double d : data) {
-        dataNumber.add(new Double(d));
-      }
+    dataNumber = new ArrayList<Double>();
+    for (double d : data) {
+      dataNumber.add(d);
     }
     return dataNumber;
   }
