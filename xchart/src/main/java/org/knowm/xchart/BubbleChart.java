@@ -37,7 +37,7 @@ import org.knowm.xchart.style.Theme;
 /**
  * @author timmolter
  */
-public class BubbleChart extends Chart<BubbleStyler, NoMarkersSeries> {
+public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -98,7 +98,7 @@ public class BubbleChart extends Chart<BubbleStyler, NoMarkersSeries> {
    * @param bubbleData the bubble data
    * @return A Series object that you can set properties on
    */
-  public NoMarkersSeries addSeries(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
+  public BubbleSeries addSeries(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
 
     return addSeries(seriesName, Utils.getNumberListFromDoubleArray(xData), Utils.getNumberListFromDoubleArray(yData), Utils.getNumberListFromDoubleArray(bubbleData));
   }
@@ -112,12 +112,12 @@ public class BubbleChart extends Chart<BubbleStyler, NoMarkersSeries> {
    * @param bubbleData the bubble data
    * @return
    */
-  public NoMarkersSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleData) {
+  public BubbleSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleData) {
 
     // Sanity checks
     sanityCheck(seriesName, xData, yData, bubbleData);
 
-    NoMarkersSeries series = null;
+    BubbleSeries series = null;
     if (xData != null) {
 
       // Sanity check
@@ -125,10 +125,10 @@ public class BubbleChart extends Chart<BubbleStyler, NoMarkersSeries> {
         throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
 
-      series = new NoMarkersSeries(seriesName, xData, yData, bubbleData);
+      series = new BubbleSeries(seriesName, xData, yData, bubbleData);
     }
     else { // generate xData
-      series = new NoMarkersSeries(seriesName, Utils.getGeneratedData(yData.size()), yData, bubbleData);
+      series = new BubbleSeries(seriesName, Utils.getGeneratedData(yData.size()), yData, bubbleData);
     }
 
     seriesMap.put(seriesName, series);
@@ -146,10 +146,10 @@ public class BubbleChart extends Chart<BubbleStyler, NoMarkersSeries> {
    * @param newBubbleData - set null if there are no error bars
    * @return
    */
-  public NoMarkersSeries updateBubbleSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newBubbleData) {
+  public BubbleSeries updateBubbleSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newBubbleData) {
 
-    Map<String, NoMarkersSeries> seriesMap = getSeriesMap();
-    NoMarkersSeries series = seriesMap.get(seriesName);
+    Map<String, BubbleSeries> seriesMap = getSeriesMap();
+    BubbleSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
     }
@@ -178,7 +178,7 @@ public class BubbleChart extends Chart<BubbleStyler, NoMarkersSeries> {
    * @param newBubbleData - set null if there are no error bars
    * @return
    */
-  public NoMarkersSeries updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
+  public BubbleSeries updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
 
     return updateBubbleSeries(seriesName, Utils.getNumberListFromDoubleArray(newXData), Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(newBubbleData));
   }
@@ -212,8 +212,8 @@ public class BubbleChart extends Chart<BubbleStyler, NoMarkersSeries> {
     setHeight(height);
 
     // set the series types if they are not set. Legend and Plot need it.
-    for (NoMarkersSeries bubbleSeries : getSeriesMap().values()) {
-      NoMarkersSeries.BubbleSeriesRenderStyle seriesType = bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
+    for (BubbleSeries bubbleSeries : getSeriesMap().values()) {
+      BubbleSeries.BubbleSeriesRenderStyle seriesType = bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
         bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
@@ -235,7 +235,7 @@ public class BubbleChart extends Chart<BubbleStyler, NoMarkersSeries> {
 
     SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
         .getSeriesLines());
-    for (NoMarkersSeries series : getSeriesMap().values()) {
+    for (BubbleSeries series : getSeriesMap().values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 

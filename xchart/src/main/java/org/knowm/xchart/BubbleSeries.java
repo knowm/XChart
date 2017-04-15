@@ -29,7 +29,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  *
  * @author timmolter
  */
-public class NoMarkersSeries extends org.knowm.xchart.internal.series.NoMarkersSeries {
+public class BubbleSeries extends org.knowm.xchart.internal.series.NoMarkersSeries {
 
   public enum BubbleSeriesRenderStyle implements RenderableSeries {
 
@@ -61,7 +61,7 @@ public class NoMarkersSeries extends org.knowm.xchart.internal.series.NoMarkersS
    * @param yData
    * @param bubbleSizes
    */
-  public NoMarkersSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleSizes) {
+  public BubbleSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleSizes) {
 
     super(name, xData, yData, bubbleSizes);
   }

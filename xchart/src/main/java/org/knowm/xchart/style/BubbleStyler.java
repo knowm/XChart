@@ -16,7 +16,7 @@
  */
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.NoMarkersSeries.BubbleSeriesRenderStyle;
+import org.knowm.xchart.BubbleSeries.BubbleSeriesRenderStyle;
 
 /**
  * @author timmolter
