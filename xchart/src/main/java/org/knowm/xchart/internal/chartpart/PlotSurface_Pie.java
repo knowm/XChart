@@ -21,7 +21,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.PieSeries;
-import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
 

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.internal;
+package org.knowm.xchart.internal.series;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -29,7 +29,7 @@ import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
  *
  * @author timmolter
  */
-public abstract class Series_AxesChart extends Series {
+public abstract class AxesChartSeries extends Series {
 
   public abstract AxisDataType getAxesType(List<?> data);
 
@@ -85,7 +85,7 @@ public abstract class Series_AxesChart extends Series {
    * @param xData
    * @param yData
    */
-  public Series_AxesChart(String name, List<?> xData, List<? extends Number> yData) {
+  public AxesChartSeries(String name, List<?> xData, List<? extends Number> yData) {
 
     super(name);
 
@@ -165,7 +165,7 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param basicStroke
    */
-  public Series_AxesChart setLineStyle(BasicStroke basicStroke) {
+  public AxesChartSeries setLineStyle(BasicStroke basicStroke) {
 
     stroke = basicStroke;
     if (this.lineWidth > 0.0f) {
@@ -179,7 +179,7 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param color
    */
-  public Series_AxesChart setLineColor(java.awt.Color color) {
+  public AxesChartSeries setLineColor(java.awt.Color color) {
 
     this.lineColor = color;
     return this;
@@ -190,7 +190,7 @@ public abstract class Series_AxesChart extends Series {
    *
    * @param lineWidth
    */
-  public Series_AxesChart setLineWidth(float lineWidth) {
+  public AxesChartSeries setLineWidth(float lineWidth) {
 
     this.lineWidth = lineWidth;
     return this;

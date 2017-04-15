@@ -16,8 +16,8 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import org.knowm.xchart.BubbleSeries;
-import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.NoMarkersSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BubbleStyler;
 
@@ -31,9 +31,9 @@ public class Plot_Bubble<ST extends AxesChartStyler, S extends Series> extends P
    *
    * @param chart
    */
-  public Plot_Bubble(Chart<BubbleStyler, BubbleSeries> chart) {
+  public Plot_Bubble(Chart<BubbleStyler, NoMarkersSeries> chart) {
 
     super(chart);
-    this.plotContent = new PlotContent_Bubble<BubbleStyler, BubbleSeries>(chart);
+    this.plotContent = new PlotContent_Bubble<BubbleStyler, NoMarkersSeries>(chart);
   }
 }

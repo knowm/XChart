@@ -21,8 +21,8 @@ import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
@@ -31,7 +31,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
-  private final Chart<AxesChartStyler, Series_AxesChart> chart;
+  private final Chart<AxesChartStyler, AxesChartSeries> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
@@ -41,7 +41,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
    * @param chart
    * @param direction
    */
-  protected AxisTickMarks(Chart<AxesChartStyler, Series_AxesChart> chart, Direction direction) {
+  protected AxisTickMarks(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;

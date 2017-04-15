@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.Series_Bubble;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
@@ -30,7 +29,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  *
  * @author timmolter
  */
-public class BubbleSeries extends Series_Bubble {
+public class NoMarkersSeries extends org.knowm.xchart.internal.series.NoMarkersSeries {
 
   public enum BubbleSeriesRenderStyle implements RenderableSeries {
 
@@ -62,7 +61,7 @@ public class BubbleSeries extends Series_Bubble {
    * @param yData
    * @param bubbleSizes
    */
-  public BubbleSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleSizes) {
+  public NoMarkersSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleSizes) {
 
     super(name, xData, yData, bubbleSizes);
   }

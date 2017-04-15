@@ -27,8 +27,8 @@ import java.util.Map;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Series_Markers;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.MarkersSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -58,8 +58,8 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
     double startx = xOffset + chart.getStyler().getLegendPadding();
     double starty = yOffset + chart.getStyler().getLegendPadding();
 
-    Map<String, Series_Markers> map = chart.getSeriesMap();
-    for (Series_Markers series : map.values()) {
+    Map<String, MarkersSeries> map = chart.getSeriesMap();
+    for (MarkersSeries series : map.values()) {
 
       if (!series.isShowInLegend()) {
         continue;

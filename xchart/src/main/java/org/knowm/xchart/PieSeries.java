@@ -16,7 +16,7 @@
  */
 package org.knowm.xchart;
 
-import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 

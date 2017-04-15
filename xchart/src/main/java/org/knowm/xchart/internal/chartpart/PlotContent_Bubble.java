@@ -24,8 +24,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.knowm.xchart.BubbleSeries;
-import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.NoMarkersSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -43,7 +43,7 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
    *
    * @param chart
    */
-  protected PlotContent_Bubble(Chart<BubbleStyler, BubbleSeries> chart) {
+  protected PlotContent_Bubble(Chart<BubbleStyler, NoMarkersSeries> chart) {
 
     super(chart);
     stylerBubble = chart.getStyler();
@@ -75,8 +75,8 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
       yMax = Math.log10(yMax);
     }
 
-    Map<String, BubbleSeries> map = chart.getSeriesMap();
-    for (BubbleSeries series : map.values()) {
+    Map<String, NoMarkersSeries> map = chart.getSeriesMap();
+    for (NoMarkersSeries series : map.values()) {
 
       if (!series.isEnabled()) {
         continue;

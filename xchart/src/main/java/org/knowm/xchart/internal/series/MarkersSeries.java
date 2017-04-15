@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.internal;
+package org.knowm.xchart.internal.series;
 
 import java.awt.Color;
 import java.util.Collection;
@@ -29,7 +29,7 @@ import org.knowm.xchart.style.markers.Marker;
  *
  * @author timmolter
  */
-public abstract class Series_Markers extends Series_AxesChart {
+public abstract class MarkersSeries extends AxesChartSeries {
 
   @Override
   public abstract AxisDataType getAxesType(List<?> data);
@@ -50,13 +50,13 @@ public abstract class Series_Markers extends Series_AxesChart {
    * @param name
    * @param xData
    * @param yData
-   * @param errorBars
+   * @param extraValues
    */
-  public Series_Markers(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public MarkersSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues) {
 
     super(name, xData, yData);
 
-    this.extraValues = errorBars;
+    this.extraValues = extraValues;
     calculateMinMax();
   }
 
@@ -115,7 +115,7 @@ public abstract class Series_Markers extends Series_AxesChart {
    *
    * @param marker
    */
-  public Series_Markers setMarker(Marker marker) {
+  public MarkersSeries setMarker(Marker marker) {
 
     this.marker = marker;
     return this;
@@ -126,7 +126,7 @@ public abstract class Series_Markers extends Series_AxesChart {
    *
    * @param color
    */
-  public Series_Markers setMarkerColor(java.awt.Color color) {
+  public MarkersSeries setMarkerColor(java.awt.Color color) {
 
     this.markerColor = color;
     return this;

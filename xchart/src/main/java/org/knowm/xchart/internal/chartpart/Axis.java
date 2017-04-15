@@ -24,8 +24,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -42,7 +42,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     Number, Date, String
   }
 
-  private final Chart<AxesChartStyler, Series_AxesChart> chart;
+  private final Chart<AxesChartStyler, AxesChartSeries> chart;
   private Rectangle2D bounds;
 
   private final AxesChartStyler stylerAxesChart;
@@ -55,12 +55,12 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   /**
    * the axis title
    */
-  private AxisTitle<AxesChartStyler, Series_AxesChart> axisTitle;
+  private AxisTitle<AxesChartStyler, AxesChartSeries> axisTitle;
 
   /**
    * the axis tick
    */
-  private AxisTick<AxesChartStyler, Series_AxesChart> axisTick;
+  private AxisTick<AxesChartStyler, AxesChartSeries> axisTick;
 
   /**
    * the axis tick calculator
@@ -98,14 +98,14 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
    * @param chart     the Chart
    * @param direction the axis direction (X or Y)
    */
-  public Axis(Chart<AxesChartStyler, Series_AxesChart> chart, Direction direction) {
+  public Axis(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
 
     this.chart = chart;
     this.stylerAxesChart = chart.getStyler();
 
     this.direction = direction;
-    axisTitle = new AxisTitle<AxesChartStyler, Series_AxesChart>(chart, direction);
-    axisTick = new AxisTick<AxesChartStyler, Series_AxesChart>(chart, direction);
+    axisTitle = new AxisTitle<AxesChartStyler, AxesChartSeries>(chart, direction);
+    axisTick = new AxisTick<AxesChartStyler, AxesChartSeries>(chart, direction);
   }
 
   /**
@@ -401,7 +401,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     this.max = max;
   }
 
-  protected AxisTick<AxesChartStyler, Series_AxesChart> getAxisTick() {
+  protected AxisTick<AxesChartStyler, AxesChartSeries> getAxisTick() {
 
     return axisTick;
   }
@@ -411,7 +411,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     return direction;
   }
 
-  protected AxisTitle<AxesChartStyler, Series_AxesChart> getAxisTitle() {
+  protected AxisTitle<AxesChartStyler, AxesChartSeries> getAxisTitle() {
 
     return axisTitle;
   }

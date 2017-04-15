@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.internal;
+package org.knowm.xchart.internal.series;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
  *
  * @author timmolter
  */
-public abstract class Series_Bubble extends Series_AxesChart {
+public abstract class NoMarkersSeries extends AxesChartSeries {
 
   @Override
   public abstract AxisDataType getAxesType(List<?> data);
@@ -37,13 +37,13 @@ public abstract class Series_Bubble extends Series_AxesChart {
    * @param name
    * @param xData
    * @param yData
-   * @param bubbleSize
+   * @param extraValues
    */
-  public Series_Bubble(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleSize) {
+  public NoMarkersSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues) {
 
     super(name, xData, yData);
 
-    this.extraValues = bubbleSize;
+    this.extraValues = extraValues;
     calculateMinMax();
   }
 

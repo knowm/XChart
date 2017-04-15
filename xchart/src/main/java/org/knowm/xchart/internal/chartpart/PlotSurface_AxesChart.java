@@ -23,7 +23,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 

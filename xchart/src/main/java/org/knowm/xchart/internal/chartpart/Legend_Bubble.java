@@ -23,8 +23,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Series_Bubble;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.NoMarkersSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.style.AxesChartStyler;
 
@@ -53,8 +53,8 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
     double startx = xOffset + chart.getStyler().getLegendPadding();
     double starty = yOffset + chart.getStyler().getLegendPadding();
 
-    Map<String, Series_Bubble> map = chart.getSeriesMap();
-    for (Series_Bubble series : map.values()) {
+    Map<String, NoMarkersSeries> map = chart.getSeriesMap();
+    for (NoMarkersSeries series : map.values()) {
 
       if (!series.isShowInLegend()) {
         continue;

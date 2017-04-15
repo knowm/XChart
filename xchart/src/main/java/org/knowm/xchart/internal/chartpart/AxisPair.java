@@ -21,8 +21,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
 
@@ -31,23 +31,23 @@ import org.knowm.xchart.style.CategoryStyler;
  */
 public class AxisPair<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
-  private final Chart<AxesChartStyler, Series_AxesChart> chart;
+  private final Chart<AxesChartStyler, AxesChartSeries> chart;
 
-  private final Axis<AxesChartStyler, Series_AxesChart> xAxis;
-  private final Axis<AxesChartStyler, Series_AxesChart> yAxis;
+  private final Axis<AxesChartStyler, AxesChartSeries> xAxis;
+  private final Axis<AxesChartStyler, AxesChartSeries> yAxis;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public AxisPair(Chart<AxesChartStyler, Series_AxesChart> chart) {
+  public AxisPair(Chart<AxesChartStyler, AxesChartSeries> chart) {
 
     this.chart = chart;
 
     // add axes
-    xAxis = new Axis<AxesChartStyler, Series_AxesChart>(chart, Axis.Direction.X);
-    yAxis = new Axis<AxesChartStyler, Series_AxesChart>(chart, Axis.Direction.Y);
+    xAxis = new Axis<AxesChartStyler, AxesChartSeries>(chart, Axis.Direction.X);
+    yAxis = new Axis<AxesChartStyler, AxesChartSeries>(chart, Axis.Direction.Y);
   }
 
   @Override
@@ -64,7 +64,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     // set the axis data types, making sure all are compatible
     xAxis.setAxisDataType(null);
     yAxis.setAxisDataType(null);
-    for (Series_AxesChart series : chart.getSeriesMap().values()) {
+    for (AxesChartSeries series : chart.getSeriesMap().values()) {
       xAxis.setAxisDataType(series.getxAxisDataType());
       yAxis.setAxisDataType(series.getyAxisDataType());
     }
@@ -79,7 +79,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       yAxis.addMinMax(-1, 1);
     }
     else {
-      for (Series_AxesChart series : chart.getSeriesMap().values()) {
+      for (AxesChartSeries series : chart.getSeriesMap().values()) {
         // add min/max to axes
         // System.out.println(series.getxMin());
         // System.out.println(series.getxMax());
@@ -133,7 +133,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
           int numCategories = chart.getSeriesMap().values().iterator().next().getXData().size();
           double[] accumulatedStackOffsetPos = new double[numCategories];
           double[] accumulatedStackOffsetNeg = new double[numCategories];
-          for (Series_AxesChart series : chart.getSeriesMap().values()) {
+          for (AxesChartSeries series : chart.getSeriesMap().values()) {
 
             if (!series.isEnabled()) {
               continue;
@@ -221,12 +221,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
   // Getters & Setters /////////////////////////////////////////////////
 
-  protected Axis<AxesChartStyler, Series_AxesChart> getXAxis() {
+  protected Axis<AxesChartStyler, AxesChartSeries> getXAxis() {
 
     return xAxis;
   }
 
-  protected Axis<AxesChartStyler, Series_AxesChart> getYAxis() {
+  protected Axis<AxesChartStyler, AxesChartSeries> getYAxis() {
 
     return yAxis;
   }

@@ -35,7 +35,7 @@ import java.util.Map;
 
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler;

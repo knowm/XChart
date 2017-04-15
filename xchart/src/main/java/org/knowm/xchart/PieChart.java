@@ -19,7 +19,7 @@ package org.knowm.xchart;
 import java.awt.Graphics2D;
 import java.util.Map;
 
-import org.knowm.xchart.internal.Series;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;

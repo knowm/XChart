@@ -19,8 +19,8 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.internal.Series;
-import org.knowm.xchart.internal.Series_AxesChart;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
@@ -29,19 +29,19 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 public class AxisTick<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
-  private final Chart<AxesChartStyler, Series_AxesChart> chart;
+  private final Chart<AxesChartStyler, AxesChartSeries> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
   /**
    * the axisticklabels
    */
-  private AxisTickLabels<AxesChartStyler, Series_AxesChart> axisTickLabels;
+  private AxisTickLabels<AxesChartStyler, AxesChartSeries> axisTickLabels;
 
   /**
    * the axistickmarks
    */
-  private AxisTickMarks<AxesChartStyler, Series_AxesChart> axisTickMarks;
+  private AxisTickMarks<AxesChartStyler, AxesChartSeries> axisTickMarks;
 
   /**
    * Constructor
@@ -49,12 +49,12 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
    * @param chart
    * @param direction
    */
-  protected AxisTick(Chart<AxesChartStyler, Series_AxesChart> chart, Direction direction) {
+  protected AxisTick(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;
-    axisTickLabels = new AxisTickLabels<AxesChartStyler, Series_AxesChart>(chart, direction);
-    axisTickMarks = new AxisTickMarks<AxesChartStyler, Series_AxesChart>(chart, direction);
+    axisTickLabels = new AxisTickLabels<AxesChartStyler, AxesChartSeries>(chart, direction);
+    axisTickMarks = new AxisTickMarks<AxesChartStyler, AxesChartSeries>(chart, direction);
   }
 
   @Override
@@ -115,7 +115,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
 
   // Getters /////////////////////////////////////////////////
 
-  protected AxisTickLabels<AxesChartStyler, Series_AxesChart> getAxisTickLabels() {
+  protected AxisTickLabels<AxesChartStyler, AxesChartSeries> getAxisTickLabels() {
 
     return axisTickLabels;
   }
