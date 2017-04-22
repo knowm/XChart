@@ -79,6 +79,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       yAxis.addMinMax(-1, 1);
     }
     else {
+      int disabledCount = 0; // maybe all are disabled, so we check this condition
       for (AxesChartSeries series : chart.getSeriesMap().values()) {
         // add min/max to axes
         // System.out.println(series.getxMin());
@@ -87,10 +88,15 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
         // System.out.println(series.getyMax());
         // System.out.println("****");
         if (!series.isEnabled()) {
+          disabledCount++;
           continue;
         }
         xAxis.addMinMax(series.getXMin(), series.getXMax());
         yAxis.addMinMax(series.getYMin(), series.getYMax());
+      }
+      if(disabledCount==chart.getSeriesMap().values().size()){
+        xAxis.addMinMax(-1, 1);
+        yAxis.addMinMax(-1, 1);
       }
     }
 
