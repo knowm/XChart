@@ -17,6 +17,7 @@
 package org.knowm.xchart;
 
 import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -26,6 +27,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -104,6 +107,53 @@ public final class BitmapEncoder {
       throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
+    ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
+  }
+
+  /**
+   * Save list of Charts as an image file.
+   * Function assumes that all charts are the same size (width, height).
+   * Number of charts should equal rows multiplied by cols.
+   *
+   * @param charts
+   * @param rows number of rows
+   * @param cols number of columns
+   * @param fileName
+   * @param bitmapFormat
+   * @throws IOException
+   */
+  public static void saveBitmap(List<Chart> charts, Integer rows, Integer cols, String fileName, BitmapEncoder.BitmapFormat bitmapFormat) throws IOException {
+    OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
+    try {
+      saveBitmap(charts, rows, cols, out, bitmapFormat);
+    } finally {
+      out.close();
+    }
+  }
+
+  /**
+   * Save list of Charts into a given stream. Does not close the target stream automatically at the end of the operation.
+   * Function assumes that all charts are the same size (width, height).
+   * Number of charts should equal rows multiplied by cols.
+   *
+   * @param charts
+   * @param rows number of rows
+   * @param cols number of columns
+   * @param targetStream
+   * @param bitmapFormat
+   * @throws IOException
+   */
+  public static void saveBitmap(List<Chart> charts, Integer rows, Integer cols, OutputStream targetStream, BitmapEncoder.BitmapFormat bitmapFormat) throws IOException {
+    List<BufferedImage> chartImages = new LinkedList<BufferedImage>();
+    for(Chart c: charts)
+      chartImages.add(getBufferedImage(c));
+
+    BufferedImage bufferedImage = mergeImages(
+            chartImages,
+            rows,
+            cols
+    );
+
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
   }
 
@@ -246,4 +296,24 @@ public final class BitmapEncoder {
     chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
     return bufferedImage;
   }
+
+  private static BufferedImage mergeImages(List<BufferedImage> images, Integer rows, Integer cols) {
+    BufferedImage first = images.get(0);
+    int singleImageWidth = first.getWidth();
+    int singleImageHeight = first.getHeight();
+    int totalWidth = singleImageWidth * cols;
+    int totalHeight = singleImageHeight * rows;
+    BufferedImage mergedImage = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_ARGB);
+
+    Graphics g = mergedImage.getGraphics();
+    for(int row=0; row < rows; row++) {
+      for(int col=0; col < cols; col++) {
+        BufferedImage image = images.get(row*cols + col);
+        g.drawImage(image, col*singleImageWidth, row*singleImageHeight, null);
+      }
+    }
+
+    return mergedImage;
+  }
+
 }
