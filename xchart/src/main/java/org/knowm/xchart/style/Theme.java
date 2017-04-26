@@ -149,6 +149,10 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   double getDonutThickness();
 
+  boolean isSumVisible();
+
+  Font getSumFont();
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   int getMarkerSize();

@@ -16,6 +16,8 @@
  */
 package org.knowm.xchart.style;
 
+import java.awt.Font;
+
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 
 /**
@@ -36,6 +38,9 @@ public class PieStyler extends Styler {
   private AnnotationType annotationType;
   private boolean drawAllAnnotations;
   private double donutThickness;
+
+  private boolean isSumVisible;
+  private Font sumFont;
 
   /**
    * Constructor
@@ -58,6 +63,9 @@ public class PieStyler extends Styler {
 
     // Annotations ////////////////////////////////
     this.hasAnnotations = true;
+
+    this.isSumVisible = theme.isSumVisible();
+    this.sumFont = theme.getSumFont();
   }
 
   public PieSeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -171,6 +179,38 @@ public class PieStyler extends Styler {
   public void setDonutThickness(double donutThickness) {
 
     this.donutThickness = donutThickness;
+  }
+
+  public boolean isSumVisible() {
+
+    return isSumVisible;
+  }
+
+  /**
+   * Sets whether or not the sum is visible in the centre of the pie chart.
+   *
+   * @param isSumVisible
+   */
+  public PieStyler setSumVisible(boolean isSumVisible) {
+
+    this.isSumVisible = isSumVisible;
+    return this;
+  }
+
+  public Font getSumFont() {
+
+    return sumFont;
+  }
+
+  /**
+   * Sets the font for the sum.
+   *
+   * @param isSumVisible
+   */
+  public PieStyler setSumFont(Font sumFont) {
+
+    this.sumFont = sumFont;
+    return this;
   }
 
   /**

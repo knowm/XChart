@@ -378,6 +378,18 @@ public class MyCustomTheme implements Theme {
     return .33;
   }
 
+  @Override
+  public boolean isSumVisible() {
+
+  	return false;
+  }
+
+  @Override
+  public Font getSumFont() {
+
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+  }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override
@@ -413,4 +425,5 @@ public class MyCustomTheme implements Theme {
 
     return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
   }
+
 }
