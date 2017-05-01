@@ -22,7 +22,6 @@ import java.awt.Font;
 import java.awt.Stroke;
 
 import org.knowm.xchart.style.PieStyler.AnnotationType;
-import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.GGPlot2SeriesColors;
 import org.knowm.xchart.style.lines.GGPlot2SeriesLines;
@@ -32,27 +31,11 @@ import org.knowm.xchart.style.markers.Marker;
 /**
  * @author timmolter
  */
-public class GGPlot2Theme implements Theme {
+public class GGPlot2Theme extends AbstractBaseTheme {
 
   // Chart Style ///////////////////////////////
 
-  @Override
-  public Color getChartBackgroundColor() {
-
-    return ChartColor.getAWTColor(ChartColor.WHITE);
-  }
-
-  @Override
-  public Color getChartFontColor() {
-
-    return ChartColor.getAWTColor(ChartColor.BLACK);
-  }
-
-  @Override
-  public int getChartPadding() {
-
-    return 10;
-  }
+  // SeriesMarkers, SeriesLines, SeriesColors ///////////////////////////////
 
   @Override
   public Marker[] getSeriesMarkers() {
@@ -77,19 +60,7 @@ public class GGPlot2Theme implements Theme {
   @Override
   public Font getChartTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
-  }
-
-  @Override
-  public boolean isChartTitleVisible() {
-
-    return true;
-  }
-
-  @Override
-  public boolean isChartTitleBoxVisible() {
-
-    return true;
+    return getBaseFont().deriveFont(14f);
   }
 
   @Override
@@ -104,30 +75,12 @@ public class GGPlot2Theme implements Theme {
     return ChartColor.getAWTColor(ChartColor.GREY);
   }
 
-  @Override
-  public int getChartTitlePadding() {
-
-    return 5;
-  }
-
   // Chart Legend ///////////////////////////////
 
   @Override
   public Font getLegendFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
-  }
-
-  @Override
-  public boolean isLegendVisible() {
-
-    return true;
-  }
-
-  @Override
-  public Color getLegendBackgroundColor() {
-
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+	return getBaseFont().deriveFont(14f);
   }
 
   @Override
@@ -136,60 +89,18 @@ public class GGPlot2Theme implements Theme {
     return ChartColor.getAWTColor(ChartColor.WHITE);
   }
 
-  @Override
-  public int getLegendPadding() {
-
-    return 10;
-  }
-
-  @Override
-  public int getLegendSeriesLineLength() {
-
-    return 24;
-  }
-
-  @Override
-  public LegendPosition getLegendPosition() {
-
-    return LegendPosition.OutsideE;
-  }
-
   // Chart Axes ///////////////////////////////
-
-  @Override
-  public boolean isXAxisTitleVisible() {
-
-    return true;
-  }
-
-  @Override
-  public boolean isYAxisTitleVisible() {
-
-    return true;
-  }
 
   @Override
   public Font getAxisTitleFont() {
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
-  }
-
-  @Override
-  public boolean isXAxisTicksVisible() {
-
-    return true;
-  }
-
-  @Override
-  public boolean isYAxisTicksVisible() {
-
-    return true;
+    return getBaseFont().deriveFont(14f);
   }
 
   @Override
   public Font getAxisTickLabelsFont() {
 
-    return new Font(Font.SANS_SERIF, Font.BOLD, 13);
+    return getBaseFont().deriveFont(Font.BOLD).deriveFont(13f);
   }
 
   @Override
@@ -205,30 +116,6 @@ public class GGPlot2Theme implements Theme {
   }
 
   @Override
-  public int getPlotMargin() {
-
-    return 0;
-  }
-
-  @Override
-  public boolean isAxisTicksLineVisible() {
-
-    return false;
-  }
-
-  @Override
-  public boolean isAxisTicksMarksVisible() {
-
-    return true;
-  }
-
-  @Override
-  public Color getAxisTickMarksColor() {
-
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
-  }
-
-  @Override
   public Stroke getAxisTickMarksStroke() {
 
     return new BasicStroke(1.5f);
@@ -241,42 +128,12 @@ public class GGPlot2Theme implements Theme {
   }
 
   @Override
-  public int getAxisTitlePadding() {
+  public boolean isAxisTicksLineVisible() {
 
-    return 10;
-  }
-
-  @Override
-  public int getXAxisTickMarkSpacingHint() {
-
-    return 74;
-  }
-
-  @Override
-  public int getYAxisTickMarkSpacingHint() {
-
-    return 44;
+	  return false;
   }
 
   // Chart Plot Area ///////////////////////////////
-
-  @Override
-  public boolean isPlotGridLinesVisible() {
-
-    return true;
-  }
-
-  @Override
-  public boolean isPlotGridVerticalLinesVisible() {
-
-    return true;
-  }
-
-  @Override
-  public boolean isPlotGridHorizontalLinesVisible() {
-
-    return true;
-  }
 
   @Override
   public Color getPlotBackgroundColor() {
@@ -315,61 +172,19 @@ public class GGPlot2Theme implements Theme {
   }
 
   @Override
-  public double getPlotContentSize() {
-
-    return .92;
-  }
-
-  // Category Charts ///////////////////////////////
-
-  @Override
-  public double getAvailableSpaceFill() {
-
-    return 0.9;
-  }
-
-  @Override
-  public boolean isOverlapped() {
-
-    return false;
-  }
-
-  // Pie Charts ///////////////////////////////
-
-  @Override
-  public boolean isCircular() {
-
-    return true;
-  }
-
-  @Override
-  public double getStartAngleInDegrees() {
+  public int getPlotMargin() {
 
     return 0;
   }
 
-  @Override
-  public Font getPieFont() {
+  // Category Charts ///////////////////////////////
 
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 15);
-  }
-
-  @Override
-  public double getAnnotationDistance() {
-
-    return .67;
-  }
+  // Pie Charts ///////////////////////////////
 
   @Override
   public AnnotationType getAnnotationType() {
 
     return AnnotationType.LabelAndPercentage;
-  }
-
-  @Override
-  public boolean isDrawAllAnnotations() {
-
-    return false;
   }
 
   @Override
@@ -380,18 +195,6 @@ public class GGPlot2Theme implements Theme {
 
   // Line, Scatter, Area Charts ///////////////////////////////
 
-  @Override
-  public int getMarkerSize() {
-
-    return 8;
-  }
-
-  @Override
-  public boolean showMarkers() {
-
-    return true;
-  }
-
   // Error Bars ///////////////////////////////
 
   @Override
@@ -400,17 +203,6 @@ public class GGPlot2Theme implements Theme {
     return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
-  @Override
-  public boolean isErrorBarsColorSeriesColor() {
-
-    return false;
-  }
-
   // Annotations ///////////////////////////////
 
-  @Override
-  public Font getAnnotationFont() {
-
-    return new Font(Font.SANS_SERIF, Font.PLAIN, 12);
-  }
 }

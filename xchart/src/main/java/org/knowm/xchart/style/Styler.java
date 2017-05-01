@@ -65,6 +65,7 @@ public abstract class Styler {
   protected Theme theme = new XChartTheme();
 
   // Chart Style ///////////////////////////////
+  private Font baseFont;
   private Color chartBackgroundColor;
   private Color chartFontColor;
   private int chartPadding;
@@ -104,6 +105,8 @@ public abstract class Styler {
   protected void setAllStyles() {
 
     // Chart Style ///////////////////////////////
+	baseFont = theme.getBaseFont();
+
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
 
@@ -143,6 +146,23 @@ public abstract class Styler {
   }
 
   // Chart Style ///////////////////////////////
+
+  /**
+   * Set the base font
+   *
+   * @param baseFont
+   * @return styler
+   */
+  public Styler setBaseFont(Font baseFont) {
+
+    this.baseFont = baseFont;
+    return this;
+  }
+
+  public Font getBaseFont() {
+
+    return baseFont;
+  }
 
   /**
    * Set the chart background color - the part around the edge of the chart

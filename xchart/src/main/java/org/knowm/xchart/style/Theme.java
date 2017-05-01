@@ -33,6 +33,13 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Chart Style ///////////////////////////////
 
+  /**
+   * Base font, from which all other fonts are derived, if not set directly.
+   *
+   * @return base font
+   */
+  Font getBaseFont();
+
   Color getChartBackgroundColor();
 
   Color getChartFontColor();
@@ -148,6 +155,10 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   boolean isDrawAllAnnotations();
 
   double getDonutThickness();
+
+  boolean isSumVisible();
+
+  Font getSumFont();
 
   // Line, Scatter, Area Charts ///////////////////////////////
 

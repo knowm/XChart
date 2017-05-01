@@ -92,6 +92,32 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       total += series.getValue().doubleValue();
     }
 
+    // draw total value if visible
+    if (pieStyler.isSumVisible()) {
+    	DecimalFormat totalDf = (pieStyler.getDecimalPattern() == null) ? df : new DecimalFormat(pieStyler.getDecimalPattern());
+
+    	String annotation = totalDf.format(total);
+
+        TextLayout textLayout = new TextLayout(annotation, pieStyler.getSumFont(), new FontRenderContext(null, true, false));
+        Shape shape = textLayout.getOutline(null);
+        g.setColor(pieStyler.getChartFontColor());
+
+        // compute center
+        Rectangle2D annotationRectangle = textLayout.getBounds();
+        double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 - annotationRectangle.getWidth() / 2;
+        double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2 + annotationRectangle.getHeight() / 2;
+
+        // set text
+        AffineTransform orig = g.getTransform();
+        AffineTransform at = new AffineTransform();
+
+        at.translate(xCenter, yCenter);
+        g.transform(at);
+        g.fill(shape);
+        g.setTransform(orig);
+
+    }
+
     // draw pie slices
     // double curValue = 0.0;
     // double curValue = 0.0;
