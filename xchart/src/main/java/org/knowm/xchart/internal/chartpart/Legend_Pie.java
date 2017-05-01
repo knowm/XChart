@@ -31,7 +31,7 @@ import org.knowm.xchart.style.PieStyler;
  */
 public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
-  PieStyler stylerPie;
+  PieStyler pieStyler;
 
   /**
    * Constructor
@@ -41,7 +41,7 @@ public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Le
   public Legend_Pie(Chart<PieStyler, PieSeries> chart) {
 
     super(chart);
-    stylerPie = chart.getStyler();
+    pieStyler = chart.getStyler();
   }
 
   @Override
@@ -74,15 +74,6 @@ public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Le
       paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
       starty += legendEntryHeight + chart.getStyler().getLegendPadding();
     }
-  }
-
-  @Override
-  public Rectangle2D getBounds() {
-
-    if (bounds == null) { // was not drawn fully yet, just need the height hint. The Axis object may be asking for it.
-      bounds = getBoundsHint();
-    }
-    return bounds;
   }
 
   @Override

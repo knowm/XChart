@@ -23,9 +23,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.internal.series.NoMarkersSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
+import org.knowm.xchart.internal.series.NoMarkersSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
@@ -33,7 +33,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
-  AxesChartStyler stylerAxesChart;
+  AxesChartStyler axesChartStyler;
 
   /**
    * Constructor
@@ -43,7 +43,7 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
   public Legend_Bubble(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
-    stylerAxesChart = chart.getStyler();
+    axesChartStyler = chart.getStyler();
   }
 
   @Override
@@ -82,17 +82,8 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
   }
 
   @Override
-  public Rectangle2D getBounds() {
-
-    if (bounds == null) { // was not drawn fully yet, just need the height hint. The Axis object may be asking for it.
-      bounds = getBoundsHint();
-    }
-    return bounds;
-  }
-
-  @Override
   public double getSeriesLegendRenderGraphicHeight(Series series) {
 
-    return series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize();
+    return series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : axesChartStyler.getMarkerSize();
   }
 }

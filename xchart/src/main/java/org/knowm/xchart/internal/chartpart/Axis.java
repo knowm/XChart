@@ -153,8 +153,8 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // |
       // ----
       double xOffset = stylerAxesChart.getChartPadding();
-      // double yOffset = chart.getChartTitle().getBounds().getHeight() < .1 ? stylerAxesChart.getChartPadding() : chart.getChartTitle().getBounds().getHeight()
-      // + stylerAxesChart.getChartPadding();
+      // double yOffset = chart.getChartTitle().getBounds().getHeight() < .1 ? axesChartStyler.getChartPadding() : chart.getChartTitle().getBounds().getHeight()
+      // + axesChartStyler.getChartPadding();
       double yOffset = chart.getChartTitle().getBounds().getHeight() + stylerAxesChart.getChartPadding();
 
       /////////////////////////
