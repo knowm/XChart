@@ -27,9 +27,9 @@ import java.util.Map;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.internal.series.MarkersSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
+import org.knowm.xchart.internal.series.MarkersSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
@@ -38,7 +38,7 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
-  AxesChartStyler stylerAxesChart;
+  private AxesChartStyler axesChartStyler;
 
   /**
    * Constructor
@@ -48,7 +48,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
   public Legend_Marker(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
-    stylerAxesChart = chart.getStyler();
+    axesChartStyler = chart.getStyler();
   }
 
   @Override
@@ -69,7 +69,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       }
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
-      float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, (series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize()));
+      float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, (series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : axesChartStyler.getMarkerSize()));
 
       // paint line and marker
       if (series.getLegendRenderType() != LegendRenderType.Box) {
@@ -85,10 +85,9 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, startx + chart.getStyler().getLegendSeriesLineLength() / 2.0, starty + legendEntryHeight / 2.0, stylerAxesChart.getMarkerSize());
+          series.getMarker().paint(g, startx + chart.getStyler().getLegendSeriesLineLength() / 2.0, starty + legendEntryHeight / 2.0, axesChartStyler.getMarkerSize());
         }
-      }
-      else { // bar/pie type series
+      } else { // bar/pie type series
 
         // paint inner box
         Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
@@ -102,7 +101,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
           g.setColor(series.getLineColor());
 
           // Only respect the existing stroke width up to BOX_OUTLINE_WIDTH, as the legend box is very small.
-          //Note the simplified coversion of line width from user space to device space.
+          //Note the simplified conversion of line width from user space to device space.
           BasicStroke existingLineStyle = series.getLineStyle();
           BasicStroke newLineStyle = new BasicStroke(
               existingLineStyle.getLineWidth() > BOX_OUTLINE_WIDTH * 0.5f ? BOX_OUTLINE_WIDTH * 0.5f : existingLineStyle.getLineWidth(),
@@ -133,9 +132,8 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       if (series.getLegendRenderType() != LegendRenderType.Box) {
 
         double x = startx + chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding();
-        paintSeriesText(g, seriesTextBounds, stylerAxesChart.getMarkerSize(), x, starty);
-      }
-      else { // bar/pie type series
+        paintSeriesText(g, seriesTextBounds, axesChartStyler.getMarkerSize(), x, starty);
+      } else { // bar/pie type series
 
         double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
         paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
@@ -145,17 +143,8 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
   }
 
   @Override
-  public Rectangle2D getBounds() {
-
-    if (bounds == null) { // was not drawn fully yet, just need the height hint. The Axis object may be asking for it.
-      bounds = getBoundsHint();
-    }
-    return bounds;
-  }
-
-  @Override
   public double getSeriesLegendRenderGraphicHeight(Series series) {
 
-    return series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : stylerAxesChart.getMarkerSize();
+    return series.getLegendRenderType() == LegendRenderType.Box ? BOX_SIZE : axesChartStyler.getMarkerSize();
   }
 }

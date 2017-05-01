@@ -25,8 +25,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -44,7 +44,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   protected static final int MULTI_LINE_SPACE = 3;
 
   protected Chart<ST, S> chart;
-  protected Rectangle2D bounds = null;
+  protected Rectangle2D bounds;
 
   protected double xOffset = 0;
   protected double yOffset = 0;
@@ -77,9 +77,9 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     // We call get bounds hint because sometimes the Axis object needs it to know it's bounds (if Legend is outside Plot). If it's null, we just need to calulate it before painting, because the paint
     // methods needs the bounds.
-    if (bounds == null) { // No other part asked for the bounds yet. Probably because it's an "inside" legend location
-      bounds = getBoundsHint(); // Actually, the only information contained in this bounds is the width and height.
-    }
+//    if (bounds == null) { // No other part asked for the bounds yet. Probably because it's an "inside" legend location
+    bounds = getBoundsHint(); // Actually, the only information contained in this bounds is the width and height.
+//    }
 
     // legend draw position
 
@@ -124,7 +124,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     doPaint(g);
 
     // bounds
-    bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
+//    bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
     // g.setColor(Color.blue);
     // g.draw(bounds);
   }
@@ -178,8 +178,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     double legendContentWidth = 0;
     if (!containsBox) {
       legendContentWidth = chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding() + legendTextContentMaxWidth;
-    }
-    else {
+    } else {
       legendContentWidth = BOX_SIZE + chart.getStyler().getLegendPadding() + legendTextContentMaxWidth;
     }
 
@@ -189,8 +188,6 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     return new Rectangle2D.Double(Double.NaN, Double.NaN, width, height); // Double.NaN indicates not sure yet.
   }
-
-  // TODO possibly cache the first hint result, so as to not re-calculate this.
 
   /**
    * Normally each legend entry just has one line of text, but it can be made multi-line by adding "\\n". This method returns a Map for each single legend entry, which is normally just a Map with one
@@ -261,5 +258,11 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       // g.draw(boundsTemp);
       multiLineOffset += height + MULTI_LINE_SPACE;
     }
+  }
+
+  @Override
+  public Rectangle2D getBounds() {
+
+    return getBoundsHint();
   }
 }

@@ -74,7 +74,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
             g.setColor(stylerAxesChart.getPlotGridLinesColor());
             g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
             Shape line = stylerAxesChart.getPlotGridLinesStroke().createStrokedShape(new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset));
-            // g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
+            // g.setStroke(axesChartStyler.getPlotGridLinesStroke());
             // Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
             g.draw(line);
             // g.drawLine((int) bounds.getX(), (int) yOffset, (int) (bounds.getX() + bounds.getWidth()), (int) yOffset);
@@ -111,7 +111,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
 
             g.setColor(stylerAxesChart.getPlotGridLinesColor());
             g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
-            // g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
+            // g.setStroke(axesChartStyler.getPlotGridLinesStroke());
             // System.out.println();
             Shape line = stylerAxesChart.getPlotGridLinesStroke().createStrokedShape(new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight()));
             // Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight());
