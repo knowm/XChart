@@ -205,11 +205,22 @@ public class PieStyler extends Styler {
   /**
    * Sets the font for the sum.
    *
-   * @param isSumVisible
+   * @param sumFont font
    */
   public PieStyler setSumFont(Font sumFont) {
 
     this.sumFont = sumFont;
+    return this;
+  }
+
+  /**
+   * Sets the font size for the sum.
+   *
+   * @param isSumVisible
+   */
+  public PieStyler setSumFontSize(float sumFontSize) {
+
+    this.sumFont = this.sumFont.deriveFont(sumFontSize);
     return this;
   }
 

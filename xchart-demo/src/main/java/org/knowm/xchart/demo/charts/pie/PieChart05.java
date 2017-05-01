@@ -22,6 +22,7 @@ import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.colors.BaseSeriesColors;
 
 /**
  * Pie Chart with Donut Style and sum.
@@ -55,8 +56,10 @@ public class PieChart05 implements ExampleChart<PieChart> {
     chart.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
     chart.getStyler().setDecimalPattern("#");
 
+    chart.getStyler().setSeriesColors(new BaseSeriesColors().getSeriesColors());
+
     chart.getStyler().setSumVisible(true);
-    chart.getStyler().setSumFont(chart.getStyler().getSumFont().deriveFont(Float.valueOf(20)));
+    chart.getStyler().setSumFontSize(20f);
 
     // Series
     chart.addSeries("A", 22);
