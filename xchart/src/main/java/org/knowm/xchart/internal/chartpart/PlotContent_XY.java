@@ -32,6 +32,7 @@ import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.XYStyler;
+import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -79,6 +80,10 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
     }
 
     Map<String, XYSeries> map = chart.getSeriesMap();
+    DataLabeller dataLabeller = stylerXY.getDataLabeller();
+    if(dataLabeller != null) {
+  	  dataLabeller.startPaint(g);
+    }
     for (XYSeries series : map.values()) {
 
       if (!series.isEnabled()) {
@@ -254,10 +259,18 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
+      
+        // add data labels
+        if(dataLabeller != null) {
+          dataLabeller.addData(xOffset, yOffset, x, yOrig);
+        }
       }
 
       // close any open path for area charts
       closePath(g, path, previousX, getBounds(), yTopMargin);
+    }
+    if(dataLabeller != null) {
+      dataLabeller.paint(g);
     }
   }
 }

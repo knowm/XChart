@@ -30,6 +30,7 @@ import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -82,6 +83,10 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
     int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
+    DataLabeller dataLabeller = categoryStyler.getDataLabeller();
+    if(dataLabeller != null) {
+      dataLabeller.startPaint(g);
+    }
 
     for (CategorySeries series : seriesMap.values()) {
 
@@ -252,10 +257,17 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
+        if(dataLabeller != null) {
+          dataLabeller.addData(xOffset, yOffset, categoryCounter - 1, y);
+        }        
       }
 
       // close any open path for area charts
       closePath(g, path, previousX, getBounds(), yTopMargin);
+    }
+    // add data labels
+    if(dataLabeller != null) {
+      dataLabeller.paint(g);
     }
   }
 }
