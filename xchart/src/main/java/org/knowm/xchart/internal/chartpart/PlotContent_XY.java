@@ -39,7 +39,7 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extends PlotContent_ {
 
-  XYStyler stylerXY;
+  XYStyler xyStyler;
 
   /**
    * Constructor
@@ -49,18 +49,18 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
   protected PlotContent_XY(Chart<XYStyler, XYSeries> chart) {
 
     super(chart);
-    stylerXY = chart.getStyler();
+    xyStyler = chart.getStyler();
   }
 
   @Override
   public void doPaint(Graphics2D g) {
 
     // X-Axis
-    double xTickSpace = stylerXY.getPlotContentSize() * getBounds().getWidth();
+    double xTickSpace = xyStyler.getPlotContentSize() * getBounds().getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
 
     // Y-Axis
-    double yTickSpace = stylerXY.getPlotContentSize() * getBounds().getHeight();
+    double yTickSpace = xyStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
     double xMin = chart.getXAxis().getMin();
@@ -69,11 +69,11 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
     double yMax = chart.getYAxis().getMax();
 
     // logarithmic
-    if (stylerXY.isXAxisLogarithmic()) {
+    if (xyStyler.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
       xMax = Math.log10(xMax);
     }
-    if (stylerXY.isYAxisLogarithmic()) {
+    if (xyStyler.isYAxisLogarithmic()) {
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
     }
@@ -111,7 +111,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           x = ((Date) xItr.next()).getTime();
         }
         // System.out.println(x);
-        if (stylerXY.isXAxisLogarithmic()) {
+        if (xyStyler.isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
         // System.out.println(x);
@@ -133,7 +133,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         double y = 0.0;
 
         // System.out.println(y);
-        if (stylerXY.isYAxisLogarithmic()) {
+        if (xyStyler.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         }
         else {
@@ -204,7 +204,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         // paint marker
         if (series.getMarker() != null) {
           g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset, stylerXY.getMarkerSize());
+          series.getMarker().paint(g, xOffset, yOffset, xyStyler.getMarkerSize());
         }
 
         // paint error bars
@@ -213,17 +213,17 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           double eb = ebItr.next().doubleValue();
 
           // set error bar style
-          if (stylerXY.isErrorBarsColorSeriesColor()) {
+          if (xyStyler.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getLineColor());
           }
           else {
-            g.setColor(stylerXY.getErrorBarsColor());
+            g.setColor(xyStyler.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
 
           // Top value
           double topValue = 0.0;
-          if (stylerXY.isYAxisLogarithmic()) {
+          if (xyStyler.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
           }
@@ -235,7 +235,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
           // Bottom value
           double bottomValue = 0.0;
-          if (stylerXY.isYAxisLogarithmic()) {
+          if (xyStyler.isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);

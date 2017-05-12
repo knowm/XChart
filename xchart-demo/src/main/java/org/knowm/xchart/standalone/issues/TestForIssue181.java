@@ -56,13 +56,13 @@ public class TestForIssue181 {
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
     chart.getStyler().setMarkerSize(5);
-    chart.getStyler().setAxisTicksVisible(false);
+    chart.getStyler().setAxisTicksVisible(true);
     chart.getStyler().setXAxisMin(0.0);
     chart.getStyler().setYAxisMin(0.0);
     chart.getStyler().setSeriesMarkers(markers);
     chart.getStyler().setSeriesColors(colors);
     chart.getStyler().setPlotGridLinesVisible(false);
-
+    chart.getStyler().setPlotContentSize(1.0);
     new SwingWrapper<XYChart>(chart).displayChart();
   }
 }
