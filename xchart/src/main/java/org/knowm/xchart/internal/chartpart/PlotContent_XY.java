@@ -80,7 +80,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
     }
 
     Map<String, XYSeries> map = chart.getSeriesMap();
-    DataLabeller dataLabeller = stylerXY.getDataLabeller();
+    DataLabeller dataLabeller = xyStyler.getDataLabeller();
     if(dataLabeller != null) {
   	  dataLabeller.startPaint(g);
     }
