@@ -13,7 +13,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.knowm.xchart.style.Styler;
 
@@ -75,6 +77,10 @@ public class DataLabeller implements MouseMotionListener {
   private boolean dataLabelsAsToolTips = true;
   private DataLabelContent dataLabelContent = DataLabelContent.xAndYLabels;
 
+  private SimpleDateFormat dateFormat;
+  boolean xIsDate;
+  private String labelTemplate; 
+  
   // dont draw overlapping labels
   private boolean preventOverlap = false;
 
@@ -89,6 +95,7 @@ public class DataLabeller implements MouseMotionListener {
   private Color textColor;
   private Font textFont;
   DecimalFormat twoPlaces;
+  
 
   public DataLabeller(Styler styler) {
     this.styler = styler;
@@ -137,15 +144,27 @@ public class DataLabeller implements MouseMotionListener {
     bottomEdge = clipBounds.getMaxY() - margin * 2;
   }
 
+  protected String formatX(double xValue) {
+    if(xIsDate) {
+      Date date = new Date((long) xValue);
+      return dateFormat.format(date);
+    }
+    return twoPlaces.format(xValue);
+  }
+  
+  protected String formatY(double yValue) {
+    return twoPlaces.format(yValue);
+  }
+  
   protected String getLabel(double xValue, double yValue) {
 
     switch (dataLabelContent) {
     case xAndYLabels:
-      return "(" + twoPlaces.format(xValue) + ", " + twoPlaces.format(yValue) + ")";
+      return "(" + formatX(xValue) + ", " + formatY(yValue) + ")";
     case xLabels:
-      return twoPlaces.format(xValue);
+      return formatX(xValue);
     case yLabels:
-      return twoPlaces.format(yValue);
+      return formatY(yValue);
 
     default:
       break;
@@ -201,6 +220,12 @@ public class DataLabeller implements MouseMotionListener {
   
   public void addData(Shape shape, double xOffset, double yOffset, double width, String label) {
 
+    DataPoint dp = new DataPoint(shape, xOffset, yOffset, width, label);
+    dataPointList.add(dp);
+  }
+
+  public void addData(Shape shape, double xOffset, double yOffset, double width, Object...labelParameters) {
+    String label = String.format(labelTemplate, labelParameters);
     DataPoint dp = new DataPoint(shape, xOffset, yOffset, width, label);
     dataPointList.add(dp);
   }
@@ -362,5 +387,35 @@ public class DataLabeller implements MouseMotionListener {
 
     this.styler = styler;
     initStyle();
+  }
+  
+  public SimpleDateFormat getDateFormat() {
+    
+    return dateFormat;
+  }
+  
+  public void setDateFormat(SimpleDateFormat dateFormat) {
+
+    this.dateFormat = dateFormat;
+  }
+  
+  public boolean isxIsDate() {
+
+    return xIsDate;
+  }
+  
+  public void setxIsDate(boolean xIsDate) {
+
+    this.xIsDate = xIsDate;
+  }
+  
+  public String getLabelTemplate() {
+    
+    return labelTemplate;
+  }
+  
+  public void setLabelTemplate(String labelTemplate) {
+    
+    this.labelTemplate = labelTemplate;
   }
 }
