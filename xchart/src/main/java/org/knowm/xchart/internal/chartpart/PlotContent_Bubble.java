@@ -30,6 +30,7 @@ import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BubbleStyler;
+import org.knowm.xchart.style.label.DataLabeller;
 
 /**
  * @author timmolter
@@ -73,6 +74,10 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
     if (stylerBubble.isYAxisLogarithmic()) {
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
+    }
+    DataLabeller dataLabeller = stylerBubble.getDataLabeller();
+    if(dataLabeller != null) {
+      dataLabeller.startPaint(g);
     }
 
     Map<String, BubbleSeries> map = chart.getSeriesMap();
@@ -177,8 +182,15 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
           g.setColor(series.getLineColor());
           g.setStroke(series.getLineStyle());
           g.draw(bubble);
+          // add data labels
+          if(dataLabeller != null) {
+            dataLabeller.addData(bubble, xOffset, yOffset, 0, x, yOrig);
+          }    
         }
       }
+    }
+    if(dataLabeller != null) {
+      dataLabeller.paint(g);
     }
   }
 }

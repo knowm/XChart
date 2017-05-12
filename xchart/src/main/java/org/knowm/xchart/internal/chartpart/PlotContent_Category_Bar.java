@@ -39,6 +39,7 @@ import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -152,6 +153,10 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     int seriesCounter = 0;
     double[] accumulatedStackOffsetPos = new double[numCategories];
     double[] accumulatedStackOffsetNeg = new double[numCategories];
+    DataLabeller dataLabeller = stylerCategory.getDataLabeller();
+    if(dataLabeller != null) {
+      dataLabeller.startPaint(g);
+    }
     for (CategorySeries series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
@@ -482,6 +487,17 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           line = new Line2D.Double(errorBarOffset - 3, topEBOffset, errorBarOffset + 3, topEBOffset);
           g.draw(line);
         }
+        // add data labels
+        if(dataLabeller != null) {
+          Rectangle2D.Double rect = new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
+          double yPoint;
+          if(y < 0) {
+            yPoint = zeroOffset + 4 + 20 + 5;
+          } else {
+            yPoint = yOffset;
+          }
+          dataLabeller.addData(rect, xOffset, yPoint, barWidth, categoryCounter - 1, y);
+        }
       }
 
       //Final drawing of a steppedBar is done after the main loop,
@@ -492,5 +508,10 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
       seriesCounter++;
     }
+    // add data labels
+    if(dataLabeller != null) {
+      dataLabeller.paint(g);
+    }
+
   }
 }

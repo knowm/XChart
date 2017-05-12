@@ -20,6 +20,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 
+import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -101,6 +102,10 @@ public abstract class Styler {
   public boolean hasAnnotations = false; // set by subclass
 
   private String decimalPattern;
+  
+  //
+  // Data Labels
+  private DataLabeller dataLabeller = new DataLabeller(this);
 
   protected void setAllStyles() {
 
@@ -582,5 +587,15 @@ public abstract class Styler {
   public String getDecimalPattern() {
 
     return decimalPattern;
+  }
+
+  public DataLabeller getDataLabeller() {
+    
+    return dataLabeller;
+  }
+  
+  public void setDataLabeller(DataLabeller dataLabeller) {
+  
+    this.dataLabeller = dataLabeller;
   }
 }

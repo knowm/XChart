@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -39,6 +40,7 @@ import javax.swing.filechooser.FileFilter;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.style.label.DataLabeller;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -67,6 +69,15 @@ public class XChartPanel<T extends Chart> extends JPanel {
     // Right-click listener for saving chart
     this.addMouseListener(new PopUpMenuClickListener());
 
+    // Mouse motion listener for data label popup
+    DataLabeller dataLabeller = chart.getStyler().getDataLabeller();
+    if(dataLabeller != null) {
+      MouseMotionListener mml = dataLabeller.getMouseMotionListener();
+      if(mml != null) {
+        this.addMouseMotionListener(mml);
+      }
+    }
+    
     // Control+S key listener for saving chart
     KeyStroke ctrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlS, "save");

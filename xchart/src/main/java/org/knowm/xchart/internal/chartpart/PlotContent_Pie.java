@@ -23,6 +23,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Arc2D.Double;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -35,6 +36,7 @@ import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -122,6 +124,10 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     // double curValue = 0.0;
     // double curValue = 0.0;
     double startAngle = pieStyler.getStartAngleInDegrees() + 90;
+    DataLabeller dataLabeller = pieStyler.getDataLabeller();
+    if(dataLabeller != null) {
+      dataLabeller.startPaint(g);
+    }
 
     map = chart.getSeriesMap();
     for (PieSeries series : map.values()) {
@@ -131,6 +137,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       }
 
       Number y = series.getValue();
+      Shape labelShape;
 
       // draw slice/donut
       double arcAngle = (y.doubleValue() * 360 / total);
@@ -139,9 +146,11 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       // slice
       if (PieSeriesRenderStyle.Pie == series.getChartPieSeriesRenderStyle()) {
 
-        g.fill(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
+        Double pieShape = new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE);
+        g.fill(pieShape);
         g.setColor(pieStyler.getPlotBackgroundColor());
-        g.draw(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), startAngle, arcAngle, Arc2D.PIE));
+        g.draw(pieShape);
+        labelShape = pieShape;
       }
 
       // donut
@@ -151,6 +160,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
         g.fill(donutSlice);
         g.setColor(pieStyler.getPlotBackgroundColor());
         g.draw(donutSlice);
+        labelShape = donutSlice;
       }
 
       // curValue += y.doubleValue();
@@ -274,7 +284,25 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       //
       // }
 
+      
+      // add data labels
+      if(dataLabeller != null) {
+        //maybe another option to construct this label
+        String annotation = series.getName() + " (" + df.format(y) + ")";
+        
+        double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2 ;// - annotationRectangle.getWidth() / 2;
+        double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2; // + annotationRectangle.getHeight() / 2;
+        double angle = (arcAngle + startAngle) - arcAngle / 2;
+        double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
+        double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
+
+        dataLabeller.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
+      }
       startAngle += arcAngle;
+    }
+    // add data labels
+    if(dataLabeller != null) {
+      dataLabeller.paint(g);
     }
   }
 
