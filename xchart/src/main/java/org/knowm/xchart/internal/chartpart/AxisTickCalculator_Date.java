@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.label.DataLabeller;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for date axes
@@ -167,6 +168,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
     //////////////////////////////////////////////
 
+    SimpleDateFormat simpleDateformat = null;
     // now increase the timespan until one is found where all the labels fit nicely. It will often be the first one.
     index--;
     do {
@@ -189,7 +191,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
       }
       // System.out.println("datePattern: " + datePattern);
 
-      SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styler.getLocale());
+      simpleDateformat = new SimpleDateFormat(datePattern, styler.getLocale());
       simpleDateformat.setTimeZone(styler.getTimezone());
 
       // return simpleDateformat.format(value);
@@ -211,6 +213,14 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
         // }
       }
     } while (!willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    DataLabeller dataLabeller = styler.getDataLabeller();
+    if(dataLabeller != null && simpleDateformat != null) {
+      dataLabeller.setxIsDate(true);
+      // don't override custom date formats
+      if(dataLabeller.getDateFormat() == null) {
+        dataLabeller.setDateFormat(simpleDateformat);
+      }
+    }
   }
 
   static class TimeSpan {
