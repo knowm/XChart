@@ -16,6 +16,7 @@
  */
 package org.knowm.xchart.standalone;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.area.AreaLineChart03;
+import org.knowm.xchart.demo.charts.date.DateChart05;
 import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.label.DataLabeller.DataLabelContent;
 
@@ -85,6 +87,21 @@ public class DataLabellerExample {
     	chart.setTitle("Static data label without overlapping with y values only");
     	charts.add(chart);
     }
+    {
+    	DateChart05 dc = new DateChart05();
+    	XYChart chart = dc.getChart();
+    	DataLabeller dataLabeller = chart.getStyler().getDataLabeller();
+    	dataLabeller.setShouldShowDataLabels(true);
+    	dataLabeller.setDataLabelsAsToolTips(true);
+    	chart.setTitle("Data label with date x axis");
+    	charts.add(chart);
+    	
+    	dataLabeller.setxIsDate(true);
+    	dataLabeller.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+    }
+    
+    
+
     
     new SwingWrapper<XYChart>(charts).displayChartMatrix();
   }
