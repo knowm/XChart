@@ -45,7 +45,7 @@ public class DataLabellerExample {
     {
     	XYChart chart = alc.getChart();
     	DataLabeller dataLabeller = chart.getDataLabeller();
-    	dataLabeller.setShouldShowDataLabels(false);
+    	dataLabeller.setDataLabelsEnabled(false);
     	chart.setTitle("No data label");
     	charts.add(chart);
     }
@@ -53,7 +53,7 @@ public class DataLabellerExample {
     	//current default
     	XYChart chart = alc.getChart();
     	DataLabeller dataLabeller = chart.getDataLabeller();
-    	dataLabeller.setShouldShowDataLabels(true);
+    	dataLabeller.setDataLabelsEnabled(true);
     	dataLabeller.setDataLabelsAsToolTips(true);
     	chart.setTitle("Pop up data label");
     	charts.add(chart);
@@ -61,7 +61,7 @@ public class DataLabellerExample {
     {
     	XYChart chart = alc.getChart();
     	DataLabeller dataLabeller = chart.getDataLabeller();
-    	dataLabeller.setShouldShowDataLabels(true);
+    	dataLabeller.setDataLabelsEnabled(true);
     	dataLabeller.setDataLabelsAsToolTips(false);
     	chart.setTitle("Static data label");
     	charts.add(chart);
@@ -69,18 +69,18 @@ public class DataLabellerExample {
     {
     	XYChart chart = alc.getChart();
     	DataLabeller dataLabeller = chart.getDataLabeller();
-    	dataLabeller.setShouldShowDataLabels(true);
+    	dataLabeller.setDataLabelsEnabled(true);
     	dataLabeller.setDataLabelsAsToolTips(false);
-    	dataLabeller.setPreventOverlap(true);
+    	dataLabeller.setPreventDataLabelOverlap(true);
     	chart.setTitle("Static data label without overlapping");
     	charts.add(chart);
     }
     {
     	XYChart chart = alc.getChart();
     	DataLabeller dataLabeller = chart.getDataLabeller();
-    	dataLabeller.setShouldShowDataLabels(true);
+    	dataLabeller.setDataLabelsEnabled(true);
     	dataLabeller.setDataLabelsAsToolTips(false);
-    	dataLabeller.setPreventOverlap(true);
+    	dataLabeller.setPreventDataLabelOverlap(true);
     	dataLabeller.setDataLabelContent(DataLabelContent.yLabels);
     	chart.setTitle("Static data label without overlapping with y values only");
     	charts.add(chart);
