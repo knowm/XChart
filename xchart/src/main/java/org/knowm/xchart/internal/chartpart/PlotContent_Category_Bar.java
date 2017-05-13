@@ -482,10 +482,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           } else {
             yPoint = yOffset;
           }
-          if (chart.dataLabeller != null) {
-            chart.dataLabeller.addData(rect, xOffset, yPoint, barWidth, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
-                .format(y));
-          }
+          chart.dataLabeller.addData(rect, xOffset, yPoint, barWidth, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
+              .format(y));
         }
       }
 
@@ -496,10 +494,6 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
       }
 
       seriesCounter++;
-    }
-    // add data labels
-    if (chart.dataLabeller != null) {
-      chart.dataLabeller.paint(g);
     }
 
   }

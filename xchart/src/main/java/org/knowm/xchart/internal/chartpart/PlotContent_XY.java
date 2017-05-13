@@ -253,16 +253,11 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
         // add data labels
         // TODO if no labels are wanted skip this. add option to styler
-        if (chart.dataLabeller != null) {
-          chart.dataLabeller.addData(xOffset, yOffset, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
-        }
+        chart.dataLabeller.addData(xOffset, yOffset, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
       }
 
       // close any open path for area charts
       closePath(g, path, previousX, getBounds(), yTopMargin);
-    }
-    if (chart.dataLabeller != null) {
-      chart.dataLabeller.paint(g);
     }
   }
 }

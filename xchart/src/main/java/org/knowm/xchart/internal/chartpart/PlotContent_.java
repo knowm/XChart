@@ -67,6 +67,8 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
 
     doPaint(g);
 
+    chart.dataLabeller.paint(g);
+
     g.setClip(null);
   }
 

@@ -95,7 +95,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
-      Iterator<? > xItr = series.getXData().iterator();
+      Iterator<?> xItr = series.getXData().iterator();
       Iterator<? extends Number> yItr = yData.iterator();
       Iterator<? extends Number> ebItr = null;
       Collection<? extends Number> errorBars = series.getExtraValues();
@@ -250,18 +250,12 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
-        if (chart.dataLabeller != null) {
-          chart.dataLabeller.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
-              .format(y));
-        }
+        chart.dataLabeller.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
+            .format(y));
       }
 
       // close any open path for area charts
       closePath(g, path, previousX, getBounds(), yTopMargin);
-    }
-    // add data labels
-    if (chart.dataLabeller != null) {
-      chart.dataLabeller.paint(g);
     }
   }
 }

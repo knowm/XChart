@@ -153,12 +153,12 @@ public class DataLabeller implements MouseMotionListener {
 
     if (isDataLabelsAsToolTips) {
       if (popupDataPoint != null) { // popupDataPoint was created in mouse move, need to render it
-        paintDataLabel(g, popupDataPoint, true);
+        paintDataLabel(g, popupDataPoint);
       }
     } else { // data labels should be permanently shown for all points
 
       for (DataPoint dataPoint : dataPointList) {
-        paintDataLabel(g, dataPoint, false);
+        paintDataLabel(g, dataPoint);
       }
     }
   }
@@ -213,7 +213,7 @@ public class DataLabeller implements MouseMotionListener {
     return null;
   }
 
-  private void paintDataLabel(Graphics2D g, DataPoint dataPoint, boolean isPopup) {
+  private void paintDataLabel(Graphics2D g, DataPoint dataPoint) {
 
     TextLayout textLayout = new TextLayout(dataPoint.label, textFont, new FontRenderContext(null, true, false));
     Rectangle2D annotationRectangle = textLayout.getBounds();
@@ -227,31 +227,32 @@ public class DataLabeller implements MouseMotionListener {
     double halfHeight = h / 2;
 
     // not the box with label, but the shape
-    if (isPopup) {
+    if (isDataLabelsAsToolTips) {
       // highlight shape for popup
       g.setColor(popupHighlightColor);
       g.fill(dataPoint.shape);
     }
 
+    // the label in a box
     x = Math.max(x, leftEdge);
     x = Math.min(x, rightEdge - w);
     y = Math.max(y, topEdge);
     y = Math.min(y, bottomEdge - h);
-
     Rectangle2D rectangle = new Rectangle2D.Double(x, y, w, h);
-    boolean draw = true;
+
+    boolean shouldDrawBox = true;
     if (preventDataLabelOverlap) {
       for (Shape shape : shapeList) {
         if (shape.intersects(rectangle)) {
-          draw = false;
+          shouldDrawBox = false;
           break;
         }
       }
-      if (draw) {
+      if (shouldDrawBox) {
         shapeList.add(rectangle);
       }
     }
-    if (draw) {
+    if (shouldDrawBox) {
 
       // fill background
       g.setColor(backgroundColor);
@@ -324,24 +325,32 @@ public class DataLabeller implements MouseMotionListener {
 
   protected static class DataPoint {
 
-    String label;
+    private final String label;
 
     // used for popup detection & popup highlight
-    Shape shape;
+    private final Shape shape;
 
     // label center coordinates
-    double x;
-    double y;
+    private final double x;
+    private final double y;
 
     // width of data point (used for bar charts)
     double w;
 
+    /**
+     * Constructor
+     *
+     * @param x
+     * @param y
+     * @param margin
+     * @param label
+     */
     public DataPoint(double x, double y, int margin, String label) {
 
       double halfSize = margin * 1.5;
       double markerSize = margin * 3;
 
-      shape = new Ellipse2D.Double(x - halfSize, y - halfSize, markerSize, markerSize);
+      this.shape = new Ellipse2D.Double(x - halfSize, y - halfSize, markerSize, markerSize);
 
       this.x = x;
       this.y = y;
@@ -349,7 +358,17 @@ public class DataLabeller implements MouseMotionListener {
       this.label = label;
     }
 
+    /**
+     * Constructor
+     *
+     * @param shape
+     * @param x
+     * @param y
+     * @param width
+     * @param label
+     */
     public DataPoint(Shape shape, double x, double y, double width, String label) {
+
       this.x = x;
       this.y = y;
       this.w = width;
