@@ -12,49 +12,13 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.knowm.xchart.style.Styler;
 
 public class DataLabeller implements MouseMotionListener {
 
-  protected static class DataPoint {
-    String label;
-
-    // used for popup detection & popup highlight
-    Shape shape;
-    
-    // label center coordinates
-    double x;
-    double y;
-    
-    // width of data point (used for bar charts)
-    double w;
-
-    public DataPoint(double x, double y, int margin, String label) {
-      double halfSize = margin * 1.5;
-      double markerSize = margin * 3;
-
-      shape = new Ellipse2D.Double(x - halfSize, y - halfSize, markerSize, markerSize);
-
-      this.x = x;
-      this.y = y;
-      this.w = 0;
-      this.label = label;
-    }
-
-    public DataPoint(Shape shape, double x, double y, double width, String label) {
-      this.x = x;
-      this.y = y;
-      this.w = width;
-      this.shape = shape;
-      this.label = label;
-    }
-
-  }
-
-  public static enum DataLabelContent {
+  public enum DataLabelContent {
     xLabels, yLabels, xAndYLabels
   }
 
@@ -81,40 +45,41 @@ public class DataLabeller implements MouseMotionListener {
   // currently drawn labels
   private ArrayList<Shape> shapeList;
 
-  protected Styler styler;
+  private final Styler styler;
 
   private Color popupHighlightColor;
   private Color backgroundColor;
   private Color borderColor;
   private Color textColor;
   private Font textFont;
-  DecimalFormat twoPlaces;
+//  DecimalFormat twoPlaces;
 
+  /**
+   * Constructor
+   *
+   * @param styler
+   */
   public DataLabeller(Styler styler) {
+
     this.styler = styler;
-    init();
-  }
 
-  protected void init() {
-
-    dataPointList = new ArrayList<DataPoint>();
-    shapeList = new ArrayList<Shape>();
-    twoPlaces = new DecimalFormat("#.#");
-    popupDataPoint = null;
-  }
-
-  public void initStyle() {
-
+    // initStyle
+    // TODO create specific styles in styler for some of these
     popupHighlightColor = styler.getChartTitleBoxBackgroundColor();
     backgroundColor = styler.getLegendBackgroundColor(); // Color.WHITE;
     borderColor = styler.getLegendBorderColor(); // Color.BLACK;
     textColor = styler.getChartFontColor();
     textFont = styler.getAnnotationsFont();
 
-    if (styler.getDecimalPattern() != null) {
-      twoPlaces = new DecimalFormat(styler.getDecimalPattern());
-    }
+//    if (styler.getDecimalPattern() != null) {
+//      twoPlaces = new DecimalFormat(styler.getDecimalPattern());
+//    }
 
+    //init
+    dataPointList = new ArrayList<DataPoint>();
+    shapeList = new ArrayList<Shape>();
+//    twoPlaces = new DecimalFormat("#.#");
+    popupDataPoint = null;
   }
 
   public void startPaint(Graphics2D g) {
@@ -122,9 +87,9 @@ public class DataLabeller implements MouseMotionListener {
     if (!shouldShowDataLabels) {
       return;
     }
-    if (textColor == null) {
-      initStyle();
-    }
+//    if (textColor == null) {
+//      initStyle();
+//    }
     dataPointList.clear();
     shapeList.clear();
 
@@ -135,22 +100,6 @@ public class DataLabeller implements MouseMotionListener {
 
     topEdge = clipBounds.getY() + margin;
     bottomEdge = clipBounds.getMaxY() - margin * 2;
-  }
-
-  protected String getLabel(double xValue, double yValue) {
-
-    switch (dataLabelContent) {
-    case xAndYLabels:
-      return "(" + twoPlaces.format(xValue) + ", " + twoPlaces.format(yValue) + ")";
-    case xLabels:
-      return twoPlaces.format(xValue);
-    case yLabels:
-      return twoPlaces.format(yValue);
-
-    default:
-      break;
-    }
-    return null;
   }
 
   public void paint(Graphics2D g) {
@@ -174,7 +123,7 @@ public class DataLabeller implements MouseMotionListener {
   /**
    * Adds a data (xValue, yValue) with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
    */
-  public void addData(double xOffset, double yOffset, double xValue, double yValue) {
+  public void addData(double xOffset, double yOffset, String xValue, String yValue) {
 
     String label = getLabel(xValue, yValue);
 
@@ -185,24 +134,40 @@ public class DataLabeller implements MouseMotionListener {
    * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
    */
   public void addData(double xOffset, double yOffset, String label) {
-    
+
     DataPoint dp = new DataPoint(xOffset, yOffset, margin, label);
     dataPointList.add(dp);
   }
-  
+
   /**
-   * Adds a data (xValue, yValue) with geometry defined with shape . This point will be highlighted using the shape
+   * Adds a data (xValue, yValue) with geometry defined with shape. This point will be highlighted using the shape
    */
-  public void addData(Shape shape, double xOffset, double yOffset, double width, double xValue, double yValue) {
-    
+  public void addData(Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
+
     String label = getLabel(xValue, yValue);
     addData(shape, xOffset, yOffset, width, label);
   }
-  
+
   public void addData(Shape shape, double xOffset, double yOffset, double width, String label) {
 
     DataPoint dp = new DataPoint(shape, xOffset, yOffset, width, label);
     dataPointList.add(dp);
+  }
+
+  private String getLabel(String xValue, String yValue) {
+
+    switch (dataLabelContent) {
+      case xAndYLabels:
+        return "(" + xValue + ", " + yValue + ")";
+      case xLabels:
+        return xValue;
+      case yLabels:
+        return yValue;
+
+      default:
+        break;
+    }
+    return null;
   }
 
   public void paintDataLabel(Graphics2D g, DataPoint dataPoint, boolean isPopup) {
@@ -263,7 +228,7 @@ public class DataLabeller implements MouseMotionListener {
       g.transform(at);
       g.fill(shape);
       g.setTransform(orig);
-      
+
       // Rectangle2D bounds = g.getFontMetrics().getStringBounds(dataPoint.label,
       // g);
       // g.drawString(dataPoint.label, (float) (x + margin * 2), (float) (y +
@@ -311,56 +276,82 @@ public class DataLabeller implements MouseMotionListener {
       e.getComponent().repaint();
     }
   }
-  
-  
+
   public boolean isShouldShowDataLabels() {
 
     return shouldShowDataLabels;
   }
-  
+
   public void setShouldShowDataLabels(boolean shouldShowDataLabels) {
 
     this.shouldShowDataLabels = shouldShowDataLabels;
   }
-  
+
   public boolean isDataLabelsAsToolTips() {
 
     return dataLabelsAsToolTips;
   }
-  
+
   public void setDataLabelsAsToolTips(boolean dataLabelsAsToolTips) {
 
     this.dataLabelsAsToolTips = dataLabelsAsToolTips;
   }
-  
+
   public DataLabelContent getDataLabelContent() {
 
     return dataLabelContent;
   }
-  
+
   public void setDataLabelContent(DataLabelContent dataLabelContent) {
 
     this.dataLabelContent = dataLabelContent;
   }
-  
+
   public boolean isPreventOverlap() {
 
     return preventOverlap;
   }
-  
+
   public void setPreventOverlap(boolean preventOverlap) {
 
     this.preventOverlap = preventOverlap;
   }
- 
-  public Styler getStyler() {
 
-    return styler;
-  }
-  
-  public void setStyler(Styler styler) {
+  protected static class DataPoint {
 
-    this.styler = styler;
-    initStyle();
+    String label;
+
+    // used for popup detection & popup highlight
+    Shape shape;
+
+    // label center coordinates
+    double x;
+    double y;
+
+    // width of data point (used for bar charts)
+    double w;
+
+    public DataPoint(double x, double y, int margin, String label) {
+
+      double halfSize = margin * 1.5;
+      double markerSize = margin * 3;
+
+      shape = new Ellipse2D.Double(x - halfSize, y - halfSize, markerSize, markerSize);
+
+      this.x = x;
+      this.y = y;
+      this.w = 0;
+      this.label = label;
+    }
+
+    public DataPoint(Shape shape, double x, double y, double width, String label) {
+      this.x = x;
+      this.y = y;
+      this.w = width;
+      this.shape = shape;
+      this.label = label;
+    }
+
   }
+
 }

@@ -156,7 +156,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
     String datePattern = timeSpans.get(index).getDatePattern();
     // System.out.println("index: " + index);
 
-    // iterate BACWARDS from previous point until the appropriate timespan is found for the gridStepHint
+    // iterate BACKWARDS from previous point until the appropriate timespan is found for the gridStepHint
     for (int i = index - 1; i > 0; i--) {
 
       if (gridStepHint > timeSpans.get(i).getUnitAmount() * timeSpans.get(i).getMagnitude()) {
@@ -191,19 +191,12 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
       SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styler.getLocale());
       simpleDateformat.setTimeZone(styler.getTimezone());
-
-      // return simpleDateformat.format(value);
-
-      //////////////////////////////
+      axisFormat=simpleDateformat;
 
       // generate all tickLabels and tickLocations from the first to last position
       for (double value = firstPosition; value <= maxValue + 2 * gridStep; value = value + gridStep) {
 
-        // if (value <= maxValue && value >= minValue) {
-
-        ///////////////////////////////
-
-        tickLabels.add(simpleDateformat.format(value));
+        tickLabels.add(axisFormat.format(value));
         // here we convert tickPosition finally to plot space, i.e. pixels
         double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
         // System.out.println("tickLabelPosition: " + tickLabelPosition);

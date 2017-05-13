@@ -29,7 +29,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 public class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
 
-  NumberFormatter numberFormatter = null;
+  private final NumberLogFormatter numberLogFormatter;
 
   /**
    * Constructor
@@ -43,7 +43,8 @@ public class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
   public AxisTickCalculator_Logarithmic(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
-    numberFormatter = new NumberFormatter(styler);
+    numberLogFormatter = new NumberLogFormatter(styler, axisDirection);
+    axisFormat = numberLogFormatter;
     calculate();
   }
 
@@ -51,7 +52,7 @@ public class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf(maxValue), minValue, maxValue, axisDirection));
+      tickLabels.add(numberLogFormatter.format(BigDecimal.valueOf(maxValue).doubleValue()));
       tickLocations.add(workingSpace / 2.0);
       return;
     }
@@ -116,9 +117,8 @@ public class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
 
         // only add labels for the decades
         if (Math.abs(Math.log10(j) % 1) < 0.00000001) {
-          tickLabels.add(numberFormatter.formatLogNumber(j, axisDirection));
-        }
-        else {
+          tickLabels.add(numberLogFormatter.format(j));
+        } else {
           tickLabels.add(null);
         }
 

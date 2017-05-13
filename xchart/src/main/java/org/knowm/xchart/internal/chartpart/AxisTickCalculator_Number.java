@@ -31,7 +31,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 public class AxisTickCalculator_Number extends AxisTickCalculator_ {
 
-  NumberFormatter numberFormatter = null;
+  private final NumberFormatter numberFormatter;
 
   /**
    * Constructor
@@ -45,7 +45,8 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
   public AxisTickCalculator_Number(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
-    numberFormatter = new NumberFormatter(styler);
+    numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
+    axisFormat = numberFormatter;
     calculate();
   }
 
@@ -53,7 +54,7 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf(maxValue), minValue, maxValue, axisDirection));
+      tickLabels.add(numberFormatter.format(BigDecimal.valueOf(maxValue).doubleValue()));
       tickLocations.add(workingSpace / 2.0);
       return;
     }
@@ -96,14 +97,12 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       int exponent = 0;
       if (significand == 0) {
         exponent = 1;
-      }
-      else if (significand < 1) {
+      } else if (significand < 1) {
         while (significand < 1) {
           significand *= 10.0;
           exponent--;
         }
-      }
-      else {
+      } else {
         while (significand >= 10 || significand == Double.NEGATIVE_INFINITY) {
           significand /= 10.0;
           exponent++;
@@ -115,16 +114,13 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       if (significand > 7.5) {
         // gridStep = 10.0 * 10 ** exponent
         gridStep = 10.0 * Utils.pow(10, exponent);
-      }
-      else if (significand > 3.5) {
+      } else if (significand > 3.5) {
         // gridStep = 5.0 * 10 ** exponent
         gridStep = 5.0 * Utils.pow(10, exponent);
-      }
-      else if (significand > 1.5) {
+      } else if (significand > 1.5) {
         // gridStep = 2.0 * 10 ** exponent
         gridStep = 2.0 * Utils.pow(10, exponent);
-      }
-      else {
+      } else {
         // gridStep = 1.0 * 10 ** exponent
         gridStep = Utils.pow(10, exponent);
       }
@@ -150,14 +146,12 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       if (firstPositionAsDouble == Double.NaN) {
         // This happens when the data values are almost the same but differ by a very tiny amount.
         // The solution for now is to create a single axis label and tick at the average value
-        tickLabels.add(numberFormatter.formatNumber(BigDecimal.valueOf((maxValue + minValue) / 2.0), minValue, maxValue, axisDirection));
+        tickLabels.add(numberFormatter.format(BigDecimal.valueOf((maxValue + minValue) / 2.0)));
         tickLocations.add(workingSpace / 2.0);
         return;
-      }
-      else if (firstPositionAsDouble == Double.NEGATIVE_INFINITY) {
+      } else if (firstPositionAsDouble == Double.NEGATIVE_INFINITY) {
         firstPosition = BigDecimal.valueOf(-1 * Double.MAX_VALUE);
-      }
-      else {
+      } else {
         try {
           firstPosition = BigDecimal.valueOf(firstPositionAsDouble);
         } catch (java.lang.NumberFormatException e) {
@@ -181,7 +175,7 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
 
         // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 && value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
         // System.out.println(value);
-        String tickLabel = numberFormatter.formatNumber(value, minValue, maxValue, axisDirection);
+        String tickLabel = numberFormatter.format(value.doubleValue());
         // System.out.println(tickLabel);
         tickLabels.add(tickLabel);
 

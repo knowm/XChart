@@ -25,12 +25,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.knowm.xchart.BubbleSeries;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BubbleStyler;
-import org.knowm.xchart.style.label.DataLabeller;
 
 /**
  * @author timmolter
@@ -75,10 +74,6 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
     }
-    DataLabeller dataLabeller = stylerBubble.getDataLabeller();
-    if(dataLabeller != null) {
-      dataLabeller.startPaint(g);
-    }
 
     Map<String, BubbleSeries> map = chart.getSeriesMap();
     for (BubbleSeries series : map.values()) {
@@ -107,8 +102,7 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
         double x = 0.0;
         if (chart.getXAxis().getAxisDataType() == AxisDataType.Number) {
           x = ((Number) xItr.next()).doubleValue();
-        }
-        else if (chart.getXAxis().getAxisDataType() == AxisDataType.Date) {
+        } else if (chart.getXAxis().getAxisDataType() == AxisDataType.Date) {
           x = ((Date) xItr.next()).getTime();
         }
         // System.out.println(x);
@@ -132,8 +126,7 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
         // System.out.println(y);
         if (stylerBubble.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
-        }
-        else {
+        } else {
           y = yOrig;
         }
         // System.out.println(y);
@@ -183,14 +176,14 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
           g.setStroke(series.getLineStyle());
           g.draw(bubble);
           // add data labels
-          if(dataLabeller != null) {
-            dataLabeller.addData(bubble, xOffset, yOffset, 0, x, yOrig);
-          }    
+          if (chart.dataLabeller != null) {
+            chart.dataLabeller.addData(bubble, xOffset, yOffset, 0, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
+          }
         }
       }
     }
-    if(dataLabeller != null) {
-      dataLabeller.paint(g);
+    if (chart.dataLabeller != null) {
+      chart.dataLabeller.paint(g);
     }
   }
 }

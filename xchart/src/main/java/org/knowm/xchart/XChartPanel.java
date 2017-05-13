@@ -70,7 +70,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
     this.addMouseListener(new PopUpMenuClickListener());
 
     // Mouse motion listener for data label popup
-    DataLabeller dataLabeller = chart.getStyler().getDataLabeller();
+    DataLabeller dataLabeller = chart.getDataLabeller();
     if(dataLabeller != null) {
       MouseMotionListener mml = dataLabeller.getMouseMotionListener();
       if(mml != null) {

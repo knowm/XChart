@@ -36,7 +36,6 @@ import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
-import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -124,10 +123,6 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     // double curValue = 0.0;
     // double curValue = 0.0;
     double startAngle = pieStyler.getStartAngleInDegrees() + 90;
-    DataLabeller dataLabeller = pieStyler.getDataLabeller();
-    if(dataLabeller != null) {
-      dataLabeller.startPaint(g);
-    }
 
     map = chart.getSeriesMap();
     for (PieSeries series : map.values()) {
@@ -286,7 +281,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
 
       
       // add data labels
-      if(dataLabeller != null) {
+      if(chart.dataLabeller != null) {
         //maybe another option to construct this label
         String annotation = series.getName() + " (" + df.format(y) + ")";
         
@@ -296,13 +291,13 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
         double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
         double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
 
-        dataLabeller.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
+        chart.dataLabeller.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
       }
       startAngle += arcAngle;
     }
     // add data labels
-    if(dataLabeller != null) {
-      dataLabeller.paint(g);
+    if(chart.dataLabeller != null) {
+      chart.dataLabeller.paint(g);
     }
   }
 

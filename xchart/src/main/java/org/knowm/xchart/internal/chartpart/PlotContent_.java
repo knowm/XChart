@@ -34,6 +34,7 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
 
   protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
+
   public abstract void doPaint(Graphics2D g);
 
   /**
@@ -61,6 +62,8 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
 
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
     g.setClip(bounds.createIntersection(bounds));
+
+    chart.dataLabeller.startPaint(g);
 
     doPaint(g);
 

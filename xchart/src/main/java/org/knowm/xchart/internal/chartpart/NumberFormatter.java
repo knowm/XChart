@@ -18,34 +18,44 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.FieldPosition;
+import java.text.Format;
 import java.text.NumberFormat;
+import java.text.ParsePosition;
 
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * @author timmolter
  */
-public class NumberFormatter {
+public class NumberFormatter extends Format {
 
   private final AxesChartStyler styler;
+  private final Axis.Direction axisDirection;
+  private final double min;
+  private final double max;
+  private final NumberFormat numberFormat;
 
   /**
    * Constructor
    */
-  public NumberFormatter(AxesChartStyler styler) {
+  public NumberFormatter(AxesChartStyler styler, Axis.Direction axisDirection, double min, double max) {
 
     this.styler = styler;
+    this.axisDirection = axisDirection;
+    this.min = min;
+    this.max = max;
+    numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
   }
 
-  public String getFormatPattern(BigDecimal value, double min, double max) {
+  public String getFormatPattern(double value) {
 
     // System.out.println("value: " + value);
     // System.out.println("min: " + min);
     // System.out.println("max: " + max);
 
     // some special cases first
-    if (value.compareTo(BigDecimal.ZERO) == 0) {
+    if (BigDecimal.valueOf(value).compareTo(BigDecimal.ZERO) == 0) {
       return "0";
     }
 
@@ -53,16 +63,14 @@ public class NumberFormatter {
     int placeOfDifference;
     if (difference == 0.0) {
       placeOfDifference = 0;
-    }
-    else {
+    } else {
       placeOfDifference = (int) Math.floor(Math.log(difference) / Math.log(10));
     }
     int placeOfValue;
-    if (value.doubleValue() == 0.0) {
+    if (value == 0.0) {
       placeOfValue = 0;
-    }
-    else {
-      placeOfValue = (int) Math.floor(Math.log(value.doubleValue()) / Math.log(10));
+    } else {
+      placeOfValue = (int) Math.floor(Math.log(value) / Math.log(10));
     }
 
     // System.out.println("difference: " + difference);
@@ -72,8 +80,7 @@ public class NumberFormatter {
     if (placeOfDifference <= 4 && placeOfDifference >= -4) {
       // System.out.println("getNormalDecimalPattern");
       return getNormalDecimalPatternPositive(placeOfValue, placeOfDifference);
-    }
-    else {
+    } else {
       // System.out.println("getScientificDecimalPattern");
       return getScientificDecimalPattern();
     }
@@ -87,11 +94,9 @@ public class NumberFormatter {
 
       if (i >= 0 && (i < placeOfValue)) {
         sb.append("0");
-      }
-      else if (i < 0 && (i > placeOfValue)) {
+      } else if (i < 0 && (i > placeOfValue)) {
         sb.append("0");
-      }
-      else {
+      } else {
         sb.append("#");
       }
       if (i % 3 == 0 && i > 0) {
@@ -110,76 +115,36 @@ public class NumberFormatter {
     return "0.###############E0";
   }
 
-  /**
-   * Format a number value, if the override patterns are null, it uses defaults
-   *
-   * @param value
-   * @param min
-   * @param max
-   * @param axisDirection
-   * @return
-   */
-  public String formatNumber(BigDecimal value, double min, double max, Direction axisDirection) {
+  @Override
+  public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
 
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
+//    BigDecimal number = (BigDecimal) obj;
+    Number number = (Number) obj;
 
     String decimalPattern;
 
-    if (axisDirection == Direction.X && styler.getXAxisDecimalPattern() != null) {
+    if (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() != null) {
 
       decimalPattern = styler.getXAxisDecimalPattern();
-    }
-    else if (axisDirection == Direction.Y && styler.getYAxisDecimalPattern() != null) {
+    } else if (axisDirection == Axis.Direction.Y && styler.getYAxisDecimalPattern() != null) {
       decimalPattern = styler.getYAxisDecimalPattern();
-    }
-    else if (styler.getDecimalPattern() != null) {
-
+    } else if (styler.getDecimalPattern() != null) {
       decimalPattern = styler.getDecimalPattern();
-    }
-    else {
-      decimalPattern = getFormatPattern(value, min, max);
+    } else {
+      decimalPattern = getFormatPattern(number.doubleValue());
     }
     // System.out.println(decimalPattern);
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
     normalFormat.applyPattern(decimalPattern);
-    return normalFormat.format(value);
+    toAppendTo.append(normalFormat.format(number));
+
+    return toAppendTo;
+
   }
 
-  /**
-   * Format a log number value for log Axes which show only decade tick labels. if the override patterns are null, it uses defaults
-   *
-   * @param value
-   * @return
-   */
-  public String formatLogNumber(double value, Direction axisDirection) {
-
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
-
-    String decimalPattern;
-
-    if (axisDirection == Direction.X && styler.getXAxisDecimalPattern() != null) {
-
-      decimalPattern = styler.getXAxisDecimalPattern();
-    }
-    else if (axisDirection == Direction.Y && styler.getYAxisDecimalPattern() != null) {
-      decimalPattern = styler.getYAxisDecimalPattern();
-    }
-    else if (styler.getDecimalPattern() != null) {
-
-      decimalPattern = styler.getDecimalPattern();
-    }
-    else {
-      if (Math.abs(value) > 1000.0 || Math.abs(value) < 0.001) {
-        decimalPattern = "0E0";
-      }
-      else {
-        decimalPattern = "0.###";
-      }
-    }
-
-    DecimalFormat normalFormat = (DecimalFormat) numberFormat;
-    normalFormat.applyPattern(decimalPattern);
-    return normalFormat.format(value);
+  @Override
+  public Object parseObject(String source, ParsePosition pos) {
+    return null;
   }
 }

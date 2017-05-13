@@ -44,7 +44,7 @@ public class DataLabellerExample {
     }
     {
     	XYChart chart = alc.getChart();
-    	DataLabeller dataLabeller = chart.getStyler().getDataLabeller();
+    	DataLabeller dataLabeller = chart.getDataLabeller();
     	dataLabeller.setShouldShowDataLabels(false);
     	chart.setTitle("No data label");
     	charts.add(chart);
@@ -52,7 +52,7 @@ public class DataLabellerExample {
     {
     	//current default
     	XYChart chart = alc.getChart();
-    	DataLabeller dataLabeller = chart.getStyler().getDataLabeller();
+    	DataLabeller dataLabeller = chart.getDataLabeller();
     	dataLabeller.setShouldShowDataLabels(true);
     	dataLabeller.setDataLabelsAsToolTips(true);
     	chart.setTitle("Pop up data label");
@@ -60,7 +60,7 @@ public class DataLabellerExample {
     }
     {
     	XYChart chart = alc.getChart();
-    	DataLabeller dataLabeller = chart.getStyler().getDataLabeller();
+    	DataLabeller dataLabeller = chart.getDataLabeller();
     	dataLabeller.setShouldShowDataLabels(true);
     	dataLabeller.setDataLabelsAsToolTips(false);
     	chart.setTitle("Static data label");
@@ -68,7 +68,7 @@ public class DataLabellerExample {
     }
     {
     	XYChart chart = alc.getChart();
-    	DataLabeller dataLabeller = chart.getStyler().getDataLabeller();
+    	DataLabeller dataLabeller = chart.getDataLabeller();
     	dataLabeller.setShouldShowDataLabels(true);
     	dataLabeller.setDataLabelsAsToolTips(false);
     	dataLabeller.setPreventOverlap(true);
@@ -77,7 +77,7 @@ public class DataLabellerExample {
     }
     {
     	XYChart chart = alc.getChart();
-    	DataLabeller dataLabeller = chart.getStyler().getDataLabeller();
+    	DataLabeller dataLabeller = chart.getDataLabeller();
     	dataLabeller.setShouldShowDataLabels(true);
     	dataLabeller.setDataLabelsAsToolTips(false);
     	dataLabeller.setPreventOverlap(true);

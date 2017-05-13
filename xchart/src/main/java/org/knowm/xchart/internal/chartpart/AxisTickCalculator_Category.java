@@ -66,17 +66,19 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
     double firstPosition = gridStep / 2.0;
 
     // set up String formatters that may be encountered
-    NumberFormatter numberFormatter = null;
-    SimpleDateFormat simpleDateformat = null;
-    if (axisType == AxisDataType.Number) {
-      numberFormatter = new NumberFormatter(styler);
-    }
-    else if (axisType == AxisDataType.Date) {
+    if (axisType == AxisDataType.String) {
+      StringFormatter stringFormatter = new StringFormatter();
+      axisFormat = stringFormatter;
+    } else if (axisType == AxisDataType.Number) {
+      NumberFormatter numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
+      axisFormat = numberFormatter;
+    } else if (axisType == AxisDataType.Date) {
       if (styler.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
       }
-      simpleDateformat = new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
+      SimpleDateFormat simpleDateformat = new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
       simpleDateformat.setTimeZone(styler.getTimezone());
+      axisFormat = simpleDateformat;
     }
 
     int counter = 0;
@@ -84,12 +86,10 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
     for (Object category : categories) {
       if (axisType == AxisDataType.String) {
         tickLabels.add(category.toString());
-      }
-      else if (axisType == AxisDataType.Number) {
-        tickLabels.add(numberFormatter.formatNumber(new BigDecimal(category.toString()), minValue, maxValue, axisDirection));
-      }
-      else if (axisType == AxisDataType.Date) {
-        tickLabels.add(simpleDateformat.format((((Date) category).getTime())));
+      } else if (axisType == AxisDataType.Number) {
+        tickLabels.add(axisFormat.format(new BigDecimal(category.toString()).doubleValue()));
+      } else if (axisType == AxisDataType.Date) {
+        tickLabels.add(axisFormat.format((((Date) category).getTime())));
       }
 
       double tickLabelPosition = margin + firstPosition + gridStep * counter++;

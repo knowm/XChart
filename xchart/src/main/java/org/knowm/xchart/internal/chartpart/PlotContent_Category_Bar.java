@@ -35,11 +35,10 @@ import java.util.Map;
 
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -134,11 +133,9 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     int chartForm = 1; // 1=positive, -1=negative, 0=span
     if (yMin > 0.0 && yMax > 0.0) {
       chartForm = 1; // positive chart
-    }
-    else if (yMin < 0.0 && yMax < 0.0) {
+    } else if (yMin < 0.0 && yMax < 0.0) {
       chartForm = -1; // negative chart
-    }
-    else {
+    } else {
       chartForm = 0;// span chart
     }
     // System.out.println(yMin);
@@ -153,10 +150,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     int seriesCounter = 0;
     double[] accumulatedStackOffsetPos = new double[numCategories];
     double[] accumulatedStackOffsetNeg = new double[numCategories];
-    DataLabeller dataLabeller = stylerCategory.getDataLabeller();
-    if(dataLabeller != null) {
-      dataLabeller.startPaint(g);
-    }
+
     for (CategorySeries series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
@@ -167,6 +161,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
+      Iterator<?> xItr = series.getXData().iterator();
       Iterator<? extends Number> yItr = series.getYData().iterator();
       Iterator<? extends Number> ebItr = null;
       Collection<? extends Number> errorBars = series.getExtraValues();
@@ -191,6 +186,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           categoryCounter++;
           continue;
         }
+        Object nextCat = xItr.next();
 
         double y = next.doubleValue();
 
@@ -232,8 +228,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
                   series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick ||
                   series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar) {
                 yBottom = 0.0;
-              }
-              else {
+              } else {
                 yBottom = y;
               }
               if (stylerCategory.isStacked()) {
@@ -241,14 +236,12 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
                 yBottom += accumulatedStackOffsetPos[categoryCounter];
                 accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
               }
-            }
-            else {
+            } else {
               if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar ||
                   series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick ||
                   series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar) {
                 yTop = 0.0;
-              }
-              else {
+              } else {
                 yTop = y; // yTransform uses yTop, and for non-bars and stick, it's the same as yBottom.
               }
               yBottom = y;
@@ -282,8 +275,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
             barWidth = gridStep * barWidthPercentage;
             double barMargin = gridStep * (1 - barWidthPercentage) / 2;
             xOffset = getBounds().getX() + xLeftMargin + gridStep * categoryCounter++ + barMargin;
-          }
-          else {
+          } else {
 
             barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
             double barMargin = gridStep * (1 - barWidthPercentage) / 2;
@@ -310,8 +302,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
             steppedPath = new ArrayList<Point2D.Double>();
             steppedReturnPath = new ArrayList<Point2D.Double>();
             steppedPath.add(new Point2D.Double(xOffset, yCenter));
-          }
-          else if (stylerCategory.isStacked()) {
+          } else if (stylerCategory.isStacked()) {
             //If a section of a stacked graph has changed from positive
             //to negative or vice-versa, draw what we've stored up so far
             //and resume with a blank slate.
@@ -392,8 +383,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
             double annotationY;
             if (next.doubleValue() >= 0.0) {
               annotationY = yOffset - 4;
-            }
-            else {
+            } else {
               annotationY = zeroOffset + 4 + annotationRectangle.getHeight();
             }
             Shape shape = textLayout.getOutline(null);
@@ -406,8 +396,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
             g.fill(shape);
             g.setTransform(orig);
           }
-        }
-        else if (CategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+        } else if (CategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
 
           // paint stick
           if (series.getLineStyle() != SeriesLines.NONE) {
@@ -424,13 +413,11 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
             if (y <= 0) {
               series.getMarker().paint(g, xOffset + barWidth / 2, zeroOffset, stylerCategory.getMarkerSize());
-            }
-            else {
+            } else {
               series.getMarker().paint(g, xOffset + barWidth / 2, yOffset, stylerCategory.getMarkerSize());
             }
           }
-        }
-        else {
+        } else {
 
           // paint line
           if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Line) {
@@ -465,8 +452,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           // set error bar style
           if (stylerCategory.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getLineColor());
-          }
-          else {
+          } else {
             g.setColor(stylerCategory.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
@@ -488,15 +474,18 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           g.draw(line);
         }
         // add data labels
-        if(dataLabeller != null) {
+        if (chart.dataLabeller != null) {
           Rectangle2D.Double rect = new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
           double yPoint;
-          if(y < 0) {
+          if (y < 0) {
             yPoint = zeroOffset + 4 + 20 + 5;
           } else {
             yPoint = yOffset;
           }
-          dataLabeller.addData(rect, xOffset, yPoint, barWidth, categoryCounter - 1, y);
+          if (chart.dataLabeller != null) {
+            chart.dataLabeller.addData(rect, xOffset, yPoint, barWidth, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
+                .format(y));
+          }
         }
       }
 
@@ -509,8 +498,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
       seriesCounter++;
     }
     // add data labels
-    if(dataLabeller != null) {
-      dataLabeller.paint(g);
+    if (chart.dataLabeller != null) {
+      chart.dataLabeller.paint(g);
     }
 
   }

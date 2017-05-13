@@ -27,12 +27,11 @@ import java.util.Map;
 
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.XYStyler;
-import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -80,10 +79,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
     }
 
     Map<String, XYSeries> map = chart.getSeriesMap();
-    DataLabeller dataLabeller = xyStyler.getDataLabeller();
-    if(dataLabeller != null) {
-  	  dataLabeller.startPaint(g);
-    }
+
     for (XYSeries series : map.values()) {
 
       if (!series.isEnabled()) {
@@ -111,8 +107,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         double x = 0.0;
         if (chart.getXAxis().getAxisDataType() == AxisDataType.Number) {
           x = ((Number) xItr.next()).doubleValue();
-        }
-        else if (chart.getXAxis().getAxisDataType() == AxisDataType.Date) {
+        } else if (chart.getXAxis().getAxisDataType() == AxisDataType.Date) {
           x = ((Date) xItr.next()).getTime();
         }
         // System.out.println(x);
@@ -140,8 +135,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         // System.out.println(y);
         if (xyStyler.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
-        }
-        else {
+        } else {
           y = yOrig;
         }
         // System.out.println(y);
@@ -220,8 +214,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           // set error bar style
           if (xyStyler.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getLineColor());
-          }
-          else {
+          } else {
             g.setColor(xyStyler.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
@@ -231,8 +224,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           if (xyStyler.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
-          }
-          else {
+          } else {
             topValue = y + eb;
           }
           double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
@@ -244,8 +236,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
-          }
-          else {
+          } else {
             bottomValue = y - eb;
           }
           double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
@@ -259,18 +250,19 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
-      
+
         // add data labels
-        if(dataLabeller != null) {
-          dataLabeller.addData(xOffset, yOffset, x, yOrig);
+        // TODO if no labels are wanted skip this. add option to styler
+        if (chart.dataLabeller != null) {
+          chart.dataLabeller.addData(xOffset, yOffset, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
         }
       }
 
       // close any open path for area charts
       closePath(g, path, previousX, getBounds(), yTopMargin);
     }
-    if(dataLabeller != null) {
-      dataLabeller.paint(g);
+    if (chart.dataLabeller != null) {
+      chart.dataLabeller.paint(g);
     }
   }
 }

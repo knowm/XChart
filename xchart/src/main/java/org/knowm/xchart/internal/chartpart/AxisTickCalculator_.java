@@ -21,6 +21,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.text.Format;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,6 +52,8 @@ public abstract class AxisTickCalculator_ {
   protected final double maxValue;
 
   protected final AxesChartStyler styler;
+
+  protected Format axisFormat;
 
   /**
    * Constructor
@@ -129,5 +132,9 @@ public abstract class AxisTickCalculator_ {
     // }
 
     return (largestLabelWidth * 1.1 < tickSpacingHint);
+  }
+
+  public Format getAxisFormat() {
+    return axisFormat;
   }
 }

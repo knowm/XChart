@@ -20,11 +20,13 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.text.Format;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.label.DataLabeller;
 
 /**
  * An XChart Chart
@@ -56,6 +58,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   protected Map<String, S> seriesMap = new LinkedHashMap<String, S>();
 
+  protected final DataLabeller dataLabeller;
+
   /**
    * Constructor
    *
@@ -68,6 +72,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.width = width;
     this.height = height;
     this.styler = styler;
+
+    dataLabeller = new DataLabeller(styler);
 
     this.chartTitle = new ChartTitle(this);
   }
@@ -186,5 +192,20 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public ST getStyler() {
 
     return styler;
+  }
+
+  public DataLabeller getDataLabeller() {
+
+    return dataLabeller;
+  }
+
+  public Format getXAxisFormat() {
+
+    return axisPair.getXAxis().getAxisTickCalculator().getAxisFormat();
+  }
+
+  public Format getYAxisFormat() {
+
+    return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
 }

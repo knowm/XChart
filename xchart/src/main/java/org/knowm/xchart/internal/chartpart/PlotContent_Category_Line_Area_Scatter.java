@@ -26,11 +26,10 @@ import java.util.Map;
 
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -83,10 +82,6 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
     int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
-    DataLabeller dataLabeller = categoryStyler.getDataLabeller();
-    if(dataLabeller != null) {
-      dataLabeller.startPaint(g);
-    }
 
     for (CategorySeries series : seriesMap.values()) {
 
@@ -100,6 +95,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
+      Iterator<? > xItr = series.getXData().iterator();
       Iterator<? extends Number> yItr = yData.iterator();
       Iterator<? extends Number> ebItr = null;
       Collection<? extends Number> errorBars = series.getExtraValues();
@@ -124,6 +120,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           previousY = -Double.MAX_VALUE;
           continue;
         }
+        Object nextCat = xItr.next();
 
         double yOrig = next.doubleValue();
 
@@ -132,8 +129,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         // System.out.println(y);
         if (categoryStyler.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
-        }
-        else {
+        } else {
           y = yOrig;
         }
         // System.out.println(y);
@@ -218,8 +214,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           // set error bar style
           if (categoryStyler.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getLineColor());
-          }
-          else {
+          } else {
             g.setColor(categoryStyler.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
@@ -229,8 +224,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           if (categoryStyler.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
-          }
-          else {
+          } else {
             topValue = y + eb;
           }
           double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
@@ -242,8 +236,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
-          }
-          else {
+          } else {
             bottomValue = y - eb;
           }
           double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
@@ -257,17 +250,18 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
-        if(dataLabeller != null) {
-          dataLabeller.addData(xOffset, yOffset, categoryCounter - 1, y);
-        }        
+        if (chart.dataLabeller != null) {
+          chart.dataLabeller.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
+              .format(y));
+        }
       }
 
       // close any open path for area charts
       closePath(g, path, previousX, getBounds(), yTopMargin);
     }
     // add data labels
-    if(dataLabeller != null) {
-      dataLabeller.paint(g);
+    if (chart.dataLabeller != null) {
+      chart.dataLabeller.paint(g);
     }
   }
 }

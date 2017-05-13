@@ -20,7 +20,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 
-import org.knowm.xchart.style.label.DataLabeller;
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -102,15 +101,11 @@ public abstract class Styler {
   public boolean hasAnnotations = false; // set by subclass
 
   private String decimalPattern;
-  
-  //
-  // Data Labels
-  private DataLabeller dataLabeller = new DataLabeller(this);
 
   protected void setAllStyles() {
 
     // Chart Style ///////////////////////////////
-	baseFont = theme.getBaseFont();
+    baseFont = theme.getBaseFont();
 
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
@@ -441,8 +436,7 @@ public abstract class Styler {
 
     if (legendSeriesLineLength < 0) {
       this.legendSeriesLineLength = 0;
-    }
-    else {
+    } else {
       this.legendSeriesLineLength = legendSeriesLineLength;
     }
     return this;
@@ -589,13 +583,4 @@ public abstract class Styler {
     return decimalPattern;
   }
 
-  public DataLabeller getDataLabeller() {
-    
-    return dataLabeller;
-  }
-  
-  public void setDataLabeller(DataLabeller dataLabeller) {
-  
-    this.dataLabeller = dataLabeller;
-  }
 }
