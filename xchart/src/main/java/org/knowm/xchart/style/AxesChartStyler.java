@@ -254,7 +254,7 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   /**
-   * Set the axis tick mark length
+   * Set the axis tick mark length (in pixels)
    *
    * @param axisTickMarkLength
    */
@@ -270,7 +270,7 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   /**
-   * sets the padding between the tick labels and the tick marks
+   * sets the padding (in pixels) between the tick labels and the tick marks
    *
    * @param axisTickPadding
    */
@@ -366,7 +366,7 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   /**
-   * sets the margin around the plot area
+   * sets the margin (in pixels) around the plot area
    *
    * @param plotMargin
    */
@@ -382,7 +382,7 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   /**
-   * sets the padding between the axis title and the tick labels
+   * sets the padding (in pixels) between the axis title and the tick labels
    *
    * @param axisTitlePadding
    */
@@ -398,7 +398,7 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   /**
-   * set the spacing between tick marks for the X-Axis
+   * set the spacing (in pixels) between tick marks for the X-Axis
    *
    * @param xAxisTickMarkSpacingHint
    */
@@ -414,7 +414,7 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   /**
-   * set the spacing between tick marks for the Y-Axis
+   * set the spacing (in pixels) between tick marks for the Y-Axis
    *
    * @param yAxisTickMarkSpacingHint
    */
@@ -639,7 +639,7 @@ public abstract class AxesChartStyler extends Styler {
   // Line, Scatter, Area Charts ///////////////////////////////
 
   /**
-   * Sets the size of the markers in pixels
+   * Sets the size of the markers (in pixels)
    *
    * @param markerSize
    */
