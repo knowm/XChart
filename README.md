@@ -122,11 +122,12 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] Logarithmic axes
 * [x] Number, Date, Bubble and Category X-Axis
 * [x] Multiple series
+* [x] Tool tips
 * [x] Extensive customization
 * [x] Themes - XChart, GGPlot2, Matlab
 * [x] Right-click, Save-As...
 * [x] User-defined axes range
-* [x] Custom legend placement
+* [x] Definable legend placement
 * [x] CSV import and export
 * [x] High resolution chart export
 * [x] Export as PNG, JPG, BMP, GIF with custom DPI setting

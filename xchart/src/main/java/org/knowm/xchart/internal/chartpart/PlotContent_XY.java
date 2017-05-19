@@ -252,8 +252,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         }
 
         // add data labels
-        // TODO if no labels are wanted skip this. add option to styler
-        chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
+        if (chart.getStyler().isToolTipsEnabled()) {
+          chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
+        }
       }
 
       // close any open path for area charts
