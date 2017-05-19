@@ -474,7 +474,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           g.draw(line);
         }
         // add data labels
-        if (chart.dataLabeller != null) {
+        if (chart.toolTips != null) {
           Rectangle2D.Double rect = new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
           double yPoint;
           if (y < 0) {
@@ -482,7 +482,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
           } else {
             yPoint = yOffset;
           }
-          chart.dataLabeller.addData(rect, xOffset, yPoint, barWidth, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
+          chart.toolTips.addData(rect, xOffset, yPoint, barWidth, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
               .format(y));
         }
       }

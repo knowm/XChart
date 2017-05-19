@@ -60,6 +60,13 @@ public abstract class Styler {
   }
 
   /**
+   * What to display in the data label
+   */
+  public enum ToolTipType {
+    xLabels, yLabels, xAndYLabels
+  }
+
+  /**
    * the default Theme
    */
   protected Theme theme = new XChartTheme();
@@ -95,6 +102,14 @@ public abstract class Styler {
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
   private double plotContentSize = .92;
+
+  // Tool Tips ///////////////////////////////
+  private boolean isToolTipsEnabled;
+  private ToolTipType toolTipType;
+  private Color toolTipBackgroundColor;
+  private Color toolTipBorderColor;
+  private Font toolTipFont;
+  private Color toolTipHighlightColor;
 
   // Annotations ///////////////////////////////
   private Font annotationsFont;
@@ -137,6 +152,15 @@ public abstract class Styler {
     plotBorderColor = theme.getPlotBorderColor();
     isPlotBorderVisible = theme.isPlotBorderVisible();
     plotContentSize = theme.getPlotContentSize();
+
+    // Tool Tips ///////////////////////////////
+
+    isToolTipsEnabled = theme.isToolTipsEnabled();
+    toolTipType = theme.getToolTipType();
+    toolTipBackgroundColor = theme.getToolTipBackgroundColor();
+    toolTipBorderColor = theme.getToolTipBorderColor();
+    toolTipFont = theme.getToolTipFont();
+    toolTipHighlightColor = theme.getToolTipHighlightColor();
 
     // Annotations ///////////////////////////////
     annotationsFont = theme.getAnnotationFont();
@@ -533,7 +557,75 @@ public abstract class Styler {
     return this;
   }
 
-  // Annotations ///////////////////////////////
+  // Tool Tips ///////////////////////////////
+
+  public boolean isToolTipsEnabled() {
+
+    return isToolTipsEnabled;
+  }
+
+  public Styler setToolTipsEnabled(boolean toolTipsEnabled) {
+
+    isToolTipsEnabled = toolTipsEnabled;
+    return this;
+  }
+
+  public ToolTipType getToolTipType() {
+
+    return toolTipType;
+  }
+
+  public Styler setToolTipType(ToolTipType toolTipType) {
+
+    this.toolTipType = toolTipType;
+    return this;
+  }
+
+  public Color getToolTipBackgroundColor() {
+
+    return toolTipBackgroundColor;
+  }
+
+  public Styler setToolTipBackgroundColor(Color toolTipBackgroundColor) {
+
+    this.toolTipBackgroundColor = toolTipBackgroundColor;
+    return this;
+  }
+
+  public Color getToolTipBorderColor() {
+
+    return toolTipBorderColor;
+  }
+
+  public Styler setToolTipBorderColor(Color toolTipBorderColor) {
+
+    this.toolTipBorderColor = toolTipBorderColor;
+    return this;
+  }
+
+  public Font getToolTipFont() {
+
+    return toolTipFont;
+  }
+
+  public Styler setToolTipFont(Font toolTipFont) {
+
+    this.toolTipFont = toolTipFont;
+    return this;
+  }
+
+  public Color getToolTipHighlightColor() {
+
+    return toolTipHighlightColor;
+  }
+
+  public Styler setToolTipHighlightColor(Color toolTipHighlightColor) {
+
+    this.toolTipHighlightColor = toolTipHighlightColor;
+    return this;
+  }
+
+// Annotations ///////////////////////////////
 
   public Boolean hasAnnotations() {
 

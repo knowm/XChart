@@ -54,6 +54,7 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setPlotGridLinesVisible(false);
     chart.getStyler().setXAxisTickMarkSpacingHint(100);
+    chart.getStyler().setToolTipsEnabled(true);
 
     // Series
     List<Integer> xData = new ArrayList<Integer>();

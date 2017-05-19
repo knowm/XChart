@@ -23,6 +23,7 @@ import java.awt.Stroke;
 
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.BaseSeriesColors;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.lines.BaseSeriesLines;
@@ -42,7 +43,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Font getBaseFont() {
 
-	return BASE_FONT;
+    return BASE_FONT;
   }
 
   @Override
@@ -91,7 +92,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Font getChartTitleFont() {
 
-	return getBaseFont().deriveFont(Font.BOLD).deriveFont(14f);
+    return getBaseFont().deriveFont(Font.BOLD).deriveFont(14f);
   }
 
   @Override
@@ -126,13 +127,10 @@ public abstract class AbstractBaseTheme implements Theme {
 
   // Chart Legend ///////////////////////////////
 
-  /**
-   * Base font, size 11.
-   */
   @Override
   public Font getLegendFont() {
 
-	return getBaseFont().deriveFont(11f);
+    return getBaseFont().deriveFont(11f);
   }
 
   @Override
@@ -185,9 +183,6 @@ public abstract class AbstractBaseTheme implements Theme {
     return true;
   }
 
-  /**
-   * Base font, bold, size 12.
-   */
   @Override
   public Font getAxisTitleFont() {
 
@@ -206,13 +201,10 @@ public abstract class AbstractBaseTheme implements Theme {
     return true;
   }
 
-  /**
-   * Axis title font.
-   */
   @Override
   public Font getAxisTickLabelsFont() {
 
-	return getAxisTitleFont();
+    return getAxisTitleFont();
   }
 
   @Override
@@ -230,7 +222,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getAxisTickMarksColor() {
 
-	  return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
   @Override
@@ -342,6 +334,43 @@ public abstract class AbstractBaseTheme implements Theme {
 
     return 4;
   }
+  // Tool Tips ///////////////////////////////
+
+  @Override
+  public boolean isToolTipsEnabled() {
+
+    return false;
+  }
+
+  @Override
+  public ToolTipType getToolTipType() {
+
+    return ToolTipType.xAndYLabels;
+  }
+
+  @Override
+  public Font getToolTipFont() {
+
+    return BASE_FONT;
+  }
+
+  @Override
+  public Color getToolTipBackgroundColor() {
+
+    return ChartColor.getAWTColor(ChartColor.WHITE);
+  }
+
+  @Override
+  public Color getToolTipBorderColor() {
+
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+  }
+
+  @Override
+  public Color getToolTipHighlightColor() {
+
+    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+  }
 
   // Category Charts ///////////////////////////////
 
@@ -407,12 +436,9 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public boolean isSumVisible() {
 
-  	return false;
+    return false;
   }
 
-  /**
-   * Annotations font.
-   */
   @Override
   public Font getSumFont() {
 

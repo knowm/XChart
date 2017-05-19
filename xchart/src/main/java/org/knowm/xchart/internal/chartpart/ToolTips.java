@@ -1,7 +1,7 @@
-package org.knowm.xchart.style.label;
+package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Color;
-import java.awt.Font;
+import static org.knowm.xchart.internal.chartpart.ChartPart.SOLID_STROKE;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
@@ -13,26 +13,18 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.knowm.xchart.style.Styler;
-
-// TODO move this out of Style
 
 /**
  * Data labels can be put on all labels or configured to popup like a tooltip from a mouse over.
  */
-public class DataLabeller implements MouseMotionListener {
-
-  /**
-   * What to dispolay in the data label
-   */
-  public enum DataLabelContent {
-    xLabels, yLabels, xAndYLabels
-  }
+public class ToolTips implements MouseMotionListener {
 
   // for pop up
-  private final ArrayList<DataPoint> dataPointList = new ArrayList<DataPoint>();
-  private DataPoint popupDataPoint;
+  private final List<DataPoint> dataPointList = new ArrayList<DataPoint>();
+  private DataPoint dataPoint;
 
   // edge detection
   private final static int MARGIN = 5;
@@ -41,59 +33,31 @@ public class DataLabeller implements MouseMotionListener {
   private double topEdge;
   private double bottomEdge;
 
-  // should they be enabled or not?
-  private boolean isDataLabelsEnabled = true;
-
-  // (either they are all rendered permanently or on via tool tip)
-  private boolean isDataLabelsAsToolTips = true;
-
-  private DataLabelContent dataLabelContent = DataLabelContent.xAndYLabels;
-
-  // should prevent overlapping labels
-  private boolean preventDataLabelOverlap = false;
-
   // currently drawn labels
-  private final ArrayList<Shape> shapeList = new ArrayList<Shape>();
+  private final List<Shape> shapeList = new ArrayList<Shape>();
 
   private final Styler styler;
-
-  private Color popupHighlightColor;
-  private Color backgroundColor;
-  private Color borderColor;
-  private Color textColor;
-  private Font textFont;
-//  DecimalFormat twoPlaces;
 
   /**
    * Constructor
    *
    * @param styler
    */
-  public DataLabeller(Styler styler) {
+  public ToolTips(Styler styler) {
 
     this.styler = styler;
-
-    // initStyle
-    // TODO create specific styles in styler for some of these
-//    popupHighlightColor = styler.getChartTitleBoxBackgroundColor();
-    popupHighlightColor = Color.PINK;
-    backgroundColor = styler.getLegendBackgroundColor(); // Color.WHITE;
-    borderColor = styler.getLegendBorderColor(); // Color.BLACK;
-    textColor = styler.getChartFontColor();
-    textFont = styler.getAnnotationsFont();
-
-    popupDataPoint = null;
+    this.dataPoint = null;
   }
 
   @Override
   public void mouseDragged(MouseEvent e) {
-
+    // ignore
   }
 
   @Override
   public void mouseMoved(MouseEvent e) {
 
-    if (!isDataLabelsEnabled || !isDataLabelsAsToolTips) { // don't draw anything or all labels aready drawn
+    if (!styler.isToolTipsEnabled()) { // don't draw anything or all labels aready drawn
       return;
     }
 
@@ -110,25 +74,24 @@ public class DataLabeller implements MouseMotionListener {
     if (newPoint != null) {
 
       // if the existing shown data point is already shown, abort
-      if (popupDataPoint != null) {
-        if (popupDataPoint.equals(newPoint)) {
+      if (dataPoint != null) {
+        if (dataPoint.equals(newPoint)) {
           return;
         }
       }
-      popupDataPoint = newPoint;
-//      System.out.println("e.getComponent() = " + e.getComponent()); // should be XChartPanel
+      dataPoint = newPoint;
       e.getComponent().repaint(); // repaint the entire XChartPanel
     }
     // remove the popup shape
-    else if (popupDataPoint != null) {
-      popupDataPoint = null;
+    else if (dataPoint != null) {
+      dataPoint = null;
       e.getComponent().repaint(); // repaint the entire XChartPanel
     }
   }
 
   public void prepare(Graphics2D g) {
 
-    if (!isDataLabelsEnabled) {
+    if (!styler.isToolTipsEnabled()) {
       return;
     }
     // clear lists
@@ -147,19 +110,12 @@ public class DataLabeller implements MouseMotionListener {
   public void paint(Graphics2D g) {
 
     // abort of data labels is not enabled
-    if (!isDataLabelsEnabled) {
+    if (!styler.isToolTipsEnabled()) {
       return;
     }
 
-    if (isDataLabelsAsToolTips) {
-      if (popupDataPoint != null) { // popupDataPoint was created in mouse move, need to render it
-        paintDataLabel(g, popupDataPoint);
-      }
-    } else { // data labels should be permanently shown for all points
-
-      for (DataPoint dataPoint : dataPointList) {
-        paintDataLabel(g, dataPoint);
-      }
+    if (dataPoint != null) { // dataPoint was created in mouse move, need to render it
+      paintToolTip(g, dataPoint);
     }
   }
 
@@ -199,7 +155,7 @@ public class DataLabeller implements MouseMotionListener {
 
   private String getLabel(String xValue, String yValue) {
 
-    switch (dataLabelContent) {
+    switch (styler.getToolTipType()) {
       case xAndYLabels:
         return "(" + xValue + ", " + yValue + ")";
       case xLabels:
@@ -213,12 +169,11 @@ public class DataLabeller implements MouseMotionListener {
     return null;
   }
 
-  private void paintDataLabel(Graphics2D g, DataPoint dataPoint) {
+  private void paintToolTip(Graphics2D g, DataPoint dataPoint) {
 
-    TextLayout textLayout = new TextLayout(dataPoint.label, textFont, new FontRenderContext(null, true, false));
+    TextLayout textLayout = new TextLayout(dataPoint.label, styler.getToolTipFont(), new FontRenderContext(null, true, false));
     Rectangle2D annotationRectangle = textLayout.getBounds();
 
-    // double x = dataPoint.x + MARGIN;
     double x = dataPoint.x + dataPoint.w / 2 - annotationRectangle.getWidth() / 2 - MARGIN;
     double y = dataPoint.y - 3 * MARGIN - annotationRectangle.getHeight();
 
@@ -227,11 +182,9 @@ public class DataLabeller implements MouseMotionListener {
     double halfHeight = h / 2;
 
     // not the box with label, but the shape
-    if (isDataLabelsAsToolTips) {
-      // highlight shape for popup
-      g.setColor(popupHighlightColor);
-      g.fill(dataPoint.shape);
-    }
+    // highlight shape for popup
+    g.setColor(styler.getToolTipHighlightColor());
+    g.fill(dataPoint.shape);
 
     // the label in a box
     x = Math.max(x, leftEdge);
@@ -240,87 +193,31 @@ public class DataLabeller implements MouseMotionListener {
     y = Math.min(y, bottomEdge - h);
     Rectangle2D rectangle = new Rectangle2D.Double(x, y, w, h);
 
-    boolean shouldDrawBox = true;
-    if (preventDataLabelOverlap) {
-      for (Shape shape : shapeList) {
-        if (shape.intersects(rectangle)) {
-          shouldDrawBox = false;
-          break;
-        }
-      }
-      if (shouldDrawBox) {
-        shapeList.add(rectangle);
-      }
-    }
-    if (shouldDrawBox) {
+    // fill background
+    g.setColor(styler.getToolTipBackgroundColor());
+    g.fill(rectangle);
 
-      // fill background
-      g.setColor(backgroundColor);
-//      g.setColor(Color.blue);
-      g.fill(rectangle);
+    // draw outline
+    g.setStroke(SOLID_STROKE);
+    g.setColor(styler.getToolTipBorderColor());
+    g.draw(rectangle);
 
-      // draw outline
-      g.setColor(borderColor);
-      g.draw(rectangle);
+    // draw text label
+    Shape shape = textLayout.getOutline(null);
+    g.setColor(styler.getChartFontColor());
+    g.setFont(styler.getToolTipFont());
+    AffineTransform orig = g.getTransform();
+    AffineTransform at = new AffineTransform();
+    at.translate(x + MARGIN - 1, y + MARGIN - 1 + halfHeight);
+    g.transform(at);
+    g.fill(shape);
+    g.setTransform(orig);
 
-      // draw text label
-      Shape shape = textLayout.getOutline(null);
-      g.setColor(textColor);
-      g.setFont(textFont);
-      AffineTransform orig = g.getTransform();
-      AffineTransform at = new AffineTransform();
-      // at.translate(annotationX, annotationY);
-      at.translate(x + MARGIN, y + MARGIN + halfHeight);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
-
-    }
   }
 
   public MouseMotionListener getMouseMotionListener() {
 
     return this;
-  }
-
-  public boolean isDataLabelsEnabled() {
-
-    return isDataLabelsEnabled;
-  }
-
-  public void setDataLabelsEnabled(boolean dataLabelsEnabled) {
-
-    this.isDataLabelsEnabled = dataLabelsEnabled;
-  }
-
-  public boolean isDataLabelsAsToolTips() {
-
-    return isDataLabelsAsToolTips;
-  }
-
-  public void setDataLabelsAsToolTips(boolean dataLabelsAsToolTips) {
-
-    this.isDataLabelsAsToolTips = dataLabelsAsToolTips;
-  }
-
-  public DataLabelContent getDataLabelContent() {
-
-    return dataLabelContent;
-  }
-
-  public void setDataLabelContent(DataLabelContent dataLabelContent) {
-
-    this.dataLabelContent = dataLabelContent;
-  }
-
-  public boolean isPreventDataLabelOverlap() {
-
-    return preventDataLabelOverlap;
-  }
-
-  public void setPreventDataLabelOverlap(boolean preventDataLabelOverlap) {
-
-    this.preventDataLabelOverlap = preventDataLabelOverlap;
   }
 
   protected static class DataPoint {

@@ -59,10 +59,10 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
     if (direction == Axis.Direction.Y) {
 
-      if (chart.getyYAxisTitle() != null && !chart.getyYAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isYAxisTitleVisible()) {
+      if (chart.getYAxisTitle() != null && !chart.getYAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isYAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout nonRotatedTextLayout = new TextLayout(chart.getyYAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
+        TextLayout nonRotatedTextLayout = new TextLayout(chart.getYAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
         Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
 
         // ///////////////////////////////////////////////

@@ -25,6 +25,7 @@ import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
@@ -35,6 +36,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * <li>Histogram
  * <li>Bar Chart styles - not overlapped, bar width
  * <li>Integer data values
+ * <li>Tool Tips
  */
 public class BarChart07 implements ExampleChart<CategoryChart> {
 
@@ -55,6 +57,8 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setAvailableSpaceFill(.96);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
+    chart.getStyler().setToolTipsEnabled(true);
+    chart.getStyler().setToolTipType(Styler.ToolTipType.yLabels);
 
     // Series
     Histogram histogram1 = new Histogram(getGaussianData(1000), 10, -30, 30);

@@ -177,6 +177,26 @@ public class GGPlot2Theme extends AbstractBaseTheme {
     return 0;
   }
 
+  // Tool Tips ///////////////////////////////
+
+  @Override
+  public Color getToolTipBackgroundColor() {
+
+    return ChartColor.getAWTColor(ChartColor.WHITE);
+  }
+
+  @Override
+  public Color getToolTipBorderColor() {
+
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+  }
+
+  @Override
+  public Color getToolTipHighlightColor() {
+
+    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+  }
+
   // Category Charts ///////////////////////////////
 
   // Pie Charts ///////////////////////////////

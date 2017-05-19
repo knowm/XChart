@@ -135,6 +135,26 @@ public class MatlabTheme extends AbstractBaseTheme {
     return 3;
   }
 
+  // Tool Tips ///////////////////////////////
+
+  @Override
+  public Color getToolTipBackgroundColor() {
+
+    return new Color(255, 255, 220);
+  }
+
+  @Override
+  public Color getToolTipBorderColor() {
+
+    return ChartColor.getAWTColor(ChartColor.BLACK);
+  }
+
+  @Override
+  public Color getToolTipHighlightColor() {
+
+    return ChartColor.getAWTColor(ChartColor.BLACK);
+  }
+
   // Category Charts ///////////////////////////////
 
   // Pie Charts ///////////////////////////////

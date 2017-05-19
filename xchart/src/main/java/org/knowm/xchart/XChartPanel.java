@@ -40,7 +40,7 @@ import javax.swing.filechooser.FileFilter;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.style.label.DataLabeller;
+import org.knowm.xchart.internal.chartpart.ToolTips;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -70,9 +70,9 @@ public class XChartPanel<T extends Chart> extends JPanel {
     this.addMouseListener(new PopUpMenuClickListener());
 
     // Mouse motion listener for data label popup
-    DataLabeller dataLabeller = chart.getDataLabeller();
-    if(dataLabeller != null) {
-      MouseMotionListener mml = dataLabeller.getMouseMotionListener();
+    ToolTips toolTips = chart.getToolTips();
+    if(toolTips != null) {
+      MouseMotionListener mml = toolTips.getMouseMotionListener();
       if(mml != null) {
         this.addMouseMotionListener(mml);
       }

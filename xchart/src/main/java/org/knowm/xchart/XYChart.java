@@ -47,14 +47,6 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
     super(width, height, new XYStyler());
 
-    // long start = System.currentTimeMillis();
-    //
-    // long t1 = System.currentTimeMillis();
-    // System.out.println("t1 = " + (t1 - start));
-    //
-    // long t2 = System.currentTimeMillis();
-    // System.out.println("t2 = " + (t2 - t1));
-
     axisPair = new AxisPair(this);
 
     plot = new Plot_XY(this);
@@ -66,7 +58,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param width
    * @param height
-   * @param theme  - pass in a instance of Theme class, probably a custom Theme.
+   * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
   public XYChart(int width, int height, Theme theme) {
 
@@ -103,8 +95,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Add a series for a X-Y type chart using Lists
    *
    * @param seriesName
-   * @param xData      the X-Axis data
-   * @param yData      the Y-Axis data
+   * @param xData the X-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {
@@ -116,8 +108,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Add a series for a X-Y type chart using using double arrays
    *
    * @param seriesName
-   * @param xData      the X-Axis data
-   * @param xData      the Y-Axis data
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public XYSeries addSeries(String seriesName, double[] xData, double[] yData) {
@@ -129,9 +121,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Add a series for a X-Y type chart using using double arrays with error bars
    *
    * @param seriesName
-   * @param xData      the X-Axis data
-   * @param xData      the Y-Axis data
-   * @param errorBars  the error bar data
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
+   * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
   public XYSeries addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
@@ -143,8 +135,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Add a series for a X-Y type chart using using int arrays
    *
    * @param seriesName
-   * @param xData      the X-Axis data
-   * @param xData      the Y-Axis data
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public XYSeries addSeries(String seriesName, int[] xData, int[] yData) {
@@ -156,9 +148,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Add a series for a X-Y type chart using using int arrays with error bars
    *
    * @param seriesName
-   * @param xData      the X-Axis data
-   * @param xData      the Y-Axis data
-   * @param errorBars  the error bar data
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
+   * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
   public XYSeries addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
@@ -170,9 +162,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Add a series for a X-Y type chart using Lists with error bars
    *
    * @param seriesName
-   * @param xData      the X-Axis data
-   * @param yData      the Y-Axis data
-   * @param errorBars  the error bar data
+   * @param xData the X-Axis data
+   * @param yData the Y-Axis data
+   * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
   public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
@@ -189,8 +181,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
       }
 
       series = new XYSeries(seriesName, xData, yData, errorBars);
-    }
-    else { // generate xData
+    } else { // generate xData
       series = new XYSeries(seriesName, Utils.getGeneratedData(yData.size()), yData, errorBars);
     }
 
@@ -203,8 +194,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Update a series by updating the X-Axis, Y-Axis and error bar data
    *
    * @param seriesName
-   * @param newXData        - set null to be automatically generated as a list of increasing Integers starting from
-   *                        1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   * 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
@@ -223,8 +214,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
         generatedXData.add(i);
       }
       series.replaceData(generatedXData, newYData, newErrorBarData);
-    }
-    else {
+    } else {
       series.replaceData(newXData, newYData, newErrorBarData);
     }
 
@@ -235,8 +225,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Update a series by updating the X-Axis, Y-Axis and error bar data
    *
    * @param seriesName
-   * @param newXData        - set null to be automatically generated as a list of increasing Integers starting from
-   *                        1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   * 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return

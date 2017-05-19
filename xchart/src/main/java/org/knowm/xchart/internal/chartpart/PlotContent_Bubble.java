@@ -176,7 +176,7 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
           g.setStroke(series.getLineStyle());
           g.draw(bubble);
           // add data labels
-          chart.dataLabeller.addData(bubble, xOffset, yOffset, 0, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
+          chart.toolTips.addData(bubble, xOffset, yOffset, 0, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
         }
       }
     }

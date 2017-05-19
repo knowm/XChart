@@ -284,7 +284,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
       double xOffset = xCenter + Math.cos(Math.toRadians(angle)) * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
       double yOffset = yCenter - Math.sin(Math.toRadians(angle)) * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
 
-      chart.dataLabeller.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
+      chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
       startAngle += arcAngle;
     }
   }

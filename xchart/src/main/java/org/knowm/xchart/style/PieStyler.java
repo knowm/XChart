@@ -42,9 +42,6 @@ public class PieStyler extends Styler {
   private boolean isSumVisible;
   private Font sumFont;
 
-  /**
-   * Constructor
-   */
   public PieStyler() {
 
     this.setAllStyles();

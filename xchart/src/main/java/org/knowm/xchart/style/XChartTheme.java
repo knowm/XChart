@@ -90,6 +90,9 @@ public class XChartTheme extends AbstractBaseTheme {
     return false;
   }
 
+  // Tool Tips ///////////////////////////////
+
+
   // Category Charts ///////////////////////////////
 
   // Pie Charts ///////////////////////////////

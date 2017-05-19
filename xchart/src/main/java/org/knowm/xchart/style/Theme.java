@@ -22,6 +22,7 @@ import java.awt.Stroke;
 
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
@@ -33,11 +34,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Chart Style ///////////////////////////////
 
-  /**
-   * Base font, from which all other fonts are derived, if not set directly.
-   *
-   * @return base font
-   */
   Font getBaseFont();
 
   Color getChartBackgroundColor();
@@ -112,6 +108,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Chart Plot Area ///////////////////////////////
 
+  // TODO investigate why this is never used.
   boolean isPlotGridLinesVisible();
 
   boolean isPlotGridVerticalLinesVisible();
@@ -134,6 +131,20 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   int getPlotMargin();
 
+  // ToolTips ///////////////////////////////
+
+  boolean isToolTipsEnabled();
+
+  ToolTipType getToolTipType();
+
+  Font getToolTipFont();
+
+  Color getToolTipBackgroundColor();
+
+  Color getToolTipBorderColor();
+
+  Color getToolTipHighlightColor();
+
   // Bar Charts ///////////////////////////////
 
   double getAvailableSpaceFill();
@@ -144,6 +155,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   boolean isCircular();
 
+  // TODO investigate why this is never used.
   double getStartAngleInDegrees();
 
   Font getPieFont();
@@ -164,6 +176,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   int getMarkerSize();
 
+  // TODO investigate why this is never used.
   boolean showMarkers();
 
   // Error Bars ///////////////////////////////

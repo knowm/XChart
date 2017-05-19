@@ -295,8 +295,8 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
     // Axis title
     double titleHeight = 0.0;
-    if (chart.getyYAxisTitle() != null && !chart.getyYAxisTitle().trim().equalsIgnoreCase("") && stylerAxesChart.isYAxisTitleVisible()) {
-      TextLayout textLayout = new TextLayout(chart.getyYAxisTitle(), stylerAxesChart.getAxisTitleFont(), new FontRenderContext(null, true, false));
+    if (chart.getYAxisTitle() != null && !chart.getYAxisTitle().trim().equalsIgnoreCase("") && stylerAxesChart.isYAxisTitleVisible()) {
+      TextLayout textLayout = new TextLayout(chart.getYAxisTitle(), stylerAxesChart.getAxisTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
       titleHeight = rectangle.getHeight() + stylerAxesChart.getAxisTitlePadding();
     }

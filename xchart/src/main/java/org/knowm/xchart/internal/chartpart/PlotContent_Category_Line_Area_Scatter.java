@@ -250,7 +250,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
-        chart.dataLabeller.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
+        chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
             .format(y));
       }
 

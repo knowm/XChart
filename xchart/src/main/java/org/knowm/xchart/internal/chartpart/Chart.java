@@ -26,7 +26,6 @@ import java.util.Map;
 
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.label.DataLabeller;
 
 /**
  * An XChart Chart
@@ -51,14 +50,13 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   /**
    * Chart Parts
    */
+  protected AxisPair axisPair;
+  ToolTips toolTips; // ToolTip is hewre because AxisPair and Plot need access to it
+  protected Plot_ plot;
   protected ChartTitle chartTitle;
   protected Legend_ legend;
-  protected Plot_ plot;
-  protected AxisPair axisPair;
 
   protected Map<String, S> seriesMap = new LinkedHashMap<String, S>();
-
-  protected final DataLabeller dataLabeller;
 
   /**
    * Constructor
@@ -73,7 +71,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.height = height;
     this.styler = styler;
 
-    dataLabeller = new DataLabeller(styler);
+    this.toolTips = new ToolTips(styler);
 
     this.chartTitle = new ChartTitle(this);
   }
@@ -85,6 +83,26 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     g.setColor(styler.getChartBackgroundColor());
     Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
     g.fill(rect);
+  }
+
+  /**
+   * Gets the Chart's styler, which can be used to customize the Chart's appearance
+   *
+   * @return the styler
+   */
+  public ST getStyler() {
+
+    return styler;
+  }
+
+  public S removeSeries(String seriesName) {
+
+    return seriesMap.remove(seriesName);
+  }
+
+  public ToolTips getToolTips() {
+
+    return toolTips;
   }
 
   /**
@@ -130,7 +148,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.xAxisTitle = xAxisTitle;
   }
 
-  public String getyYAxisTitle() {
+  public String getYAxisTitle() {
 
     return yAxisTitle;
   }
@@ -144,32 +162,32 @@ public abstract class Chart<ST extends Styler, S extends Series> {
    * Chart Parts Getters
    */
 
-  protected ChartTitle getChartTitle() {
+  ChartTitle getChartTitle() {
 
     return chartTitle;
   }
 
-  protected Legend_ getLegend() {
+  Legend_ getLegend() {
 
     return legend;
   }
 
-  protected Plot_ getPlot() {
+  Plot_ getPlot() {
 
     return plot;
   }
 
-  protected Axis getXAxis() {
+  Axis getXAxis() {
 
     return axisPair.getXAxis();
   }
 
-  protected Axis getYAxis() {
+  Axis getYAxis() {
 
     return axisPair.getYAxis();
   }
 
-  public AxisPair getAxisPair() {
+  AxisPair getAxisPair() {
 
     return axisPair;
   }
@@ -179,33 +197,14 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return seriesMap;
   }
 
-  public S removeSeries(String seriesName) {
-
-    return seriesMap.remove(seriesName);
-  }
-
-  /**
-   * Gets the Chart's styler, which can be used to customize the Chart's appearance
-   *
-   * @return the styler
-   */
-  public ST getStyler() {
-
-    return styler;
-  }
-
-  public DataLabeller getDataLabeller() {
-
-    return dataLabeller;
-  }
-
-  public Format getXAxisFormat() {
+  Format getXAxisFormat() {
 
     return axisPair.getXAxis().getAxisTickCalculator().getAxisFormat();
   }
 
-  public Format getYAxisFormat() {
+  Format getYAxisFormat() {
 
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
+
 }
