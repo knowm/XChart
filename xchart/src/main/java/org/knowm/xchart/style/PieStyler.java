@@ -53,6 +53,7 @@ public class PieStyler extends Styler {
 
     this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie;
     this.isCircular = theme.isCircular();
+    this.startAngleInDegrees = theme.getStartAngleInDegrees();
     this.annotationDistance = theme.getAnnotationDistance();
     this.annotationType = theme.getAnnotationType();
     this.drawAllAnnotations = theme.isDrawAllAnnotations();
@@ -213,7 +214,7 @@ public class PieStyler extends Styler {
   /**
    * Sets the font size for the sum.
    *
-   * @param isSumVisible
+   * @param sumFontSize
    */
   public PieStyler setSumFontSize(float sumFontSize) {
 

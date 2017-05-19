@@ -453,12 +453,6 @@ public abstract class AbstractBaseTheme implements Theme {
     return 8;
   }
 
-  @Override
-  public boolean showMarkers() {
-
-    return true;
-  }
-
   // Error Bars ///////////////////////////////
 
   @Override

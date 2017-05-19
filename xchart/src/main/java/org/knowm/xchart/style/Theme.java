@@ -108,7 +108,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Chart Plot Area ///////////////////////////////
 
-  // TODO investigate why this is never used.
   boolean isPlotGridLinesVisible();
 
   boolean isPlotGridVerticalLinesVisible();
@@ -155,7 +154,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   boolean isCircular();
 
-  // TODO investigate why this is never used.
   double getStartAngleInDegrees();
 
   Font getPieFont();
@@ -175,9 +173,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   // Line, Scatter, Area Charts ///////////////////////////////
 
   int getMarkerSize();
-
-  // TODO investigate why this is never used.
-  boolean showMarkers();
 
   // Error Bars ///////////////////////////////
 

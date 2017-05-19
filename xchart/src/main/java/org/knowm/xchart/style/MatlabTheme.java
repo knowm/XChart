@@ -167,12 +167,6 @@ public class MatlabTheme extends AbstractBaseTheme {
 
   // Line, Scatter, Area Charts ///////////////////////////////
 
-  @Override
-  public boolean showMarkers() {
-
-    return false;
-  }
-
   // Error Bars ///////////////////////////////
 
   // Annotations ///////////////////////////////

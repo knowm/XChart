@@ -59,9 +59,6 @@ public abstract class Styler {
     Left, Centre, Right
   }
 
-  /**
-   * What to display in the data label
-   */
   public enum ToolTipType {
     xLabels, yLabels, xAndYLabels
   }
