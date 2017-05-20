@@ -182,6 +182,9 @@
                     <includes>
                         <include>**/*.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/package-info.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
