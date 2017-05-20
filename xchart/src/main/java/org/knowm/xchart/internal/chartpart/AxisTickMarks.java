@@ -21,9 +21,9 @@ import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.series.AxesChartSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
@@ -121,8 +121,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
         g.drawLine((int) xOffset, (int) (yOffset - chart.getStyler().getAxisTickMarkLength()), (int) (xOffset + chart.getXAxis().getBounds().getWidth()), (int) (yOffset - chart.getStyler()
             .getAxisTickMarkLength()));
       }
-    }
-    else {
+    } else {
       bounds = new Rectangle2D.Double();
     }
   }

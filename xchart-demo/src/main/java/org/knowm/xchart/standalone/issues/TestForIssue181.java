@@ -30,7 +30,6 @@ import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-
 public class TestForIssue181 {
 
   public static void main(String[] args) {

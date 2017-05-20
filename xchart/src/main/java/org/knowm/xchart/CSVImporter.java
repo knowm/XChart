@@ -52,8 +52,7 @@ public class CSVImporter {
     XYChart chart;
     if (chartTheme != null) {
       chart = new XYChart(width, height, chartTheme);
-    }
-    else {
+    } else {
       chart = new XYChart(width, height);
     }
 
@@ -65,15 +64,13 @@ public class CSVImporter {
       String[] xAndYData;
       if (dataOrientation == DataOrientation.Rows) {
         xAndYData = getSeriesDataFromCSVRows(csvFile);
-      }
-      else {
+      } else {
         xAndYData = getSeriesDataFromCSVColumns(csvFile);
       }
 
       if (xAndYData[2] == null || xAndYData[2].trim().equalsIgnoreCase("")) {
         chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]));
-      }
-      else {
+      } else {
         chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), getAxisData(xAndYData[2]));
       }
     }
@@ -90,8 +87,7 @@ public class CSVImporter {
     String[] xAndYData;
     if (dataOrientation == DataOrientation.Rows) {
       xAndYData = getSeriesDataFromCSVRows(csvFile);
-    }
-    else {
+    } else {
       xAndYData = getSeriesDataFromCSVColumns(csvFile);
     }
     return new SeriesData(getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
@@ -231,7 +227,7 @@ public class CSVImporter {
    * This method returns the files found in the given directory matching the given regular expression.
    *
    * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
-   * @param regex   - ex. ".*.csv"
+   * @param regex - ex. ".*.csv"
    * @return File[] - an array of files
    */
   private static File[] getAllFiles(String dirName, String regex) {
@@ -271,8 +267,7 @@ public class CSVImporter {
         }
       }
       return filteredFiles.toArray(new File[filteredFiles.size()]);
-    }
-    else {
+    } else {
       System.out.println(dirName + " does not denote a valid directory!");
       return new File[0];
     }

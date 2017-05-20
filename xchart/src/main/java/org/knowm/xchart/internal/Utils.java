@@ -48,8 +48,7 @@ public class Utils {
 
     if (exponent > 0) {
       return Math.pow(base, exponent);
-    }
-    else {
+    } else {
       return 1.0 / Math.pow(base, -1 * exponent);
     }
   }

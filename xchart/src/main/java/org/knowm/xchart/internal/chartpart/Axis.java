@@ -24,8 +24,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.AxesChartSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -95,7 +95,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   /**
    * Constructor
    *
-   * @param chart     the Chart
+   * @param chart the Chart
    * @param direction the axis direction (X or Y)
    */
   public Axis(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
@@ -204,8 +204,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
-    }
-    else { // X-Axis
+    } else { // X-Axis
 
       // calculate paint zone
       // |____________________|
@@ -339,16 +338,13 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
         AxisDataType axisType = chart.getAxisPair().getXAxis().getAxisDataType();
 
         return new AxisTickCalculator_Category(getDirection(), workingSpace, categories, axisType, stylerAxesChart);
-      }
-      else if (getAxisDataType() == AxisDataType.Date) {
+      } else if (getAxisDataType() == AxisDataType.Date) {
 
         return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, stylerAxesChart);
-      }
-      else if (stylerAxesChart.isXAxisLogarithmic()) {
+      } else if (stylerAxesChart.isXAxisLogarithmic()) {
 
         return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, stylerAxesChart);
-      }
-      else {
+      } else {
         return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, stylerAxesChart);
       }
     }
@@ -359,8 +355,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       if (stylerAxesChart.isYAxisLogarithmic() && getAxisDataType() != AxisDataType.Date) {
 
         return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, stylerAxesChart);
-      }
-      else {
+      } else {
         return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, stylerAxesChart);
       }
     }

@@ -67,7 +67,7 @@ public class SwingWrapper<T extends Chart> {
    * Constructor
    *
    * @param charts
-   * @param numRows    - the number of rows
+   * @param numRows - the number of rows
    * @param numColumns - the number of columns
    */
   public SwingWrapper(List<T> charts, int numRows, int numColumns) {
@@ -154,8 +154,7 @@ public class SwingWrapper<T extends Chart> {
             XChartPanel<T> chartPanel = new XChartPanel<T>(chart);
             chartPanels.add(chartPanel);
             frame.add(chartPanel);
-          }
-          else {
+          } else {
             JPanel chartPanel = new JPanel();
             frame.getContentPane().add(chartPanel);
           }

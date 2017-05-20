@@ -25,9 +25,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.series.AxesChartSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
@@ -193,8 +193,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
       // g.setColor(Color.blue);
       // g.draw(bounds);
 
-    }
-    else {
+    } else {
       bounds = new Rectangle2D.Double();
     }
   }

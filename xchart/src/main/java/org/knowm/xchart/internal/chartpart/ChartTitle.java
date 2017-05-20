@@ -110,8 +110,7 @@ public class ChartTitle implements ChartPart {
       double height = 2 * chart.getStyler().getChartTitlePadding() + rectangle.getHeight();
 
       return new Rectangle2D.Double(Double.NaN, Double.NaN, width, height); // Double.NaN indicates not sure yet.
-    }
-    else {
+    } else {
       return new Rectangle2D.Double(); // Constructs a new Rectangle2D, initialized to location (0, 0) and size (0, 0).
     }
   }

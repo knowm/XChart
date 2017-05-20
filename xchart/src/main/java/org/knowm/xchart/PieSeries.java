@@ -16,9 +16,9 @@
  */
 package org.knowm.xchart;
 
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
+import org.knowm.xchart.internal.series.Series;
 
 /**
  * A Series containing Pie data to be plotted on a Chart

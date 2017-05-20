@@ -19,10 +19,10 @@ package org.knowm.xchart;
 import java.awt.Graphics2D;
 import java.util.Map;
 
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.PieStyler;
@@ -52,7 +52,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
    *
    * @param width
    * @param height
-   * @param theme  - pass in a instance of Theme class, probably a custom Theme.
+   * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
   public PieChart(int width, int height, Theme theme) {
 

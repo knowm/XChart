@@ -191,7 +191,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
       SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styler.getLocale());
       simpleDateformat.setTimeZone(styler.getTimezone());
-      axisFormat=simpleDateformat;
+      axisFormat = simpleDateformat;
 
       // generate all tickLabels and tickLocations from the first to last position
       for (double value = firstPosition; value <= maxValue + 2 * gridStep; value = value + gridStep) {

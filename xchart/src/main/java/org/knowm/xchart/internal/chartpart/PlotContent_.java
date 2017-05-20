@@ -34,7 +34,6 @@ public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series>
 
   final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
-
   protected abstract void doPaint(Graphics2D g);
 
   /**

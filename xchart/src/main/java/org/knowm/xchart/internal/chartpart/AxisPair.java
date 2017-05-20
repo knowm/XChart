@@ -21,8 +21,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.AxesChartSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
 
@@ -77,8 +77,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     if (chart.getSeriesMap() == null || chart.getSeriesMap().size() < 1) {
       xAxis.addMinMax(-1, 1);
       yAxis.addMinMax(-1, 1);
-    }
-    else {
+    } else {
       int disabledCount = 0; // maybe all are disabled, so we check this condition
       for (AxesChartSeries series : chart.getSeriesMap().values()) {
         // add min/max to axes
@@ -94,7 +93,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
         xAxis.addMinMax(series.getXMin(), series.getXMax());
         yAxis.addMinMax(series.getYMin(), series.getYMax());
       }
-      if(disabledCount==chart.getSeriesMap().values().size()){
+      if (disabledCount == chart.getSeriesMap().values().size()) {
         xAxis.addMinMax(-1, 1);
         yAxis.addMinMax(-1, 1);
       }
@@ -158,8 +157,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
               if (next.doubleValue() > 0) {
                 accumulatedStackOffsetPos[categoryCounter] += next.doubleValue();
-              }
-              else if (next.doubleValue() < 0) {
+              } else if (next.doubleValue() < 0) {
                 accumulatedStackOffsetNeg[categoryCounter] += next.doubleValue();
               }
               categoryCounter++;

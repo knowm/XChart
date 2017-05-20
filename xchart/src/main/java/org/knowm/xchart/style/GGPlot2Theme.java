@@ -80,7 +80,7 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public Font getLegendFont() {
 
-	return getBaseFont().deriveFont(14f);
+    return getBaseFont().deriveFont(14f);
   }
 
   @Override
@@ -130,7 +130,7 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public boolean isAxisTicksLineVisible() {
 
-	  return false;
+    return false;
   }
 
   // Chart Plot Area ///////////////////////////////

@@ -71,13 +71,13 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
     // Mouse motion listener for data label popup
     ToolTips toolTips = chart.getToolTips();
-    if(toolTips != null) {
+    if (toolTips != null) {
       MouseMotionListener mml = toolTips.getMouseMotionListener();
-      if(mml != null) {
+      if (mml != null) {
         this.addMouseMotionListener(mml);
       }
     }
-    
+
     // Control+S key listener for saving chart
     KeyStroke ctrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlS, "save");
@@ -189,26 +189,19 @@ public class XChartPanel<T extends Chart> extends JPanel {
         try {
           if (fileChooser.getFileFilter() == null) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.PNG);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
             BitmapEncoder.saveJPGWithQuality(chart, BitmapEncoder.addFileExtension(theFileToSave.getCanonicalPath(), BitmapFormat.JPG), 1.0f);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.PNG);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.BMP);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.GIF);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
             VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.SVG);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
             VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.EPS);
-          }
-          else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
+          } else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
             VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.PDF);
           }
         } catch (IOException e) {

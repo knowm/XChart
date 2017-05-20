@@ -19,9 +19,9 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.series.AxesChartSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
@@ -86,8 +86,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
       // g.setColor(Color.red);
       // g.draw(bounds);
 
-    }
-    else if (direction == Axis.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
+    } else if (direction == Axis.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
@@ -107,8 +106,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
       // g.setColor(Color.red);
       // g.draw(bounds);
 
-    }
-    else {
+    } else {
       bounds = new Rectangle2D.Double();
     }
   }

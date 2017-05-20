@@ -186,8 +186,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
-      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart02")) {
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart02")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -201,8 +200,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
-      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart03")) {
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart03")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -216,8 +214,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
-      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart04")) {
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart04")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -231,8 +228,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
-      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart05")) {
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart05")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 

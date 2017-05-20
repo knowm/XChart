@@ -20,10 +20,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.series.MarkersSeries;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
+import org.knowm.xchart.internal.series.MarkersSeries;
 
 /**
  * A Series containing category data to be plotted on a Chart
@@ -101,14 +101,11 @@ public class CategorySeries extends MarkersSeries {
     Object dataPoint = itr.next();
     if (dataPoint instanceof Number) {
       axisType = AxisDataType.Number;
-    }
-    else if (dataPoint instanceof Date) {
+    } else if (dataPoint instanceof Date) {
       axisType = AxisDataType.Date;
-    }
-    else if (dataPoint instanceof String) {
+    } else if (dataPoint instanceof String) {
       axisType = AxisDataType.String;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Series data must be either Number, Date or String type!!!");
     }
     return axisType;

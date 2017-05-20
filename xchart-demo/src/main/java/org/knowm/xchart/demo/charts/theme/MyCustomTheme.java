@@ -37,7 +37,7 @@ public class MyCustomTheme extends AbstractBaseTheme {
   @Override
   public Font getBaseFont() {
 
-	return new Font(Font.SERIF, Font.PLAIN, 10);
+    return new Font(Font.SERIF, Font.PLAIN, 10);
   }
 
   @Override
@@ -81,7 +81,7 @@ public class MyCustomTheme extends AbstractBaseTheme {
   @Override
   public Font getChartTitleFont() {
 
-	return getBaseFont().deriveFont(Font.BOLD).deriveFont(18f);
+    return getBaseFont().deriveFont(Font.BOLD).deriveFont(18f);
   }
 
   @Override

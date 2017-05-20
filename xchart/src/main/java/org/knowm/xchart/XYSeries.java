@@ -20,10 +20,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.series.MarkersSeries;
 import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
+import org.knowm.xchart.internal.series.MarkersSeries;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
@@ -95,11 +95,9 @@ public class XYSeries extends MarkersSeries {
     Object dataPoint = itr.next();
     if (dataPoint instanceof Number) {
       axisType = AxisDataType.Number;
-    }
-    else if (dataPoint instanceof Date) {
+    } else if (dataPoint instanceof Date) {
       axisType = AxisDataType.Date;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Series data must be either Number or Date type!!!");
     }
     return axisType;

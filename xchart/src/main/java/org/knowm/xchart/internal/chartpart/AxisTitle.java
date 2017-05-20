@@ -23,9 +23,9 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.series.AxesChartSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
@@ -40,7 +40,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
   /**
    * Constructor
    *
-   * @param chart     the Chart
+   * @param chart the Chart
    * @param direction the Direction
    */
   AxisTitle(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
@@ -89,12 +89,10 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
             nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
-      }
-      else {
+      } else {
         bounds = new Rectangle2D.Double(chart.getYAxis().getBounds().getX(), chart.getYAxis().getBounds().getY(), 0, chart.getYAxis().getBounds().getHeight());
       }
-    }
-    else {
+    } else {
 
       if (chart.getXAxisTitle() != null && !chart.getXAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isXAxisTitleVisible()) {
 
@@ -119,8 +117,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
         // g.setColor(Color.blue);
         // g.draw(bounds);
 
-      }
-      else {
+      } else {
         bounds = new Rectangle2D.Double(chart.getXAxis().getBounds().getX(), chart.getXAxis().getBounds().getY() + chart.getXAxis().getBounds().getHeight(), chart.getXAxis().getBounds().getWidth(),
             0);
         // g.setColor(Color.blue);

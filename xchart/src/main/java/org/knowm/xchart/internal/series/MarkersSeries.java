@@ -74,8 +74,7 @@ public abstract class MarkersSeries extends AxesChartSeries {
     double[] yMinMax;
     if (extraValues == null) {
       yMinMax = findMinMax(yData, yAxisType);
-    }
-    else {
+    } else {
       yMinMax = findMinMaxWithErrorBars(yData, extraValues);
     }
     yMin = yMinMax[0];
