@@ -33,9 +33,6 @@ public class ToolTips implements MouseMotionListener {
   private double topEdge;
   private double bottomEdge;
 
-  // currently drawn labels
-  private final List<Shape> shapeList = new ArrayList<Shape>();
-
   private final Styler styler;
 
   /**
@@ -43,7 +40,7 @@ public class ToolTips implements MouseMotionListener {
    *
    * @param styler
    */
-  public ToolTips(Styler styler) {
+  ToolTips(Styler styler) {
 
     this.styler = styler;
     this.dataPoint = null;
@@ -89,14 +86,13 @@ public class ToolTips implements MouseMotionListener {
     }
   }
 
-  public void prepare(Graphics2D g) {
+  void prepare(Graphics2D g) {
 
     if (!styler.isToolTipsEnabled()) {
       return;
     }
     // clear lists
     dataPointList.clear();
-    shapeList.clear();
 
     Rectangle clipBounds = g.getClipBounds();
 
@@ -122,7 +118,7 @@ public class ToolTips implements MouseMotionListener {
   /**
    * Adds a data (xValue, yValue) with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
    */
-  public void addData(double xOffset, double yOffset, String xValue, String yValue) {
+  void addData(double xOffset, double yOffset, String xValue, String yValue) {
 
     String label = getLabel(xValue, yValue);
 
@@ -132,7 +128,7 @@ public class ToolTips implements MouseMotionListener {
   /**
    * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
    */
-  public void addData(double xOffset, double yOffset, String label) {
+  void addData(double xOffset, double yOffset, String label) {
 
     DataPoint dp = new DataPoint(xOffset, yOffset, MARGIN, label);
     dataPointList.add(dp);
@@ -141,13 +137,13 @@ public class ToolTips implements MouseMotionListener {
   /**
    * Adds a data (xValue, yValue) with geometry defined with shape. This point will be highlighted using the shape
    */
-  public void addData(Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
+  void addData(Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
 
     String label = getLabel(xValue, yValue);
     addData(shape, xOffset, yOffset, width, label);
   }
 
-  public void addData(Shape shape, double xOffset, double yOffset, double width, String label) {
+  void addData(Shape shape, double xOffset, double yOffset, double width, String label) {
 
     DataPoint dp = new DataPoint(shape, xOffset, yOffset, width, label);
     dataPointList.add(dp);
@@ -162,11 +158,10 @@ public class ToolTips implements MouseMotionListener {
         return xValue;
       case yLabels:
         return yValue;
-
       default:
         break;
     }
-    return null;
+    return "";
   }
 
   private void paintToolTip(Graphics2D g, DataPoint dataPoint) {
@@ -212,7 +207,6 @@ public class ToolTips implements MouseMotionListener {
     g.transform(at);
     g.fill(shape);
     g.setTransform(orig);
-
   }
 
   public MouseMotionListener getMouseMotionListener() {
@@ -220,7 +214,7 @@ public class ToolTips implements MouseMotionListener {
     return this;
   }
 
-  protected static class DataPoint {
+  static class DataPoint {
 
     private final String label;
 
@@ -242,7 +236,7 @@ public class ToolTips implements MouseMotionListener {
      * @param margin
      * @param label
      */
-    public DataPoint(double x, double y, int margin, String label) {
+    DataPoint(double x, double y, int margin, String label) {
 
       double halfSize = margin * 1.5;
       double markerSize = margin * 3;
@@ -264,7 +258,7 @@ public class ToolTips implements MouseMotionListener {
      * @param width
      * @param label
      */
-    public DataPoint(Shape shape, double x, double y, double width, String label) {
+    DataPoint(Shape shape, double x, double y, double width, String label) {
 
       this.x = x;
       this.y = y;
