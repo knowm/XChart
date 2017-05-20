@@ -14,20 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.standalone;
+package org.knowm.xchart.standalone.issues;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Creates a list of Charts and saves it as a PNG file.
  */
-public class ExampleSaveListOfCharts {
+public class TestForIssue1 {
 
   public static void main(String[] args) throws Exception {
 

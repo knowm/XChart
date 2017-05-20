@@ -16,8 +16,8 @@
  */
 package org.knowm.xchart;
 
-import java.awt.Graphics2D;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -123,6 +123,7 @@ public final class BitmapEncoder {
    * @throws IOException
    */
   public static void saveBitmap(List<Chart> charts, Integer rows, Integer cols, String fileName, BitmapEncoder.BitmapFormat bitmapFormat) throws IOException {
+
     OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
     try {
       saveBitmap(charts, rows, cols, out, bitmapFormat);
@@ -144,14 +145,15 @@ public final class BitmapEncoder {
    * @throws IOException
    */
   public static void saveBitmap(List<Chart> charts, Integer rows, Integer cols, OutputStream targetStream, BitmapEncoder.BitmapFormat bitmapFormat) throws IOException {
+
     List<BufferedImage> chartImages = new LinkedList<BufferedImage>();
-    for(Chart c: charts)
+    for (Chart c : charts)
       chartImages.add(getBufferedImage(c));
 
     BufferedImage bufferedImage = mergeImages(
-            chartImages,
-            rows,
-            cols
+        chartImages,
+        rows,
+        cols
     );
 
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
@@ -239,7 +241,7 @@ public final class BitmapEncoder {
    *
    * @param chart
    * @param fileName
-   * @param quality  - a float between 0 and 1 (1 = maximum quality)
+   * @param quality - a float between 0 and 1 (1 = maximum quality)
    * @throws FileNotFoundException
    * @throws IOException
    */
@@ -298,6 +300,7 @@ public final class BitmapEncoder {
   }
 
   private static BufferedImage mergeImages(List<BufferedImage> images, Integer rows, Integer cols) {
+
     BufferedImage first = images.get(0);
     int singleImageWidth = first.getWidth();
     int singleImageHeight = first.getHeight();
@@ -306,10 +309,10 @@ public final class BitmapEncoder {
     BufferedImage mergedImage = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_ARGB);
 
     Graphics g = mergedImage.getGraphics();
-    for(int row=0; row < rows; row++) {
-      for(int col=0; col < cols; col++) {
-        BufferedImage image = images.get(row*cols + col);
-        g.drawImage(image, col*singleImageWidth, row*singleImageHeight, null);
+    for (int row = 0; row < rows; row++) {
+      for (int col = 0; col < cols; col++) {
+        BufferedImage image = images.get(row * cols + col);
+        g.drawImage(image, col * singleImageWidth, row * singleImageHeight, null);
       }
     }
 
