@@ -57,7 +57,7 @@ public class SwingWorkerRealTime {
 
   private class MySwingWorker extends SwingWorker<Boolean, double[]> {
 
-    LinkedList<Double> fifo = new LinkedList<Double>();
+    final LinkedList<Double> fifo = new LinkedList<Double>();
 
     public MySwingWorker() {
 

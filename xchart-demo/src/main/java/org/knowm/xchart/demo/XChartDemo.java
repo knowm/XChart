@@ -94,12 +94,12 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
   /**
    * The main split frame
    */
-  private JSplitPane splitPane;
+  private final JSplitPane splitPane;
 
   /**
    * The tree
    */
-  private JTree tree;
+  private final JTree tree;
 
   /**
    * The panel for chart
@@ -258,9 +258,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
   private void createNodes(DefaultMutableTreeNode top) {
 
     // categories
-    DefaultMutableTreeNode category = null;
+    DefaultMutableTreeNode category;
     // leaves
-    DefaultMutableTreeNode defaultMutableTreeNode = null;
+    DefaultMutableTreeNode defaultMutableTreeNode;
 
     // Area category
     category = new DefaultMutableTreeNode("Area Charts");

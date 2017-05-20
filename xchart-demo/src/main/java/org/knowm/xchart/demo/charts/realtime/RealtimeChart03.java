@@ -44,7 +44,7 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
   private XYChart xyChart;
 
   private List<Integer> xData = new CopyOnWriteArrayList<Integer>();
-  private List<Double> yData = new CopyOnWriteArrayList<Double>();
+  private final List<Double> yData = new CopyOnWriteArrayList<Double>();
   private List<Double> errorBars = new CopyOnWriteArrayList<Double>();
 
   public static final String SERIES_NAME = "series1";

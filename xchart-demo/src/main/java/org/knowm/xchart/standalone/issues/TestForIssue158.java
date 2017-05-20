@@ -4,9 +4,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
 
-/**
- * Created by timmolter on 4/22/17.
- */
+
 public class TestForIssue158 {
 
   public static void main(String[] args) throws Exception {

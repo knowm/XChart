@@ -33,7 +33,7 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  */
 public class IntermediateExample {
 
-  static Random random = new Random();
+  static final Random random = new Random();
 
   public static void main(String[] args) {
 

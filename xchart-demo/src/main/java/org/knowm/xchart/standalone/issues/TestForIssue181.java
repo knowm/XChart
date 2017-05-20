@@ -14,9 +14,7 @@ import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/**
- * Created by timmolter on 5/1/17.
- */
+
 public class TestForIssue181 {
 
   public static void main(String[] args) {
