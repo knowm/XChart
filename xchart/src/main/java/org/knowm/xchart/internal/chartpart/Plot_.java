@@ -27,18 +27,18 @@ import org.knowm.xchart.style.Styler;
  */
 public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
 
-  protected final Chart<ST, S> chart;
-  protected Rectangle2D bounds;
+  final Chart<ST, S> chart;
+  Rectangle2D bounds;
 
-  protected PlotSurface_ plotSurface;
-  protected PlotContent_ plotContent;
+  PlotSurface_ plotSurface;
+  PlotContent_ plotContent;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Plot_(Chart<ST, S> chart) {
+  Plot_(Chart<ST, S> chart) {
 
     this.chart = chart;
   }

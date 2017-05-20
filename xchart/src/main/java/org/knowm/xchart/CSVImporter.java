@@ -49,7 +49,7 @@ public class CSVImporter {
   public static XYChart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height, ChartTheme chartTheme) {
 
     // 1. get the directory, name chart the dir name
-    XYChart chart = null;
+    XYChart chart;
     if (chartTheme != null) {
       chart = new XYChart(width, height, chartTheme);
     }
@@ -62,7 +62,7 @@ public class CSVImporter {
 
     // 3. create a series for each file, naming the series the file name
     for (File csvFile : csvFiles) {
-      String[] xAndYData = null;
+      String[] xAndYData;
       if (dataOrientation == DataOrientation.Rows) {
         xAndYData = getSeriesDataFromCSVRows(csvFile);
       }
@@ -87,7 +87,7 @@ public class CSVImporter {
     File csvFile = new File(path2CSVFile);
 
     // 2. Create Series
-    String[] xAndYData = null;
+    String[] xAndYData;
     if (dataOrientation == DataOrientation.Rows) {
       xAndYData = getSeriesDataFromCSVRows(csvFile);
     }
@@ -151,7 +151,7 @@ public class CSVImporter {
     BufferedReader bufferedReader = null;
     try {
       int counter = 0;
-      String line = null;
+      String line;
       bufferedReader = new BufferedReader(new FileReader(csvFile));
       while ((line = bufferedReader.readLine()) != null) {
         xAndYData[counter++] = line;
@@ -183,7 +183,7 @@ public class CSVImporter {
 
     BufferedReader bufferedReader = null;
     try {
-      String line = null;
+      String line;
       bufferedReader = new BufferedReader(new FileReader(csvFile));
       while ((line = bufferedReader.readLine()) != null) {
         String[] dataArray = line.split(",");
@@ -215,8 +215,7 @@ public class CSVImporter {
 
     List<Number> axisData = new ArrayList<Number>();
     String[] stringDataArray = stringData.split(",");
-    for (int i = 0; i < stringDataArray.length; i++) {
-      String dataPoint = stringDataArray[i];
+    for (String dataPoint : stringDataArray) {
       try {
         Double value = Double.parseDouble(dataPoint);
         axisData.add(value);
@@ -235,16 +234,16 @@ public class CSVImporter {
    * @param regex   - ex. ".*.csv"
    * @return File[] - an array of files
    */
-  public static File[] getAllFiles(String dirName, String regex) {
+  private static File[] getAllFiles(String dirName, String regex) {
 
     File[] allFiles = getAllFiles(dirName);
 
     List<File> matchingFiles = new ArrayList<File>();
 
-    for (int i = 0; i < allFiles.length; i++) {
+    for (File allFile : allFiles) {
 
-      if (allFiles[i].getName().matches(regex)) {
-        matchingFiles.add(allFiles[i]);
+      if (allFile.getName().matches(regex)) {
+        matchingFiles.add(allFile);
       }
     }
 
@@ -257,7 +256,7 @@ public class CSVImporter {
    * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
    * @return File[] - an array of files
    */
-  public static File[] getAllFiles(String dirName) {
+  private static File[] getAllFiles(String dirName) {
 
     File dir = new File(dirName);
 
@@ -265,10 +264,10 @@ public class CSVImporter {
 
     if (files != null) {
       List<File> filteredFiles = new ArrayList<File>();
-      for (int i = 0; i < files.length; i++) {
+      for (File file : files) {
 
-        if (files[i].isFile()) {
-          filteredFiles.add(files[i]);
+        if (file.isFile()) {
+          filteredFiles.add(file);
         }
       }
       return filteredFiles.toArray(new File[filteredFiles.size()]);

@@ -36,24 +36,24 @@ public abstract class AxisTickCalculator_ {
   /**
    * the List of tick label position in pixels
    */
-  protected List<Double> tickLocations = new LinkedList<Double>();
+  final List<Double> tickLocations = new LinkedList<Double>();
 
   /**
    * the List of tick label values
    */
-  protected List<String> tickLabels = new LinkedList<String>();
+  final List<String> tickLabels = new LinkedList<String>();
 
-  protected final Direction axisDirection;
+  final Direction axisDirection;
 
-  protected final double workingSpace;
+  final double workingSpace;
 
-  protected final double minValue;
+  final double minValue;
 
-  protected final double maxValue;
+  final double maxValue;
 
-  protected final AxesChartStyler styler;
+  final AxesChartStyler styler;
 
-  protected Format axisFormat;
+  Format axisFormat;
 
   /**
    * Constructor
@@ -64,7 +64,7 @@ public abstract class AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
+  AxisTickCalculator_(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
@@ -135,6 +135,7 @@ public abstract class AxisTickCalculator_ {
   }
 
   public Format getAxisFormat() {
+
     return axisFormat;
   }
 }

@@ -28,7 +28,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 /**
  * @author timmolter
  */
-public class NumberFormatter extends Format {
+class NumberFormatter extends Format {
 
   private final AxesChartStyler styler;
   private final Axis.Direction axisDirection;
@@ -48,7 +48,7 @@ public class NumberFormatter extends Format {
     numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
   }
 
-  public String getFormatPattern(double value) {
+  private String getFormatPattern(double value) {
 
     // System.out.println("value: " + value);
     // System.out.println("min: " + min);
@@ -82,7 +82,7 @@ public class NumberFormatter extends Format {
       return getNormalDecimalPatternPositive(placeOfValue, placeOfDifference);
     } else {
       // System.out.println("getScientificDecimalPattern");
-      return getScientificDecimalPattern();
+      return "0.###############E0";
     }
   }
 
@@ -108,11 +108,6 @@ public class NumberFormatter extends Format {
     }
     // System.out.println(sb.toString());
     return sb.toString();
-  }
-
-  private String getScientificDecimalPattern() {
-
-    return "0.###############E0";
   }
 
   @Override

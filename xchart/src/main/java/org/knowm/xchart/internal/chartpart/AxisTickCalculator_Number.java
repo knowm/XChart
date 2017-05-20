@@ -29,7 +29,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  *
  * @author timmolter
  */
-public class AxisTickCalculator_Number extends AxisTickCalculator_ {
+class AxisTickCalculator_Number extends AxisTickCalculator_ {
 
   private final NumberFormatter numberFormatter;
 
@@ -81,7 +81,7 @@ public class AxisTickCalculator_Number extends AxisTickCalculator_ {
       tickSpacingHint = 25 - 5;
     }
 
-    int gridStepInChartSpace = 0;
+    int gridStepInChartSpace;
 
     do {
 

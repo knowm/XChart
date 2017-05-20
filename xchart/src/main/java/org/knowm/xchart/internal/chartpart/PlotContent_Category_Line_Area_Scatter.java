@@ -37,14 +37,14 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  CategoryStyler categoryStyler;
+  private final CategoryStyler categoryStyler;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotContent_Category_Line_Area_Scatter(Chart<CategoryStyler, CategorySeries> chart) {
+  PlotContent_Category_Line_Area_Scatter(Chart<CategoryStyler, CategorySeries> chart) {
 
     super(chart);
     this.categoryStyler = chart.getStyler();
@@ -61,16 +61,16 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
     double yTickSpace = categoryStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
-    double xMin = chart.getAxisPair().getXAxis().getMin();
-    double xMax = chart.getAxisPair().getXAxis().getMax();
+//    double xMin = chart.getAxisPair().getXAxis().getMin();
+//    double xMax = chart.getAxisPair().getXAxis().getMax();
     double yMin = chart.getAxisPair().getYAxis().getMin();
     double yMax = chart.getAxisPair().getYAxis().getMax();
 
     // logarithmic
-    if (categoryStyler.isXAxisLogarithmic()) {
-      xMin = Math.log10(xMin);
-      xMax = Math.log10(xMax);
-    }
+//    if (categoryStyler.isXAxisLogarithmic()) {
+//      xMin = Math.log10(xMin);
+//      xMax = Math.log10(xMax);
+//    }
     if (categoryStyler.isYAxisLogarithmic()) {
       yMin = Math.log10(yMin);
       yMax = Math.log10(yMax);
@@ -124,7 +124,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
         double yOrig = next.doubleValue();
 
-        double y = 0.0;
+        double y;
 
         // System.out.println(y);
         if (categoryStyler.isYAxisLogarithmic()) {
@@ -220,7 +220,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           g.setStroke(errorBarStroke);
 
           // Top value
-          double topValue = 0.0;
+          double topValue;
           if (categoryStyler.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
@@ -231,7 +231,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           double topEBOffset = getBounds().getY() + topEBTransform;
 
           // Bottom value
-          double bottomValue = 0.0;
+          double bottomValue;
           if (categoryStyler.isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);

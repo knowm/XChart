@@ -38,7 +38,7 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
-  private AxesChartStyler axesChartStyler;
+  private final AxesChartStyler axesChartStyler;
 
   /**
    * Constructor

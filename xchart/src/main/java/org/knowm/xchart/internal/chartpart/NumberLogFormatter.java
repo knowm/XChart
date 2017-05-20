@@ -27,7 +27,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 /**
  * @author timmolter
  */
-public class NumberLogFormatter extends Format {
+class NumberLogFormatter extends Format {
 
   private final AxesChartStyler styler;
   private final Axis.Direction axisDirection;

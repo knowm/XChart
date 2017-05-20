@@ -27,7 +27,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  *
  * @author timmolter
  */
-public class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
+class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
 
   private final NumberLogFormatter numberLogFormatter;
 

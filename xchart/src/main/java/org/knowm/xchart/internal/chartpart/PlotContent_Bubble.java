@@ -36,14 +36,14 @@ import org.knowm.xchart.style.BubbleStyler;
  */
 public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> extends PlotContent_ {
 
-  BubbleStyler stylerBubble;
+  private final BubbleStyler stylerBubble;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotContent_Bubble(Chart<BubbleStyler, BubbleSeries> chart) {
+  PlotContent_Bubble(Chart<BubbleStyler, BubbleSeries> chart) {
 
     super(chart);
     stylerBubble = chart.getStyler();
@@ -86,8 +86,8 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
       Collection<?> xData = series.getXData();
       Collection<? extends Number> yData = series.getYData();
 
-      double previousX = -Double.MAX_VALUE;
-      double previousY = -Double.MAX_VALUE;
+//      double previousX = -Double.MAX_VALUE;
+//      double previousY = -Double.MAX_VALUE;
 
       Iterator<?> xItr = xData.iterator();
       Iterator<? extends Number> yItr = yData.iterator();
@@ -114,14 +114,14 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
         Number next = yItr.next();
         if (next == null) {
 
-          previousX = -Double.MAX_VALUE;
-          previousY = -Double.MAX_VALUE;
+//          previousX = -Double.MAX_VALUE;
+//          previousY = -Double.MAX_VALUE;
           continue;
         }
 
         double yOrig = next.doubleValue();
 
-        double y = 0.0;
+        double y;
 
         // System.out.println(y);
         if (stylerBubble.isYAxisLogarithmic()) {
@@ -152,8 +152,8 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
         // System.out.println(yOffset);
         // System.out.println("---");
 
-        previousX = xOffset;
-        previousY = yOffset;
+//        previousX = xOffset;
+//        previousY = yOffset;
 
         // paint bubbles
         if (bubbles != null) {
@@ -161,7 +161,7 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
           double bubbleSize = bubbleItr.next().doubleValue();
 
           // Draw it
-          Shape bubble = null;
+          Shape bubble;
           // if (BubbleSeriesRenderStyle.Round == series.getBubbleSeriesRenderStyle()) {
           bubble = new Ellipse2D.Double(xOffset - bubbleSize / 2, yOffset - bubbleSize / 2, bubbleSize, bubbleSize);
           // }

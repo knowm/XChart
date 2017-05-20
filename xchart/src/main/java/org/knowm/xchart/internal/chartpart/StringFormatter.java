@@ -25,7 +25,7 @@ import java.text.ParsePosition;
  *
  * @author timmolter
  */
-public class StringFormatter extends Format {
+class StringFormatter extends Format {
 
   /**
    * Constructor

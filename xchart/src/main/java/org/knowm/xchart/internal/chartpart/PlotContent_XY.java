@@ -39,14 +39,14 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extends PlotContent_ {
 
-  XYStyler xyStyler;
+  private final XYStyler xyStyler;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotContent_XY(Chart<XYStyler, XYSeries> chart) {
+  PlotContent_XY(Chart<XYStyler, XYSeries> chart) {
 
     super(chart);
     xyStyler = chart.getStyler();
@@ -130,7 +130,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
         double yOrig = next.doubleValue();
 
-        double y = 0.0;
+        double y;
 
         // System.out.println(y);
         if (xyStyler.isYAxisLogarithmic()) {
@@ -220,7 +220,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           g.setStroke(errorBarStroke);
 
           // Top value
-          double topValue = 0.0;
+          double topValue;
           if (xyStyler.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
@@ -231,7 +231,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           double topEBOffset = getBounds().getY() + topEBTransform;
 
           // Bottom value
-          double bottomValue = 0.0;
+          double bottomValue;
           if (xyStyler.isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);

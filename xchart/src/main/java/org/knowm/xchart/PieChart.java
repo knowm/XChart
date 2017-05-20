@@ -146,7 +146,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
   /**
    * set the series color based on theme
    */
-  public void setSeriesStyles() {
+  private void setSeriesStyles() {
 
     SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
         .getSeriesLines());

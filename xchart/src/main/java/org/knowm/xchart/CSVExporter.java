@@ -167,7 +167,7 @@ public class CSVExporter {
         sb.append(xDataPoint).append(",");
         sb.append(yDataPoint).append(",");
         if (errorBarValue != null) {
-          sb.append(errorBarValue + ",");
+          sb.append(errorBarValue).append(",");
         }
         sb.setLength(sb.length() - 1);
         sb.append(System.getProperty("line.separator"));

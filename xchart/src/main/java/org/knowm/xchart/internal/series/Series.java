@@ -42,7 +42,7 @@ public abstract class Series {
    *
    * @param name
    */
-  public Series(String name) {
+  protected Series(String name) {
 
     if (name == null || name.length() < 1) {
       throw new IllegalArgumentException("Series name cannot be null or zero-length!!!");

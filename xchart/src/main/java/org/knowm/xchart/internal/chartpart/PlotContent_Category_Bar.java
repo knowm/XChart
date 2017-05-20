@@ -46,14 +46,14 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_Category_Bar<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  CategoryStyler stylerCategory;
+  private final CategoryStyler stylerCategory;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotContent_Category_Bar(Chart<CategoryStyler, CategorySeries> chart) {
+  PlotContent_Category_Bar(Chart<CategoryStyler, CategorySeries> chart) {
 
     super(chart);
     this.stylerCategory = chart.getStyler();
@@ -92,9 +92,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     drawPath.moveTo(startPoint.getX(), startPoint.getY());
 
     //Prepare complete fill path
-    for (int i = 0; i < path.size(); i++) {
+    for (Point2D.Double currentPoint : path) {
 
-      Point2D.Double currentPoint = path.get(i);
       drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
     }
     drawStepBarFill(g, series, drawPath);
@@ -103,9 +102,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     drawPath.reset();
     drawPath.moveTo(startPoint.getX(), startPoint.getY());
     List<Point2D.Double> linePath = path.subList(0, path.size() - returnPath.size() + 1);
-    for (int i = 0; i < linePath.size(); i++) {
+    for (Point2D.Double currentPoint : linePath) {
 
-      Point2D.Double currentPoint = linePath.get(i);
       drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
     }
 

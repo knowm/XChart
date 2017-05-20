@@ -43,7 +43,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
    * @param chart     the Chart
    * @param direction the Direction
    */
-  protected AxisTitle(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
+  AxisTitle(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;

@@ -122,7 +122,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
   /**
    * Here we can add special case min max calculations and take care of manual min max settings.
    */
-  public void overrideMinMax() {
+  private void overrideMinMax() {
 
     double overrideXAxisMinValue = xAxis.getMin();
     double overrideXAxisMaxValue = xAxis.getMax();
@@ -227,12 +227,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
   // Getters & Setters /////////////////////////////////////////////////
 
-  protected Axis<AxesChartStyler, AxesChartSeries> getXAxis() {
+  Axis<AxesChartStyler, AxesChartSeries> getXAxis() {
 
     return xAxis;
   }
 
-  protected Axis<AxesChartStyler, AxesChartSeries> getYAxis() {
+  Axis<AxesChartStyler, AxesChartSeries> getYAxis() {
 
     return yAxis;
   }

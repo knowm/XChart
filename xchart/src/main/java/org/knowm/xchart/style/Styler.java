@@ -66,7 +66,7 @@ public abstract class Styler {
   /**
    * the default Theme
    */
-  protected Theme theme = new XChartTheme();
+  Theme theme = new XChartTheme();
 
   // Chart Style ///////////////////////////////
   private Font baseFont;
@@ -110,11 +110,11 @@ public abstract class Styler {
 
   // Annotations ///////////////////////////////
   private Font annotationsFont;
-  public boolean hasAnnotations = false; // set by subclass
+  boolean hasAnnotations = false; // set by subclass
 
   private String decimalPattern;
 
-  protected void setAllStyles() {
+  void setAllStyles() {
 
     // Chart Style ///////////////////////////////
     baseFont = theme.getBaseFont();

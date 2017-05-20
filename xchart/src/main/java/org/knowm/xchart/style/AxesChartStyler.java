@@ -77,7 +77,7 @@ public abstract class AxesChartStyler extends Styler {
   private String yAxisDecimalPattern;
 
   @Override
-  protected void setAllStyles() {
+  void setAllStyles() {
 
     super.setAllStyles();
 

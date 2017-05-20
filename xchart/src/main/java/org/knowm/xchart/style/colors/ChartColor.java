@@ -50,7 +50,7 @@ public enum ChartColor {
    */
   WHITE(new Color(255, 255, 255));
 
-  Color color;
+  final Color color;
 
   /**
    * Get a AWT Color Object

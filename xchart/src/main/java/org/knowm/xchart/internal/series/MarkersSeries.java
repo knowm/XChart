@@ -52,7 +52,7 @@ public abstract class MarkersSeries extends AxesChartSeries {
    * @param yData
    * @param extraValues
    */
-  public MarkersSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues) {
+  protected MarkersSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues) {
 
     super(name, xData, yData);
 
@@ -61,7 +61,7 @@ public abstract class MarkersSeries extends AxesChartSeries {
   }
 
   @Override
-  public void calculateMinMax() {
+  protected void calculateMinMax() {
 
     // xData
     double[] xMinMax = findMinMax(xData, xAxisType);
@@ -71,7 +71,7 @@ public abstract class MarkersSeries extends AxesChartSeries {
     // System.out.println(xMax);
 
     // yData
-    double[] yMinMax = null;
+    double[] yMinMax;
     if (extraValues == null) {
       yMinMax = findMinMax(yData, yAxisType);
     }

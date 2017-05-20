@@ -172,7 +172,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     // Sanity checks
     sanityCheck(seriesName, xData, yData, errorBars);
 
-    XYSeries series = null;
+    XYSeries series;
     if (xData != null) {
 
       // Sanity check
@@ -285,7 +285,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   /**
    * set the series color, marker and line style based on theme
    */
-  public void setSeriesStyles() {
+  private void setSeriesStyles() {
 
     SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
         .getSeriesLines());

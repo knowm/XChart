@@ -43,15 +43,15 @@ import org.knowm.xchart.style.Styler;
  */
 public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotContent_ {
 
-  PieStyler pieStyler;
-  DecimalFormat df = new DecimalFormat("#.0");
+  private final PieStyler pieStyler;
+  private final DecimalFormat df = new DecimalFormat("#.0");
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotContent_Pie(Chart<PieStyler, PieSeries> chart) {
+  PlotContent_Pie(Chart<PieStyler, PieSeries> chart) {
 
     super(chart);
     pieStyler = chart.getStyler();

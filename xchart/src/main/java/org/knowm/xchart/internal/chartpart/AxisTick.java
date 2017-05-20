@@ -36,12 +36,12 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
   /**
    * the axisticklabels
    */
-  private AxisTickLabels<AxesChartStyler, AxesChartSeries> axisTickLabels;
+  private final AxisTickLabels<AxesChartStyler, AxesChartSeries> axisTickLabels;
 
   /**
    * the axistickmarks
    */
-  private AxisTickMarks<AxesChartStyler, AxesChartSeries> axisTickMarks;
+  private final AxisTickMarks<AxesChartStyler, AxesChartSeries> axisTickMarks;
 
   /**
    * Constructor
@@ -49,7 +49,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
    * @param chart
    * @param direction
    */
-  protected AxisTick(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
+  AxisTick(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;
@@ -115,7 +115,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
 
   // Getters /////////////////////////////////////////////////
 
-  protected AxisTickLabels<AxesChartStyler, AxesChartSeries> getAxisTickLabels() {
+  AxisTickLabels<AxesChartStyler, AxesChartSeries> getAxisTickLabels() {
 
     return axisTickLabels;
   }

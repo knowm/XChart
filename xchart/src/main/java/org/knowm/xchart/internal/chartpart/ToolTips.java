@@ -128,9 +128,9 @@ public class ToolTips implements MouseMotionListener {
   /**
    * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
    */
-  void addData(double xOffset, double yOffset, String label) {
+  private void addData(double xOffset, double yOffset, String label) {
 
-    DataPoint dp = new DataPoint(xOffset, yOffset, MARGIN, label);
+    DataPoint dp = new DataPoint(xOffset, yOffset, label);
     dataPointList.add(dp);
   }
 
@@ -226,20 +226,19 @@ public class ToolTips implements MouseMotionListener {
     private final double y;
 
     // width of data point (used for bar charts)
-    double w;
+    final double w;
 
     /**
      * Constructor
      *
      * @param x
      * @param y
-     * @param margin
      * @param label
      */
-    DataPoint(double x, double y, int margin, String label) {
+    DataPoint(double x, double y, String label) {
 
-      double halfSize = margin * 1.5;
-      double markerSize = margin * 3;
+      double halfSize = MARGIN * 1.5;
+      double markerSize = MARGIN * 3;
 
       this.shape = new Ellipse2D.Double(x - halfSize, y - halfSize, markerSize, markerSize);
 

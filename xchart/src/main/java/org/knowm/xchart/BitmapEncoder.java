@@ -22,7 +22,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -242,10 +241,9 @@ public final class BitmapEncoder {
    * @param chart
    * @param fileName
    * @param quality - a float between 0 and 1 (1 = maximum quality)
-   * @throws FileNotFoundException
    * @throws IOException
    */
-  public static void saveJPGWithQuality(Chart chart, String fileName, float quality) throws FileNotFoundException, IOException {
+  public static void saveJPGWithQuality(Chart chart, String fileName, float quality) throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
@@ -278,7 +276,7 @@ public final class BitmapEncoder {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
-    byte[] imageInBytes = null;
+    byte[] imageInBytes;
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), baos);

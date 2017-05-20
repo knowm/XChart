@@ -29,7 +29,7 @@ import org.knowm.xchart.style.CategoryStyler;
  */
 public class Plot_Category<ST extends AxesChartStyler, S extends Series> extends Plot_AxesChart {
 
-  CategoryStyler stylerCategory;
+  private final CategoryStyler stylerCategory;
 
   /**
    * Constructor

@@ -33,7 +33,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
-  AxesChartStyler axesChartStyler;
+  private final AxesChartStyler axesChartStyler;
 
   /**
    * Constructor

@@ -36,7 +36,7 @@ public class SwingWrapper<T extends Chart> {
   private String windowTitle = "XChart";
 
   private List<T> charts = new ArrayList<T>();
-  private List<XChartPanel<T>> chartPanels = new ArrayList<XChartPanel<T>>();
+  private final List<XChartPanel<T>> chartPanels = new ArrayList<XChartPanel<T>>();
   private int numRows;
   private int numColumns;
 

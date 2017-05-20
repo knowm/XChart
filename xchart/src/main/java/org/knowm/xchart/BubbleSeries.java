@@ -51,8 +51,6 @@ public class BubbleSeries extends org.knowm.xchart.internal.series.NoMarkersSeri
 
   private BubbleSeriesRenderStyle bubbleSeriesRenderStyle = null;
 
-  private Number value;
-
   /**
    * Constructor
    *
@@ -82,16 +80,6 @@ public class BubbleSeries extends org.knowm.xchart.internal.series.NoMarkersSeri
     return bubbleSeriesRenderStyle.getLegendRenderType();
   }
 
-  public Number getValue() {
-
-    return value;
-  }
-
-  public void setValue(Number value) {
-
-    this.value = value;
-  }
-
   @Override
   public AxisDataType getAxesType(List<?> data) {
 
@@ -101,11 +89,9 @@ public class BubbleSeries extends org.knowm.xchart.internal.series.NoMarkersSeri
     Object dataPoint = itr.next();
     if (dataPoint instanceof Number) {
       axisType = AxisDataType.Number;
-    }
-    else if (dataPoint instanceof Date) {
+    } else if (dataPoint instanceof Date) {
       axisType = AxisDataType.Date;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Series data must be either Number or Date type!!!");
     }
     return axisType;

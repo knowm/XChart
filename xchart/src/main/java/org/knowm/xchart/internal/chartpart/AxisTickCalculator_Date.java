@@ -30,7 +30,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  *
  * @author timmolter
  */
-public class AxisTickCalculator_Date extends AxisTickCalculator_ {
+class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
   private static final long MILLIS_SCALE = TimeUnit.MILLISECONDS.toMillis(1L);
   private static final long SEC_SCALE = TimeUnit.SECONDS.toMillis(1L);
@@ -41,7 +41,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
   // private static final long QUARTER_SCALE = TimeUnit.DAYS.toMillis(1L) * 120;
   private static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
 
-  private static List<TimeSpan> timeSpans = new ArrayList<TimeSpan>();
+  private static final List<TimeSpan> timeSpans = new ArrayList<TimeSpan>();
 
   static {
     timeSpans.add(new TimeSpan(MILLIS_SCALE, 1, "ss.SSS"));
@@ -134,7 +134,7 @@ public class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
     // Generate the labels first, see if they "look" OK and reiterate with an increased tickSpacingHint
     int tickSpacingHint = styler.getXAxisTickMarkSpacingHint();
-    int gridStepInChartSpace = 0;
+    int gridStepInChartSpace;
 
     // System.out.println("calculating ticks...");
     long gridStepHint = (long) (span / tickSpace * tickSpacingHint); // in time units (ms)

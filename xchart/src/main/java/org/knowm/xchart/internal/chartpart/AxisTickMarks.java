@@ -41,7 +41,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
    * @param chart
    * @param direction
    */
-  protected AxisTickMarks(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
+  AxisTickMarks(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;

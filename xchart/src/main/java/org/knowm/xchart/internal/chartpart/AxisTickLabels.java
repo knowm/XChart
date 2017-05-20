@@ -45,7 +45,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
    * @param chart
    * @param direction
    */
-  protected AxisTickLabels(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
+  AxisTickLabels(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
 
     this.chart = chart;
     this.direction = direction;

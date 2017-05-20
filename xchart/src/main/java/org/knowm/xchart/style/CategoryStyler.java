@@ -122,8 +122,4 @@ public class CategoryStyler extends AxesChartStyler {
     super.setAllStyles();
   }
 
-  public Theme getTheme() {
-
-    return theme;
-  }
 }

@@ -34,27 +34,27 @@ import org.knowm.xchart.style.Styler;
  */
 public abstract class Legend_<ST extends Styler, S extends Series> implements ChartPart {
 
-  public abstract double getSeriesLegendRenderGraphicHeight(Series series);
+  protected abstract double getSeriesLegendRenderGraphicHeight(Series series);
 
-  public abstract void doPaint(Graphics2D g);
+  protected abstract void doPaint(Graphics2D g);
 
-  protected static final int LEGEND_MARGIN = 6;
-  protected static final int BOX_SIZE = 20;
-  protected static final int BOX_OUTLINE_WIDTH = 5;
-  protected static final int MULTI_LINE_SPACE = 3;
+  private static final int LEGEND_MARGIN = 6;
+  static final int BOX_SIZE = 20;
+  static final int BOX_OUTLINE_WIDTH = 5;
+  private static final int MULTI_LINE_SPACE = 3;
 
-  protected Chart<ST, S> chart;
-  protected Rectangle2D bounds;
+  final Chart<ST, S> chart;
+  private Rectangle2D bounds;
 
-  protected double xOffset = 0;
-  protected double yOffset = 0;
+  double xOffset = 0;
+  double yOffset = 0;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Legend_(Chart<ST, S> chart) {
+  Legend_(Chart<ST, S> chart) {
 
     this.chart = chart;
   }
@@ -132,7 +132,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   /**
    * determine the width and height of the chart legend
    */
-  public Rectangle2D getBoundsHint() {
+  private Rectangle2D getBoundsHint() {
 
     if (!chart.getStyler().isLegendVisible()) {
       return new Rectangle2D.Double(); // Constructs a new Rectangle2D, initialized to location (0, 0) and size (0, 0).
@@ -175,7 +175,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     }
 
     // determine legend content width
-    double legendContentWidth = 0;
+    double legendContentWidth;
     if (!containsBox) {
       legendContentWidth = chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding() + legendTextContentMaxWidth;
     } else {
@@ -196,7 +196,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
    * @param series
    * @return
    */
-  protected Map<String, Rectangle2D> getSeriesTextBounds(Series series) {
+  Map<String, Rectangle2D> getSeriesTextBounds(Series series) {
 
     // FontMetrics fontMetrics = g.getFontMetrics(getChartPainter().getstyler().getLegendFont());
     // float fontDescent = fontMetrics.getDescent();

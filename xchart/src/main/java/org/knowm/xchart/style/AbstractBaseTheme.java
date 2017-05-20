@@ -36,7 +36,7 @@ import org.knowm.xchart.style.markers.Marker;
  */
 public abstract class AbstractBaseTheme implements Theme {
 
-  public static final Font BASE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
+  private static final Font BASE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
 
   // Chart Style ///////////////////////////////
 

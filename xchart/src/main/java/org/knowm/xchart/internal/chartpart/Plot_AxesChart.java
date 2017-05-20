@@ -29,14 +29,14 @@ import org.knowm.xchart.style.Styler;
  */
 public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
 
-  AxesChartStyler stylerAxesChart;
+  private final AxesChartStyler stylerAxesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Plot_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
+  Plot_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
     stylerAxesChart = chart.getStyler();

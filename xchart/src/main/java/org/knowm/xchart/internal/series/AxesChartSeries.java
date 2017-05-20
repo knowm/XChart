@@ -31,15 +31,15 @@ import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
  */
 public abstract class AxesChartSeries extends Series {
 
-  public abstract AxisDataType getAxesType(List<?> data);
+  protected abstract AxisDataType getAxesType(List<?> data);
 
-  public abstract void calculateMinMax();
+  protected abstract void calculateMinMax();
 
   List<?> xData; // can be Number or Date or String
-  AxisDataType xAxisType;
+  final AxisDataType xAxisType;
 
   List<? extends Number> yData;
-  AxisDataType yAxisType;
+  final AxisDataType yAxisType;
 
   List<? extends Number> extraValues;
 
@@ -66,17 +66,17 @@ public abstract class AxesChartSeries extends Series {
   /**
    * Line Style
    */
-  BasicStroke stroke;
+  private BasicStroke stroke;
 
   /**
    * Line Color
    */
-  Color lineColor;
+  private Color lineColor;
 
   /**
    * Line Width
    */
-  float lineWidth = -1.0f;
+  private float lineWidth = -1.0f;
 
   /**
    * Constructor
@@ -85,7 +85,7 @@ public abstract class AxesChartSeries extends Series {
    * @param xData
    * @param yData
    */
-  public AxesChartSeries(String name, List<?> xData, List<? extends Number> yData) {
+  AxesChartSeries(String name, List<?> xData, List<? extends Number> yData) {
 
     super(name);
 
@@ -141,12 +141,10 @@ public abstract class AxesChartSeries extends Series {
 
       if (axisType == AxisDataType.Number) {
         value = ((Number) dataPoint).doubleValue();
-      }
-      else if (axisType == AxisDataType.Date) {
+      } else if (axisType == AxisDataType.Date) {
         Date date = (Date) dataPoint;
         value = date.getTime();
-      }
-      else if (axisType == AxisDataType.String) {
+      } else if (axisType == AxisDataType.String) {
         return new double[]{Double.NaN, Double.NaN};
       }
       if (value < min) {

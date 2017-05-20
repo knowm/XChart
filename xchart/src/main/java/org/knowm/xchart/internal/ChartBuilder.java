@@ -35,7 +35,7 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
   /**
    * Constructor
    */
-  public ChartBuilder() {
+  protected ChartBuilder() {
 
   }
 

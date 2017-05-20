@@ -49,7 +49,7 @@ public class PieStyler extends Styler {
   }
 
   @Override
-  protected void setAllStyles() {
+  void setAllStyles() {
 
     this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie;
     this.isCircular = theme.isCircular();
@@ -234,8 +234,4 @@ public class PieStyler extends Styler {
     return this;
   }
 
-  public Theme getTheme() {
-
-    return theme;
-  }
 }

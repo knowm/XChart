@@ -39,7 +39,7 @@ public class PlotSurface_Pie<ST extends Styler, S extends Series> extends PlotSu
    *
    * @param chart
    */
-  protected PlotSurface_Pie(Chart<PieStyler, PieSeries> chart) {
+  PlotSurface_Pie(Chart<PieStyler, PieSeries> chart) {
 
     super(chart);
     this.stylerPie = chart.getStyler();

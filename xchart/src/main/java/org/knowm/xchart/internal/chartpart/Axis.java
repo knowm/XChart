@@ -55,12 +55,12 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   /**
    * the axis title
    */
-  private AxisTitle<AxesChartStyler, AxesChartSeries> axisTitle;
+  private final AxisTitle<AxesChartStyler, AxesChartSeries> axisTitle;
 
   /**
    * the axis tick
    */
-  private AxisTick<AxesChartStyler, AxesChartSeries> axisTick;
+  private final AxisTick<AxesChartStyler, AxesChartSeries> axisTick;
 
   /**
    * the axis tick calculator
@@ -70,7 +70,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   /**
    * the axis direction
    */
-  private Direction direction;
+  private final Direction direction;
 
   private double min;
 
@@ -111,7 +111,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   /**
    * Reset the default min and max values in preparation for calculating the actual min and max
    */
-  protected void resetMinMax() {
+  void resetMinMax() {
 
     min = Double.MAX_VALUE;
     max = -1 * Double.MAX_VALUE;
@@ -121,7 +121,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
    * @param min
    * @param max
    */
-  protected void addMinMax(double min, double max) {
+  void addMinMax(double min, double max) {
 
     // System.out.println(min);
     // System.out.println(max);
@@ -160,7 +160,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       /////////////////////////
       int i = 1; // just twice through is all it takes
       double width = 60; // arbitrary, final width depends on Axis tick labels
-      double height = 0;
+      double height;
       do {
         // System.out.println("width before: " + width);
 
@@ -368,7 +368,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
   // Getters /////////////////////////////////////////////////
 
-  protected AxisDataType getAxisDataType() {
+  AxisDataType getAxisDataType() {
 
     return axisDataType;
   }
@@ -381,37 +381,37 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     this.axisDataType = axisDataType;
   }
 
-  protected double getMin() {
+  double getMin() {
 
     return min;
   }
 
-  protected void setMin(double min) {
+  void setMin(double min) {
 
     this.min = min;
   }
 
-  protected double getMax() {
+  double getMax() {
 
     return max;
   }
 
-  protected void setMax(double max) {
+  void setMax(double max) {
 
     this.max = max;
   }
 
-  protected AxisTick<AxesChartStyler, AxesChartSeries> getAxisTick() {
+  AxisTick<AxesChartStyler, AxesChartSeries> getAxisTick() {
 
     return axisTick;
   }
 
-  protected Direction getDirection() {
+  private Direction getDirection() {
 
     return direction;
   }
 
-  protected AxisTitle<AxesChartStyler, AxesChartSeries> getAxisTitle() {
+  AxisTitle<AxesChartStyler, AxesChartSeries> getAxisTitle() {
 
     return axisTitle;
   }

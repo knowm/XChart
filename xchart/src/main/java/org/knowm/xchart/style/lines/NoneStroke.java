@@ -21,6 +21,6 @@ import java.awt.BasicStroke;
 /**
  * @author timmolter
  */
-public class NoneStroke extends BasicStroke {
+class NoneStroke extends BasicStroke {
 
 }

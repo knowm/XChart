@@ -58,7 +58,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    *
    * @param width
    * @param height
-   * @param theme  - pass in a instance of Theme class, probably a custom Theme.
+   * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
   public BubbleChart(int width, int height, Theme theme) {
 
@@ -87,14 +87,16 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);
+    setXAxisTitle(chartBuilder.xAxisTitle);
+    setYAxisTitle(chartBuilder.yAxisTitle);
   }
 
   /**
    * Add a series for a Bubble type chart using using double arrays
    *
    * @param seriesName
-   * @param xData      the X-Axis data
-   * @param xData      the Y-Axis data
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
    * @param bubbleData the bubble data
    * @return A Series object that you can set properties on
    */
@@ -107,8 +109,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * Add a series for a Bubble type chart using using Lists
    *
    * @param seriesName
-   * @param xData      the X-Axis data
-   * @param xData      the Y-Axis data
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
    * @param bubbleData the bubble data
    * @return
    */
@@ -117,7 +119,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     // Sanity checks
     sanityCheck(seriesName, xData, yData, bubbleData);
 
-    BubbleSeries series = null;
+    BubbleSeries series;
     if (xData != null) {
 
       // Sanity check
@@ -126,8 +128,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
       }
 
       series = new BubbleSeries(seriesName, xData, yData, bubbleData);
-    }
-    else { // generate xData
+    } else { // generate xData
       series = new BubbleSeries(seriesName, Utils.getGeneratedData(yData.size()), yData, bubbleData);
     }
 
@@ -140,8 +141,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * Update a series by updating the X-Axis, Y-Axis and bubble data
    *
    * @param seriesName
-   * @param newXData      - set null to be automatically generated as a list of increasing Integers starting from
-   *                      1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   * 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newBubbleData - set null if there are no error bars
    * @return
@@ -160,8 +161,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
         generatedXData.add(i);
       }
       series.replaceData(generatedXData, newYData, newBubbleData);
-    }
-    else {
+    } else {
       series.replaceData(newXData, newYData, newBubbleData);
     }
 
@@ -172,8 +172,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * Update a series by updating the X-Axis, Y-Axis and bubble data
    *
    * @param seriesName
-   * @param newXData      - set null to be automatically generated as a list of increasing Integers starting from
-   *                      1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
+   * 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newBubbleData - set null if there are no error bars
    * @return
@@ -231,7 +231,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
   /**
    * set the series color based on theme
    */
-  public void setSeriesStyles() {
+  private void setSeriesStyles() {
 
     SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
         .getSeriesLines());

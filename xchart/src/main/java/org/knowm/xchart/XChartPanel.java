@@ -299,7 +299,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
   private class XChartPanelPopupMenu extends JPopupMenu {
 
-    JMenuItem saveAsMenuItem;
+    final JMenuItem saveAsMenuItem;
     JMenuItem exportAsMenuItem;
 
     public XChartPanelPopupMenu() {

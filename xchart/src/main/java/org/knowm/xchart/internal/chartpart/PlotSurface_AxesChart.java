@@ -41,7 +41,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
    *
    * @param chart
    */
-  protected PlotSurface_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
+  PlotSurface_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
     this.stylerAxesChart = chart.getStyler();
@@ -63,8 +63,8 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
     if (stylerAxesChart.isPlotGridHorizontalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {
 
       List<Double> yAxisTickLocations = chart.getYAxis().getAxisTickCalculator().getTickLocations();
-      for (int i = 0; i < yAxisTickLocations.size(); i++) {
-        double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocations.get(i);
+      for (Double yAxisTickLocation : yAxisTickLocations) {
+        double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
 
         if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
 
@@ -99,9 +99,9 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
     if (stylerAxesChart.isPlotGridVerticalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {
 
       List<Double> xAxisTickLocations = chart.getXAxis().getAxisTickCalculator().getTickLocations();
-      for (int i = 0; i < xAxisTickLocations.size(); i++) {
+      for (Double xAxisTickLocation : xAxisTickLocations) {
 
-        double tickLocation = xAxisTickLocations.get(i);
+        double tickLocation = xAxisTickLocation;
         double xOffset = bounds.getX() + tickLocation;
 
         if (xOffset > bounds.getX() && xOffset < bounds.getX() + bounds.getWidth()) {

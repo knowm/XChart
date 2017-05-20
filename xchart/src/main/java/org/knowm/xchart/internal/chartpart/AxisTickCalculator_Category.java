@@ -31,7 +31,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  *
  * @author timmolter
  */
-public class AxisTickCalculator_Category extends AxisTickCalculator_ {
+class AxisTickCalculator_Category extends AxisTickCalculator_ {
 
   /**
    * Constructor
@@ -67,11 +67,9 @@ public class AxisTickCalculator_Category extends AxisTickCalculator_ {
 
     // set up String formatters that may be encountered
     if (axisType == AxisDataType.String) {
-      StringFormatter stringFormatter = new StringFormatter();
-      axisFormat = stringFormatter;
+      axisFormat = new StringFormatter();
     } else if (axisType == AxisDataType.Number) {
-      NumberFormatter numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
-      axisFormat = numberFormatter;
+      axisFormat = new NumberFormatter(styler, axisDirection, minValue, maxValue);
     } else if (axisType == AxisDataType.Date) {
       if (styler.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");

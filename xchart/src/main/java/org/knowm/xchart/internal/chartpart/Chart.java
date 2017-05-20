@@ -36,7 +36,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   public abstract void paint(Graphics2D g, int width, int height);
 
-  protected ST styler;
+  protected final ST styler;
 
   /**
    * Meta Data
@@ -51,12 +51,12 @@ public abstract class Chart<ST extends Styler, S extends Series> {
    * Chart Parts
    */
   protected AxisPair axisPair;
-  ToolTips toolTips; // ToolTip is hewre because AxisPair and Plot need access to it
+  final ToolTips toolTips; // ToolTip is hewre because AxisPair and Plot need access to it
   protected Plot_ plot;
-  protected ChartTitle chartTitle;
+  protected final ChartTitle chartTitle;
   protected Legend_ legend;
 
-  protected Map<String, S> seriesMap = new LinkedHashMap<String, S>();
+  protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
 
   /**
    * Constructor
@@ -65,7 +65,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
    * @param height
    * @param styler
    */
-  public Chart(int width, int height, ST styler) {
+  protected Chart(int width, int height, ST styler) {
 
     this.width = width;
     this.height = height;
@@ -76,7 +76,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.chartTitle = new ChartTitle(this);
   }
 
-  public void paintBackground(Graphics2D g) {
+  protected void paintBackground(Graphics2D g) {
 
     // paint chart main background
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
@@ -113,7 +113,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return width;
   }
 
-  public void setWidth(int width) {
+  protected void setWidth(int width) {
 
     this.width = width;
   }
@@ -123,7 +123,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return height;
   }
 
-  public void setHeight(int height) {
+  protected void setHeight(int height) {
 
     this.height = height;
   }

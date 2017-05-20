@@ -60,7 +60,7 @@ public class Utils {
       return null;
     }
 
-    List<Double> dataNumber = null;
+    List<Double> dataNumber;
     dataNumber = new ArrayList<Double>();
     for (double d : data) {
       dataNumber.add(d);
@@ -74,7 +74,7 @@ public class Utils {
       return null;
     }
 
-    List<Double> dataNumber = null;
+    List<Double> dataNumber;
     dataNumber = new ArrayList<Double>();
     for (double d : data) {
       dataNumber.add(d);

@@ -170,7 +170,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     // Sanity checks
     sanityCheck(seriesName, xData, yData, errorBars);
 
-    CategorySeries series = null;
+    CategorySeries series;
     if (xData != null) {
 
       // Sanity check
@@ -284,7 +284,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
   /**
    * set the series color, marker and line style based on theme
    */
-  public void setSeriesStyles() {
+  private void setSeriesStyles() {
 
     SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
         .getSeriesLines());

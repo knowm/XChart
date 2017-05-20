@@ -31,8 +31,6 @@ import org.knowm.xchart.style.PieStyler;
  */
 public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Legend_ {
 
-  PieStyler pieStyler;
-
   /**
    * Constructor
    *
@@ -41,7 +39,6 @@ public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Le
   public Legend_Pie(Chart<PieStyler, PieSeries> chart) {
 
     super(chart);
-    pieStyler = chart.getStyler();
   }
 
   @Override

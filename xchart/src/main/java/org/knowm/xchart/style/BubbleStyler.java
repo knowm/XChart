@@ -67,8 +67,4 @@ public class BubbleStyler extends AxesChartStyler {
     super.setAllStyles();
   }
 
-  public Theme getTheme() {
-
-    return theme;
-  }
 }

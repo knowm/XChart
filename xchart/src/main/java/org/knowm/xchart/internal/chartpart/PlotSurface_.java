@@ -26,14 +26,14 @@ import org.knowm.xchart.style.Styler;
  */
 public abstract class PlotSurface_<ST extends Styler, S extends Series> implements ChartPart {
 
-  protected final Chart<ST, S> chart;
+  final Chart<ST, S> chart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  protected PlotSurface_(Chart<ST, S> chart) {
+  PlotSurface_(Chart<ST, S> chart) {
 
     this.chart = chart;
   }

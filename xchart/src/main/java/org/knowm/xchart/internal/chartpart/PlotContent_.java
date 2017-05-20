@@ -30,19 +30,19 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
-  protected final Chart<ST, S> chart;
+  final Chart<ST, S> chart;
 
-  protected final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
 
-  public abstract void doPaint(Graphics2D g);
+  protected abstract void doPaint(Graphics2D g);
 
   /**
    * Constructor
    *
    * @param chart - The Chart
    */
-  protected PlotContent_(Chart<ST, S> chart) {
+  PlotContent_(Chart<ST, S> chart) {
 
     this.chart = chart;
   }

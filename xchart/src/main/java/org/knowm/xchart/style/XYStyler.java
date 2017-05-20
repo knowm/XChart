@@ -67,8 +67,4 @@ public class XYStyler extends AxesChartStyler {
     super.setAllStyles();
   }
 
-  public Theme getTheme() {
-
-    return theme;
-  }
 }
