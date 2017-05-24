@@ -65,17 +65,11 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
     double xMin = chart.getXAxis().getMin();
     double xMax = chart.getXAxis().getMax();
-    double yMin = chart.getYAxis().getMin();
-    double yMax = chart.getYAxis().getMax();
 
     // logarithmic
     if (xyStyler.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
       xMax = Math.log10(xMax);
-    }
-    if (xyStyler.isYAxisLogarithmic()) {
-      yMin = Math.log10(yMin);
-      yMax = Math.log10(yMax);
     }
 
     Map<String, XYSeries> map = chart.getSeriesMap();
@@ -84,6 +78,13 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
       if (!series.isEnabled()) {
         continue;
+      }
+      Axis yAxis = chart.getYAxis(series.getYIndex());
+      double yMin = yAxis.getMin();
+      double yMax = yAxis.getMax();
+      if (xyStyler.isYAxisLogarithmic()) {
+        yMin = Math.log10(yMin);
+        yMax = Math.log10(yMax);
       }
 
       // data points

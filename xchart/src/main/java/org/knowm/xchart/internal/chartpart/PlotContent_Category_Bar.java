@@ -124,8 +124,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     // System.out.println("gridStep: " + gridStep);
 
     // Y-Axis
-    double yMin = chart.getAxisPair().getYAxis().getMin();
-    double yMax = chart.getAxisPair().getYAxis().getMax();
+    double yMin = chart.getYAxis().getMin();
+    double yMax = chart.getYAxis().getMax();
 
     // figure out the general form of the chart
     int chartForm = 1; // 1=positive, -1=negative, 0=span
@@ -154,6 +154,9 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
       if (!series.isEnabled()) {
         continue;
       }
+
+      yMin = chart.getYAxis(series.getYIndex()).getMin();
+      yMax = chart.getYAxis(series.getYIndex()).getMax();
 
       // for line series
       double previousX = -Double.MAX_VALUE;

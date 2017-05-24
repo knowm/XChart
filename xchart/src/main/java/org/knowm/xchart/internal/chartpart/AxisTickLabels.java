@@ -38,6 +38,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
   private final Chart<AxesChartStyler, AxesChartSeries> chart;
   private Rectangle2D bounds;
   private final Direction direction;
+  private final Axis yAxis;
 
   /**
    * Constructor
@@ -45,10 +46,11 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
    * @param chart
    * @param direction
    */
-  AxisTickLabels(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
+  AxisTickLabels(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, Axis yAxis) {
 
     this.chart = chart;
     this.direction = direction;
+    this.yAxis = yAxis;
   }
 
   @Override
@@ -60,18 +62,18 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
 
     if (direction == Axis.Direction.Y && chart.getStyler().isYAxisTicksVisible()) { // Y-Axis
 
-      double xWidth = chart.getYAxis().getAxisTitle().getBounds().getWidth();
-      double xOffset = chart.getYAxis().getAxisTitle().getBounds().getX() + xWidth;
-      double yOffset = chart.getYAxis().getBounds().getY();
-      double height = chart.getYAxis().getBounds().getHeight();
+      double xWidth = yAxis.getAxisTitle().getBounds().getWidth();
+      double xOffset = yAxis.getAxisTitle().getBounds().getX() + xWidth;
+      double yOffset = yAxis.getBounds().getY();
+      double height = yAxis.getBounds().getHeight();
       double maxTickLabelWidth = 0;
       Map<Double, TextLayout> axisLabelTextLayouts = new HashMap<Double, TextLayout>();
 
-      for (int i = 0; i < chart.getYAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
+      for (int i = 0; i < yAxis.getAxisTickCalculator().getTickLabels().size(); i++) {
 
-        String tickLabel = chart.getYAxis().getAxisTickCalculator().getTickLabels().get(i);
+        String tickLabel = yAxis.getAxisTickCalculator().getTickLabels().get(i);
         // System.out.println("** " + tickLabel);
-        double tickLocation = chart.getYAxis().getAxisTickCalculator().getTickLocations().get(i);
+        double tickLocation = yAxis.getAxisTickCalculator().getTickLocations().get(i);
         double flippedTickLocation = yOffset + height - tickLocation;
 
         if (tickLabel != null && flippedTickLocation > yOffset && flippedTickLocation < yOffset + height) { // some are null for logarithmic axes

@@ -21,6 +21,7 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.text.Format;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private int height;
   private String title = "";
   private String xAxisTitle = "";
-  private String yAxisTitle = "";
+  private HashMap<Integer, String> yAxisTitleMap = new HashMap<Integer, String>();
 
   /**
    * Chart Parts
@@ -148,14 +149,19 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.xAxisTitle = xAxisTitle;
   }
 
-  public String getYAxisTitle() {
-
-    return yAxisTitle;
+  public String getYAxisTitle(int yIndex) {
+    
+	return yAxisTitleMap.get(yIndex);
   }
 
   public void setYAxisTitle(String yAxisTitle) {
+    
+	yAxisTitleMap.put(0, yAxisTitle);
+  }
+  
+  public void setYAxisTitle(int yIndex, String yAxisTitle) {
 
-    this.yAxisTitle = yAxisTitle;
+	yAxisTitleMap.put(yIndex, yAxisTitle);
   }
 
   /**
@@ -185,6 +191,11 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   Axis getYAxis() {
 
     return axisPair.getYAxis();
+  }
+  
+  Axis getYAxis(int yIndex) {
+    
+    return axisPair.getYAxis(yIndex);
   }
 
   AxisPair getAxisPair() {

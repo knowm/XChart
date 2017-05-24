@@ -45,15 +45,16 @@ public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
 
   @Override
   public void paint(Graphics2D g) {
+    Rectangle2D yAxisBounds = chart.getAxisPair().getYAxisBounds();
 
     // calculate bounds
-    double xOffset = chart.getYAxis().getBounds().getX() + chart.getYAxis().getBounds().getWidth()
+    double xOffset = yAxisBounds.getX() + yAxisBounds.getWidth()
 
         + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0);
 
-    double yOffset = chart.getYAxis().getBounds().getY();
+    double yOffset = yAxisBounds.getY();
     double width = chart.getXAxis().getBounds().getWidth();
-    double height = chart.getYAxis().getBounds().getHeight();
+    double height = yAxisBounds.getHeight();
     this.bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
     super.paint(g);

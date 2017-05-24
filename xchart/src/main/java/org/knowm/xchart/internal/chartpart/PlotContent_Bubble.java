@@ -62,17 +62,11 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
 
     double xMin = chart.getXAxis().getMin();
     double xMax = chart.getXAxis().getMax();
-    double yMin = chart.getYAxis().getMin();
-    double yMax = chart.getYAxis().getMax();
 
     // logarithmic
     if (stylerBubble.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
       xMax = Math.log10(xMax);
-    }
-    if (stylerBubble.isYAxisLogarithmic()) {
-      yMin = Math.log10(yMin);
-      yMax = Math.log10(yMax);
     }
 
     Map<String, BubbleSeries> map = chart.getSeriesMap();
@@ -80,6 +74,13 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
 
       if (!series.isEnabled()) {
         continue;
+      }
+
+      double yMin = chart.getYAxis(series.getYIndex()).getMin();
+      double yMax = chart.getYAxis(series.getYIndex()).getMax();
+      if (stylerBubble.isYAxisLogarithmic()) {
+        yMin = Math.log10(yMin);
+        yMax = Math.log10(yMax);
       }
 
       // data points

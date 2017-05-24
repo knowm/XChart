@@ -75,6 +75,8 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   private double min;
 
   private double max;
+  
+  private final int yIndex;
 
   /**
    * An axis direction
@@ -98,14 +100,15 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
    * @param chart the Chart
    * @param direction the axis direction (X or Y)
    */
-  public Axis(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
+  public Axis(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, int yIndex) {
 
     this.chart = chart;
     this.stylerAxesChart = chart.getStyler();
 
     this.direction = direction;
-    axisTitle = new AxisTitle<AxesChartStyler, AxesChartSeries>(chart, direction);
-    axisTick = new AxisTick<AxesChartStyler, AxesChartSeries>(chart, direction);
+    this.yIndex = yIndex;
+    axisTitle = new AxisTitle<AxesChartStyler, AxesChartSeries>(chart, direction, direction == Direction.Y ? this : null, yIndex);
+    axisTick = new AxisTick<AxesChartStyler, AxesChartSeries>(chart, direction, direction == Direction.Y ? this : null);
   }
 
   /**
@@ -152,7 +155,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // |
       // |
       // ----
-      double xOffset = stylerAxesChart.getChartPadding();
+      double xOffset = chart.getAxisPair().getYAxisXOffset();
       // double yOffset = chart.getChartTitle().getBounds().getHeight() < .1 ? axesChartStyler.getChartPadding() : chart.getChartTitle().getBounds().getHeight()
       // + axesChartStyler.getChartPadding();
       double yOffset = chart.getChartTitle().getBounds().getHeight() + stylerAxesChart.getChartPadding();
@@ -209,14 +212,15 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // calculate paint zone
       // |____________________|
 
-      double xOffset = chart.getYAxis().getBounds().getWidth() + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0) + stylerAxesChart.getChartPadding();
-      double yOffset = chart.getYAxis().getBounds().getY() + chart.getYAxis().getBounds().getHeight() + stylerAxesChart.getPlotMargin();
+      Rectangle2D yAxisBounds = chart.getAxisPair().getYAxisBounds();
+      double xOffset = yAxisBounds.getWidth() + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0) + stylerAxesChart.getChartPadding();
+      double yOffset = yAxisBounds.getY() + yAxisBounds.getHeight() + stylerAxesChart.getPlotMargin();
 
       double width =
 
           chart.getWidth()
 
-              - chart.getYAxis().getBounds().getWidth() // y-axis was already painted
+              - yAxisBounds.getWidth() // y-axis was already painted
 
               - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0)
 
@@ -229,7 +233,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // double height = this.getXAxisHeightHint(width);
       // System.out.println("height: " + height);
       // the Y-Axis was already draw at this point so we know how much vertical room is left for the X-Axis
-      double height = chart.getHeight() - chart.getYAxis().getBounds().getY() - chart.getYAxis().getBounds().getHeight() - stylerAxesChart.getChartPadding() - stylerAxesChart.getPlotMargin();
+      double height = chart.getHeight() - yAxisBounds.getY() - yAxisBounds.getHeight() - stylerAxesChart.getChartPadding() - stylerAxesChart.getPlotMargin();
       // System.out.println("height2: " + height2);
 
       bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
@@ -294,8 +298,9 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
     // Axis title
     double titleHeight = 0.0;
-    if (chart.getYAxisTitle() != null && !chart.getYAxisTitle().trim().equalsIgnoreCase("") && stylerAxesChart.isYAxisTitleVisible()) {
-      TextLayout textLayout = new TextLayout(chart.getYAxisTitle(), stylerAxesChart.getAxisTitleFont(), new FontRenderContext(null, true, false));
+    String yAxisTitle = chart.getYAxisTitle(yIndex);
+    if (yAxisTitle != null && !yAxisTitle.trim().equalsIgnoreCase("") && stylerAxesChart.isYAxisTitleVisible()) {
+      TextLayout textLayout = new TextLayout(yAxisTitle, stylerAxesChart.getAxisTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
       titleHeight = rectangle.getHeight() + stylerAxesChart.getAxisTitlePadding();
     }
