@@ -34,6 +34,7 @@ import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler.AxisAlignment;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
@@ -43,6 +44,9 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * @author timmolter
  */
 public class TestForIssue54 {
+
+  static final int WIDTH = 465;
+  static final int HEIGHT = 320;
 
   public static void main(String[] args) {
 
@@ -75,11 +79,12 @@ public class TestForIssue54 {
 //    }
     {
       Chart chart = getAreaChart();
-      chart.setTitle("b on second axis, c on third axis");
+      chart.setTitle("all different axis, c axis on right");
       Series series = (Series) chart.getSeriesMap().get("b");
       series.setYIndex(1);
       series = (Series) chart.getSeriesMap().get("c");
       series.setYIndex(2);
+      chart.getStyler().setYAxisAlignment(2, AxisAlignment.Right);
       charts.add(chart);
     }
     
@@ -90,9 +95,10 @@ public class TestForIssue54 {
     }
     {
       Chart chart = getCaregoryChart();
-      chart.setTitle("b on second axis");
+      chart.setTitle("b on second axis, b on right");
       Series series = (Series) chart.getSeriesMap().get("b");
       series.setYIndex(1);
+      chart.getStyler().setYAxisAlignment(1, AxisAlignment.Right);
       charts.add(chart);
     }
     
@@ -130,7 +136,7 @@ public class TestForIssue54 {
   }
   
   static Chart getLineChart() {
-	    XYChart chart = new XYChartBuilder().width(600).height(420).xAxisTitle("X").yAxisTitle("Y").build();
+	    XYChart chart = new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
 	    // Customize Chart
 	    chart.getStyler().setToolTipsEnabled(true);
@@ -159,7 +165,7 @@ public class TestForIssue54 {
   static Chart getAreaChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(600).height(420).title("Area chart").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart = new XYChartBuilder().width(WIDTH).height(HEIGHT).title("Area chart").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
@@ -178,7 +184,7 @@ public class TestForIssue54 {
   static CategoryChart getCaregoryChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(600).height(420).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
+    CategoryChart chart = new CategoryChartBuilder().width(WIDTH).height(HEIGHT).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
@@ -216,7 +222,7 @@ public class TestForIssue54 {
   static CategoryChart getCategoryLineChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(600).height(420).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();
+    CategoryChart chart = new CategoryChartBuilder().width(WIDTH).height(HEIGHT).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();
 
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Line);
@@ -250,7 +256,7 @@ public class TestForIssue54 {
   static BubbleChart getBubleChart() {
 
     // Create Chart
-    BubbleChart chart = new BubbleChartBuilder().width(600).height(420).title("BubbleChart01").xAxisTitle("X").yAxisTitle("Y").build();
+    BubbleChart chart = new BubbleChartBuilder().width(WIDTH).height(HEIGHT).title("BubbleChart01").xAxisTitle("X").yAxisTitle("Y").build();
     chart.getStyler().setToolTipsEnabled(true);
     // Customize Chart
 

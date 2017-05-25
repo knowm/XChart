@@ -43,7 +43,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   }
 
   private final Chart<AxesChartStyler, AxesChartSeries> chart;
-  private Rectangle2D bounds;
+  private final Rectangle2D.Double bounds;
 
   private final AxesChartStyler stylerAxesChart;
 
@@ -107,6 +107,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
     this.direction = direction;
     this.yIndex = yIndex;
+    bounds = new Rectangle2D.Double();
     axisTitle = new AxisTitle<AxesChartStyler, AxesChartSeries>(chart, direction, direction == Direction.Y ? this : null, yIndex);
     axisTick = new AxisTick<AxesChartStyler, AxesChartSeries>(chart, direction, direction == Direction.Y ? this : null);
   }
@@ -140,10 +141,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     // System.out.println(this.max);
   }
 
-  @Override
-  public void paint(Graphics2D g) {
-
-    bounds = new Rectangle2D.Double();
+  public void preparePaint() {
 
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
@@ -155,7 +153,8 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // |
       // |
       // ----
-      double xOffset = chart.getAxisPair().getYAxisXOffset();
+      //double xOffset = chart.getAxisPair().getYAxisXOffset();
+      double xOffset = 0; // this will be updated on AxisPair.paint() method 
       // double yOffset = chart.getChartTitle().getBounds().getHeight() < .1 ? axesChartStyler.getChartPadding() : chart.getChartTitle().getBounds().getHeight()
       // + axesChartStyler.getChartPadding();
       double yOffset = chart.getChartTitle().getBounds().getHeight() + stylerAxesChart.getChartPadding();
@@ -192,35 +191,28 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
       /////////////////////////
 
-      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
-      // g.setColor(Color.yellow);
-      // g.draw(bounds);
-
-      // fill in Axis with sub-components
-      axisTitle.paint(g);
-      axisTick.paint(g);
-
-      // now we know the real bounds width after ticks and title are painted
-      width = (stylerAxesChart.isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + axisTick.getBounds().getWidth();
-
-      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
-      // g.setColor(Color.yellow);
-      // g.draw(bounds);
+      //bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
+      bounds.setRect(xOffset, yOffset, width, height);
 
     } else { // X-Axis
 
       // calculate paint zone
       // |____________________|
 
-      Rectangle2D yAxisBounds = chart.getAxisPair().getYAxisBounds();
-      double xOffset = yAxisBounds.getWidth() + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0) + stylerAxesChart.getChartPadding();
-      double yOffset = yAxisBounds.getY() + yAxisBounds.getHeight() + stylerAxesChart.getPlotMargin();
+      Rectangle2D leftYAxisBounds = chart.getAxisPair().getLeftYAxisBounds();
+      Rectangle2D rightYAxisBounds = chart.getAxisPair().getRightYAxisBounds();
+      
+      double maxYAxisY = Math.max(leftYAxisBounds.getY() + leftYAxisBounds.getHeight(), rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
+      double xOffset = leftYAxisBounds.getWidth() + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0) + stylerAxesChart.getChartPadding();
+      double yOffset = maxYAxisY + stylerAxesChart.getPlotMargin();
 
       double width =
 
           chart.getWidth()
 
-              - yAxisBounds.getWidth() // y-axis was already painted
+              - leftYAxisBounds.getWidth() // y-axis was already painted
+
+              - rightYAxisBounds.getWidth() // y-axis was already painted
 
               - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0)
 
@@ -233,13 +225,43 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // double height = this.getXAxisHeightHint(width);
       // System.out.println("height: " + height);
       // the Y-Axis was already draw at this point so we know how much vertical room is left for the X-Axis
-      double height = chart.getHeight() - yAxisBounds.getY() - yAxisBounds.getHeight() - stylerAxesChart.getChartPadding() - stylerAxesChart.getPlotMargin();
+      double height = chart.getHeight() - maxYAxisY - stylerAxesChart.getChartPadding() - stylerAxesChart.getPlotMargin();
       // System.out.println("height2: " + height2);
 
-      bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
+      bounds.setRect(xOffset, yOffset, width, height);
+    }
+  }
+  
+  @Override
+  public void paint(Graphics2D g) {
+    
+    
+    
+    // determine Axis bounds
+    if (direction == Direction.Y) { // Y-Axis - gets called first
+      
+      
+      /////////////////////////
+      
+      // fill in Axis with sub-components
+      axisTitle.paint(g);
+      axisTick.paint(g);
+      
+      // now we know the real bounds width after ticks and title are painted
+      double width = (stylerAxesChart.isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + axisTick.getBounds().getWidth();
+      
+      bounds.width = width;
       // g.setColor(Color.yellow);
       // g.draw(bounds);
-
+      
+    } else { // X-Axis
+      
+      // calculate paint zone
+      // |____________________|
+      
+      // g.setColor(Color.yellow);
+      // g.draw(bounds);
+      
       // now paint the X-Axis given the above paint zone
       this.axisTickCalculator = getAxisTickCalculator(bounds.getWidth());
       axisTitle.paint(g);

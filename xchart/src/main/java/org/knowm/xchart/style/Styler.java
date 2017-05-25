@@ -19,6 +19,7 @@ package org.knowm.xchart.style;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.HashMap;
 
 import org.knowm.xchart.style.markers.Marker;
 
@@ -61,6 +62,11 @@ public abstract class Styler {
 
   public enum ToolTipType {
     xLabels, yLabels, xAndYLabels
+  }
+
+  public enum AxisAlignment {
+    
+    Left, Right
   }
 
   /**
@@ -114,6 +120,9 @@ public abstract class Styler {
 
   private String decimalPattern;
 
+  private HashMap<Integer, AxisAlignment> yAxisAlignmentMap = new HashMap<Integer, AxisAlignment>();
+
+  
   void setAllStyles() {
 
     // Chart Style ///////////////////////////////
@@ -672,4 +681,12 @@ public abstract class Styler {
     return decimalPattern;
   }
 
+  public AxisAlignment getYAxisAlignment(int yIndex) {
+    return yAxisAlignmentMap.get(yIndex);
+  }
+  
+  public void setYAxisAlignment(int yIndex, AxisAlignment aa) {
+    yAxisAlignmentMap.put(yIndex, aa);
+  }
+  
 }

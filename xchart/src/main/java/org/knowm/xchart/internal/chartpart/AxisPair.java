@@ -28,6 +28,8 @@ import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler.AxisAlignment;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * @author timmolter
@@ -40,7 +42,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
   private final Axis<AxesChartStyler, AxesChartSeries> yAxis;
   private final Map<Integer, Axis<AxesChartStyler, AxesChartSeries>> yAxisMap;
   
-  private final Rectangle2D.Double yAxisBounds;
+  private final Rectangle2D.Double leftYAxisBounds;
+  private final Rectangle2D.Double rightYAxisBounds;
 
   /**
    * Constructor
@@ -56,7 +59,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     yAxis = new Axis<AxesChartStyler, AxesChartSeries>(chart, Axis.Direction.Y, 0);
     yAxisMap = new TreeMap<Integer, Axis<AxesChartStyler, AxesChartSeries>>();
     yAxisMap.put(0, yAxis);
-    yAxisBounds = new Rectangle2D.Double();
+    leftYAxisBounds = new Rectangle2D.Double();
+    rightYAxisBounds = new Rectangle2D.Double();
   }
 
   @Override
@@ -64,22 +68,86 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
     prepareForPaint();
 
-    yAxisBounds.width = 0;
-    yAxisBounds.x = 0;
-    yAxis.paint(g);
-    Rectangle2D bounds = yAxis.getBounds();
-    yAxisBounds.setRect(bounds);
+    int leftCount = 0;
+    int rightCount = 0;
+
+    leftYAxisBounds.width = 0;
+    rightYAxisBounds.width = 0;
+
+    
+    AxesChartStyler styler = chart.getStyler();
+    for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
+      Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
+      ya.preparePaint();
+      Rectangle2D bounds = ya.getBounds();
+      double width = bounds.getWidth();
+      if (styler.getYAxisAlignment(e.getKey()) == AxisAlignment.Right) {
+        rightYAxisBounds.width += width + chart.getStyler().getChartPadding();
+        if(rightCount == 0) {
+          rightYAxisBounds.setRect(bounds);
+        } 
+        rightCount++;
+      } else {
+        if(leftCount == 0) {
+          leftYAxisBounds.setRect(bounds);
+          leftYAxisBounds.width = 0;
+        }
+        leftYAxisBounds.width += width + chart.getStyler().getChartPadding();
+        leftCount++;
+      }
+    }
+    
+    double leftStart = 0;
+    double rightStart;
+    if (rightCount == 0) {
+      rightStart = 0;
+    } else {
+      rightStart =
+        chart.getWidth()
+        
+            - rightYAxisBounds.width 
+        
+            - (styler.getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0) 
+        
+             - 1 * styler.getChartPadding()
+        
+             - (styler.isYAxisTicksVisible() ? (styler.getPlotMargin()) : 0)
+        
+             - (styler.getLegendPosition() == LegendPosition.OutsideE && styler.isLegendVisible() ? styler.getChartPadding() : 0);
+    }
+
+    //leftYAxisBounds.x = leftStart;
+    rightYAxisBounds.x = rightStart;
+    
+    if(leftCount == 0) {
+      Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
+      leftYAxisBounds.x = bounds.x;
+      leftYAxisBounds.y = bounds.y;
+      leftYAxisBounds.height = bounds.height;
+    }
     
     for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
-      if (e.getKey() == 0) {
-        continue;
-      }
-      
       Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
+      Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) ya.getBounds();
+      double width = bounds.getWidth();
+      if (styler.getYAxisAlignment(e.getKey()) == AxisAlignment.Right) {
+        bounds.x = rightStart;
+        // add padding after axis 
+        rightStart += chart.getStyler().getChartPadding() + width;
+      } else {
+        // add padding before axis
+        leftStart += chart.getStyler().getChartPadding();
+        bounds.x = leftStart;
+        leftStart += width;
+      }
       ya.paint(g);
-      bounds = ya.getBounds();
-      yAxisBounds.width += bounds.getWidth() + chart.getStyler().getChartPadding();
+      // System.out.println("Y axis " + e.getKey() + " bounds: " + bounds);
     }
+    
+//    System.out.println("left Y   bounds: " + leftYAxisBounds);
+//    System.out.println("right Y  bounds: " + rightYAxisBounds);
+    
+    xAxis.preparePaint();
     xAxis.paint(g);
   }
 
@@ -318,13 +386,13 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     return null; // should never be called
   }
 
-  public Rectangle2D getYAxisBounds() {
+  public Rectangle2D.Double getLeftYAxisBounds() {
 
-    return yAxisBounds;
+    return leftYAxisBounds;
   }
+  
+  public Rectangle2D.Double getRightYAxisBounds() {
 
-  public double getYAxisXOffset() {
-    
-    return yAxisBounds.getMaxX() + chart.getStyler().getChartPadding();
+    return rightYAxisBounds;
   }
 }
