@@ -32,7 +32,7 @@ public abstract class Styler {
 
   public enum LegendPosition {
 
-    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW, InsideN
+    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW, InsideN, InsideS, OutsideS
   }
 
   public enum ChartTheme {

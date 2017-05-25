@@ -180,7 +180,18 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
                 - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE && stylerAxesChart.isLegendVisible() ? stylerAxesChart.getChartPadding() : 0);
 
-        height = chart.getHeight() - yOffset - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth) - stylerAxesChart.getPlotMargin() - stylerAxesChart.getChartPadding();
+        height = 
+            chart.getHeight()
+            
+                - yOffset 
+                
+                - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth) 
+                
+                - stylerAxesChart.getPlotMargin() 
+                
+                - stylerAxesChart.getChartPadding()
+                
+                - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideS ? chart.getLegend().getBounds().getHeight() : 0);
 
         width = getYAxisWidthHint(height);
         // System.out.println("width after: " + width);
@@ -204,7 +215,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       
       double maxYAxisY = Math.max(leftYAxisBounds.getY() + leftYAxisBounds.getHeight(), rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
       double xOffset = leftYAxisBounds.getWidth() + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0) + stylerAxesChart.getChartPadding();
-      double yOffset = maxYAxisY + stylerAxesChart.getPlotMargin();
+      double yOffset = maxYAxisY + stylerAxesChart.getPlotMargin() - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideS ? chart.getLegend().getBounds().getHeight() : 0);
 
       double width =
 

@@ -139,6 +139,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
     // Create Chart Panel
     chartPanel = new XChartPanel(new AreaChart01().getChart());
+    chartPanel = new XChartPanel(new LineChart01().getChart());
 
     // Add the scroll panes to a split pane.
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -151,6 +152,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
     // Add the split pane to this panel.
     add(splitPane);
+    tree.setSelectionRow(3);
+    tree.expandRow(3);
+    
   }
 
   @Override
