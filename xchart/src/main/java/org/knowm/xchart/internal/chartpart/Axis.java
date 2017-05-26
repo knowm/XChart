@@ -214,9 +214,13 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       Rectangle2D rightYAxisBounds = chart.getAxisPair().getRightYAxisBounds();
       
       double maxYAxisY = Math.max(leftYAxisBounds.getY() + leftYAxisBounds.getHeight(), rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
-      double xOffset = leftYAxisBounds.getWidth() + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0) + stylerAxesChart.getChartPadding();
+      double xOffset = leftYAxisBounds.getWidth() + stylerAxesChart.getChartPadding();
       double yOffset = maxYAxisY + stylerAxesChart.getPlotMargin() - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideS ? chart.getLegend().getBounds().getHeight() : 0);
 
+      double legendWidth = 0;
+      if (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE && stylerAxesChart.isLegendVisible()) {
+        legendWidth = chart.getLegend().getBounds().getWidth() + stylerAxesChart.getChartPadding();
+      }
       double width =
 
           chart.getWidth()
@@ -225,13 +229,11 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
               - rightYAxisBounds.getWidth() // y-axis was already painted
 
-              - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0)
-
               - 2 * stylerAxesChart.getChartPadding()
 
-              - (stylerAxesChart.isYAxisTicksVisible() ? (stylerAxesChart.getPlotMargin()) : 0)
+              //- tickMargin is included in left & right y axis bounds
 
-              - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE && stylerAxesChart.isLegendVisible() ? stylerAxesChart.getChartPadding() : 0);
+              - legendWidth;
 
       // double height = this.getXAxisHeightHint(width);
       // System.out.println("height: " + height);
@@ -280,6 +282,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     }
   }
 
+  
   /**
    * The vertical Y-Axis is drawn first, but to know the lower bounds of it, we need to know how high the X-Axis paint zone is going to be. Since the tick labels could be rotated, we need to actually
    * determine the tick labels first to get an idea of how tall the X-Axis tick labels will be.
@@ -359,7 +362,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // get the height of the label including rotation
       TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, stylerAxesChart.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
-
+      
       axisTickLabelsHeight = rectangle.getWidth() + stylerAxesChart.getAxisTickPadding() + stylerAxesChart.getAxisTickMarkLength();
     }
     return titleHeight + axisTickLabelsHeight;
