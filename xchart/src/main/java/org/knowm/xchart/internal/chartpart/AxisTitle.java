@@ -27,6 +27,7 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.Styler.AxisAlignment;
 
 /**
  * AxisTitle
@@ -71,8 +72,15 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
         Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
 
         // ///////////////////////////////////////////////
-
-        int xOffset = (int) (yAxis.getBounds().getX() + nonRotatedRectangle.getHeight());
+        
+        boolean onRight = chart.getStyler().getYAxisAlignment(yAxis.getYIndex()) == AxisAlignment.Right;
+        int xOffset;
+        if (onRight) {
+          xOffset = (int) (yAxis.getAxisTick().getBounds().getX() + yAxis.getAxisTick().getBounds().getWidth() + nonRotatedRectangle.getHeight());
+        } else {
+          xOffset = (int) (yAxis.getBounds().getX() + nonRotatedRectangle.getHeight());
+        }
+        
         int yOffset = (int) ((yAxis.getBounds().getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + yAxis.getBounds().getY());
 
         AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.PI / 2, 0, 0);

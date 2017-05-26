@@ -79,11 +79,12 @@ public class TestForIssue54 {
 //    }
     {
       Chart chart = getAreaChart();
-      chart.setTitle("all different axis, c axis on right");
+      chart.setTitle("all different axis, b & c axis on right");
       Series series = (Series) chart.getSeriesMap().get("b");
       series.setYIndex(1);
       series = (Series) chart.getSeriesMap().get("c");
       series.setYIndex(2);
+      chart.getStyler().setYAxisAlignment(1, AxisAlignment.Right);
       chart.getStyler().setYAxisAlignment(2, AxisAlignment.Right);
       charts.add(chart);
     }
@@ -114,6 +115,7 @@ public class TestForIssue54 {
       series.setYIndex(1);
       series = (Series) chart.getSeriesMap().get("d");
       series.setYIndex(1);
+      chart.getStyler().setYAxisAlignment(1, AxisAlignment.Right);
       charts.add(chart);
     }
     
@@ -130,7 +132,10 @@ public class TestForIssue54 {
       charts.add(chart);
     }
     
-
+    Chart chart = charts.get(3);
+    
+    //charts.clear();
+    charts.add(chart);
     
     new SwingWrapper<Chart>(charts).displayChartMatrix();
   }
@@ -169,7 +174,11 @@ public class TestForIssue54 {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setAxisTitlesVisible(false);
+    chart.getStyler().setAxisTitlesVisible(true);
+    chart.setYAxisTitle(0, "a");
+    chart.setYAxisTitle(1, "b");
+    chart.setYAxisTitle(2, "c");
+
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
     chart.getStyler().setToolTipsEnabled(true);
 

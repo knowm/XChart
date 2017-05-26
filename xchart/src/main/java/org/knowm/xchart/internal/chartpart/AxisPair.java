@@ -19,12 +19,10 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;

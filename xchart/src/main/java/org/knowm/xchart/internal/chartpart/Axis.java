@@ -28,6 +28,7 @@ import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler.AxisAlignment;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
@@ -257,8 +258,14 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       /////////////////////////
       
       // fill in Axis with sub-components
-      axisTitle.paint(g);
-      axisTick.paint(g);
+      boolean onRight = stylerAxesChart.getYAxisAlignment(yIndex) == AxisAlignment.Right;
+      if (onRight) {
+        axisTick.paint(g);
+        axisTitle.paint(g);
+      } else {
+        axisTitle.paint(g);
+        axisTick.paint(g);
+      }
       
       // now we know the real bounds width after ticks and title are painted
       double width = (stylerAxesChart.isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + axisTick.getBounds().getWidth();
@@ -461,5 +468,10 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   public Rectangle2D getBounds() {
 
     return bounds;
+  }
+  
+  public int getYIndex() {
+
+    return yIndex;
   }
 }
