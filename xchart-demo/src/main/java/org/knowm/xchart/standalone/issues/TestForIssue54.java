@@ -132,10 +132,16 @@ public class TestForIssue54 {
       charts.add(chart);
     }
     
-    Chart chart = charts.get(3);
-    
-    //charts.clear();
-    charts.add(chart);
+    // Chart chart = charts.get(3);
+    // charts.clear();
+    // charts.add(chart);
+    {
+      Chart chart = getLineChart();
+      chart.setTitle("Default axis on right");
+      chart.getStyler().setYAxisAlignment(0, AxisAlignment.Right);
+      charts.add(chart);
+    }
+
     
     new SwingWrapper<Chart>(charts).displayChartMatrix();
   }
