@@ -37,6 +37,8 @@ public abstract class Series {
 
   private boolean isEnabled = true;
 
+  private int yIndex = 0;
+  
   /**
    * Constructor
    *
@@ -83,5 +85,15 @@ public abstract class Series {
   public void setEnabled(boolean isEnabled) {
 
     this.isEnabled = isEnabled;
+  }
+
+  public int getYIndex() {
+
+    return yIndex;
+  }
+  
+  public void setYIndex(int yIndex) {
+
+    this.yIndex = yIndex;
   }
 }

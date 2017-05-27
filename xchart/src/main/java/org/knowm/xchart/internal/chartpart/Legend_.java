@@ -108,6 +108,14 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
         xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
         yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
         break;
+      case InsideS:
+        xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
+        yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+        break;
+      case OutsideS:
+        xOffset = (chart.getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
+        yOffset = chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+        break;
 
       default:
         break;

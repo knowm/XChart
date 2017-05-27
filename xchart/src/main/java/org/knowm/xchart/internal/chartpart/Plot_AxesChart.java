@@ -29,8 +29,6 @@ import org.knowm.xchart.style.Styler;
  */
 public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
 
-  private final AxesChartStyler stylerAxesChart;
-
   /**
    * Constructor
    *
@@ -39,21 +37,19 @@ public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
   Plot_AxesChart(Chart<AxesChartStyler, XYSeries> chart) {
 
     super(chart);
-    stylerAxesChart = chart.getStyler();
     this.plotSurface = new PlotSurface_AxesChart<AxesChartStyler, XYSeries>(chart);
   }
 
   @Override
   public void paint(Graphics2D g) {
+    Rectangle2D yAxisBounds = chart.getAxisPair().getLeftYAxisBounds();
+    Rectangle2D xAxisBounds = chart.getXAxis().getBounds();
 
     // calculate bounds
-    double xOffset = chart.getYAxis().getBounds().getX() + chart.getYAxis().getBounds().getWidth()
-
-        + (stylerAxesChart.isYAxisTicksVisible() ? stylerAxesChart.getPlotMargin() : 0);
-
-    double yOffset = chart.getYAxis().getBounds().getY();
-    double width = chart.getXAxis().getBounds().getWidth();
-    double height = chart.getYAxis().getBounds().getHeight();
+    double xOffset = xAxisBounds.getX();
+    double yOffset = yAxisBounds.getY();
+    double width = xAxisBounds.getWidth();
+    double height = yAxisBounds.getHeight();
     this.bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 
     super.paint(g);

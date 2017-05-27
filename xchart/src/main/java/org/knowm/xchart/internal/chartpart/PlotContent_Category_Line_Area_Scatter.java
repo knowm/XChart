@@ -52,7 +52,6 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
   @Override
   public void doPaint(Graphics2D g) {
-
     // X-Axis
     double xTickSpace = categoryStyler.getPlotContentSize() * getBounds().getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
@@ -63,20 +62,12 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
 //    double xMin = chart.getAxisPair().getXAxis().getMin();
 //    double xMax = chart.getAxisPair().getXAxis().getMax();
-    double yMin = chart.getAxisPair().getYAxis().getMin();
-    double yMax = chart.getAxisPair().getYAxis().getMax();
 
     // logarithmic
 //    if (categoryStyler.isXAxisLogarithmic()) {
 //      xMin = Math.log10(xMin);
 //      xMax = Math.log10(xMax);
 //    }
-    if (categoryStyler.isYAxisLogarithmic()) {
-      yMin = Math.log10(yMin);
-      yMax = Math.log10(yMax);
-    }
-    // System.out.println("yMin = " + yMin);
-    // System.out.println("yMax = " + yMax);
 
     Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
 
@@ -88,6 +79,15 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       if (!series.isEnabled()) {
         continue;
       }
+      Axis yAxis = chart.getYAxis(series.getYIndex());
+      double yMin = yAxis.getMin();
+      double yMax = yAxis.getMax();
+      if (categoryStyler.isYAxisLogarithmic()) {
+        yMin = Math.log10(yMin);
+        yMax = Math.log10(yMax);
+      }
+      // System.out.println("yMin = " + yMin);
+      // System.out.println("yMax = " + yMax);
 
       // data points
       Collection<? extends Number> yData = series.getYData();

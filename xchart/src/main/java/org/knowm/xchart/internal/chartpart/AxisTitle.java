@@ -27,6 +27,7 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.Styler.AxisAlignment;
 
 /**
  * AxisTitle
@@ -36,6 +37,8 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
   private final Chart<AxesChartStyler, AxesChartSeries> chart;
   private Rectangle2D bounds;
   private final Direction direction;
+  private final Axis yAxis;
+  private final int yIndex;
 
   /**
    * Constructor
@@ -43,10 +46,12 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
    * @param chart the Chart
    * @param direction the Direction
    */
-  AxisTitle(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
+  AxisTitle(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, Axis yAxis, int yIndex) {
 
     this.chart = chart;
     this.direction = direction;
+    this.yAxis = yAxis;
+    this.yIndex = yIndex;
   }
 
   @Override
@@ -59,16 +64,24 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
     if (direction == Axis.Direction.Y) {
 
-      if (chart.getYAxisTitle() != null && !chart.getYAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isYAxisTitleVisible()) {
+      String yAxisTitle = chart.getYAxisTitle(yIndex);
+      if (yAxisTitle != null && !yAxisTitle.trim().equalsIgnoreCase("") && chart.getStyler().isYAxisTitleVisible()) {
 
         FontRenderContext frc = g.getFontRenderContext();
-        TextLayout nonRotatedTextLayout = new TextLayout(chart.getYAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
+        TextLayout nonRotatedTextLayout = new TextLayout(yAxisTitle, chart.getStyler().getAxisTitleFont(), frc);
         Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
 
         // ///////////////////////////////////////////////
-
-        int xOffset = (int) (chart.getYAxis().getBounds().getX() + nonRotatedRectangle.getHeight());
-        int yOffset = (int) ((chart.getYAxis().getBounds().getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + chart.getYAxis().getBounds().getY());
+        
+        boolean onRight = chart.getStyler().getYAxisAlignment(yAxis.getYIndex()) == AxisAlignment.Right;
+        int xOffset;
+        if (onRight) {
+          xOffset = (int) (yAxis.getAxisTick().getBounds().getX() + yAxis.getAxisTick().getBounds().getWidth() + nonRotatedRectangle.getHeight());
+        } else {
+          xOffset = (int) (yAxis.getBounds().getX() + nonRotatedRectangle.getHeight());
+        }
+        
+        int yOffset = (int) ((yAxis.getBounds().getHeight() + nonRotatedRectangle.getWidth()) / 2.0 + yAxis.getBounds().getY());
 
         AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.PI / 2, 0, 0);
         Shape shape = nonRotatedTextLayout.getOutline(rot);
@@ -90,7 +103,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
         // g.setColor(Color.blue);
         // g.draw(bounds);
       } else {
-        bounds = new Rectangle2D.Double(chart.getYAxis().getBounds().getX(), chart.getYAxis().getBounds().getY(), 0, chart.getYAxis().getBounds().getHeight());
+        bounds = new Rectangle2D.Double(yAxis.getBounds().getX(), yAxis.getBounds().getY(), 0, yAxis.getBounds().getHeight());
       }
     } else {
 

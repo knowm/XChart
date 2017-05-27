@@ -48,13 +48,14 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
    *
    * @param chart
    * @param direction
+   * @param yAxis 
    */
-  AxisTick(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction) {
+  AxisTick(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, Axis yAxis) {
 
     this.chart = chart;
     this.direction = direction;
-    axisTickLabels = new AxisTickLabels<AxesChartStyler, AxesChartSeries>(chart, direction);
-    axisTickMarks = new AxisTickMarks<AxesChartStyler, AxesChartSeries>(chart, direction);
+    axisTickLabels = new AxisTickLabels<AxesChartStyler, AxesChartSeries>(chart, direction, yAxis);
+    axisTickMarks = new AxisTickMarks<AxesChartStyler, AxesChartSeries>(chart, direction, yAxis);
   }
 
   @Override
