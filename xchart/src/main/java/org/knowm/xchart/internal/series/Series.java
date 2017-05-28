@@ -37,12 +37,12 @@ public abstract class Series {
 
   private boolean isEnabled = true;
 
-  private int yIndex = 0;
-  
+  private int yAxisGroup = 0;
+
   /**
    * Constructor
    *
-   * @param name
+   * @param name the name of the series
    */
   protected Series(String name) {
 
@@ -87,13 +87,18 @@ public abstract class Series {
     this.isEnabled = isEnabled;
   }
 
-  public int getYIndex() {
+  public int getYAxisGroup() {
 
-    return yIndex;
+    return yAxisGroup;
   }
-  
-  public void setYIndex(int yIndex) {
 
-    this.yIndex = yIndex;
+  /**
+   * Set the Y Axis Group the series should belong to
+   *
+   * @param yAxisGroup
+   */
+  public void setYAxisGroup(int yAxisGroup) {
+
+    this.yAxisGroup = yAxisGroup;
   }
 }

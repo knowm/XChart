@@ -155,8 +155,8 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
         continue;
       }
 
-      yMin = chart.getYAxis(series.getYIndex()).getMin();
-      yMax = chart.getYAxis(series.getYIndex()).getMax();
+      yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
+      yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
 
       // for line series
       double previousX = -Double.MAX_VALUE;

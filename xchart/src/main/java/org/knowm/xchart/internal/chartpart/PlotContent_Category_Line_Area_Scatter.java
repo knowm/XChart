@@ -79,7 +79,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       if (!series.isEnabled()) {
         continue;
       }
-      Axis yAxis = chart.getYAxis(series.getYIndex());
+      Axis yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
       if (categoryStyler.isYAxisLogarithmic()) {

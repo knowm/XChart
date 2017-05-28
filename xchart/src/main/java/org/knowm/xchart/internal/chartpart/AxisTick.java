@@ -48,7 +48,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
    *
    * @param chart
    * @param direction
-   * @param yAxis 
+   * @param yAxis
    */
   AxisTick(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, Axis yAxis) {
 

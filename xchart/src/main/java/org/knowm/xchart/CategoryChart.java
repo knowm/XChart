@@ -86,7 +86,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
-    setYAxisTitle(chartBuilder.yAxisTitle);
+    setYAxisGroupTitle(0, chartBuilder.yAxisTitle);
   }
 
   /**

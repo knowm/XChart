@@ -25,7 +25,7 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.Styler.AxisAlignment;
+import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /**
  * Axis tick marks. This includes the little tick marks and the line that hugs the plot area.
@@ -60,9 +60,9 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
     if (direction == Axis.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
 
       int axisTickMarkLength = styler.getAxisTickMarkLength();
-      
-      boolean onRight = styler.getYAxisAlignment(yAxis.getYIndex()) == AxisAlignment.Right;
-      
+
+      boolean onRight = styler.getYAxisAlignment(yAxis.getYIndex()) == YAxisPosition.Right;
+
       Rectangle2D yAxisBounds = yAxis.getBounds();
       Rectangle2D axisTickLabelBounds = yAxis.getAxisTick().getAxisTickLabels().getBounds();
       double xOffset;
@@ -74,7 +74,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
         xOffset = axisTickLabelBounds.getX() + axisTickLabelBounds.getWidth() + styler.getAxisTickPadding();
         lineXOffset = xOffset + axisTickMarkLength;
       }
-      
+
       double yOffset = yAxisBounds.getY();
 
       // bounds

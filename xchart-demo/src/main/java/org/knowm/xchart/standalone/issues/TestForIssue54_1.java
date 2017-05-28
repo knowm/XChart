@@ -34,7 +34,6 @@ import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler.AxisAlignment;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
@@ -43,7 +42,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  *
  * @author timmolter
  */
-public class TestForIssue54 {
+public class TestForIssue54_1 {
 
   static final int WIDTH = 465;
   static final int HEIGHT = 320;
@@ -60,8 +59,8 @@ public class TestForIssue54 {
       Chart chart = getLineChart();
       chart.setTitle("sin(x) on second axis with title");
       Series series = (Series) chart.getSeriesMap().get("y=sin(x)");
-      series.setYIndex(1);
-      chart.setYAxisTitle(1, "sin(x)");
+      series.setYAxisGroup(1);
+      chart.setYAxisGroupTitle(1, "sin(x)");
       charts.add(chart);
     }
 
@@ -74,18 +73,18 @@ public class TestForIssue54 {
 //      Chart chart = getAreaChart();
 //      chart.setTitle("b on second axis");
 //      Series series = (Series) chart.getSeriesMap().get("b");
-//      series.setYIndex(1);
+//      series.setYAxisGroup(1);
 //      charts.add(chart);
 //    }
     {
       Chart chart = getAreaChart();
       chart.setTitle("all different axis, b & c axis on right");
       Series series = (Series) chart.getSeriesMap().get("b");
-      series.setYIndex(1);
+      series.setYAxisGroup(1);
       series = (Series) chart.getSeriesMap().get("c");
-      series.setYIndex(2);
-      chart.getStyler().setYAxisAlignment(1, AxisAlignment.Right);
-      chart.getStyler().setYAxisAlignment(2, AxisAlignment.Right);
+      series.setYAxisGroup(2);
+      chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
+      chart.getStyler().setYAxisGroupPosition(2, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
     
@@ -98,8 +97,8 @@ public class TestForIssue54 {
       Chart chart = getCaregoryChart();
       chart.setTitle("b on second axis, b on right");
       Series series = (Series) chart.getSeriesMap().get("b");
-      series.setYIndex(1);
-      chart.getStyler().setYAxisAlignment(1, AxisAlignment.Right);
+      series.setYAxisGroup(1);
+      chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
     
@@ -112,10 +111,10 @@ public class TestForIssue54 {
       Chart chart = getCategoryLineChart();
       chart.setTitle("b&d on second axis");
       Series series = (Series) chart.getSeriesMap().get("b");
-      series.setYIndex(1);
+      series.setYAxisGroup(1);
       series = (Series) chart.getSeriesMap().get("d");
-      series.setYIndex(1);
-      chart.getStyler().setYAxisAlignment(1, AxisAlignment.Right);
+      series.setYAxisGroup(1);
+      chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
     
@@ -128,7 +127,7 @@ public class TestForIssue54 {
       Chart chart = getBubleChart();
       chart.setTitle("b on second axis");
       Series series = (Series) chart.getSeriesMap().get("b");
-      series.setYIndex(1);
+      series.setYAxisGroup(1);
       charts.add(chart);
     }
     
@@ -138,7 +137,7 @@ public class TestForIssue54 {
     {
       Chart chart = getLineChart();
       chart.setTitle("Default axis on right");
-      chart.getStyler().setYAxisAlignment(0, AxisAlignment.Right);
+      chart.getStyler().setYAxisGroupPosition(0, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
 
@@ -181,9 +180,9 @@ public class TestForIssue54 {
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setAxisTitlesVisible(true);
-    chart.setYAxisTitle(0, "a");
-    chart.setYAxisTitle(1, "b");
-    chart.setYAxisTitle(2, "c");
+    chart.setYAxisGroupTitle(0, "a");
+    chart.setYAxisGroupTitle(1, "b");
+    chart.setYAxisGroupTitle(2, "c");
 
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
     chart.getStyler().setToolTipsEnabled(true);

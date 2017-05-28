@@ -28,8 +28,8 @@ import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
-import org.knowm.xchart.style.Styler.AxisAlignment;
 import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /**
  * Axis
@@ -76,7 +76,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   private double min;
 
   private double max;
-  
+
   private final int yIndex;
 
   /**
@@ -181,17 +181,17 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
                 - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideE && stylerAxesChart.isLegendVisible() ? stylerAxesChart.getChartPadding() : 0);
 
-        height = 
+        height =
             chart.getHeight()
-            
-                - yOffset 
-                
-                - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth) 
-                
-                - stylerAxesChart.getPlotMargin() 
-                
+
+                - yOffset
+
+                - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth)
+
+                - stylerAxesChart.getPlotMargin()
+
                 - stylerAxesChart.getChartPadding()
-                
+
                 - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideS ? chart.getLegend().getBounds().getHeight() : 0);
 
         width = getYAxisWidthHint(height);
@@ -213,7 +213,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
       Rectangle2D leftYAxisBounds = chart.getAxisPair().getLeftYAxisBounds();
       Rectangle2D rightYAxisBounds = chart.getAxisPair().getRightYAxisBounds();
-      
+
       double maxYAxisY = Math.max(leftYAxisBounds.getY() + leftYAxisBounds.getHeight(), rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
       double xOffset = leftYAxisBounds.getWidth() + stylerAxesChart.getChartPadding();
       double yOffset = maxYAxisY + stylerAxesChart.getPlotMargin() - (stylerAxesChart.getLegendPosition() == LegendPosition.OutsideS ? chart.getLegend().getBounds().getHeight() : 0);
@@ -245,20 +245,17 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       bounds.setRect(xOffset, yOffset, width, height);
     }
   }
-  
+
   @Override
   public void paint(Graphics2D g) {
-    
-    
-    
+
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
-      
-      
+
       /////////////////////////
-      
+
       // fill in Axis with sub-components
-      boolean onRight = stylerAxesChart.getYAxisAlignment(yIndex) == AxisAlignment.Right;
+      boolean onRight = stylerAxesChart.getYAxisAlignment(yIndex) == YAxisPosition.Right;
       if (onRight) {
         axisTick.paint(g);
         axisTitle.paint(g);
@@ -266,22 +263,22 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
         axisTitle.paint(g);
         axisTick.paint(g);
       }
-      
+
       // now we know the real bounds width after ticks and title are painted
       double width = (stylerAxesChart.isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0) + axisTick.getBounds().getWidth();
-      
+
       bounds.width = width;
       // g.setColor(Color.yellow);
       // g.draw(bounds);
-      
+
     } else { // X-Axis
-      
+
       // calculate paint zone
       // |____________________|
-      
+
       // g.setColor(Color.yellow);
       // g.draw(bounds);
-      
+
       // now paint the X-Axis given the above paint zone
       this.axisTickCalculator = getAxisTickCalculator(bounds.getWidth());
       axisTitle.paint(g);
@@ -289,7 +286,6 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
     }
   }
 
-  
   /**
    * The vertical Y-Axis is drawn first, but to know the lower bounds of it, we need to know how high the X-Axis paint zone is going to be. Since the tick labels could be rotated, we need to actually
    * determine the tick labels first to get an idea of how tall the X-Axis tick labels will be.
@@ -341,7 +337,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
     // Axis title
     double titleHeight = 0.0;
-    String yAxisTitle = chart.getYAxisTitle(yIndex);
+    String yAxisTitle = chart.getYAxisGroupTitle(yIndex);
     if (yAxisTitle != null && !yAxisTitle.trim().equalsIgnoreCase("") && stylerAxesChart.isYAxisTitleVisible()) {
       TextLayout textLayout = new TextLayout(yAxisTitle, stylerAxesChart.getAxisTitleFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
@@ -369,7 +365,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       // get the height of the label including rotation
       TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, stylerAxesChart.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
-      
+
       axisTickLabelsHeight = rectangle.getWidth() + stylerAxesChart.getAxisTickPadding() + stylerAxesChart.getAxisTickMarkLength();
     }
     return titleHeight + axisTickLabelsHeight;
@@ -469,7 +465,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
 
     return bounds;
   }
-  
+
   public int getYIndex() {
 
     return yIndex;

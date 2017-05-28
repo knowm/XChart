@@ -29,7 +29,7 @@ import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.Styler.AxisAlignment;
+import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /**
  * Axis tick labels
@@ -64,8 +64,8 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
 
     if (direction == Axis.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
 
-      boolean onRight = styler.getYAxisAlignment(yAxis.getYIndex()) == AxisAlignment.Right;
-      
+      boolean onRight = styler.getYAxisAlignment(yAxis.getYIndex()) == YAxisPosition.Right;
+
       double xOffset;
       if (onRight) {
         xOffset = yAxis.getBounds().getX() + (styler.isYAxisTicksVisible() ? styler.getAxisTickMarkLength() + styler.getAxisTickPadding() : 0);

@@ -79,7 +79,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
       if (!series.isEnabled()) {
         continue;
       }
-      Axis yAxis = chart.getYAxis(series.getYIndex());
+      Axis yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
       if (xyStyler.isYAxisLogarithmic()) {

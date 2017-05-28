@@ -64,8 +64,8 @@ public abstract class Styler {
     xLabels, yLabels, xAndYLabels
   }
 
-  public enum AxisAlignment {
-    
+  public enum YAxisPosition {
+
     Left, Right
   }
 
@@ -120,9 +120,8 @@ public abstract class Styler {
 
   private String decimalPattern;
 
-  private HashMap<Integer, AxisAlignment> yAxisAlignmentMap = new HashMap<Integer, AxisAlignment>();
+  private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<Integer, YAxisPosition>();
 
-  
   void setAllStyles() {
 
     // Chart Style ///////////////////////////////
@@ -681,12 +680,20 @@ public abstract class Styler {
     return decimalPattern;
   }
 
-  public AxisAlignment getYAxisAlignment(int yIndex) {
-    return yAxisAlignmentMap.get(yIndex);
+  public YAxisPosition getYAxisAlignment(int yAxisGroup) {
+
+    return yAxisAlignmentMap.get(yAxisGroup);
   }
-  
-  public void setYAxisAlignment(int yIndex, AxisAlignment aa) {
-    yAxisAlignmentMap.put(yIndex, aa);
+
+  /**
+   * Set the YAxis group position.
+   *
+   * @param yAxisGroup
+   * @param yAxisPosition
+   */
+  public void setYAxisGroupPosition(int yAxisGroup, YAxisPosition yAxisPosition) {
+
+    yAxisAlignmentMap.put(yAxisGroup, yAxisPosition);
   }
-  
+
 }

@@ -24,6 +24,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
@@ -72,8 +73,12 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
     series.setMarker(SeriesMarkers.NONE);
     series = chart.addSeries("Gaussian 2", xData, y2Data);
     series.setMarker(SeriesMarkers.NONE);
+    series.setYAxisGroup(1); // default is group 0
     series = chart.addSeries("Difference", xData, y3Data);
     series.setMarker(SeriesMarkers.NONE);
+
+    chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideS);
 
     return chart;
   }

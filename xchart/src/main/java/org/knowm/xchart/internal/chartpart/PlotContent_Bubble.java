@@ -76,8 +76,8 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
         continue;
       }
 
-      double yMin = chart.getYAxis(series.getYIndex()).getMin();
-      double yMax = chart.getYAxis(series.getYIndex()).getMax();
+      double yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
+      double yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
       if (stylerBubble.isYAxisLogarithmic()) {
         yMin = Math.log10(yMin);
         yMax = Math.log10(yMax);
