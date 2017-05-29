@@ -38,7 +38,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * Demonstrates the following:
  * <ul>
  * <li>Millisecond Scale
- * <li>Series with no Markers
+ * <li>LegendPosition.OutsideS
+ * <li>Two YAxis Groups - both on left
  */
 public class DateChart01 implements ExampleChart<XYChart> {
 

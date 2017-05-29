@@ -28,9 +28,17 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 
 /**
  * Minute Scale
+ * * <p>
+ * Demonstrates the following:
+ * <ul>
+ * <li>Minute Scale
+ * <li>10^9 formatting
+ * <li>LegendPosition.InsideS
+ * <li>Two YAxis Groups - one on left, one on right
  */
 public class DateChart03 implements ExampleChart<XYChart> {
 
@@ -48,11 +56,14 @@ public class DateChart03 implements ExampleChart<XYChart> {
     XYChart chart = new XYChartBuilder().width(800).height(600).title("Minute Scale").build();
 
     // Customize Chart
-    chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideS);
+    chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
 
     // Series
-    List<Date> xData = new ArrayList<Date>();
-    List<Double> yData = new ArrayList<Double>();
+    List<Date> xData1 = new ArrayList<Date>();
+    List<Double> yData1 = new ArrayList<Double>();
+    List<Date> xData2 = new ArrayList<Date>();
+    List<Double> yData2 = new ArrayList<Double>();
 
     Random random = new Random();
 
@@ -66,11 +77,14 @@ public class DateChart03 implements ExampleChart<XYChart> {
       }
       // System.out.println(date.getTime());
       // System.out.println(date.toString());
-      xData.add(date);
-      yData.add(Math.random() * i * 1000000000);
+      xData1.add(date);
+      xData2.add(date);
+      yData1.add(Math.random() * i * 1000000000);
+      yData2.add(Math.random() * i * 10);
     }
 
-    chart.addSeries("blah", xData, yData);
+    chart.addSeries("series1", xData1, yData1).setYAxisGroup(1);
+    chart.addSeries("series2", xData2, yData2);
 
     return chart;
   }
