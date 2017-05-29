@@ -60,7 +60,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
 
     // horizontal
 
-    if (stylerAxesChart.isPlotGridHorizontalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {
+    if (stylerAxesChart.isPlotGridHorizontalLinesVisible()) {
 
       List<Double> yAxisTickLocations = chart.getYAxis().getAxisTickCalculator().getTickLocations();
       for (Double yAxisTickLocation : yAxisTickLocations) {
@@ -69,31 +69,51 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
         if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
 
           // draw lines
-          if (stylerAxesChart.isPlotGridHorizontalLinesVisible()) {
-
-            g.setColor(stylerAxesChart.getPlotGridLinesColor());
-            g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
-            Shape line = stylerAxesChart.getPlotGridLinesStroke().createStrokedShape(new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset));
-            // g.setStroke(axesChartStyler.getPlotGridLinesStroke());
-            // Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
-            g.draw(line);
-            // g.drawLine((int) bounds.getX(), (int) yOffset, (int) (bounds.getX() + bounds.getWidth()), (int) yOffset);
-          }
-
-          // tick marks
-          if (stylerAxesChart.isPlotTicksMarksVisible()) {
-
-            g.setColor(stylerAxesChart.getAxisTickMarksColor());
-            g.setStroke(stylerAxesChart.getAxisTickMarksStroke());
-            Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + stylerAxesChart.getAxisTickMarkLength(), yOffset);
-            g.draw(line);
-            line = new Line2D.Double(bounds.getX() + bounds.getWidth(), yOffset, bounds.getX() + bounds.getWidth() - stylerAxesChart.getAxisTickMarkLength(), yOffset);
-            g.draw(line);
-          }
+          g.setColor(stylerAxesChart.getPlotGridLinesColor());
+          g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
+          Shape line = stylerAxesChart.getPlotGridLinesStroke().createStrokedShape(new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset));
+          // g.setStroke(axesChartStyler.getPlotGridLinesStroke());
+          // Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + bounds.getWidth(), yOffset);
+          g.draw(line);
+          // g.drawLine((int) bounds.getX(), (int) yOffset, (int) (bounds.getX() + bounds.getWidth()), (int) yOffset);
         }
       }
     }
 
+    // horizontal tick marks
+    if (stylerAxesChart.isPlotTicksMarksVisible()) {
+      
+      // draw left side
+      List<Double> yAxisTickLocations = chart.getAxisPair().getLeftMainYAxis().getAxisTickCalculator().getTickLocations();
+      for (Double yAxisTickLocation : yAxisTickLocations) {
+        double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
+        
+        if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
+          
+          // tick marks           
+          g.setColor(stylerAxesChart.getAxisTickMarksColor());
+          g.setStroke(stylerAxesChart.getAxisTickMarksStroke());
+          Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() + stylerAxesChart.getAxisTickMarkLength(), yOffset);
+          g.draw(line);
+        }
+      }
+      
+      // draw right side
+      yAxisTickLocations = chart.getAxisPair().getRightMainYAxis().getAxisTickCalculator().getTickLocations();
+      for (Double yAxisTickLocation : yAxisTickLocations) {
+        double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
+        
+        if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
+          
+          // tick marks           
+          g.setColor(stylerAxesChart.getAxisTickMarksColor());
+          g.setStroke(stylerAxesChart.getAxisTickMarksStroke());
+          Shape line = new Line2D.Double(bounds.getX() + bounds.getWidth(), yOffset, bounds.getX() + bounds.getWidth() - stylerAxesChart.getAxisTickMarkLength(), yOffset);
+          g.draw(line);
+        }
+      }
+    }
+    
     // vertical
 
     if (stylerAxesChart.isPlotGridVerticalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {

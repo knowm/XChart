@@ -28,6 +28,7 @@ import java.util.Map;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * @author timmolter
@@ -82,7 +83,8 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 //    }
 
     // legend draw position
-
+    double height = bounds.getHeight();
+    
     switch (chart.getStyler().getLegendPosition()) {
       case OutsideE:
         xOffset = chart.getWidth() - bounds.getWidth() - chart.getStyler().getChartPadding();
@@ -114,15 +116,16 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
         break;
       case OutsideS:
         xOffset = (chart.getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
-        yOffset = chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+        yOffset = chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN + chart.getStyler().getLegendPadding();
+        height = bounds.getHeight() - chart.getStyler().getLegendPadding() * 2;
         break;
 
       default:
         break;
     }
-
+    
     // draw legend box background and border
-    Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
+    Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
     g.setColor(chart.getStyler().getLegendBackgroundColor());
     g.fill(rect);
     g.setStroke(SOLID_STROKE);
@@ -192,7 +195,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     // Legend Box
     double width = legendContentWidth + 2 * chart.getStyler().getLegendPadding();
-    double height = legendContentHeight + chart.getStyler().getLegendPadding();
+    double height = legendContentHeight + chart.getStyler().getLegendPadding() + (chart.getStyler().getLegendPosition() == LegendPosition.OutsideS ? chart.getStyler().getLegendPadding() * 2 : 0);
 
     return new Rectangle2D.Double(Double.NaN, Double.NaN, width, height); // Double.NaN indicates not sure yet.
   }
