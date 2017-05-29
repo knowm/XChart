@@ -29,6 +29,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
@@ -55,14 +56,16 @@ public class DateChart01 implements ExampleChart<XYChart> {
     XYChart chart = new XYChartBuilder().width(800).height(600).title("Millisecond Scale").build();
 
     // Customize Chart
-    chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
 
     // Series
     Random random = new Random();
 
     // generate data
-    List<Date> xData = new ArrayList<Date>();
-    List<Double> yData = new ArrayList<Double>();
+    List<Date> xData1 = new ArrayList<Date>();
+    List<Double> yData1 = new ArrayList<Double>();
+    List<Date> xData2 = new ArrayList<Date>();
+    List<Double> yData2 = new ArrayList<Double>();
 
     DateFormat sdf = new SimpleDateFormat("HH:mm:ss.S");
     Date date = null;
@@ -73,15 +76,17 @@ public class DateChart01 implements ExampleChart<XYChart> {
       } catch (ParseException e) {
         e.printStackTrace();
       }
-      // System.out.println(date.getTime());
-      // System.out.println(date.toString());
-      xData.add(date);
-      yData.add(Math.random() * i);
+      xData1.add(date);
+      xData2.add(date);
+      yData1.add(Math.random() * i);
+      yData2.add(Math.random() * i * 100);
     }
 
-    XYSeries series = chart.addSeries("blah", xData, yData);
+    XYSeries series = chart.addSeries("series 1", xData1, yData1);
     series.setMarker(SeriesMarkers.NONE);
+    chart.addSeries("series 2", xData2, yData2).setMarker(SeriesMarkers.NONE).setYAxisGroup(1);
 
     return chart;
   }
+
 }
