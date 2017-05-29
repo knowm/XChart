@@ -40,6 +40,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
   private final Axis<AxesChartStyler, AxesChartSeries> xAxis;
   private final Axis<AxesChartStyler, AxesChartSeries> yAxis;
   private final TreeMap<Integer, Axis<AxesChartStyler, AxesChartSeries>> yAxisMap;
+  private Axis<AxesChartStyler, AxesChartSeries> leftMainYAxis;
+  private Axis<AxesChartStyler, AxesChartSeries> rightMainYAxis;
 
   private final Rectangle2D.Double leftYAxisBounds;
   private final Rectangle2D.Double rightYAxisBounds;
@@ -67,6 +69,9 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
     prepareForPaint();
 
+    leftMainYAxis = null;
+    rightMainYAxis = null;
+    
     AxesChartStyler styler = chart.getStyler();
 
     final int chartPadding = styler.getChartPadding();
@@ -83,6 +88,11 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       if (styler.getYAxisAlignment(e.getKey()) == YAxisPosition.Right) {
         continue;
       }
+      if (e.getKey() == 0) {
+        
+        //draw main axis group rightmost
+        continue;
+      }
       ya.preparePaint();
       Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) ya.getBounds();
       // add padding before axis
@@ -92,7 +102,22 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       leftStart += paddingBetweenAxes + width + tickMargin;
       leftYAxisBounds.width += width;
       leftCount++;
+      leftMainYAxis = ya;
     }
+    
+    if (styler.getYAxisAlignment(0) != YAxisPosition.Right) {
+      yAxis.preparePaint();
+      Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
+      // add padding before axis
+      bounds.x = leftStart;
+      yAxis.paint(g);
+      double width = bounds.getWidth();
+      leftStart += paddingBetweenAxes + width + tickMargin;
+      leftYAxisBounds.width += width;
+      leftCount++;
+      leftMainYAxis = yAxis;
+    }
+    
     if (leftCount > 1) {
       leftYAxisBounds.width += (leftCount - 1) * paddingBetweenAxes;
     }
@@ -121,6 +146,11 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       if (styler.getYAxisAlignment(e.getKey()) != YAxisPosition.Right) {
         continue;
       }
+      if (e.getKey() == 0) {
+        
+        //draw main axis group leftmost
+        continue;
+      }
       ya.preparePaint();
       Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) ya.getBounds();
       double aproxWidth = bounds.getWidth();
@@ -134,7 +164,32 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
       rightEnd -= paddingBetweenAxes + aproxWidth + tickMargin;
       rightCount++;
+      rightMainYAxis = ya;
     }
+    
+    if (styler.getYAxisAlignment(0) == YAxisPosition.Right) {
+      yAxis.preparePaint();
+      Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
+      double aproxWidth = bounds.getWidth();
+      double xOffset = rightEnd - aproxWidth;
+      bounds.x = xOffset;
+      rightYAxisBounds.x = xOffset;
+      yAxis.paint(g);
+      // double width = bounds.getWidth();
+      // we already draw the axis, so actual width is not necessary
+      rightYAxisBounds.width += aproxWidth;
+
+      rightEnd -= paddingBetweenAxes + aproxWidth + tickMargin;
+      rightCount++;
+      rightMainYAxis = yAxis;
+    }
+    if(leftMainYAxis == null) {
+      leftMainYAxis = yAxis;
+    }
+    if(rightMainYAxis == null) {
+      rightMainYAxis = yAxis;
+    }
+    
     if (rightCount > 1) {
       rightYAxisBounds.width += (rightCount - 1) * paddingBetweenAxes;
     }
@@ -413,5 +468,15 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
   public Rectangle2D.Double getRightYAxisBounds() {
 
     return rightYAxisBounds;
+  }
+  
+  public Axis<AxesChartStyler, AxesChartSeries> getLeftMainYAxis() {
+
+    return leftMainYAxis;
+  }
+  
+  public Axis<AxesChartStyler, AxesChartSeries> getRightMainYAxis() {
+
+    return rightMainYAxis;
   }
 }
