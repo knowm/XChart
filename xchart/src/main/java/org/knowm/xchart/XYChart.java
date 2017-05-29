@@ -88,7 +88,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
-    setYAxisGroupTitle(0, chartBuilder.yAxisTitle);
+    setYAxisTitle(chartBuilder.yAxisTitle);
   }
 
   /**

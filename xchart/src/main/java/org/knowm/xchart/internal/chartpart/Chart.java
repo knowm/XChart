@@ -46,6 +46,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private int height;
   private String title = "";
   private String xAxisTitle = "";
+  private String yAxisTitle = "";
   private HashMap<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
 
   /**
@@ -149,9 +150,23 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.xAxisTitle = xAxisTitle;
   }
 
+  public String getYAxisTitle() {
+
+    return yAxisTitle;
+  }
+  
+  public void setYAxisTitle(String yAxisTitle) {
+
+    this.yAxisTitle = yAxisTitle;
+  }
+  
   public String getYAxisGroupTitle(int yAxisGroup) {
 
-    return yAxisGroupTitleMap.get(yAxisGroup);
+    String title = yAxisGroupTitleMap.get(yAxisGroup);
+    if (title == null) {
+      return yAxisTitle;
+    }
+    return title;
   }
 
   public void setYAxisGroupTitle(int yAxisGroup, String yAxisTitle) {
