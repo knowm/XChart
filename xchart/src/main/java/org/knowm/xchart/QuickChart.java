@@ -77,7 +77,7 @@ public final class QuickChart {
     // Customize Chart
     chart.setTitle(chartTitle);
     chart.setXAxisTitle(xTitle);
-    chart.setYAxisGroupTitle(0, yTitle);
+    chart.setYAxisTitle(yTitle);
 
     // Series
     for (int i = 0; i < yData.length; i++) {
@@ -112,7 +112,7 @@ public final class QuickChart {
     // Customize Chart
     chart.setTitle(chartTitle);
     chart.setXAxisTitle(xTitle);
-    chart.setYAxisGroupTitle(0, yTitle);
+    chart.setYAxisTitle(yTitle);
 
     XYSeries series = chart.addSeries(seriesName, xData, yData);
     series.setMarker(SeriesMarkers.NONE);

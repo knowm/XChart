@@ -88,7 +88,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
-    setYAxisGroupTitle(0, chartBuilder.yAxisTitle);
+    setYAxisTitle(chartBuilder.yAxisTitle);
   }
 
   /**
