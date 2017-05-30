@@ -90,7 +90,7 @@ public class Utils {
     }
     return generatedData;
   }
-  
+
   public static void printBounds(String name, Rectangle2D bounds) {
     System.out.printf("%-20s: [x=%6.2f, y=%6.2f, w=%6.2f, h=%6.2f] [%6.2f - %6.2f] %n", name, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), bounds.getX(), bounds.getMaxX());
   }

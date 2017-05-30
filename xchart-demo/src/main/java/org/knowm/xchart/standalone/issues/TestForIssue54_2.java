@@ -24,8 +24,8 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.Styler.YAxisPosition;
 import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /**
  * Create a Chart matrix
@@ -47,10 +47,9 @@ public class TestForIssue54_2 {
     chart.getStyler().setYAxisGroupPosition(0, YAxisPosition.Right);
     chart.setYAxisGroupTitle(1, "sin(x)");
 
+    new SwingWrapper<Chart>(chart).displayChart();
 
-    new SwingWrapper<Chart>(chart).  displayChart();
-
-}
+  }
 
   static Chart getLineChart() {
 
@@ -79,7 +78,5 @@ public class TestForIssue54_2 {
     chart.addSeries("y=cos(x)", xData2, yData2);
     return chart;
   }
-
-
 
 }

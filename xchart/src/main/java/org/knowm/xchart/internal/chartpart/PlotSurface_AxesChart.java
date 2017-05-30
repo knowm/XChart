@@ -82,14 +82,14 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
 
     // horizontal tick marks
     if (stylerAxesChart.isPlotTicksMarksVisible()) {
-      
+
       // draw left side
       List<Double> yAxisTickLocations = chart.getAxisPair().getLeftMainYAxis().getAxisTickCalculator().getTickLocations();
       for (Double yAxisTickLocation : yAxisTickLocations) {
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
-        
+
         if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
-          
+
           // tick marks           
           g.setColor(stylerAxesChart.getAxisTickMarksColor());
           g.setStroke(stylerAxesChart.getAxisTickMarksStroke());
@@ -97,14 +97,14 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
           g.draw(line);
         }
       }
-      
+
       // draw right side
       yAxisTickLocations = chart.getAxisPair().getRightMainYAxis().getAxisTickCalculator().getTickLocations();
       for (Double yAxisTickLocation : yAxisTickLocations) {
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
-        
+
         if (yOffset > bounds.getY() && yOffset < bounds.getY() + bounds.getHeight()) {
-          
+
           // tick marks           
           g.setColor(stylerAxesChart.getAxisTickMarksColor());
           g.setStroke(stylerAxesChart.getAxisTickMarksStroke());
@@ -113,7 +113,7 @@ public class PlotSurface_AxesChart<ST extends Styler, S extends Series> extends 
         }
       }
     }
-    
+
     // vertical
 
     if (stylerAxesChart.isPlotGridVerticalLinesVisible() || stylerAxesChart.isPlotTicksMarksVisible()) {

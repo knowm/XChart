@@ -87,7 +87,7 @@ public class TestForIssue54_1 {
       chart.getStyler().setYAxisGroupPosition(2, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
-    
+
     {
       Chart chart = getCaregoryChart();
       chart.setTitle("Default axis");
@@ -101,7 +101,7 @@ public class TestForIssue54_1 {
       chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
-    
+
     {
       Chart chart = getCategoryLineChart();
       chart.setTitle("Default axis");
@@ -117,7 +117,7 @@ public class TestForIssue54_1 {
       chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
-    
+
     {
       Chart chart = getBubleChart();
       chart.setTitle("Default axis");
@@ -130,7 +130,7 @@ public class TestForIssue54_1 {
       series.setYAxisGroup(1);
       charts.add(chart);
     }
-    
+
     // Chart chart = charts.get(3);
     // charts.clear();
     // charts.add(chart);
@@ -141,37 +141,36 @@ public class TestForIssue54_1 {
       charts.add(chart);
     }
 
-    
     new SwingWrapper<Chart>(charts).displayChartMatrix();
   }
-  
+
   static Chart getLineChart() {
-	    XYChart chart = new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart = new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
-	    // Customize Chart
-	    chart.getStyler().setToolTipsEnabled(true);
-	    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-	    // generates sine data
-	    int size = 30;
-	    List<Integer> xData = new ArrayList<Integer>();
-	    List<Double> yData = new ArrayList<Double>();
-	    List<Integer> xData2 = new ArrayList<Integer>();
-	    List<Double> yData2 = new ArrayList<Double>();
-	    for (int i = 0; i <= size; i++) {
-	      double radians = (Math.PI / (size / 2) * i);
-	      int x = i - size / 2;
-	      xData.add(x);
-	      yData.add(-1 * Math.sin(radians));
-	      xData2.add(x);
-	      yData2.add(-10 * Math.cos(radians));
-	    }
+    // Customize Chart
+    chart.getStyler().setToolTipsEnabled(true);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    // generates sine data
+    int size = 30;
+    List<Integer> xData = new ArrayList<Integer>();
+    List<Double> yData = new ArrayList<Double>();
+    List<Integer> xData2 = new ArrayList<Integer>();
+    List<Double> yData2 = new ArrayList<Double>();
+    for (int i = 0; i <= size; i++) {
+      double radians = (Math.PI / (size / 2) * i);
+      int x = i - size / 2;
+      xData.add(x);
+      yData.add(-1 * Math.sin(radians));
+      xData2.add(x);
+      yData2.add(-10 * Math.cos(radians));
+    }
 
-	    // Series
-	    chart.addSeries("y=sin(x)", xData, yData);
-	    chart.addSeries("y=cos(x)", xData2, yData2);
-	    return chart;
+    // Series
+    chart.addSeries("y=sin(x)", xData, yData);
+    chart.addSeries("y=cos(x)", xData2, yData2);
+    return chart;
   }
-  
+
   static Chart getAreaChart() {
 
     // Create Chart
@@ -188,8 +187,8 @@ public class TestForIssue54_1 {
     chart.getStyler().setToolTipsEnabled(true);
 
     // Series
-    chart.addSeries("a", new double[]{0, 3, 6, 9, 12}, new double[] {-1,  5,   9,  6,  5});
-    chart.addSeries("b", new double[]{1, 4, 7, 10, 13}, new double[]{-10,  50, 90,  60, 50});
+    chart.addSeries("a", new double[]{0, 3, 6, 9, 12}, new double[]{-1, 5, 9, 6, 5});
+    chart.addSeries("b", new double[]{1, 4, 7, 10, 13}, new double[]{-10, 50, 90, 60, 50});
     chart.addSeries("c", new double[]{2, 5, 8, 11, 14}, new double[]{-100, 500, 900, 600, 500});
 
     return chart;
@@ -232,7 +231,7 @@ public class TestForIssue54_1 {
     }
     return data;
   }
-  
+
   static CategoryChart getCategoryLineChart() {
 
     // Create Chart
@@ -245,20 +244,19 @@ public class TestForIssue54_1 {
     chart.getStyler().setAvailableSpaceFill(0);
     chart.getStyler().setOverlapped(true);
     chart.getStyler().setToolTipsEnabled(true);
-    
 
     // Declare data
     List<String> xAxisKeys = Arrays.asList("release-0.5", "release-0.6", "release-0.7", "release-0.8", "release-0.9");
     String[] seriesNames = new String[]{"a", "b", "c", "d"};
-    
+
     Integer[][] dataPerSeries = new Integer[][]{
-      {5, 20, 15, 25, 35},
-      {10, 40, 30, 50, 70},
-      {20, 80, 60, 100, 140},
-      {45, 121, 151, 231, 381},
-      
-      };
-    
+        {5, 20, 15, 25, 35},
+        {10, 40, 30, 50, 70},
+        {20, 80, 60, 100, 140},
+        {45, 121, 151, 231, 381},
+
+    };
+
     // Series
     for (int i = 0; i < seriesNames.length; i++) {
       chart.addSeries(seriesNames[i], xAxisKeys, Arrays.asList(dataPerSeries[i]));
@@ -287,5 +285,5 @@ public class TestForIssue54_1 {
 
     return chart;
   }
-  
+
 }

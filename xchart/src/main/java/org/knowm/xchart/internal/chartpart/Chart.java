@@ -154,12 +154,12 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return yAxisTitle;
   }
-  
+
   public void setYAxisTitle(String yAxisTitle) {
 
     this.yAxisTitle = yAxisTitle;
   }
-  
+
   public String getYAxisGroupTitle(int yAxisGroup) {
 
     String title = yAxisGroupTitleMap.get(yAxisGroup);

@@ -25,6 +25,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
@@ -36,6 +37,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * <li>Series data as a Set
  * <li>Setting marker size
  * <li>Formatting of negative numbers with large magnitude but small differences
+ * <li>YAxis position on Right
  */
 public class ScatterChart01 implements ExampleChart<XYChart> {
 
@@ -57,7 +59,7 @@ public class ScatterChart01 implements ExampleChart<XYChart> {
     chart.getStyler().setChartTitleVisible(false);
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
     chart.getStyler().setMarkerSize(16);
-
+    chart.getStyler().setYAxisGroupPosition(0, Styler.YAxisPosition.Right);
     // Series
     List<Double> xData = new LinkedList<Double>();
     List<Double> yData = new LinkedList<Double>();

@@ -71,7 +71,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
     leftMainYAxis = null;
     rightMainYAxis = null;
-    
+
     AxesChartStyler styler = chart.getStyler();
 
     final int chartPadding = styler.getChartPadding();
@@ -89,7 +89,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
         continue;
       }
       if (e.getKey() == 0) {
-        
+
         //draw main axis group rightmost
         continue;
       }
@@ -104,7 +104,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       leftCount++;
       leftMainYAxis = ya;
     }
-    
+
     if (styler.getYAxisAlignment(0) != YAxisPosition.Right) {
       yAxis.preparePaint();
       Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
@@ -117,7 +117,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       leftCount++;
       leftMainYAxis = yAxis;
     }
-    
+
     if (leftCount > 1) {
       leftYAxisBounds.width += (leftCount - 1) * paddingBetweenAxes;
     }
@@ -147,7 +147,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
         continue;
       }
       if (e.getKey() == 0) {
-        
+
         //draw main axis group leftmost
         continue;
       }
@@ -166,7 +166,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       rightCount++;
       rightMainYAxis = ya;
     }
-    
+
     if (styler.getYAxisAlignment(0) == YAxisPosition.Right) {
       yAxis.preparePaint();
       Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
@@ -183,13 +183,13 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       rightCount++;
       rightMainYAxis = yAxis;
     }
-    if(leftMainYAxis == null) {
+    if (leftMainYAxis == null) {
       leftMainYAxis = yAxis;
     }
-    if(rightMainYAxis == null) {
+    if (rightMainYAxis == null) {
       rightMainYAxis = yAxis;
     }
-    
+
     if (rightCount > 1) {
       rightYAxisBounds.width += (rightCount - 1) * paddingBetweenAxes;
     }
@@ -469,12 +469,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
     return rightYAxisBounds;
   }
-  
+
   public Axis<AxesChartStyler, AxesChartSeries> getLeftMainYAxis() {
 
     return leftMainYAxis;
   }
-  
+
   public Axis<AxesChartStyler, AxesChartSeries> getRightMainYAxis() {
 
     return rightMainYAxis;

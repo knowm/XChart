@@ -84,7 +84,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     // legend draw position
     double height = bounds.getHeight();
-    
+
     switch (chart.getStyler().getLegendPosition()) {
       case OutsideE:
         xOffset = chart.getWidth() - bounds.getWidth() - chart.getStyler().getChartPadding();
@@ -123,7 +123,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       default:
         break;
     }
-    
+
     // draw legend box background and border
     Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
     g.setColor(chart.getStyler().getLegendBackgroundColor());
