@@ -104,7 +104,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
   /**
    * The panel for chart
    */
-  private XChartPanel chartPanel;
+  protected XChartPanel chartPanel;
 
   /**
    * real-time chart example

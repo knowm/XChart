@@ -696,4 +696,8 @@ public abstract class Styler {
     yAxisAlignmentMap.put(yAxisGroup, yAxisPosition);
   }
 
+  public Theme getTheme() {
+
+    return theme;
+  }
 }
