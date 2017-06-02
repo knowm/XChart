@@ -81,7 +81,7 @@ public class ChartStylePanel extends JPanel {
     static HashMap<Class, TableCellEditor> editorMap;
     static Class[] assignableClasses = { Theme.class, BasicStroke.class, Marker.class, TimeZone.class };
     static {
-      editorMap = new HashMap<>();
+      editorMap = new HashMap<Class, TableCellEditor>();
       {
         JComboBox comboBox = new JComboBox(new Boolean[] { Boolean.TRUE, Boolean.FALSE });
         TableCellEditor cellEditor = new DefaultCellEditor(comboBox);
@@ -501,7 +501,7 @@ public class ChartStylePanel extends JPanel {
     chartPanel.repaint();
   }
 
-  static HashSet<String> skipSet = new HashSet<>(Arrays.asList("class",
+  static HashSet<String> skipSet = new HashSet<String>(Arrays.asList("class",
       // chart
       "styler", "toolTips", "height", "width", "seriesMap", "YAxisGroupTitle",
       // series
@@ -511,7 +511,7 @@ public class ChartStylePanel extends JPanel {
   public static ArrayList<EditableProperty> getProperties(ChartStylePanel csp, Chart chart) {
 
     if (chart == null) {
-      return new ArrayList<>();
+      return new ArrayList<EditableProperty>();
     }
     ArrayList<EditableProperty> list = getObjectProperties(csp, chart, "chart.", skipSet);
     ArrayList<EditableProperty> list2 = getObjectProperties(csp, chart.getStyler(), "styler.", skipSet);
@@ -519,7 +519,7 @@ public class ChartStylePanel extends JPanel {
 
     Map<String, Series> seriesMap = chart.getSeriesMap();
     int ind = 0;
-    TreeSet<Integer> seriesIndSet = new TreeSet<>();
+    TreeSet<Integer> seriesIndSet = new TreeSet<Integer>();
     for (Entry<String, Series> e : seriesMap.entrySet()) {
       Series series = e.getValue();
       list2 = getObjectProperties(csp, series, "series[" + e.getKey() + "].", skipSet);
@@ -531,13 +531,13 @@ public class ChartStylePanel extends JPanel {
 
     try {
       MethodDescriptor[] methodDescriptors = Introspector.getBeanInfo(chart.getClass()).getMethodDescriptors();
-      HashMap<String, Method> chartMethodMap = new HashMap<>();
+      HashMap<String, Method> chartMethodMap = new HashMap<String, Method>();
       for (MethodDescriptor methodDescriptor : methodDescriptors) {
         chartMethodMap.put(methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
       }
 
       methodDescriptors = Introspector.getBeanInfo(chart.getStyler().getClass()).getMethodDescriptors();
-      HashMap<String, Method> stylerMethodMap = new HashMap<>();
+      HashMap<String, Method> stylerMethodMap = new HashMap<String, Method>();
       for (MethodDescriptor methodDescriptor : methodDescriptors) {
         stylerMethodMap.put(methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
       }
@@ -591,7 +591,7 @@ public class ChartStylePanel extends JPanel {
   public static ArrayList<EditableProperty> getObjectProperties(ChartStylePanel csp, Object obj, String prefix,
       Set<String> skipSet) {
 
-    ArrayList<EditableProperty> list = new ArrayList<>();
+    ArrayList<EditableProperty> list = new ArrayList<EditableProperty>();
     try {
       BeanInfo info = Introspector.getBeanInfo(obj.getClass());
       PropertyDescriptor[] propertyDescriptors = info.getPropertyDescriptors();
@@ -604,7 +604,7 @@ public class ChartStylePanel extends JPanel {
       });
 
       MethodDescriptor[] methodDescriptors = info.getMethodDescriptors();
-      HashMap<String, Method> methodMap = new HashMap<>();
+      HashMap<String, Method> methodMap = new HashMap<String, Method>();
       for (MethodDescriptor methodDescriptor : methodDescriptors) {
         methodMap.put(methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
       }
