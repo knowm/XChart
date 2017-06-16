@@ -543,14 +543,14 @@ public class ChartStylePanel extends JPanel {
       }
 
       // Skipping property (no read method): styler.YAxisAlignment null
-      // chart.getStyler().getYAxisAlignment(yAxisGroup)
+      // chart.getStyler().getYAxisGroupPosistion(yAxisGroup)
       // chart.getStyler().setYAxisGroupPosition(yAxisGroup)
 
       for (Integer i : seriesIndSet) {
         EditableProperty styleEditor = new EditableProperty(csp, "chart.YAxisGroupTitle[" + i + "]", chart,
             chartMethodMap.get("getyaxisgrouptitle"), chartMethodMap.get("setyaxisgrouptitle"), i);
         list.add(styleEditor);
-        Method readMethod = stylerMethodMap.get("getyaxisalignment");
+        Method readMethod = stylerMethodMap.get("getyaxisgroupposition");
         styleEditor = new EditableProperty(csp, "chart.YAxisGroupPosition[" + i + "]", chart.getStyler(), readMethod,
             stylerMethodMap.get("setyaxisgroupposition"), i);
         list.add(styleEditor);

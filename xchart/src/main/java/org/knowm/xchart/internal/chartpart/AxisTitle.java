@@ -73,7 +73,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
         // ///////////////////////////////////////////////
 
-        boolean onRight = chart.getStyler().getYAxisAlignment(yAxis.getYIndex()) == YAxisPosition.Right;
+        boolean onRight = chart.getStyler().getYAxisGroupPosistion(yAxis.getYIndex()) == YAxisPosition.Right;
         int xOffset;
         if (onRight) {
           xOffset = (int) (yAxis.getAxisTick().getBounds().getX() + yAxis.getAxisTick().getBounds().getWidth() + nonRotatedRectangle.getHeight());

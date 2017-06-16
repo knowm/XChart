@@ -85,7 +85,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
     for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
       Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
-      if (styler.getYAxisAlignment(e.getKey()) == YAxisPosition.Right) {
+      if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
         continue;
       }
       if (e.getKey() == 0) {
@@ -105,7 +105,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       leftMainYAxis = ya;
     }
 
-    if (styler.getYAxisAlignment(0) != YAxisPosition.Right) {
+    if (styler.getYAxisGroupPosistion(0) != YAxisPosition.Right) {
       yAxis.preparePaint();
       Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
       // add padding before axis
@@ -143,7 +143,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     // traverse reverse
     for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.descendingMap().entrySet()) {
       Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
-      if (styler.getYAxisAlignment(e.getKey()) != YAxisPosition.Right) {
+      if (styler.getYAxisGroupPosistion(e.getKey()) != YAxisPosition.Right) {
         continue;
       }
       if (e.getKey() == 0) {
@@ -167,7 +167,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       rightMainYAxis = ya;
     }
 
-    if (styler.getYAxisAlignment(0) == YAxisPosition.Right) {
+    if (styler.getYAxisGroupPosistion(0) == YAxisPosition.Right) {
       yAxis.preparePaint();
       Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
       double aproxWidth = bounds.getWidth();
@@ -212,14 +212,14 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 //    Utils.printBounds("left Y axis", leftYAxisBounds);
 //    for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
 //      Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
-//      if (styler.getYAxisAlignment(e.getKey()) != YAxisPosition.Right) {
+//      if (styler.getYAxisGroupPosistion(e.getKey()) != YAxisPosition.Right) {
 //        Utils.printBounds(" y axis " + e.getKey(), ya.getBounds());
 //      }
 //    }
 //    Utils.printBounds("right Y axis", rightYAxisBounds);
 //    for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
 //      Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
-//      if (styler.getYAxisAlignment(e.getKey()) == YAxisPosition.Right) {
+//      if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
 //        Utils.printBounds(" y axis " + e.getKey(), ya.getBounds());
 //      }
 //    }

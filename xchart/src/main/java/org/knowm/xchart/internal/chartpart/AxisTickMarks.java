@@ -61,7 +61,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
 
       int axisTickMarkLength = styler.getAxisTickMarkLength();
 
-      boolean onRight = styler.getYAxisAlignment(yAxis.getYIndex()) == YAxisPosition.Right;
+      boolean onRight = styler.getYAxisGroupPosistion(yAxis.getYIndex()) == YAxisPosition.Right;
 
       Rectangle2D yAxisBounds = yAxis.getBounds();
       Rectangle2D axisTickLabelBounds = yAxis.getAxisTick().getAxisTickLabels().getBounds();

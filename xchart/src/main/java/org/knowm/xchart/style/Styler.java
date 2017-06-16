@@ -680,7 +680,7 @@ public abstract class Styler {
     return decimalPattern;
   }
 
-  public YAxisPosition getYAxisAlignment(int yAxisGroup) {
+  public YAxisPosition getYAxisGroupPosistion(int yAxisGroup) {
 
     return yAxisAlignmentMap.get(yAxisGroup);
   }

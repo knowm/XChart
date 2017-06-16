@@ -255,7 +255,7 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       /////////////////////////
 
       // fill in Axis with sub-components
-      boolean onRight = stylerAxesChart.getYAxisAlignment(yIndex) == YAxisPosition.Right;
+      boolean onRight = stylerAxesChart.getYAxisGroupPosistion(yIndex) == YAxisPosition.Right;
       if (onRight) {
         axisTick.paint(g);
         axisTitle.paint(g);

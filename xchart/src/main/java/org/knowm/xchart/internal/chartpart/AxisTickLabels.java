@@ -64,7 +64,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
 
     if (direction == Axis.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
 
-      boolean onRight = styler.getYAxisAlignment(yAxis.getYIndex()) == YAxisPosition.Right;
+      boolean onRight = styler.getYAxisGroupPosistion(yAxis.getYIndex()) == YAxisPosition.Right;
 
       double xOffset;
       if (onRight) {
