@@ -771,11 +771,11 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public TextAlignment getxAxisLabelAlignmentVertical() {
+  public TextAlignment getXAxisLabelAlignmentVertical() {
     return xAxisLabelAlignmentVertical;
   }
 
-  public void setxAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
+  public void setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
     this.xAxisLabelAlignmentVertical = xAxisLabelAlignmentVertical;
   }
 }
