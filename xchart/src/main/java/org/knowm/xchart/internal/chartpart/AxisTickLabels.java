@@ -190,13 +190,13 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
           int tickLabelY = tickLabelBounds.getBounds().height;
           int yAlignmentOffset;
           switch (styler.getxAxisLabelAlignmentVertical()) {
-            case Left:
+            case Right:
               yAlignmentOffset = maxTickLabelY - tickLabelY;
               break;
             case Centre:
               yAlignmentOffset = (maxTickLabelY - tickLabelY) / 2;
               break;
-            case Right:
+            case Left:
             default:
               yAlignmentOffset = 0;
           }
