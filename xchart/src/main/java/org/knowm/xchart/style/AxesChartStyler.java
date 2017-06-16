@@ -52,6 +52,7 @@ public abstract class AxesChartStyler extends Styler {
   private Double yAxisMin;
   private Double yAxisMax;
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
+  private TextAlignment xAxisLabelAlignmentVertical = TextAlignment.Centre;
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
   private int xAxisLabelRotation = 0;
 
@@ -768,5 +769,13 @@ public abstract class AxesChartStyler extends Styler {
 
     this.yAxisDecimalPattern = yAxisDecimalPattern;
     return this;
+  }
+
+  public TextAlignment getXAxisLabelAlignmentVertical() {
+    return xAxisLabelAlignmentVertical;
+  }
+
+  public void setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
+    this.xAxisLabelAlignmentVertical = xAxisLabelAlignmentVertical;
   }
 }
