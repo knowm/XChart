@@ -183,7 +183,6 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
-            g.setColor(series.getFillColor());
             double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
 
             if (path == null) {
@@ -259,6 +258,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
       }
 
       // close any open path for area charts
+      g.setColor(series.getFillColor());
       closePath(g, path, previousX, getBounds(), yTopMargin);
     }
   }

@@ -190,7 +190,6 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
             double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
 
-            g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
             Shape line = new Line2D.Double(xOffset, yBottomOfArea, xOffset, yOffset);
             g.draw(line);
@@ -255,6 +254,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
       }
 
       // close any open path for area charts
+      g.setColor(series.getFillColor());
       closePath(g, path, previousX, getBounds(), yTopMargin);
     }
   }
