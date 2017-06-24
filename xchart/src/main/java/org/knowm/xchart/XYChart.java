@@ -118,6 +118,18 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   }
 
   /**
+   * Add a series for a X-Y type chart using using double arrays
+   *
+   * @param seriesName
+   * @param yData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public XYSeries addSeries(String seriesName, double[] yData) {
+
+    return addSeries(seriesName, null, yData, null);
+  }
+
+  /**
    * Add a series for a X-Y type chart using using double arrays with error bars
    *
    * @param seriesName
@@ -132,16 +144,67 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   }
 
   /**
-   * Add a series for a X-Y type chart using using int arrays
+   * Add a series for a X-Y type chart using using float arrays
    *
    * @param seriesName
    * @param xData the X-Axis data
    * @param xData the Y-Axis data
    * @return A Series object that you can set properties on
    */
+  public XYSeries addSeries(String seriesName, float[] xData, float[] yData) {
+
+    return addSeries(seriesName, xData, yData, null);
+  }
+
+  /**
+   * Add a series for a X-Y type chart using using float arrays
+   *
+   * @param seriesName
+   * @param yData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public XYSeries addSeries(String seriesName, float[] yData) {
+
+    return addSeries(seriesName, null, yData, null);
+  }
+
+  /**
+   * Add a series for a X-Y type chart using using float arrays with error bars
+   *
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
+   * @param errorBars the error bar data
+   * @return A Series object that you can set properties on
+   */
+  public XYSeries addSeries(String seriesName, float[] xData, float[] yData, float[] errorBars) {
+
+    return addSeries(seriesName, Utils.getNumberListFromFloatArray(xData), Utils.getNumberListFromFloatArray(yData), Utils.getNumberListFromFloatArray(errorBars));
+  }
+
+  /**
+   * Add a series for a X-Y type chart using using int arrays
+   *
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param yData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
   public XYSeries addSeries(String seriesName, int[] xData, int[] yData) {
 
     return addSeries(seriesName, xData, yData, null);
+  }
+
+  /**
+   * Add a series for a X-Y type chart using using int arrays
+   *
+   * @param seriesName
+   * @param yData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public XYSeries addSeries(String seriesName, int[] yData) {
+
+    return addSeries(seriesName, null, yData, null);
   }
 
   /**

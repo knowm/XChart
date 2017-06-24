@@ -68,6 +68,20 @@ public class Utils {
     return dataNumber;
   }
 
+  public static List<Float> getNumberListFromFloatArray(float[] data) {
+
+    if (data == null) {
+      return null;
+    }
+
+    List<Float> dataNumber;
+    dataNumber = new ArrayList<Float>();
+    for (float d : data) {
+      dataNumber.add(d);
+    }
+    return dataNumber;
+  }
+
   public static List<Double> getNumberListFromIntArray(int[] data) {
 
     if (data == null) {
