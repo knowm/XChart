@@ -220,7 +220,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
     if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 
-      File theFileToSave = fileChooser.getSelectedFile();
+      File theFileToSave = fileChooser.getCurrentDirectory();
       try {
         CSVExporter.writeCSVColumns((XYChart) chart, theFileToSave.getCanonicalPath() + File.separatorChar);
       } catch (IOException e) {
