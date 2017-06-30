@@ -17,6 +17,7 @@
 package org.knowm.xchart;
 
 import java.awt.GridLayout;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,21 +100,27 @@ public class SwingWrapper<T extends Chart> {
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    try {
+      javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
 
-      @Override
-      public void run() {
+        @Override
+        public void run() {
 
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        XChartPanel<T> chartPanel = new XChartPanel<T>(charts.get(0));
-        chartPanels.add(chartPanel);
-        frame.add(chartPanel);
+          frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+          XChartPanel<T> chartPanel = new XChartPanel<T>(charts.get(0));
+          chartPanels.add(chartPanel);
+          frame.add(chartPanel);
 
-        // Display the window.
-        frame.pack();
-        frame.setVisible(true);
-      }
-    });
+          // Display the window.
+          frame.pack();
+          frame.setVisible(true);
+        }
+      });
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
 
     return frame;
   }
