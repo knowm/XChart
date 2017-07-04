@@ -109,6 +109,7 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 
 * [x] No *required* additional dependencies
 * [x] ~182KB Jar
+* [x] Multiple Y-Axis charts
 * [x] Line charts
 * [x] Scatter charts
 * [x] Area charts
@@ -274,7 +275,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.3.1</version>
+        <version>3.4.0</version>
     </dependency>
 ```
 
@@ -290,7 +291,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.4.0-SNAPSHOT</version>
+      <version>3.4.1-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -301,7 +302,7 @@ Snapshots can be manually downloaded from Sonatype: [https://oss.sonatype.org/co
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "3.3.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.4.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
 ## Building
