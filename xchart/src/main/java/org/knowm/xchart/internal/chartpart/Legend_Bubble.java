@@ -18,6 +18,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
@@ -53,6 +54,9 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
     double startx = xOffset + chart.getStyler().getLegendPadding();
     double starty = yOffset + chart.getStyler().getLegendPadding();
 
+    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
     Map<String, NoMarkersSeries> map = chart.getSeriesMap();
     for (NoMarkersSeries series : map.values()) {
 
@@ -79,6 +83,7 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
       paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
       starty += legendEntryHeight + chart.getStyler().getLegendPadding();
     }
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   @Override

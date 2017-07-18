@@ -118,6 +118,8 @@ public abstract class Styler {
   private Font annotationsFont;
   boolean hasAnnotations = false; // set by subclass
 
+  private boolean antiAlias = true;
+
   private String decimalPattern;
 
   private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<Integer, YAxisPosition>();
@@ -699,5 +701,15 @@ public abstract class Styler {
   public Theme getTheme() {
 
     return theme;
+  }
+
+  public boolean getAntiAlias() {
+
+    return antiAlias;
+  }
+
+  public void setAntiAlias(boolean newVal) {
+
+    antiAlias = newVal;
   }
 }

@@ -18,6 +18,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
@@ -50,6 +51,9 @@ public class ChartTitle implements ChartPart {
     if (!chart.getStyler().isChartTitleVisible() || chart.getTitle().length() == 0) {
       return;
     }
+
+    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
     // create rectangle first for sizing
     FontRenderContext frc = g.getFontRenderContext();
@@ -93,6 +97,7 @@ public class ChartTitle implements ChartPart {
     // g.setColor(Color.blue);
     // g.draw(bounds);
 
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   /**

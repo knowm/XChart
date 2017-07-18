@@ -81,7 +81,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected void paintBackground(Graphics2D g) {
 
     // paint chart main background
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); // global rendering hint
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, styler.getAntiAlias() ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF); // global rendering hint
     g.setColor(styler.getChartBackgroundColor());
     Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
     g.fill(rect);
