@@ -66,6 +66,8 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
     double xMin = chart.getXAxis().getMin();
     double xMax = chart.getXAxis().getMax();
 
+    Line2D.Double line = new Line2D.Double();
+
     // logarithmic
     if (xyStyler.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
@@ -172,7 +174,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
             if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
               g.setColor(series.getLineColor());
               g.setStroke(series.getLineStyle());
-              Shape line = new Line2D.Double(previousX, previousY, xOffset, yOffset);
+              line.setLine(previousX, previousY, xOffset, yOffset);
               g.draw(line);
             }
           }
@@ -243,11 +245,11 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           double bottomEBOffset = getBounds().getY() + bottomEBTransform;
 
           // Draw it
-          Shape line = new Line2D.Double(xOffset, topEBOffset, xOffset, bottomEBOffset);
+          line.setLine(xOffset, topEBOffset, xOffset, bottomEBOffset);
           g.draw(line);
-          line = new Line2D.Double(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
+          line.setLine(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
           g.draw(line);
-          line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
+          line.setLine(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
 
