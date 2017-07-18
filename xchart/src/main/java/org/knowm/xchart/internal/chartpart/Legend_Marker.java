@@ -18,6 +18,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -57,6 +58,9 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
     // Draw legend content inside legend box
     double startx = xOffset + chart.getStyler().getLegendPadding();
     double starty = yOffset + chart.getStyler().getLegendPadding();
+
+    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
     Map<String, MarkersSeries> map = chart.getSeriesMap();
     for (MarkersSeries series : map.values()) {
@@ -140,6 +144,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
       }
       starty += legendEntryHeight + chart.getStyler().getLegendPadding();
     }
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   @Override

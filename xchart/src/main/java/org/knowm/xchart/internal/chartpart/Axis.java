@@ -17,6 +17,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
@@ -249,6 +250,9 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
   @Override
   public void paint(Graphics2D g) {
 
+    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
 
@@ -284,6 +288,8 @@ public class Axis<ST extends AxesChartStyler, S extends Series> implements Chart
       axisTitle.paint(g);
       axisTick.paint(g);
     }
+
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   /**
