@@ -46,7 +46,6 @@ public class Plot_Category<ST extends AxesChartStyler, S extends Series> extends
   public void paint(Graphics2D g) {
 
     if (CategorySeriesRenderStyle.Bar.equals(stylerCategory.getDefaultSeriesRenderStyle()) || CategorySeriesRenderStyle.Stick.equals(stylerCategory.getDefaultSeriesRenderStyle())) {
-
       this.plotContent = new PlotContent_Category_Bar<CategoryStyler, CategorySeries>(chart);
     } else {
       this.plotContent = new PlotContent_Category_Line_Area_Scatter<CategoryStyler, CategorySeries>(chart);

@@ -32,6 +32,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.MarkersSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
@@ -101,6 +102,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
         //Draw outline
         //At the time of writing CategorySeriesRenderStyle.Bar does not support outlines. To reflect this any LineColor value should be ignored.
         if (!(series instanceof CategorySeries && ((CategorySeries) series).getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar)) {
+
           // paint outer box
           g.setColor(series.getLineColor());
 
@@ -142,7 +144,17 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
         double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
         paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
       }
-      starty += legendEntryHeight + chart.getStyler().getLegendPadding();
+
+      if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
+        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
+      } else {
+        int markerWidth = BOX_SIZE;
+        if (series.getLegendRenderType() == LegendRenderType.Line) {
+          markerWidth = chart.getStyler().getLegendSeriesLineLength();
+        }
+        float legendEntryWidth = getLegendEntryWidth(seriesTextBounds, markerWidth);
+        startx += legendEntryWidth + chart.getStyler().getLegendPadding();
+      }
     }
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }

@@ -42,6 +42,7 @@ public class Plot_AxesChart<ST extends Styler, S extends Series> extends Plot_ {
 
   @Override
   public void paint(Graphics2D g) {
+
     Rectangle2D yAxisBounds = chart.getAxisPair().getLeftYAxisBounds();
     Rectangle2D xAxisBounds = chart.getXAxis().getBounds();
 

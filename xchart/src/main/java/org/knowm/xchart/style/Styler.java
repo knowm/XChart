@@ -35,6 +35,11 @@ public abstract class Styler {
     OutsideE, InsideNW, InsideNE, InsideSE, InsideSW, InsideN, InsideS, OutsideS
   }
 
+  public enum LegendLayout {
+
+    Vertical, Horizontal
+  }
+
   public enum ChartTheme {
 
     XChart, GGPlot2, Matlab;
@@ -99,6 +104,7 @@ public abstract class Styler {
   private int legendPadding;
   private int legendSeriesLineLength;
   private LegendPosition legendPosition;
+  private LegendLayout legendLayout = LegendLayout.Vertical;
 
   // Chart Plot Area ///////////////////////////////
   private Color plotBackgroundColor;
@@ -118,10 +124,9 @@ public abstract class Styler {
   private Font annotationsFont;
   boolean hasAnnotations = false; // set by subclass
 
+  // Misc. ///////////////////////////////
   private boolean antiAlias = true;
-
   private String decimalPattern;
-
   private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<Integer, YAxisPosition>();
 
   void setAllStyles() {
@@ -492,6 +497,19 @@ public abstract class Styler {
   public LegendPosition getLegendPosition() {
 
     return legendPosition;
+  }
+
+  /**
+   * Set the legend layout
+   *
+   * @return
+   */
+  public LegendLayout getLegendLayout() {
+    return legendLayout;
+  }
+
+  public void setLegendLayout(LegendLayout legendLayout) {
+    this.legendLayout = legendLayout;
   }
 
   // Chart Plot ///////////////////////////////

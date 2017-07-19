@@ -58,6 +58,7 @@ public class DateChart01 implements ExampleChart<XYChart> {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
+    chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     // Series
     Random random = new Random();

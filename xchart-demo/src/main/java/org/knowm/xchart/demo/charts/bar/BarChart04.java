@@ -22,6 +22,7 @@ import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 
 /**
  * Missing Point in Series
@@ -34,6 +35,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <li>Missing point in series
  * <li>Manually setting y-axis min and max values
  * <li>Bar Chart Annotations
+ * <li>Horizontal Legend OutsideS
  */
 public class BarChart04 implements ExampleChart<CategoryChart> {
 
@@ -55,6 +57,8 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
     chart.getStyler().setYAxisMax(70.0);
     chart.getStyler().setHasAnnotations(true);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
+    chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     // Series
     chart.addSeries("female", Arrays.asList(10, 20, 30, 40, 50), Arrays.asList(50, 10, 20, 40, 35));

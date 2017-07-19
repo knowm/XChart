@@ -17,8 +17,8 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
@@ -26,6 +26,7 @@ import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * @author timmolter
@@ -73,7 +74,17 @@ public class Legend_Pie<ST extends AxesChartStyler, S extends Series> extends Le
       // paint series text
       final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
       paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
-      starty += legendEntryHeight + chart.getStyler().getLegendPadding();
+
+      if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
+        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
+      } else {
+        int markerWidth = BOX_SIZE;
+        if (series.getLegendRenderType() == RenderableSeries.LegendRenderType.Line) {
+          markerWidth = chart.getStyler().getLegendSeriesLineLength();
+        }
+        float legendEntryWidth = getLegendEntryWidth(seriesTextBounds, markerWidth);
+        startx += legendEntryWidth + chart.getStyler().getLegendPadding();
+      }
     }
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);

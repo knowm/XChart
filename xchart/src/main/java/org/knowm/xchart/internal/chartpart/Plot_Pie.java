@@ -61,7 +61,11 @@ public class Plot_Pie<ST extends Styler, S extends Series> extends Plot_ {
 
             - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE && chart.getStyler().isLegendVisible() ? chart.getStyler().getChartPadding() : 0);
 
-    double height = chart.getHeight() - chart.getChartTitle().getBounds().getHeight() - 2 * chart.getStyler().getChartPadding();
+    double height = chart.getHeight() - chart.getChartTitle().getBounds().getHeight()
+
+        - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideS ? chart.getLegend().getBounds().getHeight() : 0)
+
+        - 2 * chart.getStyler().getChartPadding();
 
     this.bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
 

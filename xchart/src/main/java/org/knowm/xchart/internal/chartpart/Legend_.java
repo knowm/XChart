@@ -28,7 +28,6 @@ import java.util.Map;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * @author timmolter
@@ -78,16 +77,19 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     // We call get bounds hint because sometimes the Axis object needs it to know it's bounds (if Legend is outside Plot). If it's null, we just need to calulate it before painting, because the paint
     // methods needs the bounds.
-//    if (bounds == null) { // No other part asked for the bounds yet. Probably because it's an "inside" legend location
-    bounds = getBoundsHint(); // Actually, the only information contained in this bounds is the width and height.
-//    }
+    //if (bounds == null) { // No other part asked for the bounds yet. Probably because it's an "inside" legend location
+    if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
+      bounds = getBoundsHintVertical(); // Actually, the only information contained in this bounds is the width and height.
+    } else {
+      bounds = getBoundsHintHorizontal(); // Actually, the only information contained in this bounds is the width and height.
+    }
 
     // legend draw position
     double height = bounds.getHeight();
 
     switch (chart.getStyler().getLegendPosition()) {
       case OutsideE:
-        xOffset = chart.getWidth() - bounds.getWidth() - chart.getStyler().getChartPadding();
+        xOffset = chart.getWidth() - bounds.getWidth() - LEGEND_MARGIN;
         yOffset = chart.getPlot().getBounds().getY() + (chart.getPlot().getBounds().getHeight() - bounds.getHeight()) / 2.0;
         break;
       case InsideNW:
@@ -115,9 +117,8 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
         yOffset = chart.getPlot().getBounds().getY() + chart.getPlot().getBounds().getHeight() - bounds.getHeight() - LEGEND_MARGIN;
         break;
       case OutsideS:
-        xOffset = (chart.getWidth() - bounds.getWidth()) / 2 + LEGEND_MARGIN;
-        yOffset = chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN + chart.getStyler().getLegendPadding();
-        height = bounds.getHeight() - chart.getStyler().getLegendPadding() * 2;
+        xOffset = chart.getPlot().getBounds().getX() + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2.0;
+        yOffset = chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN;
         break;
 
       default:
@@ -143,7 +144,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   /**
    * determine the width and height of the chart legend
    */
-  private Rectangle2D getBoundsHint() {
+  private Rectangle2D getBoundsHintVertical() {
 
     if (!chart.getStyler().isLegendVisible()) {
       return new Rectangle2D.Double(); // Constructs a new Rectangle2D, initialized to location (0, 0) and size (0, 0).
@@ -195,9 +196,62 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     // Legend Box
     double width = legendContentWidth + 2 * chart.getStyler().getLegendPadding();
-    double height = legendContentHeight + chart.getStyler().getLegendPadding() + (chart.getStyler().getLegendPosition() == LegendPosition.OutsideS ? chart.getStyler().getLegendPadding() * 2 : 0);
+    double height = legendContentHeight + chart.getStyler().getLegendPadding() ;
 
-    return new Rectangle2D.Double(Double.NaN, Double.NaN, width, height); // Double.NaN indicates not sure yet.
+    return new Rectangle2D.Double(0, 0, width, height); // 0 indicates not sure yet.
+  }
+
+  /**
+   * determine the width and height of the chart legend with horizontal layout
+   */
+  private Rectangle2D getBoundsHintHorizontal() {
+
+    if (!chart.getStyler().isLegendVisible()) {
+      return new Rectangle2D.Double(); // Constructs a new Rectangle2D, initialized to location (0, 0) and size (0, 0).
+    }
+
+    // determine legend text content max height
+    double legendTextContentMaxHeight = 0;
+
+    // determine total legend content width
+    double legendContentWidth = 0;
+
+    Map<String, S> map = chart.getSeriesMap();
+    for (Series series : map.values()) {
+
+      if (!series.isShowInLegend()) {
+        continue;
+      }
+      if (!series.isEnabled()) {
+        continue;
+      }
+
+      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
+
+      double legendEntryHeight = 0; // could be multi-line
+      double legendEntryMaxWidth = 0; // could be multi-line
+      for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
+        legendEntryHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
+        legendEntryMaxWidth = Math.max(legendEntryMaxWidth, entry.getValue().getWidth());
+      }
+
+      legendEntryHeight -= MULTI_LINE_SPACE; // subtract away the bottom MULTI_LINE_SPACE
+      legendTextContentMaxHeight = Math.max(legendEntryHeight, getSeriesLegendRenderGraphicHeight(series));
+
+      legendContentWidth += legendEntryMaxWidth + chart.getStyler().getLegendPadding();
+
+      if (series.getLegendRenderType() == LegendRenderType.Line) {
+        legendContentWidth = chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding() + legendContentWidth;
+      } else {
+        legendContentWidth = BOX_SIZE + chart.getStyler().getLegendPadding() + legendContentWidth;
+      }
+    }
+
+    // Legend Box
+    double width = legendContentWidth + chart.getStyler().getLegendPadding();
+    double height = legendTextContentMaxHeight + chart.getStyler().getLegendPadding() * 2;
+
+    return new Rectangle2D.Double(0, 0, width, height); // 0 indicates not sure yet.
   }
 
   /**
@@ -241,6 +295,16 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     return legendEntryHeight;
   }
 
+  float getLegendEntryWidth(Map<String, Rectangle2D> seriesTextBounds, int markerSize) {
+
+    float legendEntryWidth = 0;
+    for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
+      legendEntryWidth = Math.max(legendEntryWidth, (float) entry.getValue().getWidth());
+    }
+
+    return legendEntryWidth + markerSize + chart.getStyler().getLegendPadding();
+  }
+
   void paintSeriesText(Graphics2D g, Map<String, Rectangle2D> seriesTextBounds, int markerSize, double x, double starty) {
 
     g.setColor(chart.getStyler().getChartFontColor());
@@ -274,6 +338,10 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   @Override
   public Rectangle2D getBounds() {
 
-    return getBoundsHint();
+    if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
+      return getBoundsHintVertical(); // Actually, the only information contained in this bounds is the width and height.
+    } else {
+      return getBoundsHintHorizontal(); // Actually, the only information contained in this bounds is the width and height.
+    }
   }
 }

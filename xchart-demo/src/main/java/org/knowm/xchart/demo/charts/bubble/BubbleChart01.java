@@ -20,6 +20,7 @@ import org.knowm.xchart.BubbleChart;
 import org.knowm.xchart.BubbleChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 
 /**
  * Basic Bubble Chart
@@ -27,6 +28,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * Demonstrates the following:
  * <ul>
  * <li>Bubble Chart
+ * <li>Legend Inside North with Horizontal Layout
  */
 public class BubbleChart01 implements ExampleChart<BubbleChart> {
 
@@ -42,6 +44,8 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
 
     // Create Chart
     BubbleChart chart = new BubbleChartBuilder().width(800).height(600).title("BubbleChart01").xAxisTitle("X").yAxisTitle("Y").build();
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideN);
+    chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     // Customize Chart
 
