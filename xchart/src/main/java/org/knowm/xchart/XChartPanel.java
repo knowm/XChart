@@ -35,6 +35,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
@@ -54,7 +56,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
   private final T chart;
   private final Dimension preferredSize;
   private String saveAsString = "Save As...";
-  private String exportAsString = "Export As...";
+  private String exportAsString = "Export To...";
 
   /**
    * Constructor
@@ -160,6 +162,8 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
   private void showSaveAsDialog() {
 
+    UIManager.put("FileChooser.saveButtonText", "Save");
+    UIManager.put("FileChooser.fileNameLabelText", "File Name:");
     JFileChooser fileChooser = new JFileChooser();
     FileFilter pngFileFilter = new SuffixSaveFilter("png"); // default
     fileChooser.addChoosableFileFilter(pngFileFilter);
@@ -213,8 +217,31 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
   private void showExportAsDialog() {
 
+    UIManager.put("FileChooser.saveButtonText", "Export");
+    UIManager.put("FileChooser.fileNameLabelText", "Export To:");
+    UIManager.put("FileChooser.saveDialogFileNameLabel.textAndMnemonic", "Export To:");
+    UIDefaults defaults = UIManager.getDefaults();
+//    System.out.println(defaults.size()+ " properties");
+//    for (Enumeration e = defaults.keys();
+//         e.hasMoreElements();) {
+//      Object key = e.nextElement();
+//      System.out.println(key + " = " + defaults.get(key));
+//    }
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    fileChooser.setFileFilter(new FileFilter() {
+
+      @Override
+      public boolean accept(File f) {
+        return f.isDirectory();
+      }
+
+      @Override
+      public String getDescription() {
+        return "Any Directory";
+      }
+
+    });
     fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.setDialogTitle("Export");
 
@@ -362,4 +389,5 @@ public class XChartPanel<T extends Chart> extends JPanel {
       }
     }
   }
+
 }
