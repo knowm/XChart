@@ -291,7 +291,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.4.1-SNAPSHOT</version>
+      <version>3.5.0-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -321,7 +321,7 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.4.0" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-3.3.1.jar:xchart-3.3.1.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-3.4.0.jar:xchart-3.4.0.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 
