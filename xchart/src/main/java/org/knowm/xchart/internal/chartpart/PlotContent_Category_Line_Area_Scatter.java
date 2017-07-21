@@ -52,6 +52,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
 
   @Override
   public void doPaint(Graphics2D g) {
+
     // X-Axis
     double xTickSpace = categoryStyler.getPlotContentSize() * getBounds().getWidth();
     double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
@@ -59,15 +60,6 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
     // Y-Axis
     double yTickSpace = categoryStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
-
-//    double xMin = chart.getAxisPair().getXAxis().getMin();
-//    double xMax = chart.getAxisPair().getXAxis().getMax();
-
-    // logarithmic
-//    if (categoryStyler.isXAxisLogarithmic()) {
-//      xMin = Math.log10(xMin);
-//      xMax = Math.log10(xMax);
-//    }
 
     Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
 
@@ -129,7 +121,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
         // System.out.println(y);
         if (categoryStyler.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
-        } else {
+        }
+        else {
           y = yOrig;
         }
         // System.out.println(y);
@@ -213,7 +206,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           // set error bar style
           if (categoryStyler.isErrorBarsColorSeriesColor()) {
             g.setColor(series.getLineColor());
-          } else {
+          }
+          else {
             g.setColor(categoryStyler.getErrorBarsColor());
           }
           g.setStroke(errorBarStroke);
@@ -223,7 +217,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           if (categoryStyler.isYAxisLogarithmic()) {
             topValue = yOrig + eb;
             topValue = Math.log10(topValue);
-          } else {
+          }
+          else {
             topValue = y + eb;
           }
           double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
@@ -235,7 +230,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
             bottomValue = yOrig - eb;
             // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
-          } else {
+          }
+          else {
             bottomValue = y - eb;
           }
           double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
@@ -249,8 +245,7 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
-        chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
-            .format(y));
+        chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat().format(y));
       }
 
       // close any open path for area charts

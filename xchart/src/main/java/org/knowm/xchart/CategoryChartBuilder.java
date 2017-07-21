@@ -45,7 +45,7 @@ public class CategoryChartBuilder extends ChartBuilder<CategoryChartBuilder, Cat
   /**
    * return fully built Chart_Category
    *
-   * @return a Chart_Category
+   * @return a CategoryChart
    */
   @Override
   public CategoryChart build() {

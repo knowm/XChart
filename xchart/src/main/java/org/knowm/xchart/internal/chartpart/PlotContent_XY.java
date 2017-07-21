@@ -17,18 +17,13 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.XYStyler;
@@ -90,37 +85,26 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
       }
 
       // data points
-      Collection<?> xData = series.getXData();
-      Collection<? extends Number> yData = series.getYData();
+      double[] xData = series.getXData();
+      double[] yData = series.getYData();
 
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
-      Iterator<?> xItr = xData.iterator();
-      Iterator<? extends Number> yItr = yData.iterator();
-      Iterator<? extends Number> ebItr = null;
-      Collection<? extends Number> errorBars = series.getExtraValues();
-      if (errorBars != null) {
-        ebItr = errorBars.iterator();
-      }
+      double[] errorBars = series.getExtraValues();
       Path2D.Double path = null;
 
-      while (xItr.hasNext()) {
+      for (int i = 0; i < xData.length; i++) {
 
-        double x = 0.0;
-        if (chart.getXAxis().getAxisDataType() == AxisDataType.Number) {
-          x = ((Number) xItr.next()).doubleValue();
-        } else if (chart.getXAxis().getAxisDataType() == AxisDataType.Date) {
-          x = ((Date) xItr.next()).getTime();
-        }
+        double x = xData[i];
         // System.out.println(x);
         if (xyStyler.isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
         // System.out.println(x);
 
-        Number next = yItr.next();
-        if (next == null) {
+        double next = yData[i];
+        if (next == Double.NaN) {
 
           // for area charts
           closePath(g, path, previousX, getBounds(), yTopMargin);
@@ -131,7 +115,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
           continue;
         }
 
-        double yOrig = next.doubleValue();
+        double yOrig = yData[i];
 
         double y;
 
@@ -211,7 +195,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
         // paint error bars
         if (errorBars != null) {
 
-          double eb = ebItr.next().doubleValue();
+          double eb = errorBars[i];
 
           // set error bar style
           if (xyStyler.isErrorBarsColorSeriesColor()) {

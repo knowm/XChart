@@ -29,7 +29,9 @@ import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.MarkersSeries;
+import org.knowm.xchart.internal.series.AxesChartSeries;
+import org.knowm.xchart.internal.series.MarkersSeriesCategory;
+import org.knowm.xchart.internal.series.MarkersSeriesNumerical;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
@@ -63,8 +65,8 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    Map<String, MarkersSeries> map = chart.getSeriesMap();
-    for (MarkersSeries series : map.values()) {
+    Map<String, AxesChartSeries> map = chart.getSeriesMap();
+    for (AxesChartSeries series : map.values()) {
 
       if (!series.isShowInLegend()) {
         continue;
@@ -88,35 +90,47 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
         }
 
         // paint marker
-        if (series.getMarker() != null) {
-          g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, startx + chart.getStyler().getLegendSeriesLineLength() / 2.0, starty + legendEntryHeight / 2.0, axesChartStyler.getMarkerSize());
+
+        if (series instanceof MarkersSeriesNumerical) {
+
+          MarkersSeriesNumerical markersSeriesNumerical = (MarkersSeriesNumerical) series;
+
+          if (markersSeriesNumerical.getMarker() != null) {
+            g.setColor(markersSeriesNumerical.getMarkerColor());
+            markersSeriesNumerical.getMarker().paint(g, startx + chart.getStyler().getLegendSeriesLineLength() / 2.0, starty + legendEntryHeight / 2.0, axesChartStyler.getMarkerSize());
+          }
+
         }
-      } else { // bar/pie type series
+        else if (series instanceof MarkersSeriesCategory) {
+
+          MarkersSeriesCategory markersSeriesCategory = (MarkersSeriesCategory) series;
+          if (markersSeriesCategory.getMarker() != null) {
+            g.setColor(markersSeriesCategory.getMarkerColor());
+            markersSeriesCategory.getMarker().paint(g, startx + chart.getStyler().getLegendSeriesLineLength() / 2.0, starty + legendEntryHeight / 2.0, axesChartStyler.getMarkerSize());
+          }
+
+        }
+
+      }
+      else { // bar/pie type series
 
         // paint inner box
         Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
         g.setColor(series.getFillColor());
         g.fill(rectSmall);
 
-        //Draw outline
-        //At the time of writing CategorySeriesRenderStyle.Bar does not support outlines. To reflect this any LineColor value should be ignored.
+        // Draw outline
+        // At the time of writing CategorySeriesRenderStyle.Bar does not support outlines. To reflect this any LineColor value should be ignored.
         if (!(series instanceof CategorySeries && ((CategorySeries) series).getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar)) {
 
           // paint outer box
           g.setColor(series.getLineColor());
 
           // Only respect the existing stroke width up to BOX_OUTLINE_WIDTH, as the legend box is very small.
-          //Note the simplified conversion of line width from user space to device space.
+          // Note the simplified conversion of line width from user space to device space.
           BasicStroke existingLineStyle = series.getLineStyle();
-          BasicStroke newLineStyle = new BasicStroke(
-              existingLineStyle.getLineWidth() > BOX_OUTLINE_WIDTH * 0.5f ? BOX_OUTLINE_WIDTH * 0.5f : existingLineStyle.getLineWidth(),
-              existingLineStyle.getEndCap(),
-              existingLineStyle.getLineJoin(),
-              existingLineStyle.getMiterLimit(),
-              existingLineStyle.getDashArray(),
-              existingLineStyle.getDashPhase()
-          );
+          BasicStroke newLineStyle = new BasicStroke(existingLineStyle.getLineWidth() > BOX_OUTLINE_WIDTH * 0.5f ? BOX_OUTLINE_WIDTH * 0.5f : existingLineStyle.getLineWidth(), existingLineStyle
+              .getEndCap(), existingLineStyle.getLineJoin(), existingLineStyle.getMiterLimit(), existingLineStyle.getDashArray(), existingLineStyle.getDashPhase());
 
           g.setPaint(series.getLineColor());
           g.setStroke(newLineStyle);
@@ -139,7 +153,8 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
 
         double x = startx + chart.getStyler().getLegendSeriesLineLength() + chart.getStyler().getLegendPadding();
         paintSeriesText(g, seriesTextBounds, axesChartStyler.getMarkerSize(), x, starty);
-      } else { // bar/pie type series
+      }
+      else { // bar/pie type series
 
         double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
         paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
@@ -147,7 +162,8 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
 
       if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
         starty += legendEntryHeight + chart.getStyler().getLegendPadding();
-      } else {
+      }
+      else {
         int markerWidth = BOX_SIZE;
         if (series.getLegendRenderType() == LegendRenderType.Line) {
           markerWidth = chart.getStyler().getLegendSeriesLineLength();

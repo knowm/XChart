@@ -27,6 +27,12 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  */
 public abstract class Series {
 
+
+  public enum DataType {
+
+    Number, Date, String
+  }
+
   public abstract LegendRenderType getLegendRenderType();
 
   private final String name;

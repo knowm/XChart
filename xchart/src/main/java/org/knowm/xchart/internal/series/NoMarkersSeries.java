@@ -16,20 +16,13 @@
  */
 package org.knowm.xchart.internal.series;
 
-import java.util.List;
-
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
-
 /**
- * A Series containing X and Y data to be plotted on a Chart with X and Y Axes, values associated with each X-Y point, could be used for bubble sizes for example, but error bars, as the min and max
+ * A Series containing X and Y data to be plotted on a Chart with X and Y Axes, values associated with each X-Y point, could be used for bubble sizes for example, but no error bars, as the min and max
  * are calculated differently. No markers.
  *
  * @author timmolter
  */
-public abstract class NoMarkersSeries extends AxesChartSeries {
-
-  @Override
-  public abstract AxisDataType getAxesType(List<?> data);
+public abstract class NoMarkersSeries extends AxesChartSeriesNumerical {
 
   /**
    * Constructor
@@ -39,9 +32,9 @@ public abstract class NoMarkersSeries extends AxesChartSeries {
    * @param yData
    * @param extraValues
    */
-  protected NoMarkersSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues) {
+  protected NoMarkersSeries(String name, double[] xData, double[] yData, double[] extraValues, Series.DataType axisType) {
 
-    super(name, xData, yData);
+    super(name, xData, yData, axisType);
 
     this.extraValues = extraValues;
     calculateMinMax();
@@ -51,7 +44,7 @@ public abstract class NoMarkersSeries extends AxesChartSeries {
   protected void calculateMinMax() {
 
     // xData
-    double[] xMinMax = findMinMax(xData, xAxisType);
+    double[] xMinMax = findMinMax(xData, xAxisDataType);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
     // System.out.println(xMin);

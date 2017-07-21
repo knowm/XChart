@@ -77,7 +77,8 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
         int xOffset;
         if (onRight) {
           xOffset = (int) (yAxis.getAxisTick().getBounds().getX() + yAxis.getAxisTick().getBounds().getWidth() + nonRotatedRectangle.getHeight());
-        } else {
+        }
+        else {
           xOffset = (int) (yAxis.getBounds().getX() + nonRotatedRectangle.getHeight());
         }
 
@@ -102,10 +103,12 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
             nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
-      } else {
+      }
+      else {
         bounds = new Rectangle2D.Double(yAxis.getBounds().getX(), yAxis.getBounds().getY(), 0, yAxis.getBounds().getHeight());
       }
-    } else {
+    }
+    else {
 
       if (chart.getXAxisTitle() != null && !chart.getXAxisTitle().trim().equalsIgnoreCase("") && chart.getStyler().isXAxisTitleVisible()) {
 
@@ -130,7 +133,8 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
         // g.setColor(Color.blue);
         // g.draw(bounds);
 
-      } else {
+      }
+      else {
         bounds = new Rectangle2D.Double(chart.getXAxis().getBounds().getX(), chart.getXAxis().getBounds().getY() + chart.getXAxis().getBounds().getHeight(), chart.getXAxis().getBounds().getWidth(),
             0);
         // g.setColor(Color.blue);

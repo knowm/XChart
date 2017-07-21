@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -29,10 +28,7 @@ import org.knowm.xchart.style.markers.Marker;
  *
  * @author timmolter
  */
-public abstract class MarkersSeries extends AxesChartSeries {
-
-  @Override
-  public abstract AxisDataType getAxesType(List<?> data);
+public abstract class MarkersSeriesCategory extends AxesChartSeriesCategory {
 
   /**
    * Marker Style
@@ -52,9 +48,9 @@ public abstract class MarkersSeries extends AxesChartSeries {
    * @param yData
    * @param extraValues
    */
-  protected MarkersSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues) {
+  protected MarkersSeriesCategory(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues, DataType axisType) {
 
-    super(name, xData, yData);
+    super(name, xData, yData, axisType);
 
     this.extraValues = extraValues;
     calculateMinMax();
@@ -64,7 +60,7 @@ public abstract class MarkersSeries extends AxesChartSeries {
   protected void calculateMinMax() {
 
     // xData
-    double[] xMinMax = findMinMax(xData, xAxisType);
+    double[] xMinMax = findMinMax(xData, xAxisDataType);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
     // System.out.println(xMin);
@@ -74,7 +70,8 @@ public abstract class MarkersSeries extends AxesChartSeries {
     double[] yMinMax;
     if (extraValues == null) {
       yMinMax = findMinMax(yData, yAxisType);
-    } else {
+    }
+    else {
       yMinMax = findMinMaxWithErrorBars(yData, extraValues);
     }
     yMin = yMinMax[0];
@@ -106,7 +103,7 @@ public abstract class MarkersSeries extends AxesChartSeries {
         max = bigDecimal + eb;
       }
     }
-    return new double[]{min, max};
+    return new double[] { min, max };
   }
 
   /**
@@ -114,7 +111,7 @@ public abstract class MarkersSeries extends AxesChartSeries {
    *
    * @param marker
    */
-  public MarkersSeries setMarker(Marker marker) {
+  public MarkersSeriesCategory setMarker(Marker marker) {
 
     this.marker = marker;
     return this;
@@ -125,7 +122,7 @@ public abstract class MarkersSeries extends AxesChartSeries {
    *
    * @param color
    */
-  public MarkersSeries setMarkerColor(java.awt.Color color) {
+  public MarkersSeriesCategory setMarkerColor(java.awt.Color color) {
 
     this.markerColor = color;
     return this;

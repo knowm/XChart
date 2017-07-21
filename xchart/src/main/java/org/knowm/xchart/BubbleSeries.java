@@ -16,13 +16,9 @@
  */
 package org.knowm.xchart;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
+import org.knowm.xchart.internal.series.Series;
 
 /**
  * A Series containing X, Y and bubble size data to be plotted on a Chart
@@ -59,9 +55,9 @@ public class BubbleSeries extends org.knowm.xchart.internal.series.NoMarkersSeri
    * @param yData
    * @param bubbleSizes
    */
-  public BubbleSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> bubbleSizes) {
+  public BubbleSeries(String name, double[] xData, double[] yData, double[] bubbleSizes, Series.DataType axisType) {
 
-    super(name, xData, yData, bubbleSizes);
+    super(name, xData, yData, bubbleSizes, axisType);
   }
 
   public BubbleSeriesRenderStyle getBubbleSeriesRenderStyle() {
@@ -80,20 +76,4 @@ public class BubbleSeries extends org.knowm.xchart.internal.series.NoMarkersSeri
     return bubbleSeriesRenderStyle.getLegendRenderType();
   }
 
-  @Override
-  public AxisDataType getAxesType(List<?> data) {
-
-    AxisDataType axisType;
-
-    Iterator<?> itr = data.iterator();
-    Object dataPoint = itr.next();
-    if (dataPoint instanceof Number) {
-      axisType = AxisDataType.Number;
-    } else if (dataPoint instanceof Date) {
-      axisType = AxisDataType.Date;
-    } else {
-      throw new IllegalArgumentException("Series data must be either Number or Date type!!!");
-    }
-    return axisType;
-  }
 }

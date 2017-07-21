@@ -18,6 +18,8 @@ package org.knowm.xchart;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
+import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.CategoryStyler;
@@ -178,9 +181,10 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
 
-      series = new CategorySeries(seriesName, xData, yData, errorBars);
-    } else { // generate xData
-      series = new CategorySeries(seriesName, Utils.getGeneratedData(yData.size()), yData, errorBars);
+      series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
+    }
+    else { // generate xData
+      series = new CategorySeries(seriesName, Utils.getGeneratedDataAsList(yData.size()), yData, errorBars, getDataType(xData));
     }
 
     seriesMap.put(seriesName, series);
@@ -188,12 +192,34 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     return series;
   }
 
+  // TODO Abstract this
+  private DataType getDataType(List<?> data) {
+
+    DataType axisType;
+
+    Iterator<?> itr = data.iterator();
+    Object dataPoint = itr.next();
+    if (dataPoint instanceof Number) {
+      axisType = DataType.Number;
+    }
+    else if (dataPoint instanceof Date) {
+      axisType = DataType.Date;
+    }
+    else if (dataPoint instanceof String) {
+      axisType = DataType.String;
+    }
+    else {
+      throw new IllegalArgumentException("Series data must be either Number, Date or String type!!!");
+    }
+    return axisType;
+  }
+
   /**
    * Update a series by updating the X-Axis, Y-Axis and error bar data
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   * 1 and ending at the size of the new Y-Axis data list.
+   *          1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
@@ -212,7 +238,8 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         generatedXData.add(i);
       }
       series.replaceData(generatedXData, newYData, newErrorBarData);
-    } else {
+    }
+    else {
       series.replaceData(newXData, newYData, newErrorBarData);
     }
 
@@ -224,7 +251,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   * 1 and ending at the size of the new Y-Axis data list.
+   *          1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return

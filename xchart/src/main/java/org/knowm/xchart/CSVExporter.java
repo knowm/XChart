@@ -22,8 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * This class is used to export Chart data to a folder containing one or more CSV files. The parent folder's name is the title of the chart. Each
@@ -82,41 +80,24 @@ public class CSVExporter {
   }
 
   /**
-   * Joins a collection into an entire row of comma separated values.
+   * Joins a series into an entire row of comma separated values.
    *
-   * @param collection
+   * @param seriesData
    * @param separator
    * @return
    */
-  private static String join(Collection<?> collection, String separator) {
-
-    if (collection == null) {
-      return null;
-    }
-    Iterator<?> iterator = collection.iterator();
-    // handle null, zero and one elements before building a buffer
-    if (!iterator.hasNext()) {
-      return "";
-    }
-    Object first = iterator.next();
-    if (!iterator.hasNext()) {
-      return first == null ? "" : first.toString();
-    }
+  private static String join(double[] seriesData, String separator) {
 
     // two or more elements
     StringBuilder sb = new StringBuilder(256); // Java default is 16, probably too small
-    if (first != null) {
-      sb.append(first);
-    }
+      sb.append(seriesData[0]);
+    for (int i = 1; i < seriesData.length; i++) {
 
-    while (iterator.hasNext()) {
       if (separator != null) {
         sb.append(separator);
       }
-      Object obj = iterator.next();
-      if (obj != null) {
-        sb.append(obj);
-      }
+
+      sb.append(seriesData[i]);
     }
     return sb.toString();
   }
@@ -147,27 +128,17 @@ public class CSVExporter {
     try {
 
       out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
-      Collection<?> xData = series.getXData();
-      Collection<? extends Number> yData = series.getYData();
-      Collection<? extends Number> errorBarData = series.getExtraValues();
-      Iterator<?> itrx = xData.iterator();
-      Iterator<? extends Number> itry = yData.iterator();
-      Iterator<? extends Number> itrErrorBar = null;
-      if (errorBarData != null) {
-        itrErrorBar = errorBarData.iterator();
-      }
-      while (itrx.hasNext()) {
-        Number xDataPoint = (Number) itrx.next();
-        Number yDataPoint = itry.next();
-        Number errorBarValue = null;
-        if (itrErrorBar != null) {
-          errorBarValue = itrErrorBar.next();
-        }
+     double[] xData = series.getXData();
+      double[]  yData = series.getYData();
+      double[]  errorBarData = series.getExtraValues();
+      for (int i = 0; i <xData.length ; i++) {
+
+
         StringBuilder sb = new StringBuilder();
-        sb.append(xDataPoint).append(",");
-        sb.append(yDataPoint).append(",");
-        if (errorBarValue != null) {
-          sb.append(errorBarValue).append(",");
+        sb.append(xData[i]).append(",");
+        sb.append(yData[i]).append(",");
+        if (errorBarData != null) {
+          sb.append(errorBarData[i]).append(",");
         }
         sb.setLength(sb.length() - 1);
         sb.append(System.getProperty("line.separator"));

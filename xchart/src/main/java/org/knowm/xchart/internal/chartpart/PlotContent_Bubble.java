@@ -19,14 +19,10 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.knowm.xchart.BubbleSeries;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BubbleStyler;
@@ -84,43 +80,25 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
       }
 
       // data points
-      Collection<?> xData = series.getXData();
-      Collection<? extends Number> yData = series.getYData();
 
-//      double previousX = -Double.MAX_VALUE;
-//      double previousY = -Double.MAX_VALUE;
+      for (int i = 0; i <series.getXData().length ; i++) {
 
-      Iterator<?> xItr = xData.iterator();
-      Iterator<? extends Number> yItr = yData.iterator();
-      Iterator<? extends Number> bubbleItr = null;
-      Collection<? extends Number> bubbles = series.getExtraValues();
-      if (bubbles != null) {
-        bubbleItr = bubbles.iterator();
-      }
 
-      while (xItr.hasNext()) {
-
-        double x = 0.0;
-        if (chart.getXAxis().getAxisDataType() == AxisDataType.Number) {
-          x = ((Number) xItr.next()).doubleValue();
-        } else if (chart.getXAxis().getAxisDataType() == AxisDataType.Date) {
-          x = ((Date) xItr.next()).getTime();
-        }
+        double x = series.getXData()[i];
         // System.out.println(x);
         if (stylerBubble.isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
         // System.out.println(x);
 
-        Number next = yItr.next();
-        if (next == null) {
+        if (series.getYData()[i] == Double.NaN) {
 
 //          previousX = -Double.MAX_VALUE;
 //          previousY = -Double.MAX_VALUE;
           continue;
         }
 
-        double yOrig = next.doubleValue();
+        double yOrig = series.getYData()[i];
 
         double y;
 
@@ -157,9 +135,9 @@ public class PlotContent_Bubble<ST extends AxesChartStyler, S extends Series> ex
 //        previousY = yOffset;
 
         // paint bubbles
-        if (bubbles != null) {
+        if (series.getExtraValues() != null) {
 
-          double bubbleSize = bubbleItr.next().doubleValue();
+          double bubbleSize = series.getExtraValues()[i];
 
           // Draw it
           Shape bubble;

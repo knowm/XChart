@@ -16,21 +16,17 @@
  */
 package org.knowm.xchart;
 
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.MarkersSeries;
+import org.knowm.xchart.internal.series.MarkersSeriesCategory;
+import org.knowm.xchart.internal.series.Series;
 
 /**
  * A Series containing category data to be plotted on a Chart
- *
- * @author timmolter
  */
-public class CategorySeries extends MarkersSeries {
+public class CategorySeries extends MarkersSeriesCategory {
 
   public enum CategorySeriesRenderStyle implements RenderableSeries {
 
@@ -69,10 +65,11 @@ public class CategorySeries extends MarkersSeries {
    * @param xData
    * @param yData
    * @param errorBars
+   * @param axisType
    */
-  public CategorySeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public CategorySeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars, Series.DataType axisType) {
 
-    super(name, xData, yData, errorBars);
+    super(name, xData, yData, errorBars, axisType);
   }
 
   public CategorySeriesRenderStyle getChartCategorySeriesRenderStyle() {
@@ -92,22 +89,4 @@ public class CategorySeries extends MarkersSeries {
     return chartCategorySeriesRenderStyle.getLegendRenderType();
   }
 
-  @Override
-  public AxisDataType getAxesType(List<?> data) {
-
-    AxisDataType axisType;
-
-    Iterator<?> itr = data.iterator();
-    Object dataPoint = itr.next();
-    if (dataPoint instanceof Number) {
-      axisType = AxisDataType.Number;
-    } else if (dataPoint instanceof Date) {
-      axisType = AxisDataType.Date;
-    } else if (dataPoint instanceof String) {
-      axisType = AxisDataType.String;
-    } else {
-      throw new IllegalArgumentException("Series data must be either Number, Date or String type!!!");
-    }
-    return axisType;
-  }
 }

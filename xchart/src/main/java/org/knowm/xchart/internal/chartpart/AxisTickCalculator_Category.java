@@ -22,8 +22,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
@@ -42,14 +42,15 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
    * @param axisType
    * @param styler
    */
-  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, AxisDataType axisType, AxesChartStyler styler) {
+  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, Series.DataType axisType, AxesChartStyler
+      styler) {
 
     super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
 
     calculate(categories, axisType);
   }
 
-  private void calculate(List<?> categories, AxisDataType axisType) {
+  private void calculate(List<?> categories, Series.DataType axisType) {
 
     // tick space - a percentage of the working space available for ticks
     double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space
@@ -66,11 +67,11 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
     double firstPosition = gridStep / 2.0;
 
     // set up String formatters that may be encountered
-    if (axisType == AxisDataType.String) {
+    if (axisType == Series.DataType.String) {
       axisFormat = new StringFormatter();
-    } else if (axisType == AxisDataType.Number) {
+    } else if (axisType == Series.DataType.Number) {
       axisFormat = new NumberFormatter(styler, axisDirection, minValue, maxValue);
-    } else if (axisType == AxisDataType.Date) {
+    } else if (axisType == Series.DataType.Date) {
       if (styler.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
       }
@@ -82,11 +83,11 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
     int counter = 0;
 
     for (Object category : categories) {
-      if (axisType == AxisDataType.String) {
+      if (axisType == Series.DataType.String) {
         tickLabels.add(category.toString());
-      } else if (axisType == AxisDataType.Number) {
+      } else if (axisType == Series.DataType.Number) {
         tickLabels.add(axisFormat.format(new BigDecimal(category.toString()).doubleValue()));
-      } else if (axisType == AxisDataType.Date) {
+      } else if (axisType == Series.DataType.Date) {
         tickLabels.add(axisFormat.format((((Date) category).getTime())));
       }
 

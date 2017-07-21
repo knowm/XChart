@@ -19,12 +19,13 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.series.AxesChartSeries;
-import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -33,7 +34,7 @@ import org.knowm.xchart.style.Styler.YAxisPosition;
 /**
  * @author timmolter
  */
-public class AxisPair<ST extends AxesChartStyler, S extends Series> implements ChartPart {
+public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
   private final Chart<AxesChartStyler, AxesChartSeries> chart;
 
@@ -79,7 +80,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
     int tickMargin = (styler.isYAxisTicksVisible() ? (styler.getPlotMargin()) : 0);
     leftYAxisBounds.width = 0;
-    //draw left sided axises
+    // draw left sided axises
     int leftCount = 0;
     double leftStart = chartPadding;
 
@@ -90,7 +91,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       }
       if (e.getKey() == 0) {
 
-        //draw main axis group rightmost
+        // draw main axis group rightmost
         continue;
       }
       ya.preparePaint();
@@ -129,12 +130,11 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     if (styler.getLegendPosition() == LegendPosition.OutsideE && styler.isLegendVisible()) {
       legendWidth = chart.getLegend().getBounds().getWidth() + styler.getChartPadding();
     }
-    double rightEnd =
-        chart.getWidth()
+    double rightEnd = chart.getWidth()
 
-            - legendWidth
+        - legendWidth
 
-            - 1 * chartPadding;
+        - 1 * chartPadding;
 
     rightYAxisBounds.x = rightEnd;
 
@@ -148,7 +148,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       }
       if (e.getKey() == 0) {
 
-        //draw main axis group leftmost
+        // draw main axis group leftmost
         continue;
       }
       ya.preparePaint();
@@ -201,31 +201,32 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     leftYAxisBounds.y = bounds.y;
     leftYAxisBounds.height = bounds.height;
 
-    //rightYAxisBounds.x -= (styler.isYAxisTicksVisible() ? (styler.getPlotMargin()) : 0);
+    // rightYAxisBounds.x -= (styler.isYAxisTicksVisible() ? (styler.getPlotMargin()) : 0);
 
     rightYAxisBounds.y = bounds.y;
     rightYAxisBounds.height = bounds.height;
 
     xAxis.preparePaint();
     xAxis.paint(g);
-//    Utils.printBounds("x axis", xAxis.getBounds());
-//    Utils.printBounds("left Y axis", leftYAxisBounds);
-//    for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
-//      Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
-//      if (styler.getYAxisGroupPosistion(e.getKey()) != YAxisPosition.Right) {
-//        Utils.printBounds(" y axis " + e.getKey(), ya.getBounds());
-//      }
-//    }
-//    Utils.printBounds("right Y axis", rightYAxisBounds);
-//    for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
-//      Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
-//      if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
-//        Utils.printBounds(" y axis " + e.getKey(), ya.getBounds());
-//      }
-//    }
+    // Utils.printBounds("x axis", xAxis.getBounds());
+    // Utils.printBounds("left Y axis", leftYAxisBounds);
+    // for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
+    // Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
+    // if (styler.getYAxisGroupPosistion(e.getKey()) != YAxisPosition.Right) {
+    // Utils.printBounds(" y axis " + e.getKey(), ya.getBounds());
+    // }
+    // }
+    // Utils.printBounds("right Y axis", rightYAxisBounds);
+    // for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
+    // Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
+    // if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
+    // Utils.printBounds(" y axis " + e.getKey(), ya.getBounds());
+    // }
+    // }
   }
 
   private void prepareForPaint() {
+
     boolean mainYAxisUsed = false;
     if (chart.getSeriesMap() != null) {
       for (AxesChartSeries series : chart.getSeriesMap().values()) {
@@ -241,15 +242,15 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
     }
 
     // set the axis data types, making sure all are compatible
-    xAxis.setAxisDataType(null);
+    xAxis.setDataType(null);
     for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
-      ya.setAxisDataType(null);
+      ya.setDataType(null);
     }
     for (AxesChartSeries series : chart.getSeriesMap().values()) {
-      xAxis.setAxisDataType(series.getxAxisDataType());
-      getYAxis(series.getYAxisGroup()).setAxisDataType(series.getyAxisDataType());
+      xAxis.setDataType(series.getxAxisDataType());
+      getYAxis(series.getYAxisGroup()).setDataType(series.getyAxisDataType());
       if (!mainYAxisUsed) {
-        yAxis.setAxisDataType(series.getyAxisDataType());
+        yAxis.setDataType(series.getyAxisDataType());
       }
     }
 
@@ -265,7 +266,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
       for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
         ya.addMinMax(-1, 1);
       }
-    } else {
+    }
+    else {
       int disabledCount = 0; // maybe all are disabled, so we check this condition
       for (AxesChartSeries series : chart.getSeriesMap().values()) {
         // add min/max to axes
@@ -337,6 +339,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
    * Here we can add special case min max calculations and take care of manual min max settings.
    */
   private void overrideMinMaxForXAxis() {
+
     double overrideXAxisMinValue = xAxis.getMin();
     double overrideXAxisMaxValue = xAxis.getMax();
     // override min and maxValue if specified
@@ -366,17 +369,24 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
         // if stacked, we need to completely re-calculate min and max.
         if (categoryStyler.isStacked()) {
-          int numCategories = chart.getSeriesMap().values().iterator().next().getXData().size();
+
+          AxesChartSeriesCategory axesChartSeries = (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+          List<?> categories = (List<?>) axesChartSeries.getXData();
+
+          int numCategories = categories.size();
           double[] accumulatedStackOffsetPos = new double[numCategories];
           double[] accumulatedStackOffsetNeg = new double[numCategories];
+
           for (AxesChartSeries series : chart.getSeriesMap().values()) {
+
+            AxesChartSeriesCategory axesChartSeriesCategory = (AxesChartSeriesCategory) series;
 
             if (!series.isEnabled()) {
               continue;
             }
 
             int categoryCounter = 0;
-            Iterator<? extends Number> yItr = series.getYData().iterator();
+            Iterator<? extends Number> yItr = axesChartSeriesCategory.getYData().iterator();
             while (yItr.hasNext()) {
 
               Number next = yItr.next();
@@ -388,7 +398,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends Series> implements C
 
               if (next.doubleValue() > 0) {
                 accumulatedStackOffsetPos[categoryCounter] += next.doubleValue();
-              } else if (next.doubleValue() < 0) {
+              }
+              else if (next.doubleValue() < 0) {
                 accumulatedStackOffsetNeg[categoryCounter] += next.doubleValue();
               }
               categoryCounter++;

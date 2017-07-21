@@ -18,11 +18,6 @@ package org.knowm.xchart.internal.series;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes.
@@ -31,17 +26,10 @@ import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
  */
 public abstract class AxesChartSeries extends Series {
 
-  protected abstract AxisDataType getAxesType(List<?> data);
-
   protected abstract void calculateMinMax();
 
-  List<?> xData; // can be Number or Date or String
-  final AxisDataType xAxisType;
-
-  List<? extends Number> yData;
-  final AxisDataType yAxisType;
-
-  List<? extends Number> extraValues;
+  final DataType xAxisDataType;
+  final DataType yAxisType;
 
   /**
    * the minimum value of axis range
@@ -82,80 +70,13 @@ public abstract class AxesChartSeries extends Series {
    * Constructor
    *
    * @param name
-   * @param xData
-   * @param yData
+   * @param xAxisDataType
    */
-  AxesChartSeries(String name, List<?> xData, List<? extends Number> yData) {
+  AxesChartSeries(String name, DataType xAxisDataType) {
 
     super(name);
-
-    this.xData = xData;
-    this.xAxisType = getAxesType(xData);
-    this.yData = yData;
-    this.yAxisType = AxisDataType.Number;
-
-    calculateMinMax();
-  }
-
-  /**
-   * This is an internal method which shouldn't be called from client code. Use XYChart.updateXYSeries or CategoryChart.updateXYSeries instead!
-   *
-   * @param newXData
-   * @param newYData
-   * @param newExtraValues
-   */
-  public void replaceData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
-
-    // Sanity check
-    if (newExtraValues != null && newExtraValues.size() != newYData.size()) {
-      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
-    }
-    if (newXData.size() != newYData.size()) {
-      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-    }
-
-    xData = newXData;
-    yData = newYData;
-    extraValues = newExtraValues;
-    calculateMinMax();
-  }
-
-  /**
-   * Finds the min and max of a dataset
-   *
-   * @param data
-   * @return
-   */
-  double[] findMinMax(Collection<?> data, AxisDataType axisType) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (Object dataPoint : data) {
-
-      if (dataPoint == null) {
-        continue;
-      }
-
-      double value = 0.0;
-
-      if (axisType == AxisDataType.Number) {
-        value = ((Number) dataPoint).doubleValue();
-      } else if (axisType == AxisDataType.Date) {
-        Date date = (Date) dataPoint;
-        value = date.getTime();
-      } else if (axisType == AxisDataType.String) {
-        return new double[]{Double.NaN, Double.NaN};
-      }
-      if (value < min) {
-        min = value;
-      }
-      if (value > max) {
-        max = value;
-      }
-    }
-
-    return new double[]{min, max};
+    this.xAxisDataType = xAxisDataType;
+    yAxisType = DataType.Number;
   }
 
   /**
@@ -194,31 +115,6 @@ public abstract class AxesChartSeries extends Series {
     return this;
   }
 
-  public Collection<?> getXData() {
-
-    return xData;
-  }
-
-  public AxisDataType getxAxisDataType() {
-
-    return xAxisType;
-  }
-
-  public Collection<? extends Number> getYData() {
-
-    return yData;
-  }
-
-  public AxisDataType getyAxisDataType() {
-
-    return yAxisType;
-  }
-
-  public Collection<? extends Number> getExtraValues() {
-
-    return extraValues;
-  }
-
   public double getXMin() {
 
     return xMin;
@@ -252,5 +148,15 @@ public abstract class AxesChartSeries extends Series {
   public float getLineWidth() {
 
     return lineWidth;
+  }
+
+  public DataType getxAxisDataType() {
+
+    return xAxisDataType;
+  }
+
+  public DataType getyAxisDataType() {
+
+    return yAxisType;
   }
 }

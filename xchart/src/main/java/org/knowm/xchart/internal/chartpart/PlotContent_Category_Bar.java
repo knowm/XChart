@@ -25,7 +25,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -371,11 +370,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
 
           if (stylerCategory.hasAnnotations() && next != null) {
 
-            DecimalFormat twoPlaces = new DecimalFormat("#.#");
-            if (stylerCategory.getYAxisDecimalPattern() != null) {
-              twoPlaces = new DecimalFormat(stylerCategory.getYAxisDecimalPattern());
-            }
-            String numberAsString = twoPlaces.format(next);
+            String numberAsString = chart.getYAxisFormat().format(next);
 
             TextLayout textLayout = new TextLayout(numberAsString, stylerCategory.getAnnotationsFont(), new FontRenderContext(null, true, false));
             Rectangle2D annotationRectangle = textLayout.getBounds();

@@ -16,8 +16,8 @@
  */
 package org.knowm.xchart.internal;
 
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ import java.util.List;
 public class Utils {
 
   /**
-   * Constructor
+   * Private Constructor
    */
   private Utils() {
 
@@ -49,7 +49,8 @@ public class Utils {
 
     if (exponent > 0) {
       return Math.pow(base, exponent);
-    } else {
+    }
+    else {
       return 1.0 / Math.pow(base, -1 * exponent);
     }
   }
@@ -63,20 +64,6 @@ public class Utils {
     List<Double> dataNumber;
     dataNumber = new ArrayList<Double>();
     for (double d : data) {
-      dataNumber.add(d);
-    }
-    return dataNumber;
-  }
-
-  public static List<Float> getNumberListFromFloatArray(float[] data) {
-
-    if (data == null) {
-      return null;
-    }
-
-    List<Float> dataNumber;
-    dataNumber = new ArrayList<Float>();
-    for (float d : data) {
       dataNumber.add(d);
     }
     return dataNumber;
@@ -96,7 +83,7 @@ public class Utils {
     return dataNumber;
   }
 
-  public static List<Double> getGeneratedData(int length) {
+  public static List<Double> getGeneratedDataAsList(int length) {
 
     List<Double> generatedData = new ArrayList<Double>();
     for (int i = 1; i < length + 1; i++) {
@@ -105,8 +92,70 @@ public class Utils {
     return generatedData;
   }
 
-  public static void printBounds(String name, Rectangle2D bounds) {
-    System.out.printf("%-20s: [x=%6.2f, y=%6.2f, w=%6.2f, h=%6.2f] [%6.2f - %6.2f] %n", name, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), bounds.getX(), bounds.getMaxX());
+  public static double[] getDoubleArrayFromFloatArray(float[] data) {
+
+    if (data == null) {
+      return null;
+    }
+    double[] doubles = new double[data.length];
+
+    for (int i = 0; i < data.length; i++) {
+      doubles[i] = data[i];
+    }
+    return doubles;
   }
 
+  public static double[] getDoubleArrayFromIntArray(int[] data) {
+
+    if (data == null) {
+      return null;
+    }
+    double[] doubles = new double[data.length];
+
+    for (int i = 0; i < data.length; i++) {
+      doubles[i] = data[i];
+    }
+    return doubles;
+  }
+
+  public static double[] getDoubleArrayFromNumberList(List<?> data) {
+
+    if (data == null) {
+      return null;
+    }
+    double[] doubles = new double[data.size()];
+
+    for (int i = 0; i < data.size(); i++) {
+
+      if (data.get(i) == null) {
+        doubles[i] = Double.NaN;
+      }
+      else {
+        doubles[i] = ((Number) data.get(i)).doubleValue();
+      }
+    }
+    return doubles;
+  }
+
+  public static double[] getDoubleArrayFromDateList(List<?> data) {
+
+    if (data == null) {
+      return null;
+    }
+    double[] doubles = new double[data.size()];
+
+    for (int i = 0; i < data.size(); i++) {
+      doubles[i] = ((Date) data.get(i)).getTime();
+    }
+    return doubles;
+  }
+
+  public static double[] getGeneratedDataAsArray(int length) {
+
+    double[] generatedData = new double[length];
+    for (int i = 0; i < length; i++) {
+      generatedData[i] = ((double) i + 1);
+    }
+    return generatedData;
+  }
 }

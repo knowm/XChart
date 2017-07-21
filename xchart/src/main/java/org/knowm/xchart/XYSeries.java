@@ -16,21 +16,17 @@
  */
 package org.knowm.xchart;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.MarkersSeries;
+import org.knowm.xchart.internal.series.MarkersSeriesNumerical;
+import org.knowm.xchart.internal.series.Series;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
  *
  * @author timmolter
  */
-public class XYSeries extends MarkersSeries {
+public class XYSeries extends MarkersSeriesNumerical {
 
   public enum XYSeriesRenderStyle implements RenderableSeries {
 
@@ -64,9 +60,9 @@ public class XYSeries extends MarkersSeries {
    * @param yData
    * @param errorBars
    */
-  public XYSeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public XYSeries(String name, double[] xData, double[] yData, double[] errorBars, Series.DataType axisType) {
 
-    super(name, xData, yData, errorBars);
+    super(name, xData, yData, errorBars, axisType);
   }
 
   public XYSeriesRenderStyle getXYSeriesRenderStyle() {
@@ -86,20 +82,4 @@ public class XYSeries extends MarkersSeries {
     return xySeriesRenderStyle.getLegendRenderType();
   }
 
-  @Override
-  public AxisDataType getAxesType(List<?> data) {
-
-    AxisDataType axisType;
-
-    Iterator<?> itr = data.iterator();
-    Object dataPoint = itr.next();
-    if (dataPoint instanceof Number) {
-      axisType = AxisDataType.Number;
-    } else if (dataPoint instanceof Date) {
-      axisType = AxisDataType.Date;
-    } else {
-      throw new IllegalArgumentException("Series data must be either Number or Date type!!!");
-    }
-    return axisType;
-  }
 }
