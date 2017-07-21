@@ -16,40 +16,60 @@
  */
 package org.knowm.xchart;
 
-import java.util.List;
+import java.awt.BasicStroke;
+import java.awt.Color;
 
-import org.knowm.xchart.internal.chartpart.Axis.AxisDataType;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.MarkersSeries;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.markers.Marker;
 
 /**
  * A Series containing Radar data to be plotted on a Chart
  *
  * @author timmolter
  */
-public class RadarSeries extends MarkersSeries {
+public class RadarSeries extends Series {
+
+  /**
+   * Line Style
+   */
+  private BasicStroke stroke;
+
+  /**
+   * Line Color
+   */
+  private Color lineColor;
+
+  /**
+   * Line Width
+   */
+  private float lineWidth = -1.0f;
+
+  /**
+   * Marker
+   */
+  private Marker marker;
+
+  /**
+   * Marker Color
+   */
+  private Color markerColor;
 
   LegendRenderType legendRenderType;
 
-  protected double[] values;
-  protected String[] toolTips;
+  private double[] values;
+  private String[] toolTips;
 
   /**
-   * 
    * @param toolTips Adds custom tool tips for series. If tool tip is null, it is automatically calculated.
    */
-
   public RadarSeries(String name, double[] values, String[] toolTips) {
 
-    super(name, null, null, null);
+    super(name);
     this.values = values;
     this.toolTips = toolTips;
   }
-  
-  @Override
-  protected void calculateMinMax() {
-  }
-  
+
   public double[] getValues() {
 
     return values;
@@ -60,17 +80,11 @@ public class RadarSeries extends MarkersSeries {
     this.values = values;
   }
 
-  @Override
-  public AxisDataType getAxesType(List<?> data) {
-
-    return AxisDataType.Number;
-  }
-  
   public void setLegendRenderType(LegendRenderType legendRenderType) {
 
     this.legendRenderType = legendRenderType;
   }
-  
+
   @Override
   public LegendRenderType getLegendRenderType() {
 
@@ -81,5 +95,87 @@ public class RadarSeries extends MarkersSeries {
 
     return toolTips;
   }
-  
+
+  /**
+   * Set the line style of the series
+   *
+   * @param basicStroke
+   */
+  public RadarSeries setLineStyle(BasicStroke basicStroke) {
+
+    stroke = basicStroke;
+    if (this.lineWidth > 0.0f) {
+      stroke = new BasicStroke(lineWidth, this.stroke.getEndCap(), this.stroke.getLineJoin(), this.stroke.getMiterLimit(), this.stroke.getDashArray(), this.stroke.getDashPhase());
+    }
+    return this;
+  }
+
+  /**
+   * Set the line color of the series
+   *
+   * @param color
+   */
+  public RadarSeries setLineColor(java.awt.Color color) {
+
+    this.lineColor = color;
+    return this;
+  }
+
+  /**
+   * Set the line width of the series
+   *
+   * @param lineWidth
+   */
+  public RadarSeries setLineWidth(float lineWidth) {
+
+    this.lineWidth = lineWidth;
+    return this;
+  }
+
+  /**
+   * Sets the marker for the series
+   *
+   * @param marker
+   */
+  public RadarSeries setMarker(Marker marker) {
+
+    this.marker = marker;
+    return this;
+  }
+
+  /**
+   * Sets the marker color for the series
+   *
+   * @param color
+   */
+  public RadarSeries setMarkerColor(java.awt.Color color) {
+
+    this.markerColor = color;
+    return this;
+  }
+
+  public BasicStroke getLineStyle() {
+
+    return stroke;
+  }
+
+  public Color getLineColor() {
+
+    return lineColor;
+  }
+
+  public float getLineWidth() {
+
+    return lineWidth;
+  }
+
+  public Marker getMarker() {
+
+    return marker;
+  }
+
+  public Color getMarkerColor() {
+
+    return markerColor;
+  }
 }

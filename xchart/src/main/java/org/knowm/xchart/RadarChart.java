@@ -31,14 +31,15 @@ import org.knowm.xchart.style.Theme;
  * @author timmolter
  */
 public class RadarChart extends Chart<RadarStyler, RadarSeries> {
-  public enum RadarRenderStyle  {
+
+  public enum RadarRenderStyle {
     Polygon, Circle;
   }
-  
+
   private RadarRenderStyle radarRenderStyle = RadarRenderStyle.Polygon;
 
   protected String[] variableLabels;
-  
+
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
    *
@@ -96,15 +97,15 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
    * @return
    */
   public RadarSeries addSeries(String seriesName, double[] values) {
+
     return addSeries(seriesName, values, null);
   }
-  
+
   public RadarSeries addSeries(String seriesName, double[] values, String[] toolTips) {
 
- // Sanity checks
+    // Sanity checks
     sanityCheck(seriesName, values, toolTips);
 
-    
     RadarSeries series = new RadarSeries(seriesName, values, toolTips);
 
     seriesMap.put(seriesName, series);
@@ -112,13 +113,12 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     return series;
   }
 
-  
   private void sanityCheck(String seriesName, double[] values, String[] toolTips) {
 
     if (variableLabels == null) {
       throw new IllegalArgumentException("Variable labels cannot be null!!!");
     }
-    
+
     if (seriesMap.keySet().contains(seriesName)) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
     }
@@ -129,16 +129,16 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
       throw new IllegalArgumentException("Too few values!!!");
     }
     for (double d : values) {
-      if ( d < 0 || d > 1) {
+      if (d < 0 || d > 1) {
         throw new IllegalArgumentException("Values must be in [0, 1] range!!!");
       }
     }
-    
+
     if (toolTips != null && toolTips.length < variableLabels.length) {
       throw new IllegalArgumentException("Too few tool tips!!!");
     }
   }
-  
+
   @Override
   public void paint(Graphics2D g, int width, int height) {
 
@@ -187,20 +187,20 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 
     return variableLabels;
   }
-  
+
   public void setVariableLabels(String[] variableLabels) {
 
     this.variableLabels = variableLabels;
   }
-  
+
   public RadarRenderStyle getRadarRenderStyle() {
 
     return radarRenderStyle;
   }
-  
+
   public void setRadarRenderStyle(RadarRenderStyle radarRenderStyle) {
 
     this.radarRenderStyle = radarRenderStyle;
   }
-  
+
 }
