@@ -120,7 +120,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
   }
 
   /**
-   * Add a series for a X-Y type chart using using int arrays
+   * Add a series for a Category type chart using using int arrays
    *
    * @param seriesName
    * @param xData the X-Axis data
@@ -133,7 +133,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
   }
 
   /**
-   * Add a series for a X-Y type chart using using int arrays with error bars
+   * Add a series for a Category type chart using using int arrays with error bars
    *
    * @param seriesName
    * @param xData the X-Axis data
@@ -182,8 +182,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       }
 
       series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
-    }
-    else { // generate xData
+    } else { // generate xData
       series = new CategorySeries(seriesName, Utils.getGeneratedDataAsList(yData.size()), yData, errorBars, getDataType(xData));
     }
 
@@ -192,7 +191,6 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     return series;
   }
 
-  // TODO Abstract this
   private DataType getDataType(List<?> data) {
 
     DataType axisType;
@@ -201,14 +199,11 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     Object dataPoint = itr.next();
     if (dataPoint instanceof Number) {
       axisType = DataType.Number;
-    }
-    else if (dataPoint instanceof Date) {
+    } else if (dataPoint instanceof Date) {
       axisType = DataType.Date;
-    }
-    else if (dataPoint instanceof String) {
+    } else if (dataPoint instanceof String) {
       axisType = DataType.String;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Series data must be either Number, Date or String type!!!");
     }
     return axisType;
@@ -219,7 +214,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
+   * 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
@@ -238,8 +233,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         generatedXData.add(i);
       }
       series.replaceData(generatedXData, newYData, newErrorBarData);
-    }
-    else {
+    } else {
       series.replaceData(newXData, newYData, newErrorBarData);
     }
 
@@ -251,7 +245,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
+   * 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return

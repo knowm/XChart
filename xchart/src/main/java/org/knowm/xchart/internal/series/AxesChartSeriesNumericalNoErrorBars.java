@@ -21,7 +21,7 @@ package org.knowm.xchart.internal.series;
  *
  * @author timmolter
  */
-public abstract class AxesChartSeriesNumerical extends AxesChartSeries {
+public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
   double[] xData; // can be Number or Date(epochtime)
 
@@ -37,12 +37,13 @@ public abstract class AxesChartSeriesNumerical extends AxesChartSeries {
    * @param yData
    * @param xAxisDataType
    */
-  AxesChartSeriesNumerical(String name, double[] xData, double[] yData, DataType xAxisDataType) {
+ public AxesChartSeriesNumericalNoErrorBars(String name, double[] xData, double[] yData,double[] extraValues, DataType xAxisDataType) {
 
     super(name, xAxisDataType);
 
     this.xData = xData;
-    this.yData = yData;
+   this.yData = yData;
+   this.extraValues = extraValues;
 
     calculateMinMax();
   }
@@ -76,7 +77,7 @@ public abstract class AxesChartSeriesNumerical extends AxesChartSeries {
    * @param data
    * @return
    */
-  double[] findMinMax(double[] data, DataType dataType) {
+  double[] findMinMax(double[] data) {
 
     double min = Double.MAX_VALUE;
     double max = -Double.MAX_VALUE;
@@ -85,10 +86,6 @@ public abstract class AxesChartSeriesNumerical extends AxesChartSeries {
 
       if (dataPoint == Double.NaN) {
         continue;
-      }
-
-      if (dataType == DataType.String) {
-        return new double[] { Double.NaN, Double.NaN };
       }
       else {
         if (dataPoint < min) {
@@ -103,6 +100,55 @@ public abstract class AxesChartSeriesNumerical extends AxesChartSeries {
     return new double[] { min, max };
   }
 
+  @Override
+  protected void calculateMinMax() {
+
+    // xData
+    double[] xMinMax = findMinMax(xData);
+    xMin = xMinMax[0];
+    xMax = xMinMax[1];
+    // System.out.println(xMin);
+    // System.out.println(xMax);
+
+    // yData
+    double[] yMinMax;
+    if (extraValues == null) {
+      yMinMax = findMinMax(yData);
+    }
+    else {
+      yMinMax = findMinMaxWithErrorBars(yData, extraValues);
+    }
+    yMin = yMinMax[0];
+    yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
+  }
+
+  /**
+   * Finds the min and max of a dataset accounting for error bars
+   *
+   * @param data
+   * @param errorBars
+   * @return
+   */
+  private double[] findMinMaxWithErrorBars(double[] data, double[] errorBars) {
+
+    double min = Double.MAX_VALUE;
+    double max = -Double.MAX_VALUE;
+
+    for (int i = 0; i < data.length; i++) {
+
+      double d = data[i];
+      double eb = errorBars[i];
+      if (d - eb < min) {
+        min = d - eb;
+      }
+      if (d + eb > max) {
+        max = d + eb;
+      }
+    }
+    return new double[] { min, max };
+  }
   public double[] getXData() {
 
     return xData;

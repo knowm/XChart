@@ -18,14 +18,14 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.MarkersSeriesNumerical;
+import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
  *
  * @author timmolter
  */
-public class XYSeries extends MarkersSeriesNumerical {
+public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
   public enum XYSeriesRenderStyle implements RenderableSeries {
 

@@ -18,14 +18,14 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.NoMarkersSeries;
 
 /**
  * A Series containing X, Y and bubble size data to be plotted on a Chart
  *
  * @author timmolter
  */
-public class BubbleSeries extends org.knowm.xchart.internal.series.NoMarkersSeries {
+public class BubbleSeries extends NoMarkersSeries {
 
   public enum BubbleSeriesRenderStyle implements RenderableSeries {
 
@@ -55,9 +55,9 @@ public class BubbleSeries extends org.knowm.xchart.internal.series.NoMarkersSeri
    * @param yData
    * @param bubbleSizes
    */
-  public BubbleSeries(String name, double[] xData, double[] yData, double[] bubbleSizes, Series.DataType axisType) {
+  public BubbleSeries(String name, double[] xData, double[] yData, double[] bubbleSizes) {
 
-    super(name, xData, yData, bubbleSizes, axisType);
+    super(name, xData, yData, bubbleSizes, DataType.Number);
   }
 
   public BubbleSeriesRenderStyle getBubbleSeriesRenderStyle() {

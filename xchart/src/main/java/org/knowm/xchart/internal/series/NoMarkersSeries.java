@@ -22,7 +22,7 @@ package org.knowm.xchart.internal.series;
  *
  * @author timmolter
  */
-public abstract class NoMarkersSeries extends AxesChartSeriesNumerical {
+public abstract class NoMarkersSeries extends AxesChartSeriesNumericalNoErrorBars {
 
   /**
    * Constructor
@@ -34,7 +34,7 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumerical {
    */
   protected NoMarkersSeries(String name, double[] xData, double[] yData, double[] extraValues, Series.DataType axisType) {
 
-    super(name, xData, yData, axisType);
+    super(name, xData, yData, extraValues, axisType);
 
     this.extraValues = extraValues;
     calculateMinMax();
@@ -44,7 +44,7 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumerical {
   protected void calculateMinMax() {
 
     // xData
-    double[] xMinMax = findMinMax(xData, xAxisDataType);
+    double[] xMinMax = findMinMax(xData);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
     // System.out.println(xMin);
@@ -52,7 +52,7 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumerical {
 
     // yData
     double[] yMinMax = null;
-    yMinMax = findMinMax(yData, yAxisType);
+    yMinMax = findMinMax(yData);
     yMin = yMinMax[0];
     yMax = yMinMax[1];
     // System.out.println(yMin);

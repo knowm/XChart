@@ -18,6 +18,7 @@ package org.knowm.xchart.internal.series;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ import java.util.List;
  *
  * @author timmolter
  */
-public abstract class AxesChartSeriesCategory extends AxesChartSeries {
+public abstract class AxesChartSeriesCategory extends MarkerSeries {
 
   List<?> xData; // can be Number or Date or String
 
@@ -40,12 +41,13 @@ public abstract class AxesChartSeriesCategory extends AxesChartSeries {
    * @param xData
    * @param yData
    */
-  public AxesChartSeriesCategory(String name, List<?> xData, List<? extends Number> yData, DataType xAxisDataType) {
+  public AxesChartSeriesCategory(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues, DataType xAxisDataType) {
 
     super(name, xAxisDataType);
 
     this.xData = xData;
     this.yData = yData;
+    this.extraValues = extraValues;
 
     calculateMinMax();
   }
@@ -72,7 +74,56 @@ public abstract class AxesChartSeriesCategory extends AxesChartSeries {
     extraValues = newExtraValues;
     calculateMinMax();
   }
+  @Override
+  protected void calculateMinMax() {
 
+    // xData
+    double[] xMinMax = findMinMax(xData, xAxisDataType);
+    xMin = xMinMax[0];
+    xMax = xMinMax[1];
+    // System.out.println(xMin);
+    // System.out.println(xMax);
+
+    // yData
+    double[] yMinMax;
+    if (extraValues == null) {
+      yMinMax = findMinMax(yData, yAxisType);
+    }
+    else {
+      yMinMax = findMinMaxWithErrorBars(yData, extraValues);
+    }
+    yMin = yMinMax[0];
+    yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
+  }
+
+  /**
+   * Finds the min and max of a dataset accounting for error bars
+   *
+   * @param data
+   * @param errorBars
+   * @return
+   */
+  private double[] findMinMaxWithErrorBars(Collection<? extends Number> data, Collection<? extends Number> errorBars) {
+
+    double min = Double.MAX_VALUE;
+    double max = -Double.MAX_VALUE;
+
+    Iterator<? extends Number> itr = data.iterator();
+    Iterator<? extends Number> ebItr = errorBars.iterator();
+    while (itr.hasNext()) {
+      double bigDecimal = itr.next().doubleValue();
+      double eb = ebItr.next().doubleValue();
+      if (bigDecimal - eb < min) {
+        min = bigDecimal - eb;
+      }
+      if (bigDecimal + eb > max) {
+        max = bigDecimal + eb;
+      }
+    }
+    return new double[] { min, max };
+  }
   /**
    * Finds the min and max of a dataset
    *

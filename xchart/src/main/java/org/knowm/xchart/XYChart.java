@@ -47,7 +47,6 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     super(width, height, new XYStyler());
 
     axisPair = new AxisPair(this);
-
     plot = new Plot_XY(this);
     legend = new Legend_Marker(this);
   }
@@ -221,7 +220,6 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     switch (dataType) {
 
     case Date:
-
       return addSeries(seriesName, Utils.getDoubleArrayFromDateList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(errorBars), DataType.Date);
 
     default:
@@ -230,7 +228,6 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
   }
 
-  // TODO Abstract this
   private DataType getDataType(List<?> data) {
 
     if (data == null) {

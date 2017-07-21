@@ -20,13 +20,13 @@ import java.util.List;
 
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.MarkersSeriesCategory;
+import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series;
 
 /**
  * A Series containing category data to be plotted on a Chart
  */
-public class CategorySeries extends MarkersSeriesCategory {
+public class CategorySeries extends AxesChartSeriesCategory {
 
   public enum CategorySeriesRenderStyle implements RenderableSeries {
 
@@ -38,7 +38,7 @@ public class CategorySeries extends MarkersSeriesCategory {
 
     SteppedBar(LegendRenderType.Box),
 
-    Bar(LegendRenderType.Box),
+    Bar(LegendRenderType.BoxNoOutline),
 
     Stick(LegendRenderType.Line);
 

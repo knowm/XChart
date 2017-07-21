@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.NoMarkersSeries;
+import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
@@ -58,8 +58,8 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    Map<String, NoMarkersSeries> map = chart.getSeriesMap();
-    for (NoMarkersSeries series : map.values()) {
+    Map<String, AxesChartSeriesNumericalNoErrorBars> map = chart.getSeriesMap();
+    for (AxesChartSeriesNumericalNoErrorBars series : map.values()) {
 
       if (!series.isShowInLegend()) {
         continue;
@@ -85,7 +85,8 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends Series> extends
 
       if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
         starty += legendEntryHeight + chart.getStyler().getLegendPadding();
-      } else {
+      }
+      else {
         int markerWidth = BOX_SIZE;
         if (series.getLegendRenderType() == LegendRenderType.Line) {
           markerWidth = chart.getStyler().getLegendSeriesLineLength();

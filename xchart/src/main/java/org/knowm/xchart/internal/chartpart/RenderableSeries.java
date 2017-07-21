@@ -23,7 +23,7 @@ public interface RenderableSeries {
 
   enum LegendRenderType {
 
-    Line, Scatter, Box
+    Line, Scatter, Box, BoxNoOutline
   }
 
   LegendRenderType getLegendRenderType();
