@@ -144,7 +144,7 @@ public class ToolTips implements MouseMotionListener {
   /**
    * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
    */
-  private void addData(double xOffset, double yOffset, String label) {
+  public void addData(double xOffset, double yOffset, String label) {
 
     DataPoint dp = new DataPoint(xOffset, yOffset, label);
     dataPointList.add(dp);
