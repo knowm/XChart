@@ -25,9 +25,6 @@ import org.knowm.xchart.style.RadarStyler;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
-/**
- * @author timmolter
- */
 public class Plot_Radar<ST extends Styler, S extends Series> extends Plot_ {
 
   /**

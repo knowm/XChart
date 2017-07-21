@@ -16,7 +16,6 @@
  */
 package org.knowm.xchart;
 
-import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 
@@ -27,24 +26,11 @@ import org.knowm.xchart.internal.series.Series;
  */
 public class PieSeries extends Series {
 
-  public enum PieSeriesRenderStyle implements RenderableSeries {
+  public enum PieSeriesRenderStyle {
 
-    Pie(LegendRenderType.Box),
+    Pie(),
 
-    Donut(LegendRenderType.Box);
-
-    private final LegendRenderType legendRenderType;
-
-    PieSeriesRenderStyle(LegendRenderType legendRenderType) {
-
-      this.legendRenderType = legendRenderType;
-    }
-
-    @Override
-    public LegendRenderType getLegendRenderType() {
-
-      return legendRenderType;
-    }
+    Donut();
   }
 
   private PieSeriesRenderStyle chartPieSeriesRenderStyle = null;
@@ -84,12 +70,6 @@ public class PieSeries extends Series {
     return this;
   }
 
-  @Override
-  public LegendRenderType getLegendRenderType() {
-
-    return chartPieSeriesRenderStyle.getLegendRenderType();
-  }
-
   public Number getValue() {
 
     return value;
@@ -98,5 +78,12 @@ public class PieSeries extends Series {
   public void setValue(Number value) {
 
     this.value = value;
+  }
+
+  @Override
+  public LegendRenderType getLegendRenderType() {
+
+    // Pie charts are always rendered as a Box in the legend
+    return null;
   }
 }

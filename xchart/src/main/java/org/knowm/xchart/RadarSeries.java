@@ -43,7 +43,7 @@ public class RadarSeries extends Series {
   /**
    * Line Width
    */
-  private float lineWidth = -1.0f;
+  private float lineWidth;
 
   /**
    * Marker
@@ -54,8 +54,6 @@ public class RadarSeries extends Series {
    * Marker Color
    */
   private Color markerColor;
-
-  LegendRenderType legendRenderType;
 
   private double[] values;
   private String[] toolTips;
@@ -78,17 +76,6 @@ public class RadarSeries extends Series {
   public void setValues(double[] values) {
 
     this.values = values;
-  }
-
-  public void setLegendRenderType(LegendRenderType legendRenderType) {
-
-    this.legendRenderType = legendRenderType;
-  }
-
-  @Override
-  public LegendRenderType getLegendRenderType() {
-
-    return legendRenderType;
   }
 
   public String[] getToolTips() {
@@ -177,5 +164,12 @@ public class RadarSeries extends Series {
   public Color getMarkerColor() {
 
     return markerColor;
+  }
+
+  @Override
+  public LegendRenderType getLegendRenderType() {
+
+    // Pie charts are always rendered as a Box in the legend
+    return null;
   }
 }

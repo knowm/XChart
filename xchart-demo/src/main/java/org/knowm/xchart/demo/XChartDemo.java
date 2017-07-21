@@ -69,6 +69,7 @@ import org.knowm.xchart.demo.charts.pie.PieChart02;
 import org.knowm.xchart.demo.charts.pie.PieChart03;
 import org.knowm.xchart.demo.charts.pie.PieChart04;
 import org.knowm.xchart.demo.charts.pie.PieChart05;
+import org.knowm.xchart.demo.charts.radar.RadarChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart03;
@@ -186,7 +187,8 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart02")) {
+      }
+      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart02")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -200,7 +202,8 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart03")) {
+      }
+      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart03")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -214,7 +217,8 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart04")) {
+      }
+      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart04")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -228,7 +232,8 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart05")) {
+      }
+      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart05")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -258,7 +263,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     // leaves
     DefaultMutableTreeNode defaultMutableTreeNode;
 
-    // Area category
+    // Area
     category = new DefaultMutableTreeNode("Area Charts");
     top.add(category);
 
@@ -271,7 +276,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaLineChart03 - Combination Area & Line Chart", new AreaLineChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // Pie category
+    // Pie
     category = new DefaultMutableTreeNode("Pie Charts");
     top.add(category);
 
@@ -290,7 +295,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("PieChart05 - Pie Chart with Donut Style and Sum", new PieChart05().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // Line category
+    // Line
     category = new DefaultMutableTreeNode("Line Charts");
     top.add(category);
 
@@ -315,12 +320,11 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart07 - Category Chart with Line Rendering", new LineChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // Scatter category
+    // Scatter
     category = new DefaultMutableTreeNode("Scatter Charts");
     top.add(category);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart01 - Gaussian Blob with Y Axis on Right", new ScatterChart01()
-        .getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart01 - Gaussian Blob with Y Axis on Right", new ScatterChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart02 - Logarithmic Data", new ScatterChart02().getChart()));
@@ -332,7 +336,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ScatterChart04 - Error Bars", new ScatterChart04().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // Bar category
+    // Bar
     category = new DefaultMutableTreeNode("Bar Charts");
     top.add(category);
 
@@ -354,8 +358,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart06 - Histogram Overlapped", new BarChart06().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart07 - Histogram Not Overlapped with Tool Tips", new BarChart07()
-        .getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart07 - Histogram Not Overlapped with Tool Tips", new BarChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart08 - Histogram with Error Bars", new BarChart08().getChart()));
@@ -373,21 +376,28 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BarChart12 - Stepped Bars Not Overlapped", new BarChart12().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // Stick category
+    // Radar
+    category = new DefaultMutableTreeNode("Radar Charts");
+    top.add(category);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RadarChart01 - Basic Radar Chart", new RadarChart01().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    // Stick
     category = new DefaultMutableTreeNode("Stick Charts");
     top.add(category);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("StickChart01 - Basic Stick Chart", new StickChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // Bubble category
+    // Bubble
     category = new DefaultMutableTreeNode("Bubble Charts");
     top.add(category);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BubbleChart01 - Basic Bubble Chart", new BubbleChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // Theme category
+    // Theme
     category = new DefaultMutableTreeNode("Chart Themes");
     top.add(category);
 
@@ -403,12 +413,11 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("ThemeChart04 - My Custom Theme", new ThemeChart04().getChart()));
     category.add(defaultMutableTreeNode);
 
-    // Date category
+    // Date
     category = new DefaultMutableTreeNode("Date Charts");
     top.add(category);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DateChart01 - Millisecond Scale with Two Separate Y Axis Groups", new
-        DateChart01().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DateChart01 - Millisecond Scale with Two Separate Y Axis Groups", new DateChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DateChart02 - Second Scale", new DateChart02().getChart()));

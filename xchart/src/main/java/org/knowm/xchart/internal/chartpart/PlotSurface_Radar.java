@@ -27,8 +27,6 @@ import org.knowm.xchart.style.Styler;
 
 /**
  * Draws the plot background and the plot border
- *
- * @author timmolter
  */
 public class PlotSurface_Radar<ST extends Styler, S extends Series> extends PlotSurface_ {
 
