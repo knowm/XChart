@@ -60,6 +60,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
 
+  private boolean vertical = false;
+
   /**
    * Constructor
    *
@@ -226,6 +228,16 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   Format getYAxisFormat() {
 
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
+  }
+
+  public boolean isVertical() {
+
+    return vertical;
+  }
+  
+  public void setVertical(boolean vertical) {
+
+    this.vertical = vertical;
   }
 
 }
