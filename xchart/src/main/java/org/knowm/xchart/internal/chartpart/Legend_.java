@@ -28,6 +28,7 @@ import java.util.Map;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * @author timmolter
@@ -125,16 +126,23 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
         break;
     }
 
-    // draw legend box background and border
-    Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
+    Rectangle2D rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
+    AffineTransform orig = null;
+    if (chart.isVertical()) {
+      orig = g.getTransform();
+      rotateLegend(g, rect, chart.getStyler().getLegendPosition());
+    }
     g.setColor(chart.getStyler().getLegendBackgroundColor());
     g.fill(rect);
     g.setStroke(SOLID_STROKE);
     g.setColor(chart.getStyler().getLegendBorderColor());
     g.draw(rect);
-
+    
     doPaint(g);
 
+    if (chart.isVertical()) {
+      g.setTransform(orig);
+    }
     // bounds
 //    bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
     // g.setColor(Color.blue);
@@ -343,5 +351,55 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     } else {
       return getBoundsHintHorizontal(); // Actually, the only information contained in this bounds is the width and height.
     }
+  }
+  
+  protected void rotateLegend(Graphics2D g2d, Rectangle2D legendBounds, LegendPosition legendPosition) {
+    double xOffset = 0;
+    double yOffset = 0;
+    double xstart = legendBounds.getX();
+    double ystart = legendBounds.getY();
+    double width = legendBounds.getWidth();
+    double height = legendBounds.getHeight();
+
+    switch (legendPosition) {
+    case OutsideE:
+      xOffset = xstart - ystart + width - height;
+      yOffset = xstart + ystart + width - height;
+      break;
+    case InsideNW:
+      xOffset = xstart - ystart;
+      yOffset = xstart + ystart + width;
+      break;
+    case InsideNE:
+      xOffset = xstart - ystart + width - height;
+      yOffset = xstart + ystart + width;
+      break;
+    case InsideSE:
+      xOffset = xstart - ystart + width - height;
+      yOffset = xstart + ystart + height;
+      break;
+    case InsideSW:
+      xOffset = xstart - ystart;
+      yOffset = xstart + ystart + height;
+      break;
+    case InsideN:
+      xOffset = xstart - ystart + height;
+      yOffset = xstart + ystart + width;
+      break;
+    case InsideS:
+      xOffset = xstart - ystart + height;
+      yOffset = xstart + ystart + height;
+      break;
+    case OutsideS:
+      xOffset = xstart - ystart + height;
+      yOffset = xstart + ystart + height;
+      break;
+
+    default:
+      break;
+    }
+
+    g2d.translate(xOffset, yOffset);
+    g2d.rotate(-Math.PI / 2);
   }
 }
