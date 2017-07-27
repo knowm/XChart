@@ -14,30 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.internal.chartpart;
+package org.knowm.xchart;
 
-import org.knowm.xchart.RadarSeries;
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.RadarStyler;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.internal.ChartBuilder;
 
-public class Plot_Radar<ST extends Styler, S extends Series> extends Plot_Pie<ST, S> {
+/**
+ * @author timmolter
+ */
+public class DialChartBuilder extends ChartBuilder<DialChartBuilder, DialChart> {
 
-  /**
-   * Constructor
-   *
-   * @param chart
-   */
-  public Plot_Radar(Chart<RadarStyler, RadarSeries> chart) {
+  public DialChartBuilder() {
 
-    super((Chart<ST, S>) chart);
   }
 
   @Override
-  protected void initContentAndSurface(Chart<ST, S> chart) {
-  
-    this.plotContent = new PlotContent_Radar(chart);
-    this.plotSurface = new PlotSurface_Pie(chart);
-  }
+  public DialChart build() {
 
+    return new DialChart(this);
+  }
 }

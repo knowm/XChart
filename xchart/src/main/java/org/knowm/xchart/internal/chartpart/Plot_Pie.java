@@ -35,11 +35,16 @@ public class Plot_Pie<ST extends Styler, S extends Series> extends Plot_ {
    *
    * @param chart
    */
-  public Plot_Pie(Chart<PieStyler, PieSeries> chart) {
+  public Plot_Pie(Chart<ST, S> chart) {
 
     super(chart);
-    this.plotContent = new PlotContent_Pie<PieStyler, PieSeries>(chart);
-    this.plotSurface = new PlotSurface_Pie<PieStyler, PieSeries>(chart);
+    initContentAndSurface(chart);
+  }
+
+  protected void initContentAndSurface(Chart<ST, S> chart) {
+
+    this.plotContent = new PlotContent_Pie<PieStyler, PieSeries>((Chart<PieStyler, PieSeries>) chart);
+    this.plotSurface = new PlotSurface_Pie<PieStyler, PieSeries>((Chart<PieStyler, PieSeries>) chart);
   }
 
   @Override

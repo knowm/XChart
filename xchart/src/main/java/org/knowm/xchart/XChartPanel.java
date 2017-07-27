@@ -35,7 +35,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
@@ -220,7 +219,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
     UIManager.put("FileChooser.saveButtonText", "Export");
     UIManager.put("FileChooser.fileNameLabelText", "Export To:");
     UIManager.put("FileChooser.saveDialogFileNameLabel.textAndMnemonic", "Export To:");
-    UIDefaults defaults = UIManager.getDefaults();
+//    UIDefaults defaults = UIManager.getDefaults();
 //    System.out.println(defaults.size()+ " properties");
 //    for (Enumeration e = defaults.keys();
 //         e.hasMoreElements();) {

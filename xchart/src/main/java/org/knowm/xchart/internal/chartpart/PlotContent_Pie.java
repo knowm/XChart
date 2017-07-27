@@ -289,20 +289,25 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     }
   }
 
-  private Shape getDonutSliceShape(Rectangle2D pieBounds, double thickness, double start, double extent) {
+  public static Shape getDonutSliceShape(Rectangle2D pieBounds, double thickness, double start, double extent) {
 
     thickness = thickness / 2;
 
     GeneralPath generalPath = new GeneralPath();
     GeneralPath dummy = new GeneralPath(); // used to find arc endpoints
 
-    Shape outer = new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), start, extent, Arc2D.OPEN);
-    Shape inner = new Arc2D.Double(pieBounds.getX() + pieBounds.getWidth() * thickness, pieBounds.getY() + pieBounds.getHeight() * thickness, pieBounds.getWidth() - 2 * pieBounds.getWidth()
-        * thickness, pieBounds.getHeight() - 2 * pieBounds.getHeight() * thickness, start + extent, -extent, Arc2D.OPEN);
+    double x = pieBounds.getX();
+    double y = pieBounds.getY();
+    double width = pieBounds.getWidth();
+    double height = pieBounds.getHeight();
+    Shape outer = new Arc2D.Double(x, y, width, height, start, extent, Arc2D.OPEN);
+    double wt = width * thickness;
+    double ht = height * thickness;
+    Shape inner = new Arc2D.Double(x + wt, y + ht, width - 2 * wt, height - 2 * ht, start + extent, -extent,
+        Arc2D.OPEN);
     generalPath.append(outer, false);
 
-    dummy.append(new Arc2D.Double(pieBounds.getX() + pieBounds.getWidth() * thickness, pieBounds.getY() + pieBounds.getHeight() * thickness, pieBounds.getWidth() - 2 * pieBounds.getWidth()
-        * thickness, pieBounds.getHeight() - 2 * pieBounds.getHeight() * thickness, start, extent, Arc2D.OPEN), false);
+    dummy.append(new Arc2D.Double(x + wt, y + ht, width - 2 * wt, height - 2 * ht, start, extent, Arc2D.OPEN), false);
 
     Point2D point = dummy.getCurrentPoint();
 
@@ -311,10 +316,11 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     }
     generalPath.append(inner, false);
 
-    dummy.append(new Arc2D.Double(pieBounds.getX(), pieBounds.getY(), pieBounds.getWidth(), pieBounds.getHeight(), start + extent, -extent, Arc2D.OPEN), false);
+    dummy.append(new Arc2D.Double(x, y, width, height, start + extent, -extent, Arc2D.OPEN), false);
 
     point = dummy.getCurrentPoint();
     generalPath.lineTo(point.getX(), point.getY());
     return generalPath;
   }
+
 }

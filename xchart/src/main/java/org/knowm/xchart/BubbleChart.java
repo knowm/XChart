@@ -16,8 +16,6 @@
  */
 package org.knowm.xchart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Map;
@@ -244,14 +242,6 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 
-      /** Line Style */
-      BasicStroke stroke;
-
-      /** Line Color */
-      Color lineColor;
-
-      /** Line Width */
-      float lineWidth = -1.0f;
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
       }
