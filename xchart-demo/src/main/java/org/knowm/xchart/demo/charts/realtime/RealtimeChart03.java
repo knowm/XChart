@@ -16,7 +16,6 @@
  */
 package org.knowm.xchart.demo.charts.realtime;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -103,12 +102,12 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
       yData.add(getRandomWalk(lastPoint));
     }
     // generate X-Data
-    xData = new ArrayList<Integer>();
+    xData = new CopyOnWriteArrayList<Integer>();
     for (int i = 1; i < yData.size() + 1; i++) {
       xData.add(i);
     }
     // generate error bars
-    errorBars = new ArrayList<Double>();
+    errorBars = new CopyOnWriteArrayList<Double>();
     for (int i = 0; i < yData.size(); i++) {
       errorBars.add(20 * Math.random());
     }

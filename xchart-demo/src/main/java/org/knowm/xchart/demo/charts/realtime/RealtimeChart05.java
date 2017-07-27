@@ -16,12 +16,12 @@
  */
 package org.knowm.xchart.demo.charts.realtime;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
@@ -83,7 +83,7 @@ public class RealtimeChart05 implements ExampleChart<CategoryChart> {
   @Override
   public CategoryChart getChart() {
 
-    xData = new ArrayList<String>(Arrays.asList(new String[]{"Blue", "Red", "Green", "Yellow", "Orange"}));
+    xData = new CopyOnWriteArrayList<String>(Arrays.asList(new String[]{"Blue", "Red", "Green", "Yellow", "Orange"}));
     Histogram histogram = new Histogram(getGaussianData(1000), 5, -10, 10);
     yData = histogram.getyAxisData();
 
@@ -107,7 +107,7 @@ public class RealtimeChart05 implements ExampleChart<CategoryChart> {
 
   private List<Double> getGaussianData(int count) {
 
-    List<Double> data = new ArrayList<Double>(count);
+    List<Double> data = new CopyOnWriteArrayList<Double>();
     Random r = new Random();
     for (int i = 0; i < count; i++) {
       data.add(r.nextGaussian() * 5);
