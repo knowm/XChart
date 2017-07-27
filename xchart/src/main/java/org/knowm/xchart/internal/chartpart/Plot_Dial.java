@@ -16,48 +16,28 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.geom.Rectangle2D;
-
+import org.knowm.xchart.DialSeries;
 import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.DialStyler;
 import org.knowm.xchart.style.Styler;
 
-/**
- * Draws the plot background and the plot border
- *
- * @author timmolter
- */
-public class PlotSurface_Pie<ST extends Styler, S extends Series> extends PlotSurface_ {
-
-  private final Styler styler;
+public class Plot_Dial<ST extends Styler, S extends Series> extends Plot_Pie<ST, S> {
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotSurface_Pie(Chart<? extends Styler, ? extends Series> chart) {
+  public Plot_Dial(Chart<DialStyler, DialSeries> chart) {
 
-    super(chart);
-    this.styler = chart.getStyler();
+    super((Chart<ST, S>) chart);
   }
-
+  
   @Override
-  public void paint(Graphics2D g) {
-
-    Rectangle2D bounds = getBounds();
-
-    // paint plot background
-    Shape rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-    g.setColor(styler.getPlotBackgroundColor());
-    g.fill(rect);
-
-    // paint plot border
-    if (styler.isPlotBorderVisible()) {
-      g.setColor(styler.getPlotBorderColor());
-      // g.setStroke(getChartPainter().getstyler().getAxisTickMarksStroke());
-      g.draw(rect);
-    }
+  protected void initContentAndSurface(Chart<ST, S> chart) {
+  
+    this.plotContent = new PlotContent_Dial(chart);
+    this.plotSurface = new PlotSurface_Pie(chart);
   }
+  
 }
