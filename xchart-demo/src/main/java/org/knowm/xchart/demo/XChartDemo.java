@@ -57,6 +57,7 @@ import org.knowm.xchart.demo.charts.date.DateChart05;
 import org.knowm.xchart.demo.charts.date.DateChart06;
 import org.knowm.xchart.demo.charts.date.DateChart07;
 import org.knowm.xchart.demo.charts.date.DateChart08;
+import org.knowm.xchart.demo.charts.dial.DialChart01;
 import org.knowm.xchart.demo.charts.line.LineChart01;
 import org.knowm.xchart.demo.charts.line.LineChart02;
 import org.knowm.xchart.demo.charts.line.LineChart03;
@@ -381,6 +382,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     top.add(category);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RadarChart01 - Basic Radar Chart", new RadarChart01().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    // Dial
+    category = new DefaultMutableTreeNode("Dial Charts");
+    top.add(category);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("DialChart01 - Basic Dial Chart", new DialChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Stick

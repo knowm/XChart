@@ -56,16 +56,16 @@ public class DialSeries extends Series {
   private Color markerColor;
 
   private double value;
-  private String toolTip;
+  private String annotation;
 
   /**
-   * @param toolTips Adds custom tool tips for series. If tool tip is null, it is automatically calculated.
+   * @param annotation Adds custom annotation for series. If annotation is null, it is automatically calculated.
    */
-  public DialSeries(String name, double value, String toolTip) {
+  public DialSeries(String name, double value, String annotation) {
 
     super(name);
     this.value = value;
-    this.toolTip = toolTip;
+    this.annotation = this.annotation;
   }
 
   public double getValue() {
@@ -78,9 +78,9 @@ public class DialSeries extends Series {
     this.value = value;
   }
   
-  public String getToolTip() {
+  public String getAnnotation() {
 
-    return toolTip;
+    return annotation;
   }
   
   /**

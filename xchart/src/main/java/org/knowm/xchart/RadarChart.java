@@ -93,7 +93,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
    * Add a series for a Radar type chart
    *
    * @param seriesName
-   * @param value
+   * @param values
    * @return
    */
   public RadarSeries addSeries(String seriesName, double[] values) {
@@ -101,19 +101,27 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     return addSeries(seriesName, values, null);
   }
 
-  public RadarSeries addSeries(String seriesName, double[] values, String[] toolTips) {
+  /**
+   * Add a series for a Radar type chart
+   *
+   * @param seriesName
+   * @param values
+   * @param annotations
+   * @return
+   */
+  public RadarSeries addSeries(String seriesName, double[] values, String[] annotations) {
 
     // Sanity checks
-    sanityCheck(seriesName, values, toolTips);
+    sanityCheck(seriesName, values, annotations);
 
-    RadarSeries series = new RadarSeries(seriesName, values, toolTips);
+    RadarSeries series = new RadarSeries(seriesName, values, annotations);
 
     seriesMap.put(seriesName, series);
 
     return series;
   }
 
-  private void sanityCheck(String seriesName, double[] values, String[] toolTips) {
+  private void sanityCheck(String seriesName, double[] values, String[] annotations) {
 
     if (variableLabels == null) {
       throw new IllegalArgumentException("Variable labels cannot be null!!!");
@@ -134,7 +142,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
       }
     }
 
-    if (toolTips != null && toolTips.length < variableLabels.length) {
+    if (annotations != null && annotations.length < variableLabels.length) {
       throw new IllegalArgumentException("Too few tool tips!!!");
     }
   }

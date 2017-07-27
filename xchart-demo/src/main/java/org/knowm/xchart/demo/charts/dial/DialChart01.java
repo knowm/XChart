@@ -16,8 +16,6 @@
  */
 package org.knowm.xchart.demo.charts.dial;
 
-import java.util.ArrayList;
-
 import org.knowm.xchart.DialChart;
 import org.knowm.xchart.DialChartBuilder;
 import org.knowm.xchart.SwingWrapper;
@@ -36,63 +34,20 @@ public class DialChart01 implements ExampleChart<DialChart> {
   public static void main(String[] args) {
 
     ExampleChart<DialChart> exampleChart = new DialChart01();
-    ArrayList<DialChart> charts = new ArrayList<DialChart>();
-    {
-      DialChart chart = exampleChart.getChart();
-      chart.setTitle("Dial chart");
-      charts.add(chart);
-    }
-    {
-      DialChart chart = exampleChart.getChart();
-      chart.setTitle("Dial chart without green&red parts");
-      chart.getStyler().setRedFrom(-1);
-      chart.getStyler().setGreenFrom(-1);
-
-      charts.add(chart);
-    }
-    {
-      DialChart chart = exampleChart.getChart();
-      chart.setTitle("Dial chart with custom ticks&labels");
-      chart.getStyler().setAxisTickValues(new double[] { .33, .45, .79});
-      chart.getStyler().setAxisTickLabels(new String[] { "min", "average", "max"});
-      charts.add(chart);
-    }
-    {
-      DialChart chart = exampleChart.getChart();
-      chart.setTitle("Dial chart with custom arrow");
-      chart.getStyler().setArrowLengthPercentage(1.05);
-      chart.getStyler().setArrowArcAngle(90);
-      chart.getStyler().setArrowArcPercentage(.03);
-      charts.add(chart);
-    }
-    {
-      DialChart chart = exampleChart.getChart();
-      chart.setTitle("Full circle dial chart");
-      chart.getStyler().setArcAngle(360);
-      //chart.getStyler().setDonutThickness(1);
-      chart.getStyler().setAxisTickLabelsVisible(false);
-      charts.add(chart);
-    }
-    {
-      DialChart chart = exampleChart.getChart();
-      chart.setTitle("Full circle dial chart without donut");
-      chart.getStyler().setArcAngle(360);
-      chart.getStyler().setDonutThickness(1);
-      chart.getStyler().setAxisTickLabelsVisible(false);
-      charts.add(chart);
-    }
-    new SwingWrapper<DialChart>(charts).displayChartMatrix();
+    DialChart chart = exampleChart.getChart();
+    new SwingWrapper<DialChart>(chart).displayChart();
   }
 
   @Override
   public DialChart getChart() {
 
     // Create Chart
-    DialChart chart = new DialChartBuilder().width(480).height(400).title("Dial Chart").build();
+    DialChart chart = new DialChartBuilder().width(800).height(600).title("Radar Chart").build();
 
     // Series
     chart.addSeries("Rate", 0.9381, "93.81 %");
     chart.getStyler().setToolTipsEnabled(true);
+    chart.getStyler().setHasAnnotations(true);
     chart.getStyler().setLegendVisible(false);
 
     return chart;

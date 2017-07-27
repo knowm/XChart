@@ -44,6 +44,7 @@ public class RadarChart01 implements ExampleChart<RadarChart> {
 
     // Create Chart
     RadarChart chart = new RadarChartBuilder().width(800).height(600).title("Radar Chart").build();
+    chart.getStyler().setToolTipsEnabled(true);
 
     // Series
     chart.setVariableLabels(new String[] {"Sales", "Marketting", "Development", "Customer Support", "Information Technology", "Administration" });

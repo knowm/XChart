@@ -56,16 +56,16 @@ public class RadarSeries extends Series {
   private Color markerColor;
 
   private double[] values;
-  private String[] toolTips;
+  private String[] annotations;
 
   /**
-   * @param toolTips Adds custom tool tips for series. If tool tip is null, it is automatically calculated.
+   * @param annotations Adds custom annotations for series. If annotations is null, it is automatically calculated.
    */
-  public RadarSeries(String name, double[] values, String[] toolTips) {
+  public RadarSeries(String name, double[] values, String[] annotations) {
 
     super(name);
     this.values = values;
-    this.toolTips = toolTips;
+    this.annotations = annotations;
   }
 
   public double[] getValues() {
@@ -78,9 +78,9 @@ public class RadarSeries extends Series {
     this.values = values;
   }
 
-  public String[] getToolTips() {
+  public String[] getAnnotations() {
 
-    return toolTips;
+    return annotations;
   }
 
   /**

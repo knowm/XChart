@@ -302,7 +302,7 @@ public class PlotContent_Radar<ST extends Styler, S extends Series> extends Plot
       }
 
       double[] values = series.getValues();
-      String[] toolTips = series.getToolTips();
+      String[] toolTips = series.getAnnotations();
 
       g.setColor(series.getFillColor());
 

@@ -205,7 +205,7 @@ public class PlotContent_Dial<ST extends Styler, S extends Series> extends PlotC
       double value = series.getValue();
       // draw title
       if (styler.hasAnnotations()) {
-        String annotation = series.getToolTip();
+        String annotation = series.getAnnotation();
         if (annotation == null) {
           if (styler.getDecimalPattern() != null) {
             DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
@@ -251,7 +251,7 @@ public class PlotContent_Dial<ST extends Styler, S extends Series> extends PlotC
 
       Path2D.Double path = new Path2D.Double();
       if (styler.isToolTipsEnabled()) {
-        String annotation = series.getToolTip();
+        String annotation = series.getAnnotation();
         if (annotation == null) {
           if (styler.getDecimalPattern() != null) {
             DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());

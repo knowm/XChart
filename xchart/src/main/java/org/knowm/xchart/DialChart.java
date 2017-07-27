@@ -99,12 +99,20 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     return addSeries(seriesName, value, null);
   }
 
-  public DialSeries addSeries(String seriesName, double value, String toolTip) {
+  /**
+   * Add a series for a Dial type chart
+   *
+   * @param seriesName
+   * @param value
+   * @param annotation
+   * @return
+   */
+  public DialSeries addSeries(String seriesName, double value, String annotation) {
 
     // Sanity checks
     sanityCheck(seriesName, value);
 
-    DialSeries series = new DialSeries(seriesName, value, toolTip);
+    DialSeries series = new DialSeries(seriesName, value, annotation);
 
     seriesMap.put(seriesName, series);
 
