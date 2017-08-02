@@ -26,6 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
 
@@ -116,7 +117,21 @@ public class XChartPanel<T extends Chart> extends JPanel {
     super.paintComponent(g);
 
     Graphics2D g2d = (Graphics2D) g.create();
-    chart.paint(g2d, getWidth(), getHeight());
+    
+    if (chart.isVertical()) {
+      AffineTransform orig = g2d.getTransform();
+      int newW = getHeight();
+      int newH = getWidth();
+      int rotatePoint = newH / 2;
+
+      //g2d.rotate(Math.PI/2, rotatePoint, rotatePoint);
+      g2d.rotate(Math.PI/2, rotatePoint, rotatePoint);
+      chart.paint(g2d, newW, newH);
+      
+      g2d.setTransform(orig);
+    } else {
+      chart.paint(g2d, getWidth(), getHeight());
+    }
     g2d.dispose();
   }
 
@@ -388,5 +403,4 @@ public class XChartPanel<T extends Chart> extends JPanel {
       }
     }
   }
-
 }
