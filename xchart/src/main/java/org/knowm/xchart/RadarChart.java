@@ -27,9 +27,6 @@ import org.knowm.xchart.style.RadarStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
 
-/**
- * @author timmolter
- */
 public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 
   public enum RadarRenderStyle {
@@ -106,15 +103,15 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
    *
    * @param seriesName
    * @param values
-   * @param annotations
+   * @param tooltipOverrides
    * @return
    */
-  public RadarSeries addSeries(String seriesName, double[] values, String[] annotations) {
+  public RadarSeries addSeries(String seriesName, double[] values, String[] tooltipOverrides) {
 
     // Sanity checks
-    sanityCheck(seriesName, values, annotations);
+    sanityCheck(seriesName, values, tooltipOverrides);
 
-    RadarSeries series = new RadarSeries(seriesName, values, annotations);
+    RadarSeries series = new RadarSeries(seriesName, values, tooltipOverrides);
 
     seriesMap.put(seriesName, series);
 

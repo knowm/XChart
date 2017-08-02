@@ -26,7 +26,6 @@ import org.knowm.xchart.style.markers.Marker;
 /**
  * A Series containing Radar data to be plotted on a Chart
  *
- * @author timmolter
  */
 public class RadarSeries extends Series {
 
@@ -56,16 +55,16 @@ public class RadarSeries extends Series {
   private Color markerColor;
 
   private double[] values;
-  private String[] annotations;
+  private String[] tooltipOverrides;
 
   /**
-   * @param annotations Adds custom annotations for series. If annotations is null, it is automatically calculated.
+   * @param tooltipOverrides Adds custom tooltipOverrides for series. If tooltipOverrides is null, they are automatically generated.
    */
-  public RadarSeries(String name, double[] values, String[] annotations) {
+  public RadarSeries(String name, double[] values, String[] tooltipOverrides) {
 
     super(name);
     this.values = values;
-    this.annotations = annotations;
+    this.tooltipOverrides = tooltipOverrides;
   }
 
   public double[] getValues() {
@@ -78,9 +77,9 @@ public class RadarSeries extends Series {
     this.values = values;
   }
 
-  public String[] getAnnotations() {
+  public String[] getTooltipOverrides() {
 
-    return annotations;
+    return tooltipOverrides;
   }
 
   /**
@@ -169,7 +168,7 @@ public class RadarSeries extends Series {
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    // Pie charts are always rendered as a Box in the legend
+    // Radar charts are always rendered as a Box in the legend
     return null;
   }
 }

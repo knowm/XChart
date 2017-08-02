@@ -27,16 +27,7 @@ import org.knowm.xchart.style.DialStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
 
-/**
- * @author timmolter
- */
 public class DialChart extends Chart<DialStyler, DialSeries> {
-
-  public enum DialRenderStyle {
-    Polygon, Circle;
-  }
-
-  private DialRenderStyle radarRenderStyle = DialRenderStyle.Polygon;
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -174,13 +165,4 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     }
   }
 
-  public DialRenderStyle getDialRenderStyle() {
-
-    return radarRenderStyle;
-  }
-
-  public void setDialRenderStyle(DialRenderStyle radarRenderStyle) {
-
-    this.radarRenderStyle = radarRenderStyle;
-  }
 }

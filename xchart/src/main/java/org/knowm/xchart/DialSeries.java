@@ -169,7 +169,7 @@ public class DialSeries extends Series {
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    // Pie charts are always rendered as a Box in the legend
+    // Dial charts don't have a legend
     return null;
   }
 }

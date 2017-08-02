@@ -20,9 +20,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 
-/**
- * @author timmolter
- */
 public class RadarStyler extends Styler {
 
   private boolean isCircular;
