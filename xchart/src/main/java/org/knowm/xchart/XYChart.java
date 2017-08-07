@@ -209,6 +209,18 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Add a series for a X-Y type chart using Lists
    *
    * @param seriesName
+   * @param yData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public XYSeries addSeries(String seriesName,  List<? extends Number> yData) {
+
+    return addSeries(seriesName, null, yData, null);
+  }
+
+  /**
+   * Add a series for a X-Y type chart using Lists
+   *
+   * @param seriesName
    * @param xData the X-Axis data
    * @param yData the Y-Axis data
    * @param errorBars the error bar data
@@ -219,11 +231,11 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     DataType dataType = getDataType(xData);
     switch (dataType) {
 
-    case Date:
-      return addSeries(seriesName, Utils.getDoubleArrayFromDateList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(errorBars), DataType.Date);
+      case Date:
+        return addSeries(seriesName, Utils.getDoubleArrayFromDateList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(errorBars), DataType.Date);
 
-    default:
-      return addSeries(seriesName, Utils.getDoubleArrayFromNumberList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(errorBars), DataType.Number);
+      default:
+        return addSeries(seriesName, Utils.getDoubleArrayFromNumberList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(errorBars), DataType.Number);
     }
 
   }
@@ -240,11 +252,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     Object dataPoint = itr.next();
     if (dataPoint instanceof Number) {
       axisType = DataType.Number;
-    }
-    else if (dataPoint instanceof Date) {
+    } else if (dataPoint instanceof Date) {
       axisType = DataType.Date;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Series data must be either Number or Date type!!!");
     }
     return axisType;
@@ -278,8 +288,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
       }
 
       series = new XYSeries(seriesName, xData, yData, errorBars, dataType);
-    }
-    else { // generate xData
+    } else { // generate xData
       series = new XYSeries(seriesName, Utils.getGeneratedDataAsArray(yData.length), yData, errorBars, dataType);
     }
 
@@ -293,7 +302,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
+   * 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
@@ -308,7 +317,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
+   * 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
@@ -323,8 +332,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     if (newXData == null) {
       double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
       series.replaceData(generatedXData, newYData, newErrorBarData);
-    }
-    else {
+    } else {
       series.replaceData(newXData, newYData, newErrorBarData);
     }
 
