@@ -307,9 +307,19 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public XYSeries updateXYSeries(String seriesName, List<? extends Number> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
+  public XYSeries updateXYSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
 
-    return updateXYSeries(seriesName, Utils.getDoubleArrayFromNumberList(newXData), Utils.getDoubleArrayFromNumberList(newYData), Utils.getDoubleArrayFromNumberList(newErrorBarData));
+
+
+    DataType dataType = getDataType(newXData);
+    switch (dataType) {
+
+      case Date:
+        return updateXYSeries(seriesName, Utils.getDoubleArrayFromDateList(newXData), Utils.getDoubleArrayFromNumberList(newYData), Utils.getDoubleArrayFromNumberList(newErrorBarData));
+
+      default:
+        return updateXYSeries(seriesName, Utils.getDoubleArrayFromNumberList(newXData), Utils.getDoubleArrayFromNumberList(newYData), Utils.getDoubleArrayFromNumberList(newErrorBarData));
+    }
   }
 
   /**
