@@ -27,16 +27,15 @@ import java.util.Map;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /**
  * Axis tick labels
  */
-public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implements ChartPart {
+public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
-  private final Chart<AxesChartStyler, AxesChartSeries> chart;
+  private final Chart<ST, S> chart;
   private Rectangle2D bounds;
   private final Direction direction;
   private final Axis yAxis;
@@ -47,7 +46,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
    * @param chart
    * @param direction
    */
-  AxisTickLabels(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, Axis yAxis) {
+  AxisTickLabels(Chart<ST, S> chart, Direction direction, Axis yAxis) {
 
     this.chart = chart;
     this.direction = direction;
@@ -57,7 +56,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends Series> implem
   @Override
   public void paint(Graphics2D g) {
 
-    AxesChartStyler styler = chart.getStyler();
+    ST styler = chart.getStyler();
     g.setFont(styler.getAxisTickLabelsFont());
 
     g.setColor(styler.getAxisTickLabelsColor());

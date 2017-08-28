@@ -25,10 +25,8 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 
-import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.MarkerSeries;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -36,16 +34,16 @@ import org.knowm.xchart.style.lines.SeriesLines;
 /**
  * @author timmolter
  */
-public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends Legend_ {
+public class Legend_Marker<ST extends AxesChartStyler, S extends MarkerSeries> extends Legend_<ST, S> {
 
-  private final AxesChartStyler axesChartStyler;
+  private final ST axesChartStyler;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Legend_Marker(Chart<AxesChartStyler, XYSeries> chart) {
+  public Legend_Marker(Chart<ST, S> chart) {
 
     super(chart);
     axesChartStyler = chart.getStyler();
@@ -61,8 +59,8 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    Map<String, MarkerSeries> map = chart.getSeriesMap();
-    for (MarkerSeries series : map.values()) {
+    Map<String, S> map = chart.getSeriesMap();
+    for (S series : map.values()) {
 
       if (!series.isShowInLegend()) {
         continue;
@@ -155,7 +153,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends Series> extends
   }
 
   @Override
-  public double getSeriesLegendRenderGraphicHeight(Series series) {
+  public double getSeriesLegendRenderGraphicHeight(S series) {
 
     return (series.getLegendRenderType() == LegendRenderType.Box || series.getLegendRenderType() == LegendRenderType.BoxNoOutline) ? BOX_SIZE : axesChartStyler.getMarkerSize();
   }

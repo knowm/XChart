@@ -30,16 +30,14 @@ import java.text.NumberFormat;
 import java.util.Map;
 
 import org.knowm.xchart.DialSeries;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.DialStyler;
-import org.knowm.xchart.style.Styler;
 
-public class PlotContent_Dial<ST extends Styler, S extends Series> extends PlotContent_ {
+public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> extends PlotContent_<ST, S> {
 
-  private final DialStyler styler;
+  private final ST styler;
   private final NumberFormat df = DecimalFormat.getPercentInstance();
 
-  PlotContent_Dial(Chart<DialStyler, DialSeries> chart) {
+  PlotContent_Dial(Chart<ST, S> chart) {
 
     super(chart);
     styler = chart.getStyler();
@@ -170,8 +168,8 @@ public class PlotContent_Dial<ST extends Styler, S extends Series> extends PlotC
       }
     }
 
-    Map<String, DialSeries> map = chart.getSeriesMap();
-    for (DialSeries series : map.values()) {
+    Map<String, S> map = chart.getSeriesMap();
+    for (S series : map.values()) {
       if (!series.isEnabled()) {
         continue;
       }

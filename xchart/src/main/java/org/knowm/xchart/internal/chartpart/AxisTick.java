@@ -21,27 +21,26 @@ import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * An axis tick
  */
-public class AxisTick<ST extends AxesChartStyler, S extends Series> implements ChartPart {
+public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
-  private final Chart<AxesChartStyler, AxesChartSeries> chart;
+  private final Chart<ST, S> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
   /**
    * the axisticklabels
    */
-  private final AxisTickLabels<AxesChartStyler, AxesChartSeries> axisTickLabels;
+  private final AxisTickLabels<ST, S> axisTickLabels;
 
   /**
    * the axistickmarks
    */
-  private final AxisTickMarks<AxesChartStyler, AxesChartSeries> axisTickMarks;
+  private final AxisTickMarks<ST, S> axisTickMarks;
 
   /**
    * Constructor
@@ -50,12 +49,12 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
    * @param direction
    * @param yAxis
    */
-  AxisTick(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, Axis yAxis) {
+  AxisTick(Chart<ST, S> chart, Direction direction, Axis yAxis) {
 
     this.chart = chart;
     this.direction = direction;
-    axisTickLabels = new AxisTickLabels<AxesChartStyler, AxesChartSeries>(chart, direction, yAxis);
-    axisTickMarks = new AxisTickMarks<AxesChartStyler, AxesChartSeries>(chart, direction, yAxis);
+    axisTickLabels = new AxisTickLabels<ST, S>(chart, direction, yAxis);
+    axisTickMarks = new AxisTickMarks<ST, S>(chart, direction, yAxis);
   }
 
   @Override
@@ -114,7 +113,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends Series> implements C
 
   // Getters /////////////////////////////////////////////////
 
-  AxisTickLabels<AxesChartStyler, AxesChartSeries> getAxisTickLabels() {
+  AxisTickLabels<ST, S> getAxisTickLabels() {
 
     return axisTickLabels;
   }

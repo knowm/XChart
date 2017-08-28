@@ -111,8 +111,10 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] ~182KB Jar
 * [x] Multiple Y-Axis charts
 * [x] Line charts
+* [x] Step charts
 * [x] Scatter charts
 * [x] Area charts
+* [x] Step Area charts
 * [x] Bar charts
 * [x] Histogram charts
 * [x] Pie charts
@@ -121,6 +123,7 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] Stick charts
 * [x] Dial charts
 * [x] Radar charts
+* [x] OHLC charts
 * [x] Error bars
 * [x] Logarithmic axes
 * [x] Number, Date, Bubble and Category X-Axis
@@ -150,6 +153,7 @@ Currently, there are 5 major chart types. Each type has its corresponding `Chart
 | BubbleChart | BubbleChartBuilder | BubbleStyler | BubbleSeries | Number, Date | Round |
 | DialChart | DialChartBuilder | DialStyler | DialSeries | double  | Round |
 | RadarChart | RadarChartBuilder | RadarStyler | RadarSeries | double[] | Round |
+| OHLCChart | OHLCChartBuilder | OHLCStyler | OHLCSeries | OHLC with Date | Candle |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
 
@@ -159,7 +163,7 @@ The different Stylers contain chart styling methods specific to the correspondin
 
 `XYChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals. 
 
-Series render styles include: `Line`, `Scatter` and `Area`.
+Series render styles include: `Line`, `Scatter`, `Area`, `Step` and `StepArea`.
 
 ### CategoryChart 
 
@@ -198,6 +202,14 @@ Series render styles include: `Round` and in the near future `Square`.
 `RadarChart` charts take a `double[]` of values between `0` and `1` to set the position of radar node.
 
 Series render styles include: `Polygon` and  `Circle`.
+
+### OHLCChart
+
+![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Candle.png)
+
+`OHLCChart` charts take Date data types for the X-Axis and 4 Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals.
+
+Series render styles include: `Candle`, `HiLo`.
 
 ## Real-time Java Charts using XChart
 

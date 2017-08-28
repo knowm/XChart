@@ -33,17 +33,15 @@ import java.util.Map;
 
 import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
-import org.knowm.xchart.style.Styler;
 
 /**
  * @author timmolter
  */
-public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotContent_ {
+public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries> extends PlotContent_<ST, S> {
 
-  private final PieStyler pieStyler;
+  private final ST pieStyler;
   private final DecimalFormat df = new DecimalFormat("#.0");
 
   /**
@@ -51,7 +49,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
    *
    * @param chart
    */
-  PlotContent_Pie(Chart<PieStyler, PieSeries> chart) {
+  PlotContent_Pie(Chart<ST, S> chart) {
 
     super(chart);
     pieStyler = chart.getStyler();
@@ -84,8 +82,8 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     // get total
     double total = 0.0;
 
-    Map<String, PieSeries> map = chart.getSeriesMap();
-    for (PieSeries series : map.values()) {
+    Map<String, S> map = chart.getSeriesMap();
+    for (S series : map.values()) {
 
       if (!series.isEnabled()) {
         continue;
@@ -125,7 +123,7 @@ public class PlotContent_Pie<ST extends Styler, S extends Series> extends PlotCo
     double startAngle = pieStyler.getStartAngleInDegrees() + 90;
 
     map = chart.getSeriesMap();
-    for (PieSeries series : map.values()) {
+    for (S series : map.values()) {
 
       if (!series.isEnabled()) {
         continue;

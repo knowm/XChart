@@ -35,6 +35,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.area.AreaChart01;
 import org.knowm.xchart.demo.charts.area.AreaChart02;
+import org.knowm.xchart.demo.charts.area.AreaChart03;
 import org.knowm.xchart.demo.charts.area.AreaLineChart03;
 import org.knowm.xchart.demo.charts.bar.BarChart01;
 import org.knowm.xchart.demo.charts.bar.BarChart02;
@@ -58,24 +59,17 @@ import org.knowm.xchart.demo.charts.date.DateChart06;
 import org.knowm.xchart.demo.charts.date.DateChart07;
 import org.knowm.xchart.demo.charts.date.DateChart08;
 import org.knowm.xchart.demo.charts.dial.DialChart01;
-import org.knowm.xchart.demo.charts.line.LineChart01;
-import org.knowm.xchart.demo.charts.line.LineChart02;
-import org.knowm.xchart.demo.charts.line.LineChart03;
-import org.knowm.xchart.demo.charts.line.LineChart04;
-import org.knowm.xchart.demo.charts.line.LineChart05;
-import org.knowm.xchart.demo.charts.line.LineChart06;
-import org.knowm.xchart.demo.charts.line.LineChart07;
+import org.knowm.xchart.demo.charts.line.*;
+import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
+import org.knowm.xchart.demo.charts.ohlc.OHLCChart02;
+import org.knowm.xchart.demo.charts.ohlc.OHLCChart03;
 import org.knowm.xchart.demo.charts.pie.PieChart01;
 import org.knowm.xchart.demo.charts.pie.PieChart02;
 import org.knowm.xchart.demo.charts.pie.PieChart03;
 import org.knowm.xchart.demo.charts.pie.PieChart04;
 import org.knowm.xchart.demo.charts.pie.PieChart05;
 import org.knowm.xchart.demo.charts.radar.RadarChart01;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart03;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart04;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart05;
+import org.knowm.xchart.demo.charts.realtime.*;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart01;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart02;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart03;
@@ -116,6 +110,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
   final RealtimeChart03 realtimeChart03 = new RealtimeChart03();
   final RealtimeChart04 realtimeChart04 = new RealtimeChart04();
   final RealtimeChart05 realtimeChart05 = new RealtimeChart05();
+  final RealtimeChart06 realtimeChart06 = new RealtimeChart06();
   Timer timer = new Timer();
 
   /**
@@ -248,6 +243,20 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart06")) {
+        // set up real-time chart simulated data feed
+        TimerTask chartUpdaterTask = new TimerTask() {
+
+          @Override
+          public void run() {
+
+            realtimeChart06.updateData();
+            chartPanel.revalidate();
+            chartPanel.repaint();
+          }
+        };
+        timer = new Timer();
+        timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
       }
     }
   }
@@ -275,6 +284,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaLineChart03 - Combination Area & Line Chart", new AreaLineChart03().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaChart03 - Step area rendering", new AreaChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Pie
@@ -319,6 +331,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart07 - Category Chart with Line Rendering", new LineChart07().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart08 - Step rendering", new LineChart08().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Scatter
@@ -405,6 +420,19 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("BubbleChart01 - Basic Bubble Chart", new BubbleChart01().getChart()));
     category.add(defaultMutableTreeNode);
 
+    // OHLC
+    category = new DefaultMutableTreeNode("OHLC Charts");
+    top.add(category);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("OHLCChart01 - HiLo rendering", new OHLCChart01().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("OHLCChart02 - Candle rendering", new OHLCChart02().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("OHLCChart03 - Candle with custom colors", new OHLCChart03().getChart()));
+    category.add(defaultMutableTreeNode);
+
     // Theme
     category = new DefaultMutableTreeNode("Chart Themes");
     top.add(category);
@@ -466,6 +494,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart05 - Real-time Category Chart", realtimeChart05.getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("RealtimeChart06 - Real-time OHLC Chart", realtimeChart06.getChart()));
     category.add(defaultMutableTreeNode);
   }
 

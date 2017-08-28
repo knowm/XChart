@@ -16,19 +16,13 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.PieSeries;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.PieStyler;
-import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * @author timmolter
  */
-public class Plot_Pie<ST extends Styler, S extends Series> extends Plot_ {
+public class Plot_Pie<ST extends PieStyler, S extends PieSeries> extends Plot_Circular<ST, S> {
 
   /**
    * Constructor
@@ -38,42 +32,11 @@ public class Plot_Pie<ST extends Styler, S extends Series> extends Plot_ {
   public Plot_Pie(Chart<ST, S> chart) {
 
     super(chart);
-    initContentAndSurface(chart);
   }
 
   protected void initContentAndSurface(Chart<ST, S> chart) {
 
-    this.plotContent = new PlotContent_Pie<PieStyler, PieSeries>((Chart<PieStyler, PieSeries>) chart);
-    this.plotSurface = new PlotSurface_Pie<PieStyler, PieSeries>((Chart<PieStyler, PieSeries>) chart);
-  }
-
-  @Override
-  public void paint(Graphics2D g) {
-
-    // calculate bounds
-    double xOffset = chart.getStyler().getChartPadding();
-
-    // double yOffset = chart.getChartTitle().getBounds().getHeight() + 2 * chart.getStyler().getChartPadding();
-    double yOffset = chart.getChartTitle().getBounds().getHeight() + chart.getStyler().getChartPadding();
-
-    double width =
-
-        chart.getWidth()
-
-            - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE ? chart.getLegend().getBounds().getWidth() : 0)
-
-            - 2 * chart.getStyler().getChartPadding()
-
-            - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideE && chart.getStyler().isLegendVisible() ? chart.getStyler().getChartPadding() : 0);
-
-    double height = chart.getHeight() - chart.getChartTitle().getBounds().getHeight()
-
-        - (chart.getStyler().getLegendPosition() == LegendPosition.OutsideS ? chart.getLegend().getBounds().getHeight() : 0)
-
-        - 2 * chart.getStyler().getChartPadding();
-
-    this.bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
-
-    super.paint(g);
+    this.plotContent = new PlotContent_Pie<ST, S>(chart);
+    this.plotSurface = new PlotSurface_Pie<ST, S>(chart);
   }
 }

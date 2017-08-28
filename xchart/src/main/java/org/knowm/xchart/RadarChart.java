@@ -46,8 +46,8 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
   public RadarChart(int width, int height) {
 
     super(width, height, new RadarStyler());
-    plot = new Plot_Radar(this);
-    legend = new Legend_Pie(this);
+    plot = new Plot_Radar<RadarStyler, RadarSeries>(this);
+    legend = new Legend_Pie<RadarStyler, RadarSeries>(this);
   }
 
   /**

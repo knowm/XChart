@@ -34,22 +34,22 @@ public abstract class AxesChartSeries extends Series {
   /**
    * the minimum value of axis range
    */
-  double xMin;
+  protected double xMin;
 
   /**
    * the maximum value of axis range
    */
-  double xMax;
+  protected double xMax;
 
   /**
    * the minimum value of axis range
    */
-  double yMin;
+  protected double yMin;
 
   /**
    * the maximum value of axis range
    */
-  double yMax;
+  protected double yMax;
 
   /**
    * Line Style
@@ -72,7 +72,7 @@ public abstract class AxesChartSeries extends Series {
    * @param name
    * @param xAxisDataType
    */
-  AxesChartSeries(String name, DataType xAxisDataType) {
+  protected AxesChartSeries(String name, DataType xAxisDataType) {
 
     super(name);
     this.xAxisDataType = xAxisDataType;

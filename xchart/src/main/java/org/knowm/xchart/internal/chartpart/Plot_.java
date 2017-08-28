@@ -30,8 +30,8 @@ public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
   final Chart<ST, S> chart;
   Rectangle2D bounds;
 
-  PlotSurface_ plotSurface;
-  PlotContent_ plotContent;
+  PlotSurface_<ST, S> plotSurface;
+  PlotContent_<ST, S> plotContent;
 
   /**
    * Constructor

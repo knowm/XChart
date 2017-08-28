@@ -16,28 +16,28 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.Styler;
+
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.Styler;
 
 /**
  * Draws the plot background and the plot border
  *
  * @author timmolter
  */
-public class PlotSurface_Pie<ST extends Styler, S extends Series> extends PlotSurface_ {
+public class PlotSurface_Pie<ST extends Styler, S extends Series> extends PlotSurface_<ST, S> {
 
-  private final Styler styler;
+  private final ST styler;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotSurface_Pie(Chart<? extends Styler, ? extends Series> chart) {
+  PlotSurface_Pie(Chart<ST, S> chart) {
 
     super(chart);
     this.styler = chart.getStyler();

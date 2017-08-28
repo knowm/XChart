@@ -43,8 +43,8 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
   public PieChart(int width, int height) {
 
     super(width, height, new PieStyler());
-    plot = new Plot_Pie(this);
-    legend = new Legend_Pie(this);
+    plot = new Plot_Pie<PieStyler, PieSeries>(this);
+    legend = new Legend_Pie<PieStyler, PieSeries>(this);
   }
 
   /**

@@ -46,9 +46,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
     super(width, height, new XYStyler());
 
-    axisPair = new AxisPair(this);
-    plot = new Plot_XY(this);
-    legend = new Legend_Marker(this);
+    axisPair = new AxisPair<XYStyler, XYSeries>(this);
+    plot = new Plot_XY<XYStyler, XYSeries>(this);
+    legend = new Legend_Marker<XYStyler, XYSeries>(this);
   }
 
   /**

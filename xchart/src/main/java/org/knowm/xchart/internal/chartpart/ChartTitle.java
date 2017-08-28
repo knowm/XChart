@@ -16,6 +16,9 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.Styler;
+
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -28,9 +31,9 @@ import java.awt.geom.Rectangle2D;
 /**
  * Chart Title
  */
-public class ChartTitle implements ChartPart {
+public class ChartTitle<ST extends Styler, S extends Series> implements ChartPart {
 
-  private final Chart<?, ?> chart;
+  private final Chart<ST, S> chart;
   private Rectangle2D bounds;
 
   /**
@@ -38,7 +41,7 @@ public class ChartTitle implements ChartPart {
    *
    * @param chart
    */
-  public ChartTitle(Chart<?, ?> chart) {
+  public ChartTitle(Chart<ST, S> chart) {
 
     this.chart = chart;
   }

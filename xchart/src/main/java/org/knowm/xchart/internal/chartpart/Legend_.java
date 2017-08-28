@@ -34,7 +34,7 @@ import org.knowm.xchart.style.Styler;
  */
 public abstract class Legend_<ST extends Styler, S extends Series> implements ChartPart {
 
-  protected abstract double getSeriesLegendRenderGraphicHeight(Series series);
+  protected abstract double getSeriesLegendRenderGraphicHeight(S series);
 
   protected abstract void doPaint(Graphics2D g);
 
@@ -159,7 +159,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     double legendContentHeight = 0;
 
     Map<String, S> map = chart.getSeriesMap();
-    for (Series series : map.values()) {
+    for (S series : map.values()) {
 
       if (!series.isShowInLegend()) {
         continue;
@@ -217,7 +217,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     double legendContentWidth = 0;
 
     Map<String, S> map = chart.getSeriesMap();
-    for (Series series : map.values()) {
+    for (S series : map.values()) {
 
       if (!series.isShowInLegend()) {
         continue;
@@ -261,7 +261,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
    * @param series
    * @return
    */
-  Map<String, Rectangle2D> getSeriesTextBounds(Series series) {
+  Map<String, Rectangle2D> getSeriesTextBounds(S series) {
 
     // FontMetrics fontMetrics = g.getFontMetrics(getChartPainter().getstyler().getLegendFont());
     // float fontDescent = fontMetrics.getDescent();

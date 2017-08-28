@@ -16,25 +16,22 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import org.knowm.xchart.DialSeries;
-import org.knowm.xchart.style.DialStyler;
+import org.knowm.xchart.OHLCSeries;
+import org.knowm.xchart.style.AxesChartStyler;
 
-public class Plot_Dial<ST extends DialStyler, S extends DialSeries> extends Plot_Circular<ST, S> {
+/**
+ * @author arthurmcgibbon
+ */
+public class Plot_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> extends Plot_AxesChart<ST, S> {
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Plot_Dial(Chart<ST, S> chart) {
+  public Plot_OHLC(Chart<ST, S> chart) {
 
     super(chart);
-  }
-  
-  @Override
-  protected void initContentAndSurface(Chart<ST, S> chart) {
-  
-    this.plotContent = new PlotContent_Dial<ST, S>(chart);
-    this.plotSurface = new PlotSurface_Pie<ST, S>(chart);
+    this.plotContent = new PlotContent_OHLC<ST, S>(chart);
   }
 }

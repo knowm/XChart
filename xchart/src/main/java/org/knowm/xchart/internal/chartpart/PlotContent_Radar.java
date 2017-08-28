@@ -33,11 +33,9 @@ import java.util.Map;
 import org.knowm.xchart.RadarChart;
 import org.knowm.xchart.RadarChart.RadarRenderStyle;
 import org.knowm.xchart.RadarSeries;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.RadarStyler;
-import org.knowm.xchart.style.Styler;
 
-public class PlotContent_Radar<ST extends Styler, S extends Series> extends PlotContent_ {
+public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> extends PlotContent_<ST, S> {
 
   private final static int MARGIN = 5;
   private final RadarStyler styler;
@@ -50,13 +48,13 @@ public class PlotContent_Radar<ST extends Styler, S extends Series> extends Plot
   double xDiameter;
   double yDiameter;
 
-  PlotContent_Radar(Chart<RadarStyler, RadarSeries> chart) {
+  PlotContent_Radar(Chart<ST, S> chart) {
 
     super(chart);
     styler = chart.getStyler();
   }
 
-  protected void calculatePlotVaraiables(double widthCorrection, double heightCorrection) {
+  protected void calculatePlotVariables(double widthCorrection, double heightCorrection) {
 
     double fillPercentage = styler.getPlotContentSize();
     double boundsWidth = getBounds().getWidth();
@@ -91,12 +89,12 @@ public class PlotContent_Radar<ST extends Styler, S extends Series> extends Plot
   @Override
   public void doPaint(Graphics2D g) {
 
-    calculatePlotVaraiables(0, 0);
+    calculatePlotVariables(0, 0);
 
     String[] variableLabels = ((RadarChart) chart).getVariableLabels();
     int variableCount = variableLabels.length;
 
-    Map<String, RadarSeries> map = chart.getSeriesMap();
+    Map<String, S> map = chart.getSeriesMap();
     RadarChart radarChart = (RadarChart) chart;
 
     double angleForSeries = 360.0 / variableCount;
@@ -295,7 +293,7 @@ public class PlotContent_Radar<ST extends Styler, S extends Series> extends Plot
 
     NumberFormat decimalFormat = (styler.getDecimalPattern() == null) ? df : new DecimalFormat(styler.getDecimalPattern());
 
-    for (RadarSeries series : map.values()) {
+    for (S series : map.values()) {
 
       if (!series.isEnabled()) {
         continue;
