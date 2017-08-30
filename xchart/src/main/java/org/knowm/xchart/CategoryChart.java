@@ -49,9 +49,9 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
   public CategoryChart(int width, int height) {
 
     super(width, height, new CategoryStyler());
-    axisPair = new AxisPair(this);
-    plot = new Plot_Category(this);
-    legend = new Legend_Marker(this);
+    axisPair = new AxisPair<CategoryStyler, CategorySeries>(this);
+    plot = new Plot_Category<CategoryStyler, CategorySeries>(this);
+    legend = new Legend_Marker<CategoryStyler, CategorySeries>(this);
   }
 
   /**

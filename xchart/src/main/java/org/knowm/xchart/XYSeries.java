@@ -33,6 +33,10 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
     Area(LegendRenderType.Line),
 
+    Step(LegendRenderType.Line),
+
+    StepArea(LegendRenderType.Line),
+
     Scatter(LegendRenderType.Scatter);
 
     private final LegendRenderType legendRenderType;

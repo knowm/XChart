@@ -27,24 +27,22 @@ import java.util.Map;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.CategoryStyler;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
  * @author timmolter
  */
-public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends Series> extends PlotContent_ {
+public class PlotContent_Category_Line_Area_Scatter<ST extends CategoryStyler, S extends CategorySeries> extends PlotContent_<ST, S> {
 
-  private final CategoryStyler categoryStyler;
+  private final ST categoryStyler;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotContent_Category_Line_Area_Scatter(Chart<CategoryStyler, CategorySeries> chart) {
+  PlotContent_Category_Line_Area_Scatter(Chart<ST, S> chart) {
 
     super(chart);
     this.categoryStyler = chart.getStyler();
@@ -61,12 +59,12 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends Styler, S extends
     double yTickSpace = categoryStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
-    Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
+    Map<String, S> seriesMap = chart.getSeriesMap();
 
     int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
 
-    for (CategorySeries series : seriesMap.values()) {
+    for (S series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
         continue;

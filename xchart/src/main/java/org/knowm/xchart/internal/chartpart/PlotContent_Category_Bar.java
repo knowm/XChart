@@ -35,30 +35,28 @@ import java.util.Map;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.CategoryStyler;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
  * @author timmolter
  */
-public class PlotContent_Category_Bar<ST extends Styler, S extends Series> extends PlotContent_ {
+public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends CategorySeries> extends PlotContent_<ST, S> {
 
-  private final CategoryStyler stylerCategory;
+  private final ST stylerCategory;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotContent_Category_Bar(Chart<CategoryStyler, CategorySeries> chart) {
+  PlotContent_Category_Bar(Chart<ST, S> chart) {
 
     super(chart);
     this.stylerCategory = chart.getStyler();
   }
 
-  private static void drawStepBarLine(Graphics2D g, CategorySeries series, Path2D.Double path) {
+  private void drawStepBarLine(Graphics2D g, S series, Path2D.Double path) {
 
     if (series.getLineColor() != null) {
       g.setColor(series.getLineColor());
@@ -67,7 +65,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     }
   }
 
-  private static void drawStepBarFill(Graphics2D g, CategorySeries series, Path2D.Double path) {
+  private void drawStepBarFill(Graphics2D g, S series, Path2D.Double path) {
 
     if (series.getFillColor() != null) {
       g.setColor(series.getFillColor());
@@ -75,7 +73,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     }
   }
 
-  private static void drawStepBar(Graphics2D g, CategorySeries series, ArrayList<Point2D.Double> path, ArrayList<Point2D.Double> returnPath) {
+  private void drawStepBar(Graphics2D g, S series, ArrayList<Point2D.Double> path, ArrayList<Point2D.Double> returnPath) {
 
     Collections.reverse(returnPath);
 
@@ -117,7 +115,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     // System.out.println("xTickSpace: " + xTickSpace);
     double xLeftMargin = Utils.getTickStartOffset(getBounds().getWidth(), xTickSpace);
     // System.out.println("xLeftMargin: " + xLeftMargin);
-    Map<String, CategorySeries> seriesMap = chart.getSeriesMap();
+    Map<String, S> seriesMap = chart.getSeriesMap();
     int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
     // System.out.println("gridStep: " + gridStep);
@@ -148,7 +146,7 @@ public class PlotContent_Category_Bar<ST extends Styler, S extends Series> exten
     double[] accumulatedStackOffsetPos = new double[numCategories];
     double[] accumulatedStackOffsetNeg = new double[numCategories];
 
-    for (CategorySeries series : seriesMap.values()) {
+    for (S series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
         continue;

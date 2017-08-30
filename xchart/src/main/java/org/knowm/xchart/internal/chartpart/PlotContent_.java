@@ -23,12 +23,12 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * @author timmolter
  */
-public abstract class PlotContent_<ST extends AxesChartStyler, S extends Series> implements ChartPart {
+public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;
 

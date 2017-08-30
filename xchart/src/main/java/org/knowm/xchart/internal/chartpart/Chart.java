@@ -53,10 +53,10 @@ public abstract class Chart<ST extends Styler, S extends Series> {
    * Chart Parts
    */
   protected AxisPair axisPair;
-  final ToolTips toolTips; // ToolTip is hewre because AxisPair and Plot need access to it
-  protected Plot_ plot;
-  protected final ChartTitle chartTitle;
-  protected Legend_ legend;
+  final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
+  protected Plot_<ST, S> plot;
+  protected final ChartTitle<ST, S> chartTitle;
+  protected Legend_<ST, S> legend;
 
   protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
 
@@ -75,7 +75,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     this.toolTips = new ToolTips(styler);
 
-    this.chartTitle = new ChartTitle(this);
+    this.chartTitle = new ChartTitle<ST, S>(this);
   }
 
   protected void paintBackground(Graphics2D g) {
@@ -178,17 +178,17 @@ public abstract class Chart<ST extends Styler, S extends Series> {
    * Chart Parts Getters
    */
 
-  ChartTitle getChartTitle() {
+  ChartTitle<ST, S> getChartTitle() {
 
     return chartTitle;
   }
 
-  Legend_ getLegend() {
+  Legend_<ST, S> getLegend() {
 
     return legend;
   }
 
-  Plot_ getPlot() {
+  Plot_<ST, S> getPlot() {
 
     return plot;
   }

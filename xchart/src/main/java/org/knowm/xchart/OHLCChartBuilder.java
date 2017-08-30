@@ -14,27 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.knowm.xchart.internal.chartpart;
+package org.knowm.xchart;
 
-import org.knowm.xchart.DialSeries;
-import org.knowm.xchart.style.DialStyler;
+import org.knowm.xchart.internal.ChartBuilder;
 
-public class Plot_Dial<ST extends DialStyler, S extends DialSeries> extends Plot_Circular<ST, S> {
+/**
+ * @author timmolter
+ */
+public class OHLCChartBuilder extends ChartBuilder<OHLCChartBuilder, OHLCChart> {
+
+  String xAxisTitle = "";
+  String yAxisTitle = "";
+
+  public OHLCChartBuilder() {
+
+  }
+
+  public OHLCChartBuilder xAxisTitle(String xAxisTitle) {
+
+    this.xAxisTitle = xAxisTitle;
+    return this;
+  }
+
+  public OHLCChartBuilder yAxisTitle(String yAxisTitle) {
+
+    this.yAxisTitle = yAxisTitle;
+    return this;
+  }
 
   /**
-   * Constructor
+   * return fully built XYChart
    *
-   * @param chart
+   * @return a XYChart
    */
-  public Plot_Dial(Chart<ST, S> chart) {
-
-    super(chart);
-  }
-  
   @Override
-  protected void initContentAndSurface(Chart<ST, S> chart) {
-  
-    this.plotContent = new PlotContent_Dial<ST, S>(chart);
-    this.plotSurface = new PlotSurface_Pie<ST, S>(chart);
+  public OHLCChart build() {
+
+    return new OHLCChart(this);
   }
 }

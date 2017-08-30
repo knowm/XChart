@@ -36,13 +36,13 @@ import org.knowm.xchart.style.Styler.YAxisPosition;
  */
 public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
-  private final Chart<AxesChartStyler, AxesChartSeries> chart;
+  private final Chart<ST, S> chart;
 
-  private final Axis<AxesChartStyler, AxesChartSeries> xAxis;
-  private final Axis<AxesChartStyler, AxesChartSeries> yAxis;
-  private final TreeMap<Integer, Axis<AxesChartStyler, AxesChartSeries>> yAxisMap;
-  private Axis<AxesChartStyler, AxesChartSeries> leftMainYAxis;
-  private Axis<AxesChartStyler, AxesChartSeries> rightMainYAxis;
+  private final Axis<ST, S> xAxis;
+  private final Axis<ST, S> yAxis;
+  private final TreeMap<Integer, Axis<ST, S>> yAxisMap;
+  private Axis<ST, S> leftMainYAxis;
+  private Axis<ST, S> rightMainYAxis;
 
   private final Rectangle2D.Double leftYAxisBounds;
   private final Rectangle2D.Double rightYAxisBounds;
@@ -52,14 +52,14 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    *
    * @param chart
    */
-  public AxisPair(Chart<AxesChartStyler, AxesChartSeries> chart) {
+  public AxisPair(Chart<ST, S> chart) {
 
     this.chart = chart;
 
     // add axes
-    xAxis = new Axis<AxesChartStyler, AxesChartSeries>(chart, Axis.Direction.X, 0);
-    yAxis = new Axis<AxesChartStyler, AxesChartSeries>(chart, Axis.Direction.Y, 0);
-    yAxisMap = new TreeMap<Integer, Axis<AxesChartStyler, AxesChartSeries>>();
+    xAxis = new Axis<ST, S>(chart, Axis.Direction.X, 0);
+    yAxis = new Axis<ST, S>(chart, Axis.Direction.Y, 0);
+    yAxisMap = new TreeMap<Integer, Axis<ST, S>>();
     yAxisMap.put(0, yAxis);
     leftYAxisBounds = new Rectangle2D.Double();
     rightYAxisBounds = new Rectangle2D.Double();
@@ -73,7 +73,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     leftMainYAxis = null;
     rightMainYAxis = null;
 
-    AxesChartStyler styler = chart.getStyler();
+    ST styler = chart.getStyler();
 
     final int chartPadding = styler.getChartPadding();
     final int paddingBetweenAxes = chartPadding;
@@ -84,8 +84,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     int leftCount = 0;
     double leftStart = chartPadding;
 
-    for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
-      Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
+    for (Entry<Integer, Axis<ST, S>> e : yAxisMap.entrySet()) {
+      Axis<ST, S> ya = e.getValue();
       if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
         continue;
       }
@@ -141,8 +141,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     int rightCount = 0;
 
     // traverse reverse
-    for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.descendingMap().entrySet()) {
-      Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
+    for (Entry<Integer, Axis<ST, S>> e : yAxisMap.descendingMap().entrySet()) {
+      Axis<ST, S> ya = e.getValue();
       if (styler.getYAxisGroupPosistion(e.getKey()) != YAxisPosition.Right) {
         continue;
       }
@@ -229,7 +229,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     boolean mainYAxisUsed = false;
     if (chart.getSeriesMap() != null) {
-      for (AxesChartSeries series : chart.getSeriesMap().values()) {
+      for (S series : chart.getSeriesMap().values()) {
         int yIndex = series.getYAxisGroup();
         if (!mainYAxisUsed && yIndex == 0) {
           mainYAxisUsed = true;
@@ -237,16 +237,16 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
         if (yAxisMap.containsKey(yIndex)) {
           continue;
         }
-        yAxisMap.put(yIndex, new Axis<AxesChartStyler, AxesChartSeries>(chart, Axis.Direction.Y, yIndex));
+        yAxisMap.put(yIndex, new Axis<ST, S>(chart, Axis.Direction.Y, yIndex));
       }
     }
 
     // set the axis data types, making sure all are compatible
     xAxis.setDataType(null);
-    for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
+    for (Axis<ST, S> ya : yAxisMap.values()) {
       ya.setDataType(null);
     }
-    for (AxesChartSeries series : chart.getSeriesMap().values()) {
+    for (S series : chart.getSeriesMap().values()) {
       xAxis.setDataType(series.getxAxisDataType());
       getYAxis(series.getYAxisGroup()).setDataType(series.getyAxisDataType());
       if (!mainYAxisUsed) {
@@ -256,20 +256,20 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     // calculate axis min and max
     xAxis.resetMinMax();
-    for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
+    for (Axis<ST, S> ya : yAxisMap.values()) {
       ya.resetMinMax();
     }
 
     // if no series, we still want to plot an empty plot with axes. Since there are no min and max with no series added, we just fake it arbitrarily.
     if (chart.getSeriesMap() == null || chart.getSeriesMap().size() < 1) {
       xAxis.addMinMax(-1, 1);
-      for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
+      for (Axis<ST, S> ya : yAxisMap.values()) {
         ya.addMinMax(-1, 1);
       }
     }
     else {
       int disabledCount = 0; // maybe all are disabled, so we check this condition
-      for (AxesChartSeries series : chart.getSeriesMap().values()) {
+      for (S series : chart.getSeriesMap().values()) {
         // add min/max to axes
         // System.out.println(series.getxMin());
         // System.out.println(series.getxMax());
@@ -289,14 +289,14 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       }
       if (disabledCount == chart.getSeriesMap().values().size()) {
         xAxis.addMinMax(-1, 1);
-        for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
+        for (Axis<ST, S> ya : yAxisMap.values()) {
           ya.addMinMax(-1, 1);
         }
       }
     }
 
     overrideMinMaxForXAxis();
-    for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
+    for (Axis<ST, S> ya : yAxisMap.values()) {
       overrideMinMaxForYAxis(ya);
     }
 
@@ -305,7 +305,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic X-Axis!!!");
     }
     if (chart.getStyler().isYAxisLogarithmic()) {
-      for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
+      for (Axis<ST, S> ya : yAxisMap.values()) {
         if (ya.getMin() <= 0.0) {
           // System.out.println(getMin());
           throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic Y-Axis!!!");
@@ -316,7 +316,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     if (xAxis.getMin() == Double.POSITIVE_INFINITY || xAxis.getMax() == Double.POSITIVE_INFINITY) {
       throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
     }
-    for (Axis<AxesChartStyler, AxesChartSeries> ya : yAxisMap.values()) {
+    for (Axis<ST, S> ya : yAxisMap.values()) {
       if (ya.getMin() == Double.POSITIVE_INFINITY || ya.getMax() == Double.POSITIVE_INFINITY) {
         throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
       }
@@ -330,7 +330,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
   }
 
-  protected Axis<AxesChartStyler, AxesChartSeries> getYAxis(int yIndex) {
+  protected Axis<ST, S> getYAxis(int yIndex) {
 
     return yAxisMap.get(yIndex);
   }
@@ -377,7 +377,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
           double[] accumulatedStackOffsetPos = new double[numCategories];
           double[] accumulatedStackOffsetNeg = new double[numCategories];
 
-          for (AxesChartSeries series : chart.getSeriesMap().values()) {
+          for (S series : chart.getSeriesMap().values()) {
 
             AxesChartSeriesCategory axesChartSeriesCategory = (AxesChartSeriesCategory) series;
 
@@ -455,12 +455,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
   // Getters & Setters /////////////////////////////////////////////////
 
-  Axis<AxesChartStyler, AxesChartSeries> getXAxis() {
+  Axis<ST, S> getXAxis() {
 
     return xAxis;
   }
 
-  Axis<AxesChartStyler, AxesChartSeries> getYAxis() {
+  Axis<ST, S> getYAxis() {
 
     return yAxis;
   }
@@ -481,12 +481,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     return rightYAxisBounds;
   }
 
-  public Axis<AxesChartStyler, AxesChartSeries> getLeftMainYAxis() {
+  public Axis<ST, S> getLeftMainYAxis() {
 
     return leftMainYAxis;
   }
 
-  public Axis<AxesChartStyler, AxesChartSeries> getRightMainYAxis() {
+  public Axis<ST, S> getRightMainYAxis() {
 
     return rightMainYAxis;
   }

@@ -23,16 +23,15 @@ import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /**
  * Axis tick marks. This includes the little tick marks and the line that hugs the plot area.
  */
-public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> implements ChartPart {
+public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
-  private final Chart<AxesChartStyler, AxesChartSeries> chart;
+  private final Chart<ST, S> chart;
   private Rectangle2D bounds;
   private final Direction direction;
   private final Axis yAxis;
@@ -43,7 +42,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
    * @param chart
    * @param direction
    */
-  AxisTickMarks(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, Axis yAxis) {
+  AxisTickMarks(Chart<ST, S> chart, Direction direction, Axis yAxis) {
 
     this.chart = chart;
     this.direction = direction;
@@ -53,7 +52,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends Series> impleme
   @Override
   public void paint(Graphics2D g) {
 
-    AxesChartStyler styler = chart.getStyler();
+    ST styler = chart.getStyler();
     g.setColor(styler.getAxisTickMarksColor());
     g.setStroke(styler.getAxisTickMarksStroke());
 

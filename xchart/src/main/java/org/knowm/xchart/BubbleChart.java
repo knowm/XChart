@@ -45,9 +45,9 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
   public BubbleChart(int width, int height) {
 
     super(width, height, new BubbleStyler());
-    axisPair = new AxisPair(this);
-    plot = new Plot_Bubble(this);
-    legend = new Legend_Bubble(this);
+    axisPair = new AxisPair<BubbleStyler, BubbleSeries>(this);
+    plot = new Plot_Bubble<BubbleStyler, BubbleSeries>(this);
+    legend = new Legend_Bubble<BubbleStyler, BubbleSeries>(this);
   }
 
   /**

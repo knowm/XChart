@@ -39,10 +39,10 @@ import org.knowm.xchart.style.Styler.YAxisPosition;
  */
 public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
-  private final Chart<AxesChartStyler, AxesChartSeries> chart;
+  private final Chart<ST, S> chart;
   private final Rectangle2D.Double bounds;
 
-  private final AxesChartStyler axesChartStyler;
+  private final ST axesChartStyler;
 
   /**
    * the dataType
@@ -52,12 +52,12 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   /**
    * the axis title
    */
-  private final AxisTitle<AxesChartStyler, AxesChartSeries> axisTitle;
+  private final AxisTitle<ST, S> axisTitle;
 
   /**
    * the axis tick
    */
-  private final AxisTick<AxesChartStyler, AxesChartSeries> axisTick;
+  private final AxisTick<ST, S> axisTick;
 
   /**
    * the axis tick calculator
@@ -97,7 +97,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
    * @param chart the Chart
    * @param direction the axis direction (X or Y)
    */
-  public Axis(Chart<AxesChartStyler, AxesChartSeries> chart, Direction direction, int yIndex) {
+  public Axis(Chart<ST, S> chart, Direction direction, int yIndex) {
 
     this.chart = chart;
     this.axesChartStyler = chart.getStyler();
@@ -105,8 +105,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     this.direction = direction;
     this.yIndex = yIndex;
     bounds = new Rectangle2D.Double();
-    axisTitle = new AxisTitle<AxesChartStyler, AxesChartSeries>(chart, direction, direction == Direction.Y ? this : null, yIndex);
-    axisTick = new AxisTick<AxesChartStyler, AxesChartSeries>(chart, direction, direction == Direction.Y ? this : null);
+    axisTitle = new AxisTitle<ST, S>(chart, direction, direction == Direction.Y ? this : null, yIndex);
+    axisTick = new AxisTick<ST, S>(chart, direction, direction == Direction.Y ? this : null);
   }
 
   /**
@@ -453,7 +453,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     this.max = max;
   }
 
-  AxisTick<AxesChartStyler, AxesChartSeries> getAxisTick() {
+  AxisTick<ST, S> getAxisTick() {
 
     return axisTick;
   }
@@ -463,7 +463,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     return direction;
   }
 
-  AxisTitle<AxesChartStyler, AxesChartSeries> getAxisTitle() {
+  AxisTitle<ST, S> getAxisTitle() {
 
     return axisTitle;
   }

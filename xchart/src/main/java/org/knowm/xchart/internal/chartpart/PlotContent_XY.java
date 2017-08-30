@@ -24,24 +24,22 @@ import java.util.Map;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.XYStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /**
  * @author timmolter
  */
-public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extends PlotContent_ {
+public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> extends PlotContent_<ST, S> {
 
-  private final XYStyler xyStyler;
+  private final ST xyStyler;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotContent_XY(Chart<XYStyler, XYSeries> chart) {
+  PlotContent_XY(Chart<ST, S> chart) {
 
     super(chart);
     xyStyler = chart.getStyler();
@@ -69,9 +67,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
       xMax = Math.log10(xMax);
     }
 
-    Map<String, XYSeries> map = chart.getSeriesMap();
+    Map<String, S> map = chart.getSeriesMap();
 
-    for (XYSeries series : map.values()) {
+    for (S series : map.values()) {
 
       if (!series.isEnabled()) {
         continue;
@@ -150,22 +148,37 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
 
         // paint line
 
-        boolean isSeriesLineOrArea = (XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()) || (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle());
+        boolean isSeriesLineOrArea = XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()
+                || XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle();
+        boolean isSeriesStepLineOrStepArea =  XYSeriesRenderStyle.Step == series.getXYSeriesRenderStyle()
+                || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle();
 
-        if (isSeriesLineOrArea) {
+        if (isSeriesLineOrArea || isSeriesStepLineOrStepArea) {
           if (series.getLineStyle() != SeriesLines.NONE) {
 
             if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
               g.setColor(series.getLineColor());
               g.setStroke(series.getLineStyle());
-              line.setLine(previousX, previousY, xOffset, yOffset);
-              g.draw(line);
+              if (isSeriesLineOrArea) {
+                line.setLine(previousX, previousY, xOffset, yOffset);
+                g.draw(line);
+              } else {
+                if (previousX != xOffset) {
+                  line.setLine(previousX, previousY, xOffset, previousY);
+                  g.draw(line);
+                }
+                if (previousY != yOffset) {
+                  line.setLine(xOffset, previousY, xOffset, yOffset);
+                  g.draw(line);
+                }
+              }
             }
           }
         }
 
         // paint area
-        if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
+        if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
+                || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
@@ -176,7 +189,16 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends Series> extend
               path.moveTo(previousX, yBottomOfArea);
               path.lineTo(previousX, previousY);
             }
-            path.lineTo(xOffset, yOffset);
+            if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
+              path.lineTo(xOffset, yOffset);
+            } else {
+              if (previousX != xOffset) {
+                path.lineTo(xOffset, previousY);
+              }
+              if (previousY != yOffset) {
+                path.lineTo(xOffset, yOffset);
+              }
+            }
           }
           if (xOffset < previousX) {
             throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");

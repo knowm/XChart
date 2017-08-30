@@ -24,16 +24,16 @@ import org.knowm.xchart.style.XYStyler;
 /**
  * @author timmolter
  */
-public class Plot_XY<ST extends AxesChartStyler, S extends Series> extends Plot_AxesChart {
+public class Plot_XY<ST extends AxesChartStyler, S extends XYSeries> extends Plot_AxesChart<ST, S> {
 
   /**
    * Constructor
    *
    * @param chart
    */
-  public Plot_XY(Chart<XYStyler, XYSeries> chart) {
+  public Plot_XY(Chart<ST, S> chart) {
 
     super(chart);
-    this.plotContent = new PlotContent_XY<XYStyler, XYSeries>(chart);
+    this.plotContent = new PlotContent_XY<ST, S>(chart);
   }
 }

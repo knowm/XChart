@@ -38,8 +38,8 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
   public DialChart(int width, int height) {
 
     super(width, height, new DialStyler());
-    plot = new Plot_Dial(this);
-    legend = new Legend_Pie(this);
+    plot = new Plot_Dial<DialStyler, DialSeries>(this);
+    legend = new Legend_Pie<DialStyler, DialSeries>(this);
   }
 
   /**
