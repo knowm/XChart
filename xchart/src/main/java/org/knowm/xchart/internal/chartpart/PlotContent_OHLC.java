@@ -22,6 +22,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 import java.awt.*;
+import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
@@ -68,6 +69,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
     }
 
     Map<String, S> map = chart.getSeriesMap();
+    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
 
     for (S series : map.values()) {
 
@@ -88,6 +90,9 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
       double[] highData = series.getHighData();
       double[] lowData = series.getLowData();
       double[] closeData = series.getCloseData();
+
+      double candleHalfWidth = Math.max(3, xTickSpace / xData.length / 2 - ohlcStyler.getAxisTickPadding());
+      float lineWidth = Math.max(2, series.getLineStyle().getLineWidth());
 
       for (int i = 0; i < xData.length; i++) {
 
@@ -148,6 +153,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
         double lowOffset = getBounds().getY() + lowTransform;
         double closeOffset = getBounds().getY() + closeTransform;
 
+        Area toolTipArea = null;
         // paint line
         if (series.getLineStyle() != SeriesLines.NONE) {
 
@@ -159,9 +165,12 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
             // high to low line
             line.setLine(xOffset, highOffset, xOffset, lowOffset);
             g.draw(line);
-            // TODO - this should be in relation to how wide the bars are on the screen.  How do I get this info?
-            final double xStart = xOffset - 3.0;
-            final double xEnd = xOffset + 3.0;
+            final double xStart = xOffset - candleHalfWidth;
+            final double xEnd = xOffset + candleHalfWidth;
+            if (toolTipsEnabled) {
+              rect.setRect(xOffset - lineWidth / 2, highOffset, lineWidth, lowOffset - highOffset);
+              toolTipArea = new Area(rect);
+            }
             if (series.getRenderStyle() == OHLCSeries.OHLCSeriesRenderStyle.Candle) {
               // candle style
               if (closeOrig > openOrig) {
@@ -171,23 +180,34 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
               }
               rect.setRect(xStart, Math.min(openOffset, closeOffset), xEnd - xStart, Math.abs(closeOffset - openOffset));
               g.fill(rect);
+              // add data labels
+              if (toolTipsEnabled) {
+                toolTipArea.add(new Area(rect));
+              }
+
             } else {
               // lines only
               line.setLine(xStart, openOffset, xOffset, openOffset);
               g.draw(line);
               line.setLine(xOffset, closeOffset, xEnd, closeOffset);
               g.draw(line);
+              if (toolTipsEnabled) {
+                rect.setRect(xStart, openOffset - lineWidth / 2, xOffset - xStart, lineWidth);
+                toolTipArea.add(new Area(rect));
+                rect.setRect(xOffset, closeOffset - lineWidth / 2, xEnd - xOffset, lineWidth);
+                toolTipArea.add(new Area(rect));
+              }
             }
           }
         }
 
         // add data labels
-        if (chart.getStyler().isToolTipsEnabled()) {
-          chart.toolTips.addData(xOffset, closeOffset, chart.getXAxisFormat().format(x),
-                  chart.getYAxisFormat().format(openOrig) + ':' +
-                          chart.getYAxisFormat().format(highOrig) + ':' +
-                          chart.getYAxisFormat().format(lowOrig) + ':' +
-                          chart.getYAxisFormat().format(closeOrig));
+        if (toolTipsEnabled) {
+          chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth *2, chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat().format(openOrig) + ':' +
+                      chart.getYAxisFormat().format(highOrig) + ':' +
+                      chart.getYAxisFormat().format(lowOrig) + ':' +
+                      chart.getYAxisFormat().format(closeOrig));
         }
       }
 

@@ -24,6 +24,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -57,13 +58,16 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
 
   public static void populateData(Date startDate, double startPrice, int count, List<Date> xData,
                                   List<Double> openData, List<Double> highData, List<Double> lowData, List<Double> closeData) {
-
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(startDate);
     double data = startPrice;
     for (int i = 1; i <= count; i++) {
 
       // add 1 day
-      startDate = new Date(startDate.getTime() + (1 * 1000 * 60 * 60 * 24));
-      xData.add(startDate);
+      //startDate = new Date(startDate.getTime() + (1 * 1000 * 60 * 60 * 24));
+      //xData.add(startDate);
+      cal.add(Calendar.DATE, 1);
+      xData.add(cal.getTime());
 
       double previous = data;
 
@@ -109,8 +113,9 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
 
     populateData(xData, openData, highData, lowData, closeData);
 
+    xData = null;
     chart.addSeries("Series", xData, openData, highData, lowData, closeData).setRenderStyle(OHLCSeries.OHLCSeriesRenderStyle.HiLo);
-
+    chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
 
