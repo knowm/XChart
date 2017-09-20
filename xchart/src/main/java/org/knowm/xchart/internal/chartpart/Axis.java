@@ -24,6 +24,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
+import java.util.Map;
 
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
@@ -375,6 +376,21 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   }
 
   private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
+    
+    // check if a custom tick label map is present
+	Map<Double, Object> map = chart.getAxisTickLocationLabelMap(getDirection(), yIndex);
+    if (map != null) {
+      
+      if (getDirection() == Direction.X && axesChartStyler instanceof CategoryStyler) {
+        AxesChartSeriesCategory axesChartSeries = (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+        List<?> categories = (List<?>) axesChartSeries.getXData();
+        DataType axisType = chart.getAxisPair().getXAxis().getDataType();
+        
+        return new AxisTickCalculator_Custom(getDirection(), workingSpace, axesChartStyler, map, axisType, categories.size());
+      }
+        
+      return new AxisTickCalculator_Custom(getDirection(), workingSpace, min, max, axesChartStyler, map); 
+    }
 
     // X-Axis
     if (getDirection() == Direction.X) {
