@@ -20,14 +20,17 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
+import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -328,4 +331,26 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       }
     }
   }
+  
+  /**
+   * 
+   * @param categoryTickValueLabelMap Map containing category name -> label mappings
+   */
+  public void setXAxisCategoryTickLocationLabelMap(Map<Object, Object> categoryTickValueLabelMap) {
+    
+    Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<Double, Object>();
+    AxesChartSeriesCategory axesChartSeries = (AxesChartSeriesCategory) getSeriesMap().values().iterator().next();
+    List<?> categories = (List<?>) axesChartSeries.getXData();
+
+    for (Entry<Object, Object> entry : categoryTickValueLabelMap.entrySet()) {
+      int index = categories.indexOf(entry.getKey());
+      if (index == -1) {
+        throw new IllegalArgumentException("Could not find category index for " + entry.getKey());
+      }
+      axisTickValueLabelMap.put((double) index, entry.getValue());
+    }
+    
+    super.setXAxisTickLocationLabelMap(axisTickValueLabelMap);
+  }
+
 }

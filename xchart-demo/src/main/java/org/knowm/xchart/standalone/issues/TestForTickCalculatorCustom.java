@@ -26,12 +26,14 @@ import java.util.TreeMap;
 
 import javax.swing.JFrame;
 
+import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.area.AreaChart01;
 import org.knowm.xchart.demo.charts.bar.BarChart06;
+import org.knowm.xchart.demo.charts.bar.BarChart09;
 import org.knowm.xchart.demo.charts.date.DateChart05;
 import org.knowm.xchart.internal.chartpart.Chart;
 
@@ -48,6 +50,7 @@ public class TestForTickCalculatorCustom {
     charts.add(new AreaChart01().getChart());
     charts.add(new BarChart06().getChart());
     charts.add(new DateChart05().getChart());
+    charts.add(new BarChart09().getChart());
 
     {
       XYChart chart = new AreaChart01().getChart();
@@ -105,11 +108,24 @@ public class TestForTickCalculatorCustom {
       chart.setXAxisTickLocationLabelMap(xMarkMap);
       charts.add(chart);
     }
+    {
+      // for category charts another way to create custom axis places is using category names in first series. 
+      CategoryChart chart = new BarChart09().getChart();
+      
+      Map<Object, Object> xMarkMap = new TreeMap<Object, Object>();
+      
+      xMarkMap.put("A", "-A-");
+      xMarkMap.put("D", "+D+");
+      
+      chart.setXAxisCategoryTickLocationLabelMap(xMarkMap);
+      chart.setTitle("Value vs. Letter - x axis labels by category name");
+      charts.add(chart);
+    }
     
     for (Chart chart : charts) {
       chart.getStyler().setToolTipsEnabled(true);
     }
-    JFrame frame = new SwingWrapper<Chart>(charts).displayChartMatrix();
+    JFrame frame = new SwingWrapper<Chart>(charts,2, 4).displayChartMatrix();
     Dimension preferredSize = new Dimension(1920, 1000);
     frame.setPreferredSize(preferredSize);
     frame.setSize(preferredSize);
