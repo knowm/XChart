@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -48,6 +49,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private String xAxisTitle = "";
   private String yAxisTitle = "";
   private HashMap<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
+  private HashMap<String, Map<Double, Object>> axisTickLocationLabelMap = new HashMap<String, Map<Double, Object>>();
 
   /**
    * Chart Parts
@@ -227,5 +229,25 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
+  
+  public void setXAxisTickLocationLabelMap(Map<Double, Object> axisTickValueLabelMap) {
+    
+    axisTickLocationLabelMap.put("X0", axisTickValueLabelMap);
+  }
 
+  public void setYAxisTickLocationLabelMap(Map<Double, Object> axisTickValueLabelMap) {
+    
+    axisTickLocationLabelMap.put("Y0", axisTickValueLabelMap);
+  }
+  
+  public void setYAxisTickLocationLabelMap(Map<Double, Object> axisTickValueLabelMap, int yAxisGroup) {
+    
+    axisTickLocationLabelMap.put("Y" + yAxisGroup, axisTickValueLabelMap);
+  }
+  
+  public Map<Double, Object> getAxisTickLocationLabelMap(Direction direction, int yIndex) {
+
+    return axisTickLocationLabelMap.get(direction.name() + yIndex);
+    
+  }
 }
