@@ -59,9 +59,9 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
     List<Double> closeData = new ArrayList<Double>();
 
     OHLCChart01.populateData(xData, openData, highData, lowData, closeData);
-
+    xData = null;
     chart.addSeries("Series", xData, openData, highData, lowData, closeData);
-
+    chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
 
