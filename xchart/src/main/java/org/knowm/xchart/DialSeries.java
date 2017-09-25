@@ -65,7 +65,7 @@ public class DialSeries extends Series {
 
     super(name);
     this.value = value;
-    this.annotation = this.annotation;
+    this.annotation = annotation;
   }
 
   public double getValue() {
