@@ -27,6 +27,8 @@ public interface SeriesMarkers {
   Marker SQUARE = new Square();
   Marker TRIANGLE_DOWN = new TriangleDown();
   Marker TRIANGLE_UP = new TriangleUp();
+  Marker CROSS = new Cross();
+  Marker PLUS = new Plus();
 
   Marker[] getSeriesMarkers();
 }

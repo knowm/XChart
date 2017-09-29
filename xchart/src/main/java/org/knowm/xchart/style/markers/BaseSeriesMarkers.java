@@ -29,7 +29,7 @@ public class BaseSeriesMarkers implements SeriesMarkers {
    */
   public BaseSeriesMarkers() {
 
-    seriesMarkers = new Marker[]{CIRCLE, SQUARE, DIAMOND, TRIANGLE_UP, TRIANGLE_DOWN};
+    seriesMarkers = new Marker[]{CIRCLE, SQUARE, DIAMOND, TRIANGLE_UP, TRIANGLE_DOWN, CROSS};
   }
 
   @Override
