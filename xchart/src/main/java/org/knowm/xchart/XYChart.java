@@ -106,7 +106,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public XYSeries addSeries(String seriesName, double[] xData, double[] yData) {
@@ -131,7 +131,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public XYSeries addSeries(String seriesName, float[] xData, float[] yData) {
@@ -144,7 +144,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
@@ -183,7 +183,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
