@@ -69,6 +69,7 @@ public abstract class AxesChartStyler extends Styler {
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
   private boolean isErrorBarsColorSeriesColor;
+  private boolean isErrorBarsContinuous = false;
 
   // Formatting ////////////////////////////////
   private Locale locale;
@@ -687,6 +688,21 @@ public abstract class AxesChartStyler extends Styler {
   public boolean isErrorBarsColorSeriesColor() {
 
     return isErrorBarsColorSeriesColor;
+  }
+  
+  /**
+   * Set true if the the error bars should form a continuous region
+   *
+   * @return
+   */
+  public AxesChartStyler setErrorBarsContinuous(boolean isErrorBarsContinuous) {
+
+    this.isErrorBarsContinuous = isErrorBarsContinuous;
+    return this;
+  }
+  
+  public boolean isErrorBarsContinuous() {
+	  return isErrorBarsContinuous;
   }
 
   // Formatting ////////////////////////////////

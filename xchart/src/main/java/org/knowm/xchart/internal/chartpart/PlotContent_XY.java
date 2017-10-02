@@ -16,9 +16,14 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.PathIterator;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.knowm.xchart.XYSeries;
@@ -32,242 +37,331 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> extends PlotContent_<ST, S> {
 
-  private final ST xyStyler;
+	private class ErrorBarPainter implements ErrorPainter {
 
-  /**
-   * Constructor
-   *
-   * @param chart
-   */
-  PlotContent_XY(Chart<ST, S> chart) {
+		final private Color barColor;
 
-    super(chart);
-    xyStyler = chart.getStyler();
-  }
+		public ErrorBarPainter(Color barColor) {
+			this.barColor = barColor;
+		}
 
-  @Override
-  public void doPaint(Graphics2D g) {
+		@Override
+		public void draw(double x, double yTop, double yBottom, Graphics2D g) {
+			Line2D.Double line = new Line2D.Double();
+			g.setColor(barColor);
+			g.setStroke(errorBarStroke);
+			line.setLine(x, yTop, x, yBottom);
+			g.draw(line);
+			line.setLine(x - 3, yBottom, x + 3, yBottom);
+			g.draw(line);
+			line.setLine(x - 3, yTop, x + 3, yTop);
+			g.draw(line);
+		}
 
-    // X-Axis
-    double xTickSpace = xyStyler.getPlotContentSize() * getBounds().getWidth();
-    double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
+		@Override
+		public void cleanup(Graphics2D g) {}
 
-    // Y-Axis
-    double yTickSpace = xyStyler.getPlotContentSize() * getBounds().getHeight();
-    double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
+	}
 
-    double xMin = chart.getXAxis().getMin();
-    double xMax = chart.getXAxis().getMax();
+	private class ConfidenceAreaPainter implements ErrorPainter {
 
-    Line2D.Double line = new Line2D.Double();
+		//	private final Stroke errorAreaStroke = new BasicStroke(0.5f);
 
-    // logarithmic
-    if (xyStyler.isXAxisLogarithmic()) {
-      xMin = Math.log10(xMin);
-      xMax = Math.log10(xMax);
-    }
+		private double previousX = Double.NaN;
+		private double previousYT = Double.NaN;
+		private double previousYB = Double.NaN;
+		private Path2D.Double errorPathUpper;
+		private ArrayList<double[]> errorPathLower;
+		private Color fillColor;
 
-    Map<String, S> map = chart.getSeriesMap();
+		public ConfidenceAreaPainter(Color fillColor) {
+			this.fillColor=fillColor;
+		}
 
-    for (S series : map.values()) {
+		@Override
+		public void draw(double x, double yTop, double yBottom, Graphics2D g) {
+			// Use similar approach to XYSeriesRenderStyle.Area
+			//		g.setStroke(errorAreaStroke);
+			if (x == Double.NaN && yTop == Double.NaN && yBottom == Double.NaN) {
+				closePath(g);
+			}
 
-      if (!series.isEnabled()) {
-        continue;
-      }
-      Axis yAxis = chart.getYAxis(series.getYAxisGroup());
-      double yMin = yAxis.getMin();
-      double yMax = yAxis.getMax();
-      if (xyStyler.isYAxisLogarithmic()) {
-        yMin = Math.log10(yMin);
-        yMax = Math.log10(yMax);
-      }
+			if (previousX != Double.NaN && previousYT != Double.NaN && previousYB != Double.NaN) {
+				if (errorPathUpper == null || errorPathLower == null) {
+					errorPathUpper = new Path2D.Double();
+					errorPathLower = new ArrayList<double[]>();
+					errorPathUpper.moveTo(previousX, previousYT);
+				}
+				errorPathUpper.lineTo(x, yTop);
+				errorPathLower.add(new double[]{x, yBottom});
+			}
+			if (x < previousX) {
+				throw new RuntimeException("X-Data must be in ascending order for Continuous Error Bars!!!");
+			}
 
-      // data points
-      double[] xData = series.getXData();
-      double[] yData = series.getYData();
+			previousX = x;
+			previousYT = yTop;
+			previousYB = yBottom;
+		}
 
-      double previousX = -Double.MAX_VALUE;
-      double previousY = -Double.MAX_VALUE;
+		private void closePath(Graphics2D g) {
+			if (errorPathUpper != null && errorPathLower != null) {
+				int l = errorPathLower.size();
+				for(int i = 0; i<l; ++i) {
+					double[] point = errorPathLower.get(l-i-1);
+					errorPathUpper.lineTo(point[0], point[1]);
+				}
+				errorPathUpper.closePath();
+				g.setColor(fillColor);
+				g.fill(errorPathUpper);
+			}
+			errorPathUpper = null;
+			errorPathLower = null;   
+		}
 
-      double[] errorBars = series.getExtraValues();
-      Path2D.Double path = null;
+		@Override
+		public void cleanup(Graphics2D g) {
+			this.closePath(g);
+		}
 
-      for (int i = 0; i < xData.length; i++) {
+	}
 
-        double x = xData[i];
-        // System.out.println(x);
-        if (xyStyler.isXAxisLogarithmic()) {
-          x = Math.log10(x);
-        }
-        // System.out.println(x);
+	private interface ErrorPainter {
 
-        double next = yData[i];
-        if (next == Double.NaN) {
+		void draw(double x, double yTop, double yBottom, Graphics2D g);
 
-          // for area charts
-          closePath(g, path, previousX, getBounds(), yTopMargin);
-          path = null;
+		void cleanup(Graphics2D g);
 
-          previousX = -Double.MAX_VALUE;
-          previousY = -Double.MAX_VALUE;
-          continue;
-        }
+	}
 
-        double yOrig = yData[i];
+	private final ST xyStyler;
 
-        double y;
+	/**
+	 * Constructor
+	 *
+	 * @param chart
+	 */
+	PlotContent_XY(Chart<ST, S> chart) {
 
-        // System.out.println(y);
-        if (xyStyler.isYAxisLogarithmic()) {
-          y = Math.log10(yOrig);
-        } else {
-          y = yOrig;
-        }
-        // System.out.println(y);
+		super(chart);
+		xyStyler = chart.getStyler();
+	}
 
-        double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
-        double yTransform = getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+	@Override
+	public void doPaint(Graphics2D g) {
 
-        // a check if all x data are the exact same values
-        if (Math.abs(xMax - xMin) / 5 == 0.0) {
-          xTransform = getBounds().getWidth() / 2.0;
-        }
+		// X-Axis
+		double xTickSpace = xyStyler.getPlotContentSize() * getBounds().getWidth();
+		double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
 
-        // a check if all y data are the exact same values
-        if (Math.abs(yMax - yMin) / 5 == 0.0) {
-          yTransform = getBounds().getHeight() / 2.0;
-        }
+		// Y-Axis
+		double yTickSpace = xyStyler.getPlotContentSize() * getBounds().getHeight();
+		double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
-        double xOffset = getBounds().getX() + xTransform;
-        double yOffset = getBounds().getY() + yTransform;
-        // System.out.println(xTransform);
-        // System.out.println(xOffset);
-        // System.out.println(yTransform);
-        // System.out.println(yOffset);
-        // System.out.println("---");
+		double xMin = chart.getXAxis().getMin();
+		double xMax = chart.getXAxis().getMax();
 
-        // paint line
+		Line2D.Double line = new Line2D.Double();
 
-        boolean isSeriesLineOrArea = XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle();
-        boolean isSeriesStepLineOrStepArea =  XYSeriesRenderStyle.Step == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle();
+		// logarithmic
+		if (xyStyler.isXAxisLogarithmic()) {
+			xMin = Math.log10(xMin);
+			xMax = Math.log10(xMax);
+		}
 
-        if (isSeriesLineOrArea || isSeriesStepLineOrStepArea) {
-          if (series.getLineStyle() != SeriesLines.NONE) {
+		Map<String, S> map = chart.getSeriesMap();
 
-            if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
-              g.setColor(series.getLineColor());
-              g.setStroke(series.getLineStyle());
-              if (isSeriesLineOrArea) {
-                line.setLine(previousX, previousY, xOffset, yOffset);
-                g.draw(line);
-              } else {
-                if (previousX != xOffset) {
-                  line.setLine(previousX, previousY, xOffset, previousY);
-                  g.draw(line);
-                }
-                if (previousY != yOffset) {
-                  line.setLine(xOffset, previousY, xOffset, yOffset);
-                  g.draw(line);
-                }
-              }
-            }
-          }
-        }
+		for (S series : map.values()) {
 
-        // paint area
-        if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()) {
+			if (!series.isEnabled()) {
+				continue;
+			}
+			Axis yAxis = chart.getYAxis(series.getYAxisGroup());
+			double yMin = yAxis.getMin();
+			double yMax = yAxis.getMax();
+			if (xyStyler.isYAxisLogarithmic()) {
+				yMin = Math.log10(yMin);
+				yMax = Math.log10(yMax);
+			}
 
-          if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
+			// data points
+			double[] xData = series.getXData();
+			double[] yData = series.getYData();
 
-            double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
+			double previousX = -Double.MAX_VALUE;
+			double previousY = -Double.MAX_VALUE;
 
-            if (path == null) {
-              path = new Path2D.Double();
-              path.moveTo(previousX, yBottomOfArea);
-              path.lineTo(previousX, previousY);
-            }
-            if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
-              path.lineTo(xOffset, yOffset);
-            } else {
-              if (previousX != xOffset) {
-                path.lineTo(xOffset, previousY);
-              }
-              if (previousY != yOffset) {
-                path.lineTo(xOffset, yOffset);
-              }
-            }
-          }
-          if (xOffset < previousX) {
-            throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
-          }
-        }
+			Path2D.Double path = null;
+			double[] errorBars = series.getExtraValues();
 
-        previousX = xOffset;
-        previousY = yOffset;
+			// Configure error bars
+			ErrorPainter errorBarPainter = null;
+			if(errorBars!=null) {
+				if(xyStyler.isErrorBarsContinuous()) {
+					Color color = Color.LIGHT_GRAY;
+					color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 127);
+					errorBarPainter = new ConfidenceAreaPainter(color);
+				} else {
+					errorBarPainter = new ErrorBarPainter( xyStyler.isErrorBarsColorSeriesColor() ? series.getLineColor() : xyStyler.getErrorBarsColor());
+				}
+			}
 
-        // paint marker
-        if (series.getMarker() != null) {
-          g.setColor(series.getMarkerColor());
-          series.getMarker().paint(g, xOffset, yOffset, xyStyler.getMarkerSize());
-        }
+			for (int i = 0; i < xData.length; i++) {
 
-        // paint error bars
-        if (errorBars != null) {
+				double x = xData[i];
+				if (xyStyler.isXAxisLogarithmic()) {
+					x = Math.log10(x);
+				}
 
-          double eb = errorBars[i];
+				double next = yData[i];
+				if (next == Double.NaN) {
 
-          // set error bar style
-          if (xyStyler.isErrorBarsColorSeriesColor()) {
-            g.setColor(series.getLineColor());
-          } else {
-            g.setColor(xyStyler.getErrorBarsColor());
-          }
-          g.setStroke(errorBarStroke);
+					// for area charts
+					closePath(g, path, previousX, getBounds(), yTopMargin);
+					path = null;
 
-          // Top value
-          double topValue;
-          if (xyStyler.isYAxisLogarithmic()) {
-            topValue = yOrig + eb;
-            topValue = Math.log10(topValue);
-          } else {
-            topValue = y + eb;
-          }
-          double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
-          double topEBOffset = getBounds().getY() + topEBTransform;
+					previousX = -Double.MAX_VALUE;
+					previousY = -Double.MAX_VALUE;
+					continue;
+				}
 
-          // Bottom value
-          double bottomValue;
-          if (xyStyler.isYAxisLogarithmic()) {
-            bottomValue = yOrig - eb;
-            // System.out.println(bottomValue);
-            bottomValue = Math.log10(bottomValue);
-          } else {
-            bottomValue = y - eb;
-          }
-          double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
-          double bottomEBOffset = getBounds().getY() + bottomEBTransform;
+				double yOrig = yData[i];
 
-          // Draw it
-          line.setLine(xOffset, topEBOffset, xOffset, bottomEBOffset);
-          g.draw(line);
-          line.setLine(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
-          g.draw(line);
-          line.setLine(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
-          g.draw(line);
-        }
+				double y;
 
-        // add data labels
-        if (chart.getStyler().isToolTipsEnabled()) {
-          chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
-        }
-      }
+				if (xyStyler.isYAxisLogarithmic()) {
+					y = Math.log10(yOrig);
+				} else {
+					y = yOrig;
+				}
 
-      // close any open path for area charts
-      g.setColor(series.getFillColor());
-      closePath(g, path, previousX, getBounds(), yTopMargin);
-    }
-  }
+				double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
+				double yTransform = getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+
+				// a check if all x data are the exact same values
+				if (Math.abs(xMax - xMin) / 5 == 0.0) {
+					xTransform = getBounds().getWidth() / 2.0;
+				}
+
+				// a check if all y data are the exact same values
+				if (Math.abs(yMax - yMin) / 5 == 0.0) {
+					yTransform = getBounds().getHeight() / 2.0;
+				}
+
+				double xOffset = getBounds().getX() + xTransform;
+				double yOffset = getBounds().getY() + yTransform;
+
+				// paint line
+
+				boolean isSeriesLineOrArea = XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()
+						|| XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle();
+				boolean isSeriesStepLineOrStepArea =  XYSeriesRenderStyle.Step == series.getXYSeriesRenderStyle()
+						|| XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle();
+
+				if (isSeriesLineOrArea || isSeriesStepLineOrStepArea) {
+					if (series.getLineStyle() != SeriesLines.NONE) {
+
+						if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
+							g.setColor(series.getLineColor());
+							g.setStroke(series.getLineStyle());
+							if (isSeriesLineOrArea) {
+								line.setLine(previousX, previousY, xOffset, yOffset);
+								g.draw(line);
+							} else {
+								if (previousX != xOffset) {
+									line.setLine(previousX, previousY, xOffset, previousY);
+									g.draw(line);
+								}
+								if (previousY != yOffset) {
+									line.setLine(xOffset, previousY, xOffset, yOffset);
+									g.draw(line);
+								}
+							}
+						}
+					}
+				}
+
+				// paint area
+				if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
+						|| XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()) {
+
+					if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
+
+						double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
+
+						if (path == null) {
+							path = new Path2D.Double();
+							path.moveTo(previousX, yBottomOfArea);
+							path.lineTo(previousX, previousY);
+						}
+						if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
+							path.lineTo(xOffset, yOffset);
+						} else {
+							if (previousX != xOffset) {
+								path.lineTo(xOffset, previousY);
+							}
+							if (previousY != yOffset) {
+								path.lineTo(xOffset, yOffset);
+							}
+						}
+					}
+					if (xOffset < previousX) {
+						throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
+					}
+				}
+
+				previousX = xOffset;
+				previousY = yOffset;
+
+				// paint marker
+				if (series.getMarker() != null) {
+					g.setColor(series.getMarkerColor());
+					series.getMarker().paint(g, xOffset, yOffset, xyStyler.getMarkerSize());
+				}
+
+				// paint error bars
+				if (errorBarPainter != null && errorBars != null) {
+
+					double eb = errorBars[i];
+
+					// Top value
+					double topValue;
+					if (xyStyler.isYAxisLogarithmic()) {
+						topValue = yOrig + eb;
+						topValue = Math.log10(topValue);
+					} else {
+						topValue = y + eb;
+					}
+					double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
+					double topEBOffset = getBounds().getY() + topEBTransform;
+
+					// Bottom value
+					double bottomValue;
+					if (xyStyler.isYAxisLogarithmic()) {
+						bottomValue = yOrig - eb;
+						bottomValue = Math.log10(bottomValue);
+					} else {
+						bottomValue = y - eb;
+					}
+					double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
+					double bottomEBOffset = getBounds().getY() + bottomEBTransform;
+
+					// Draw it
+					errorBarPainter.draw(xOffset, topEBOffset, bottomEBOffset, g);
+
+				}
+
+				// add data labels
+				if (chart.getStyler().isToolTipsEnabled()) {
+					chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
+				}
+			}
+
+			if (errorBarPainter!=null) errorBarPainter.cleanup(g);
+
+			// close any open path for area charts
+			g.setColor(series.getFillColor());
+			closePath(g, path, previousX, getBounds(), yTopMargin);
+		}
+	}
 }

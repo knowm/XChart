@@ -76,8 +76,6 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends CategoryStyler, S
         yMin = Math.log10(yMin);
         yMax = Math.log10(yMax);
       }
-      // System.out.println("yMin = " + yMin);
-      // System.out.println("yMax = " + yMax);
 
       // data points
       Collection<? extends Number> yData = series.getYData();
@@ -115,15 +113,12 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends CategoryStyler, S
         double yOrig = next.doubleValue();
 
         double y;
-
-        // System.out.println(y);
         if (categoryStyler.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         }
         else {
           y = yOrig;
         }
-        // System.out.println(y);
 
         double yTransform = getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
@@ -134,13 +129,8 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends CategoryStyler, S
 
         double xOffset = getBounds().getX() + xLeftMargin + categoryCounter * gridStep + gridStep / 2;
         double yOffset = getBounds().getY() + yTransform;
-        // System.out.println(xOffset);
-        // System.out.println(yTransform);
-        // System.out.println(yOffset);
-        // System.out.println("---");
 
         // paint line
-        // System.out.println(series.getChartCategorySeriesRenderStyle());
         if (CategorySeriesRenderStyle.Line.equals(series.getChartCategorySeriesRenderStyle()) || CategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
 
           if (series.getLineStyle() != SeriesLines.NONE) {
@@ -226,7 +216,6 @@ public class PlotContent_Category_Line_Area_Scatter<ST extends CategoryStyler, S
           double bottomValue;
           if (categoryStyler.isYAxisLogarithmic()) {
             bottomValue = yOrig - eb;
-            // System.out.println(bottomValue);
             bottomValue = Math.log10(bottomValue);
           }
           else {
