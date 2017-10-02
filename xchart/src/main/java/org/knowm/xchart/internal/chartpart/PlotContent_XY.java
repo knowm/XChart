@@ -16,13 +16,10 @@
  */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
-import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -37,10 +34,43 @@ import org.knowm.xchart.style.lines.SeriesLines;
  */
 public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> extends PlotContent_<ST, S> {
 
+	/**
+	 * Interface to support different forms of error marks
+	 * @author bjef8061
+	 *
+	 */
+	private interface ErrorPainter {
+
+
+		/**
+		 * Add error marks for new data point
+		 * @param x position along x axis
+		 * @param yTop y position of top of error region
+		 * @param yBottom y position of bottom of error region
+		 * @param g Graphics context
+		 */
+		void draw(double x, double yTop, double yBottom, Graphics2D g);
+
+		/**
+		 * Apply any final operations. Should be called once all points have
+		 * been drawn
+		 * @param g Graphics context
+		 */
+		void cleanup(Graphics2D g);
+
+	}
+	
+	/**
+	 * Painter for standard error bars
+	 * @author bjef8061
+	 */
 	private class ErrorBarPainter implements ErrorPainter {
 
 		final private Color barColor;
 
+		/**
+		 * @param barColor Colour of error bars
+		 */
 		public ErrorBarPainter(Color barColor) {
 			this.barColor = barColor;
 		}
@@ -63,9 +93,12 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
 
 	}
 
+	/**
+	 * Painter for confidence regions, drawn as continuous areas
+	 * @author bjef8061
+	 *
+	 */
 	private class ConfidenceAreaPainter implements ErrorPainter {
-
-		//	private final Stroke errorAreaStroke = new BasicStroke(0.5f);
 
 		private double previousX = Double.NaN;
 		private double previousYT = Double.NaN;
@@ -74,6 +107,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
 		private ArrayList<double[]> errorPathLower;
 		private Color fillColor;
 
+		/**
+		 * @param fillColor Colour to fill the region
+		 */
 		public ConfidenceAreaPainter(Color fillColor) {
 			this.fillColor=fillColor;
 		}
@@ -81,7 +117,6 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
 		@Override
 		public void draw(double x, double yTop, double yBottom, Graphics2D g) {
 			// Use similar approach to XYSeriesRenderStyle.Area
-			//		g.setStroke(errorAreaStroke);
 			if (x == Double.NaN && yTop == Double.NaN && yBottom == Double.NaN) {
 				closePath(g);
 			}
@@ -123,14 +158,6 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
 		public void cleanup(Graphics2D g) {
 			this.closePath(g);
 		}
-
-	}
-
-	private interface ErrorPainter {
-
-		void draw(double x, double yTop, double yBottom, Graphics2D g);
-
-		void cleanup(Graphics2D g);
 
 	}
 
