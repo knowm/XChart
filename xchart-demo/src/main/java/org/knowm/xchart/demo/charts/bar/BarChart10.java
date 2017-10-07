@@ -54,7 +54,7 @@ public class BarChart10 implements ExampleChart<CategoryChart> {
   public CategoryChart getChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
+    CategoryChart chart = new CategoryChartBuilder().paintJustXAxisTickLabels(true).width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
@@ -65,8 +65,8 @@ public class BarChart10 implements ExampleChart<CategoryChart> {
     chart.getStyler().setOverlapped(true);
 
     // Series
-    Histogram histogram1 = new Histogram(getGaussianData(10000), 20, -20, 20);
-    Histogram histogram2 = new Histogram(getGaussianData(5000), 20, -20, 20);
+    Histogram histogram1 = new Histogram(getGaussianData(10000), 250, -125, 125);
+    Histogram histogram2 = new Histogram(getGaussianData(5000), 250, -125, 125);
     CategorySeries series1 = chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
     CategorySeries series2 = chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
 
