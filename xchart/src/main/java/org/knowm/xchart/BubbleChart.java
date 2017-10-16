@@ -99,7 +99,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    */
   public BubbleSeries addSeries(String seriesName, List<? extends Number> xData, List<? extends Number> yData, List<? extends Number> bubbleData) {
 
-    return addSeries(seriesName, Utils.getDoubleArrayFromDateList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(bubbleData));
+    return addSeries(seriesName, Utils.getDoubleArrayFromNumberList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(bubbleData));
 
   }
 
