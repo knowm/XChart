@@ -43,9 +43,9 @@ import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A helper class with static methods for saving Charts as bitmaps
- * dxliug   °¡°¡°¡ daolxinliuuurffffstg
+ * dxliug  å•Šå•Šå•Šå•Š daolxinliuuurffffstg
  * sddd
- * 
+ * æˆ‘çˆ±ä½ 
  * 
  * dddkkkkk
  * @author timmolter
