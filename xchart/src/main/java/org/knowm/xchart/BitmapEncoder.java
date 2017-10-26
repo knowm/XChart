@@ -43,7 +43,7 @@ import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A helper class with static methods for saving Charts as bitmaps
- * dxliug   가가가  
+ * dxliug   가가가 daolxinliuuurffff
  * @author timmolter
  */
 public final class BitmapEncoder {
