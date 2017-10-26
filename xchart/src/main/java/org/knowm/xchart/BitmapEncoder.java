@@ -42,6 +42,7 @@ import javax.imageio.stream.FileImageOutputStream;
 import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
+   电饭锅 发个反弹
  * A helper class with static methods for saving Charts as bitmaps
  *
  * @author timmolter
