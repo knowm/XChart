@@ -29,7 +29,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for given values&labels
  *
  */
-class AxisTickCalculator_Custom extends AxisTickCalculator_ {
+class AxisTickCalculator_Override extends AxisTickCalculator_ {
 
   /**
    * Constructor
@@ -39,16 +39,26 @@ class AxisTickCalculator_Custom extends AxisTickCalculator_ {
    * @param minValue
    * @param maxValue
    * @param styler
-   * @param markMap 
+   * @param labelOverrideMap
    */
-  public AxisTickCalculator_Custom(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler, Map<Double, Object> markMap) {
+  public AxisTickCalculator_Override(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler, Map<Double, Object> labelOverrideMap) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
     axisFormat = new NumberFormatter(styler, axisDirection, minValue, maxValue);
-    calculate(markMap);
+    calculate(labelOverrideMap);
   }
-  
-  public AxisTickCalculator_Custom(Direction axisDirection, double workingSpace, AxesChartStyler styler, Map<Double, Object> markMap, Series.DataType axisType, int categoryCount) {
+
+  /**
+   * Constructor
+   *
+   * @param axisDirection
+   * @param workingSpace
+   * @param styler
+   * @param markMap
+   * @param axisType
+   * @param categoryCount
+   */
+  public AxisTickCalculator_Override(Direction axisDirection, double workingSpace, AxesChartStyler styler, Map<Double, Object> markMap, Series.DataType axisType, int categoryCount) {
     
     super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
     // set up String formatters that may be encountered
@@ -68,11 +78,11 @@ class AxisTickCalculator_Custom extends AxisTickCalculator_ {
     calculateForCategory(markMap, categoryCount);
   }
 
-  private void calculate(Map<Double, Object> locationLabelMap) {
+  private void calculate(Map<Double, Object> labelOverrideMap) {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      String label = locationLabelMap.isEmpty() ? " " : locationLabelMap.values().iterator().next().toString();
+      String label = labelOverrideMap.isEmpty() ? " " : labelOverrideMap.values().iterator().next().toString();
       tickLabels.add(label);
       tickLocations.add(workingSpace / 2.0);
       return;
@@ -90,7 +100,8 @@ class AxisTickCalculator_Custom extends AxisTickCalculator_ {
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // generate all tickLabels and tickLocations from the first to last position
-    for (Entry<Double, Object> entry : locationLabelMap.entrySet()) {
+    for (Entry<Double, Object> entry : labelOverrideMap.entrySet()) {
+
       Object value = entry.getValue();
       String tickLabel = value == null ? " " : value.toString();
       tickLabels.add(tickLabel);
@@ -117,6 +128,7 @@ class AxisTickCalculator_Custom extends AxisTickCalculator_ {
     double firstPosition = gridStep / 2.0;
 
     for (Entry<Double, Object> entry : locationLabelMap.entrySet()) {
+
       Object value = entry.getValue();
       String tickLabel = value == null ? " " : value.toString();
       tickLabels.add(tickLabel);

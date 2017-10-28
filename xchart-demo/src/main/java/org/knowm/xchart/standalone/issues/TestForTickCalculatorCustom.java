@@ -65,8 +65,8 @@ public class TestForTickCalculatorCustom {
       yMarkMap.put(6.0, "max b");
       yMarkMap.put(9.0, "max a");
       
-      chart.setXAxisTickLocationLabelMap(xMarkMap);
-      chart.setYAxisTickLocationLabelMap(yMarkMap);
+      chart.setXAxisLabelOverrideMap(xMarkMap);
+      chart.setYAxisLabelOverrideMap(yMarkMap);
       chart.setTitle("AreaChart01 - custom x&y axis labels");
       charts.add(chart);
     }
@@ -84,7 +84,7 @@ public class TestForTickCalculatorCustom {
         xMarkMap.put((double)i, xData.get(i));
       }
       
-      chart.setXAxisTickLocationLabelMap(xMarkMap);
+      chart.setXAxisLabelOverrideMap(xMarkMap);
       chart.setTitle("Score Histogram - x axis labels on each 5th category");
       charts.add(chart);
     }
@@ -105,7 +105,7 @@ public class TestForTickCalculatorCustom {
         xMarkMap.put(d, label);
       }
       
-      chart.setXAxisTickLocationLabelMap(xMarkMap);
+      chart.setXAxisLabelOverrideMap(xMarkMap);
       charts.add(chart);
     }
     {
@@ -117,7 +117,7 @@ public class TestForTickCalculatorCustom {
       xMarkMap.put("A", "-A-");
       xMarkMap.put("D", "+D+");
       
-      chart.setXAxisCategoryTickLocationLabelMap(xMarkMap);
+      chart.setCustomCategoryLabels(xMarkMap);
       chart.setTitle("Value vs. Letter - x axis labels by category name");
       charts.add(chart);
     }

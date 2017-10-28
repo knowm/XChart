@@ -333,24 +333,28 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
   }
   
   /**
-   * 
-   * @param categoryTickValueLabelMap Map containing category name -> label mappings
+   *
+   * Set custom X-Axis category labels
+   *
+   * @param customCategoryLabels Map containing category name -> label mappings
    */
-  public void setXAxisCategoryTickLocationLabelMap(Map<Object, Object> categoryTickValueLabelMap) {
-    
-    Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<Double, Object>();
-    AxesChartSeriesCategory axesChartSeries = (AxesChartSeriesCategory) getSeriesMap().values().iterator().next();
+  public void setCustomCategoryLabels(Map<Object, Object> customCategoryLabels) {
+
+    // get the first series
+    AxesChartSeriesCategory axesChartSeries = getSeriesMap().values().iterator().next();
+    // get the first categories, could be Number Date or String
     List<?> categories = (List<?>) axesChartSeries.getXData();
 
-    for (Entry<Object, Object> entry : categoryTickValueLabelMap.entrySet()) {
+    Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<Double, Object>();
+    for (Entry<Object, Object> entry : customCategoryLabels.entrySet()) {
       int index = categories.indexOf(entry.getKey());
       if (index == -1) {
         throw new IllegalArgumentException("Could not find category index for " + entry.getKey());
       }
       axisTickValueLabelMap.put((double) index, entry.getValue());
     }
-    
-    super.setXAxisTickLocationLabelMap(axisTickValueLabelMap);
+
+    setXAxisLabelOverrideMap(axisTickValueLabelMap);
   }
 
 }

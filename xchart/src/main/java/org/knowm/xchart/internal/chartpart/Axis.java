@@ -202,8 +202,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       // bounds = new Rectangle2D.Double(xOffset, yOffset, width, height);
       bounds.setRect(xOffset, yOffset, width, height);
 
-    }
-    else { // X-Axis
+    } else { // X-Axis
 
       // calculate paint zone
       // |____________________|
@@ -259,8 +258,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (onRight) {
         axisTick.paint(g);
         axisTitle.paint(g);
-      }
-      else {
+      } else {
         axisTitle.paint(g);
         axisTick.paint(g);
       }
@@ -272,8 +270,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
-    }
-    else { // X-Axis
+    } else { // X-Axis
 
       // calculate paint zone
       // |____________________|
@@ -376,20 +373,21 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   }
 
   private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
-    
-    // check if a custom tick label map is present
-	Map<Double, Object> map = chart.getAxisTickLocationLabelMap(getDirection(), yIndex);
-    if (map != null) {
-      
+
+    // check if a custom  label map is present
+    Map<Double, Object> labelOverrideMap = chart.getYAxisLabelOverrideMap(getDirection(), yIndex);
+    if (labelOverrideMap != null) {
+
       if (getDirection() == Direction.X && axesChartStyler instanceof CategoryStyler) {
+
         AxesChartSeriesCategory axesChartSeries = (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
         List<?> categories = (List<?>) axesChartSeries.getXData();
         DataType axisType = chart.getAxisPair().getXAxis().getDataType();
-        
-        return new AxisTickCalculator_Custom(getDirection(), workingSpace, axesChartStyler, map, axisType, categories.size());
+
+        return new AxisTickCalculator_Override(getDirection(), workingSpace, axesChartStyler, labelOverrideMap, axisType, categories.size());
       }
-        
-      return new AxisTickCalculator_Custom(getDirection(), workingSpace, min, max, axesChartStyler, map); 
+
+      return new AxisTickCalculator_Override(getDirection(), workingSpace, min, max, axesChartStyler, labelOverrideMap);
     }
 
     // X-Axis
@@ -404,18 +402,15 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
         return new AxisTickCalculator_Category(getDirection(), workingSpace, categories, axisType, axesChartStyler);
 
-      }
-      else if (getDataType() == Series.DataType.Date) {
+      } else if (getDataType() == Series.DataType.Date) {
 
         return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, axesChartStyler);
 
-      }
-      else if (axesChartStyler.isXAxisLogarithmic()) {
+      } else if (axesChartStyler.isXAxisLogarithmic()) {
 
         return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, axesChartStyler);
 
-      }
-      else {
+      } else {
 
         return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, axesChartStyler);
       }
@@ -427,8 +422,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 
         return new AxisTickCalculator_Logarithmic(getDirection(), workingSpace, min, max, axesChartStyler);
-      }
-      else {
+      } else {
         return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, axesChartStyler);
       }
     }

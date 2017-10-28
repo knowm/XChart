@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -48,8 +47,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private String title = "";
   private String xAxisTitle = "";
   private String yAxisTitle = "";
-  private HashMap<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
-  private HashMap<String, Map<Double, Object>> axisTickLocationLabelMap = new HashMap<String, Map<Double, Object>>();
+  private Map<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
 
   /**
    * Chart Parts
@@ -176,6 +174,32 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     yAxisGroupTitleMap.put(yAxisGroup, yAxisTitle);
   }
 
+  public Map<String, S> getSeriesMap() {
+
+    return seriesMap;
+  }
+
+  public void setXAxisLabelOverrideMap(Map<Double, Object> overrideMap) {
+
+    axisPair.getAxisLabelOverrideMap().put("X0", overrideMap);
+  }
+
+  public void setYAxisLabelOverrideMap(Map<Double, Object> overrideMap) {
+
+    axisPair.getAxisLabelOverrideMap().put("Y0", overrideMap);
+  }
+
+  public void setYAxisLabelOverrideMap(Map<Double, Object> overrideMap, int yAxisGroup) {
+
+    axisPair.getAxisLabelOverrideMap().put(("Y" + yAxisGroup), overrideMap);
+  }
+
+  public Map<Double, Object> getYAxisLabelOverrideMap(Axis.Direction direction, int yIndex) {
+
+    Map<String, Map<Double, Object>> axisLabelOverrideMap = axisPair.getAxisLabelOverrideMap();
+    return axisLabelOverrideMap.get((direction.name() + yIndex));
+  }
+
   /**
    * Chart Parts Getters
    */
@@ -215,11 +239,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return axisPair;
   }
 
-  public Map<String, S> getSeriesMap() {
-
-    return seriesMap;
-  }
-
   Format getXAxisFormat() {
 
     return axisPair.getXAxis().getAxisTickCalculator().getAxisFormat();
@@ -229,25 +248,5 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
-  
-  public void setXAxisTickLocationLabelMap(Map<Double, Object> axisTickValueLabelMap) {
-    
-    axisTickLocationLabelMap.put("X0", axisTickValueLabelMap);
-  }
 
-  public void setYAxisTickLocationLabelMap(Map<Double, Object> axisTickValueLabelMap) {
-    
-    axisTickLocationLabelMap.put("Y0", axisTickValueLabelMap);
-  }
-  
-  public void setYAxisTickLocationLabelMap(Map<Double, Object> axisTickValueLabelMap, int yAxisGroup) {
-    
-    axisTickLocationLabelMap.put("Y" + yAxisGroup, axisTickValueLabelMap);
-  }
-  
-  public Map<Double, Object> getAxisTickLocationLabelMap(Direction direction, int yIndex) {
-
-    return axisTickLocationLabelMap.get(direction.name() + yIndex);
-    
-  }
 }

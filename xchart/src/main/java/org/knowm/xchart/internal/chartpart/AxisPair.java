@@ -18,8 +18,10 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -43,6 +45,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   private final TreeMap<Integer, Axis<ST, S>> yAxisMap;
   private Axis<ST, S> leftMainYAxis;
   private Axis<ST, S> rightMainYAxis;
+  private Map<String, Map<Double, Object>> axisLabelOverrideMap = new HashMap<String, Map<Double, Object>>();
 
   private final Rectangle2D.Double leftYAxisBounds;
   private final Rectangle2D.Double rightYAxisBounds;
@@ -134,7 +137,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
         - legendWidth
 
-        - 1 * chartPadding;
+        - chartPadding;
 
     rightYAxisBounds.x = rightEnd;
 
@@ -266,8 +269,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       for (Axis<ST, S> ya : yAxisMap.values()) {
         ya.addMinMax(-1, 1);
       }
-    }
-    else {
+    } else {
       int disabledCount = 0; // maybe all are disabled, so we check this condition
       for (S series : chart.getSeriesMap().values()) {
         // add min/max to axes
@@ -330,7 +332,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
   }
 
-  protected Axis<ST, S> getYAxis(int yIndex) {
+  Axis<ST, S> getYAxis(int yIndex) {
 
     return yAxisMap.get(yIndex);
   }
@@ -398,8 +400,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
               if (next.doubleValue() > 0) {
                 accumulatedStackOffsetPos[categoryCounter] += next.doubleValue();
-              }
-              else if (next.doubleValue() < 0) {
+              } else if (next.doubleValue() < 0) {
                 accumulatedStackOffsetNeg[categoryCounter] += next.doubleValue();
               }
               categoryCounter++;
@@ -489,5 +490,10 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   public Axis<ST, S> getRightMainYAxis() {
 
     return rightMainYAxis;
+  }
+
+  public Map<String, Map<Double, Object>> getAxisLabelOverrideMap() {
+
+    return axisLabelOverrideMap;
   }
 }
