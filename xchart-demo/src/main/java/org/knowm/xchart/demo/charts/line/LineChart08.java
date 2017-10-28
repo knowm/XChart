@@ -16,15 +16,15 @@
  */
 package org.knowm.xchart.demo.charts.line;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Logarithmic Y-Axis
@@ -71,7 +71,8 @@ public class LineChart08 implements ExampleChart<XYChart> {
     // chart.getStyler().setXAxisLabelRotation(0);
 
     // Series
-    chart.addSeries("10^x", xData, yData);
+    XYSeries series = chart.addSeries("10^x", xData, yData);
+
 
     return chart;
   }

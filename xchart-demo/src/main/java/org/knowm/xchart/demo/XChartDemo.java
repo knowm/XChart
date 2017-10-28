@@ -339,7 +339,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart07 - Category Chart with Line Rendering", new LineChart07().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart08 - Step rendering", new LineChart08().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("LineChart08 - Step Rendering", new LineChart08().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Scatter

@@ -23,10 +23,11 @@ import java.util.Random;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Gaussian Blob
@@ -38,6 +39,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * <li>Setting marker size
  * <li>Formatting of negative numbers with large magnitude but small differences
  * <li>YAxis position on Right
+ * <li>Cross type series marker
  */
 public class ScatterChart01 implements ExampleChart<XYChart> {
 
@@ -57,7 +59,7 @@ public class ScatterChart01 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
     chart.getStyler().setChartTitleVisible(false);
-    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyler().setLegendVisible(false);
     chart.getStyler().setMarkerSize(16);
     chart.getStyler().setYAxisGroupPosition(0, Styler.YAxisPosition.Right);
     // Series
@@ -69,7 +71,8 @@ public class ScatterChart01 implements ExampleChart<XYChart> {
       xData.add(random.nextGaussian() / 1000);
       yData.add(-1000000 + random.nextGaussian());
     }
-    chart.addSeries("Gaussian Blob", xData, yData);
+    XYSeries series = chart.addSeries("Gaussian Blob", xData, yData);
+    series.setMarker(SeriesMarkers.CROSS);
 
     return chart;
   }
