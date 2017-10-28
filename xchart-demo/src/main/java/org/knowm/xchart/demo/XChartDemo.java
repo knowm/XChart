@@ -36,7 +36,7 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.area.AreaChart01;
 import org.knowm.xchart.demo.charts.area.AreaChart02;
 import org.knowm.xchart.demo.charts.area.AreaChart03;
-import org.knowm.xchart.demo.charts.area.AreaLineChart03;
+import org.knowm.xchart.demo.charts.area.AreaChart04;
 import org.knowm.xchart.demo.charts.bar.BarChart01;
 import org.knowm.xchart.demo.charts.bar.BarChart02;
 import org.knowm.xchart.demo.charts.bar.BarChart03;
@@ -59,7 +59,14 @@ import org.knowm.xchart.demo.charts.date.DateChart06;
 import org.knowm.xchart.demo.charts.date.DateChart07;
 import org.knowm.xchart.demo.charts.date.DateChart08;
 import org.knowm.xchart.demo.charts.dial.DialChart01;
-import org.knowm.xchart.demo.charts.line.*;
+import org.knowm.xchart.demo.charts.line.LineChart01;
+import org.knowm.xchart.demo.charts.line.LineChart02;
+import org.knowm.xchart.demo.charts.line.LineChart03;
+import org.knowm.xchart.demo.charts.line.LineChart04;
+import org.knowm.xchart.demo.charts.line.LineChart05;
+import org.knowm.xchart.demo.charts.line.LineChart06;
+import org.knowm.xchart.demo.charts.line.LineChart07;
+import org.knowm.xchart.demo.charts.line.LineChart08;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart02;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart03;
@@ -69,7 +76,12 @@ import org.knowm.xchart.demo.charts.pie.PieChart03;
 import org.knowm.xchart.demo.charts.pie.PieChart04;
 import org.knowm.xchart.demo.charts.pie.PieChart05;
 import org.knowm.xchart.demo.charts.radar.RadarChart01;
-import org.knowm.xchart.demo.charts.realtime.*;
+import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
+import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
+import org.knowm.xchart.demo.charts.realtime.RealtimeChart03;
+import org.knowm.xchart.demo.charts.realtime.RealtimeChart04;
+import org.knowm.xchart.demo.charts.realtime.RealtimeChart05;
+import org.knowm.xchart.demo.charts.realtime.RealtimeChart06;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart01;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart02;
 import org.knowm.xchart.demo.charts.scatter.ScatterChart03;
@@ -82,8 +94,6 @@ import org.knowm.xchart.demo.charts.theme.ThemeChart04;
 
 /**
  * Class containing all XChart example charts
- *
- * @author timmolter
  */
 public class XChartDemo extends JPanel implements TreeSelectionListener {
 
@@ -183,8 +193,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
-      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart02")) {
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart02")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -198,8 +207,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
-      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart03")) {
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart03")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -213,8 +221,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
-      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart04")) {
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart04")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -228,8 +235,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
-      }
-      else if (chartInfo.getExampleChartName().startsWith("RealtimeChart05")) {
+      } else if (chartInfo.getExampleChartName().startsWith("RealtimeChart05")) {
         // set up real-time chart simulated data feed
         TimerTask chartUpdaterTask = new TimerTask() {
 
@@ -283,10 +289,10 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaChart02 - Null Y-Axis Data Points", new AreaChart02().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaLineChart03 - Combination Area & Line Chart", new AreaLineChart03().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaChart03 - Combination Area & Line Chart", new AreaChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
-    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaChart03 - Step area rendering", new AreaChart03().getChart()));
+    defaultMutableTreeNode = new DefaultMutableTreeNode(new ChartInfo("AreaChart04 - Step Area Rendering", new AreaChart04().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Pie

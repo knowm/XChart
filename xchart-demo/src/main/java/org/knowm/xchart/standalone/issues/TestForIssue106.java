@@ -24,7 +24,7 @@ import java.util.List;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.demo.charts.area.AreaLineChart03;
+import org.knowm.xchart.demo.charts.area.AreaChart03;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -36,7 +36,7 @@ public class TestForIssue106 {
 
   public static void main(String[] args) {
 
-    ExampleChart<XYChart> alc = new AreaLineChart03();
+    ExampleChart<XYChart> alc = new AreaChart03();
     List<XYChart> charts = new ArrayList<XYChart>();
     {
       XYChart chart = alc.getChart();
