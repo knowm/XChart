@@ -59,6 +59,7 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
       return;
     }
 
+    java.awt.Shape saveClip = g.getClip();
     // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
     g.setClip(bounds.createIntersection(bounds));
 
@@ -68,7 +69,7 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
 
     chart.toolTips.paint(g);
 
-    g.setClip(null);
+    g.setClip(saveClip);
   }
 
   @Override
