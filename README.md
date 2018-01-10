@@ -366,7 +366,7 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 
 ## Donations
 
-Donate with Bitcoin: [1JVyTP9v9z54dALuhDTZDQfS6FUjcKjPgZ](https://blockchain.info/address/1JVyTP9v9z54dALuhDTZDQfS6FUjcKjPgZ)
+Donate with Bitcoin: [187sgF3x681fYCWGSUwYimd7xA4nXuzpbs](https://blockchain.info/address/187sgF3x681fYCWGSUwYimd7xA4nXuzpbs)
 
 All donations will be used to pay bounties for new features, refactoring, etc. Please consider donating or even posting your own bounties on our [Issues Page](https://github.com/timmolter/xchart/issues?state=open). Open bounties and bounties paid thus far can be found on Knowm's [bounties](http://knowm.org/open-source/) page.
 
