@@ -367,7 +367,3 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 ## Donations
 
 All donations will be used to pay bounties for new features, refactoring, etc. Please consider donating or even posting your own bounties on our [Issues Page](https://github.com/timmolter/xchart/issues?state=open). Donation addresses, open bounties and bounties paid thus far can be found on Knowm's [bounties](http://knowm.org/open-source/) page.
-
-## Release Information
-
-We will announce new releases on our [Twitter page](https://twitter.com/Knowmorg).
