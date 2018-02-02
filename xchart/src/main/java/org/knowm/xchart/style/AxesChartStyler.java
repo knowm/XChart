@@ -492,7 +492,7 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
   
-  public AxesChartStyler setYAxisMin(Double yAxisMin, Integer yAxisGroup) {
+  public AxesChartStyler setYAxisMin(Integer yAxisGroup, Double yAxisMin) {
     
     this.yAxisMinMap.put(yAxisGroup, yAxisMin);
     return this;
@@ -514,7 +514,7 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
   
-  public AxesChartStyler setYAxisMax(Double yAxisMax, Integer yAxisGroup) {
+  public AxesChartStyler setYAxisMax(Integer yAxisGroup, Double yAxisMax) {
     
     this.yAxisMaxMap.put(yAxisGroup, yAxisMax);
     return this;

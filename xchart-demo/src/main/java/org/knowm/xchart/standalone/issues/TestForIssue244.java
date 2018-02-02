@@ -82,8 +82,8 @@ public class TestForIssue244 {
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
       
       AxesChartStyler styler = (AxesChartStyler)chart.getStyler();
-      styler.setYAxisMax(20.0, 0);
-      styler.setYAxisMin(-20.0, 0);
+      styler.setYAxisMax(0, 20.0);
+      styler.setYAxisMin(0, -20.0);
       
       charts.add(chart);
     }
@@ -98,10 +98,10 @@ public class TestForIssue244 {
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
       
       AxesChartStyler styler = (AxesChartStyler)chart.getStyler();
-      styler.setYAxisMax(20.0, 0);
-      styler.setYAxisMin(-20.0, 0);
-      styler.setYAxisMax(2.0, 1);
-      styler.setYAxisMin(-2.0, 1);
+      styler.setYAxisMax(0, 20.0);
+      styler.setYAxisMin(0, -20.0);
+      styler.setYAxisMax(1, 2.0);
+      styler.setYAxisMin(1, -2.0);
       
       charts.add(chart);
     }
@@ -120,10 +120,10 @@ public class TestForIssue244 {
       styler.setYAxisMax(100.0);
       styler.setYAxisMin(-100.0);
       
-      styler.setYAxisMax(20.0, 0);
-      styler.setYAxisMin(-20.0, 0);
-      styler.setYAxisMax(2.0, 1);
-      styler.setYAxisMin(-2.0, 1);
+      styler.setYAxisMax(0, 20.0);
+      styler.setYAxisMin(0, -20.0);
+      styler.setYAxisMax(1, 2.0);
+      styler.setYAxisMin(1, -2.0);
       
       charts.add(chart);
     }
