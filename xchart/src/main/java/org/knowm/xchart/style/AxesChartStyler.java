@@ -19,6 +19,7 @@ package org.knowm.xchart.style;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -49,8 +50,9 @@ public abstract class AxesChartStyler extends Styler {
   private boolean isYAxisLogarithmic;
   private Double xAxisMin;
   private Double xAxisMax;
-  private Double yAxisMin;
-  private Double yAxisMax;
+  private HashMap<Integer, Double> yAxisMinMap = new HashMap<Integer, Double>();
+  private HashMap<Integer, Double> yAxisMaxMap = new HashMap<Integer, Double>();
+
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
   private TextAlignment xAxisLabelAlignmentVertical = TextAlignment.Centre;
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
@@ -104,8 +106,8 @@ public abstract class AxesChartStyler extends Styler {
     this.isYAxisLogarithmic = false;
     this.xAxisMin = null;
     this.xAxisMax = null;
-    this.yAxisMin = null;
-    this.yAxisMax = null;
+    this.yAxisMinMap.clear();
+    this.yAxisMaxMap.clear();
 
     // Chart Plot Area ///////////////////////////////
     this.isPlotGridVerticalLinesVisible = theme.isPlotGridVerticalLinesVisible();
@@ -486,26 +488,48 @@ public abstract class AxesChartStyler extends Styler {
 
   public AxesChartStyler setYAxisMin(Double yAxisMin) {
 
-    this.yAxisMin = yAxisMin;
+    this.yAxisMinMap.put(null, yAxisMin);
+    return this;
+  }
+  
+  public AxesChartStyler setYAxisMin(Integer yAxisGroup, Double yAxisMin) {
+    
+    this.yAxisMinMap.put(yAxisGroup, yAxisMin);
     return this;
   }
 
   public Double getYAxisMin() {
 
-    return yAxisMin;
+    return yAxisMinMap.get(null);
+  }
+
+  public Double getYAxisMin(Integer yAxisGroup) {
+    
+    return yAxisMinMap.get(yAxisGroup);
   }
 
   public AxesChartStyler setYAxisMax(Double yAxisMax) {
 
-    this.yAxisMax = yAxisMax;
+    this.yAxisMaxMap.put(null, yAxisMax);
+    return this;
+  }
+  
+  public AxesChartStyler setYAxisMax(Integer yAxisGroup, Double yAxisMax) {
+    
+    this.yAxisMaxMap.put(yAxisGroup, yAxisMax);
     return this;
   }
 
   public Double getYAxisMax() {
 
-    return yAxisMax;
+    return yAxisMaxMap.get(null);
   }
 
+  public Double getYAxisMax(Integer yAxisGroup) {
+    
+    return yAxisMaxMap.get(yAxisGroup);
+  }
+  
   public TextAlignment getXAxisLabelAlignment() {
 
     return xAxisLabelAlignment;
