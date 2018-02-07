@@ -40,7 +40,7 @@ Create a `XYChart` via a `XYChartBuilder`, style chart, add a series to it, styl
     XYChart chart = new XYChartBuilder().width(600).height(500).title("Gaussian Blobs").xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyler().setDefaultSeriesRenderStyle(ChartXYSeriesRenderStyle.Scatter);
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
     chart.getStyler().setChartTitleVisible(false);
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
     chart.getStyler().setMarkerSize(16);
