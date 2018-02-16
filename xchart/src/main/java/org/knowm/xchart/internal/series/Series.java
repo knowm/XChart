@@ -36,6 +36,8 @@ public abstract class Series {
   public abstract LegendRenderType getLegendRenderType();
 
   private final String name;
+  
+  private String label;
 
   private Color fillColor;
 
@@ -56,6 +58,7 @@ public abstract class Series {
       throw new IllegalArgumentException("Series name cannot be null or zero-length!!!");
     }
     this.name = name;
+    this.label= name;
   }
 
   public Color getFillColor() {
@@ -63,14 +66,25 @@ public abstract class Series {
     return fillColor;
   }
 
-  public void setFillColor(Color fillColor) {
+  public Series setFillColor(Color fillColor) {
 
     this.fillColor = fillColor;
+    return this;
   }
 
   public String getName() {
 
     return name;
+  }
+  
+  public String getLabel() {
+
+    return label;
+  }
+  
+  public Series setLabel(String label) {
+	  this.label=label;
+	  return this;
   }
 
   public boolean isShowInLegend() {
@@ -78,9 +92,10 @@ public abstract class Series {
     return showInLegend;
   }
 
-  public void setShowInLegend(boolean showInLegend) {
+  public Series setShowInLegend(boolean showInLegend) {
 
     this.showInLegend = showInLegend;
+    return this;
   }
 
   public boolean isEnabled() {
@@ -88,9 +103,10 @@ public abstract class Series {
     return isEnabled;
   }
 
-  public void setEnabled(boolean isEnabled) {
+  public Series setEnabled(boolean isEnabled) {
 
     this.isEnabled = isEnabled;
+    return this;
   }
 
   public int getYAxisGroup() {
@@ -103,8 +119,9 @@ public abstract class Series {
    *
    * @param yAxisGroup
    */
-  public void setYAxisGroup(int yAxisGroup) {
+  public Series setYAxisGroup(int yAxisGroup) {
 
     this.yAxisGroup = yAxisGroup;
+    return this;
   }
 }
