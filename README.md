@@ -12,20 +12,20 @@ Create a `XYChart` instance via `QuickChart`, add a series of data to it, and ei
 
 ```java
 
-    double[] xData = new double[] { 0.0, 1.0, 2.0 };
-    double[] yData = new double[] { 2.0, 1.0, 0.0 };
+double[] xData = new double[] { 0.0, 1.0, 2.0 };
+double[] yData = new double[] { 2.0, 1.0, 0.0 };
 
-    // Create Chart
-    XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+// Create Chart
+XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
 
-    // Show it
-    new SwingWrapper(chart).displayChart();
+// Show it
+new SwingWrapper(chart).displayChart();
 
-    // Save it
-    BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
+// Save it
+BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
 
-    // or save it in high-res
-    BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
+// or save it in high-res
+BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
 ```
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Simplest.png)
@@ -36,21 +36,21 @@ Create a `XYChart` via a `XYChartBuilder`, style chart, add a series to it, styl
 
 ```java
 
-    // Create Chart
-    XYChart chart = new XYChartBuilder().width(600).height(500).title("Gaussian Blobs").xAxisTitle("X").yAxisTitle("Y").build();
+// Create Chart
+XYChart chart = new XYChartBuilder().width(600).height(500).title("Gaussian Blobs").xAxisTitle("X").yAxisTitle("Y").build();
 
-    // Customize Chart
-    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
-    chart.getStyler().setChartTitleVisible(false);
-    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
-    chart.getStyler().setMarkerSize(16);
+// Customize Chart
+chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+chart.getStyler().setChartTitleVisible(false);
+chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+chart.getStyler().setMarkerSize(16);
 
-    // Series
-    chart.addSeries("Gaussian Blob 1", getGaussian(1000, 1, 10), getGaussian(1000, 1, 10));
-    XYSeries series = chart.addSeries("Gaussian Blob 2", getGaussian(1000, 1, 10), getGaussian(1000, 0, 5));
-    series.setMarker(SeriesMarkers.DIAMOND);
+// Series
+chart.addSeries("Gaussian Blob 1", getGaussian(1000, 1, 10), getGaussian(1000, 1, 10));
+XYSeries series = chart.addSeries("Gaussian Blob 2", getGaussian(1000, 1, 10), getGaussian(1000, 0, 5));
+series.setMarker(SeriesMarkers.DIAMOND);
 
-    new SwingWrapper(chart).displayChart();
+new SwingWrapper(chart).displayChart();
 ```
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Intermediate.png)
@@ -61,43 +61,43 @@ Create a `XYChart` via a `XYChartBuilder`, style chart, add a series to it, add 
 
 ```java
 
-    // Create Chart
-    final XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
+// Create Chart
+final XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
 
-    // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
-    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
+// Customize Chart
+chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
+chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
 
-    // Series
-    chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });
-    chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
-    chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
+// Series
+chart.addSeries("a", new double[] { 0, 3, 5, 7, 9 }, new double[] { -3, 5, 9, 6, 5 });
+chart.addSeries("b", new double[] { 0, 2, 4, 6, 9 }, new double[] { -1, 6, 4, 0, 4 });
+chart.addSeries("c", new double[] { 0, 1, 3, 8, 9 }, new double[] { -2, -1, 1, 0, 1 });
 
-    // Schedule a job for the event-dispatching thread:
-    // creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+// Schedule a job for the event-dispatching thread:
+// creating and showing this application's GUI.
+javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
-      @Override
-      public void run() {
+  @Override
+  public void run() {
 
-        // Create and set up the window.
-        JFrame frame = new JFrame("Advanced Example");
-        frame.setLayout(new BorderLayout());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    // Create and set up the window.
+    JFrame frame = new JFrame("Advanced Example");
+    frame.setLayout(new BorderLayout());
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // chart
-        JPanel chartPanel = new XChartPanel<XYChart>(chart);
-        frame.add(chartPanel, BorderLayout.CENTER);
+    // chart
+    JPanel chartPanel = new XChartPanel<XYChart>(chart);
+    frame.add(chartPanel, BorderLayout.CENTER);
 
-        // label
-        JLabel label = new JLabel("Blah blah blah.", SwingConstants.CENTER);
-        frame.add(label, BorderLayout.SOUTH);
+    // label
+    JLabel label = new JLabel("Blah blah blah.", SwingConstants.CENTER);
+    frame.add(label, BorderLayout.SOUTH);
 
-        // Display the window.
-        frame.pack();
-        frame.setVisible(true);
-      }
-    });
+    // Display the window.
+    frame.pack();
+    frame.setVisible(true);
+  }
+});
 
 ```
 
@@ -220,53 +220,53 @@ Creating real-time charts is as simple as calling `updateXYSeries` for one or mo
 The following sample code used to generate the above real-time chart can be found [here](https://github.com/timmolter/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/standalone/readme/SimpleRealTime.java).
 
 ```java
-    public class SimpleRealTime {
-    
-      public static void main(String[] args) throws Exception {
-    
-        double phase = 0;
-        double[][] initdata = getSineData(phase);
-    
-        // Create Chart
-        final XYChart chart = QuickChart.getChart("Simple XChart Real-time Demo", "Radians", "Sine", "sine", initdata[0], initdata[1]);
-    
-        // Show it
-        final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
-        sw.displayChart();
-    
-        while (true) {
-    
-          phase += 2 * Math.PI * 2 / 20.0;
-    
-          Thread.sleep(100);
-    
-          final double[][] data = getSineData(phase);
-    
-          javax.swing.SwingUtilities.invokeLater(new Runnable() {
-    
-            @Override
-            public void run() {
-    
-              chart.updateXYSeries("sine", data[0], data[1], null);
-              sw.repaintChart();
-            }
-          });
+public class SimpleRealTime {
+
+  public static void main(String[] args) throws Exception {
+
+    double phase = 0;
+    double[][] initdata = getSineData(phase);
+
+    // Create Chart
+    final XYChart chart = QuickChart.getChart("Simple XChart Real-time Demo", "Radians", "Sine", "sine", initdata[0], initdata[1]);
+
+    // Show it
+    final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
+    sw.displayChart();
+
+    while (true) {
+
+      phase += 2 * Math.PI * 2 / 20.0;
+
+      Thread.sleep(100);
+
+      final double[][] data = getSineData(phase);
+
+      javax.swing.SwingUtilities.invokeLater(new Runnable() {
+
+        @Override
+        public void run() {
+
+          chart.updateXYSeries("sine", data[0], data[1], null);
+          sw.repaintChart();
         }
-    
-      }
-    
-      private static double[][] getSineData(double phase) {
-    
-        double[] xData = new double[100];
-        double[] yData = new double[100];
-        for (int i = 0; i < xData.length; i++) {
-          double radians = phase + (2 * Math.PI / xData.length * i);
-          xData[i] = radians;
-          yData[i] = Math.sin(radians);
-        }
-        return new double[][] { xData, yData };
-      }
+      });
     }
+
+  }
+
+  private static double[][] getSineData(double phase) {
+
+    double[] xData = new double[100];
+    double[] yData = new double[100];
+    for (int i = 0; i < xData.length; i++) {
+      double radians = phase + (2 * Math.PI / xData.length * i);
+      xData[i] = radians;
+      yData[i] = Math.sin(radians);
+    }
+    return new double[][] { xData, yData };
+  }
+}
 ```
 
 ## Chart Customization
@@ -305,7 +305,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.5.0</version>
+        <version>3.5.1</version>
     </dependency>
 ```
 
@@ -321,7 +321,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.5.1-SNAPSHOT</version>
+      <version>3.5.2-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -332,7 +332,7 @@ Snapshots can be manually downloaded from Sonatype: [https://oss.sonatype.org/co
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.1" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
 ## Building
@@ -351,7 +351,7 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.0" exclude("de.erich
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-3.5.0.jar:xchart-3.5.0.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-3.5.1.jar:xchart-3.5.1.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
 
