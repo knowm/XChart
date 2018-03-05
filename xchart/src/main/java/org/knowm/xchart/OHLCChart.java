@@ -387,9 +387,9 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
 
     // set the series render styles if they are not set. Legend and Plot need it.
     for (OHLCSeries series : getSeriesMap().values()) {
-      OHLCSeries.OHLCSeriesRenderStyle renderStyle = series.getRenderStyle(); // would be directly set
+      OHLCSeries.OHLCSeriesRenderStyle renderStyle = series.getOhlcSeriesRenderStyle(); // would be directly set
       if (renderStyle == null) { // wasn't overridden, use default from Style Manager
-        series.setRenderStyle(getStyler().getDefaultSeriesRenderStyle());
+        series.setOhlcSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }
     setSeriesStyles();

@@ -77,9 +77,9 @@ public class CategorySeries extends AxesChartSeriesCategory {
     return chartCategorySeriesRenderStyle;
   }
 
-  public CategorySeries setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle chartXYSeriesRenderStyle) {
+  public CategorySeries setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle categorySeriesRenderStyle) {
 
-    this.chartCategorySeriesRenderStyle = chartXYSeriesRenderStyle;
+    this.chartCategorySeriesRenderStyle = categorySeriesRenderStyle;
     return this;
   }
 

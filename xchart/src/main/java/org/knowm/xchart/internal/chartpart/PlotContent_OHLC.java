@@ -166,7 +166,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
               rect.setRect(xOffset - lineWidth / 2, highOffset, lineWidth, lowOffset - highOffset);
               toolTipArea = new Area(rect);
             }
-            if (series.getRenderStyle() == OHLCSeries.OHLCSeriesRenderStyle.Candle) {
+            if (series.getOhlcSeriesRenderStyle() == OHLCSeries.OHLCSeriesRenderStyle.Candle) {
               // candle style
               if (closeOrig > openOrig) {
                 g.setPaint(series.getUpColor());

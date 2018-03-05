@@ -114,7 +114,7 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
     populateData(xData, openData, highData, lowData, closeData);
 
     xData = null;
-    chart.addSeries("Series", xData, openData, highData, lowData, closeData).setRenderStyle(OHLCSeries.OHLCSeriesRenderStyle.HiLo);
+    chart.addSeries("Series", xData, openData, highData, lowData, closeData).setOhlcSeriesRenderStyle(OHLCSeries.OHLCSeriesRenderStyle.HiLo);
     chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
