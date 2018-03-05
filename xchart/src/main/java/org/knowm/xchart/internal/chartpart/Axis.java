@@ -1,13 +1,10 @@
 /**
  * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
  * http://www.apache.org/licenses/LICENSE-2.0
- *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -128,10 +125,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     // System.out.println(min);
     // System.out.println(max);
     // NaN indicates String axis data, so min and max play no role
-    if (this.min == Double.NaN || min < this.min) {
+    if (Double.isNaN(this.min) || min < this.min) {
       this.min = min;
     }
-    if (this.max == Double.NaN || max > this.max) {
+    if (Double.isNaN(this.max) || max > this.max) {
       this.max = max;
     }
 
@@ -176,7 +173,9 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
                 - (axesChartStyler.isYAxisTicksVisible() ? (axesChartStyler.getPlotMargin()) : 0)
 
-                - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE && axesChartStyler.isLegendVisible() ? axesChartStyler.getChartPadding() : 0);
+                - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE && axesChartStyler.isLegendVisible() ?
+                axesChartStyler.getChartPadding() :
+                0);
 
         height = chart.getHeight()
 
@@ -212,7 +211,9 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
       double maxYAxisY = Math.max(leftYAxisBounds.getY() + leftYAxisBounds.getHeight(), rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
       double xOffset = leftYAxisBounds.getWidth() + axesChartStyler.getChartPadding();
-      double yOffset = maxYAxisY + axesChartStyler.getPlotMargin() - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideS ? chart.getLegend().getBounds().getHeight() : 0);
+      double yOffset = maxYAxisY + axesChartStyler.getPlotMargin() - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideS ?
+          chart.getLegend().getBounds().getHeight() :
+          0);
 
       double legendWidth = 0;
       if (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE && axesChartStyler.isLegendVisible()) {
@@ -242,8 +243,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     }
   }
 
-  @Override
-  public void paint(Graphics2D g) {
+  @Override public void paint(Graphics2D g) {
 
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -324,8 +324,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       // System.out.println("sampleLabel: " + sampleLabel);
 
       // get the height of the label including rotation
-      TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, axesChartStyler.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-      AffineTransform rot = axesChartStyler.getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(axesChartStyler.getXAxisLabelRotation()));
+      TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, axesChartStyler.getAxisTickLabelsFont(),
+          new FontRenderContext(null, true, false));
+      AffineTransform rot = axesChartStyler.getXAxisLabelRotation() == 0 ?
+          null :
+          AffineTransform.getRotateInstance(-1 * Math.toRadians(axesChartStyler.getXAxisLabelRotation()));
       Shape shape = textLayout.getOutline(rot);
       Rectangle2D rectangle = shape.getBounds();
 
@@ -364,7 +367,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       // get the height of the label including rotation
-      TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, axesChartStyler.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+      TextLayout textLayout = new TextLayout(sampleLabel.length() == 0 ? " " : sampleLabel, axesChartStyler.getAxisTickLabelsFont(),
+          new FontRenderContext(null, true, false));
       Rectangle2D rectangle = textLayout.getBounds();
 
       axisTickLabelsHeight = rectangle.getWidth() + axesChartStyler.getAxisTickPadding() + axesChartStyler.getAxisTickMarkLength();
@@ -483,8 +487,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     return this.axisTickCalculator;
   }
 
-  @Override
-  public Rectangle2D getBounds() {
+  @Override public Rectangle2D getBounds() {
 
     return bounds;
   }

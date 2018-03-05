@@ -102,7 +102,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
         // System.out.println(x);
 
         double next = yData[i];
-        if (next == Double.NaN) {
+        if (Double.isNaN(next)) {
 
           // for area charts
           closePath(g, path, previousX, getBounds(), yTopMargin);

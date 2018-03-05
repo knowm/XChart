@@ -89,7 +89,7 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
         }
         // System.out.println(x);
 
-        if (series.getYData()[i] == Double.NaN) {
+        if (Double.isNaN(series.getYData()[i])) {
 
 //          previousX = -Double.MAX_VALUE;
 //          previousY = -Double.MAX_VALUE;

@@ -1,13 +1,10 @@
 /**
  * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
  * http://www.apache.org/licenses/LICENSE-2.0
- *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,13 +34,13 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
    * @param yData
    * @param xAxisDataType
    */
- public AxesChartSeriesNumericalNoErrorBars(String name, double[] xData, double[] yData,double[] extraValues, DataType xAxisDataType) {
+  public AxesChartSeriesNumericalNoErrorBars(String name, double[] xData, double[] yData, double[] extraValues, DataType xAxisDataType) {
 
     super(name, xAxisDataType);
 
     this.xData = xData;
-   this.yData = yData;
-   this.extraValues = extraValues;
+    this.yData = yData;
+    this.extraValues = extraValues;
 
     calculateMinMax();
   }
@@ -84,10 +81,9 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
     for (double dataPoint : data) {
 
-      if (dataPoint == Double.NaN) {
+      if (Double.isNaN(dataPoint)) {
         continue;
-      }
-      else {
+      } else {
         if (dataPoint < min) {
           min = dataPoint;
         }
@@ -97,11 +93,10 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
       }
     }
 
-    return new double[] { min, max };
+    return new double[]{min, max};
   }
 
-  @Override
-  protected void calculateMinMax() {
+  @Override protected void calculateMinMax() {
 
     // xData
     double[] xMinMax = findMinMax(xData);
@@ -114,8 +109,7 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     double[] yMinMax;
     if (extraValues == null) {
       yMinMax = findMinMax(yData);
-    }
-    else {
+    } else {
       yMinMax = findMinMaxWithErrorBars(yData, extraValues);
     }
     yMin = yMinMax[0];
@@ -147,8 +141,9 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
         max = d + eb;
       }
     }
-    return new double[] { min, max };
+    return new double[]{min, max};
   }
+
   public double[] getXData() {
 
     return xData;

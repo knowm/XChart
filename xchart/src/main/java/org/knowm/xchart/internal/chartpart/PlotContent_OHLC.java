@@ -1,13 +1,10 @@
 /**
  * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
  * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
  * http://www.apache.org/licenses/LICENSE-2.0
- *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -45,8 +42,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
     ohlcStyler = chart.getStyler();
   }
 
-  @Override
-  public void doPaint(Graphics2D g) {
+  @Override public void doPaint(Graphics2D g) {
 
     // X-Axis
     double xTickSpace = ohlcStyler.getPlotContentSize() * getBounds().getWidth();
@@ -101,7 +97,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
           x = Math.log10(x);
         }
 
-        if (closeData[i] == Double.NaN) {
+        if (Double.isNaN(closeData[i])) {
           continue;
         }
 
@@ -157,9 +153,8 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
         // paint line
         if (series.getLineStyle() != SeriesLines.NONE) {
 
-          if (xOffset != -Double.MAX_VALUE && openOffset != -Double.MAX_VALUE &&
-                  highOffset != -Double.MAX_VALUE && lowOffset != -Double.MAX_VALUE &&
-                  closeOffset != -Double.MAX_VALUE) {
+          if (xOffset != -Double.MAX_VALUE && openOffset != -Double.MAX_VALUE && highOffset != -Double.MAX_VALUE && lowOffset != -Double.MAX_VALUE
+              && closeOffset != -Double.MAX_VALUE) {
             g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
             // high to low line
@@ -203,11 +198,9 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
 
         // add data labels
         if (toolTipsEnabled) {
-          chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth *2, chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat().format(openOrig) + ':' +
-                      chart.getYAxisFormat().format(highOrig) + ':' +
-                      chart.getYAxisFormat().format(lowOrig) + ':' +
-                      chart.getYAxisFormat().format(closeOrig));
+          chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth * 2, chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat().format(openOrig) + ':' + chart.getYAxisFormat().format(highOrig) + ':' + chart.getYAxisFormat().format(lowOrig)
+                  + ':' + chart.getYAxisFormat().format(closeOrig));
         }
       }
 
