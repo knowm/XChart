@@ -92,6 +92,8 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     // System.out.println("firstPosition: " + firstPosition);
     double tickStep = Utils.pow(10, logMin - 1);
 
+    boolean axisDecadeOnly = (axisDirection == Direction.X) ? styler.isXAxisLogarithmicDecadeOnly() : styler.isYAxisLogarithmicDecadeOnly();
+
     for (int i = logMin; i <= logMax; i++) { // for each decade
 
       // System.out.println("tickStep: " + tickStep);
@@ -116,7 +118,7 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
         }
 
         // only add labels for the decades
-        if (Math.abs(Math.log10(j) % 1) < 0.00000001) {
+        if (!axisDecadeOnly || Math.abs(Math.log10(j) % 1) < 0.00000001) {
           tickLabels.add(numberLogFormatter.format(j));
         } else {
           tickLabels.add(null);

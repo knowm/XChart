@@ -78,6 +78,8 @@ public abstract class AxesChartStyler extends Styler {
   private String datePattern;
   private String xAxisDecimalPattern;
   private String yAxisDecimalPattern;
+  private boolean xAxisLogarithmicDecadeOnly;
+  private boolean yAxisLogarithmicDecadeOnly;
 
   @Override
   void setAllStyles() {
@@ -129,6 +131,8 @@ public abstract class AxesChartStyler extends Styler {
     this.datePattern = null; // if not null, this override pattern will be used
     this.xAxisDecimalPattern = null;
     this.yAxisDecimalPattern = null;
+    this.xAxisLogarithmicDecadeOnly = true;
+    this.yAxisLogarithmicDecadeOnly = true;
 
     // Annotations ////////////////////////////////
     this.hasAnnotations = false;
@@ -792,6 +796,34 @@ public abstract class AxesChartStyler extends Styler {
   public AxesChartStyler setYAxisDecimalPattern(String yAxisDecimalPattern) {
 
     this.yAxisDecimalPattern = yAxisDecimalPattern;
+    return this;
+  }
+
+  public boolean isXAxisLogarithmicDecadeOnly() {
+    return xAxisLogarithmicDecadeOnly;
+  }
+
+  /**
+   * Set the decade only support for logarithmic Y-Axis
+   *
+   * @param xAxisLogarithmicDecadeOnly
+   */
+  public AxesChartStyler setXAxisLogarithmicDecadeOnly(boolean xAxisLogarithmicDecadeOnly) {
+    this.xAxisLogarithmicDecadeOnly = xAxisLogarithmicDecadeOnly;
+    return this;
+  }
+
+  public boolean isYAxisLogarithmicDecadeOnly() {
+    return yAxisLogarithmicDecadeOnly;
+  }
+
+  /**
+   * Set the decade only support for logarithmic Y-Axis
+   *
+   * @param yAxisLogarithmicDecadeOnly
+   */
+  public AxesChartStyler setYAxisLogarithmicDecadeOnly(boolean yAxisLogarithmicDecadeOnly) {
+    this.yAxisLogarithmicDecadeOnly = yAxisLogarithmicDecadeOnly;
     return this;
   }
 
