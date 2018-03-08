@@ -29,6 +29,7 @@ public interface SeriesMarkers {
   Marker TRIANGLE_UP = new TriangleUp();
   Marker CROSS = new Cross();
   Marker PLUS = new Plus();
+  Marker PENTAGON = new Pentagon();
 
   Marker[] getSeriesMarkers();
 }
