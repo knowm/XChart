@@ -96,6 +96,9 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
    * @param direction the axis direction (X or Y)
    */
   public Axis(Chart<ST, S> chart, Direction direction, int yIndex) {
+    this(chart,direction,yIndex,false);
+  }
+  public Axis(Chart<ST, S> chart, Direction direction, int yIndex, boolean paintJustXAxisTickLabels) {
 
     this.chart = chart;
     this.axesChartStyler = chart.getStyler();
@@ -104,7 +107,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     this.yIndex = yIndex;
     bounds = new Rectangle2D.Double();
     axisTitle = new AxisTitle<ST, S>(chart, direction, direction == Direction.Y ? this : null, yIndex);
-    axisTick = new AxisTick<ST, S>(chart, direction, direction == Direction.Y ? this : null);
+    axisTick = new AxisTick<ST, S>(chart, direction, direction == Direction.Y ? this : null, paintJustXAxisTickLabels);
   }
 
   /**

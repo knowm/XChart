@@ -56,11 +56,14 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    * @param chart
    */
   public AxisPair(Chart<ST, S> chart) {
+    this(chart,false);
+  }
+  public AxisPair(Chart<ST, S> chart, boolean paintJustXAxisTickLabels) {
 
     this.chart = chart;
 
     // add axes
-    xAxis = new Axis<ST, S>(chart, Axis.Direction.X, 0);
+    xAxis = new Axis<ST, S>(chart, Axis.Direction.X, 0, paintJustXAxisTickLabels);
     yAxis = new Axis<ST, S>(chart, Axis.Direction.Y, 0);
     yAxisMap = new TreeMap<Integer, Axis<ST, S>>();
     yAxisMap.put(0, yAxis);

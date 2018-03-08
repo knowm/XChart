@@ -25,6 +25,7 @@ public class CategoryChartBuilder extends ChartBuilder<CategoryChartBuilder, Cat
 
   String xAxisTitle = "";
   String yAxisTitle = "";
+  private boolean paintJustXAxisTickLabels;
 
   public CategoryChartBuilder() {
 
@@ -42,6 +43,11 @@ public class CategoryChartBuilder extends ChartBuilder<CategoryChartBuilder, Cat
     return this;
   }
 
+  public CategoryChartBuilder paintJustXAxisTickLabels(boolean paintJustXAxisTickLabels) {
+    this.paintJustXAxisTickLabels = paintJustXAxisTickLabels;
+    return this;
+  }
+
   /**
    * return fully built Chart_Category
    *
@@ -50,6 +56,6 @@ public class CategoryChartBuilder extends ChartBuilder<CategoryChartBuilder, Cat
   @Override
   public CategoryChart build() {
 
-    return new CategoryChart(this);
+    return new CategoryChart(this, this.paintJustXAxisTickLabels);
   }
 }

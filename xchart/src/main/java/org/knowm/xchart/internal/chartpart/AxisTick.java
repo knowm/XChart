@@ -50,10 +50,13 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    * @param yAxis
    */
   AxisTick(Chart<ST, S> chart, Direction direction, Axis yAxis) {
+    this(chart,direction,yAxis,false);
+  }
+  AxisTick(Chart<ST, S> chart, Direction direction, Axis yAxis, boolean paintJustXAxisTickLabels) {
 
     this.chart = chart;
     this.direction = direction;
-    axisTickLabels = new AxisTickLabels<ST, S>(chart, direction, yAxis);
+    axisTickLabels = new AxisTickLabels<ST, S>(chart, direction, yAxis, paintJustXAxisTickLabels);
     axisTickMarks = new AxisTickMarks<ST, S>(chart, direction, yAxis);
   }
 

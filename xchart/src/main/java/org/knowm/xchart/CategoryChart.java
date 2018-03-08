@@ -50,9 +50,12 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    * @param height
    */
   public CategoryChart(int width, int height) {
+    this(width,height,false);
+  }
+  public CategoryChart(int width, int height, boolean paintJustXAxisTickLabels) {
 
     super(width, height, new CategoryStyler());
-    axisPair = new AxisPair<CategoryStyler, CategorySeries>(this);
+    axisPair = new AxisPair<CategoryStyler, CategorySeries>(this,paintJustXAxisTickLabels);
     plot = new Plot_Category<CategoryStyler, CategorySeries>(this);
     legend = new Legend_Marker<CategoryStyler, CategorySeries>(this);
   }
@@ -65,8 +68,11 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    * @param theme - pass in a instance of Theme class, probably a custom Theme.
    */
   public CategoryChart(int width, int height, Theme theme) {
+    this(width, height, theme, false);
+  }
+  public CategoryChart(int width, int height, Theme theme, boolean paintJustXAxisTickLabels) {
 
-    this(width, height);
+    this(width, height,paintJustXAxisTickLabels);
     styler.setTheme(theme);
   }
 
@@ -78,8 +84,11 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    * @param chartTheme - pass in the desired ChartTheme enum
    */
   public CategoryChart(int width, int height, ChartTheme chartTheme) {
+    this(width, height, chartTheme,false);
+  }
+  public CategoryChart(int width, int height, ChartTheme chartTheme, boolean paintJustXAxisTickLabels) {
 
-    this(width, height, chartTheme.newInstance(chartTheme));
+    this(width, height, chartTheme.newInstance(chartTheme),paintJustXAxisTickLabels);
   }
 
   /**
@@ -88,8 +97,11 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    * @param chartBuilder
    */
   public CategoryChart(CategoryChartBuilder chartBuilder) {
+    this(chartBuilder,false);
+  }
+  public CategoryChart(CategoryChartBuilder chartBuilder,boolean paintJustXAxisTickLabels) {
 
-    this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
+    this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme,paintJustXAxisTickLabels);
     setTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
