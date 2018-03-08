@@ -2,7 +2,7 @@ package org.knowm.xchart.style.markers;
 
 import java.awt.*;
 
-public class Pentagon extends Marker {
+public class Trapezoid extends Marker {
     @Override
     public void paint(Graphics2D g, double xOffset, double yOffset, int markerSize) {
         g.setStroke(stroke);
