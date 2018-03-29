@@ -1,8 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.text.Format;
 import java.util.HashMap;
@@ -18,10 +16,15 @@ import org.knowm.xchart.style.Styler;
  */
 public abstract class Chart<ST extends Styler, S extends Series> {
 
-  public abstract void paint(Graphics2D g, int width, int height);
-
   protected final ST styler;
+  protected final ChartTitle<ST, S> chartTitle;
+  protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
+  final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
+  /** Chart Parts */
+  protected AxisPair axisPair;
 
+  protected Plot_<ST, S> plot;
+  protected Legend_<ST, S> legend;
   /** Meta Data */
   private int width;
 
@@ -30,16 +33,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private String xAxisTitle = "";
   private String yAxisTitle = "";
   private Map<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
-
-  /** Chart Parts */
-  protected AxisPair axisPair;
-
-  final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
-  protected Plot_<ST, S> plot;
-  protected final ChartTitle<ST, S> chartTitle;
-  protected Legend_<ST, S> legend;
-
-  protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
 
   /**
    * Constructor
@@ -58,6 +51,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     this.chartTitle = new ChartTitle<ST, S>(this);
   }
+
+  public abstract void paint(Graphics2D g, int width, int height);
 
   protected void paintBackground(Graphics2D g) {
 

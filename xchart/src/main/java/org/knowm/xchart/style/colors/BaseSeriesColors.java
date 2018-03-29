@@ -1,6 +1,6 @@
 package org.knowm.xchart.style.colors;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * Colors are taken from http://colorbrewer2.org/#type=qualitative&scheme=Set3&n=12.

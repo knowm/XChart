@@ -1,6 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;

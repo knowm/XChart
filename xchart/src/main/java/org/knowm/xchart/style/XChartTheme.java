@@ -1,7 +1,6 @@
 package org.knowm.xchart.style;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import java.awt.*;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.XChartSeriesLines;

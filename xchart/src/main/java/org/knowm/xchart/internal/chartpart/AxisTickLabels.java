@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -18,9 +17,9 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
     implements ChartPart {
 
   private final Chart<ST, S> chart;
-  private Rectangle2D bounds;
   private final Direction direction;
   private final Axis yAxis;
+  private Rectangle2D bounds;
 
   /**
    * Constructor

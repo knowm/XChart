@@ -1,12 +1,10 @@
 package org.knowm.xchart;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
@@ -16,10 +14,9 @@ import org.knowm.xchart.internal.chartpart.Chart;
  */
 public class SwingWrapper<T extends Chart> {
 
-  private String windowTitle = "XChart";
-
-  private List<T> charts = new ArrayList<T>();
   private final List<XChartPanel<T>> chartPanels = new ArrayList<XChartPanel<T>>();
+  private String windowTitle = "XChart";
+  private List<T> charts = new ArrayList<T>();
   private int numRows;
   private int numColumns;
 

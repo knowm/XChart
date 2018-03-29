@@ -1,24 +1,10 @@
 package org.knowm.xchart;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
@@ -116,34 +102,6 @@ public class XChartPanel<T extends Chart> extends JPanel {
     return preferredSize;
   }
 
-  private class SaveAction extends AbstractAction {
-
-    public SaveAction() {
-
-      super("save");
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-      showSaveAsDialog();
-    }
-  }
-
-  private class ExportAction extends AbstractAction {
-
-    public ExportAction() {
-
-      super("export");
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-      showExportAsDialog();
-    }
-  }
-
   private void showSaveAsDialog() {
 
     UIManager.put("FileChooser.saveButtonText", "Save");
@@ -211,13 +169,13 @@ public class XChartPanel<T extends Chart> extends JPanel {
     UIManager.put("FileChooser.saveButtonText", "Export");
     UIManager.put("FileChooser.fileNameLabelText", "Export To:");
     UIManager.put("FileChooser.saveDialogFileNameLabel.textAndMnemonic", "Export To:");
-    //    UIDefaults defaults = UIManager.getDefaults();
-    //    System.out.println(defaults.size()+ " properties");
-    //    for (Enumeration e = defaults.keys();
-    //         e.hasMoreElements();) {
-    //      Object key = e.nextElement();
-    //      System.out.println(key + " = " + defaults.get(key));
-    //    }
+    // UIDefaults defaults = UIManager.getDefaults();
+    // System.out.println(defaults.size()+ " properties");
+    // for (Enumeration e = defaults.keys();
+    // e.hasMoreElements();) {
+    // Object key = e.nextElement();
+    // System.out.println(key + " = " + defaults.get(key));
+    // }
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     fileChooser.setFileFilter(
@@ -225,11 +183,13 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
           @Override
           public boolean accept(File f) {
+
             return f.isDirectory();
           }
 
           @Override
           public String getDescription() {
+
             return "Any Directory";
           }
         });
@@ -245,6 +205,34 @@ public class XChartPanel<T extends Chart> extends JPanel {
       } catch (IOException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  private class SaveAction extends AbstractAction {
+
+    public SaveAction() {
+
+      super("save");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+      showSaveAsDialog();
+    }
+  }
+
+  private class ExportAction extends AbstractAction {
+
+    public ExportAction() {
+
+      super("export");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+      showExportAsDialog();
     }
   }
 

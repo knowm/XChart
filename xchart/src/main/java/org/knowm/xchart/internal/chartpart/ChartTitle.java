@@ -1,9 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -120,7 +117,7 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
     } else {
       return new Rectangle2D
           .Double(); // Constructs a new Rectangle2D, initialized to location (0, 0) and size (0,
-                     // 0).
+      // 0).
     }
   }
 
@@ -129,7 +126,7 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
 
     if (bounds
         == null) { // was not drawn fully yet, just need the height hint. The Plot object will be
-                   // asking for it.
+      // asking for it.
       bounds = getBoundsHint();
     }
     return bounds;

@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -15,20 +14,14 @@ import org.knowm.xchart.style.Styler;
 /** @author timmolter */
 public abstract class Legend_<ST extends Styler, S extends Series> implements ChartPart {
 
-  protected abstract double getSeriesLegendRenderGraphicHeight(S series);
-
-  protected abstract void doPaint(Graphics2D g);
-
-  private static final int LEGEND_MARGIN = 6;
   static final int BOX_SIZE = 20;
   static final int BOX_OUTLINE_WIDTH = 5;
+  private static final int LEGEND_MARGIN = 6;
   private static final int MULTI_LINE_SPACE = 3;
-
   final Chart<ST, S> chart;
-  private Rectangle2D bounds;
-
   double xOffset = 0;
   double yOffset = 0;
+  private Rectangle2D bounds;
 
   /**
    * Constructor
@@ -39,6 +32,10 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     this.chart = chart;
   }
+
+  protected abstract double getSeriesLegendRenderGraphicHeight(S series);
+
+  protected abstract void doPaint(Graphics2D g);
 
   @Override
   public void paint(Graphics2D g) {
@@ -65,11 +62,11 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
       bounds =
           getBoundsHintVertical(); // Actually, the only information contained in this bounds is the
-                                   // width and height.
+      // width and height.
     } else {
       bounds =
           getBoundsHintHorizontal(); // Actually, the only information contained in this bounds is
-                                     // the width and height.
+      // the width and height.
     }
 
     // legend draw position
@@ -154,7 +151,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     doPaint(g);
 
     // bounds
-    //    bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
+    // bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
     // g.setColor(Color.blue);
     // g.draw(bounds);
   }
@@ -165,7 +162,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     if (!chart.getStyler().isLegendVisible()) {
       return new Rectangle2D
           .Double(); // Constructs a new Rectangle2D, initialized to location (0, 0) and size (0,
-                     // 0).
+      // 0).
     }
 
     boolean containsBox = false;
@@ -230,7 +227,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     if (!chart.getStyler().isLegendVisible()) {
       return new Rectangle2D
           .Double(); // Constructs a new Rectangle2D, initialized to location (0, 0) and size (0,
-                     // 0).
+      // 0).
     }
 
     // determine legend text content max height
@@ -379,10 +376,10 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
       return getBoundsHintVertical(); // Actually, the only information contained in this bounds is
-                                      // the width and height.
+      // the width and height.
     } else {
       return getBoundsHintHorizontal(); // Actually, the only information contained in this bounds
-                                        // is the width and height.
+      // is the width and height.
     }
   }
 }

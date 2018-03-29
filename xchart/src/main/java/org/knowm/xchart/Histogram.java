@@ -12,12 +12,12 @@ import java.util.List;
  */
 public class Histogram {
 
-  private List<Double> xAxisData; // bin centers
-  private List<Double> yAxisData; // frequency counts
   private final Collection<? extends Number> originalData;
   private final int numBins;
   private final double min;
   private final double max;
+  private List<Double> xAxisData; // bin centers
+  private List<Double> yAxisData; // frequency counts
 
   /**
    * Constructor

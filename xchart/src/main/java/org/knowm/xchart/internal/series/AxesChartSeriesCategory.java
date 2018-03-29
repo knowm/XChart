@@ -117,6 +117,7 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     }
     return new double[] {min, max};
   }
+
   /**
    * Finds the min and max of a dataset
    *

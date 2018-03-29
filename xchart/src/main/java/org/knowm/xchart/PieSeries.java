@@ -10,14 +10,7 @@ import org.knowm.xchart.internal.series.Series;
  */
 public class PieSeries extends Series {
 
-  public enum PieSeriesRenderStyle {
-    Pie(),
-
-    Donut();
-  }
-
   private PieSeriesRenderStyle chartPieSeriesRenderStyle = null;
-
   private Number value;
 
   /**
@@ -69,5 +62,11 @@ public class PieSeries extends Series {
 
     // Pie charts are always rendered as a Box in the legend
     return null;
+  }
+
+  public enum PieSeriesRenderStyle {
+    Pie(),
+
+    Donut();
   }
 }

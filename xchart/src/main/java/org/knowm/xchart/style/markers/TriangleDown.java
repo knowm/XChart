@@ -1,6 +1,6 @@
 package org.knowm.xchart.style.markers;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Path2D;
 
 /** @author timmolter */

@@ -1,17 +1,10 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
+import java.awt.geom.*;
 import java.awt.geom.Arc2D.Double;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.Map;
 import org.knowm.xchart.PieSeries;
@@ -35,6 +28,45 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
     super(chart);
     pieStyler = chart.getStyler();
+  }
+
+  public static Shape getDonutSliceShape(
+      Rectangle2D pieBounds, double thickness, double start, double extent) {
+
+    thickness = thickness / 2;
+
+    GeneralPath generalPath = new GeneralPath();
+    GeneralPath dummy = new GeneralPath(); // used to find arc endpoints
+
+    double x = pieBounds.getX();
+    double y = pieBounds.getY();
+    double width = pieBounds.getWidth();
+    double height = pieBounds.getHeight();
+    Shape outer = new Arc2D.Double(x, y, width, height, start, extent, Arc2D.OPEN);
+    double wt = width * thickness;
+    double ht = height * thickness;
+    Shape inner =
+        new Arc2D.Double(
+            x + wt, y + ht, width - 2 * wt, height - 2 * ht, start + extent, -extent, Arc2D.OPEN);
+    generalPath.append(outer, false);
+
+    dummy.append(
+        new Arc2D.Double(
+            x + wt, y + ht, width - 2 * wt, height - 2 * ht, start, extent, Arc2D.OPEN),
+        false);
+
+    Point2D point = dummy.getCurrentPoint();
+
+    if (point != null) {
+      generalPath.lineTo(point.getX(), point.getY());
+    }
+    generalPath.append(inner, false);
+
+    dummy.append(new Arc2D.Double(x, y, width, height, start + extent, -extent, Arc2D.OPEN), false);
+
+    point = dummy.getCurrentPoint();
+    generalPath.lineTo(point.getX(), point.getY());
+    return generalPath;
   }
 
   @Override
@@ -328,44 +360,5 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
       startAngle += arcAngle;
     }
-  }
-
-  public static Shape getDonutSliceShape(
-      Rectangle2D pieBounds, double thickness, double start, double extent) {
-
-    thickness = thickness / 2;
-
-    GeneralPath generalPath = new GeneralPath();
-    GeneralPath dummy = new GeneralPath(); // used to find arc endpoints
-
-    double x = pieBounds.getX();
-    double y = pieBounds.getY();
-    double width = pieBounds.getWidth();
-    double height = pieBounds.getHeight();
-    Shape outer = new Arc2D.Double(x, y, width, height, start, extent, Arc2D.OPEN);
-    double wt = width * thickness;
-    double ht = height * thickness;
-    Shape inner =
-        new Arc2D.Double(
-            x + wt, y + ht, width - 2 * wt, height - 2 * ht, start + extent, -extent, Arc2D.OPEN);
-    generalPath.append(outer, false);
-
-    dummy.append(
-        new Arc2D.Double(
-            x + wt, y + ht, width - 2 * wt, height - 2 * ht, start, extent, Arc2D.OPEN),
-        false);
-
-    Point2D point = dummy.getCurrentPoint();
-
-    if (point != null) {
-      generalPath.lineTo(point.getX(), point.getY());
-    }
-    generalPath.append(inner, false);
-
-    dummy.append(new Arc2D.Double(x, y, width, height, start + extent, -extent, Arc2D.OPEN), false);
-
-    point = dummy.getCurrentPoint();
-    generalPath.lineTo(point.getX(), point.getY());
-    return generalPath;
   }
 }

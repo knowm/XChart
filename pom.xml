@@ -177,6 +177,7 @@
                 <version>2.4.0</version>
                 <configuration>
                     <filesNamePattern>.*\.java</filesNamePattern>
+                    <skip>false</skip>
                 </configuration>
                 <executions>
                     <execution>

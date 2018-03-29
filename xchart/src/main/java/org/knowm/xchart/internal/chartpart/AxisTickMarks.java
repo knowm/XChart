@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
@@ -14,9 +13,9 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
     implements ChartPart {
 
   private final Chart<ST, S> chart;
-  private Rectangle2D bounds;
   private final Direction direction;
   private final Axis yAxis;
+  private Rectangle2D bounds;
 
   /**
    * Constructor

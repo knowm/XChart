@@ -2,9 +2,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import static org.knowm.xchart.internal.chartpart.ChartPart.SOLID_STROKE;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
@@ -19,18 +17,16 @@ import org.knowm.xchart.style.Styler;
 /** Data labels can be put on all labels or configured to popup like a tooltip from a mouse over. */
 public class ToolTips implements MouseMotionListener {
 
-  // for pop up
-  private final List<DataPoint> dataPointList = new ArrayList<DataPoint>();
-  private DataPoint dataPoint;
-
   // edge detection
   private static final int MARGIN = 5;
+  // for pop up
+  private final List<DataPoint> dataPointList = new ArrayList<DataPoint>();
+  private final Styler styler;
+  private DataPoint dataPoint;
   private double leftEdge;
   private double rightEdge;
   private double topEdge;
   private double bottomEdge;
-
-  private final Styler styler;
 
   /**
    * Constructor
@@ -45,6 +41,7 @@ public class ToolTips implements MouseMotionListener {
 
   @Override
   public void mouseDragged(MouseEvent e) {
+
     // ignore
   }
 
@@ -219,17 +216,14 @@ public class ToolTips implements MouseMotionListener {
 
   static class DataPoint {
 
+    // width of data point (used for bar charts)
+    final double w;
     private final String label;
-
     // used for popup detection & popup highlight
     private final Shape shape;
-
     // label center coordinates
     private final double x;
     private final double y;
-
-    // width of data point (used for bar charts)
-    final double w;
 
     /**
      * Constructor

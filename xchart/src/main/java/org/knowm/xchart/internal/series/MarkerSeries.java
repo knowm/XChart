@@ -1,6 +1,6 @@
 package org.knowm.xchart.internal.series;
 
-import java.awt.Color;
+import java.awt.*;
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -28,6 +28,11 @@ public abstract class MarkerSeries extends AxesChartSeries {
     super(name, xAxisDataType);
   }
 
+  public Marker getMarker() {
+
+    return marker;
+  }
+
   /**
    * Sets the marker for the series
    *
@@ -39,6 +44,11 @@ public abstract class MarkerSeries extends AxesChartSeries {
     return this;
   }
 
+  public Color getMarkerColor() {
+
+    return markerColor;
+  }
+
   /**
    * Sets the marker color for the series
    *
@@ -48,15 +58,5 @@ public abstract class MarkerSeries extends AxesChartSeries {
 
     this.markerColor = color;
     return this;
-  }
-
-  public Marker getMarker() {
-
-    return marker;
-  }
-
-  public Color getMarkerColor() {
-
-    return markerColor;
   }
 }

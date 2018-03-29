@@ -1,8 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -40,7 +38,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
     double height = styler.isCircular() ? min : boundsHeight;
 
     // we need to adjust height when arcAngle is small. To much wasted space on buttom of the chart
-    // Not sure but something like r +=  r - cos((360-arcAngle)/2) where r is vertical radius
+    // Not sure but something like r += r - cos((360-arcAngle)/2) where r is vertical radius
 
     Rectangle2D pieBounds =
         new Rectangle2D.Double(

@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;

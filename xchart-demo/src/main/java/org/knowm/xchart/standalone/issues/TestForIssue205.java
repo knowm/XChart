@@ -43,10 +43,8 @@ public class TestForIssue205 {
     new SwingWrapper<CategoryChart>(chart).displayChart();
 
     System.out.println(
-        "Bins :"
-            + histogram
-                .getxAxisData()); // Bins :[16.666666666666668, 30.000000000000004,
-                                  // 43.333333333333336]
+        "Bins :" + histogram.getxAxisData()); // Bins :[16.666666666666668, 30.000000000000004,
+    // 43.333333333333336]
     System.out.println("frequency :" + histogram.getyAxisData()); // frequency :[7.0, 2.0, 3.0]
   }
 }

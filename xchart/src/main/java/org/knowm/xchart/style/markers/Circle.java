@@ -1,7 +1,6 @@
 package org.knowm.xchart.style.markers;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 /** @author timmolter */

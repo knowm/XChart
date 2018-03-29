@@ -1,22 +1,13 @@
 package org.knowm.xchart;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
+import javax.imageio.*;
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
@@ -32,13 +23,6 @@ public final class BitmapEncoder {
 
   /** Constructor - Private constructor to prevent instantiation */
   private BitmapEncoder() {}
-
-  public enum BitmapFormat {
-    PNG,
-    JPG,
-    BMP,
-    GIF
-  }
 
   /**
    * Only adds the extension of the BitmapFormat to the filename if the filename doesn't already
@@ -321,5 +305,12 @@ public final class BitmapEncoder {
     }
 
     return mergedImage;
+  }
+
+  public enum BitmapFormat {
+    PNG,
+    JPG,
+    BMP,
+    GIF
   }
 }

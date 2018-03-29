@@ -18,12 +18,6 @@ public final class VectorGraphicsEncoder {
   /** Constructor - Private constructor to prevent instantiation */
   private VectorGraphicsEncoder() {}
 
-  public enum VectorGraphicsFormat {
-    EPS,
-    PDF,
-    SVG
-  }
-
   public static void saveVectorGraphic(
       Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
 
@@ -76,5 +70,11 @@ public final class VectorGraphicsEncoder {
       fileNameWithFileExtension = fileName + newFileExtension;
     }
     return fileNameWithFileExtension;
+  }
+
+  public enum VectorGraphicsFormat {
+    EPS,
+    PDF,
+    SVG
   }
 }

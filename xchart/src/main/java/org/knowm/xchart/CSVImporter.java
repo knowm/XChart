@@ -17,11 +17,6 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  */
 public class CSVImporter {
 
-  public enum DataOrientation {
-    Rows,
-    Columns
-  }
-
   /**
    * @param path2Directory
    * @param dataOrientation
@@ -91,35 +86,6 @@ public class CSVImporter {
         getAxisData(xAndYData[0]),
         getAxisData(xAndYData[1]),
         csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
-  }
-
-  public static class SeriesData {
-
-    private final List<Number> xAxisData;
-    private final List<Number> yAxisData;
-    private final String seriesName;
-
-    public SeriesData(List<Number> xAxisData, List<Number> yAxisData, String seriesName) {
-
-      this.xAxisData = xAxisData;
-      this.yAxisData = yAxisData;
-      this.seriesName = seriesName;
-    }
-
-    public List<Number> getxAxisData() {
-
-      return xAxisData;
-    }
-
-    public List<Number> getyAxisData() {
-
-      return yAxisData;
-    }
-
-    public String getSeriesName() {
-
-      return seriesName;
-    }
   }
 
   /**
@@ -272,6 +238,40 @@ public class CSVImporter {
     } else {
       System.out.println(dirName + " does not denote a valid directory!");
       return new File[0];
+    }
+  }
+
+  public enum DataOrientation {
+    Rows,
+    Columns
+  }
+
+  public static class SeriesData {
+
+    private final List<Number> xAxisData;
+    private final List<Number> yAxisData;
+    private final String seriesName;
+
+    public SeriesData(List<Number> xAxisData, List<Number> yAxisData, String seriesName) {
+
+      this.xAxisData = xAxisData;
+      this.yAxisData = yAxisData;
+      this.seriesName = seriesName;
+    }
+
+    public List<Number> getxAxisData() {
+
+      return xAxisData;
+    }
+
+    public List<Number> getyAxisData() {
+
+      return yAxisData;
+    }
+
+    public String getSeriesName() {
+
+      return seriesName;
     }
   }
 }

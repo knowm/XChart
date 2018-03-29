@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.Map;
 import org.knowm.xchart.BubbleSeries;
@@ -72,8 +71,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
 
         if (Double.isNaN(series.getYData()[i])) {
 
-          //          previousX = -Double.MAX_VALUE;
-          //          previousY = -Double.MAX_VALUE;
+          // previousX = -Double.MAX_VALUE;
+          // previousY = -Double.MAX_VALUE;
           continue;
         }
 
@@ -111,8 +110,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
         // System.out.println(yOffset);
         // System.out.println("---");
 
-        //        previousX = xOffset;
-        //        previousY = yOffset;
+        // previousX = xOffset;
+        // previousY = yOffset;
 
         // paint bubbles
         if (series.getExtraValues() != null) {

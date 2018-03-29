@@ -181,6 +181,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       List<? extends Number> highData,
       List<? extends Number> lowData,
       List<? extends Number> closeData) {
+
     DataType dataType = getDataType(xData);
     switch (dataType) {
       case Date:
@@ -408,6 +409,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
   }
 
   private void checkData(String seriesName, String dataName, double[] data) {
+
     if (data == null) {
       throw new IllegalArgumentException(dataName + " data cannot be null!!! >" + seriesName);
     }
@@ -418,6 +420,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
 
   private void checkDataLengths(
       String seriesName, String data1Name, String data2Name, double[] data1, double[] data2) {
+
     if (data1.length != data2.length) {
       throw new IllegalArgumentException(
           data1Name + " and " + data2Name + " sizes are not the same!!! >" + seriesName);

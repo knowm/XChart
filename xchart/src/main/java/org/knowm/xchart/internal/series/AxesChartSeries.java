@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.series;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes.
@@ -10,29 +9,20 @@ import java.awt.Color;
  */
 public abstract class AxesChartSeries extends Series {
 
-  protected abstract void calculateMinMax();
-
   final DataType xAxisDataType;
   final DataType yAxisType;
-
   /** the minimum value of axis range */
   protected double xMin;
-
   /** the maximum value of axis range */
   protected double xMax;
-
   /** the minimum value of axis range */
   protected double yMin;
-
   /** the maximum value of axis range */
   protected double yMax;
-
   /** Line Style */
   private BasicStroke stroke;
-
   /** Line Color */
   private Color lineColor;
-
   /** Line Width */
   private float lineWidth = -1.0f;
 
@@ -49,48 +39,7 @@ public abstract class AxesChartSeries extends Series {
     yAxisType = DataType.Number;
   }
 
-  /**
-   * Set the line style of the series
-   *
-   * @param basicStroke
-   */
-  public AxesChartSeries setLineStyle(BasicStroke basicStroke) {
-
-    stroke = basicStroke;
-    if (this.lineWidth > 0.0f) {
-      stroke =
-          new BasicStroke(
-              lineWidth,
-              this.stroke.getEndCap(),
-              this.stroke.getLineJoin(),
-              this.stroke.getMiterLimit(),
-              this.stroke.getDashArray(),
-              this.stroke.getDashPhase());
-    }
-    return this;
-  }
-
-  /**
-   * Set the line color of the series
-   *
-   * @param color
-   */
-  public AxesChartSeries setLineColor(java.awt.Color color) {
-
-    this.lineColor = color;
-    return this;
-  }
-
-  /**
-   * Set the line width of the series
-   *
-   * @param lineWidth
-   */
-  public AxesChartSeries setLineWidth(float lineWidth) {
-
-    this.lineWidth = lineWidth;
-    return this;
-  }
+  protected abstract void calculateMinMax();
 
   public double getXMin() {
 
@@ -117,14 +66,57 @@ public abstract class AxesChartSeries extends Series {
     return stroke;
   }
 
+  /**
+   * Set the line style of the series
+   *
+   * @param basicStroke
+   */
+  public AxesChartSeries setLineStyle(BasicStroke basicStroke) {
+
+    stroke = basicStroke;
+    if (this.lineWidth > 0.0f) {
+      stroke =
+          new BasicStroke(
+              lineWidth,
+              this.stroke.getEndCap(),
+              this.stroke.getLineJoin(),
+              this.stroke.getMiterLimit(),
+              this.stroke.getDashArray(),
+              this.stroke.getDashPhase());
+    }
+    return this;
+  }
+
   public Color getLineColor() {
 
     return lineColor;
   }
 
+  /**
+   * Set the line color of the series
+   *
+   * @param color
+   */
+  public AxesChartSeries setLineColor(java.awt.Color color) {
+
+    this.lineColor = color;
+    return this;
+  }
+
   public float getLineWidth() {
 
     return lineWidth;
+  }
+
+  /**
+   * Set the line width of the series
+   *
+   * @param lineWidth
+   */
+  public AxesChartSeries setLineWidth(float lineWidth) {
+
+    this.lineWidth = lineWidth;
+    return this;
   }
 
   public DataType getxAxisDataType() {

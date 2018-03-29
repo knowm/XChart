@@ -8,37 +8,14 @@ import org.knowm.xchart.internal.series.AxesChartSeries;
 /** @author arthurmcgibbon */
 public class OHLCSeries extends AxesChartSeries {
 
-  public enum OHLCSeriesRenderStyle implements RenderableSeries {
-    Candle(LegendRenderType.Line),
-
-    HiLo(LegendRenderType.Line);
-
-    private final LegendRenderType legendRenderType;
-
-    OHLCSeriesRenderStyle(LegendRenderType legendRenderType) {
-
-      this.legendRenderType = legendRenderType;
-    }
-
-    @Override
-    public LegendRenderType getLegendRenderType() {
-
-      return legendRenderType;
-    }
-  }
-
   private double[] xData; // can be Number or Date(epochtime)
-
   private double[] openData;
   private double[] highData;
   private double[] lowData;
   private double[] closeData;
-
   private OHLCSeriesRenderStyle ohlcSeriesRenderStyle;
-
   /** Up Color */
   private Color upColor;
-
   /** Down Color */
   private Color downColor;
 
@@ -81,6 +58,11 @@ public class OHLCSeries extends AxesChartSeries {
     return this;
   }
 
+  public Color getUpColor() {
+
+    return upColor;
+  }
+
   /**
    * Set the up color of the series
    *
@@ -92,9 +74,9 @@ public class OHLCSeries extends AxesChartSeries {
     return this;
   }
 
-  public Color getUpColor() {
+  public Color getDownColor() {
 
-    return upColor;
+    return downColor;
   }
 
   /**
@@ -108,13 +90,9 @@ public class OHLCSeries extends AxesChartSeries {
     return this;
   }
 
-  public Color getDownColor() {
-
-    return downColor;
-  }
-
   @Override
   public LegendRenderType getLegendRenderType() {
+
     return ohlcSeriesRenderStyle.getLegendRenderType();
   }
 
@@ -203,5 +181,24 @@ public class OHLCSeries extends AxesChartSeries {
   public double[] getCloseData() {
 
     return closeData;
+  }
+
+  public enum OHLCSeriesRenderStyle implements RenderableSeries {
+    Candle(LegendRenderType.Line),
+
+    HiLo(LegendRenderType.Line);
+
+    private final LegendRenderType legendRenderType;
+
+    OHLCSeriesRenderStyle(LegendRenderType legendRenderType) {
+
+      this.legendRenderType = legendRenderType;
+    }
+
+    @Override
+    public LegendRenderType getLegendRenderType() {
+
+      return legendRenderType;
+    }
   }
 }

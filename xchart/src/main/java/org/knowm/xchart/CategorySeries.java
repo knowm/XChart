@@ -9,33 +9,6 @@ import org.knowm.xchart.internal.series.Series;
 /** A Series containing category data to be plotted on a Chart */
 public class CategorySeries extends AxesChartSeriesCategory {
 
-  public enum CategorySeriesRenderStyle implements RenderableSeries {
-    Line(LegendRenderType.Line),
-
-    Area(LegendRenderType.Line),
-
-    Scatter(LegendRenderType.Scatter),
-
-    SteppedBar(LegendRenderType.Box),
-
-    Bar(LegendRenderType.BoxNoOutline),
-
-    Stick(LegendRenderType.Line);
-
-    private final LegendRenderType legendRenderType;
-
-    CategorySeriesRenderStyle(LegendRenderType legendRenderType) {
-
-      this.legendRenderType = legendRenderType;
-    }
-
-    @Override
-    public LegendRenderType getLegendRenderType() {
-
-      return legendRenderType;
-    }
-  }
-
   private CategorySeriesRenderStyle chartCategorySeriesRenderStyle = null;
 
   /**
@@ -73,5 +46,32 @@ public class CategorySeries extends AxesChartSeriesCategory {
   public LegendRenderType getLegendRenderType() {
 
     return chartCategorySeriesRenderStyle.getLegendRenderType();
+  }
+
+  public enum CategorySeriesRenderStyle implements RenderableSeries {
+    Line(LegendRenderType.Line),
+
+    Area(LegendRenderType.Line),
+
+    Scatter(LegendRenderType.Scatter),
+
+    SteppedBar(LegendRenderType.Box),
+
+    Bar(LegendRenderType.BoxNoOutline),
+
+    Stick(LegendRenderType.Line);
+
+    private final LegendRenderType legendRenderType;
+
+    CategorySeriesRenderStyle(LegendRenderType legendRenderType) {
+
+      this.legendRenderType = legendRenderType;
+    }
+
+    @Override
+    public LegendRenderType getLegendRenderType() {
+
+      return legendRenderType;
+    }
   }
 }

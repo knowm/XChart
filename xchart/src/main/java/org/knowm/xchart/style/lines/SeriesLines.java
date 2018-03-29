@@ -1,6 +1,6 @@
 package org.knowm.xchart.style.lines;
 
-import java.awt.BasicStroke;
+import java.awt.*;
 
 /**
  * Pre-defined Line Styles used for Series Lines
@@ -8,8 +8,6 @@ import java.awt.BasicStroke;
  * @author timmolter
  */
 public interface SeriesLines {
-
-  BasicStroke[] getSeriesLines();
 
   BasicStroke NONE = new NoneStroke();
   BasicStroke SOLID = new BasicStroke(2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER);
@@ -32,4 +30,6 @@ public interface SeriesLines {
   BasicStroke DOT_DOT =
       new BasicStroke(
           2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 10.0f, new float[] {2.0f}, 0.0f);
+
+  BasicStroke[] getSeriesLines();
 }

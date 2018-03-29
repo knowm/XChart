@@ -1,27 +1,18 @@
 package org.knowm.xchart.style;
 
-import java.awt.Font;
+import java.awt.*;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 
 /** @author timmolter */
 public class PieStyler extends Styler {
 
   private PieSeriesRenderStyle chartPieSeriesRenderStyle;
-
-  public enum AnnotationType {
-    Value,
-    Percentage,
-    Label,
-    LabelAndPercentage
-  }
-
   private boolean isCircular;
   private double startAngleInDegrees;
   private double annotationDistance;
   private AnnotationType annotationType;
   private boolean drawAllAnnotations;
   private double donutThickness;
-
   private boolean isSumVisible;
   private Font sumFont;
 
@@ -221,5 +212,12 @@ public class PieStyler extends Styler {
     this.theme = theme;
     super.setAllStyles();
     return this;
+  }
+
+  public enum AnnotationType {
+    Value,
+    Percentage,
+    Label,
+    LabelAndPercentage
   }
 }

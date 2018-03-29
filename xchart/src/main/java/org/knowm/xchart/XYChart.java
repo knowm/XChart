@@ -1,6 +1,6 @@
 package org.knowm.xchart;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;

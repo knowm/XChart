@@ -1,6 +1,6 @@
 package org.knowm.xchart;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Radar;
@@ -12,14 +12,8 @@ import org.knowm.xchart.style.Theme;
 
 public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 
-  public enum RadarRenderStyle {
-    Polygon,
-    Circle;
-  }
-
-  private RadarRenderStyle radarRenderStyle = RadarRenderStyle.Polygon;
-
   protected String[] variableLabels;
+  private RadarRenderStyle radarRenderStyle = RadarRenderStyle.Polygon;
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -195,5 +189,10 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
   public void setRadarRenderStyle(RadarRenderStyle radarRenderStyle) {
 
     this.radarRenderStyle = radarRenderStyle;
+  }
+
+  public enum RadarRenderStyle {
+    Polygon,
+    Circle;
   }
 }

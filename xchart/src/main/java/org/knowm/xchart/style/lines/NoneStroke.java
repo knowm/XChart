@@ -1,6 +1,6 @@
 package org.knowm.xchart.style.lines;
 
-import java.awt.BasicStroke;
+import java.awt.*;
 
 /** @author timmolter */
 class NoneStroke extends BasicStroke {}

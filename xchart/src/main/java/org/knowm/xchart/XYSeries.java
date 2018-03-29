@@ -11,31 +11,6 @@ import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
  */
 public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
-  public enum XYSeriesRenderStyle implements RenderableSeries {
-    Line(LegendRenderType.Line),
-
-    Area(LegendRenderType.Line),
-
-    Step(LegendRenderType.Line),
-
-    StepArea(LegendRenderType.Line),
-
-    Scatter(LegendRenderType.Scatter);
-
-    private final LegendRenderType legendRenderType;
-
-    XYSeriesRenderStyle(LegendRenderType legendRenderType) {
-
-      this.legendRenderType = legendRenderType;
-    }
-
-    @Override
-    public LegendRenderType getLegendRenderType() {
-
-      return legendRenderType;
-    }
-  }
-
   private XYSeriesRenderStyle xySeriesRenderStyle = null;
 
   /**
@@ -67,5 +42,30 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
   public LegendRenderType getLegendRenderType() {
 
     return xySeriesRenderStyle.getLegendRenderType();
+  }
+
+  public enum XYSeriesRenderStyle implements RenderableSeries {
+    Line(LegendRenderType.Line),
+
+    Area(LegendRenderType.Line),
+
+    Step(LegendRenderType.Line),
+
+    StepArea(LegendRenderType.Line),
+
+    Scatter(LegendRenderType.Scatter);
+
+    private final LegendRenderType legendRenderType;
+
+    XYSeriesRenderStyle(LegendRenderType legendRenderType) {
+
+      this.legendRenderType = legendRenderType;
+    }
+
+    @Override
+    public LegendRenderType getLegendRenderType() {
+
+      return legendRenderType;
+    }
   }
 }

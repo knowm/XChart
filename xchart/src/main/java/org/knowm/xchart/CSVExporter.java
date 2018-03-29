@@ -1,11 +1,6 @@
 package org.knowm.xchart;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 
 /**
  * This class is used to export Chart data to a folder containing one or more CSV files. The parent

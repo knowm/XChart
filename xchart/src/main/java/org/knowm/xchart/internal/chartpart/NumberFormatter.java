@@ -1,11 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.NumberFormat;
-import java.text.ParsePosition;
+import java.text.*;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /** @author timmolter */
@@ -93,7 +89,7 @@ class NumberFormatter extends Format {
   @Override
   public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
 
-    //    BigDecimal number = (BigDecimal) obj;
+    // BigDecimal number = (BigDecimal) obj;
     Number number = (Number) obj;
 
     String decimalPattern;
@@ -119,6 +115,7 @@ class NumberFormatter extends Format {
 
   @Override
   public Object parseObject(String source, ParsePosition pos) {
+
     return null;
   }
 }

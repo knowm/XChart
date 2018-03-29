@@ -342,6 +342,17 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.1" exclude("de.erich
     mvn clean package  
     mvn javadoc:aggregate  
 
+#### formatting
+
+    mvn com.coveo:fmt-maven-plugin:format
+    
+Formats your code using [google-java-format](https://github.com/google/google-java-format) which follows [Google's code styleguide](https://google.github.io/styleguide/javaguide.html).
+
+If you want your IDE to stick to the same format, check out [the available configuration files](https://github.com/google/styleguide)
+
+* [Eclipse](https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml)
+* [IntelliJ IDEA](https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml)    
+
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/

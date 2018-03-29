@@ -1,8 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -25,37 +23,21 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   private final Rectangle2D.Double bounds;
 
   private final ST axesChartStyler;
-
-  /** the dataType */
-  private Series.DataType dataType;
-
   /** the axis title */
   private final AxisTitle<ST, S> axisTitle;
-
   /** the axis tick */
   private final AxisTick<ST, S> axisTick;
-
-  /** the axis tick calculator */
-  private AxisTickCalculator_ axisTickCalculator;
-
   /** the axis direction */
   private final Direction direction;
 
-  private double min;
-
-  private double max;
-
   private final int yIndex;
+  /** the dataType */
+  private Series.DataType dataType;
+  /** the axis tick calculator */
+  private AxisTickCalculator_ axisTickCalculator;
 
-  /** An axis direction */
-  public enum Direction {
-
-    /** the constant to represent X axis */
-    X,
-
-    /** the constant to represent Y axis */
-    Y
-  }
+  private double min;
+  private double max;
 
   /**
    * Constructor
@@ -383,7 +365,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
 
-    // check if a custom  label map is present
+    // check if a custom label map is present
     Map<Double, Object> labelOverrideMap = chart.getYAxisLabelOverrideMap(getDirection(), yIndex);
     if (labelOverrideMap != null) {
 
@@ -451,12 +433,12 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     }
   }
 
-  // Getters /////////////////////////////////////////////////
-
   Series.DataType getDataType() {
 
     return dataType;
   }
+
+  // Getters /////////////////////////////////////////////////
 
   public void setDataType(Series.DataType dataType) {
 
@@ -516,5 +498,15 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   public int getYIndex() {
 
     return yIndex;
+  }
+
+  /** An axis direction */
+  public enum Direction {
+
+    /** the constant to represent X axis */
+    X,
+
+    /** the constant to represent Y axis */
+    Y
   }
 }

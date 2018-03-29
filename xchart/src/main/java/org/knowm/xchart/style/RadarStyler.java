@@ -1,8 +1,6 @@
 package org.knowm.xchart.style;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Stroke;
+import java.awt.*;
 
 public class RadarStyler extends Styler {
 
@@ -104,6 +102,11 @@ public class RadarStyler extends Styler {
     return this;
   }
 
+  public int getMarkerSize() {
+
+    return markerSize;
+  }
+
   /**
    * Sets the size of the markers (in pixels)
    *
@@ -113,11 +116,6 @@ public class RadarStyler extends Styler {
 
     this.markerSize = markerSize;
     return this;
-  }
-
-  public int getMarkerSize() {
-
-    return markerSize;
   }
 
   public boolean isPlotGridLinesVisible() {

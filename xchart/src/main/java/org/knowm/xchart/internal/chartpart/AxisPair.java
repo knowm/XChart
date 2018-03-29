@@ -1,13 +1,10 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
@@ -24,13 +21,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   private final Axis<ST, S> xAxis;
   private final Axis<ST, S> yAxis;
   private final TreeMap<Integer, Axis<ST, S>> yAxisMap;
+  private final Rectangle2D.Double leftYAxisBounds;
+  private final Rectangle2D.Double rightYAxisBounds;
   private Axis<ST, S> leftMainYAxis;
   private Axis<ST, S> rightMainYAxis;
   private Map<String, Map<Double, Object>> axisLabelOverrideMap =
       new HashMap<String, Map<Double, Object>>();
-
-  private final Rectangle2D.Double leftYAxisBounds;
-  private final Rectangle2D.Double rightYAxisBounds;
 
   /**
    * Constructor

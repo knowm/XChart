@@ -1,20 +1,11 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
+import java.awt.geom.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
@@ -228,9 +219,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                       == CategorySeriesRenderStyle.SteppedBar) {
                 yTop = 0.0;
               } else {
-                yTop =
-                    y; // yTransform uses yTop, and for non-bars and stick, it's the same as
-                       // yBottom.
+                yTop = y; // yTransform uses yTop, and for non-bars and stick, it's the same as
+                // yBottom.
               }
               yBottom = y;
               if (stylerCategory.isStacked()) {

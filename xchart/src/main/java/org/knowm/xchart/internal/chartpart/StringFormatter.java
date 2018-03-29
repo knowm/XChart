@@ -26,6 +26,7 @@ class StringFormatter extends Format {
 
   @Override
   public Object parseObject(String source, ParsePosition pos) {
+
     return null;
   }
 }

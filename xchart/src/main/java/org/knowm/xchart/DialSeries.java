@@ -1,7 +1,6 @@
 package org.knowm.xchart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import java.awt.*;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.markers.Marker;
@@ -57,6 +56,11 @@ public class DialSeries extends Series {
     return annotation;
   }
 
+  public BasicStroke getLineStyle() {
+
+    return stroke;
+  }
+
   /**
    * Set the line style of the series
    *
@@ -78,6 +82,11 @@ public class DialSeries extends Series {
     return this;
   }
 
+  public Color getLineColor() {
+
+    return lineColor;
+  }
+
   /**
    * Set the line color of the series
    *
@@ -87,6 +96,11 @@ public class DialSeries extends Series {
 
     this.lineColor = color;
     return this;
+  }
+
+  public float getLineWidth() {
+
+    return lineWidth;
   }
 
   /**
@@ -100,6 +114,11 @@ public class DialSeries extends Series {
     return this;
   }
 
+  public Marker getMarker() {
+
+    return marker;
+  }
+
   /**
    * Sets the marker for the series
    *
@@ -111,6 +130,11 @@ public class DialSeries extends Series {
     return this;
   }
 
+  public Color getMarkerColor() {
+
+    return markerColor;
+  }
+
   /**
    * Sets the marker color for the series
    *
@@ -120,31 +144,6 @@ public class DialSeries extends Series {
 
     this.markerColor = color;
     return this;
-  }
-
-  public BasicStroke getLineStyle() {
-
-    return stroke;
-  }
-
-  public Color getLineColor() {
-
-    return lineColor;
-  }
-
-  public float getLineWidth() {
-
-    return lineWidth;
-  }
-
-  public Marker getMarker() {
-
-    return marker;
-  }
-
-  public Color getMarkerColor() {
-
-    return markerColor;
   }
 
   @Override

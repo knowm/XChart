@@ -11,23 +11,6 @@ import org.knowm.xchart.internal.series.NoMarkersSeries;
  */
 public class BubbleSeries extends NoMarkersSeries {
 
-  public enum BubbleSeriesRenderStyle implements RenderableSeries {
-    Round(LegendRenderType.Box);
-
-    private final LegendRenderType legendRenderType;
-
-    BubbleSeriesRenderStyle(LegendRenderType legendRenderType) {
-
-      this.legendRenderType = legendRenderType;
-    }
-
-    @Override
-    public LegendRenderType getLegendRenderType() {
-
-      return legendRenderType;
-    }
-  }
-
   private BubbleSeriesRenderStyle bubbleSeriesRenderStyle = null;
 
   /**
@@ -57,5 +40,22 @@ public class BubbleSeries extends NoMarkersSeries {
   public LegendRenderType getLegendRenderType() {
 
     return bubbleSeriesRenderStyle.getLegendRenderType();
+  }
+
+  public enum BubbleSeriesRenderStyle implements RenderableSeries {
+    Round(LegendRenderType.Box);
+
+    private final LegendRenderType legendRenderType;
+
+    BubbleSeriesRenderStyle(LegendRenderType legendRenderType) {
+
+      this.legendRenderType = legendRenderType;
+    }
+
+    @Override
+    public LegendRenderType getLegendRenderType() {
+
+      return legendRenderType;
+    }
   }
 }

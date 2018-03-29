@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -15,10 +14,10 @@ import org.knowm.xchart.style.Styler.YAxisPosition;
 public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements ChartPart {
 
   private final Chart<ST, S> chart;
-  private Rectangle2D bounds;
   private final Direction direction;
   private final Axis yAxis;
   private final int yIndex;
+  private Rectangle2D bounds;
 
   /**
    * Constructor

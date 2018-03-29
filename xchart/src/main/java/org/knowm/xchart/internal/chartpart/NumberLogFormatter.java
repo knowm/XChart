@@ -1,10 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.text.DecimalFormat;
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.NumberFormat;
-import java.text.ParsePosition;
+import java.text.*;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /** @author timmolter */
@@ -54,6 +50,7 @@ class NumberLogFormatter extends Format {
 
   @Override
   public Object parseObject(String source, ParsePosition pos) {
+
     return null;
   }
 }

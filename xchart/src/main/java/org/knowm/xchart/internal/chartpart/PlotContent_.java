@@ -1,8 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.series.Series;
@@ -15,8 +13,6 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
 
   final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
-  protected abstract void doPaint(Graphics2D g);
-
   /**
    * Constructor
    *
@@ -26,6 +22,8 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
 
     this.chart = chart;
   }
+
+  protected abstract void doPaint(Graphics2D g);
 
   @Override
   public void paint(Graphics2D g) {

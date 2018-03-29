@@ -1,6 +1,6 @@
 package org.knowm.xchart.style.colors;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * Pre-defined Colors used for various Chart Elements
@@ -27,6 +27,16 @@ public enum ChartColor {
   final Color color;
 
   /**
+   * Constructor
+   *
+   * @param color
+   */
+  ChartColor(Color color) {
+
+    this.color = color;
+  }
+
+  /**
    * Get a AWT Color Object
    *
    * @param chartColor
@@ -35,15 +45,5 @@ public enum ChartColor {
   public static Color getAWTColor(ChartColor chartColor) {
 
     return chartColor.color;
-  }
-
-  /**
-   * Constructor
-   *
-   * @param color
-   */
-  ChartColor(Color color) {
-
-    this.color = color;
   }
 }

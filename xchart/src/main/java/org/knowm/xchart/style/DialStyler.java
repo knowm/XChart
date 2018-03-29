@@ -1,8 +1,6 @@
 package org.knowm.xchart.style;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Stroke;
+import java.awt.*;
 
 public class DialStyler extends Styler {
 

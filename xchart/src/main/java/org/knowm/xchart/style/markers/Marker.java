@@ -1,7 +1,6 @@
 package org.knowm.xchart.style.markers;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 /** @author timmolter */
 public abstract class Marker {
