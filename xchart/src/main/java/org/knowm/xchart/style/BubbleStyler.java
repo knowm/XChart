@@ -2,16 +2,12 @@ package org.knowm.xchart.style;
 
 import org.knowm.xchart.BubbleSeries.BubbleSeriesRenderStyle;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class BubbleStyler extends AxesChartStyler {
 
   private BubbleSeriesRenderStyle bubbleChartSeriesRenderStyle;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public BubbleStyler() {
 
     this.setAllStyles();
@@ -30,11 +26,13 @@ public class BubbleStyler extends AxesChartStyler {
   }
 
   /**
-   * Sets the default series render style for the chart (Round is the only one for now) You can override the series render style individually on each Series object.
+   * Sets the default series render style for the chart (Round is the only one for now) You can
+   * override the series render style individually on each Series object.
    *
    * @param bubbleChartSeriesRenderStyle
    */
-  public BubbleStyler setDefaultSeriesRenderStyle(BubbleSeriesRenderStyle bubbleChartSeriesRenderStyle) {
+  public BubbleStyler setDefaultSeriesRenderStyle(
+      BubbleSeriesRenderStyle bubbleChartSeriesRenderStyle) {
 
     this.bubbleChartSeriesRenderStyle = bubbleChartSeriesRenderStyle;
     return this;
@@ -50,5 +48,4 @@ public class BubbleStyler extends AxesChartStyler {
     this.theme = theme;
     super.setAllStyles();
   }
-
 }

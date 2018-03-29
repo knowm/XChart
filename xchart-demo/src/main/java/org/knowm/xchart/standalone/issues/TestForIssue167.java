@@ -1,7 +1,6 @@
 package org.knowm.xchart.standalone.issues;
 
 import java.util.Arrays;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategorySeries;
@@ -9,10 +8,7 @@ import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
-/**
- * @author timmolter
- */
-
+/** @author timmolter */
 public class TestForIssue167 implements ExampleChart<CategoryChart> {
 
   public static void main(String[] args) {
@@ -28,7 +24,14 @@ public class TestForIssue167 implements ExampleChart<CategoryChart> {
   public CategoryChart getChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("CategorySeriesRenderStyle-bug").xAxisTitle("Year").yAxisTitle("Data").build();
+    CategoryChart chart =
+        new CategoryChartBuilder()
+            .width(800)
+            .height(600)
+            .title("CategorySeriesRenderStyle-bug")
+            .xAxisTitle("Year")
+            .yAxisTitle("Data")
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
@@ -41,11 +44,14 @@ public class TestForIssue167 implements ExampleChart<CategoryChart> {
     chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Line);
 
     // Series
-    String[] years = new String[]{"2000", "2001", "2002", "2003", "2004"};
-    chart.addSeries("data 1", Arrays.asList(years), Arrays.asList(100.0, 110.0, 120.0, 130.0, 140.0));
+    String[] years = new String[] {"2000", "2001", "2002", "2003", "2004"};
+    chart.addSeries(
+        "data 1", Arrays.asList(years), Arrays.asList(100.0, 110.0, 120.0, 130.0, 140.0));
     chart.addSeries("data 2", Arrays.asList(years), Arrays.asList(50.0, 60.0, 70.0, null, 90.0));
-    chart.addSeries("data 3", Arrays.asList(years), Arrays.asList(-50.0, -60.0, -70.0, null, -90.0));
-    chart.addSeries("data 4", Arrays.asList(years), Arrays.asList(-100.0, -110.0, -120.0, -130.0, -140.0));
+    chart.addSeries(
+        "data 3", Arrays.asList(years), Arrays.asList(-50.0, -60.0, -70.0, null, -90.0));
+    chart.addSeries(
+        "data 4", Arrays.asList(years), Arrays.asList(-100.0, -110.0, -120.0, -130.0, -140.0));
 
     return chart;
   }
@@ -53,7 +59,14 @@ public class TestForIssue167 implements ExampleChart<CategoryChart> {
   public CategoryChart getChart2() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("CategorySeriesRenderStyle-bug").xAxisTitle("Year").yAxisTitle("Data").build();
+    CategoryChart chart =
+        new CategoryChartBuilder()
+            .width(800)
+            .height(600)
+            .title("CategorySeriesRenderStyle-bug")
+            .xAxisTitle("Year")
+            .yAxisTitle("Data")
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
@@ -61,11 +74,19 @@ public class TestForIssue167 implements ExampleChart<CategoryChart> {
     chart.getStyler().setOverlapped(true);
 
     // Series
-    String[] years = new String[]{"2000", "2001", "2002", "2003", "2004"};
-    CategorySeries data1 = chart.addSeries("data 1", Arrays.asList(years), Arrays.asList(100.0, 110.0, 120.0, 130.0, 140.0));
-    CategorySeries data2 = chart.addSeries("data 2", Arrays.asList(years), Arrays.asList(50.0, 60.0, 70.0, null, 90.0));
-    CategorySeries data3 = chart.addSeries("data 3", Arrays.asList(years), Arrays.asList(-50.0, -60.0, -70.0, null, -90.0));
-    CategorySeries data4 = chart.addSeries("data 4", Arrays.asList(years), Arrays.asList(-100.0, -110.0, -120.0, -130.0, -140.0));
+    String[] years = new String[] {"2000", "2001", "2002", "2003", "2004"};
+    CategorySeries data1 =
+        chart.addSeries(
+            "data 1", Arrays.asList(years), Arrays.asList(100.0, 110.0, 120.0, 130.0, 140.0));
+    CategorySeries data2 =
+        chart.addSeries(
+            "data 2", Arrays.asList(years), Arrays.asList(50.0, 60.0, 70.0, null, 90.0));
+    CategorySeries data3 =
+        chart.addSeries(
+            "data 3", Arrays.asList(years), Arrays.asList(-50.0, -60.0, -70.0, null, -90.0));
+    CategorySeries data4 =
+        chart.addSeries(
+            "data 4", Arrays.asList(years), Arrays.asList(-100.0, -110.0, -120.0, -130.0, -140.0));
 
     // Now rendering is set individually to line per series. Draws nulls but
     // all negatives are drawn as zero.

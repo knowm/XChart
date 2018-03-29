@@ -14,12 +14,9 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.style.Styler;
 
-/**
- * Data labels can be put on all labels or configured to popup like a tooltip from a mouse over.
- */
+/** Data labels can be put on all labels or configured to popup like a tooltip from a mouse over. */
 public class ToolTips implements MouseMotionListener {
 
   // for pop up
@@ -27,7 +24,7 @@ public class ToolTips implements MouseMotionListener {
   private DataPoint dataPoint;
 
   // edge detection
-  private final static int MARGIN = 5;
+  private static final int MARGIN = 5;
   private double leftEdge;
   private double rightEdge;
   private double topEdge;
@@ -116,7 +113,8 @@ public class ToolTips implements MouseMotionListener {
   }
 
   /**
-   * Adds a data (xValue, yValue) with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
+   * Adds a data (xValue, yValue) with coordinates (xOffset, yOffset). This point will be
+   * highlighted with a circle centering (xOffset, yOffset)
    */
   void addData(double xOffset, double yOffset, String xValue, String yValue) {
 
@@ -126,7 +124,8 @@ public class ToolTips implements MouseMotionListener {
   }
 
   /**
-   * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
+   * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with
+   * a circle centering (xOffset, yOffset)
    */
   public void addData(double xOffset, double yOffset, String label) {
 
@@ -135,9 +134,11 @@ public class ToolTips implements MouseMotionListener {
   }
 
   /**
-   * Adds a data (xValue, yValue) with geometry defined with shape. This point will be highlighted using the shape
+   * Adds a data (xValue, yValue) with geometry defined with shape. This point will be highlighted
+   * using the shape
    */
-  void addData(Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
+  void addData(
+      Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
 
     String label = getLabel(xValue, yValue);
     addData(shape, xOffset, yOffset, width, label);
@@ -166,7 +167,9 @@ public class ToolTips implements MouseMotionListener {
 
   private void paintToolTip(Graphics2D g, DataPoint dataPoint) {
 
-    TextLayout textLayout = new TextLayout(dataPoint.label, styler.getToolTipFont(), new FontRenderContext(null, true, false));
+    TextLayout textLayout =
+        new TextLayout(
+            dataPoint.label, styler.getToolTipFont(), new FontRenderContext(null, true, false));
     Rectangle2D annotationRectangle = textLayout.getBounds();
 
     double x = dataPoint.x + dataPoint.w / 2 - annotationRectangle.getWidth() / 2 - MARGIN;
@@ -265,7 +268,5 @@ public class ToolTips implements MouseMotionListener {
       this.shape = shape;
       this.label = label;
     }
-
   }
-
 }

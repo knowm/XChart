@@ -2,7 +2,6 @@ package org.knowm.xchart.demo.charts.area;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -12,12 +11,13 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Null Y-Axis Data Points
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Area Chart
- * <li>null Y-Axis values
- * <li>ChartBuilder
+ *   <li>Area Chart
+ *   <li>null Y-Axis values
+ *   <li>ChartBuilder
  */
 public class AreaChart02 implements ExampleChart<XYChart> {
 
@@ -32,7 +32,14 @@ public class AreaChart02 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .title(getClass().getSimpleName())
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);

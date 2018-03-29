@@ -8,13 +8,14 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * Pie Chart GGPlot2 Theme
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Pie Chart
- * <li>PieChartBuilder
- * <li>GGPlot2 Theme
- * <li>Setting start angle
+ *   <li>Pie Chart
+ *   <li>PieChartBuilder
+ *   <li>GGPlot2 Theme
+ *   <li>Setting start angle
  */
 public class PieChart03 implements ExampleChart<PieChart> {
 
@@ -29,7 +30,13 @@ public class PieChart03 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600).title("Pie Chart GGPlot2 Theme").theme(ChartTheme.GGPlot2).build();
+    PieChart chart =
+        new PieChartBuilder()
+            .width(800)
+            .height(600)
+            .title("Pie Chart GGPlot2 Theme")
+            .theme(ChartTheme.GGPlot2)
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);

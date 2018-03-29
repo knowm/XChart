@@ -3,12 +3,9 @@ package org.knowm.xchart;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import java.util.Arrays;
-
 import org.junit.Test;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class HistogramTest {
 
   @Test

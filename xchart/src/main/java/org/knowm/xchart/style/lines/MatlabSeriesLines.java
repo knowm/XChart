@@ -2,19 +2,15 @@ package org.knowm.xchart.style.lines;
 
 import java.awt.BasicStroke;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class MatlabSeriesLines implements SeriesLines {
 
   private final BasicStroke[] seriesLines;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public MatlabSeriesLines() {
 
-    seriesLines = new BasicStroke[]{SOLID, DASH_DASH, DOT_DOT};
+    seriesLines = new BasicStroke[] {SOLID, DASH_DASH, DOT_DOT};
   }
 
   @Override

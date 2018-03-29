@@ -2,7 +2,6 @@ package org.knowm.xchart.demo.charts.theme;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -11,10 +10,11 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * Default XChart Theme
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Setting marker size
+ *   <li>Setting marker size
  */
 public class ThemeChart01 implements ExampleChart<XYChart> {
 
@@ -29,7 +29,15 @@ public class ThemeChart01 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).theme(ChartTheme.XChart).title("XChart Theme").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .theme(ChartTheme.XChart)
+            .title("XChart Theme")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     // Customize Chart
     chart.getStyler().setMarkerSize(11);

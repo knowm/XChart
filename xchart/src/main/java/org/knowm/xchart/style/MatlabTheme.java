@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.MatlabSeriesColors;
@@ -12,9 +11,7 @@ import org.knowm.xchart.style.lines.MatlabSeriesLines;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.MatlabSeriesMarkers;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class MatlabTheme extends AbstractBaseTheme {
 
   // Chart Style ///////////////////////////////
@@ -110,7 +107,8 @@ public class MatlabTheme extends AbstractBaseTheme {
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, new float[]{1f, 3.0f}, 0.0f);
+    return new BasicStroke(
+        .5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, new float[] {1f, 3.0f}, 0.0f);
   }
 
   @Override

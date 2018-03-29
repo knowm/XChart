@@ -2,7 +2,6 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -11,12 +10,13 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Logarithmic Y-Axis
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Logarithmic Y-Axis
- * <li>Building a Chart with ChartBuilder
- * <li>Place legend at Inside-NW position
+ *   <li>Logarithmic Y-Axis
+ *   <li>Building a Chart with ChartBuilder
+ *   <li>Place legend at Inside-NW position
  */
 public class LineChart01 implements ExampleChart<XYChart> {
 
@@ -39,7 +39,14 @@ public class LineChart01 implements ExampleChart<XYChart> {
     }
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).title("Powers of Ten").xAxisTitle("Power").yAxisTitle("Value").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .title("Powers of Ten")
+            .xAxisTitle("Power")
+            .yAxisTitle("Value")
+            .build();
 
     // Customize Chart
     chart.getStyler().setChartTitleVisible(true);

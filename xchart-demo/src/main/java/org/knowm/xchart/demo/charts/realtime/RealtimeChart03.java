@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -15,12 +13,13 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * Real-time XY Chart with Error Bars
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>real-time chart updates with JFrame
- * <li>fixed window
- * <li>error bars
+ *   <li>real-time chart updates with JFrame
+ *   <li>fixed window
+ *   <li>error bars
  */
 public class RealtimeChart03 implements ExampleChart<XYChart> {
 
@@ -40,33 +39,35 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    javax.swing.SwingUtilities.invokeLater(
+        new Runnable() {
 
-      @Override
-      public void run() {
+          @Override
+          public void run() {
 
-        // Create and set up the window.
-        JFrame frame = new JFrame("XChart");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(chartPanel);
+            // Create and set up the window.
+            JFrame frame = new JFrame("XChart");
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            frame.add(chartPanel);
 
-        // Display the window.
-        frame.pack();
-        frame.setVisible(true);
-      }
-    });
+            // Display the window.
+            frame.pack();
+            frame.setVisible(true);
+          }
+        });
 
     // Simulate a data feed
-    TimerTask chartUpdaterTask = new TimerTask() {
+    TimerTask chartUpdaterTask =
+        new TimerTask() {
 
-      @Override
-      public void run() {
+          @Override
+          public void run() {
 
-        realtimeChart03.updateData();
-        chartPanel.revalidate();
-        chartPanel.repaint();
-      }
-    };
+            realtimeChart03.updateData();
+            chartPanel.revalidate();
+            chartPanel.repaint();
+          }
+        };
 
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
@@ -97,7 +98,14 @@ public class RealtimeChart03 implements ExampleChart<XYChart> {
     }
 
     // Create Chart
-    xyChart = new XYChartBuilder().width(500).height(400).xAxisTitle("X").yAxisTitle("Y").title("Real-time XY Chart with Error Bars").build();
+    xyChart =
+        new XYChartBuilder()
+            .width(500)
+            .height(400)
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .title("Real-time XY Chart with Error Bars")
+            .build();
 
     xyChart.addSeries(SERIES_NAME, xData, yData, errorBars);
 

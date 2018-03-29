@@ -8,7 +8,6 @@ import java.text.Format;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -23,20 +22,18 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   protected final ST styler;
 
-  /**
-   * Meta Data
-   */
+  /** Meta Data */
   private int width;
+
   private int height;
   private String title = "";
   private String xAxisTitle = "";
   private String yAxisTitle = "";
   private Map<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
 
-  /**
-   * Chart Parts
-   */
+  /** Chart Parts */
   protected AxisPair axisPair;
+
   final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
   protected Plot_<ST, S> plot;
   protected final ChartTitle<ST, S> chartTitle;
@@ -65,7 +62,11 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected void paintBackground(Graphics2D g) {
 
     // paint chart main background
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, styler.getAntiAlias() ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF); // global rendering hint
+    g.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        styler.getAntiAlias()
+            ? RenderingHints.VALUE_ANTIALIAS_ON
+            : RenderingHints.VALUE_ANTIALIAS_OFF); // global rendering hint
     g.setColor(styler.getChartBackgroundColor());
     Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
     g.fill(rect);
@@ -91,9 +92,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return toolTips;
   }
 
-  /**
-   * Meta Data Getters and Setters
-   */
+  /** Meta Data Getters and Setters */
   public int getWidth() {
 
     return width;
@@ -184,10 +183,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return axisLabelOverrideMap.get((direction.name() + yIndex));
   }
 
-  /**
-   * Chart Parts Getters
-   */
-
+  /** Chart Parts Getters */
   ChartTitle<ST, S> getChartTitle() {
 
     return chartTitle;
@@ -232,5 +228,4 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
-
 }

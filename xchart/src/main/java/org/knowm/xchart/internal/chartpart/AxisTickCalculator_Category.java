@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for String axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
+ * rendering the axis ticks for String axes
  *
  * @author timmolter
  */
@@ -26,8 +26,12 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
    * @param axisType
    * @param styler
    */
-  public AxisTickCalculator_Category(Direction axisDirection, double workingSpace, List<?> categories, Series.DataType axisType, AxesChartStyler
-      styler) {
+  public AxisTickCalculator_Category(
+      Direction axisDirection,
+      double workingSpace,
+      List<?> categories,
+      Series.DataType axisType,
+      AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
 
@@ -59,7 +63,8 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
       if (styler.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
       }
-      SimpleDateFormat simpleDateformat = new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
+      SimpleDateFormat simpleDateformat =
+          new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
       simpleDateformat.setTimeZone(styler.getTimezone());
       axisFormat = simpleDateformat;
     }

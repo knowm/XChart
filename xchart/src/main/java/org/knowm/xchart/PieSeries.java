@@ -11,7 +11,6 @@ import org.knowm.xchart.internal.series.Series;
 public class PieSeries extends Series {
 
   public enum PieSeriesRenderStyle {
-
     Pie(),
 
     Donut();
@@ -34,7 +33,8 @@ public class PieSeries extends Series {
   }
 
   /**
-   * *This is an internal method which shouldn't be called from client code. Use PieChart.updatePieSeries instead!
+   * *This is an internal method which shouldn't be called from client code. Use
+   * PieChart.updatePieSeries instead!
    *
    * @param value
    */

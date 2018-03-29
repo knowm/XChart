@@ -1,18 +1,14 @@
 package org.knowm.xchart;
 
+import java.awt.*;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 
-import java.awt.*;
-
-/**
- * @author arthurmcgibbon
- */
+/** @author arthurmcgibbon */
 public class OHLCSeries extends AxesChartSeries {
 
   public enum OHLCSeriesRenderStyle implements RenderableSeries {
-
     Candle(LegendRenderType.Line),
 
     HiLo(LegendRenderType.Line);
@@ -24,7 +20,8 @@ public class OHLCSeries extends AxesChartSeries {
       this.legendRenderType = legendRenderType;
     }
 
-    @Override public LegendRenderType getLegendRenderType() {
+    @Override
+    public LegendRenderType getLegendRenderType() {
 
       return legendRenderType;
     }
@@ -39,14 +36,10 @@ public class OHLCSeries extends AxesChartSeries {
 
   private OHLCSeriesRenderStyle ohlcSeriesRenderStyle;
 
-  /**
-   * Up Color
-   */
+  /** Up Color */
   private Color upColor;
 
-  /**
-   * Down Color
-   */
+  /** Down Color */
   private Color downColor;
 
   /**
@@ -59,7 +52,14 @@ public class OHLCSeries extends AxesChartSeries {
    * @param lowData
    * @param closeData
    */
-  public OHLCSeries(String name, double[] xData, double[] openData, double[] highData, double[] lowData, double[] closeData, DataType xAxisDataType) {
+  public OHLCSeries(
+      String name,
+      double[] xData,
+      double[] openData,
+      double[] highData,
+      double[] lowData,
+      double[] closeData,
+      DataType xAxisDataType) {
 
     super(name, xAxisDataType);
     this.xData = xData;
@@ -113,12 +113,14 @@ public class OHLCSeries extends AxesChartSeries {
     return downColor;
   }
 
-  @Override public LegendRenderType getLegendRenderType() {
+  @Override
+  public LegendRenderType getLegendRenderType() {
     return ohlcSeriesRenderStyle.getLegendRenderType();
   }
 
   /**
-   * This is an internal method which shouldn't be called from client code. Use {@link org.knowm.xchart.OHLCChart#updateOHLCSeries} instead!
+   * This is an internal method which shouldn't be called from client code. Use {@link
+   * org.knowm.xchart.OHLCChart#updateOHLCSeries} instead!
    *
    * @param newXData
    * @param newOpenData
@@ -126,7 +128,12 @@ public class OHLCSeries extends AxesChartSeries {
    * @param newLowData
    * @param newCloseData
    */
-  void replaceData(double[] newXData, double[] newOpenData, double[] newHighData, double[] newLowData, double[] newCloseData) {
+  void replaceData(
+      double[] newXData,
+      double[] newOpenData,
+      double[] newHighData,
+      double[] newLowData,
+      double[] newCloseData) {
 
     // Sanity check should already by done
     this.xData = newXData;
@@ -159,10 +166,11 @@ public class OHLCSeries extends AxesChartSeries {
       }
     }
 
-    return new double[]{min, max};
+    return new double[] {min, max};
   }
 
-  @Override protected void calculateMinMax() {
+  @Override
+  protected void calculateMinMax() {
 
     double[] xMinMax = findMinMax(xData, xData);
     xMin = xMinMax[0];

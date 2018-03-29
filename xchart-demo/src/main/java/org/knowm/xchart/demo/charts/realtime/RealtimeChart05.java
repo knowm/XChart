@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
@@ -16,10 +15,11 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * Real-time Category Chart
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>real-time chart updates with SwingWrapper
+ *   <li>real-time chart updates with SwingWrapper
  */
 public class RealtimeChart05 implements ExampleChart<CategoryChart> {
 
@@ -42,23 +42,25 @@ public class RealtimeChart05 implements ExampleChart<CategoryChart> {
     swingWrapper.displayChart();
 
     // Simulate a data feed
-    TimerTask chartUpdaterTask = new TimerTask() {
-
-      @Override
-      public void run() {
-
-        updateData();
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    TimerTask chartUpdaterTask =
+        new TimerTask() {
 
           @Override
           public void run() {
 
-            swingWrapper.repaintChart();
+            updateData();
+
+            javax.swing.SwingUtilities.invokeLater(
+                new Runnable() {
+
+                  @Override
+                  public void run() {
+
+                    swingWrapper.repaintChart();
+                  }
+                });
           }
-        });
-      }
-    };
+        };
 
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
@@ -67,12 +69,20 @@ public class RealtimeChart05 implements ExampleChart<CategoryChart> {
   @Override
   public CategoryChart getChart() {
 
-    xData = new CopyOnWriteArrayList<String>(Arrays.asList(new String[]{"Blue", "Red", "Green", "Yellow", "Orange"}));
+    xData =
+        new CopyOnWriteArrayList<String>(
+            Arrays.asList(new String[] {"Blue", "Red", "Green", "Yellow", "Orange"}));
     Histogram histogram = new Histogram(getGaussianData(1000), 5, -10, 10);
     yData = histogram.getyAxisData();
 
     // Create Chart
-    categoryChart = new CategoryChartBuilder().width(500).height(400).theme(ChartTheme.Matlab).title("Real-time Category Chart").build();
+    categoryChart =
+        new CategoryChartBuilder()
+            .width(500)
+            .height(400)
+            .theme(ChartTheme.Matlab)
+            .title("Real-time Category Chart")
+            .build();
 
     categoryChart.addSeries(SERIES_NAME, xData, yData);
 

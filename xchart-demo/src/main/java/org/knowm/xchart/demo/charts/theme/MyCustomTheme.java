@@ -4,16 +4,13 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-
 import org.knowm.xchart.style.AbstractBaseTheme;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.lines.XChartSeriesLines;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.XChartSeriesMarkers;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class MyCustomTheme extends AbstractBaseTheme {
 
   // Chart Style ///////////////////////////////
@@ -93,7 +90,8 @@ public class MyCustomTheme extends AbstractBaseTheme {
   @Override
   public Stroke getAxisTickMarksStroke() {
 
-    return new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[]{3.0f, 0.0f}, 0.0f);
+    return new BasicStroke(
+        1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] {3.0f, 0.0f}, 0.0f);
   }
 
   // Chart Plot Area ///////////////////////////////
@@ -107,7 +105,8 @@ public class MyCustomTheme extends AbstractBaseTheme {
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(0.25f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[]{3.0f, 3.0f}, 0.0f);
+    return new BasicStroke(
+        0.25f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] {3.0f, 3.0f}, 0.0f);
   }
 
   // Category Charts ///////////////////////////////

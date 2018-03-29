@@ -8,14 +8,12 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/**
- * Creates a simple Chart and saves it as a PNG and JPEG image file.
- */
+/** Creates a simple Chart and saves it as a PNG and JPEG image file. */
 public class Example1 {
 
   public static void main(String[] args) throws Exception {
 
-    double[] yData = new double[]{2.0, 1.0, 0.0};
+    double[] yData = new double[] {2.0, 1.0, 0.0};
 
     // Create Chart
     XYChart chart = new XYChart(500, 400);

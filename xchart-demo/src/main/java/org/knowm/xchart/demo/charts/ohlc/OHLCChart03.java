@@ -1,22 +1,22 @@
 package org.knowm.xchart.demo.charts.ohlc;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import org.knowm.xchart.OHLCChart;
 import org.knowm.xchart.OHLCChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 /**
  * Demonstrates the following:
+ *
  * <ul>
- * <li>Candle render style green down, red up
- * <li>LegendPosition.OutsideS
- * <li>Two YAxis Groups - both on left
+ *   <li>Candle render style green down, red up
+ *   <li>LegendPosition.OutsideS
+ *   <li>Two YAxis Groups - both on left
  */
 public class OHLCChart03 implements ExampleChart<OHLCChart> {
 
@@ -45,9 +45,11 @@ public class OHLCChart03 implements ExampleChart<OHLCChart> {
 
     OHLCChart01.populateData(xData, openData, highData, lowData, closeData);
 
-    chart.addSeries("Series", xData, openData, highData, lowData, closeData).setUpColor(Color.RED).setDownColor(Color.GREEN);
+    chart
+        .addSeries("Series", xData, openData, highData, lowData, closeData)
+        .setUpColor(Color.RED)
+        .setDownColor(Color.GREEN);
 
     return chart;
   }
-
 }

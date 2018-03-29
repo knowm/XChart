@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -15,14 +14,15 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
 /**
- * Minute Scale
- * * <p>
- * Demonstrates the following:
+ * Minute Scale *
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Minute Scale
- * <li>10^9 formatting
- * <li>LegendPosition.InsideS
- * <li>Two YAxis Groups - one on left, one on right
+ *   <li>Minute Scale
+ *   <li>10^9 formatting
+ *   <li>LegendPosition.InsideS
+ *   <li>Two YAxis Groups - one on left, one on right
  */
 public class DateChart03 implements ExampleChart<XYChart> {
 
@@ -55,7 +55,14 @@ public class DateChart03 implements ExampleChart<XYChart> {
     Date date = null;
     for (int i = 1; i <= 14; i++) {
       try {
-        date = sdf.parse("2013-07-22-08:" + (5 * i + random.nextInt(2)) + ":" + (random.nextInt(2)) + "." + random.nextInt(1000));
+        date =
+            sdf.parse(
+                "2013-07-22-08:"
+                    + (5 * i + random.nextInt(2))
+                    + ":"
+                    + (random.nextInt(2))
+                    + "."
+                    + random.nextInt(1000));
       } catch (ParseException e) {
         e.printStackTrace();
       }

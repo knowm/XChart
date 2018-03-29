@@ -12,7 +12,6 @@ import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
 public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
   public enum XYSeriesRenderStyle implements RenderableSeries {
-
     Line(LegendRenderType.Line),
 
     Area(LegendRenderType.Line),
@@ -47,7 +46,8 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
    * @param yData
    * @param errorBars
    */
-  public XYSeries(String name, double[] xData, double[] yData, double[] errorBars, DataType axisType) {
+  public XYSeries(
+      String name, double[] xData, double[] yData, double[] errorBars, DataType axisType) {
 
     super(name, xData, yData, errorBars, axisType);
   }
@@ -68,5 +68,4 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
     return xySeriesRenderStyle.getLegendRenderType();
   }
-
 }

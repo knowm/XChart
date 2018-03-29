@@ -1,11 +1,10 @@
 package org.knowm.xchart.internal.chartpart;
 
-import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.Styler;
-
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.Styler;
 
 /**
  * Draws the plot background and the plot border
@@ -33,7 +32,8 @@ public class PlotSurface_Pie<ST extends Styler, S extends Series> extends PlotSu
     Rectangle2D bounds = getBounds();
 
     // paint plot background
-    Shape rect = new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+    Shape rect =
+        new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
     g.setColor(styler.getPlotBackgroundColor());
     g.fill(rect);
 

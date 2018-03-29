@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -134,7 +133,12 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    */
   public XYSeries addSeries(String seriesName, float[] xData, float[] yData, float[] errorBars) {
 
-    return addSeries(seriesName, Utils.getDoubleArrayFromFloatArray(xData), Utils.getDoubleArrayFromFloatArray(yData), Utils.getDoubleArrayFromFloatArray(errorBars), DataType.Number);
+    return addSeries(
+        seriesName,
+        Utils.getDoubleArrayFromFloatArray(xData),
+        Utils.getDoubleArrayFromFloatArray(yData),
+        Utils.getDoubleArrayFromFloatArray(errorBars),
+        DataType.Number);
   }
 
   /**
@@ -173,7 +177,12 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    */
   public XYSeries addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
 
-    return addSeries(seriesName, Utils.getDoubleArrayFromIntArray(xData), Utils.getDoubleArrayFromIntArray(yData), Utils.getDoubleArrayFromIntArray(errorBars), DataType.Number);
+    return addSeries(
+        seriesName,
+        Utils.getDoubleArrayFromIntArray(xData),
+        Utils.getDoubleArrayFromIntArray(yData),
+        Utils.getDoubleArrayFromIntArray(errorBars),
+        DataType.Number);
   }
 
   /**
@@ -196,7 +205,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
-  public XYSeries addSeries(String seriesName,  List<? extends Number> yData) {
+  public XYSeries addSeries(String seriesName, List<? extends Number> yData) {
 
     return addSeries(seriesName, null, yData, null);
   }
@@ -210,18 +219,30 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public XYSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public XYSeries addSeries(
+      String seriesName,
+      List<?> xData,
+      List<? extends Number> yData,
+      List<? extends Number> errorBars) {
 
     DataType dataType = getDataType(xData);
     switch (dataType) {
-
       case Date:
-        return addSeries(seriesName, Utils.getDoubleArrayFromDateList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(errorBars), DataType.Date);
+        return addSeries(
+            seriesName,
+            Utils.getDoubleArrayFromDateList(xData),
+            Utils.getDoubleArrayFromNumberList(yData),
+            Utils.getDoubleArrayFromNumberList(errorBars),
+            DataType.Date);
 
       default:
-        return addSeries(seriesName, Utils.getDoubleArrayFromNumberList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(errorBars), DataType.Number);
+        return addSeries(
+            seriesName,
+            Utils.getDoubleArrayFromNumberList(xData),
+            Utils.getDoubleArrayFromNumberList(yData),
+            Utils.getDoubleArrayFromNumberList(errorBars),
+            DataType.Number);
     }
-
   }
 
   private DataType getDataType(List<?> data) {
@@ -258,7 +279,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  private XYSeries addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars, DataType dataType) {
+  private XYSeries addSeries(
+      String seriesName, double[] xData, double[] yData, double[] errorBars, DataType dataType) {
 
     // Sanity checks
     sanityCheck(seriesName, xData, yData, errorBars);
@@ -273,7 +295,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
       series = new XYSeries(seriesName, xData, yData, errorBars, dataType);
     } else { // generate xData
-      series = new XYSeries(seriesName, Utils.getGeneratedDataAsArray(yData.length), yData, errorBars, dataType);
+      series =
+          new XYSeries(
+              seriesName, Utils.getGeneratedDataAsArray(yData.length), yData, errorBars, dataType);
     }
 
     seriesMap.put(seriesName, series);
@@ -285,24 +309,33 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Update a series by updating the X-Axis, Y-Axis and error bar data
    *
    * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   * 1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers
+   *     starting from 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public XYSeries updateXYSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
-
-
+  public XYSeries updateXYSeries(
+      String seriesName,
+      List<?> newXData,
+      List<? extends Number> newYData,
+      List<? extends Number> newErrorBarData) {
 
     DataType dataType = getDataType(newXData);
     switch (dataType) {
-
       case Date:
-        return updateXYSeries(seriesName, Utils.getDoubleArrayFromDateList(newXData), Utils.getDoubleArrayFromNumberList(newYData), Utils.getDoubleArrayFromNumberList(newErrorBarData));
+        return updateXYSeries(
+            seriesName,
+            Utils.getDoubleArrayFromDateList(newXData),
+            Utils.getDoubleArrayFromNumberList(newYData),
+            Utils.getDoubleArrayFromNumberList(newErrorBarData));
 
       default:
-        return updateXYSeries(seriesName, Utils.getDoubleArrayFromNumberList(newXData), Utils.getDoubleArrayFromNumberList(newYData), Utils.getDoubleArrayFromNumberList(newErrorBarData));
+        return updateXYSeries(
+            seriesName,
+            Utils.getDoubleArrayFromNumberList(newXData),
+            Utils.getDoubleArrayFromNumberList(newYData),
+            Utils.getDoubleArrayFromNumberList(newErrorBarData));
     }
   }
 
@@ -310,13 +343,14 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * Update a series by updating the X-Axis, Y-Axis and error bar data
    *
    * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   * 1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers
+   *     starting from 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public XYSeries updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
+  public XYSeries updateXYSeries(
+      String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
 
     Map<String, XYSeries> seriesMap = getSeriesMap();
     XYSeries series = seriesMap.get(seriesName);
@@ -340,7 +374,10 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   private void sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
     if (seriesMap.keySet().contains(seriesName)) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
     }
     if (yData == null) {
       throw new IllegalArgumentException("Y-Axis data cannot be null!!! >" + seriesName);
@@ -352,7 +389,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
       throw new IllegalArgumentException("X-Axis data cannot be empty!!! >" + seriesName);
     }
     if (errorBars != null && errorBars.length != yData.length) {
-      throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!! >" + seriesName);
+      throw new IllegalArgumentException(
+          "Error bars and Y-Axis sizes are not the same!!! >" + seriesName);
     }
   }
 
@@ -364,7 +402,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
     // set the series render styles if they are not set. Legend and Plot need it.
     for (XYSeries xySeries : getSeriesMap().values()) {
-      XYSeries.XYSeriesRenderStyle chartXYSeriesRenderStyle = xySeries.getXYSeriesRenderStyle(); // would be directly set
+      XYSeries.XYSeriesRenderStyle chartXYSeriesRenderStyle =
+          xySeries.getXYSeriesRenderStyle(); // would be directly set
       if (chartXYSeriesRenderStyle == null) { // wasn't overridden, use default from Style Manager
         xySeries.setXYSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
@@ -379,16 +418,18 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     legend.paint(g);
   }
 
-  /**
-   * set the series color, marker and line style based on theme
-   */
+  /** set the series color, marker and line style based on theme */
   private void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
-        .getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+        new SeriesColorMarkerLineStyleCycler(
+            getStyler().getSeriesColors(),
+            getStyler().getSeriesMarkers(),
+            getStyler().getSeriesLines());
     for (XYSeries series : getSeriesMap().values()) {
 
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
@@ -407,5 +448,4 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
       }
     }
   }
-
 }

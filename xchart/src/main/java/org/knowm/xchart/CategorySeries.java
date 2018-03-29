@@ -1,19 +1,15 @@
 package org.knowm.xchart;
 
 import java.util.List;
-
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series;
 
-/**
- * A Series containing category data to be plotted on a Chart
- */
+/** A Series containing category data to be plotted on a Chart */
 public class CategorySeries extends AxesChartSeriesCategory {
 
   public enum CategorySeriesRenderStyle implements RenderableSeries {
-
     Line(LegendRenderType.Line),
 
     Area(LegendRenderType.Line),
@@ -51,7 +47,12 @@ public class CategorySeries extends AxesChartSeriesCategory {
    * @param errorBars
    * @param axisType
    */
-  public CategorySeries(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars, Series.DataType axisType) {
+  public CategorySeries(
+      String name,
+      List<?> xData,
+      List<? extends Number> yData,
+      List<? extends Number> errorBars,
+      Series.DataType axisType) {
 
     super(name, xData, yData, errorBars, axisType);
   }
@@ -61,7 +62,8 @@ public class CategorySeries extends AxesChartSeriesCategory {
     return chartCategorySeriesRenderStyle;
   }
 
-  public CategorySeries setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle categorySeriesRenderStyle) {
+  public CategorySeries setChartCategorySeriesRenderStyle(
+      CategorySeriesRenderStyle categorySeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = categorySeriesRenderStyle;
     return this;
@@ -72,5 +74,4 @@ public class CategorySeries extends AxesChartSeriesCategory {
 
     return chartCategorySeriesRenderStyle.getLegendRenderType();
   }
-
 }

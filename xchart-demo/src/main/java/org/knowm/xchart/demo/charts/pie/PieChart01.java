@@ -7,12 +7,13 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * Pie Chart with 4 Slices
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Pie Chart
- * <li>ChartBuilderPie
- * <li>Setting Non-circular to match container aspect ratio
+ *   <li>Pie Chart
+ *   <li>ChartBuilderPie
+ *   <li>Setting Non-circular to match container aspect ratio
  */
 public class PieChart01 implements ExampleChart<PieChart> {
 
@@ -27,7 +28,8 @@ public class PieChart01 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600).title("Pie Chart with 4 Slices").build();
+    PieChart chart =
+        new PieChartBuilder().width(800).height(600).title("Pie Chart with 4 Slices").build();
 
     // Customize Chart
     chart.getStyler().setCircular(false);

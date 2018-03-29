@@ -2,7 +2,6 @@ package org.knowm.xchart.demo.charts.theme;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -10,10 +9,11 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * My Custom Theme
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Using a custom class that implements Theme
+ *   <li>Using a custom class that implements Theme
  */
 public class ThemeChart04 implements ExampleChart<XYChart> {
 
@@ -28,7 +28,14 @@ public class ThemeChart04 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).title("My Custom Theme").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .title("My Custom Theme")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
     chart.getStyler().setTheme(new MyCustomTheme());
 
     // Customize Chart

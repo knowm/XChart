@@ -1,18 +1,14 @@
 package org.knowm.xchart.style.markers;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class MatlabSeriesMarkers implements SeriesMarkers {
 
   private final Marker[] seriesMarkers;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public MatlabSeriesMarkers() {
 
-    seriesMarkers = new Marker[]{CIRCLE, SQUARE, DIAMOND};
+    seriesMarkers = new Marker[] {CIRCLE, SQUARE, DIAMOND};
   }
 
   @Override

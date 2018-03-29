@@ -2,7 +2,6 @@ package org.knowm.xchart.standalone.issues;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -32,12 +31,12 @@ public class TestForIssue54_2 {
     chart.setYAxisGroupTitle(1, "sin(x)");
 
     new SwingWrapper<Chart>(chart).displayChart();
-
   }
 
   static Chart getLineChart() {
 
-    XYChart chart = new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setToolTipsEnabled(true);
@@ -62,5 +61,4 @@ public class TestForIssue54_2 {
     chart.addSeries("y=cos(x)", xData2, yData2);
     return chart;
   }
-
 }

@@ -2,7 +2,6 @@ package org.knowm.xchart.internal.style;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-
 import org.knowm.xchart.style.markers.Marker;
 
 /**

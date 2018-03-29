@@ -1,7 +1,6 @@
 package org.knowm.xchart.standalone.issues;
 
 import java.awt.Color;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
@@ -9,19 +8,17 @@ import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class TestForIssue27_1 {
 
   public static void main(String[] args) throws Exception {
 
-    double[] xData = new double[]{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
-    double[] yData1 = new double[]{100, 100, 100, 50, 50, 50, 50};
-    double[] errdata = new double[]{50, 20, 10, 50, 40, 20, 10};
+    double[] xData = new double[] {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    double[] yData1 = new double[] {100, 100, 100, 50, 50, 50, 50};
+    double[] errdata = new double[] {50, 20, 10, 50, 40, 20, 10};
 
-    double[] yData2 = new double[]{50, 80, 90, 0, 10, 30, 40};
-    double[] yData3 = new double[]{150, 120, 110, 100, 90, 70, 60};
+    double[] yData2 = new double[] {50, 80, 90, 0, 10, 30, 40};
+    double[] yData3 = new double[] {150, 120, 110, 100, 90, 70, 60};
 
     XYChart mychart = new XYChart(900, 700);
     mychart.getStyler().setYAxisMin(0.0);

@@ -3,7 +3,6 @@ package org.knowm.xchart.style;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
@@ -11,9 +10,7 @@ import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Chart Style ///////////////////////////////

@@ -12,8 +12,10 @@ public class DialStyler extends Styler {
   private boolean axisTicksMarksVisible;
   private Color axisTickMarksColor;
   private Stroke axisTickMarksStroke;
-  private double[] axisTickValues = { 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 };
-  private String[] axisTickLabels = { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
+  private double[] axisTickValues = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
+  private String[] axisTickLabels = {
+    "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
+  };
 
   // variable labels
   private boolean axisTitleVisible;
@@ -71,8 +73,8 @@ public class DialStyler extends Styler {
   }
 
   /**
-   * Sets whether or not the radar chart is forced to be circular. Otherwise
-   * it's shape is oval, matching the containing plot.
+   * Sets whether or not the radar chart is forced to be circular. Otherwise it's shape is oval,
+   * matching the containing plot.
    *
    * @param isCircular
    */

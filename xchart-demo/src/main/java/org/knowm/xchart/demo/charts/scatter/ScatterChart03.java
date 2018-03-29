@@ -8,10 +8,11 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * Single point
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Single point
+ *   <li>Single point
  */
 public class ScatterChart03 implements ExampleChart<XYChart> {
 
@@ -26,13 +27,20 @@ public class ScatterChart03 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).title("Single Point").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .title("Single Point")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
 
     // Series
-    chart.addSeries("single point (1,1)", new double[]{1}, new double[]{1});
+    chart.addSeries("single point (1,1)", new double[] {1}, new double[] {1});
 
     return chart;
   }

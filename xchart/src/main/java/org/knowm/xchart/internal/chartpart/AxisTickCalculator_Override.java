@@ -3,15 +3,14 @@ package org.knowm.xchart.internal.chartpart;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for given values&labels
- *
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
+ * rendering the axis ticks for given values&labels
  */
 class AxisTickCalculator_Override extends AxisTickCalculator_ {
 
@@ -25,7 +24,13 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
    * @param styler
    * @param labelOverrideMap
    */
-  public AxisTickCalculator_Override(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler, Map<Double, Object> labelOverrideMap) {
+  public AxisTickCalculator_Override(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler,
+      Map<Double, Object> labelOverrideMap) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
     axisFormat = new NumberFormatter(styler, axisDirection, minValue, maxValue);
@@ -42,8 +47,14 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
    * @param axisType
    * @param categoryCount
    */
-  public AxisTickCalculator_Override(Direction axisDirection, double workingSpace, AxesChartStyler styler, Map<Double, Object> markMap, Series.DataType axisType, int categoryCount) {
-    
+  public AxisTickCalculator_Override(
+      Direction axisDirection,
+      double workingSpace,
+      AxesChartStyler styler,
+      Map<Double, Object> markMap,
+      Series.DataType axisType,
+      int categoryCount) {
+
     super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
     // set up String formatters that may be encountered
     if (axisType == Series.DataType.String) {
@@ -54,7 +65,8 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
       if (styler.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
       }
-      SimpleDateFormat simpleDateformat = new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
+      SimpleDateFormat simpleDateformat =
+          new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
       simpleDateformat.setTimeZone(styler.getTimezone());
       axisFormat = simpleDateformat;
     }
@@ -66,7 +78,8 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      String label = labelOverrideMap.isEmpty() ? " " : labelOverrideMap.values().iterator().next().toString();
+      String label =
+          labelOverrideMap.isEmpty() ? " " : labelOverrideMap.values().iterator().next().toString();
       tickLabels.add(label);
       tickLocations.add(workingSpace / 2.0);
       return;
@@ -81,7 +94,10 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
     }
 
     // where the tick should begin in the working space in pixels
-    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin =
+        Utils.getTickStartOffset(
+            workingSpace,
+            tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // generate all tickLabels and tickLocations from the first to last position
     for (Entry<Double, Object> entry : labelOverrideMap.entrySet()) {
@@ -90,11 +106,12 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
       String tickLabel = value == null ? " " : value.toString();
       tickLabels.add(tickLabel);
 
-      double tickLabelPosition = margin + ((entry.getKey().doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
+      double tickLabelPosition =
+          margin + ((entry.getKey().doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
       tickLocations.add(tickLabelPosition);
     }
   }
-  
+
   private void calculateForCategory(Map<Double, Object> locationLabelMap, int categoryCount) {
 
     // tick space - a percentage of the working space available for ticks
@@ -121,5 +138,4 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
       tickLocations.add(tickLabelPosition);
     }
   }
-
 }

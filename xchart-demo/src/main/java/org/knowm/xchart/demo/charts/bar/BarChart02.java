@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategorySeries;
@@ -18,15 +17,16 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * Date Categories
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Date categories as List
- * <li>All negative values
- * <li>Single series
- * <li>No horizontal plot gridlines
- * <li>Change series color
- * <li>MATLAB Theme
+ *   <li>Date categories as List
+ *   <li>All negative values
+ *   <li>Single series
+ *   <li>No horizontal plot gridlines
+ *   <li>Change series color
+ *   <li>MATLAB Theme
  */
 public class BarChart02 implements ExampleChart<CategoryChart> {
 
@@ -41,7 +41,15 @@ public class BarChart02 implements ExampleChart<CategoryChart> {
   public CategoryChart getChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().theme(ChartTheme.Matlab).width(800).height(600).title("Units Sold Per Year").xAxisTitle("Year").yAxisTitle("Units Sold").build();
+    CategoryChart chart =
+        new CategoryChartBuilder()
+            .theme(ChartTheme.Matlab)
+            .width(800)
+            .height(600)
+            .title("Units Sold Per Year")
+            .xAxisTitle("Year")
+            .yAxisTitle("Units Sold")
+            .build();
 
     // Customize Chart
     chart.getStyler().setPlotGridLinesVisible(false);

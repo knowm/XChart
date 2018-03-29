@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -15,10 +14,11 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * Hour Scale
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Hiding Y-Axis Axis Ticks (labels, tick marks, tick line)
+ *   <li>Hiding Y-Axis Axis Ticks (labels, tick marks, tick line)
  */
 public class DateChart04 implements ExampleChart<XYChart> {
 

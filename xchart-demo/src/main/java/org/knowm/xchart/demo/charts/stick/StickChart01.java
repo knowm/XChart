@@ -2,7 +2,6 @@ package org.knowm.xchart.demo.charts.stick;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
@@ -12,10 +11,11 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Basic Stick Chart
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Stick category series render type
+ *   <li>Stick category series render type
  */
 public class StickChart01 implements ExampleChart<CategoryChart> {
 

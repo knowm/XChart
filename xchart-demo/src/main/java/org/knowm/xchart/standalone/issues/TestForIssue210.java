@@ -1,7 +1,6 @@
 package org.knowm.xchart.standalone.issues;
 
 import java.util.ArrayList;
-
 import org.knowm.xchart.DialChart;
 import org.knowm.xchart.DialChartBuilder;
 import org.knowm.xchart.SwingWrapper;
@@ -9,11 +8,12 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * Dial Chart
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Dial Chart
- * <li>DialChartBuilder
+ *   <li>Dial Chart
+ *   <li>DialChartBuilder
  */
 public class TestForIssue210 implements ExampleChart<DialChart> {
 
@@ -37,8 +37,8 @@ public class TestForIssue210 implements ExampleChart<DialChart> {
     {
       DialChart chart = exampleChart.getChart();
       chart.setTitle("Dial chart with custom ticks&labels");
-      chart.getStyler().setAxisTickValues(new double[] { .33, .45, .79});
-      chart.getStyler().setAxisTickLabels(new String[] { "min", "average", "max"});
+      chart.getStyler().setAxisTickValues(new double[] {.33, .45, .79});
+      chart.getStyler().setAxisTickLabels(new String[] {"min", "average", "max"});
       charts.add(chart);
     }
     {
@@ -53,7 +53,7 @@ public class TestForIssue210 implements ExampleChart<DialChart> {
       DialChart chart = exampleChart.getChart();
       chart.setTitle("Full circle dial chart");
       chart.getStyler().setArcAngle(360);
-      //chart.getStyler().setDonutThickness(1);
+      // chart.getStyler().setDonutThickness(1);
       chart.getStyler().setAxisTickLabelsVisible(false);
       charts.add(chart);
     }

@@ -7,9 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.swing.JFrame;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.SwingWrapper;
@@ -48,7 +46,7 @@ public class TestForTickCalculatorCustom {
       yMarkMap.put(1.0, "max c");
       yMarkMap.put(6.0, "max b");
       yMarkMap.put(9.0, "max a");
-      
+
       chart.setXAxisLabelOverrideMap(xMarkMap);
       chart.setYAxisLabelOverrideMap(yMarkMap);
       chart.setTitle("AreaChart01 - custom x&y axis labels");
@@ -58,62 +56,63 @@ public class TestForTickCalculatorCustom {
       // issue 171
       // Is there a way to display the labels, say, for every 5 x-value
       Chart chart = new BarChart06().getChart();
-      
+
       CategorySeries series = (CategorySeries) chart.getSeriesMap().get("histogram 1");
       List<?> xData = (List<?>) series.getXData();
       Map<Double, Object> xMarkMap = new TreeMap<Double, Object>();
       // for category charts 0 means first category, 1 means second category, ...
-      
-      for (int i = 0; i < xData.size(); i+= 5) {
-        xMarkMap.put((double)i, xData.get(i));
+
+      for (int i = 0; i < xData.size(); i += 5) {
+        xMarkMap.put((double) i, xData.get(i));
       }
-      
+
       chart.setXAxisLabelOverrideMap(xMarkMap);
       chart.setTitle("Score Histogram - x axis labels on each 5th category");
       charts.add(chart);
     }
     {
       // issue 159 & 132
-      // The graph however displays labels on the x axis inbetween these points. Doesn't seem to be possible to prevent this
+      // The graph however displays labels on the x axis inbetween these points. Doesn't seem to be
+      // possible to prevent this
       XYChart chart = new DateChart05().getChart();
       chart.setTitle("Day scale - x axis labels on every data point");
-      
+
       XYSeries xySeries = chart.getSeriesMap().get("blah");
       double[] xData = xySeries.getXData();
       Map<Double, Object> xMarkMap = new TreeMap<Double, Object>();
       SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
-      
+
       for (double d : xData) {
-        Date date = new Date((long)d);
+        Date date = new Date((long) d);
         String label = sdf.format(date);
         xMarkMap.put(d, label);
       }
-      
+
       chart.setXAxisLabelOverrideMap(xMarkMap);
       charts.add(chart);
     }
     {
-      // for category charts another way to create custom axis places is using category names in first series. 
+      // for category charts another way to create custom axis places is using category names in
+      // first series.
       CategoryChart chart = new BarChart09().getChart();
-      
+
       Map<Object, Object> xMarkMap = new TreeMap<Object, Object>();
-      
+
       xMarkMap.put("A", "-A-");
       xMarkMap.put("D", "+D+");
-      
+
       chart.setCustomCategoryLabels(xMarkMap);
       chart.setTitle("Value vs. Letter - x axis labels by category name");
       charts.add(chart);
     }
-    
+
     for (Chart chart : charts) {
       chart.getStyler().setToolTipsEnabled(true);
     }
-    JFrame frame = new SwingWrapper<Chart>(charts,2, 4).displayChartMatrix();
+    JFrame frame = new SwingWrapper<Chart>(charts, 2, 4).displayChartMatrix();
     Dimension preferredSize = new Dimension(1920, 1000);
     frame.setPreferredSize(preferredSize);
     frame.setSize(preferredSize);
     frame.setVisible(true);
   }
-
 }

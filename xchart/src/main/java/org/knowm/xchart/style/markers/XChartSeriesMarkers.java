@@ -1,18 +1,14 @@
 package org.knowm.xchart.style.markers;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class XChartSeriesMarkers implements SeriesMarkers {
 
   private final Marker[] seriesMarkers;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public XChartSeriesMarkers() {
 
-    seriesMarkers = new Marker[]{CIRCLE, DIAMOND, SQUARE, TRIANGLE_DOWN, TRIANGLE_UP, CROSS, PLUS};
+    seriesMarkers = new Marker[] {CIRCLE, DIAMOND, SQUARE, TRIANGLE_DOWN, TRIANGLE_UP, CROSS, PLUS};
   }
 
   @Override

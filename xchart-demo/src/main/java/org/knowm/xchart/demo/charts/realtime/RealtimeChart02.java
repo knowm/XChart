@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
@@ -16,12 +15,13 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * Real-time Pie Chart
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>real-time chart updates with SwingWrapper
- * <li>Matlab theme
- * <li>Pie Chart
+ *   <li>real-time chart updates with SwingWrapper
+ *   <li>Matlab theme
+ *   <li>Pie Chart
  */
 public class RealtimeChart02 implements ExampleChart<PieChart> {
 
@@ -40,23 +40,25 @@ public class RealtimeChart02 implements ExampleChart<PieChart> {
     swingWrapper.displayChart();
 
     // Simulate a data feed
-    TimerTask chartUpdaterTask = new TimerTask() {
-
-      @Override
-      public void run() {
-
-        updateData();
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    TimerTask chartUpdaterTask =
+        new TimerTask() {
 
           @Override
           public void run() {
 
-            swingWrapper.repaintChart();
+            updateData();
+
+            javax.swing.SwingUtilities.invokeLater(
+                new Runnable() {
+
+                  @Override
+                  public void run() {
+
+                    swingWrapper.repaintChart();
+                  }
+                });
           }
-        });
-      }
-    };
+        };
 
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
@@ -66,7 +68,13 @@ public class RealtimeChart02 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    pieChart = new PieChartBuilder().width(500).height(400).theme(ChartTheme.Matlab).title("Real-time Pie Chart").build();
+    pieChart =
+        new PieChartBuilder()
+            .width(500)
+            .height(400)
+            .theme(ChartTheme.Matlab)
+            .title("Real-time Pie Chart")
+            .build();
 
     // Customize Chart
     pieChart.getStyler().setLegendVisible(false);

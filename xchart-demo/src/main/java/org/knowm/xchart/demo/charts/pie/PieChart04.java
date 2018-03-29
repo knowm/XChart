@@ -10,14 +10,14 @@ import org.knowm.xchart.style.Styler;
 
 /**
  * Pie Chart with Donut Style
- * <p>
- * Demonstrates the following:
- * <ul>
- * <li>Donut Chart
- * <li>PieChartBuilder
- * <li>XChart Theme
- * <li>Horizontal Legend OutsideS
  *
+ * <p>Demonstrates the following:
+ *
+ * <ul>
+ *   <li>Donut Chart
+ *   <li>PieChartBuilder
+ *   <li>XChart Theme
+ *   <li>Horizontal Legend OutsideS
  */
 public class PieChart04 implements ExampleChart<PieChart> {
 
@@ -32,12 +32,13 @@ public class PieChart04 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600).title("Pie Chart with Donut Style").build();
+    PieChart chart =
+        new PieChartBuilder().width(800).height(600).title("Pie Chart with Donut Style").build();
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     // Customize Chart
-//    chart.getStyler().setLegendVisible(false);
+    //    chart.getStyler().setLegendVisible(false);
     chart.getStyler().setAnnotationType(AnnotationType.Label);
     chart.getStyler().setAnnotationDistance(.82);
     chart.getStyler().setPlotContentSize(.9);

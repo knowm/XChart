@@ -6,12 +6,9 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
-
 import org.knowm.xchart.style.AxesChartStyler;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 class NumberFormatter extends Format {
 
   private final AxesChartStyler styler;
@@ -20,10 +17,9 @@ class NumberFormatter extends Format {
   private final double max;
   private final NumberFormat numberFormat;
 
-  /**
-   * Constructor
-   */
-  public NumberFormatter(AxesChartStyler styler, Axis.Direction axisDirection, double min, double max) {
+  /** Constructor */
+  public NumberFormatter(
+      AxesChartStyler styler, Axis.Direction axisDirection, double min, double max) {
 
     this.styler = styler;
     this.axisDirection = axisDirection;
@@ -97,7 +93,7 @@ class NumberFormatter extends Format {
   @Override
   public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
 
-//    BigDecimal number = (BigDecimal) obj;
+    //    BigDecimal number = (BigDecimal) obj;
     Number number = (Number) obj;
 
     String decimalPattern;
@@ -119,7 +115,6 @@ class NumberFormatter extends Format {
     toAppendTo.append(normalFormat.format(number));
 
     return toAppendTo;
-
   }
 
   @Override

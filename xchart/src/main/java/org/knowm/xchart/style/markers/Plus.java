@@ -20,5 +20,4 @@ public class Plus extends Marker {
     path.lineTo(xOffset, yOffset - halfSize);
     g.draw(path);
   }
-
 }

@@ -3,7 +3,6 @@ package org.knowm.xchart.demo.charts.scatter;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -14,14 +13,15 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Error Bars
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Error Bars
- * <li>Using ChartBuilder to Make a Chart
- * <li>List<Number> data sets
- * <li>Setting Series Marker and Marker Color
- * <li>Using a custom decimal pattern
+ *   <li>Error Bars
+ *   <li>Using ChartBuilder to Make a Chart
+ *   <li>List<Number> data sets
+ *   <li>Setting Series Marker and Marker Color
+ *   <li>Using a custom decimal pattern
  */
 public class ScatterChart04 implements ExampleChart<XYChart> {
 
@@ -36,7 +36,14 @@ public class ScatterChart04 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).title("ScatterChart04").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .title("ScatterChart04")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);

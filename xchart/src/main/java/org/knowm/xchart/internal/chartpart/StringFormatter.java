@@ -11,12 +11,8 @@ import java.text.ParsePosition;
  */
 class StringFormatter extends Format {
 
-  /**
-   * Constructor
-   */
-  public StringFormatter() {
-
-  }
+  /** Constructor */
+  public StringFormatter() {}
 
   @Override
   public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
@@ -32,5 +28,4 @@ class StringFormatter extends Format {
   public Object parseObject(String source, ParsePosition pos) {
     return null;
   }
-
 }

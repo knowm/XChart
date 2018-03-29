@@ -1,18 +1,14 @@
 package org.knowm.xchart.style.markers;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class GGPlot2SeriesMarkers implements SeriesMarkers {
 
   private final Marker[] seriesMarkers;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public GGPlot2SeriesMarkers() {
 
-    seriesMarkers = new Marker[]{CIRCLE, DIAMOND};
+    seriesMarkers = new Marker[] {CIRCLE, DIAMOND};
   }
 
   @Override

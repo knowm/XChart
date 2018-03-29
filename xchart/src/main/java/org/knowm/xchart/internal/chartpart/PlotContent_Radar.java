@@ -13,15 +13,15 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Map;
-
 import org.knowm.xchart.RadarChart;
 import org.knowm.xchart.RadarChart.RadarRenderStyle;
 import org.knowm.xchart.RadarSeries;
 import org.knowm.xchart.style.RadarStyler;
 
-public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> extends PlotContent_<ST, S> {
+public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
+    extends PlotContent_<ST, S> {
 
-  private final static int MARGIN = 5;
+  private static final int MARGIN = 5;
   private final RadarStyler styler;
   private final NumberFormat df = DecimalFormat.getPercentInstance();
 
@@ -51,8 +51,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> ex
     if (styler.isCircular()) {
       width = Math.min(boundsWidth, boundsHeight);
       height = width;
-    }
-    else {
+    } else {
       width = boundsWidth;
       height = boundsHeight;
     }
@@ -108,7 +107,9 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> ex
       if (axisTitleVisible) {
         String annotation = variableLabels[i];
 
-        TextLayout textLayout = new TextLayout(annotation, styler.getAxisTitleFont(), new FontRenderContext(null, true, false));
+        TextLayout textLayout =
+            new TextLayout(
+                annotation, styler.getAxisTitleFont(), new FontRenderContext(null, true, false));
         Shape shape = textLayout.getOutline(null);
         labelShapes[i] = shape;
       }
@@ -139,13 +140,15 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> ex
 
         double xOffset = xCenter - annotationWidth / 2 + cos * (xDiameter + axisTitlePadding);
         double yOffset = yCenter + annotationHeight / 2 - sin * (yDiameter + axisTitlePadding);
-        double tx = xOffset - Math.sin(Math.toRadians(startAngle - 90)) * (annotationWidth / 2 + axisTitlePadding);
+        double tx =
+            xOffset
+                - Math.sin(Math.toRadians(startAngle - 90))
+                    * (annotationWidth / 2 + axisTitlePadding);
         double ty;
 
         if (Math.abs(startAngle - 90) <= 15 || Math.abs(startAngle - 270) <= 15) {
           ty = yOffset;
-        }
-        else {
+        } else {
           ty = yOffset + Math.cos(Math.toRadians(startAngle - 90)) * annotationHeight;
         }
 
@@ -259,8 +262,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> ex
 
             if (varInd == 0) {
               path.moveTo(xOffset, yOffset);
-            }
-            else {
+            } else {
               path.lineTo(xOffset, yOffset);
             }
           }
@@ -275,7 +277,8 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> ex
       paths[i] = new Path2D.Double();
     }
 
-    NumberFormat decimalFormat = (styler.getDecimalPattern() == null) ? df : new DecimalFormat(styler.getDecimalPattern());
+    NumberFormat decimalFormat =
+        (styler.getDecimalPattern() == null) ? df : new DecimalFormat(styler.getDecimalPattern());
 
     for (S series : map.values()) {
 
@@ -299,8 +302,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> ex
 
         if (varInd == 0) {
           path.moveTo(xOffset, yOffset);
-        }
-        else {
+        } else {
           path.lineTo(xOffset, yOffset);
         }
 
@@ -322,7 +324,6 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> ex
           }
           chart.toolTips.addData(xOffset, yOffset, label);
         }
-
       }
       path.closePath();
       g.setColor(series.getLineColor());
@@ -331,5 +332,4 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries> ex
       g.fill(path);
     }
   }
-
 }

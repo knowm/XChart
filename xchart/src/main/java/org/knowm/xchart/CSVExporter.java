@@ -8,8 +8,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 /**
- * This class is used to export Chart data to a folder containing one or more CSV files. The parent folder's name is the title of the chart. Each
- * series becomes a CSV file in the folder. The series' name becomes the CSV files' name.
+ * This class is used to export Chart data to a folder containing one or more CSV files. The parent
+ * folder's name is the title of the chart. Each series becomes a CSV file in the folder. The
+ * series' name becomes the CSV files' name.
  *
  * @author timmolter
  */
@@ -74,7 +75,7 @@ public class CSVExporter {
 
     // two or more elements
     StringBuilder sb = new StringBuilder(256); // Java default is 16, probably too small
-      sb.append(seriesData[0]);
+    sb.append(seriesData[0]);
     for (int i = 1; i < seriesData.length; i++) {
 
       if (separator != null) {
@@ -112,11 +113,10 @@ public class CSVExporter {
     try {
 
       out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
-     double[] xData = series.getXData();
-      double[]  yData = series.getYData();
-      double[]  errorBarData = series.getExtraValues();
-      for (int i = 0; i <xData.length ; i++) {
-
+      double[] xData = series.getXData();
+      double[] yData = series.getYData();
+      double[] errorBarData = series.getExtraValues();
+      for (int i = 0; i < xData.length; i++) {
 
         StringBuilder sb = new StringBuilder();
         sb.append(xData[i]).append(",");
@@ -127,7 +127,8 @@ public class CSVExporter {
         sb.setLength(sb.length() - 1);
         sb.append(System.getProperty("line.separator"));
 
-        // String csv = xDataPoint + "," + yDataPoint + errorBarValue == null ? "" : ("," + errorBarValue) + System.getProperty("line.separator");
+        // String csv = xDataPoint + "," + yDataPoint + errorBarValue == null ? "" : ("," +
+        // errorBarValue) + System.getProperty("line.separator");
         // String csv = + yDataPoint + System.getProperty("line.separator");
         out.write(sb.toString());
       }

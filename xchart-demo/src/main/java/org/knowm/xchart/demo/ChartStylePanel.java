@@ -25,7 +25,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
-
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -38,7 +37,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.series.Series;
@@ -79,20 +77,29 @@ public class ChartStylePanel extends JPanel {
     Object additionalParameter;
 
     static HashMap<Class, TableCellEditor> editorMap;
-    static Class[] assignableClasses = { Theme.class, BasicStroke.class, Marker.class, TimeZone.class };
+    static Class[] assignableClasses = {
+      Theme.class, BasicStroke.class, Marker.class, TimeZone.class
+    };
+
     static {
       editorMap = new HashMap<Class, TableCellEditor>();
       {
-        JComboBox comboBox = new JComboBox(new Boolean[] { Boolean.TRUE, Boolean.FALSE });
+        JComboBox comboBox = new JComboBox(new Boolean[] {Boolean.TRUE, Boolean.FALSE});
         TableCellEditor cellEditor = new DefaultCellEditor(comboBox);
         editorMap.put(Boolean.class, cellEditor);
         editorMap.put(Boolean.TYPE, cellEditor);
       }
 
       {
-        Class[][] clsArr = { { int.class, Integer.class }, { byte.class, Byte.class }, { short.class, Short.class },
-            { long.class, Long.class }, { float.class, Float.class }, { double.class, Double.class, Number.class },
-            { String.class, String.class } };
+        Class[][] clsArr = {
+          {int.class, Integer.class},
+          {byte.class, Byte.class},
+          {short.class, Short.class},
+          {long.class, Long.class},
+          {float.class, Float.class},
+          {double.class, Double.class, Number.class},
+          {String.class, String.class}
+        };
 
         for (Class[] classes : clsArr) {
           GenericEditorWithClass editor = new GenericEditorWithClass(classes[1]);
@@ -103,32 +110,49 @@ public class ChartStylePanel extends JPanel {
       }
 
       {
-        JComboBox comboBox = new JComboBox(new Theme[] { new XChartTheme(), new GGPlot2Theme(), new MatlabTheme() });
+        JComboBox comboBox =
+            new JComboBox(new Theme[] {new XChartTheme(), new GGPlot2Theme(), new MatlabTheme()});
         editorMap.put(Theme.class, new DefaultCellEditor(comboBox));
       }
 
       {
-        LabelValue[] values = { new LabelValue("NONE", SeriesLines.NONE), new LabelValue("SOLID", SeriesLines.SOLID),
-            new LabelValue("DOT_DOT", SeriesLines.DOT_DOT), new LabelValue("DASH_DASH", SeriesLines.DASH_DASH),
-            new LabelValue("DASH_DOT", SeriesLines.DASH_DOT) };
+        LabelValue[] values = {
+          new LabelValue("NONE", SeriesLines.NONE),
+          new LabelValue("SOLID", SeriesLines.SOLID),
+          new LabelValue("DOT_DOT", SeriesLines.DOT_DOT),
+          new LabelValue("DASH_DASH", SeriesLines.DASH_DASH),
+          new LabelValue("DASH_DOT", SeriesLines.DASH_DOT)
+        };
         JComboBox comboBox = new JComboBox(values);
         editorMap.put(BasicStroke.class, new DefaultCellEditor(comboBox));
       }
       {
         LabelValue[] values = { //
-            // styler.plotGridLinesStroke java.awt.Stroke
-            new LabelValue("Base Grid Line",
-                new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] { 3.0f, 5.0f },
-                    0.0f)), //
-            new LabelValue("GGPlot2 Grid Line", new BasicStroke(1.0f)), //
-            new LabelValue("Matlab Grid Line",
-                new BasicStroke(.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, new float[] { 1f, 3.0f },
-                    0.0f)), //
+          // styler.plotGridLinesStroke java.awt.Stroke
+          new LabelValue(
+              "Base Grid Line",
+              new BasicStroke(
+                  1.0f,
+                  BasicStroke.CAP_BUTT,
+                  BasicStroke.JOIN_BEVEL,
+                  10.0f,
+                  new float[] {3.0f, 5.0f},
+                  0.0f)), //
+          new LabelValue("GGPlot2 Grid Line", new BasicStroke(1.0f)), //
+          new LabelValue(
+              "Matlab Grid Line",
+              new BasicStroke(
+                  .5f,
+                  BasicStroke.CAP_BUTT,
+                  BasicStroke.JOIN_ROUND,
+                  10.0f,
+                  new float[] {1f, 3.0f},
+                  0.0f)), //
 
-            // styler.axisTickMarksStroke java.awt.Stroke
-            new LabelValue("Base Tick Marks", new BasicStroke(1.0f)), //
-            new LabelValue("GGPlot2 Tick Marks", new BasicStroke(1.5f)), //
-            new LabelValue("Matlab Tick Marks", new BasicStroke(.5f)), //
+          // styler.axisTickMarksStroke java.awt.Stroke
+          new LabelValue("Base Tick Marks", new BasicStroke(1.0f)), //
+          new LabelValue("GGPlot2 Tick Marks", new BasicStroke(1.5f)), //
+          new LabelValue("Matlab Tick Marks", new BasicStroke(.5f)), //
         };
         JComboBox comboBox = new JComboBox(values);
         editorMap.put(Stroke.class, new DefaultCellEditor(comboBox));
@@ -141,8 +165,17 @@ public class ChartStylePanel extends JPanel {
       }
 
       {
-        Locale[] values = new Locale[] { Locale.ENGLISH, Locale.US, Locale.UK, Locale.FRANCE, Locale.FRANCE,
-            Locale.ITALIAN, Locale.GERMAN, new Locale("tr", "tr") };
+        Locale[] values =
+            new Locale[] {
+              Locale.ENGLISH,
+              Locale.US,
+              Locale.UK,
+              Locale.FRANCE,
+              Locale.FRANCE,
+              Locale.ITALIAN,
+              Locale.GERMAN,
+              new Locale("tr", "tr")
+            };
         JComboBox comboBox = new JComboBox(values);
         editorMap.put(Locale.class, new DefaultCellEditor(comboBox));
       }
@@ -156,14 +189,19 @@ public class ChartStylePanel extends JPanel {
         JComboBox comboBox = new JComboBox(values);
         editorMap.put(TimeZone.class, new DefaultCellEditor(comboBox));
       }
-
     }
 
-    public EditableProperty(ChartStylePanel csp, String name, Object obj, Method readMethod, Method writeMethod) {
+    public EditableProperty(
+        ChartStylePanel csp, String name, Object obj, Method readMethod, Method writeMethod) {
       this(csp, name, obj, readMethod, writeMethod, null);
     }
 
-    public EditableProperty(ChartStylePanel csp, String name, Object obj, Method readMethod, Method writeMethod,
+    public EditableProperty(
+        ChartStylePanel csp,
+        String name,
+        Object obj,
+        Method readMethod,
+        Method writeMethod,
         Object additionalParameter) {
 
       this.csp = csp;
@@ -205,7 +243,6 @@ public class ChartStylePanel extends JPanel {
           return;
         }
 
-
         System.out.println("Warning no editor found for property '" + name + "' with class " + cls);
 
       } catch (Exception e) {
@@ -238,8 +275,17 @@ public class ChartStylePanel extends JPanel {
       } catch (Exception e) {
         Class<?>[] parameterTypes = writeMethod.getParameterTypes();
         if (aValue.getClass() != parameterTypes[0]) {
-          System.out.println(name + " " + writeMethod.getName() + " requires " + parameterTypes[0] + " but got "
-              + aValue + " (" + (aValue == null ? null : aValue.getClass()) + ")");
+          System.out.println(
+              name
+                  + " "
+                  + writeMethod.getName()
+                  + " requires "
+                  + parameterTypes[0]
+                  + " but got "
+                  + aValue
+                  + " ("
+                  + (aValue == null ? null : aValue.getClass())
+                  + ")");
         }
         e.printStackTrace();
       }
@@ -276,7 +322,6 @@ public class ChartStylePanel extends JPanel {
       }
       return readMethod.getReturnType();
     }
-
   }
 
   public static class PropertyEditorAdapter extends AbstractCellEditor implements TableCellEditor {
@@ -297,7 +342,8 @@ public class ChartStylePanel extends JPanel {
     }
 
     @Override
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+    public Component getTableCellEditorComponent(
+        JTable table, Object value, boolean isSelected, int row, int column) {
 
       editor.setValue(value);
       return editor.getCustomEditor();
@@ -306,7 +352,7 @@ public class ChartStylePanel extends JPanel {
 
   static class GenericEditorWithClass extends DefaultCellEditor {
 
-    Class[] argTypes = new Class[] { String.class };
+    Class[] argTypes = new Class[] {String.class};
     java.lang.reflect.Constructor constructor;
     Object value;
 
@@ -337,7 +383,7 @@ public class ChartStylePanel extends JPanel {
           return super.stopCellEditing();
         }
 
-        value = constructor.newInstance(new Object[] { s });
+        value = constructor.newInstance(new Object[] {s});
       } catch (Exception e) {
         ((JComponent) getComponent()).setBorder(new LineBorder(Color.red));
         return false;
@@ -345,7 +391,8 @@ public class ChartStylePanel extends JPanel {
       return super.stopCellEditing();
     }
 
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+    public Component getTableCellEditorComponent(
+        JTable table, Object value, boolean isSelected, int row, int column) {
 
       this.value = null;
       ((JComponent) getComponent()).setBorder(new LineBorder(Color.black));
@@ -384,13 +431,13 @@ public class ChartStylePanel extends JPanel {
     public Class<?> getColumnClass(int columnIndex) {
 
       switch (columnIndex) {
-      case 0:
-        return String.class;
-      case 1:
-        return Class.class;
+        case 0:
+          return String.class;
+        case 1:
+          return Class.class;
 
-      default:
-        return Object.class;
+        default:
+          return Object.class;
       }
     }
 
@@ -404,14 +451,14 @@ public class ChartStylePanel extends JPanel {
 
       EditableProperty prop = properties.get(row);
       switch (column) {
-      case 0:
-        return prop.name;
-      case 1:
-        return prop.getValueClass().getName();
-      case 2:
-        return prop.getValue();
-      default:
-        return null;
+        case 0:
+          return prop.name;
+        case 1:
+          return prop.getValueClass().getName();
+        case 2:
+          return prop.getValue();
+        default:
+          return null;
       }
     }
 
@@ -433,7 +480,6 @@ public class ChartStylePanel extends JPanel {
 
       return rowCount;
     }
-
   }
 
   public static class EditorTable extends JTable {
@@ -501,12 +547,31 @@ public class ChartStylePanel extends JPanel {
     chartPanel.repaint();
   }
 
-  static HashSet<String> skipSet = new HashSet<String>(Arrays.asList("class",
-      // chart
-      "styler", "toolTips", "height", "width", "seriesMap", "YAxisGroupTitle",
-      // series
-      "XMax", "XMin", "YMax", "YMin", "extraValues", "XData", "YData", "xAxisDataType", "yAxisDataType",
-      "legendRenderType", "name", "YAxisAlignment", "YAxisGroupPosition"));
+  static HashSet<String> skipSet =
+      new HashSet<String>(
+          Arrays.asList(
+              "class",
+              // chart
+              "styler",
+              "toolTips",
+              "height",
+              "width",
+              "seriesMap",
+              "YAxisGroupTitle",
+              // series
+              "XMax",
+              "XMin",
+              "YMax",
+              "YMin",
+              "extraValues",
+              "XData",
+              "YData",
+              "xAxisDataType",
+              "yAxisDataType",
+              "legendRenderType",
+              "name",
+              "YAxisAlignment",
+              "YAxisGroupPosition"));
 
   public static ArrayList<EditableProperty> getProperties(ChartStylePanel csp, Chart chart) {
 
@@ -514,7 +579,8 @@ public class ChartStylePanel extends JPanel {
       return new ArrayList<EditableProperty>();
     }
     ArrayList<EditableProperty> list = getObjectProperties(csp, chart, "chart.", skipSet);
-    ArrayList<EditableProperty> list2 = getObjectProperties(csp, chart.getStyler(), "styler.", skipSet);
+    ArrayList<EditableProperty> list2 =
+        getObjectProperties(csp, chart.getStyler(), "styler.", skipSet);
     list.addAll(list2);
 
     Map<String, Series> seriesMap = chart.getSeriesMap();
@@ -530,16 +596,20 @@ public class ChartStylePanel extends JPanel {
     }
 
     try {
-      MethodDescriptor[] methodDescriptors = Introspector.getBeanInfo(chart.getClass()).getMethodDescriptors();
+      MethodDescriptor[] methodDescriptors =
+          Introspector.getBeanInfo(chart.getClass()).getMethodDescriptors();
       HashMap<String, Method> chartMethodMap = new HashMap<String, Method>();
       for (MethodDescriptor methodDescriptor : methodDescriptors) {
-        chartMethodMap.put(methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
+        chartMethodMap.put(
+            methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
       }
 
-      methodDescriptors = Introspector.getBeanInfo(chart.getStyler().getClass()).getMethodDescriptors();
+      methodDescriptors =
+          Introspector.getBeanInfo(chart.getStyler().getClass()).getMethodDescriptors();
       HashMap<String, Method> stylerMethodMap = new HashMap<String, Method>();
       for (MethodDescriptor methodDescriptor : methodDescriptors) {
-        stylerMethodMap.put(methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
+        stylerMethodMap.put(
+            methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
       }
 
       // Skipping property (no read method): styler.YAxisAlignment null
@@ -547,14 +617,25 @@ public class ChartStylePanel extends JPanel {
       // chart.getStyler().setYAxisGroupPosition(yAxisGroup)
 
       for (Integer i : seriesIndSet) {
-        EditableProperty styleEditor = new EditableProperty(csp, "chart.YAxisGroupTitle[" + i + "]", chart,
-            chartMethodMap.get("getyaxisgrouptitle"), chartMethodMap.get("setyaxisgrouptitle"), i);
+        EditableProperty styleEditor =
+            new EditableProperty(
+                csp,
+                "chart.YAxisGroupTitle[" + i + "]",
+                chart,
+                chartMethodMap.get("getyaxisgrouptitle"),
+                chartMethodMap.get("setyaxisgrouptitle"),
+                i);
         list.add(styleEditor);
         Method readMethod = stylerMethodMap.get("getyaxisgroupposition");
-        styleEditor = new EditableProperty(csp, "chart.YAxisGroupPosition[" + i + "]", chart.getStyler(), readMethod,
-            stylerMethodMap.get("setyaxisgroupposition"), i);
+        styleEditor =
+            new EditableProperty(
+                csp,
+                "chart.YAxisGroupPosition[" + i + "]",
+                chart.getStyler(),
+                readMethod,
+                stylerMethodMap.get("setyaxisgroupposition"),
+                i);
         list.add(styleEditor);
-
       }
     } catch (IntrospectionException e1) {
       e1.printStackTrace();
@@ -563,7 +644,8 @@ public class ChartStylePanel extends JPanel {
     return list;
   }
 
-  public static Method getMethod(PropertyDescriptor pd, boolean read, HashMap<String, Method> methodMap) {
+  public static Method getMethod(
+      PropertyDescriptor pd, boolean read, HashMap<String, Method> methodMap) {
 
     Method method = read ? pd.getReadMethod() : pd.getWriteMethod();
 
@@ -572,7 +654,7 @@ public class ChartStylePanel extends JPanel {
     }
 
     String lowerCaseName = pd.getName().toLowerCase(Locale.ENGLISH);
-    String[] prefixes = read ? new String[] { "get", "is" } : new String[] { "set" };
+    String[] prefixes = read ? new String[] {"get", "is"} : new String[] {"set"};
 
     for (String pre : prefixes) {
       String name = pre + lowerCaseName;
@@ -588,25 +670,28 @@ public class ChartStylePanel extends JPanel {
     return method;
   }
 
-  public static ArrayList<EditableProperty> getObjectProperties(ChartStylePanel csp, Object obj, String prefix,
-      Set<String> skipSet) {
+  public static ArrayList<EditableProperty> getObjectProperties(
+      ChartStylePanel csp, Object obj, String prefix, Set<String> skipSet) {
 
     ArrayList<EditableProperty> list = new ArrayList<EditableProperty>();
     try {
       BeanInfo info = Introspector.getBeanInfo(obj.getClass());
       PropertyDescriptor[] propertyDescriptors = info.getPropertyDescriptors();
 
-      Arrays.sort(propertyDescriptors, new Comparator<PropertyDescriptor>() {
-        public int compare(PropertyDescriptor a, PropertyDescriptor b) {
+      Arrays.sort(
+          propertyDescriptors,
+          new Comparator<PropertyDescriptor>() {
+            public int compare(PropertyDescriptor a, PropertyDescriptor b) {
 
-          return a.getName().compareToIgnoreCase(b.getName());
-        }
-      });
+              return a.getName().compareToIgnoreCase(b.getName());
+            }
+          });
 
       MethodDescriptor[] methodDescriptors = info.getMethodDescriptors();
       HashMap<String, Method> methodMap = new HashMap<String, Method>();
       for (MethodDescriptor methodDescriptor : methodDescriptors) {
-        methodMap.put(methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
+        methodMap.put(
+            methodDescriptor.getName().toLowerCase(Locale.ENGLISH), methodDescriptor.getMethod());
       }
       for (PropertyDescriptor pd : propertyDescriptors) {
         try {
@@ -620,15 +705,23 @@ public class ChartStylePanel extends JPanel {
 
             // System.out.println("Skipping property (no read method): " +
             // pd.getName() + " " + pd.getPropertyType());
-            System.out
-                .println("Skipping property (no read method): " + prefix + pd.getName() + " " + pd.getPropertyType());
+            System.out.println(
+                "Skipping property (no read method): "
+                    + prefix
+                    + pd.getName()
+                    + " "
+                    + pd.getPropertyType());
             continue;
           }
           Method writeMethod = getMethod(pd, false, methodMap);
           if (writeMethod == null) {
 
-            System.out
-                .println("Skipping property (no write method): " + prefix + pd.getName() + " " + pd.getPropertyType());
+            System.out.println(
+                "Skipping property (no write method): "
+                    + prefix
+                    + pd.getName()
+                    + " "
+                    + pd.getPropertyType());
             // System.out.println("Skipping property (no write method): " +
             // pd.getName() + " " + pd.getPropertyType());
             continue;
@@ -641,14 +734,15 @@ public class ChartStylePanel extends JPanel {
             Method wm = null;
             for (int i = 0; i < size; i++) {
 
-              EditableProperty styleEditor = new EditableProperty(csp, prefix + pd.getName() + "[" + i + "]", arr, rm,
-                  wm, i);
+              EditableProperty styleEditor =
+                  new EditableProperty(csp, prefix + pd.getName() + "[" + i + "]", arr, rm, wm, i);
               list.add(styleEditor);
             }
             continue;
           }
 
-          EditableProperty styleEditor = new EditableProperty(csp, prefix + pd.getName(), obj, readMethod, writeMethod);
+          EditableProperty styleEditor =
+              new EditableProperty(csp, prefix + pd.getName(), obj, readMethod, writeMethod);
           list.add(styleEditor);
         } catch (Exception e) {
           e.printStackTrace();

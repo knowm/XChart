@@ -2,13 +2,10 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;
@@ -30,8 +27,8 @@ public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-//     g.setColor(Color.red);
-//     g.draw(bounds);
+    //     g.setColor(Color.red);
+    //     g.draw(bounds);
 
     plotSurface.paint(g);
     if (chart.getSeriesMap().isEmpty()) {

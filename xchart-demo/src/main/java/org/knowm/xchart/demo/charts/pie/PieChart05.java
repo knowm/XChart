@@ -10,12 +10,13 @@ import org.knowm.xchart.style.colors.BaseSeriesColors;
 
 /**
  * Pie Chart with Donut Style and sum.
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Donut Chart
- * <li>PieChartBuilder
- * <li>XChart Theme
+ *   <li>Donut Chart
+ *   <li>PieChartBuilder
+ *   <li>XChart Theme
  */
 public class PieChart05 implements ExampleChart<PieChart> {
 
@@ -30,7 +31,12 @@ public class PieChart05 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600).title("Pie Chart with Donut Style and Sum").build();
+    PieChart chart =
+        new PieChartBuilder()
+            .width(800)
+            .height(600)
+            .title("Pie Chart with Donut Style and Sum")
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);

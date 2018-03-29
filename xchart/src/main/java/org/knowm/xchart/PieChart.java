@@ -2,7 +2,6 @@ package org.knowm.xchart;
 
 import java.awt.Graphics2D;
 import java.util.Map;
-
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;
@@ -13,9 +12,7 @@ import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class PieChart extends Chart<PieStyler, PieSeries> {
 
   /**
@@ -79,7 +76,10 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     PieSeries series = new PieSeries(seriesName, value);
 
     if (seriesMap.keySet().contains(seriesName)) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
     }
     seriesMap.put(seriesName, series);
 
@@ -113,7 +113,8 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
 
     // set the series types if they are not set. Legend and Plot need it.
     for (PieSeries seriesPie : getSeriesMap().values()) {
-      PieSeries.PieSeriesRenderStyle seriesType = seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
+      PieSeries.PieSeriesRenderStyle seriesType =
+          seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
         seriesPie.setChartPieSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
@@ -127,16 +128,18 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     legend.paint(g);
   }
 
-  /**
-   * set the series color based on theme
-   */
+  /** set the series color based on theme */
   private void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
-        .getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+        new SeriesColorMarkerLineStyleCycler(
+            getStyler().getSeriesColors(),
+            getStyler().getSeriesMarkers(),
+            getStyler().getSeriesLines());
     for (Series series : getSeriesMap().values()) {
 
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 
       if (series.getFillColor() == null) { // wasn't set manually
         series.setFillColor(seriesColorMarkerLineStyle.getColor());

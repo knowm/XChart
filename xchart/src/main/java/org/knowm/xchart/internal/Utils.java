@@ -4,17 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class Utils {
 
-  /**
-   * Private Constructor
-   */
-  private Utils() {
-
-  }
+  /** Private Constructor */
+  private Utils() {}
 
   /**
    * Gets the offset for the beginning of the tick marks
@@ -33,8 +27,7 @@ public class Utils {
 
     if (exponent > 0) {
       return Math.pow(base, exponent);
-    }
-    else {
+    } else {
       return 1.0 / Math.pow(base, -1 * exponent);
     }
   }
@@ -113,8 +106,7 @@ public class Utils {
 
       if (data.get(i) == null) {
         doubles[i] = Double.NaN;
-      }
-      else {
+      } else {
         doubles[i] = ((Number) data.get(i)).doubleValue();
       }
     }

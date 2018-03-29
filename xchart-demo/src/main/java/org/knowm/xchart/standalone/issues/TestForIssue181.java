@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -19,11 +18,8 @@ public class TestForIssue181 {
   public static void main(String[] args) {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder()
-        .width(500)
-        .height(350)
-        .theme(Styler.ChartTheme.Matlab)
-        .build();
+    XYChart chart =
+        new XYChartBuilder().width(500).height(350).theme(Styler.ChartTheme.Matlab).build();
 
     // Series
     List<Double> xData = new LinkedList<Double>();
@@ -37,17 +33,19 @@ public class TestForIssue181 {
     }
     chart.addSeries("Gaussian Blob", xData, yData);
 
-    XYSeries vertical = chart.addSeries("vertical", new double[]{5, 5}, new double[]{0, 10});
+    XYSeries vertical = chart.addSeries("vertical", new double[] {5, 5}, new double[] {0, 10});
     vertical.setShowInLegend(false);
     vertical.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
     vertical.setLineStyle(SeriesLines.SOLID);
-    XYSeries horizontal = chart.addSeries("horizontal", new double[]{0, 10}, new double[]{5, 5});
+    XYSeries horizontal = chart.addSeries("horizontal", new double[] {0, 10}, new double[] {5, 5});
     horizontal.setShowInLegend(false);
     horizontal.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
     horizontal.setLineStyle(SeriesLines.SOLID);
 
     // Customize Chart
-    Marker[] markers = {SeriesMarkers.SQUARE, SeriesMarkers.SQUARE, SeriesMarkers.DIAMOND, SeriesMarkers.DIAMOND};
+    Marker[] markers = {
+      SeriesMarkers.SQUARE, SeriesMarkers.SQUARE, SeriesMarkers.DIAMOND, SeriesMarkers.DIAMOND
+    };
     Color[] colors = {Color.GRAY, Color.BLUE, Color.RED, Color.RED};
 
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);

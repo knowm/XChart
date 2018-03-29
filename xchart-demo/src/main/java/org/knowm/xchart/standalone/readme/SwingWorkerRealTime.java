@@ -2,16 +2,12 @@ package org.knowm.xchart.standalone.readme;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.SwingWorker;
-
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
-/**
- * Creates a real-time chart using SwingWorker
- */
+/** Creates a real-time chart using SwingWorker */
 public class SwingWorkerRealTime {
 
   MySwingWorker mySwingWorker;
@@ -27,7 +23,14 @@ public class SwingWorkerRealTime {
   private void go() {
 
     // Create Chart
-    chart = QuickChart.getChart("SwingWorker XChart Real-time Demo", "Time", "Value", "randomWalk", new double[]{0}, new double[]{0});
+    chart =
+        QuickChart.getChart(
+            "SwingWorker XChart Real-time Demo",
+            "Time",
+            "Value",
+            "randomWalk",
+            new double[] {0},
+            new double[] {0});
     chart.getStyler().setLegendVisible(false);
     chart.getStyler().setXAxisTicksVisible(false);
 

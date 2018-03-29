@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -34,7 +33,7 @@ public class TestForIssue106 {
       charts.add(chart);
     }
     {
-      //current default
+      // current default
       XYChart chart = alc.getChart();
       chart.getStyler().setToolTipsEnabled(true);
       chart.getStyler().setToolTipBackgroundColor(Color.RED);

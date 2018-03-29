@@ -16,12 +16,8 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
 
   public ChartTheme chartTheme = ChartTheme.XChart;
 
-  /**
-   * Constructor
-   */
-  protected ChartBuilder() {
-
-  }
+  /** Constructor */
+  protected ChartBuilder() {}
 
   public T width(int width) {
 

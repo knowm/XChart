@@ -3,7 +3,6 @@ package org.knowm.xchart.demo.charts.scatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -15,15 +14,16 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Gaussian Blob
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>ChartType.Scatter
- * <li>Series data as a Set
- * <li>Setting marker size
- * <li>Formatting of negative numbers with large magnitude but small differences
- * <li>YAxis position on Right
- * <li>Cross type series marker
+ *   <li>ChartType.Scatter
+ *   <li>Series data as a Set
+ *   <li>Setting marker size
+ *   <li>Formatting of negative numbers with large magnitude but small differences
+ *   <li>YAxis position on Right
+ *   <li>Cross type series marker
  */
 public class ScatterChart01 implements ExampleChart<XYChart> {
 

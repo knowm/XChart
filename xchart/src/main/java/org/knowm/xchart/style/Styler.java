@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.HashMap;
-
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -15,18 +14,25 @@ import org.knowm.xchart.style.markers.Marker;
 public abstract class Styler {
 
   public enum LegendPosition {
-
-    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW, InsideN, InsideS, OutsideS
+    OutsideE,
+    InsideNW,
+    InsideNE,
+    InsideSE,
+    InsideSW,
+    InsideN,
+    InsideS,
+    OutsideS
   }
 
   public enum LegendLayout {
-
-    Vertical, Horizontal
+    Vertical,
+    Horizontal
   }
 
   public enum ChartTheme {
-
-    XChart, GGPlot2, Matlab;
+    XChart,
+    GGPlot2,
+    Matlab;
 
     public Theme newInstance(ChartTheme chartTheme) {
 
@@ -45,22 +51,23 @@ public abstract class Styler {
   }
 
   public enum TextAlignment {
-
-    Left, Centre, Right
+    Left,
+    Centre,
+    Right
   }
 
   public enum ToolTipType {
-    xLabels, yLabels, xAndYLabels
+    xLabels,
+    yLabels,
+    xAndYLabels
   }
 
   public enum YAxisPosition {
-
-    Left, Right
+    Left,
+    Right
   }
 
-  /**
-   * the default Theme
-   */
+  /** the default Theme */
   Theme theme = new XChartTheme();
 
   // Chart Style ///////////////////////////////
@@ -552,7 +559,8 @@ public abstract class Styler {
   }
 
   /**
-   * Sets the content size of the plot inside the plot area of the chart. To fill the area 100%, use a value of 1.0.
+   * Sets the content size of the plot inside the plot area of the chart. To fill the area 100%, use
+   * a value of 1.0.
    *
    * @param plotContentSize - Valid range is between 0 and 1.
    */
@@ -634,7 +642,7 @@ public abstract class Styler {
     return this;
   }
 
-// Annotations ///////////////////////////////
+  // Annotations ///////////////////////////////
 
   public Boolean hasAnnotations() {
 

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -18,12 +17,13 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Millisecond Scale
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Millisecond Scale
- * <li>LegendPosition.OutsideS
- * <li>Two YAxis Groups - both on left
+ *   <li>Millisecond Scale
+ *   <li>LegendPosition.OutsideS
+ *   <li>Two YAxis Groups - both on left
  */
 public class DateChart01 implements ExampleChart<XYChart> {
 
@@ -74,5 +74,4 @@ public class DateChart01 implements ExampleChart<XYChart> {
 
     return chart;
   }
-
 }

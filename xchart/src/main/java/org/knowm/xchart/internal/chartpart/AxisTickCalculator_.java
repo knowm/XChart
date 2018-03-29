@@ -8,23 +8,16 @@ import java.awt.geom.Rectangle2D;
 import java.text.Format;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public abstract class AxisTickCalculator_ {
 
-  /**
-   * the List of tick label position in pixels
-   */
+  /** the List of tick label position in pixels */
   final List<Double> tickLocations = new LinkedList<Double>();
 
-  /**
-   * the List of tick label values
-   */
+  /** the List of tick label values */
   final List<String> tickLabels = new LinkedList<String>();
 
   final Direction axisDirection;
@@ -48,7 +41,12 @@ public abstract class AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  AxisTickCalculator_(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
+  AxisTickCalculator_(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler) {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
@@ -81,7 +79,8 @@ public abstract class AxisTickCalculator_ {
   }
 
   /**
-   * Given the generated tickLabels, will they fit side-by-side without overlapping each other and looking bad? Sometimes the given tickSpacingHint is simply too small.
+   * Given the generated tickLabels, will they fit side-by-side without overlapping each other and
+   * looking bad? Sometimes the given tickSpacingHint is simply too small.
    *
    * @param tickLabels
    * @param tickSpacingHint
@@ -89,7 +88,8 @@ public abstract class AxisTickCalculator_ {
    */
   boolean willLabelsFitInTickSpaceHint(List<String> tickLabels, int tickSpacingHint) {
 
-    // Assume that for Y-Axis the ticks will all fit based on their tickSpace hint because the text is usually horizontal and "short". This more applies to the X-Axis.
+    // Assume that for Y-Axis the ticks will all fit based on their tickSpace hint because the text
+    // is usually horizontal and "short". This more applies to the X-Axis.
     if (this.axisDirection == Direction.Y) {
       return true;
     }
@@ -103,8 +103,14 @@ public abstract class AxisTickCalculator_ {
     }
     // System.out.println("longestLabel: " + sampleLabel);
 
-    TextLayout textLayout = new TextLayout(sampleLabel, styler.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-    AffineTransform rot = styler.getXAxisLabelRotation() == 0 ? null : AffineTransform.getRotateInstance(-1 * Math.toRadians(styler.getXAxisLabelRotation()));
+    TextLayout textLayout =
+        new TextLayout(
+            sampleLabel, styler.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
+    AffineTransform rot =
+        styler.getXAxisLabelRotation() == 0
+            ? null
+            : AffineTransform.getRotateInstance(
+                -1 * Math.toRadians(styler.getXAxisLabelRotation()));
     Shape shape = textLayout.getOutline(rot);
     Rectangle2D rectangle = shape.getBounds();
     double largestLabelWidth = rectangle.getWidth();

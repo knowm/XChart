@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -13,11 +12,12 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
  * Real-time XY Chart
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>real-time chart updates with SwingWrapper
- * <li>Matlab Theme
+ *   <li>real-time chart updates with SwingWrapper
+ *   <li>Matlab Theme
  */
 public class RealtimeChart01 implements ExampleChart<XYChart> {
 
@@ -39,23 +39,25 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
     swingWrapper.displayChart();
 
     // Simulate a data feed
-    TimerTask chartUpdaterTask = new TimerTask() {
-
-      @Override
-      public void run() {
-
-        updateData();
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    TimerTask chartUpdaterTask =
+        new TimerTask() {
 
           @Override
           public void run() {
 
-            swingWrapper.repaintChart();
+            updateData();
+
+            javax.swing.SwingUtilities.invokeLater(
+                new Runnable() {
+
+                  @Override
+                  public void run() {
+
+                    swingWrapper.repaintChart();
+                  }
+                });
           }
-        });
-      }
-    };
+        };
 
     Timer timer = new Timer();
     timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
@@ -67,7 +69,13 @@ public class RealtimeChart01 implements ExampleChart<XYChart> {
     yData = getRandomData(5);
 
     // Create Chart
-    xyChart = new XYChartBuilder().width(500).height(400).theme(ChartTheme.Matlab).title("Real-time XY Chart").build();
+    xyChart =
+        new XYChartBuilder()
+            .width(500)
+            .height(400)
+            .theme(ChartTheme.Matlab)
+            .title("Real-time XY Chart")
+            .build();
     xyChart.addSeries(SERIES_NAME, null, yData);
 
     return xyChart;

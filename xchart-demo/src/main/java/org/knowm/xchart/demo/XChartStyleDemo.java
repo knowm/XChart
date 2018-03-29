@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 import javax.swing.event.TreeSelectionEvent;
-
 import org.knowm.xchart.XChartPanel;
 
 public class XChartStyleDemo extends XChartDemo {
@@ -15,11 +14,11 @@ public class XChartStyleDemo extends XChartDemo {
   public XChartStyleDemo() {
     styleSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     styleSplitPane.setLeftComponent(this);
-    
+
     stylePanel = new ChartStylePanel(chartPanel);
     styleSplitPane.setRightComponent(stylePanel);
   }
-  
+
   @Override
   public void valueChanged(TreeSelectionEvent e) {
     XChartPanel oldChartPanel = chartPanel;
@@ -28,9 +27,10 @@ public class XChartStyleDemo extends XChartDemo {
       stylePanel.changeChart(chartPanel);
     }
   }
-  
+
   /**
-   * Create the GUI and show it. For thread safety, this method should be invoked from the event dispatch thread.
+   * Create the GUI and show it. For thread safety, this method should be invoked from the event
+   * dispatch thread.
    */
   private static void createAndShowGUI() {
 
@@ -52,13 +52,14 @@ public class XChartStyleDemo extends XChartDemo {
 
     // Schedule a job for the event dispatch thread:
     // creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    javax.swing.SwingUtilities.invokeLater(
+        new Runnable() {
 
-      @Override
-      public void run() {
+          @Override
+          public void run() {
 
-        createAndShowGUI();
-      }
-    });
+            createAndShowGUI();
+          }
+        });
   }
 }

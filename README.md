@@ -342,12 +342,6 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.1" exclude("de.erich
     mvn clean package  
     mvn javadoc:aggregate  
 
-#### maven-license-plugin
-
-    mvn license:check
-    mvn license:format
-    mvn license:remove
-
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/

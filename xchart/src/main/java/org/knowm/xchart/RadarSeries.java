@@ -2,47 +2,34 @@ package org.knowm.xchart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.markers.Marker;
 
-/**
- * A Series containing Radar data to be plotted on a Chart
- *
- */
+/** A Series containing Radar data to be plotted on a Chart */
 public class RadarSeries extends Series {
 
-  /**
-   * Line Style
-   */
+  /** Line Style */
   private BasicStroke stroke;
 
-  /**
-   * Line Color
-   */
+  /** Line Color */
   private Color lineColor;
 
-  /**
-   * Line Width
-   */
+  /** Line Width */
   private float lineWidth;
 
-  /**
-   * Marker
-   */
+  /** Marker */
   private Marker marker;
 
-  /**
-   * Marker Color
-   */
+  /** Marker Color */
   private Color markerColor;
 
   private double[] values;
   private String[] tooltipOverrides;
 
   /**
-   * @param tooltipOverrides Adds custom tooltipOverrides for series. If tooltipOverrides is null, they are automatically generated.
+   * @param tooltipOverrides Adds custom tooltipOverrides for series. If tooltipOverrides is null,
+   *     they are automatically generated.
    */
   public RadarSeries(String name, double[] values, String[] tooltipOverrides) {
 
@@ -75,7 +62,14 @@ public class RadarSeries extends Series {
 
     stroke = basicStroke;
     if (this.lineWidth > 0.0f) {
-      stroke = new BasicStroke(lineWidth, this.stroke.getEndCap(), this.stroke.getLineJoin(), this.stroke.getMiterLimit(), this.stroke.getDashArray(), this.stroke.getDashPhase());
+      stroke =
+          new BasicStroke(
+              lineWidth,
+              this.stroke.getEndCap(),
+              this.stroke.getLineJoin(),
+              this.stroke.getMiterLimit(),
+              this.stroke.getDashArray(),
+              this.stroke.getDashPhase());
     }
     return this;
   }

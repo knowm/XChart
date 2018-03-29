@@ -15,39 +15,25 @@ public abstract class AxesChartSeries extends Series {
   final DataType xAxisDataType;
   final DataType yAxisType;
 
-  /**
-   * the minimum value of axis range
-   */
+  /** the minimum value of axis range */
   protected double xMin;
 
-  /**
-   * the maximum value of axis range
-   */
+  /** the maximum value of axis range */
   protected double xMax;
 
-  /**
-   * the minimum value of axis range
-   */
+  /** the minimum value of axis range */
   protected double yMin;
 
-  /**
-   * the maximum value of axis range
-   */
+  /** the maximum value of axis range */
   protected double yMax;
 
-  /**
-   * Line Style
-   */
+  /** Line Style */
   private BasicStroke stroke;
 
-  /**
-   * Line Color
-   */
+  /** Line Color */
   private Color lineColor;
 
-  /**
-   * Line Width
-   */
+  /** Line Width */
   private float lineWidth = -1.0f;
 
   /**
@@ -72,7 +58,14 @@ public abstract class AxesChartSeries extends Series {
 
     stroke = basicStroke;
     if (this.lineWidth > 0.0f) {
-      stroke = new BasicStroke(lineWidth, this.stroke.getEndCap(), this.stroke.getLineJoin(), this.stroke.getMiterLimit(), this.stroke.getDashArray(), this.stroke.getDashPhase());
+      stroke =
+          new BasicStroke(
+              lineWidth,
+              this.stroke.getEndCap(),
+              this.stroke.getLineJoin(),
+              this.stroke.getMiterLimit(),
+              this.stroke.getDashArray(),
+              this.stroke.getDashPhase());
     }
     return this;
   }

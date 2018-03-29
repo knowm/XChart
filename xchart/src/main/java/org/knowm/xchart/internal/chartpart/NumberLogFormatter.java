@@ -5,21 +5,16 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
-
 import org.knowm.xchart.style.AxesChartStyler;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 class NumberLogFormatter extends Format {
 
   private final AxesChartStyler styler;
   private final Axis.Direction axisDirection;
   private final NumberFormat numberFormat;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public NumberLogFormatter(AxesChartStyler styler, Axis.Direction axisDirection) {
 
     this.styler = styler;
@@ -61,5 +56,4 @@ class NumberLogFormatter extends Format {
   public Object parseObject(String source, ParsePosition pos) {
     return null;
   }
-
 }

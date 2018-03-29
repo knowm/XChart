@@ -1,7 +1,6 @@
 package org.knowm.xchart.demo.charts.bar;
 
 import java.util.Arrays;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.SwingWrapper;
@@ -10,16 +9,17 @@ import org.knowm.xchart.style.Styler;
 
 /**
  * Missing Point in Series
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Number categories
- * <li>Positive values
- * <li>Multiple series
- * <li>Missing point in series
- * <li>Manually setting y-axis min and max values
- * <li>Bar Chart Annotations
- * <li>Horizontal Legend OutsideS
+ *   <li>Number categories
+ *   <li>Positive values
+ *   <li>Multiple series
+ *   <li>Missing point in series
+ *   <li>Manually setting y-axis min and max values
+ *   <li>Bar Chart Annotations
+ *   <li>Horizontal Legend OutsideS
  */
 public class BarChart04 implements ExampleChart<CategoryChart> {
 
@@ -34,7 +34,14 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
   public CategoryChart getChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
+    CategoryChart chart =
+        new CategoryChartBuilder()
+            .width(800)
+            .height(600)
+            .title("XFactor vs. Age")
+            .xAxisTitle("Age")
+            .yAxisTitle("XFactor")
+            .build();
 
     // Customize Chart
     chart.getStyler().setYAxisMin(5.0);

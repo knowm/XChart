@@ -2,7 +2,6 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -14,10 +13,11 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Sine wave with customized series style
- * <p>
- * * Demonstrates the following:
+ *
+ * <p>* Demonstrates the following:
+ *
  * <ul>
- * <li>Customizing the series style properties
+ *   <li>Customizing the series style properties
  */
 public class LineChart02 implements ExampleChart<XYChart> {
 

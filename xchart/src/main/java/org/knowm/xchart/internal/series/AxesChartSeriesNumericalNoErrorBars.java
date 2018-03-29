@@ -1,7 +1,8 @@
 package org.knowm.xchart.internal.series;
 
 /**
- * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number or Date(epochtime), hence a double[]
+ * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number
+ * or Date(epochtime), hence a double[]
  *
  * @author timmolter
  */
@@ -21,7 +22,8 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
    * @param yData
    * @param xAxisDataType
    */
-  public AxesChartSeriesNumericalNoErrorBars(String name, double[] xData, double[] yData, double[] extraValues, DataType xAxisDataType) {
+  public AxesChartSeriesNumericalNoErrorBars(
+      String name, double[] xData, double[] yData, double[] extraValues, DataType xAxisDataType) {
 
     super(name, xAxisDataType);
 
@@ -33,7 +35,8 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
   }
 
   /**
-   * This is an internal method which shouldn't be called from client code. Use XYChart.updateXYSeries or CategoryChart.updateXYSeries instead!
+   * This is an internal method which shouldn't be called from client code. Use
+   * XYChart.updateXYSeries or CategoryChart.updateXYSeries instead!
    *
    * @param newXData
    * @param newYData
@@ -80,10 +83,11 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
       }
     }
 
-    return new double[]{min, max};
+    return new double[] {min, max};
   }
 
-  @Override protected void calculateMinMax() {
+  @Override
+  protected void calculateMinMax() {
 
     // xData
     double[] xMinMax = findMinMax(xData);
@@ -128,7 +132,7 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
         max = d + eb;
       }
     }
-    return new double[]{min, max};
+    return new double[] {min, max};
   }
 
   public double[] getXData() {
@@ -145,5 +149,4 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
     return extraValues;
   }
-
 }

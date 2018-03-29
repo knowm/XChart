@@ -2,28 +2,21 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 
-/**
- * An axis tick
- */
+/** An axis tick */
 public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
   private final Chart<ST, S> chart;
   private Rectangle2D bounds;
   private final Direction direction;
 
-  /**
-   * the axisticklabels
-   */
+  /** the axisticklabels */
   private final AxisTickLabels<ST, S> axisTickLabels;
 
-  /**
-   * the axistickmarks
-   */
+  /** the axistickmarks */
   private final AxisTickMarks<ST, S> axisTickMarks;
 
   /**
@@ -55,17 +48,14 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      bounds = new Rectangle2D.Double(
-
-          axisTickLabels.getBounds().getX(),
-
-          axisTickLabels.getBounds().getY(),
-
-          axisTickLabels.getBounds().getWidth() + chart.getStyler().getAxisTickPadding() + axisTickMarks.getBounds().getWidth(),
-
-          axisTickMarks.getBounds().getHeight()
-
-      );
+      bounds =
+          new Rectangle2D.Double(
+              axisTickLabels.getBounds().getX(),
+              axisTickLabels.getBounds().getY(),
+              axisTickLabels.getBounds().getWidth()
+                  + chart.getStyler().getAxisTickPadding()
+                  + axisTickMarks.getBounds().getWidth(),
+              axisTickMarks.getBounds().getHeight());
 
       // g.setColor(Color.red);
       // g.draw(bounds);
@@ -75,17 +65,14 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
 
-      bounds = new Rectangle2D.Double(
-
-          axisTickMarks.getBounds().getX(),
-
-          axisTickMarks.getBounds().getY(),
-
-          axisTickLabels.getBounds().getWidth(),
-
-          axisTickMarks.getBounds().getHeight() + chart.getStyler().getAxisTickPadding() + axisTickLabels.getBounds().getHeight()
-
-      );
+      bounds =
+          new Rectangle2D.Double(
+              axisTickMarks.getBounds().getX(),
+              axisTickMarks.getBounds().getY(),
+              axisTickLabels.getBounds().getWidth(),
+              axisTickMarks.getBounds().getHeight()
+                  + chart.getStyler().getAxisTickPadding()
+                  + axisTickLabels.getBounds().getHeight());
 
       // g.setColor(Color.red);
       // g.draw(bounds);

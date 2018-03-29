@@ -1,21 +1,21 @@
 package org.knowm.xchart.demo.charts.ohlc;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import org.knowm.xchart.OHLCChart;
 import org.knowm.xchart.OHLCChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 /**
  * Demonstrates the following:
+ *
  * <ul>
- * <li>Candle render style green up, red down
- * <li>LegendPosition.OutsideS
- * <li>Two YAxis Groups - both on left
+ *   <li>Candle render style green up, red down
+ *   <li>LegendPosition.OutsideS
+ *   <li>Two YAxis Groups - both on left
  */
 public class OHLCChart02 implements ExampleChart<OHLCChart> {
 
@@ -48,5 +48,4 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
     chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
-
 }

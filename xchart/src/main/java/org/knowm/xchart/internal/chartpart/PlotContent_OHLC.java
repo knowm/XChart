@@ -1,20 +1,18 @@
 package org.knowm.xchart.internal.chartpart;
 
-import org.knowm.xchart.OHLCSeries;
-import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.lines.SeriesLines;
-
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
+import org.knowm.xchart.OHLCSeries;
+import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.lines.SeriesLines;
 
-/**
- * @author arthurmcgibbon
- */
-public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> extends PlotContent_<ST, S> {
+/** @author arthurmcgibbon */
+public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
+    extends PlotContent_<ST, S> {
 
   private final ST ohlcStyler;
 
@@ -29,7 +27,8 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
     ohlcStyler = chart.getStyler();
   }
 
-  @Override public void doPaint(Graphics2D g) {
+  @Override
+  public void doPaint(Graphics2D g) {
 
     // X-Axis
     double xTickSpace = ohlcStyler.getPlotContentSize() * getBounds().getWidth();
@@ -74,7 +73,8 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
       double[] lowData = series.getLowData();
       double[] closeData = series.getCloseData();
 
-      double candleHalfWidth = Math.max(3, xTickSpace / xData.length / 2 - ohlcStyler.getAxisTickPadding());
+      double candleHalfWidth =
+          Math.max(3, xTickSpace / xData.length / 2 - ohlcStyler.getAxisTickPadding());
       float lineWidth = Math.max(2, series.getLineStyle().getLineWidth());
 
       for (int i = 0; i < xData.length; i++) {
@@ -112,10 +112,14 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
         }
 
         double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
-        double openTransform = getBounds().getHeight() - (yTopMargin + (openY - yMin) / (yMax - yMin) * yTickSpace);
-        double highTransform = getBounds().getHeight() - (yTopMargin + (highY - yMin) / (yMax - yMin) * yTickSpace);
-        double lowTransform = getBounds().getHeight() - (yTopMargin + (lowY - yMin) / (yMax - yMin) * yTickSpace);
-        double closeTransform = getBounds().getHeight() - (yTopMargin + (closeY - yMin) / (yMax - yMin) * yTickSpace);
+        double openTransform =
+            getBounds().getHeight() - (yTopMargin + (openY - yMin) / (yMax - yMin) * yTickSpace);
+        double highTransform =
+            getBounds().getHeight() - (yTopMargin + (highY - yMin) / (yMax - yMin) * yTickSpace);
+        double lowTransform =
+            getBounds().getHeight() - (yTopMargin + (lowY - yMin) / (yMax - yMin) * yTickSpace);
+        double closeTransform =
+            getBounds().getHeight() - (yTopMargin + (closeY - yMin) / (yMax - yMin) * yTickSpace);
 
         // a check if all x data are the exact same values
         if (Math.abs(xMax - xMin) / 5 == 0.0) {
@@ -140,7 +144,10 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
         // paint line
         if (series.getLineStyle() != SeriesLines.NONE) {
 
-          if (xOffset != -Double.MAX_VALUE && openOffset != -Double.MAX_VALUE && highOffset != -Double.MAX_VALUE && lowOffset != -Double.MAX_VALUE
+          if (xOffset != -Double.MAX_VALUE
+              && openOffset != -Double.MAX_VALUE
+              && highOffset != -Double.MAX_VALUE
+              && lowOffset != -Double.MAX_VALUE
               && closeOffset != -Double.MAX_VALUE) {
             g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
@@ -160,7 +167,11 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
               } else {
                 g.setPaint(series.getDownColor());
               }
-              rect.setRect(xStart, Math.min(openOffset, closeOffset), xEnd - xStart, Math.abs(closeOffset - openOffset));
+              rect.setRect(
+                  xStart,
+                  Math.min(openOffset, closeOffset),
+                  xEnd - xStart,
+                  Math.abs(closeOffset - openOffset));
               g.fill(rect);
               // add data labels
               if (toolTipsEnabled) {
@@ -185,9 +196,19 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries> 
 
         // add data labels
         if (toolTipsEnabled) {
-          chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth * 2, chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat().format(openOrig) + ':' + chart.getYAxisFormat().format(highOrig) + ':' + chart.getYAxisFormat().format(lowOrig)
-                  + ':' + chart.getYAxisFormat().format(closeOrig));
+          chart.toolTips.addData(
+              toolTipArea,
+              xOffset,
+              highOffset,
+              candleHalfWidth * 2,
+              chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat().format(openOrig)
+                  + ':'
+                  + chart.getYAxisFormat().format(highOrig)
+                  + ':'
+                  + chart.getYAxisFormat().format(lowOrig)
+                  + ':'
+                  + chart.getYAxisFormat().format(closeOrig));
         }
       }
 

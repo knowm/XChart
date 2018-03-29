@@ -3,16 +3,12 @@ package org.knowm.xchart.style;
 import org.knowm.xchart.OHLCSeries;
 import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 
-/**
- * @author arthurmcgibbon
- */
+/** @author arthurmcgibbon */
 public class OHLCStyler extends AxesChartStyler {
 
   private OHLCSeriesRenderStyle ohlcSeriesRenderStyle;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public OHLCStyler() {
 
     this.setAllStyles();
@@ -31,7 +27,8 @@ public class OHLCStyler extends AxesChartStyler {
   }
 
   /**
-   * Sets the default series render style for the chart (candle, hilo, etc.) You can override the series render style individually on each Series object.
+   * Sets the default series render style for the chart (candle, hilo, etc.) You can override the
+   * series render style individually on each Series object.
    *
    * @param ohlcSeriesRenderStyle
    */
@@ -51,5 +48,4 @@ public class OHLCStyler extends AxesChartStyler {
     this.theme = theme;
     super.setAllStyles();
   }
-
 }

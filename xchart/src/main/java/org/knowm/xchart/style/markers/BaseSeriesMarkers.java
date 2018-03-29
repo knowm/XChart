@@ -8,12 +8,10 @@ public class BaseSeriesMarkers implements SeriesMarkers {
 
   private final Marker[] seriesMarkers;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public BaseSeriesMarkers() {
 
-    seriesMarkers = new Marker[]{CIRCLE, SQUARE, DIAMOND, TRIANGLE_UP, TRIANGLE_DOWN, CROSS};
+    seriesMarkers = new Marker[] {CIRCLE, SQUARE, DIAMOND, TRIANGLE_UP, TRIANGLE_DOWN, CROSS};
   }
 
   @Override

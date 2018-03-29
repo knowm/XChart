@@ -1,7 +1,6 @@
 package org.knowm.xchart.standalone.issues;
 
 import java.awt.Color;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
@@ -9,24 +8,22 @@ import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class TestForIssue27_2 {
 
   public static void main(String[] args) throws Exception {
 
-    double[] xData = new double[]{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    double[] xData = new double[] {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
 
     // double[] yData1 = new double[] { 100, 100, 100, 10, 10, 10, 10 };
-    double[] yData1 = new double[]{100, 100, 100, 60, 10, 10, 10};
+    double[] yData1 = new double[] {100, 100, 100, 60, 10, 10, 10};
 
-    double[] yData2 = new double[]{150, 120, 110, 112, 19, 12, 11};
+    double[] yData2 = new double[] {150, 120, 110, 112, 19, 12, 11};
 
-    double[] yData3 = new double[]{50, 80, 90, 8, 1, 8, 9};
+    double[] yData3 = new double[] {50, 80, 90, 8, 1, 8, 9};
 
     // double[] errdata = new double[] { 1, .699, .301, 2, 1, .699, 0.301 };
-    double[] errdata = new double[]{50, 20, 10, 52, 9, 2, 1};
+    double[] errdata = new double[] {50, 20, 10, 52, 9, 2, 1};
 
     XYChart mychart = new XYChart(1200, 800);
 

@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public abstract class AxesChartStyler extends Styler {
 
   // Chart Axes ///////////////////////////////
@@ -475,9 +473,9 @@ public abstract class AxesChartStyler extends Styler {
     this.yAxisMinMap.put(null, yAxisMin);
     return this;
   }
-  
+
   public AxesChartStyler setYAxisMin(Integer yAxisGroup, Double yAxisMin) {
-    
+
     this.yAxisMinMap.put(yAxisGroup, yAxisMin);
     return this;
   }
@@ -488,7 +486,7 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   public Double getYAxisMin(Integer yAxisGroup) {
-    
+
     return yAxisMinMap.get(yAxisGroup);
   }
 
@@ -497,9 +495,9 @@ public abstract class AxesChartStyler extends Styler {
     this.yAxisMaxMap.put(null, yAxisMax);
     return this;
   }
-  
+
   public AxesChartStyler setYAxisMax(Integer yAxisGroup, Double yAxisMax) {
-    
+
     this.yAxisMaxMap.put(yAxisGroup, yAxisMax);
     return this;
   }
@@ -510,10 +508,10 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   public Double getYAxisMax(Integer yAxisGroup) {
-    
+
     return yAxisMaxMap.get(yAxisGroup);
   }
-  
+
   public TextAlignment getXAxisLabelAlignment() {
 
     return xAxisLabelAlignment;
@@ -570,7 +568,8 @@ public abstract class AxesChartStyler extends Styler {
    *
    * @param isPlotGridHorizontalLinesVisible
    */
-  public AxesChartStyler setPlotGridHorizontalLinesVisible(boolean isPlotGridHorizontalLinesVisible) {
+  public AxesChartStyler setPlotGridHorizontalLinesVisible(
+      boolean isPlotGridHorizontalLinesVisible) {
 
     this.isPlotGridHorizontalLinesVisible = isPlotGridHorizontalLinesVisible;
     return this;

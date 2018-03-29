@@ -2,16 +2,12 @@ package org.knowm.xchart.style;
 
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class XYStyler extends AxesChartStyler {
 
   private XYSeriesRenderStyle xySeriesRenderStyle;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public XYStyler() {
 
     this.setAllStyles();
@@ -30,7 +26,8 @@ public class XYStyler extends AxesChartStyler {
   }
 
   /**
-   * Sets the default series render style for the chart (line, scatter, area, etc.) You can override the series render style individually on each Series object.
+   * Sets the default series render style for the chart (line, scatter, area, etc.) You can override
+   * the series render style individually on each Series object.
    *
    * @param xySeriesRenderStyle
    */
@@ -50,5 +47,4 @@ public class XYStyler extends AxesChartStyler {
     this.theme = theme;
     super.setAllStyles();
   }
-
 }

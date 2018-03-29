@@ -14,10 +14,10 @@ public class Plot_Dial<ST extends DialStyler, S extends DialSeries> extends Plot
 
     super(chart);
   }
-  
+
   @Override
   protected void initContentAndSurface(Chart<ST, S> chart) {
-  
+
     this.plotContent = new PlotContent_Dial<ST, S>(chart);
     this.plotSurface = new PlotSurface_Pie<ST, S>(chart);
   }

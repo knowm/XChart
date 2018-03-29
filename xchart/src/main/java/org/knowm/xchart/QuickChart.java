@@ -1,7 +1,6 @@
 package org.knowm.xchart;
 
 import java.util.List;
-
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
@@ -11,15 +10,11 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  */
 public final class QuickChart {
 
-  private final static int WIDTH = 600;
-  private final static int HEIGHT = 400;
+  private static final int WIDTH = 600;
+  private static final int HEIGHT = 400;
 
-  /**
-   * private Constructor
-   */
-  private QuickChart() {
-
-  }
+  /** private Constructor */
+  private QuickChart() {}
 
   /**
    * Creates a Chart with default style
@@ -32,13 +27,19 @@ public final class QuickChart {
    * @param yData An array containing Y-Axis data
    * @return a Chart Object
    */
-  public static XYChart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, double[] xData, double[] yData) {
+  public static XYChart getChart(
+      String chartTitle,
+      String xTitle,
+      String yTitle,
+      String seriesName,
+      double[] xData,
+      double[] yData) {
 
     double[][] yData2d = {yData};
     if (seriesName == null) {
       return getChart(chartTitle, xTitle, yTitle, null, xData, yData2d);
     } else {
-      return getChart(chartTitle, xTitle, yTitle, new String[]{seriesName}, xData, yData2d);
+      return getChart(chartTitle, xTitle, yTitle, new String[] {seriesName}, xData, yData2d);
     }
   }
 
@@ -53,7 +54,13 @@ public final class QuickChart {
    * @param yData An array of double arrays containing multiple Y-Axis data
    * @return a Chart Object
    */
-  public static XYChart getChart(String chartTitle, String xTitle, String yTitle, String[] seriesNames, double[] xData, double[][] yData) {
+  public static XYChart getChart(
+      String chartTitle,
+      String xTitle,
+      String yTitle,
+      String[] seriesNames,
+      double[] xData,
+      double[][] yData) {
 
     // Create Chart
     XYChart chart = new XYChart(WIDTH, HEIGHT);
@@ -88,7 +95,13 @@ public final class QuickChart {
    * @param yData A Collection containing Y-Axis data
    * @return a Chart Object
    */
-  public static XYChart getChart(String chartTitle, String xTitle, String yTitle, String seriesName, List<? extends Number> xData, List<? extends Number> yData) {
+  public static XYChart getChart(
+      String chartTitle,
+      String xTitle,
+      String yTitle,
+      String seriesName,
+      List<? extends Number> xData,
+      List<? extends Number> yData) {
 
     // Create Chart
     XYChart chart = new XYChart(WIDTH, HEIGHT);

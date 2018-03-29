@@ -1,7 +1,6 @@
 package org.knowm.xchart;
 
 import java.awt.Graphics2D;
-
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Radar;
@@ -14,7 +13,8 @@ import org.knowm.xchart.style.Theme;
 public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 
   public enum RadarRenderStyle {
-    Polygon, Circle;
+    Polygon,
+    Circle;
   }
 
   private RadarRenderStyle radarRenderStyle = RadarRenderStyle.Polygon;
@@ -109,7 +109,10 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     }
 
     if (seriesMap.keySet().contains(seriesName)) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
     }
     if (values == null) {
       throw new IllegalArgumentException("Values data cannot be null!!!");
@@ -143,16 +146,18 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     legend.paint(g);
   }
 
-  /**
-   * set the series color based on theme
-   */
+  /** set the series color based on theme */
   private void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
-        .getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+        new SeriesColorMarkerLineStyleCycler(
+            getStyler().getSeriesColors(),
+            getStyler().getSeriesMarkers(),
+            getStyler().getSeriesLines());
     for (RadarSeries series : getSeriesMap().values()) {
 
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
@@ -191,5 +196,4 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 
     this.radarRenderStyle = radarRenderStyle;
   }
-
 }

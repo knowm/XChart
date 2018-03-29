@@ -1,19 +1,18 @@
 package org.knowm.xchart.style;
 
 import java.awt.Font;
-
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class PieStyler extends Styler {
 
   private PieSeriesRenderStyle chartPieSeriesRenderStyle;
 
   public enum AnnotationType {
-
-    Value, Percentage, Label, LabelAndPercentage
+    Value,
+    Percentage,
+    Label,
+    LabelAndPercentage
   }
 
   private boolean isCircular;
@@ -56,7 +55,8 @@ public class PieStyler extends Styler {
   }
 
   /**
-   * Sets the default series render style for the chart (line, scatter, area, etc.) You can override the series render style individually on each Series object.
+   * Sets the default series render style for the chart (line, scatter, area, etc.) You can override
+   * the series render style individually on each Series object.
    *
    * @param chartPieSeriesRenderStyle
    */
@@ -72,7 +72,8 @@ public class PieStyler extends Styler {
   }
 
   /**
-   * Sets whether or not the pie chart is forced to be circular. Otherwise it's shape is oval, matching the containing plot.
+   * Sets whether or not the pie chart is forced to be circular. Otherwise it's shape is oval,
+   * matching the containing plot.
    *
    * @param isCircular
    */
@@ -104,7 +105,8 @@ public class PieStyler extends Styler {
   }
 
   /**
-   * Sets the distance of the pie chart's annotation where 0 is the center, 1 is at the edge and greater than 1 is outside of the pie chart.
+   * Sets the distance of the pie chart's annotation where 0 is the center, 1 is at the edge and
+   * greater than 1 is outside of the pie chart.
    *
    * @param annotationDistance
    */
@@ -135,10 +137,13 @@ public class PieStyler extends Styler {
   }
 
   /**
-   * By default, only the annotations that will "fit", as determined algorithmically, will be drawn. Otherwise, you can end up with annotations drawn overlapping. If `drawAllAnnotations` is set true
-   * with this method, it will override the algorithmic determination, and always draw all the annotations, one for each slice. You can also try playing around with the method `setStartAngleInDegrees`
-   * so the the slices are orientated in a more optimal way. You can also try changing the font size. Also, you can order the slices so that a small slice is followed by a larger slice, while setting
-   * this method with `true`.
+   * By default, only the annotations that will "fit", as determined algorithmically, will be drawn.
+   * Otherwise, you can end up with annotations drawn overlapping. If `drawAllAnnotations` is set
+   * true with this method, it will override the algorithmic determination, and always draw all the
+   * annotations, one for each slice. You can also try playing around with the method
+   * `setStartAngleInDegrees` so the the slices are orientated in a more optimal way. You can also
+   * try changing the font size. Also, you can order the slices so that a small slice is followed by
+   * a larger slice, while setting this method with `true`.
    *
    * @param drawAllAnnotations
    */
@@ -217,5 +222,4 @@ public class PieStyler extends Styler {
     super.setAllStyles();
     return this;
   }
-
 }

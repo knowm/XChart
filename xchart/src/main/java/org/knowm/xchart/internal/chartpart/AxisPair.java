@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
@@ -17,9 +16,7 @@ import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
   private final Chart<ST, S> chart;
@@ -29,7 +26,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   private final TreeMap<Integer, Axis<ST, S>> yAxisMap;
   private Axis<ST, S> leftMainYAxis;
   private Axis<ST, S> rightMainYAxis;
-  private Map<String, Map<Double, Object>> axisLabelOverrideMap = new HashMap<String, Map<Double, Object>>();
+  private Map<String, Map<Double, Object>> axisLabelOverrideMap =
+      new HashMap<String, Map<Double, Object>>();
 
   private final Rectangle2D.Double leftYAxisBounds;
   private final Rectangle2D.Double rightYAxisBounds;
@@ -117,11 +115,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     if (styler.getLegendPosition() == LegendPosition.OutsideE && styler.isLegendVisible()) {
       legendWidth = chart.getLegend().getBounds().getWidth() + styler.getChartPadding();
     }
-    double rightEnd = chart.getWidth()
-
-        - legendWidth
-
-        - chartPadding;
+    double rightEnd = chart.getWidth() - legendWidth - chartPadding;
 
     rightYAxisBounds.x = rightEnd;
 
@@ -247,7 +241,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       ya.resetMinMax();
     }
 
-    // if no series, we still want to plot an empty plot with axes. Since there are no min and max with no series added, we just fake it arbitrarily.
+    // if no series, we still want to plot an empty plot with axes. Since there are no min and max
+    // with no series added, we just fake it arbitrarily.
     if (chart.getSeriesMap() == null || chart.getSeriesMap().size() < 1) {
       xAxis.addMinMax(-1, 1);
       for (Axis<ST, S> ya : yAxisMap.values()) {
@@ -288,31 +283,37 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     // logarithmic sanity check
     if (chart.getStyler().isXAxisLogarithmic() && xAxis.getMin() <= 0.0) {
-      throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic X-Axis!!!");
+      throw new IllegalArgumentException(
+          "Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic X-Axis!!!");
     }
     if (chart.getStyler().isYAxisLogarithmic()) {
       for (Axis<ST, S> ya : yAxisMap.values()) {
         if (ya.getMin() <= 0.0) {
           // System.out.println(getMin());
-          throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic Y-Axis!!!");
+          throw new IllegalArgumentException(
+              "Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic Y-Axis!!!");
         }
       }
     }
     // infinity checks
     if (xAxis.getMin() == Double.POSITIVE_INFINITY || xAxis.getMax() == Double.POSITIVE_INFINITY) {
-      throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
+      throw new IllegalArgumentException(
+          "Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
     }
     for (Axis<ST, S> ya : yAxisMap.values()) {
       if (ya.getMin() == Double.POSITIVE_INFINITY || ya.getMax() == Double.POSITIVE_INFINITY) {
-        throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
+        throw new IllegalArgumentException(
+            "Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
       }
       if (ya.getMin() == Double.NEGATIVE_INFINITY || ya.getMax() == Double.NEGATIVE_INFINITY) {
-        throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.NEGATIVE_INFINITY!!!");
+        throw new IllegalArgumentException(
+            "Series data (accounting for error bars too) cannot be equal to Double.NEGATIVE_INFINITY!!!");
       }
     }
 
     if (xAxis.getMin() == Double.NEGATIVE_INFINITY || xAxis.getMax() == Double.NEGATIVE_INFINITY) {
-      throw new IllegalArgumentException("Series data (accounting for error bars too) cannot be equal to Double.NEGATIVE_INFINITY!!!");
+      throw new IllegalArgumentException(
+          "Series data (accounting for error bars too) cannot be equal to Double.NEGATIVE_INFINITY!!!");
     }
   }
 
@@ -321,22 +322,18 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     return yAxisMap.get(yIndex);
   }
 
-  /**
-   * Here we can add special case min max calculations and take care of manual min max settings.
-   */
+  /** Here we can add special case min max calculations and take care of manual min max settings. */
   private void overrideMinMaxForXAxis() {
 
     double overrideXAxisMinValue = xAxis.getMin();
     double overrideXAxisMaxValue = xAxis.getMax();
     // override min and maxValue if specified
-    if (chart.getStyler().getXAxisMin() != null)
+    if (chart.getStyler().getXAxisMin() != null) {
 
-    {
       overrideXAxisMinValue = chart.getStyler().getXAxisMin();
     }
-    if (chart.getStyler().getXAxisMax() != null)
+    if (chart.getStyler().getXAxisMax() != null) {
 
-    {
       overrideXAxisMaxValue = chart.getStyler().getXAxisMax();
     }
     xAxis.setMin(overrideXAxisMinValue);
@@ -356,7 +353,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
         // if stacked, we need to completely re-calculate min and max.
         if (categoryStyler.isStacked()) {
 
-          AxesChartSeriesCategory axesChartSeries = (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+          AxesChartSeriesCategory axesChartSeries =
+              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
           List<?> categories = (List<?>) axesChartSeries.getXData();
 
           int numCategories = categories.size();
@@ -412,7 +410,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
         }
 
         // override min/max value for bar charts' Y-Axis
-        // There is a special case where it's desired to anchor the axis min or max to zero, like in the case of bar charts. This flag enables that feature.
+        // There is a special case where it's desired to anchor the axis min or max to zero, like in
+        // the case of bar charts. This flag enables that feature.
         if (yAxis.getMin() > 0.0) {
           overrideYAxisMinValue = 0.0;
         }
@@ -428,7 +427,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     } else if (chart.getStyler().getYAxisMin() != null) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin();
     }
-    
+
     if (chart.getStyler().getYAxisMax(yAxis.getYIndex()) != null) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax(yAxis.getYIndex());
     } else if (chart.getStyler().getYAxisMax() != null) {

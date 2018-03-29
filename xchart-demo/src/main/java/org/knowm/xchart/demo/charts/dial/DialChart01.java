@@ -7,11 +7,12 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * Dial Chart
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Dial Chart
- * <li>DialChartBuilder
+ *   <li>Dial Chart
+ *   <li>DialChartBuilder
  */
 public class DialChart01 implements ExampleChart<DialChart> {
 

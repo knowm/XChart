@@ -12,7 +12,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
@@ -21,7 +20,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
-
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -29,8 +27,9 @@ import org.knowm.xchart.internal.chartpart.ToolTips;
 
 /**
  * A Swing JPanel that contains a Chart
- * <p>
- * Right-click + Save As... or ctrl+S pops up a Save As dialog box for saving the chart as PNG, JPEG, etc. file.
+ *
+ * <p>Right-click + Save As... or ctrl+S pops up a Save As dialog box for saving the chart as PNG,
+ * JPEG, etc. file.
  *
  * @author timmolter
  */
@@ -64,12 +63,14 @@ public class XChartPanel<T extends Chart> extends JPanel {
     }
 
     // Control+S key listener for saving chart
-    KeyStroke ctrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+    KeyStroke ctrlS =
+        KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlS, "save");
     this.getActionMap().put("save", new SaveAction());
 
     // Control+E key listener for saving chart
-    KeyStroke ctrlE = KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+    KeyStroke ctrlE =
+        KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlE, "export");
     this.getActionMap().put("export", new ExportAction());
   }
@@ -154,7 +155,8 @@ public class XChartPanel<T extends Chart> extends JPanel {
     fileChooser.addChoosableFileFilter(new SuffixSaveFilter("bmp"));
     fileChooser.addChoosableFileFilter(new SuffixSaveFilter("gif"));
 
-    // VectorGraphics2D is optional, so if it's on the classpath, allow saving charts as vector graphic
+    // VectorGraphics2D is optional, so if it's on the classpath, allow saving charts as vector
+    // graphic
     try {
       Class.forName("de.erichseifert.vectorgraphics2d.VectorGraphics2D");
       // it exists on the classpath
@@ -177,7 +179,10 @@ public class XChartPanel<T extends Chart> extends JPanel {
           if (fileChooser.getFileFilter() == null) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.PNG);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
-            BitmapEncoder.saveJPGWithQuality(chart, BitmapEncoder.addFileExtension(theFileToSave.getCanonicalPath(), BitmapFormat.JPG), 1.0f);
+            BitmapEncoder.saveJPGWithQuality(
+                chart,
+                BitmapEncoder.addFileExtension(theFileToSave.getCanonicalPath(), BitmapFormat.JPG),
+                1.0f);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.PNG);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
@@ -185,11 +190,14 @@ public class XChartPanel<T extends Chart> extends JPanel {
           } else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.GIF);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
-            VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.SVG);
+            VectorGraphicsEncoder.saveVectorGraphic(
+                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.SVG);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
-            VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.EPS);
+            VectorGraphicsEncoder.saveVectorGraphic(
+                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.EPS);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
-            VectorGraphicsEncoder.saveVectorGraphic(chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.PDF);
+            VectorGraphicsEncoder.saveVectorGraphic(
+                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.PDF);
           }
         } catch (IOException e) {
           e.printStackTrace();
@@ -203,28 +211,28 @@ public class XChartPanel<T extends Chart> extends JPanel {
     UIManager.put("FileChooser.saveButtonText", "Export");
     UIManager.put("FileChooser.fileNameLabelText", "Export To:");
     UIManager.put("FileChooser.saveDialogFileNameLabel.textAndMnemonic", "Export To:");
-//    UIDefaults defaults = UIManager.getDefaults();
-//    System.out.println(defaults.size()+ " properties");
-//    for (Enumeration e = defaults.keys();
-//         e.hasMoreElements();) {
-//      Object key = e.nextElement();
-//      System.out.println(key + " = " + defaults.get(key));
-//    }
+    //    UIDefaults defaults = UIManager.getDefaults();
+    //    System.out.println(defaults.size()+ " properties");
+    //    for (Enumeration e = defaults.keys();
+    //         e.hasMoreElements();) {
+    //      Object key = e.nextElement();
+    //      System.out.println(key + " = " + defaults.get(key));
+    //    }
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    fileChooser.setFileFilter(new FileFilter() {
+    fileChooser.setFileFilter(
+        new FileFilter() {
 
-      @Override
-      public boolean accept(File f) {
-        return f.isDirectory();
-      }
+          @Override
+          public boolean accept(File f) {
+            return f.isDirectory();
+          }
 
-      @Override
-      public String getDescription() {
-        return "Any Directory";
-      }
-
-    });
+          @Override
+          public String getDescription() {
+            return "Any Directory";
+          }
+        });
     fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.setDialogTitle("Export");
 
@@ -232,7 +240,8 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
       File theFileToSave = fileChooser.getSelectedFile();
       try {
-        CSVExporter.writeCSVColumns((XYChart) chart, theFileToSave.getCanonicalPath() + File.separatorChar);
+        CSVExporter.writeCSVColumns(
+            (XYChart) chart, theFileToSave.getCanonicalPath() + File.separatorChar);
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -240,7 +249,8 @@ public class XChartPanel<T extends Chart> extends JPanel {
   }
 
   /**
-   * File filter based on the suffix of a file. This file filter accepts all files that end with .suffix or the capitalized suffix.
+   * File filter based on the suffix of a file. This file filter accepts all files that end with
+   * .suffix or the capitalized suffix.
    *
    * @author Benedikt Bünz
    */
@@ -249,7 +259,8 @@ public class XChartPanel<T extends Chart> extends JPanel {
     private final String suffix;
 
     /**
-     * @param suffix This file filter accepts all files that end with .suffix or the capitalized suffix.
+     * @param suffix This file filter accepts all files that end with .suffix or the capitalized
+     *     suffix.
      */
     public SuffixSaveFilter(String suffix) {
 
@@ -308,69 +319,54 @@ public class XChartPanel<T extends Chart> extends JPanel {
     public XChartPanelPopupMenu() {
 
       saveAsMenuItem = new JMenuItem(saveAsString);
-      saveAsMenuItem.addMouseListener(new MouseListener() {
+      saveAsMenuItem.addMouseListener(
+          new MouseListener() {
 
-        @Override
-        public void mouseReleased(MouseEvent e) {
+            @Override
+            public void mouseReleased(MouseEvent e) {
 
-          showSaveAsDialog();
-        }
+              showSaveAsDialog();
+            }
 
-        @Override
-        public void mousePressed(MouseEvent e) {
+            @Override
+            public void mousePressed(MouseEvent e) {}
 
-        }
+            @Override
+            public void mouseExited(MouseEvent e) {}
 
-        @Override
-        public void mouseExited(MouseEvent e) {
+            @Override
+            public void mouseEntered(MouseEvent e) {}
 
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-
-        }
-      });
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+          });
       add(saveAsMenuItem);
 
       if (chart instanceof XYChart) {
         exportAsMenuItem = new JMenuItem(exportAsString);
-        exportAsMenuItem.addMouseListener(new MouseListener() {
+        exportAsMenuItem.addMouseListener(
+            new MouseListener() {
 
-          @Override
-          public void mouseReleased(MouseEvent e) {
+              @Override
+              public void mouseReleased(MouseEvent e) {
 
-            showExportAsDialog();
-          }
+                showExportAsDialog();
+              }
 
-          @Override
-          public void mousePressed(MouseEvent e) {
+              @Override
+              public void mousePressed(MouseEvent e) {}
 
-          }
+              @Override
+              public void mouseExited(MouseEvent e) {}
 
-          @Override
-          public void mouseExited(MouseEvent e) {
+              @Override
+              public void mouseEntered(MouseEvent e) {}
 
-          }
-
-          @Override
-          public void mouseEntered(MouseEvent e) {
-
-          }
-
-          @Override
-          public void mouseClicked(MouseEvent e) {
-
-          }
-        });
+              @Override
+              public void mouseClicked(MouseEvent e) {}
+            });
         add(exportAsMenuItem);
       }
     }
   }
-
 }

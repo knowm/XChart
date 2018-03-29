@@ -6,20 +6,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
- * This class is used to create a Chart object from a folder containing one or more CSV files. The parent folder's name becomes the title of the
- * chart. Each CSV file in the folder becomes a series on the chart. the CSV file's name becomes the series' name.
+ * This class is used to create a Chart object from a folder containing one or more CSV files. The
+ * parent folder's name becomes the title of the chart. Each CSV file in the folder becomes a series
+ * on the chart. the CSV file's name becomes the series' name.
  *
  * @author timmolter
  */
 public class CSVImporter {
 
   public enum DataOrientation {
-
-    Rows, Columns
+    Rows,
+    Columns
   }
 
   /**
@@ -30,7 +30,12 @@ public class CSVImporter {
    * @param chartTheme
    * @return
    */
-  public static XYChart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height, ChartTheme chartTheme) {
+  public static XYChart getChartFromCSVDir(
+      String path2Directory,
+      DataOrientation dataOrientation,
+      int width,
+      int height,
+      ChartTheme chartTheme) {
 
     // 1. get the directory, name chart the dir name
     XYChart chart;
@@ -53,16 +58,24 @@ public class CSVImporter {
       }
 
       if (xAndYData[2] == null || xAndYData[2].trim().equalsIgnoreCase("")) {
-        chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]));
+        chart.addSeries(
+            csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")),
+            getAxisData(xAndYData[0]),
+            getAxisData(xAndYData[1]));
       } else {
-        chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), getAxisData(xAndYData[2]));
+        chart.addSeries(
+            csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")),
+            getAxisData(xAndYData[0]),
+            getAxisData(xAndYData[1]),
+            getAxisData(xAndYData[2]));
       }
     }
 
     return chart;
   }
 
-  public static SeriesData getSeriesDataFromCSVFile(String path2CSVFile, DataOrientation dataOrientation) {
+  public static SeriesData getSeriesDataFromCSVFile(
+      String path2CSVFile, DataOrientation dataOrientation) {
 
     // 1. get csv file in the dir
     File csvFile = new File(path2CSVFile);
@@ -74,7 +87,10 @@ public class CSVImporter {
     } else {
       xAndYData = getSeriesDataFromCSVColumns(csvFile);
     }
-    return new SeriesData(getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
+    return new SeriesData(
+        getAxisData(xAndYData[0]),
+        getAxisData(xAndYData[1]),
+        csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
   }
 
   public static class SeriesData {
@@ -113,7 +129,8 @@ public class CSVImporter {
    * @param height
    * @return
    */
-  public static XYChart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
+  public static XYChart getChartFromCSVDir(
+      String path2Directory, DataOrientation dataOrientation, int width, int height) {
 
     return getChartFromCSVDir(path2Directory, dataOrientation, width, height, null);
   }
@@ -208,7 +225,8 @@ public class CSVImporter {
   }
 
   /**
-   * This method returns the files found in the given directory matching the given regular expression.
+   * This method returns the files found in the given directory matching the given regular
+   * expression.
    *
    * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
    * @param regex - ex. ".*.csv"

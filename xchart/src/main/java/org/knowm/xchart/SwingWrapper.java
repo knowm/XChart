@@ -4,11 +4,9 @@ import java.awt.GridLayout;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-
 import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
@@ -74,9 +72,7 @@ public class SwingWrapper<T extends Chart> {
     return displayChart();
   }
 
-  /**
-   * Display the chart in a Swing JFrame
-   */
+  /** Display the chart in a Swing JFrame */
   public JFrame displayChart() {
 
     // Create and set up the window.
@@ -85,21 +81,22 @@ public class SwingWrapper<T extends Chart> {
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
     try {
-      javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
+      javax.swing.SwingUtilities.invokeAndWait(
+          new Runnable() {
 
-        @Override
-        public void run() {
+            @Override
+            public void run() {
 
-          frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-          XChartPanel<T> chartPanel = new XChartPanel<T>(charts.get(0));
-          chartPanels.add(chartPanel);
-          frame.add(chartPanel);
+              frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+              XChartPanel<T> chartPanel = new XChartPanel<T>(charts.get(0));
+              chartPanels.add(chartPanel);
+              frame.add(chartPanel);
 
-          // Display the window.
-          frame.pack();
-          frame.setVisible(true);
-        }
-      });
+              // Display the window.
+              frame.pack();
+              frame.setVisible(true);
+            }
+          });
     } catch (InterruptedException e) {
       e.printStackTrace();
     } catch (InvocationTargetException e) {
@@ -122,9 +119,7 @@ public class SwingWrapper<T extends Chart> {
     return displayChartMatrix();
   }
 
-  /**
-   * Display the chart in a Swing JFrame
-   */
+  /** Display the chart in a Swing JFrame */
   public JFrame displayChartMatrix() {
 
     // Create and set up the window.
@@ -132,36 +127,38 @@ public class SwingWrapper<T extends Chart> {
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    javax.swing.SwingUtilities.invokeLater(
+        new Runnable() {
 
-      @Override
-      public void run() {
+          @Override
+          public void run() {
 
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
 
-        for (T chart : charts) {
-          if (chart != null) {
-            XChartPanel<T> chartPanel = new XChartPanel<T>(chart);
-            chartPanels.add(chartPanel);
-            frame.add(chartPanel);
-          } else {
-            JPanel chartPanel = new JPanel();
-            frame.getContentPane().add(chartPanel);
+            for (T chart : charts) {
+              if (chart != null) {
+                XChartPanel<T> chartPanel = new XChartPanel<T>(chart);
+                chartPanels.add(chartPanel);
+                frame.add(chartPanel);
+              } else {
+                JPanel chartPanel = new JPanel();
+                frame.getContentPane().add(chartPanel);
+              }
+            }
+
+            // Display the window.
+            frame.pack();
+            frame.setVisible(true);
           }
-        }
-
-        // Display the window.
-        frame.pack();
-        frame.setVisible(true);
-      }
-    });
+        });
 
     return frame;
   }
 
   /**
-   * Get the default XChartPanel. This is the only one for single panel chart displays and the first panel in matrix chart displays
+   * Get the default XChartPanel. This is the only one for single panel chart displays and the first
+   * panel in matrix chart displays
    *
    * @return the XChartPanel
    */
@@ -171,7 +168,8 @@ public class SwingWrapper<T extends Chart> {
   }
 
   /**
-   * Repaint the default XChartPanel. This is the only one for single panel chart displays and the first panel in matrix chart displays
+   * Repaint the default XChartPanel. This is the only one for single panel chart displays and the
+   * first panel in matrix chart displays
    */
   public void repaintChart() {
 

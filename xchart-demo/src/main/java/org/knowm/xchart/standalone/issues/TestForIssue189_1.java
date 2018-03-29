@@ -2,7 +2,6 @@ package org.knowm.xchart.standalone.issues;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.RadarChart;
 import org.knowm.xchart.RadarChart.RadarRenderStyle;
 import org.knowm.xchart.SwingWrapper;
@@ -34,7 +33,7 @@ public class TestForIssue189_1 {
       charts.add(chart);
     }
     {
-      //current default
+      // current default
       RadarChart chart = alc.getChart();
       chart.setTitle("Radar chart with 3 variables and start angle");
       chart.getStyler().setToolTipsEnabled(true);
@@ -47,11 +46,10 @@ public class TestForIssue189_1 {
       RadarChart chart = alc.getChart();
       chart.setTitle("Radar chart with non circular rendering");
       chart.getStyler().setPlotGridLinesStroke(SeriesLines.NONE);
-      chart.getStyler().setCircular(false);      
+      chart.getStyler().setCircular(false);
       charts.add(chart);
     }
 
     new SwingWrapper<RadarChart>(charts).displayChartMatrix();
   }
-
 }

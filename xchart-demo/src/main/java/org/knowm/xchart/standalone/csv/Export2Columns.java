@@ -6,18 +6,18 @@ import org.knowm.xchart.CSVImporter.DataOrientation;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class Export2Columns {
 
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    XYChart chart = CSVImporter.getChartFromCSVDir("./CSV/CSVChartColumns/", DataOrientation.Columns, 600, 600);
+    XYChart chart =
+        CSVImporter.getChartFromCSVDir("./CSV/CSVChartColumns/", DataOrientation.Columns, 600, 600);
 
     // export a single series
-    CSVExporter.writeCSVColumns(chart.getSeriesMap().get("series1"), "./CSV/CSVChartColumnsExport/");
+    CSVExporter.writeCSVColumns(
+        chart.getSeriesMap().get("series1"), "./CSV/CSVChartColumnsExport/");
 
     // export all series
     CSVExporter.writeCSVColumns(chart, "./CSV/CSVChartColumnsExport/");

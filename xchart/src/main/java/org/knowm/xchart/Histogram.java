@@ -76,11 +76,13 @@ public class Histogram {
 
       double doubleValue = itr.next().doubleValue();
       int bin = (int) ((doubleValue - min) / binSize); // changed this from numBins
-      if (bin < 0) { /* this data is smaller than min */
+      if (bin < 0) {
+        /* this data is smaller than min */
         // System.out.println("less than");
       } else if (doubleValue == max) { // the value falls exactly on the max value
         tempYAxisData[bin - 1] += 1;
-      } else if (bin > numBins || bin == numBins) { /* this data point is bigger than max */
+      } else if (bin > numBins || bin == numBins) {
+        /* this data point is bigger than max */
         // System.out.println("greater than");
       } else {
         tempYAxisData[bin] += 1;

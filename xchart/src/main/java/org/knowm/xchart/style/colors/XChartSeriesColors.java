@@ -2,9 +2,7 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.Color;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class XChartSeriesColors implements SeriesColors {
 
   // original XChart colors
@@ -23,12 +21,13 @@ public class XChartSeriesColors implements SeriesColors {
 
   private final Color[] seriesColors;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public XChartSeriesColors() {
 
-    seriesColors = new Color[]{BLUE, ORANGE, PURPLE, GREEN, RED, YELLOW, MAGENTA, PINK, LIGHT_GREY, CYAN, BROWN, BLACK};
+    seriesColors =
+        new Color[] {
+          BLUE, ORANGE, PURPLE, GREEN, RED, YELLOW, MAGENTA, PINK, LIGHT_GREY, CYAN, BROWN, BLACK
+        };
   }
 
   @Override

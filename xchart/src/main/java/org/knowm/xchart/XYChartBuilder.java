@@ -2,17 +2,13 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.ChartBuilder;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class XYChartBuilder extends ChartBuilder<XYChartBuilder, XYChart> {
 
   String xAxisTitle = "";
   String yAxisTitle = "";
 
-  public XYChartBuilder() {
-
-  }
+  public XYChartBuilder() {}
 
   public XYChartBuilder xAxisTitle(String xAxisTitle) {
 

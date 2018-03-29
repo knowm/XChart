@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -23,11 +22,11 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Customized Chart
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>
- * Extensive Chart Customization
+ *   <li>Extensive Chart Customization
  */
 public class LineChart03 implements ExampleChart<XYChart> {
 
@@ -42,7 +41,14 @@ public class LineChart03 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).title("LineChart03").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .title("LineChart03")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     // Customize Chart
     chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));

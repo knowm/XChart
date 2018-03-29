@@ -2,7 +2,6 @@ package org.knowm.xchart.demo.charts.theme;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -14,12 +13,13 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Matlab Theme
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Building a Chart with ChartBuilder
- * <li>Applying the Matlab Theme to the Chart
- * <li>Generating Gaussian Bell Curve Data
+ *   <li>Building a Chart with ChartBuilder
+ *   <li>Applying the Matlab Theme to the Chart
+ *   <li>Generating Gaussian Bell Curve Data
  */
 public class ThemeChart03 implements ExampleChart<XYChart> {
 
@@ -34,7 +34,15 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).title("Matlab Theme").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .theme(ChartTheme.Matlab)
+            .title("Matlab Theme")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     // Customize Chart
     chart.getStyler().setPlotGridLinesVisible(false);
@@ -72,7 +80,9 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
     List<Double> yData = new ArrayList<Double>(xData.size());
 
     for (Integer integer : xData) {
-      yData.add((1 / (std * Math.sqrt(2 * Math.PI))) * Math.exp(-(((integer - mean) * (integer - mean)) / ((2 * std * std)))));
+      yData.add(
+          (1 / (std * Math.sqrt(2 * Math.PI)))
+              * Math.exp(-(((integer - mean) * (integer - mean)) / ((2 * std * std)))));
     }
     return yData;
   }

@@ -1,14 +1,12 @@
 package org.knowm.xchart;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import org.knowm.xchart.internal.chartpart.Chart;
-
 import de.erichseifert.vectorgraphics2d.EPSGraphics2D;
 import de.erichseifert.vectorgraphics2d.PDFGraphics2D;
 import de.erichseifert.vectorgraphics2d.ProcessingPipeline;
 import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A helper class with static methods for saving Charts as vectors
@@ -17,18 +15,17 @@ import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
  */
 public final class VectorGraphicsEncoder {
 
-  /**
-   * Constructor - Private constructor to prevent instantiation
-   */
-  private VectorGraphicsEncoder() {
-
-  }
+  /** Constructor - Private constructor to prevent instantiation */
+  private VectorGraphicsEncoder() {}
 
   public enum VectorGraphicsFormat {
-    EPS, PDF, SVG
+    EPS,
+    PDF,
+    SVG
   }
 
-  public static void saveVectorGraphic(Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
+  public static void saveVectorGraphic(
+      Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
 
     ProcessingPipeline g = null;
 
@@ -60,17 +57,22 @@ public final class VectorGraphicsEncoder {
   }
 
   /**
-   * Only adds the extension of the VectorGraphicsFormat to the filename if the filename doesn't already have it.
+   * Only adds the extension of the VectorGraphicsFormat to the filename if the filename doesn't
+   * already have it.
    *
    * @param fileName
    * @param vectorGraphicsFormat
    * @return filename (if extension already exists), otherwise;: filename + "." + extension
    */
-  public static String addFileExtension(String fileName, VectorGraphicsFormat vectorGraphicsFormat) {
+  public static String addFileExtension(
+      String fileName, VectorGraphicsFormat vectorGraphicsFormat) {
 
     String fileNameWithFileExtension = fileName;
     final String newFileExtension = "." + vectorGraphicsFormat.toString().toLowerCase();
-    if (fileName.length() <= newFileExtension.length() || !fileName.substring(fileName.length() - newFileExtension.length(), fileName.length()).equalsIgnoreCase(newFileExtension)) {
+    if (fileName.length() <= newFileExtension.length()
+        || !fileName
+            .substring(fileName.length() - newFileExtension.length(), fileName.length())
+            .equalsIgnoreCase(newFileExtension)) {
       fileNameWithFileExtension = fileName + newFileExtension;
     }
     return fileNameWithFileExtension;

@@ -3,7 +3,6 @@ package org.knowm.xchart;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -15,9 +14,7 @@ import org.knowm.xchart.style.BubbleStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
   /**
@@ -81,10 +78,17 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * @param bubbleData the bubble data
    * @return A Series object that you can set properties on
    */
-  public BubbleSeries addSeries(String seriesName, List<? extends Number> xData, List<? extends Number> yData, List<? extends Number> bubbleData) {
+  public BubbleSeries addSeries(
+      String seriesName,
+      List<? extends Number> xData,
+      List<? extends Number> yData,
+      List<? extends Number> bubbleData) {
 
-    return addSeries(seriesName, Utils.getDoubleArrayFromNumberList(xData), Utils.getDoubleArrayFromNumberList(yData), Utils.getDoubleArrayFromNumberList(bubbleData));
-
+    return addSeries(
+        seriesName,
+        Utils.getDoubleArrayFromNumberList(xData),
+        Utils.getDoubleArrayFromNumberList(yData),
+        Utils.getDoubleArrayFromNumberList(bubbleData));
   }
 
   /**
@@ -96,7 +100,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * @param bubbleData the bubble data
    * @return
    */
-  public BubbleSeries addSeries(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
+  public BubbleSeries addSeries(
+      String seriesName, double[] xData, double[] yData, double[] bubbleData) {
 
     // Sanity checks
     sanityCheck(seriesName, xData, yData, bubbleData);
@@ -110,9 +115,10 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
       }
 
       series = new BubbleSeries(seriesName, xData, yData, bubbleData);
-    }
-    else { // generate xData
-      series = new BubbleSeries(seriesName, Utils.getGeneratedDataAsArray(yData.length), yData, bubbleData);
+    } else { // generate xData
+      series =
+          new BubbleSeries(
+              seriesName, Utils.getGeneratedDataAsArray(yData.length), yData, bubbleData);
     }
 
     seriesMap.put(seriesName, series);
@@ -124,28 +130,37 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * Update a series by updating the X-Axis, Y-Axis and bubble data
    *
    * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers
+   *     starting from 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newBubbleData - set null if there are no error bars
    * @return
    */
-  public BubbleSeries updateBubbleSeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newBubbleData) {
+  public BubbleSeries updateBubbleSeries(
+      String seriesName,
+      List<?> newXData,
+      List<? extends Number> newYData,
+      List<? extends Number> newBubbleData) {
 
-    return updateBubbleSeries(seriesName, Utils.getDoubleArrayFromNumberList(newXData), Utils.getDoubleArrayFromNumberList(newYData), Utils.getDoubleArrayFromNumberList(newBubbleData));
+    return updateBubbleSeries(
+        seriesName,
+        Utils.getDoubleArrayFromNumberList(newXData),
+        Utils.getDoubleArrayFromNumberList(newYData),
+        Utils.getDoubleArrayFromNumberList(newBubbleData));
   }
 
   /**
    * Update a series by updating the X-Axis, Y-Axis and bubble data
    *
    * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   *          1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers
+   *     starting from 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newBubbleData - set null if there are no error bars
    * @return
    */
-  public BubbleSeries updateBubbleSeries(String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
+  public BubbleSeries updateBubbleSeries(
+      String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
 
     Map<String, BubbleSeries> seriesMap = getSeriesMap();
     BubbleSeries series = seriesMap.get(seriesName);
@@ -155,8 +170,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     if (newXData == null) {
       double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
       series.replaceData(generatedXData, newYData, newBubbleData);
-    }
-    else {
+    } else {
       series.replaceData(newXData, newYData, newBubbleData);
     }
 
@@ -170,7 +184,10 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
   private void sanityCheck(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
 
     if (seriesMap.keySet().contains(seriesName)) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
     }
     if (yData == null) {
       throw new IllegalArgumentException("Y-Axis data cannot be null!!! >" + seriesName);
@@ -188,7 +205,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
       throw new IllegalArgumentException("X-Axis data cannot be empty!!! >" + seriesName);
     }
     if (bubbleData.length != yData.length) {
-      throw new IllegalArgumentException("Bubble Data and Y-Axis sizes are not the same!!! >" + seriesName);
+      throw new IllegalArgumentException(
+          "Bubble Data and Y-Axis sizes are not the same!!! >" + seriesName);
     }
   }
 
@@ -200,7 +218,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
     // set the series types if they are not set. Legend and Plot need it.
     for (BubbleSeries bubbleSeries : getSeriesMap().values()) {
-      BubbleSeries.BubbleSeriesRenderStyle seriesType = bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
+      BubbleSeries.BubbleSeriesRenderStyle seriesType =
+          bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
         bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
@@ -215,16 +234,18 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     legend.paint(g);
   }
 
-  /**
-   * set the series color based on theme
-   */
+  /** set the series color based on theme */
   private void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
-        .getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+        new SeriesColorMarkerLineStyleCycler(
+            getStyler().getSeriesColors(),
+            getStyler().getSeriesMarkers(),
+            getStyler().getSeriesLines());
     for (BubbleSeries series : getSeriesMap().values()) {
 
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());

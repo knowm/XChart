@@ -4,17 +4,15 @@ import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.util.Map;
-
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
-/**
- * @author timmolter
- */
-public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> extends PlotContent_<ST, S> {
+/** @author timmolter */
+public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
+    extends PlotContent_<ST, S> {
 
   private final ST xyStyler;
 
@@ -110,7 +108,8 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
         // System.out.println(y);
 
         double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
-        double yTransform = getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+        double yTransform =
+            getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
         // a check if all x data are the exact same values
         if (Math.abs(xMax - xMin) / 5 == 0.0) {
@@ -132,9 +131,11 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
 
         // paint line
 
-        boolean isSeriesLineOrArea = XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()
+        boolean isSeriesLineOrArea =
+            XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()
                 || XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle();
-        boolean isSeriesStepLineOrStepArea =  XYSeriesRenderStyle.Step == series.getXYSeriesRenderStyle()
+        boolean isSeriesStepLineOrStepArea =
+            XYSeriesRenderStyle.Step == series.getXYSeriesRenderStyle()
                 || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle();
 
         if (isSeriesLineOrArea || isSeriesStepLineOrStepArea) {
@@ -162,7 +163,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
 
         // paint area
         if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()) {
+            || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
@@ -219,7 +220,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
           } else {
             topValue = y + eb;
           }
-          double topEBTransform = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
+          double topEBTransform =
+              getBounds().getHeight()
+                  - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
           double topEBOffset = getBounds().getY() + topEBTransform;
 
           // Bottom value
@@ -231,7 +234,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
           } else {
             bottomValue = y - eb;
           }
-          double bottomEBTransform = getBounds().getHeight() - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
+          double bottomEBTransform =
+              getBounds().getHeight()
+                  - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
           double bottomEBOffset = getBounds().getY() + bottomEBTransform;
 
           // Draw it
@@ -245,7 +250,11 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries> exte
 
         // add data labels
         if (chart.getStyler().isToolTipsEnabled()) {
-          chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
+          chart.toolTips.addData(
+              xOffset,
+              yOffset,
+              chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat().format(yOrig));
         }
       }
 

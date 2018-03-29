@@ -2,9 +2,7 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.Color;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class ColorBlindFriendlySeriesColors implements SeriesColors {
 
   // The color blind friendly palette
@@ -19,12 +17,13 @@ public class ColorBlindFriendlySeriesColors implements SeriesColors {
 
   private final Color[] seriesColors;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public ColorBlindFriendlySeriesColors() {
 
-    seriesColors = new Color[]{BLACK, ORANGE, SKY_BLUE, BLUISH_GREEN, YELLOW, BLUE, VERMILLION, REDDISH_PURPLE};
+    seriesColors =
+        new Color[] {
+          BLACK, ORANGE, SKY_BLUE, BLUISH_GREEN, YELLOW, BLUE, VERMILLION, REDDISH_PURPLE
+        };
   }
 
   @Override

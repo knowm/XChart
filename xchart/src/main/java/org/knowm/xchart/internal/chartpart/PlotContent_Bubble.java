@@ -4,15 +4,13 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.util.Map;
-
 import org.knowm.xchart.BubbleSeries;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.BubbleStyler;
 
-/**
- * @author timmolter
- */
-public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries> extends PlotContent_<ST, S> {
+/** @author timmolter */
+public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
+    extends PlotContent_<ST, S> {
 
   private final ST stylerBubble;
 
@@ -63,8 +61,7 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
 
       // data points
 
-      for (int i = 0; i <series.getXData().length ; i++) {
-
+      for (int i = 0; i < series.getXData().length; i++) {
 
         double x = series.getXData()[i];
         // System.out.println(x);
@@ -75,8 +72,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
 
         if (Double.isNaN(series.getYData()[i])) {
 
-//          previousX = -Double.MAX_VALUE;
-//          previousY = -Double.MAX_VALUE;
+          //          previousX = -Double.MAX_VALUE;
+          //          previousY = -Double.MAX_VALUE;
           continue;
         }
 
@@ -93,7 +90,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
         // System.out.println(y);
 
         double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
-        double yTransform = getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+        double yTransform =
+            getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
 
         // a check if all x data are the exact same values
         if (Math.abs(xMax - xMin) / 5 == 0.0) {
@@ -113,8 +111,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
         // System.out.println(yOffset);
         // System.out.println("---");
 
-//        previousX = xOffset;
-//        previousY = yOffset;
+        //        previousX = xOffset;
+        //        previousY = yOffset;
 
         // paint bubbles
         if (series.getExtraValues() != null) {
@@ -124,7 +122,9 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
           // Draw it
           Shape bubble;
           // if (BubbleSeriesRenderStyle.Round == series.getBubbleSeriesRenderStyle()) {
-          bubble = new Ellipse2D.Double(xOffset - bubbleSize / 2, yOffset - bubbleSize / 2, bubbleSize, bubbleSize);
+          bubble =
+              new Ellipse2D.Double(
+                  xOffset - bubbleSize / 2, yOffset - bubbleSize / 2, bubbleSize, bubbleSize);
           // }
           // else {
           // bubble = new Ellipse2D.Double(xOffset, yOffset, xOffset + 10, yOffset + 10);
@@ -137,7 +137,13 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
           g.setStroke(series.getLineStyle());
           g.draw(bubble);
           // add data labels
-          chart.toolTips.addData(bubble, xOffset, yOffset, 0, chart.getXAxisFormat().format(x), chart.getYAxisFormat().format(yOrig));
+          chart.toolTips.addData(
+              bubble,
+              xOffset,
+              yOffset,
+              0,
+              chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat().format(yOrig));
         }
       }
     }

@@ -4,9 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class Circle extends Marker {
 
   @Override
@@ -14,7 +12,8 @@ public class Circle extends Marker {
 
     g.setStroke(stroke);
     double halfSize = (double) markerSize / 2;
-    Shape circle = new Ellipse2D.Double(xOffset - halfSize, yOffset - halfSize, markerSize, markerSize);
+    Shape circle =
+        new Ellipse2D.Double(xOffset - halfSize, yOffset - halfSize, markerSize, markerSize);
     g.fill(circle);
   }
 }

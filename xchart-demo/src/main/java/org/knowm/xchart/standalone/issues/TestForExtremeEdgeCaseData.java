@@ -1,14 +1,11 @@
 package org.knowm.xchart.standalone.issues;
 
 import java.io.IOException;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class TestForExtremeEdgeCaseData {
 
   public static void main(String[] args) throws IOException {

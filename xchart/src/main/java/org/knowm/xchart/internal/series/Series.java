@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.series;
 
 import java.awt.Color;
-
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 
 /**
@@ -11,16 +10,16 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  */
 public abstract class Series {
 
-
   public enum DataType {
-
-    Number, Date, String
+    Number,
+    Date,
+    String
   }
 
   public abstract LegendRenderType getLegendRenderType();
 
   private final String name;
-  
+
   private String label;
 
   private Color fillColor;
@@ -42,7 +41,7 @@ public abstract class Series {
       throw new IllegalArgumentException("Series name cannot be null or zero-length!!!");
     }
     this.name = name;
-    this.label= name;
+    this.label = name;
   }
 
   public Color getFillColor() {
@@ -60,15 +59,15 @@ public abstract class Series {
 
     return name;
   }
-  
+
   public String getLabel() {
 
     return label;
   }
-  
+
   public Series setLabel(String label) {
-	  this.label=label;
-	  return this;
+    this.label = label;
+    return this;
   }
 
   public boolean isShowInLegend() {

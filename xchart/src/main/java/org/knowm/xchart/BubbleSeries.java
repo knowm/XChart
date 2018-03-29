@@ -12,7 +12,6 @@ import org.knowm.xchart.internal.series.NoMarkersSeries;
 public class BubbleSeries extends NoMarkersSeries {
 
   public enum BubbleSeriesRenderStyle implements RenderableSeries {
-
     Round(LegendRenderType.Box);
 
     private final LegendRenderType legendRenderType;
@@ -59,5 +58,4 @@ public class BubbleSeries extends NoMarkersSeries {
 
     return bubbleSeriesRenderStyle.getLegendRenderType();
   }
-
 }

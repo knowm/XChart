@@ -2,9 +2,7 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.Color;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class PrinterFriendlySeriesColors implements SeriesColors {
 
   // printer-friendly colors from http://colorbrewer2.org/
@@ -19,12 +17,10 @@ public class PrinterFriendlySeriesColors implements SeriesColors {
 
   private final Color[] seriesColors;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public PrinterFriendlySeriesColors() {
 
-    seriesColors = new Color[]{RED, GREEN, BLUE, PURPLE, ORANGE};
+    seriesColors = new Color[] {RED, GREEN, BLUE, PURPLE, ORANGE};
   }
 
   @Override

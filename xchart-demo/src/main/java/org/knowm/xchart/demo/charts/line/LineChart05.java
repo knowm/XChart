@@ -1,7 +1,6 @@
 package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -13,13 +12,14 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Scatter and Line
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Customizing the series style properties
- * <li>Scatter and Line overlay
- * <li>Logarithmic Y-Axis
- * <li>An X-Axis min value clipping off the series
+ *   <li>Customizing the series style properties
+ *   <li>Scatter and Line overlay
+ *   <li>Logarithmic Y-Axis
+ *   <li>An X-Axis min value clipping off the series
  */
 public class LineChart05 implements ExampleChart<XYChart> {
 
@@ -34,7 +34,14 @@ public class LineChart05 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).title("LineChart05").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .title("LineChart05")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
@@ -46,9 +53,9 @@ public class LineChart05 implements ExampleChart<XYChart> {
     chart.getStyler().setToolTipsEnabled(true);
 
     // Series
-    double[] xData = new double[]{0.0, 1.0, 2.0, 3.0, 4.0, 5, 6};
-    double[] yData = new double[]{106, 44, 26, 10, 7.5, 3.4, .88};
-    double[] yData2 = new double[]{102, 49, 23.6, 11.3, 5.4, 2.6, 1.25};
+    double[] xData = new double[] {0.0, 1.0, 2.0, 3.0, 4.0, 5, 6};
+    double[] yData = new double[] {106, 44, 26, 10, 7.5, 3.4, .88};
+    double[] yData2 = new double[] {102, 49, 23.6, 11.3, 5.4, 2.6, 1.25};
 
     XYSeries series = chart.addSeries("A", xData, yData);
     series.setLineStyle(SeriesLines.NONE);

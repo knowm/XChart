@@ -1,13 +1,13 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for logarithmic axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
+ * rendering the axis ticks for logarithmic axes
  *
  * @author timmolter
  */
@@ -24,7 +24,12 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_Logarithmic(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
+  public AxisTickCalculator_Logarithmic(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
     numberLogFormatter = new NumberLogFormatter(styler, axisDirection);
@@ -50,7 +55,10 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     }
 
     // where the tick should begin in the working space in pixels
-    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin =
+        Utils.getTickStartOffset(
+            workingSpace,
+            tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // System.out.println("minValue: " + minValue);
     // System.out.println("maxValue: " + maxValue);
@@ -107,7 +115,12 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
         }
 
         // add all the tick marks though
-        double tickLabelPosition = (int) (margin + (Math.log10(j) - Math.log10(minValue)) / (Math.log10(maxValue) - Math.log10(minValue)) * tickSpace);
+        double tickLabelPosition =
+            (int)
+                (margin
+                    + (Math.log10(j) - Math.log10(minValue))
+                        / (Math.log10(maxValue) - Math.log10(minValue))
+                        * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
       tickStep = tickStep * Utils.pow(10, 1);

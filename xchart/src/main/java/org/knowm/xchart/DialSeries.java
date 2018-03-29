@@ -2,7 +2,6 @@ package org.knowm.xchart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.markers.Marker;
@@ -14,36 +13,27 @@ import org.knowm.xchart.style.markers.Marker;
  */
 public class DialSeries extends Series {
 
-  /**
-   * Line Style
-   */
+  /** Line Style */
   private BasicStroke stroke;
 
-  /**
-   * Line Color
-   */
+  /** Line Color */
   private Color lineColor;
 
-  /**
-   * Line Width
-   */
+  /** Line Width */
   private float lineWidth;
 
-  /**
-   * Marker
-   */
+  /** Marker */
   private Marker marker;
 
-  /**
-   * Marker Color
-   */
+  /** Marker Color */
   private Color markerColor;
 
   private double value;
   private String annotation;
 
   /**
-   * @param annotation Adds custom annotation for series. If annotation is null, it is automatically calculated.
+   * @param annotation Adds custom annotation for series. If annotation is null, it is automatically
+   *     calculated.
    */
   public DialSeries(String name, double value, String annotation) {
 
@@ -56,17 +46,17 @@ public class DialSeries extends Series {
 
     return value;
   }
-  
+
   public void setValue(double value) {
 
     this.value = value;
   }
-  
+
   public String getAnnotation() {
 
     return annotation;
   }
-  
+
   /**
    * Set the line style of the series
    *
@@ -76,7 +66,14 @@ public class DialSeries extends Series {
 
     stroke = basicStroke;
     if (this.lineWidth > 0.0f) {
-      stroke = new BasicStroke(lineWidth, this.stroke.getEndCap(), this.stroke.getLineJoin(), this.stroke.getMiterLimit(), this.stroke.getDashArray(), this.stroke.getDashPhase());
+      stroke =
+          new BasicStroke(
+              lineWidth,
+              this.stroke.getEndCap(),
+              this.stroke.getLineJoin(),
+              this.stroke.getMiterLimit(),
+              this.stroke.getDashArray(),
+              this.stroke.getDashPhase());
     }
     return this;
   }

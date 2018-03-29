@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
@@ -70,9 +69,7 @@ public abstract class AbstractBaseTheme implements Theme {
 
   // Chart Title ///////////////////////////////
 
-  /**
-   * Base font, bold, size 14.
-   */
+  /** Base font, bold, size 14. */
   @Override
   public Font getChartTitleFont() {
 
@@ -304,7 +301,8 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[]{3.0f, 5.0f}, 0.0f);
+    return new BasicStroke(
+        1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] {3.0f, 5.0f}, 0.0f);
   }
 
   @Override
@@ -384,9 +382,7 @@ public abstract class AbstractBaseTheme implements Theme {
     return 0;
   }
 
-  /**
-   * Base font, size 15.
-   */
+  /** Base font, size 15. */
   @Override
   public Font getPieFont() {
 
@@ -453,9 +449,7 @@ public abstract class AbstractBaseTheme implements Theme {
 
   // Annotations ///////////////////////////////
 
-  /**
-   * Pie font, size 12.
-   */
+  /** Pie font, size 12. */
   @Override
   public Font getAnnotationFont() {
 

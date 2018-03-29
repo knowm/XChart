@@ -6,7 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number or Date or String, hence a List<?>
+ * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number
+ * or Date or String, hence a List<?>
  *
  * @author timmolter
  */
@@ -25,7 +26,12 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
    * @param xData
    * @param yData
    */
-  public AxesChartSeriesCategory(String name, List<?> xData, List<? extends Number> yData, List<? extends Number> extraValues, DataType xAxisDataType) {
+  public AxesChartSeriesCategory(
+      String name,
+      List<?> xData,
+      List<? extends Number> yData,
+      List<? extends Number> extraValues,
+      DataType xAxisDataType) {
 
     super(name, xAxisDataType);
 
@@ -37,13 +43,15 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
   }
 
   /**
-   * This is an internal method which shouldn't be called from client code. Use XYChart.updateXYSeries or CategoryChart.updateXYSeries instead!
+   * This is an internal method which shouldn't be called from client code. Use
+   * XYChart.updateXYSeries or CategoryChart.updateXYSeries instead!
    *
    * @param newXData
    * @param newYData
    * @param newExtraValues
    */
-  public void replaceData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
+  public void replaceData(
+      List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
 
     // Sanity check
     if (newExtraValues != null && newExtraValues.size() != newYData.size()) {
@@ -58,6 +66,7 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     extraValues = newExtraValues;
     calculateMinMax();
   }
+
   @Override
   protected void calculateMinMax() {
 
@@ -72,8 +81,7 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     double[] yMinMax;
     if (extraValues == null) {
       yMinMax = findMinMax(yData, yAxisType);
-    }
-    else {
+    } else {
       yMinMax = findMinMaxWithErrorBars(yData, extraValues);
     }
     yMin = yMinMax[0];
@@ -89,7 +97,8 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
    * @param errorBars
    * @return
    */
-  private double[] findMinMaxWithErrorBars(Collection<? extends Number> data, Collection<? extends Number> errorBars) {
+  private double[] findMinMaxWithErrorBars(
+      Collection<? extends Number> data, Collection<? extends Number> errorBars) {
 
     double min = Double.MAX_VALUE;
     double max = -Double.MAX_VALUE;
@@ -106,7 +115,7 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
         max = bigDecimal + eb;
       }
     }
-    return new double[] { min, max };
+    return new double[] {min, max};
   }
   /**
    * Finds the min and max of a dataset
@@ -129,13 +138,11 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
 
       if (dataType == DataType.Number) {
         value = ((Number) dataPoint).doubleValue();
-      }
-      else if (dataType == DataType.Date) {
+      } else if (dataType == DataType.Date) {
         Date date = (Date) dataPoint;
         value = date.getTime();
-      }
-      else if (dataType == DataType.String) {
-        return new double[] { Double.NaN, Double.NaN };
+      } else if (dataType == DataType.String) {
+        return new double[] {Double.NaN, Double.NaN};
       }
       if (value < min) {
         min = value;
@@ -145,7 +152,7 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
       }
     }
 
-    return new double[] { min, max };
+    return new double[] {min, max};
   }
 
   public Collection<?> getXData() {
@@ -162,5 +169,4 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
 
     return extraValues;
   }
-
 }

@@ -2,9 +2,7 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.Color;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class GGPlot2SeriesColors implements SeriesColors {
 
   public static final Color RED = new Color(248, 118, 109, 255);
@@ -15,12 +13,10 @@ public class GGPlot2SeriesColors implements SeriesColors {
 
   private final Color[] seriesColors;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public GGPlot2SeriesColors() {
 
-    seriesColors = new Color[]{RED, YELLOW_GREEN, GREEN, BLUE, PURPLE};
+    seriesColors = new Color[] {RED, YELLOW_GREEN, GREEN, BLUE, PURPLE};
   }
 
   @Override

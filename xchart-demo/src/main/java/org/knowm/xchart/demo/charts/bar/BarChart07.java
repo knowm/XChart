@@ -3,7 +3,6 @@ package org.knowm.xchart.demo.charts.bar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
@@ -14,13 +13,14 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Histogram Not Overlapped
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Histogram
- * <li>Bar Chart styles - not overlapped, bar width
- * <li>Integer data values
- * <li>Tool Tips
+ *   <li>Histogram
+ *   <li>Bar Chart styles - not overlapped, bar width
+ *   <li>Integer data values
+ *   <li>Tool Tips
  */
 public class BarChart07 implements ExampleChart<CategoryChart> {
 
@@ -35,7 +35,14 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
   public CategoryChart getChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
+    CategoryChart chart =
+        new CategoryChartBuilder()
+            .width(800)
+            .height(600)
+            .title("Score Histogram")
+            .xAxisTitle("Mean")
+            .yAxisTitle("Count")
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);

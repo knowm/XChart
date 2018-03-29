@@ -3,7 +3,6 @@ package org.knowm.xchart.demo.charts.scatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -13,13 +12,14 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Logarithmic Data
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Scatter chart
- * <li>Logarithmic X-Axis
- * <li>Place legend at Inside-NW position
- * <li>Formatting of number with large magnitude but small differences
+ *   <li>Scatter chart
+ *   <li>Logarithmic X-Axis
+ *   <li>Place legend at Inside-NW position
+ *   <li>Formatting of number with large magnitude but small differences
  *
  * @author timmolter
  */

@@ -2,17 +2,13 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.ChartBuilder;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class OHLCChartBuilder extends ChartBuilder<OHLCChartBuilder, OHLCChart> {
 
   String xAxisTitle = "";
   String yAxisTitle = "";
 
-  public OHLCChartBuilder() {
-
-  }
+  public OHLCChartBuilder() {}
 
   public OHLCChartBuilder xAxisTitle(String xAxisTitle) {
 

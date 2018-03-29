@@ -2,9 +2,7 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.Color;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class MatlabSeriesColors implements SeriesColors {
 
   public static final Color BLUE = new Color(0, 0, 255, 255);
@@ -17,12 +15,10 @@ public class MatlabSeriesColors implements SeriesColors {
 
   private final Color[] seriesColors;
 
-  /**
-   * Constructor
-   */
+  /** Constructor */
   public MatlabSeriesColors() {
 
-    seriesColors = new Color[]{BLUE, GREEN, RED, TURQUOISE, MAGENTA, YELLOW, DARK_GREY};
+    seriesColors = new Color[] {BLUE, GREEN, RED, TURQUOISE, MAGENTA, YELLOW, DARK_GREY};
   }
 
   @Override
