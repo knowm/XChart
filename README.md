@@ -348,10 +348,15 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.1" exclude("de.erich
     
 Formats your code using [google-java-format](https://github.com/google/google-java-format) which follows [Google's code styleguide](https://google.github.io/styleguide/javaguide.html).
 
-If you want your IDE to stick to the same format, check out [the available configuration files](https://github.com/google/styleguide)
+If you want your IDE to stick to the same format, check out the available configuration plugins:
 
-* [Eclipse](https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml)
-* [IntelliJ IDEA](https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml)    
+#### Eclipse
+
+Download [`google-java-format-eclipse-plugin_*.jar`](https://github.com/google/google-java-format/releases) and place in `/Applications/Eclipse Java.app/Contents/Eclipse/dropins`. Select the plugin in `Preferences > Java > Code Style > Formatter > Formatter Implementation`. Restart Eclipse.
+
+#### IntelliJ
+
+In the plugins section in IntelliJ search for `google-java-format` and install the plugin. Restart IntelliJ.
 
 ## Running Demo
 
