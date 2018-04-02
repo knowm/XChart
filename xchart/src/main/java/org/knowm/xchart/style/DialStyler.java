@@ -1,24 +1,6 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.style;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Stroke;
+import java.awt.*;
 
 public class DialStyler extends Styler {
 
@@ -28,8 +10,10 @@ public class DialStyler extends Styler {
   private boolean axisTicksMarksVisible;
   private Color axisTickMarksColor;
   private Stroke axisTickMarksStroke;
-  private double[] axisTickValues = { 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 };
-  private String[] axisTickLabels = { "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" };
+  private double[] axisTickValues = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
+  private String[] axisTickLabels = {
+    "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
+  };
 
   // variable labels
   private boolean axisTitleVisible;
@@ -87,8 +71,8 @@ public class DialStyler extends Styler {
   }
 
   /**
-   * Sets whether or not the radar chart is forced to be circular. Otherwise
-   * it's shape is oval, matching the containing plot.
+   * Sets whether or not the radar chart is forced to be circular. Otherwise it's shape is oval,
+   * matching the containing plot.
    *
    * @param isCircular
    */

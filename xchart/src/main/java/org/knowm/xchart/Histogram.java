@@ -1,19 +1,3 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart;
 
 import java.util.ArrayList;
@@ -28,12 +12,12 @@ import java.util.List;
  */
 public class Histogram {
 
-  private List<Double> xAxisData; // bin centers
-  private List<Double> yAxisData; // frequency counts
   private final Collection<? extends Number> originalData;
   private final int numBins;
   private final double min;
   private final double max;
+  private List<Double> xAxisData; // bin centers
+  private List<Double> yAxisData; // frequency counts
 
   /**
    * Constructor
@@ -92,11 +76,13 @@ public class Histogram {
 
       double doubleValue = itr.next().doubleValue();
       int bin = (int) ((doubleValue - min) / binSize); // changed this from numBins
-      if (bin < 0) { /* this data is smaller than min */
+      if (bin < 0) {
+        /* this data is smaller than min */
         // System.out.println("less than");
       } else if (doubleValue == max) { // the value falls exactly on the max value
         tempYAxisData[bin - 1] += 1;
-      } else if (bin > numBins || bin == numBins) { /* this data point is bigger than max */
+      } else if (bin > numBins || bin == numBins) {
+        /* this data point is bigger than max */
         // System.out.println("greater than");
       } else {
         tempYAxisData[bin] += 1;

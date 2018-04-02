@@ -342,11 +342,21 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.1" exclude("de.erich
     mvn clean package  
     mvn javadoc:aggregate  
 
-#### maven-license-plugin
+#### Formatting
 
-    mvn license:check
-    mvn license:format
-    mvn license:remove
+    mvn com.coveo:fmt-maven-plugin:format
+    
+Formats your code using [google-java-format](https://github.com/google/google-java-format) which follows [Google's code styleguide](https://google.github.io/styleguide/javaguide.html).
+
+If you want your IDE to stick to the same format, check out the available configuration plugins:
+
+#### Eclipse
+
+Download [`google-java-format-eclipse-plugin_*.jar`](https://github.com/google/google-java-format/releases) and place in `/Applications/Eclipse Java.app/Contents/Eclipse/dropins`. Restart Eclipse. Select the plugin in `Preferences > Java > Code Style > Formatter > Formatter Implementation`. 
+
+#### IntelliJ
+
+In the plugins section in IntelliJ search for `google-java-format` and install the plugin. Restart IntelliJ.
 
 ## Running Demo
 
@@ -364,6 +374,3 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 [![Build Status](https://travis-ci.org/timmolter/XChart.png?branch=develop)](https://travis-ci.org/timmolter/XChart.png)  
 [Build History](https://travis-ci.org/timmolter/XChart/builds)  
 
-## Donations
-
-All donations will be used to pay bounties for new features, refactoring, etc. Please consider donating or even posting your own bounties on our [Issues Page](https://github.com/timmolter/xchart/issues?state=open). Donation addresses, open bounties and bounties paid thus far can be found on Knowm's [bounties](http://knowm.org/open-source/) page.

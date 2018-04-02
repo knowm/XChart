@@ -1,65 +1,22 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart;
 
+import java.awt.*;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 
-import java.awt.*;
-
-/**
- * @author arthurmcgibbon
- */
+/** @author arthurmcgibbon */
 public class OHLCSeries extends AxesChartSeries {
 
-  public enum OHLCSeriesRenderStyle implements RenderableSeries {
-
-    Candle(LegendRenderType.Line),
-
-    HiLo(LegendRenderType.Line);
-
-    private final LegendRenderType legendRenderType;
-
-    OHLCSeriesRenderStyle(LegendRenderType legendRenderType) {
-
-      this.legendRenderType = legendRenderType;
-    }
-
-    @Override public LegendRenderType getLegendRenderType() {
-
-      return legendRenderType;
-    }
-  }
-
   private double[] xData; // can be Number or Date(epochtime)
-
   private double[] openData;
   private double[] highData;
   private double[] lowData;
   private double[] closeData;
-
   private OHLCSeriesRenderStyle ohlcSeriesRenderStyle;
-
-  /**
-   * Up Color
-   */
+  /** Up Color */
   private Color upColor;
-
-  /**
-   * Down Color
-   */
+  /** Down Color */
   private Color downColor;
 
   /**
@@ -72,7 +29,14 @@ public class OHLCSeries extends AxesChartSeries {
    * @param lowData
    * @param closeData
    */
-  public OHLCSeries(String name, double[] xData, double[] openData, double[] highData, double[] lowData, double[] closeData, DataType xAxisDataType) {
+  public OHLCSeries(
+      String name,
+      double[] xData,
+      double[] openData,
+      double[] highData,
+      double[] lowData,
+      double[] closeData,
+      DataType xAxisDataType) {
 
     super(name, xAxisDataType);
     this.xData = xData;
@@ -94,6 +58,11 @@ public class OHLCSeries extends AxesChartSeries {
     return this;
   }
 
+  public Color getUpColor() {
+
+    return upColor;
+  }
+
   /**
    * Set the up color of the series
    *
@@ -105,9 +74,9 @@ public class OHLCSeries extends AxesChartSeries {
     return this;
   }
 
-  public Color getUpColor() {
+  public Color getDownColor() {
 
-    return upColor;
+    return downColor;
   }
 
   /**
@@ -121,17 +90,15 @@ public class OHLCSeries extends AxesChartSeries {
     return this;
   }
 
-  public Color getDownColor() {
+  @Override
+  public LegendRenderType getLegendRenderType() {
 
-    return downColor;
-  }
-
-  @Override public LegendRenderType getLegendRenderType() {
     return ohlcSeriesRenderStyle.getLegendRenderType();
   }
 
   /**
-   * This is an internal method which shouldn't be called from client code. Use {@link org.knowm.xchart.OHLCChart#updateOHLCSeries} instead!
+   * This is an internal method which shouldn't be called from client code. Use {@link
+   * org.knowm.xchart.OHLCChart#updateOHLCSeries} instead!
    *
    * @param newXData
    * @param newOpenData
@@ -139,7 +106,12 @@ public class OHLCSeries extends AxesChartSeries {
    * @param newLowData
    * @param newCloseData
    */
-  void replaceData(double[] newXData, double[] newOpenData, double[] newHighData, double[] newLowData, double[] newCloseData) {
+  void replaceData(
+      double[] newXData,
+      double[] newOpenData,
+      double[] newHighData,
+      double[] newLowData,
+      double[] newCloseData) {
 
     // Sanity check should already by done
     this.xData = newXData;
@@ -172,10 +144,11 @@ public class OHLCSeries extends AxesChartSeries {
       }
     }
 
-    return new double[]{min, max};
+    return new double[] {min, max};
   }
 
-  @Override protected void calculateMinMax() {
+  @Override
+  protected void calculateMinMax() {
 
     double[] xMinMax = findMinMax(xData, xData);
     xMin = xMinMax[0];
@@ -208,5 +181,24 @@ public class OHLCSeries extends AxesChartSeries {
   public double[] getCloseData() {
 
     return closeData;
+  }
+
+  public enum OHLCSeriesRenderStyle implements RenderableSeries {
+    Candle(LegendRenderType.Line),
+
+    HiLo(LegendRenderType.Line);
+
+    private final LegendRenderType legendRenderType;
+
+    OHLCSeriesRenderStyle(LegendRenderType legendRenderType) {
+
+      this.legendRenderType = legendRenderType;
+    }
+
+    @Override
+    public LegendRenderType getLegendRenderType() {
+
+      return legendRenderType;
+    }
   }
 }

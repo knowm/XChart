@@ -1,23 +1,6 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.demo.charts.bar;
 
 import java.util.Arrays;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.SwingWrapper;
@@ -26,16 +9,17 @@ import org.knowm.xchart.style.Styler;
 
 /**
  * Missing Point in Series
- * <p>
- * Demonstrates the following:
+ *
+ * <p>Demonstrates the following:
+ *
  * <ul>
- * <li>Number categories
- * <li>Positive values
- * <li>Multiple series
- * <li>Missing point in series
- * <li>Manually setting y-axis min and max values
- * <li>Bar Chart Annotations
- * <li>Horizontal Legend OutsideS
+ *   <li>Number categories
+ *   <li>Positive values
+ *   <li>Multiple series
+ *   <li>Missing point in series
+ *   <li>Manually setting y-axis min and max values
+ *   <li>Bar Chart Annotations
+ *   <li>Horizontal Legend OutsideS
  */
 public class BarChart04 implements ExampleChart<CategoryChart> {
 
@@ -50,7 +34,14 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
   public CategoryChart getChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(800).height(600).title("XFactor vs. Age").xAxisTitle("Age").yAxisTitle("XFactor").build();
+    CategoryChart chart =
+        new CategoryChartBuilder()
+            .width(800)
+            .height(600)
+            .title("XFactor vs. Age")
+            .xAxisTitle("Age")
+            .yAxisTitle("XFactor")
+            .build();
 
     // Customize Chart
     chart.getStyler().setYAxisMin(5.0);

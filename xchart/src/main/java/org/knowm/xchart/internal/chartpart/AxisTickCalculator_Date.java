@@ -1,32 +1,16 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.internal.chartpart;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for date axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
+ * rendering the axis ticks for date axes
  *
  * @author timmolter
  */
@@ -107,7 +91,12 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_Date(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
+  public AxisTickCalculator_Date(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
 
@@ -126,13 +115,17 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
     }
 
     // where the tick should begin in the working space in pixels
-    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin =
+        Utils.getTickStartOffset(
+            workingSpace,
+            tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // the span of the data
     long span = (long) Math.abs(maxValue - minValue); // in data space
     // System.out.println("span: " + span);
 
-    // Generate the labels first, see if they "look" OK and reiterate with an increased tickSpacingHint
+    // Generate the labels first, see if they "look" OK and reiterate with an increased
+    // tickSpacingHint
     int tickSpacingHint = styler.getXAxisTickMarkSpacingHint();
     int gridStepInChartSpace;
 
@@ -146,7 +139,10 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
     int index = 0;
     for (int i = 0; i < timeSpans.size() - 1; i++) {
 
-      if (span < ((timeSpans.get(i).getUnitAmount() * timeSpans.get(i).getMagnitude() + timeSpans.get(i + 1).getUnitAmount() * timeSpans.get(i + 1).getMagnitude()) / 2.0)) {
+      if (span
+          < ((timeSpans.get(i).getUnitAmount() * timeSpans.get(i).getMagnitude()
+                  + timeSpans.get(i + 1).getUnitAmount() * timeSpans.get(i + 1).getMagnitude())
+              / 2.0)) {
         index = i;
         break;
       }
@@ -156,7 +152,8 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
     String datePattern = timeSpans.get(index).getDatePattern();
     // System.out.println("index: " + index);
 
-    // iterate BACKWARDS from previous point until the appropriate timespan is found for the gridStepHint
+    // iterate BACKWARDS from previous point until the appropriate timespan is found for the
+    // gridStepHint
     for (int i = index - 1; i > 0; i--) {
 
       if (gridStepHint > timeSpans.get(i).getUnitAmount() * timeSpans.get(i).getMagnitude()) {
@@ -167,14 +164,17 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
     //////////////////////////////////////////////
 
-    // now increase the timespan until one is found where all the labels fit nicely. It will often be the first one.
+    // now increase the timespan until one is found where all the labels fit nicely. It will often
+    // be the first one.
     index--;
     do {
 
       tickLabels.clear();
       tickLocations.clear();
 
-      double gridStep = timeSpans.get(++index).getUnitAmount() * timeSpans.get(index).getMagnitude(); // in time units (ms)
+      double gridStep =
+          timeSpans.get(++index).getUnitAmount()
+              * timeSpans.get(index).getMagnitude(); // in time units (ms)
       // System.out.println("gridStep: " + gridStep);
 
       gridStepInChartSpace = (int) (gridStep / span * tickSpace);
@@ -194,11 +194,14 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
       axisFormat = simpleDateformat;
 
       // generate all tickLabels and tickLocations from the first to last position
-      for (double value = firstPosition; value <= maxValue + 2 * gridStep; value = value + gridStep) {
+      for (double value = firstPosition;
+          value <= maxValue + 2 * gridStep;
+          value = value + gridStep) {
 
         tickLabels.add(axisFormat.format(value));
         // here we convert tickPosition finally to plot space, i.e. pixels
-        double tickLabelPosition = margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
+        double tickLabelPosition =
+            margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
         // System.out.println("tickLabelPosition: " + tickLabelPosition);
         tickLocations.add(tickLabelPosition);
         // }
@@ -244,7 +247,13 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
     @Override
     public String toString() {
 
-      return "TimeSpan [unitAmount=" + unitAmount + ", magnitude=" + magnitude + ", datePattern=" + datePattern + "]";
+      return "TimeSpan [unitAmount="
+          + unitAmount
+          + ", magnitude="
+          + magnitude
+          + ", datePattern="
+          + datePattern
+          + "]";
     }
   }
 }

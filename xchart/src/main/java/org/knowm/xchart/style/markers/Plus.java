@@ -1,6 +1,6 @@
 package org.knowm.xchart.style.markers;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Path2D;
 
 public class Plus extends Marker {
@@ -20,5 +20,4 @@ public class Plus extends Marker {
     path.lineTo(xOffset, yOffset - halfSize);
     g.draw(path);
   }
-
 }
