@@ -1,4 +1,4 @@
-## [![XChart](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_64_64.png)](http://knowm.org/open-source/xchart) XChart
+## [![XChart](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_64_64.png)](http://knowm.org/open-source/xchart) XChart
 
 XChart is a light weight Java library for plotting data.
 
@@ -28,7 +28,7 @@ BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
 BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI", BitmapFormat.PNG, 300);
 ```
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Simplest.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Simplest.png)
 
 ## Intermediate Example
 
@@ -53,7 +53,7 @@ series.setMarker(SeriesMarkers.DIAMOND);
 new SwingWrapper(chart).displayChart();
 ```
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Intermediate.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Intermediate.png)
 
 ## Advanced Example
 
@@ -101,7 +101,7 @@ javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
 ```
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Advanced.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Advanced.png)
 
 To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to update the series data, followed by `revalidate()` and `repaint()` on the `XChartPanel` instance to repaint.
 
@@ -159,7 +159,7 @@ The different Stylers contain chart styling methods specific to the correspondin
 
 ### XYChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XYChart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XYChart.png)
 
 `XYChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals. 
 
@@ -167,7 +167,7 @@ Series render styles include: `Line`, `Scatter`, `Area`, `Step` and `StepArea`.
 
 ### CategoryChart 
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/CategoryChart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/CategoryChart.png)
 
 `CategoryChart` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. For the X-Axis, each category is given its own tick mark.  
 
@@ -175,7 +175,7 @@ Series render styles include: `Bar`, `Line`, `Scatter`, `Area` and `Stick`.
 
 ### PieChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/PieChart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/PieChart.png)
 
 `PieChart` charts take String data types for the pie slice name and Number data types for the pie slice value.  
 
@@ -183,7 +183,7 @@ Series render styles include: `Pie` and `Donut`.
 
 ### BubbleChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Bubble_Chart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Bubble_Chart.png)
 
 `BubbleChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis and bubble sizes. 
 
@@ -191,13 +191,13 @@ Series render styles include: `Round` and in the near future `Square`.
 
 ### DialChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Dial_Chart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Dial_Chart.png)
 
 `DialChart` charts take a `double` to set the position of the dial pointer.
 
 ### RadarChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Radar_Chart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Radar_Chart.png)
 
 `RadarChart` charts take a `double[]` of values between `0` and `1` to set the position of radar node.
 
@@ -205,7 +205,7 @@ Series render styles include: `Polygon` and  `Circle`.
 
 ### OHLCChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Candle.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Candle.png)
 
 `OHLCChart` charts take Date data types for the X-Axis and 4 Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals.
 
@@ -213,11 +213,11 @@ Series render styles include: `Candle`, `HiLo`.
 
 ## Real-time Java Charts using XChart
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_SimpleRealtime.gif)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_SimpleRealtime.gif)
 
-Creating real-time charts is as simple as calling `updateXYSeries` for one or more series objects through the `XYChart` instance and triggering a redraw of the `JPanel` containing the chart. This works for all chart types including `XYChart`, `CategoryChart`, `BubbleChart` and `PieChart`, for which example source code can be found [here](https://github.com/timmolter/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime). Examples demonstrate using the `SwingWrapper` with `repaintChart()` method as well as `XChartPanel` with `revalidate()` and `repaint()`. 
+Creating real-time charts is as simple as calling `updateXYSeries` for one or more series objects through the `XYChart` instance and triggering a redraw of the `JPanel` containing the chart. This works for all chart types including `XYChart`, `CategoryChart`, `BubbleChart` and `PieChart`, for which example source code can be found [here](https://github.com/knowm/XChart/tree/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/realtime). Examples demonstrate using the `SwingWrapper` with `repaintChart()` method as well as `XChartPanel` with `revalidate()` and `repaint()`. 
 
-The following sample code used to generate the above real-time chart can be found [here](https://github.com/timmolter/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/standalone/readme/SimpleRealTime.java).
+The following sample code used to generate the above real-time chart can be found [here](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/standalone/readme/SimpleRealTime.java).
 
 ```java
 public class SimpleRealTime {
@@ -273,9 +273,9 @@ public class SimpleRealTime {
 
 All the styling options can be found in one of two possible places: 1) the Chart's `Styler` or 2) the series' `set` methods. With this chart customization design, all customization options can be quickly "discovered" using an IDE's built in "Content Assist". With centralized styling like this, there is no need to hunt around the entire charting API to find that one customization you're looking for - it's all right in one spot!
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Chart_Customization.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Chart_Customization.png)
  
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Series_Customization.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Series_Customization.png)
  
 ## Chart Themes
 
@@ -283,11 +283,11 @@ XChart ships with three different themes: Default `XChart`, `GGPlot2` and `Matla
 
     XYChart chart = new XYChartBuilder().width(800).height(600).theme(ChartTheme.Matlab).build();
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Themes.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Themes.png)
 
 ## What's Next?
 
-Now go ahead and [study some more examples](http://knowm.org/open-source/xchart/xchart-example-code/), [download the thing](http://knowm.org/open-source/xchart/xchart-change-log) and [provide feedback](https://github.com/timmolter/XChart/issues).
+Now go ahead and [study some more examples](http://knowm.org/open-source/xchart/xchart-example-code/), [download the thing](http://knowm.org/open-source/xchart/xchart-change-log) and [provide feedback](https://github.com/knowm/XChart/issues).
  
 ## Getting Started
 
@@ -363,11 +363,11 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
     cd /path/to/xchart-demo/jar/
     java -cp xchart-demo-3.5.1.jar:xchart-3.5.1.jar org.knowm.xchart.demo.XChartDemo
 
-![](https://raw.githubusercontent.com/timmolter/XChart/develop/etc/XChart_Demo.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
 
 ## Bugs
 
-Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/timmolter/XChart/issues).  
+Please report any bugs or submit feature requests to [XChart's Github issue tracker](https://github.com/knowm/XChart/issues).  
 
 ## Continuous Integration
 
