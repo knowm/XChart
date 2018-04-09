@@ -72,7 +72,7 @@
       <dependency>
         <groupId>de.erichseifert.vectorgraphics2d</groupId>
         <artifactId>VectorGraphics2D</artifactId>
-        <version>0.11</version>
+        <version>0.13</version>
         <optional>true</optional>
       </dependency>
     </dependencies>

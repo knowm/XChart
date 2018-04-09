@@ -1,12 +1,19 @@
 package org.knowm.xchart;
 
-import de.erichseifert.vectorgraphics2d.EPSGraphics2D;
-import de.erichseifert.vectorgraphics2d.PDFGraphics2D;
-import de.erichseifert.vectorgraphics2d.ProcessingPipeline;
-import de.erichseifert.vectorgraphics2d.SVGGraphics2D;
+import de.erichseifert.vectorgraphics2d.Document;
+import de.erichseifert.vectorgraphics2d.Processor;
+import de.erichseifert.vectorgraphics2d.VectorGraphics2D;
+import de.erichseifert.vectorgraphics2d.eps.EPSProcessor;
+import de.erichseifert.vectorgraphics2d.intermediate.CommandSequence;
+import de.erichseifert.vectorgraphics2d.pdf.PDFProcessor;
+import de.erichseifert.vectorgraphics2d.svg.SVGProcessor;
+import de.erichseifert.vectorgraphics2d.util.PageSize;
+import org.knowm.xchart.internal.chartpart.Chart;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A helper class with static methods for saving Charts as vectors
@@ -21,30 +28,36 @@ public final class VectorGraphicsEncoder {
   public static void saveVectorGraphic(
       Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
 
-    ProcessingPipeline g = null;
+    Processor p = null;
 
     switch (vectorGraphicsFormat) {
       case EPS:
-        g = new EPSGraphics2D(0.0, 0.0, chart.getWidth(), chart.getHeight());
+        p= new EPSProcessor();
         break;
       case PDF:
-        g = new PDFGraphics2D(0.0, 0.0, chart.getWidth(), chart.getHeight());
+        p= new PDFProcessor(true);
         break;
       case SVG:
-        g = new SVGGraphics2D(0.0, 0.0, chart.getWidth(), chart.getHeight());
+        p= new SVGProcessor();
         break;
 
       default:
         break;
     }
 
-    chart.paint(g, chart.getWidth(), chart.getHeight());
+    Graphics2D vg2d = new VectorGraphics2D();
+//    vg2d.draw(new Rectangle2D.Double(0.0, 0.0, chart.getWidth(), chart.getHeight()));
+    CommandSequence commands = ((VectorGraphics2D) vg2d).getCommands();
+
+    chart.paint(vg2d, chart.getWidth(), chart.getHeight());
 
     // Write the vector graphic output to a file
     FileOutputStream file = new FileOutputStream(addFileExtension(fileName, vectorGraphicsFormat));
 
     try {
-      file.write(g.getBytes());
+      PageSize pageSize = new PageSize(0.0, 0.0, chart.getWidth(), chart.getHeight());
+      Document doc = p.getDocument(commands, pageSize);
+      doc.writeTo(file);
     } finally {
       file.close();
     }
