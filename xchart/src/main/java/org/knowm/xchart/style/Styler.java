@@ -10,6 +10,8 @@ import org.knowm.xchart.style.markers.Marker;
  * @author timmolter
  */
 public abstract class Styler {
+  public static final int LEGEND_SHAPE_RECTANGLE = 0;
+  public static final int LEGEND_SHAPE_ELLIPSE = 1;
 
   /** the default Theme */
   Theme theme = new XChartTheme();
@@ -39,6 +41,8 @@ public abstract class Styler {
   private int legendSeriesLineLength;
   private LegendPosition legendPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
+  private int legendEntryShape;
+
   // Chart Plot Area ///////////////////////////////
   private Color plotBackgroundColor;
   private Color plotBorderColor;
@@ -108,6 +112,14 @@ public abstract class Styler {
 
     // Formatting
     decimalPattern = null;
+  }
+
+  public int getLegendEntryShape() {
+    return legendEntryShape;
+  }
+
+  public void setLegendEntryShape(int legendEntryShape) {
+    this.legendEntryShape = legendEntryShape;
   }
 
   public Font getBaseFont() {

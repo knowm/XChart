@@ -1,6 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 import org.knowm.xchart.internal.series.Series;
@@ -43,7 +44,20 @@ public class Legend_Pie<ST extends Styler, S extends Series> extends Legend_<ST,
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);
 
       // paint little box
-      Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+      Shape rectSmall = null;
+      switch (chart.getStyler().getLegendEntryShape()) {
+        case Styler.LEGEND_SHAPE_ELLIPSE:
+          {
+            rectSmall = new Ellipse2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+            break;
+          }
+        case Styler.LEGEND_SHAPE_RECTANGLE:
+        default:
+          {
+            rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+            break;
+          }
+      }
       g.setColor(series.getFillColor());
       g.fill(rectSmall);
 

@@ -26,6 +26,7 @@ public abstract class AxesChartStyler extends Styler {
   private int axisTitlePadding;
   private int xAxisTickMarkSpacingHint;
   private int yAxisTickMarkSpacingHint;
+  private String yAxisTicksSuffix;
   private boolean isXAxisLogarithmic;
   private boolean isYAxisLogarithmic;
   private Double xAxisMin;
@@ -218,6 +219,21 @@ public abstract class AxesChartStyler extends Styler {
     this.xAxisTicksVisible = isVisible;
     this.yAxisTicksVisible = isVisible;
     return this;
+  }
+
+  /**
+   * Set the x- and y-axis tick suffix
+   *
+   * @param isVisible
+   */
+  public AxesChartStyler setYAxisTicksSuffix(String suffix) {
+
+    this.yAxisTicksSuffix = suffix;
+    return this;
+  }
+
+  public String getYAxisTicksSuffix() {
+    return yAxisTicksSuffix;
   }
 
   public Font getAxisTickLabelsFont() {
