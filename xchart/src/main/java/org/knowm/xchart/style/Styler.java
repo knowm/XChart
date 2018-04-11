@@ -39,6 +39,7 @@ public abstract class Styler {
   private Font legendFont;
   private int legendPadding;
   private int legendSeriesLineLength;
+  private int legendBoxSize = 0;
   private LegendPosition legendPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
   private int legendEntryShape;
@@ -138,6 +139,14 @@ public abstract class Styler {
     this.baseFont = baseFont;
     return this;
   }
+
+    public int getLegendBoxSize() {
+        return legendBoxSize;
+    }
+
+    public void setLegendBoxSize(int legendBoxSize) {
+        this.legendBoxSize = legendBoxSize;
+    }
 
   public Color getChartBackgroundColor() {
 
