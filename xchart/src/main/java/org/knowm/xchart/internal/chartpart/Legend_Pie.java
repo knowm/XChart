@@ -1,6 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 import org.knowm.xchart.internal.series.Series;
@@ -43,18 +44,30 @@ public class Legend_Pie<ST extends Styler, S extends Series> extends Legend_<ST,
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);
 
       // paint little box
-      Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+      Shape rectSmall = null;
+      int legendBoxSize = chart.getStyler().getLegendBoxSize() < 1 ? BOX_SIZE : chart.getStyler().getLegendBoxSize();
+      switch (chart.getStyler().getLegendEntryShape()) {
+          case Styler.LEGEND_SHAPE_ELLIPSE: {
+              rectSmall = new Ellipse2D.Double(startx, starty, legendBoxSize, legendBoxSize);
+            break;
+          }
+        case Styler.LEGEND_SHAPE_RECTANGLE:
+          default: {
+              rectSmall = new Rectangle2D.Double(startx, starty, legendBoxSize, legendBoxSize);
+            break;
+          }
+      }
       g.setColor(series.getFillColor());
       g.fill(rectSmall);
 
       // paint series text
-      final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
-      paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
+      final double x = startx + legendBoxSize + chart.getStyler().getLegendPadding();
+      paintSeriesText(g, seriesTextBounds, legendBoxSize, x, starty);
 
       if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
         starty += legendEntryHeight + chart.getStyler().getLegendPadding();
       } else {
-        int markerWidth = BOX_SIZE;
+        int markerWidth = legendBoxSize;
         if (series.getLegendRenderType() == RenderableSeries.LegendRenderType.Line) {
           markerWidth = chart.getStyler().getLegendSeriesLineLength();
         }
@@ -69,6 +82,6 @@ public class Legend_Pie<ST extends Styler, S extends Series> extends Legend_<ST,
   @Override
   public double getSeriesLegendRenderGraphicHeight(S series) {
 
-    return BOX_SIZE;
+    return chart.getStyler().getLegendBoxSize() < 1 ? BOX_SIZE : chart.getStyler().getLegendBoxSize();
   }
 }

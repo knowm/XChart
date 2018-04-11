@@ -64,7 +64,13 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
       for (int i = 0; i < yAxis.getAxisTickCalculator().getTickLabels().size(); i++) {
 
-        String tickLabel = yAxis.getAxisTickCalculator().getTickLabels().get(i);
+        String tickLabel = null;
+        if (styler.getYAxisTicksSuffix() != null && !styler.getYAxisTicksSuffix().equals("")) {
+          tickLabel =
+              yAxis.getAxisTickCalculator().getTickLabels().get(i) + styler.getYAxisTicksSuffix();
+        } else {
+          tickLabel = yAxis.getAxisTickCalculator().getTickLabels().get(i);
+        }
         // System.out.println("** " + tickLabel);
         double tickLocation = yAxis.getAxisTickCalculator().getTickLocations().get(i);
         double flippedTickLocation = yOffset + height - tickLocation;
