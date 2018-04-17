@@ -1,19 +1,3 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart;
 
 import java.io.BufferedReader;
@@ -22,21 +6,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
- * This class is used to create a Chart object from a folder containing one or more CSV files. The parent folder's name becomes the title of the
- * chart. Each CSV file in the folder becomes a series on the chart. the CSV file's name becomes the series' name.
+ * This class is used to create a Chart object from a folder containing one or more CSV files. The
+ * parent folder's name becomes the title of the chart. Each CSV file in the folder becomes a series
+ * on the chart. the CSV file's name becomes the series' name.
  *
  * @author timmolter
  */
 public class CSVImporter {
-
-  public enum DataOrientation {
-
-    Rows, Columns
-  }
 
   /**
    * @param path2Directory
@@ -46,7 +25,12 @@ public class CSVImporter {
    * @param chartTheme
    * @return
    */
-  public static XYChart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height, ChartTheme chartTheme) {
+  public static XYChart getChartFromCSVDir(
+      String path2Directory,
+      DataOrientation dataOrientation,
+      int width,
+      int height,
+      ChartTheme chartTheme) {
 
     // 1. get the directory, name chart the dir name
     XYChart chart;
@@ -69,16 +53,24 @@ public class CSVImporter {
       }
 
       if (xAndYData[2] == null || xAndYData[2].trim().equalsIgnoreCase("")) {
-        chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]));
+        chart.addSeries(
+            csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")),
+            getAxisData(xAndYData[0]),
+            getAxisData(xAndYData[1]));
       } else {
-        chart.addSeries(csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")), getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), getAxisData(xAndYData[2]));
+        chart.addSeries(
+            csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")),
+            getAxisData(xAndYData[0]),
+            getAxisData(xAndYData[1]),
+            getAxisData(xAndYData[2]));
       }
     }
 
     return chart;
   }
 
-  public static SeriesData getSeriesDataFromCSVFile(String path2CSVFile, DataOrientation dataOrientation) {
+  public static SeriesData getSeriesDataFromCSVFile(
+      String path2CSVFile, DataOrientation dataOrientation) {
 
     // 1. get csv file in the dir
     File csvFile = new File(path2CSVFile);
@@ -90,36 +82,10 @@ public class CSVImporter {
     } else {
       xAndYData = getSeriesDataFromCSVColumns(csvFile);
     }
-    return new SeriesData(getAxisData(xAndYData[0]), getAxisData(xAndYData[1]), csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
-  }
-
-  public static class SeriesData {
-
-    private final List<Number> xAxisData;
-    private final List<Number> yAxisData;
-    private final String seriesName;
-
-    public SeriesData(List<Number> xAxisData, List<Number> yAxisData, String seriesName) {
-
-      this.xAxisData = xAxisData;
-      this.yAxisData = yAxisData;
-      this.seriesName = seriesName;
-    }
-
-    public List<Number> getxAxisData() {
-
-      return xAxisData;
-    }
-
-    public List<Number> getyAxisData() {
-
-      return yAxisData;
-    }
-
-    public String getSeriesName() {
-
-      return seriesName;
-    }
+    return new SeriesData(
+        getAxisData(xAndYData[0]),
+        getAxisData(xAndYData[1]),
+        csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
   }
 
   /**
@@ -129,7 +95,8 @@ public class CSVImporter {
    * @param height
    * @return
    */
-  public static XYChart getChartFromCSVDir(String path2Directory, DataOrientation dataOrientation, int width, int height) {
+  public static XYChart getChartFromCSVDir(
+      String path2Directory, DataOrientation dataOrientation, int width, int height) {
 
     return getChartFromCSVDir(path2Directory, dataOrientation, width, height, null);
   }
@@ -224,7 +191,8 @@ public class CSVImporter {
   }
 
   /**
-   * This method returns the files found in the given directory matching the given regular expression.
+   * This method returns the files found in the given directory matching the given regular
+   * expression.
    *
    * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
    * @param regex - ex. ".*.csv"
@@ -270,6 +238,40 @@ public class CSVImporter {
     } else {
       System.out.println(dirName + " does not denote a valid directory!");
       return new File[0];
+    }
+  }
+
+  public enum DataOrientation {
+    Rows,
+    Columns
+  }
+
+  public static class SeriesData {
+
+    private final List<Number> xAxisData;
+    private final List<Number> yAxisData;
+    private final String seriesName;
+
+    public SeriesData(List<Number> xAxisData, List<Number> yAxisData, String seriesName) {
+
+      this.xAxisData = xAxisData;
+      this.yAxisData = yAxisData;
+      this.seriesName = seriesName;
+    }
+
+    public List<Number> getxAxisData() {
+
+      return xAxisData;
+    }
+
+    public List<Number> getyAxisData() {
+
+      return yAxisData;
+    }
+
+    public String getSeriesName() {
+
+      return seriesName;
     }
   }
 }

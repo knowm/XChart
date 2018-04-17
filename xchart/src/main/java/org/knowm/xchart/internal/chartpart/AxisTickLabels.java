@@ -1,44 +1,25 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
-/**
- * Axis tick labels
- */
-public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
+/** Axis tick labels */
+public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSeries>
+    implements ChartPart {
 
   private final Chart<ST, S> chart;
-  private Rectangle2D bounds;
   private final Direction direction;
   private final Axis yAxis;
+  private Rectangle2D bounds;
 
   /**
    * Constructor
@@ -67,7 +48,11 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
       double xOffset;
       if (onRight) {
-        xOffset = yAxis.getBounds().getX() + (styler.isYAxisTicksVisible() ? styler.getAxisTickMarkLength() + styler.getAxisTickPadding() : 0);
+        xOffset =
+            yAxis.getBounds().getX()
+                + (styler.isYAxisTicksVisible()
+                    ? styler.getAxisTickMarkLength() + styler.getAxisTickPadding()
+                    : 0);
       } else {
         double xWidth = yAxis.getAxisTitle().getBounds().getWidth();
         xOffset = yAxis.getAxisTitle().getBounds().getX() + xWidth;
@@ -84,9 +69,12 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         double tickLocation = yAxis.getAxisTickCalculator().getTickLocations().get(i);
         double flippedTickLocation = yOffset + height - tickLocation;
 
-        if (tickLabel != null && flippedTickLocation > yOffset && flippedTickLocation < yOffset + height) { // some are null for logarithmic axes
+        if (tickLabel != null
+            && flippedTickLocation > yOffset
+            && flippedTickLocation < yOffset + height) { // some are null for logarithmic axes
           FontRenderContext frc = g.getFontRenderContext();
-          TextLayout axisLabelTextLayout = new TextLayout(tickLabel, styler.getAxisTickLabelsFont(), frc);
+          TextLayout axisLabelTextLayout =
+              new TextLayout(tickLabel, styler.getAxisTickLabelsFont(), frc);
           Rectangle2D tickLabelBounds = axisLabelTextLayout.getBounds();
           double boundWidth = tickLabelBounds.getWidth();
           if (boundWidth > maxTickLabelWidth) {
@@ -138,7 +126,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       double yOffset = chart.getXAxis().getAxisTitle().getBounds().getY();
       double width = chart.getXAxis().getBounds().getWidth();
       double maxTickLabelHeight = 0;
-      
+
       int maxTickLabelY = 0;
       for (int i = 0; i < chart.getXAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
@@ -148,7 +136,9 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         double shiftedTickLocation = xOffset + tickLocation;
 
         // discard null and out of bounds labels
-        if (tickLabel != null && shiftedTickLocation > xOffset && shiftedTickLocation < xOffset + width) {
+        if (tickLabel != null
+            && shiftedTickLocation > xOffset
+            && shiftedTickLocation < xOffset + width) {
           // some are null for logarithmic axes
 
           FontRenderContext frc = g.getFontRenderContext();
@@ -156,8 +146,9 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           // System.out.println(textLayout.getOutline(null).getBounds().toString());
 
           // Shape shape = v.getOutline();
-          AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.toRadians(styler.getXAxisLabelRotation()),
-              0, 0);
+          AffineTransform rot =
+              AffineTransform.getRotateInstance(
+                  -1 * Math.toRadians(styler.getXAxisLabelRotation()), 0, 0);
           Shape shape = textLayout.getOutline(rot);
           Rectangle2D tickLabelBounds = shape.getBounds2D();
           if (tickLabelBounds.getBounds().height > maxTickLabelY) {
@@ -175,17 +166,21 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         double shiftedTickLocation = xOffset + tickLocation;
 
         // discard null and out of bounds labels
-        if (tickLabel != null && shiftedTickLocation > xOffset && shiftedTickLocation < xOffset + width) { // some are null for logarithmic axes
+        if (tickLabel != null
+            && shiftedTickLocation > xOffset
+            && shiftedTickLocation < xOffset + width) { // some are null for logarithmic axes
 
           FontRenderContext frc = g.getFontRenderContext();
           TextLayout textLayout = new TextLayout(tickLabel, styler.getAxisTickLabelsFont(), frc);
           // System.out.println(textLayout.getOutline(null).getBounds().toString());
 
           // Shape shape = v.getOutline();
-          AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.toRadians(styler.getXAxisLabelRotation()), 0, 0);
+          AffineTransform rot =
+              AffineTransform.getRotateInstance(
+                  -1 * Math.toRadians(styler.getXAxisLabelRotation()), 0, 0);
           Shape shape = textLayout.getOutline(rot);
           Rectangle2D tickLabelBounds = shape.getBounds2D();
-          
+
           int tickLabelY = tickLabelBounds.getBounds().height;
           int yAlignmentOffset;
           switch (styler.getXAxisLabelAlignmentVertical()) {
@@ -215,8 +210,12 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
               xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
           }
           // System.out.println("tickLabelBounds: " + tickLabelBounds.toString());
-          double shiftX = -1 * tickLabelBounds.getX() * Math.sin(Math.toRadians(styler.getXAxisLabelRotation()));
-          double shiftY = -1 * (tickLabelBounds.getY() + tickLabelBounds.getHeight() + yAlignmentOffset);
+          double shiftX =
+              -1
+                  * tickLabelBounds.getX()
+                  * Math.sin(Math.toRadians(styler.getXAxisLabelRotation()));
+          double shiftY =
+              -1 * (tickLabelBounds.getY() + tickLabelBounds.getHeight() + yAlignmentOffset);
           // System.out.println(shiftX);
           // System.out.println("shiftY: " + shiftY);
           at.translate(xPos + shiftX, yOffset + shiftY);
@@ -227,7 +226,8 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
           // // debug box
           // g.setColor(Color.MAGENTA);
-          // g.draw(new Rectangle2D.Double(xPos, yOffset - tickLabelBounds.getHeight(), tickLabelBounds.getWidth(), tickLabelBounds.getHeight()));
+          // g.draw(new Rectangle2D.Double(xPos, yOffset - tickLabelBounds.getHeight(),
+          // tickLabelBounds.getWidth(), tickLabelBounds.getHeight()));
           // g.setColor(getChartPainter().getstyler().getAxisTickLabelsColor());
 
           if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
@@ -240,7 +240,8 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       }
 
       // bounds
-      bounds = new Rectangle2D.Double(xOffset, yOffset - maxTickLabelHeight, width, maxTickLabelHeight);
+      bounds =
+          new Rectangle2D.Double(xOffset, yOffset - maxTickLabelHeight, width, maxTickLabelHeight);
       // g.setColor(Color.blue);
       // g.draw(bounds);
 

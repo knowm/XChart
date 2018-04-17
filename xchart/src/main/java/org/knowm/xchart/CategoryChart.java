@@ -1,30 +1,9 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart;
 
-import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -38,9 +17,7 @@ import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
   /**
@@ -117,9 +94,14 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public CategorySeries addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) {
+  public CategorySeries addSeries(
+      String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
-    return addSeries(seriesName, Utils.getNumberListFromDoubleArray(xData), Utils.getNumberListFromDoubleArray(yData), Utils.getNumberListFromDoubleArray(errorBars));
+    return addSeries(
+        seriesName,
+        Utils.getNumberListFromDoubleArray(xData),
+        Utils.getNumberListFromDoubleArray(yData),
+        Utils.getNumberListFromDoubleArray(errorBars));
   }
 
   /**
@@ -146,7 +128,11 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    */
   public CategorySeries addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
 
-    return addSeries(seriesName, Utils.getNumberListFromIntArray(xData), Utils.getNumberListFromIntArray(yData), Utils.getNumberListFromIntArray(errorBars));
+    return addSeries(
+        seriesName,
+        Utils.getNumberListFromIntArray(xData),
+        Utils.getNumberListFromIntArray(yData),
+        Utils.getNumberListFromIntArray(errorBars));
   }
 
   /**
@@ -171,7 +157,11 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
-  public CategorySeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  public CategorySeries addSeries(
+      String seriesName,
+      List<?> xData,
+      List<? extends Number> yData,
+      List<? extends Number> errorBars) {
 
     // Sanity checks
     sanityCheck(seriesName, xData, yData, errorBars);
@@ -186,7 +176,13 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
       series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
     } else { // generate xData
-      series = new CategorySeries(seriesName, Utils.getGeneratedDataAsList(yData.size()), yData, errorBars, getDataType(xData));
+      series =
+          new CategorySeries(
+              seriesName,
+              Utils.getGeneratedDataAsList(yData.size()),
+              yData,
+              errorBars,
+              getDataType(xData));
     }
 
     seriesMap.put(seriesName, series);
@@ -207,7 +203,8 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     } else if (dataPoint instanceof String) {
       axisType = DataType.String;
     } else {
-      throw new IllegalArgumentException("Series data must be either Number, Date or String type!!!");
+      throw new IllegalArgumentException(
+          "Series data must be either Number, Date or String type!!!");
     }
     return axisType;
   }
@@ -216,13 +213,17 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    * Update a series by updating the X-Axis, Y-Axis and error bar data
    *
    * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   * 1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers
+   *     starting from 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public CategorySeries updateCategorySeries(String seriesName, List<?> newXData, List<? extends Number> newYData, List<? extends Number> newErrorBarData) {
+  public CategorySeries updateCategorySeries(
+      String seriesName,
+      List<?> newXData,
+      List<? extends Number> newYData,
+      List<? extends Number> newErrorBarData) {
 
     Map<String, CategorySeries> seriesMap = getSeriesMap();
     CategorySeries series = seriesMap.get(seriesName);
@@ -247,24 +248,36 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    * Update a series by updating the X-Axis, Y-Axis and error bar data
    *
    * @param seriesName
-   * @param newXData - set null to be automatically generated as a list of increasing Integers starting from
-   * 1 and ending at the size of the new Y-Axis data list.
+   * @param newXData - set null to be automatically generated as a list of increasing Integers
+   *     starting from 1 and ending at the size of the new Y-Axis data list.
    * @param newYData
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public CategorySeries updateCategorySeries(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
+  public CategorySeries updateCategorySeries(
+      String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
 
-    return updateCategorySeries(seriesName, Utils.getNumberListFromDoubleArray(newXData), Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(newErrorBarData));
+    return updateCategorySeries(
+        seriesName,
+        Utils.getNumberListFromDoubleArray(newXData),
+        Utils.getNumberListFromDoubleArray(newYData),
+        Utils.getNumberListFromDoubleArray(newErrorBarData));
   }
   ///////////////////////////////////////////////////
   // Internal Members and Methods ///////////////////
   ///////////////////////////////////////////////////
 
-  private void sanityCheck(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) {
+  private void sanityCheck(
+      String seriesName,
+      List<?> xData,
+      List<? extends Number> yData,
+      List<? extends Number> errorBars) {
 
     if (seriesMap.keySet().contains(seriesName)) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
     }
     if (yData == null) {
       throw new IllegalArgumentException("Y-Axis data cannot be null!!!");
@@ -288,7 +301,8 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
     // set the series render styles if they are not set. Legend and Plot need it.
     for (CategorySeries seriesCategory : getSeriesMap().values()) {
-      CategorySeries.CategorySeriesRenderStyle seriesType = seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
+      CategorySeries.CategorySeriesRenderStyle seriesType =
+          seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
         seriesCategory.setChartCategorySeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
@@ -303,16 +317,18 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     legend.paint(g);
   }
 
-  /**
-   * set the series color, marker and line style based on theme
-   */
+  /** set the series color, marker and line style based on theme */
   private void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
-        .getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+        new SeriesColorMarkerLineStyleCycler(
+            getStyler().getSeriesColors(),
+            getStyler().getSeriesMarkers(),
+            getStyler().getSeriesLines());
     for (CategorySeries series : getSeriesMap().values()) {
 
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
@@ -331,9 +347,8 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       }
     }
   }
-  
+
   /**
-   *
    * Set custom X-Axis category labels
    *
    * @param customCategoryLabels Map containing category name -> label mappings
@@ -356,5 +371,4 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
     setXAxisLabelOverrideMap(axisTickValueLabelMap);
   }
-
 }

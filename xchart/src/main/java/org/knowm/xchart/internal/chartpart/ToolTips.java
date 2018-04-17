@@ -1,26 +1,8 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.internal.chartpart;
 
 import static org.knowm.xchart.internal.chartpart.ChartPart.SOLID_STROKE;
 
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
@@ -30,26 +12,21 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.style.Styler;
 
-/**
- * Data labels can be put on all labels or configured to popup like a tooltip from a mouse over.
- */
+/** Data labels can be put on all labels or configured to popup like a tooltip from a mouse over. */
 public class ToolTips implements MouseMotionListener {
 
+  // edge detection
+  private static final int MARGIN = 5;
   // for pop up
   private final List<DataPoint> dataPointList = new ArrayList<DataPoint>();
+  private final Styler styler;
   private DataPoint dataPoint;
-
-  // edge detection
-  private final static int MARGIN = 5;
   private double leftEdge;
   private double rightEdge;
   private double topEdge;
   private double bottomEdge;
-
-  private final Styler styler;
 
   /**
    * Constructor
@@ -64,6 +41,7 @@ public class ToolTips implements MouseMotionListener {
 
   @Override
   public void mouseDragged(MouseEvent e) {
+
     // ignore
   }
 
@@ -132,7 +110,8 @@ public class ToolTips implements MouseMotionListener {
   }
 
   /**
-   * Adds a data (xValue, yValue) with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
+   * Adds a data (xValue, yValue) with coordinates (xOffset, yOffset). This point will be
+   * highlighted with a circle centering (xOffset, yOffset)
    */
   void addData(double xOffset, double yOffset, String xValue, String yValue) {
 
@@ -142,7 +121,8 @@ public class ToolTips implements MouseMotionListener {
   }
 
   /**
-   * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with a circle centering (xOffset, yOffset)
+   * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with
+   * a circle centering (xOffset, yOffset)
    */
   public void addData(double xOffset, double yOffset, String label) {
 
@@ -151,9 +131,11 @@ public class ToolTips implements MouseMotionListener {
   }
 
   /**
-   * Adds a data (xValue, yValue) with geometry defined with shape. This point will be highlighted using the shape
+   * Adds a data (xValue, yValue) with geometry defined with shape. This point will be highlighted
+   * using the shape
    */
-  void addData(Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
+  void addData(
+      Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
 
     String label = getLabel(xValue, yValue);
     addData(shape, xOffset, yOffset, width, label);
@@ -182,7 +164,9 @@ public class ToolTips implements MouseMotionListener {
 
   private void paintToolTip(Graphics2D g, DataPoint dataPoint) {
 
-    TextLayout textLayout = new TextLayout(dataPoint.label, styler.getToolTipFont(), new FontRenderContext(null, true, false));
+    TextLayout textLayout =
+        new TextLayout(
+            dataPoint.label, styler.getToolTipFont(), new FontRenderContext(null, true, false));
     Rectangle2D annotationRectangle = textLayout.getBounds();
 
     double x = dataPoint.x + dataPoint.w / 2 - annotationRectangle.getWidth() / 2 - MARGIN;
@@ -232,17 +216,14 @@ public class ToolTips implements MouseMotionListener {
 
   static class DataPoint {
 
+    // width of data point (used for bar charts)
+    final double w;
     private final String label;
-
     // used for popup detection & popup highlight
     private final Shape shape;
-
     // label center coordinates
     private final double x;
     private final double y;
-
-    // width of data point (used for bar charts)
-    final double w;
 
     /**
      * Constructor
@@ -281,7 +262,5 @@ public class ToolTips implements MouseMotionListener {
       this.shape = shape;
       this.label = label;
     }
-
   }
-
 }

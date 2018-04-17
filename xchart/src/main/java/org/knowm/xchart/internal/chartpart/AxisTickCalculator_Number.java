@@ -1,28 +1,15 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for decimal axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
+ * rendering the axis ticks for decimal axes
  *
  * @author timmolter
  */
@@ -39,7 +26,12 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_Number(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
+  public AxisTickCalculator_Number(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
     numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
@@ -65,13 +57,20 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
     }
 
     // where the tick should begin in the working space in pixels
-    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin =
+        Utils.getTickStartOffset(
+            workingSpace,
+            tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
     // the span of the data
     double span = Math.abs(Math.min((maxValue - minValue), Double.MAX_VALUE - 1)); // in data space
 
     //////////////////////////
 
-    int tickSpacingHint = (axisDirection == Direction.X ? styler.getXAxisTickMarkSpacingHint() : styler.getYAxisTickMarkSpacingHint()) - 5;
+    int tickSpacingHint =
+        (axisDirection == Direction.X
+                ? styler.getXAxisTickMarkSpacingHint()
+                : styler.getYAxisTickMarkSpacingHint())
+            - 5;
 
     // for very short plots, squeeze some more ticks in than normal into the Y-Axis
     if (axisDirection == Direction.Y && tickSpace < 160) {
@@ -134,8 +133,14 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       // int scale = gridStepBigDecimal.scale();
       // System.out.println("scale: " + scale);
       // int scale = gridStepBigDecimal.scale();
-      BigDecimal cleanedGridStep0 = gridStepBigDecimal.setScale(scale, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
-      BigDecimal cleanedGridStep = cleanedGridStep0.setScale(scale, BigDecimal.ROUND_DOWN).stripTrailingZeros(); // chop off any double imprecision
+      BigDecimal cleanedGridStep0 =
+          gridStepBigDecimal
+              .setScale(scale, RoundingMode.HALF_UP)
+              .stripTrailingZeros(); // chop off any double imprecision
+      BigDecimal cleanedGridStep =
+          cleanedGridStep0
+              .setScale(scale, BigDecimal.ROUND_DOWN)
+              .stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
 
       BigDecimal firstPosition = null;
@@ -153,32 +158,41 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
           firstPosition = BigDecimal.valueOf(firstPositionAsDouble);
         } catch (java.lang.NumberFormatException e) {
 
-          System.out.println("Some debug stuff. This happens once in a blue moon, and I don't know why.");
+          System.out.println(
+              "Some debug stuff. This happens once in a blue moon, and I don't know why.");
           System.out.println("scale: " + scale);
           System.out.println("exponent: " + exponent);
           System.out.println("gridStep: " + gridStep);
           System.out.println("cleanedGridStep: " + cleanedGridStep);
           System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
-          System.out.println("NumberFormatException caused by this number: " + getFirstPosition(cleanedGridStep.doubleValue()));
+          System.out.println(
+              "NumberFormatException caused by this number: "
+                  + getFirstPosition(cleanedGridStep.doubleValue()));
         }
       }
 
       // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
-      BigDecimal cleanedFirstPosition = firstPosition.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros(); // chop off any double imprecision
+      BigDecimal cleanedFirstPosition =
+          firstPosition
+              .setScale(10, RoundingMode.HALF_UP)
+              .stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
 
       // generate all tickLabels and tickLocations from the first to last position
       for (BigDecimal value = cleanedFirstPosition;
-           value.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0; value = value.add(cleanedGridStep)) {
+          value.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0;
+          value = value.add(cleanedGridStep)) {
 
-        // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 && value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
+        // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 &&
+        // value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
         // System.out.println(value);
         String tickLabel = numberFormatter.format(value.doubleValue());
         // System.out.println(tickLabel);
         tickLabels.add(tickLabel);
 
         // here we convert tickPosition finally to plot space, i.e. pixels
-        double tickLabelPosition = margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
+        double tickLabelPosition =
+            margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
         tickLocations.add(tickLabelPosition);
         // }
       }

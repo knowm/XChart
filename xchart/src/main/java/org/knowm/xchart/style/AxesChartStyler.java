@@ -1,31 +1,11 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.style;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Stroke;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public abstract class AxesChartStyler extends Styler {
 
   // Chart Axes ///////////////////////////////
@@ -140,6 +120,11 @@ public abstract class AxesChartStyler extends Styler {
 
   // Chart Axes ///////////////////////////////
 
+  public boolean isXAxisTitleVisible() {
+
+    return xAxisTitleVisible;
+  }
+
   /**
    * Set the x-axis title visibility
    *
@@ -151,9 +136,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isXAxisTitleVisible() {
+  public boolean isYAxisTitleVisible() {
 
-    return xAxisTitleVisible;
+    return yAxisTitleVisible;
   }
 
   /**
@@ -165,11 +150,6 @@ public abstract class AxesChartStyler extends Styler {
 
     this.yAxisTitleVisible = yAxisTitleVisible;
     return this;
-  }
-
-  public boolean isYAxisTitleVisible() {
-
-    return yAxisTitleVisible;
   }
 
   /**
@@ -184,6 +164,11 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
+  public Font getAxisTitleFont() {
+
+    return axisTitleFont;
+  }
+
   /**
    * Set the x- and y-axis title font
    *
@@ -195,9 +180,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Font getAxisTitleFont() {
+  public boolean isXAxisTicksVisible() {
 
-    return axisTitleFont;
+    return xAxisTicksVisible;
   }
 
   /**
@@ -211,9 +196,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isXAxisTicksVisible() {
+  public boolean isYAxisTicksVisible() {
 
-    return xAxisTicksVisible;
+    return yAxisTicksVisible;
   }
 
   /**
@@ -225,11 +210,6 @@ public abstract class AxesChartStyler extends Styler {
 
     this.yAxisTicksVisible = yAxisTicksVisible;
     return this;
-  }
-
-  public boolean isYAxisTicksVisible() {
-
-    return yAxisTicksVisible;
   }
 
   /**
@@ -244,6 +224,11 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
+  public Font getAxisTickLabelsFont() {
+
+    return axisTickLabelsFont;
+  }
+
   /**
    * Set the x- and y-axis tick label font
    *
@@ -255,9 +240,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Font getAxisTickLabelsFont() {
+  public int getAxisTickMarkLength() {
 
-    return axisTickLabelsFont;
+    return axisTickMarkLength;
   }
 
   /**
@@ -271,9 +256,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public int getAxisTickMarkLength() {
+  public int getAxisTickPadding() {
 
-    return axisTickMarkLength;
+    return axisTickPadding;
   }
 
   /**
@@ -287,9 +272,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public int getAxisTickPadding() {
+  public Color getAxisTickMarksColor() {
 
-    return axisTickPadding;
+    return axisTickMarksColor;
   }
 
   /**
@@ -303,9 +288,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Color getAxisTickMarksColor() {
+  public Stroke getAxisTickMarksStroke() {
 
-    return axisTickMarksColor;
+    return axisTickMarksStroke;
   }
 
   /**
@@ -319,9 +304,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Stroke getAxisTickMarksStroke() {
+  public Color getAxisTickLabelsColor() {
 
-    return axisTickMarksStroke;
+    return axisTickLabelsColor;
   }
 
   /**
@@ -335,9 +320,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Color getAxisTickLabelsColor() {
+  public boolean isAxisTicksLineVisible() {
 
-    return axisTickLabelsColor;
+    return isAxisTicksLineVisible;
   }
 
   /**
@@ -351,9 +336,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isAxisTicksLineVisible() {
+  public boolean isAxisTicksMarksVisible() {
 
-    return isAxisTicksLineVisible;
+    return isAxisTicksMarksVisible;
   }
 
   /**
@@ -367,9 +352,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isAxisTicksMarksVisible() {
+  public int getPlotMargin() {
 
-    return isAxisTicksMarksVisible;
+    return plotMargin;
   }
 
   /**
@@ -383,9 +368,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public int getPlotMargin() {
+  public int getAxisTitlePadding() {
 
-    return plotMargin;
+    return axisTitlePadding;
   }
 
   /**
@@ -399,9 +384,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public int getAxisTitlePadding() {
+  public int getXAxisTickMarkSpacingHint() {
 
-    return axisTitlePadding;
+    return xAxisTickMarkSpacingHint;
   }
 
   /**
@@ -415,9 +400,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public int getXAxisTickMarkSpacingHint() {
+  public int getYAxisTickMarkSpacingHint() {
 
-    return xAxisTickMarkSpacingHint;
+    return yAxisTickMarkSpacingHint;
   }
 
   /**
@@ -431,9 +416,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public int getYAxisTickMarkSpacingHint() {
+  public boolean isXAxisLogarithmic() {
 
-    return yAxisTickMarkSpacingHint;
+    return isXAxisLogarithmic;
   }
 
   /**
@@ -447,9 +432,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isXAxisLogarithmic() {
+  public boolean isYAxisLogarithmic() {
 
-    return isXAxisLogarithmic;
+    return isYAxisLogarithmic;
   }
 
   /**
@@ -463,9 +448,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isYAxisLogarithmic() {
+  public Double getXAxisMin() {
 
-    return isYAxisLogarithmic;
+    return xAxisMin;
   }
 
   public AxesChartStyler setXAxisMin(Double xAxisMin) {
@@ -474,9 +459,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Double getXAxisMin() {
+  public Double getXAxisMax() {
 
-    return xAxisMin;
+    return xAxisMax;
   }
 
   public AxesChartStyler setXAxisMax(Double xAxisMax) {
@@ -485,19 +470,8 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Double getXAxisMax() {
-
-    return xAxisMax;
-  }
-
-  public AxesChartStyler setYAxisMin(Double yAxisMin) {
-
-    this.yAxisMinMap.put(null, yAxisMin);
-    return this;
-  }
-  
   public AxesChartStyler setYAxisMin(Integer yAxisGroup, Double yAxisMin) {
-    
+
     this.yAxisMinMap.put(yAxisGroup, yAxisMin);
     return this;
   }
@@ -507,19 +481,19 @@ public abstract class AxesChartStyler extends Styler {
     return yAxisMinMap.get(null);
   }
 
+  public AxesChartStyler setYAxisMin(Double yAxisMin) {
+
+    this.yAxisMinMap.put(null, yAxisMin);
+    return this;
+  }
+
   public Double getYAxisMin(Integer yAxisGroup) {
-    
+
     return yAxisMinMap.get(yAxisGroup);
   }
 
-  public AxesChartStyler setYAxisMax(Double yAxisMax) {
-
-    this.yAxisMaxMap.put(null, yAxisMax);
-    return this;
-  }
-  
   public AxesChartStyler setYAxisMax(Integer yAxisGroup, Double yAxisMax) {
-    
+
     this.yAxisMaxMap.put(yAxisGroup, yAxisMax);
     return this;
   }
@@ -529,11 +503,17 @@ public abstract class AxesChartStyler extends Styler {
     return yAxisMaxMap.get(null);
   }
 
+  public AxesChartStyler setYAxisMax(Double yAxisMax) {
+
+    this.yAxisMaxMap.put(null, yAxisMax);
+    return this;
+  }
+
   public Double getYAxisMax(Integer yAxisGroup) {
-    
+
     return yAxisMaxMap.get(yAxisGroup);
   }
-  
+
   public TextAlignment getXAxisLabelAlignment() {
 
     return xAxisLabelAlignment;
@@ -568,6 +548,11 @@ public abstract class AxesChartStyler extends Styler {
 
   // Chart Plot Area ///////////////////////////////
 
+  public boolean isPlotGridLinesVisible() {
+
+    return isPlotGridHorizontalLinesVisible && isPlotGridVerticalLinesVisible;
+  }
+
   /**
    * sets the visibility of the gridlines inside the plot area
    *
@@ -580,9 +565,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isPlotGridLinesVisible() {
+  public boolean isPlotGridHorizontalLinesVisible() {
 
-    return isPlotGridHorizontalLinesVisible && isPlotGridVerticalLinesVisible;
+    return isPlotGridHorizontalLinesVisible;
   }
 
   /**
@@ -590,15 +575,16 @@ public abstract class AxesChartStyler extends Styler {
    *
    * @param isPlotGridHorizontalLinesVisible
    */
-  public AxesChartStyler setPlotGridHorizontalLinesVisible(boolean isPlotGridHorizontalLinesVisible) {
+  public AxesChartStyler setPlotGridHorizontalLinesVisible(
+      boolean isPlotGridHorizontalLinesVisible) {
 
     this.isPlotGridHorizontalLinesVisible = isPlotGridHorizontalLinesVisible;
     return this;
   }
 
-  public boolean isPlotGridHorizontalLinesVisible() {
+  public boolean isPlotGridVerticalLinesVisible() {
 
-    return isPlotGridHorizontalLinesVisible;
+    return isPlotGridVerticalLinesVisible;
   }
 
   /**
@@ -612,9 +598,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isPlotGridVerticalLinesVisible() {
+  public boolean isPlotTicksMarksVisible() {
 
-    return isPlotGridVerticalLinesVisible;
+    return isPlotTicksMarksVisible;
   }
 
   /**
@@ -628,9 +614,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isPlotTicksMarksVisible() {
+  public Color getPlotGridLinesColor() {
 
-    return isPlotTicksMarksVisible;
+    return plotGridLinesColor;
   }
 
   /**
@@ -644,9 +630,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Color getPlotGridLinesColor() {
+  public Stroke getPlotGridLinesStroke() {
 
-    return plotGridLinesColor;
+    return plotGridLinesStroke;
   }
 
   /**
@@ -660,12 +646,12 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Stroke getPlotGridLinesStroke() {
-
-    return plotGridLinesStroke;
-  }
-
   // Line, Scatter, Area Charts ///////////////////////////////
+
+  public int getMarkerSize() {
+
+    return markerSize;
+  }
 
   /**
    * Sets the size of the markers (in pixels)
@@ -678,12 +664,12 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public int getMarkerSize() {
-
-    return markerSize;
-  }
-
   // Error Bars ///////////////////////////////
+
+  public Color getErrorBarsColor() {
+
+    return errorBarsColor;
+  }
 
   /**
    * Sets the color of the error bars
@@ -696,9 +682,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Color getErrorBarsColor() {
+  public boolean isErrorBarsColorSeriesColor() {
 
-    return errorBarsColor;
+    return isErrorBarsColorSeriesColor;
   }
 
   /**
@@ -712,12 +698,12 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public boolean isErrorBarsColorSeriesColor() {
-
-    return isErrorBarsColorSeriesColor;
-  }
-
   // Formatting ////////////////////////////////
+
+  public Locale getLocale() {
+
+    return locale;
+  }
 
   /**
    * Set the locale to use for rendering the chart
@@ -730,9 +716,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Locale getLocale() {
+  public TimeZone getTimezone() {
 
-    return locale;
+    return timezone;
   }
 
   /**
@@ -746,9 +732,9 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public TimeZone getTimezone() {
+  public String getDatePattern() {
 
-    return timezone;
+    return datePattern;
   }
 
   /**
@@ -760,11 +746,6 @@ public abstract class AxesChartStyler extends Styler {
 
     this.datePattern = datePattern;
     return this;
-  }
-
-  public String getDatePattern() {
-
-    return datePattern;
   }
 
   public String getXAxisDecimalPattern() {
@@ -828,10 +809,12 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   public TextAlignment getXAxisLabelAlignmentVertical() {
+
     return xAxisLabelAlignmentVertical;
   }
 
   public void setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
+
     this.xAxisLabelAlignmentVertical = xAxisLabelAlignmentVertical;
   }
 }
