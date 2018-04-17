@@ -1,26 +1,7 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.style;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.util.HashMap;
-
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -30,55 +11,10 @@ import org.knowm.xchart.style.markers.Marker;
  */
 public abstract class Styler {
 
-  public enum LegendPosition {
-
-    OutsideE, InsideNW, InsideNE, InsideSE, InsideSW, InsideN, InsideS, OutsideS
-  }
-
-  public enum LegendLayout {
-
-    Vertical, Horizontal
-  }
-
-  public enum ChartTheme {
-
-    XChart, GGPlot2, Matlab;
-
-    public Theme newInstance(ChartTheme chartTheme) {
-
-      switch (chartTheme) {
-        case GGPlot2:
-          return new GGPlot2Theme();
-
-        case Matlab:
-          return new MatlabTheme();
-
-        case XChart:
-        default:
-          return new XChartTheme();
-      }
-    }
-  }
-
-  public enum TextAlignment {
-
-    Left, Centre, Right
-  }
-
-  public enum ToolTipType {
-    xLabels, yLabels, xAndYLabels
-  }
-
-  public enum YAxisPosition {
-
-    Left, Right
-  }
-
-  /**
-   * the default Theme
-   */
+  /** the default Theme */
   Theme theme = new XChartTheme();
 
+  boolean hasAnnotations = false; // set by subclass
   // Chart Style ///////////////////////////////
   private Font baseFont;
   private Color chartBackgroundColor;
@@ -87,7 +23,6 @@ public abstract class Styler {
   private Color[] seriesColors;
   private BasicStroke[] seriesLines;
   private Marker[] seriesMarkers;
-
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
   private boolean isChartTitleVisible;
@@ -95,7 +30,6 @@ public abstract class Styler {
   private Color chartTitleBoxBackgroundColor;
   private Color chartTitleBoxBorderColor;
   private int chartTitlePadding;
-
   // Chart Legend ///////////////////////////////
   private boolean isLegendVisible;
   private Color legendBackgroundColor;
@@ -105,13 +39,11 @@ public abstract class Styler {
   private int legendSeriesLineLength;
   private LegendPosition legendPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
-
   // Chart Plot Area ///////////////////////////////
   private Color plotBackgroundColor;
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
   private double plotContentSize = .92;
-
   // Tool Tips ///////////////////////////////
   private boolean isToolTipsEnabled;
   private ToolTipType toolTipType;
@@ -119,11 +51,8 @@ public abstract class Styler {
   private Color toolTipBorderColor;
   private Font toolTipFont;
   private Color toolTipHighlightColor;
-
   // Annotations ///////////////////////////////
   private Font annotationsFont;
-  boolean hasAnnotations = false; // set by subclass
-
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
   private String decimalPattern;
@@ -181,7 +110,10 @@ public abstract class Styler {
     decimalPattern = null;
   }
 
-  // Chart Style ///////////////////////////////
+  public Font getBaseFont() {
+
+    return baseFont;
+  }
 
   /**
    * Set the base font
@@ -195,9 +127,9 @@ public abstract class Styler {
     return this;
   }
 
-  public Font getBaseFont() {
+  public Color getChartBackgroundColor() {
 
-    return baseFont;
+    return chartBackgroundColor;
   }
 
   /**
@@ -211,9 +143,9 @@ public abstract class Styler {
     return this;
   }
 
-  public Color getChartBackgroundColor() {
+  public Color getChartFontColor() {
 
-    return chartBackgroundColor;
+    return chartFontColor;
   }
 
   /**
@@ -227,9 +159,11 @@ public abstract class Styler {
     return this;
   }
 
-  public Color getChartFontColor() {
+  // Chart Style ///////////////////////////////
 
-    return chartFontColor;
+  public int getChartPadding() {
+
+    return chartPadding;
   }
 
   /**
@@ -242,13 +176,6 @@ public abstract class Styler {
     this.chartPadding = chartPadding;
     return this;
   }
-
-  public int getChartPadding() {
-
-    return chartPadding;
-  }
-
-  // Chart Title ///////////////////////////////
 
   public Color[] getSeriesColors() {
 
@@ -283,6 +210,13 @@ public abstract class Styler {
     return this;
   }
 
+  // Chart Title ///////////////////////////////
+
+  public Font getChartTitleFont() {
+
+    return chartTitleFont;
+  }
+
   /**
    * Set the chart title font
    *
@@ -295,9 +229,9 @@ public abstract class Styler {
     return this;
   }
 
-  public Font getChartTitleFont() {
+  public boolean isChartTitleVisible() {
 
-    return chartTitleFont;
+    return isChartTitleVisible;
   }
 
   /**
@@ -311,9 +245,9 @@ public abstract class Styler {
     return this;
   }
 
-  public boolean isChartTitleVisible() {
+  public boolean isChartTitleBoxVisible() {
 
-    return isChartTitleVisible;
+    return isChartTitleBoxVisible;
   }
 
   /**
@@ -327,9 +261,9 @@ public abstract class Styler {
     return this;
   }
 
-  public boolean isChartTitleBoxVisible() {
+  public Color getChartTitleBoxBackgroundColor() {
 
-    return isChartTitleBoxVisible;
+    return chartTitleBoxBackgroundColor;
   }
 
   /**
@@ -343,9 +277,9 @@ public abstract class Styler {
     return this;
   }
 
-  public Color getChartTitleBoxBackgroundColor() {
+  public Color getChartTitleBoxBorderColor() {
 
-    return chartTitleBoxBackgroundColor;
+    return chartTitleBoxBorderColor;
   }
 
   /**
@@ -359,9 +293,9 @@ public abstract class Styler {
     return this;
   }
 
-  public Color getChartTitleBoxBorderColor() {
+  public int getChartTitlePadding() {
 
-    return chartTitleBoxBorderColor;
+    return chartTitlePadding;
   }
 
   /**
@@ -375,12 +309,10 @@ public abstract class Styler {
     return this;
   }
 
-  public int getChartTitlePadding() {
+  public Color getLegendBackgroundColor() {
 
-    return chartTitlePadding;
+    return legendBackgroundColor;
   }
-
-  // Chart Legend ///////////////////////////////
 
   /**
    * Set the chart legend background color
@@ -391,11 +323,6 @@ public abstract class Styler {
 
     this.legendBackgroundColor = color;
     return this;
-  }
-
-  public Color getLegendBackgroundColor() {
-
-    return legendBackgroundColor;
   }
 
   /**
@@ -414,6 +341,11 @@ public abstract class Styler {
     return this;
   }
 
+  public Font getLegendFont() {
+
+    return legendFont;
+  }
+
   /**
    * Set the chart legend font
    *
@@ -425,9 +357,11 @@ public abstract class Styler {
     return this;
   }
 
-  public Font getLegendFont() {
+  // Chart Legend ///////////////////////////////
 
-    return legendFont;
+  public boolean isLegendVisible() {
+
+    return isLegendVisible;
   }
 
   /**
@@ -441,9 +375,9 @@ public abstract class Styler {
     return this;
   }
 
-  public boolean isLegendVisible() {
+  public int getLegendPadding() {
 
-    return isLegendVisible;
+    return legendPadding;
   }
 
   /**
@@ -457,9 +391,9 @@ public abstract class Styler {
     return this;
   }
 
-  public int getLegendPadding() {
+  public int getLegendSeriesLineLength() {
 
-    return legendPadding;
+    return legendSeriesLineLength;
   }
 
   /**
@@ -478,9 +412,9 @@ public abstract class Styler {
     return this;
   }
 
-  public int getLegendSeriesLineLength() {
+  public LegendPosition getLegendPosition() {
 
-    return legendSeriesLineLength;
+    return legendPosition;
   }
 
   /**
@@ -494,25 +428,25 @@ public abstract class Styler {
     return this;
   }
 
-  public LegendPosition getLegendPosition() {
-
-    return legendPosition;
-  }
-
   /**
    * Set the legend layout
    *
    * @return
    */
   public LegendLayout getLegendLayout() {
+
     return legendLayout;
   }
 
   public void setLegendLayout(LegendLayout legendLayout) {
+
     this.legendLayout = legendLayout;
   }
 
-  // Chart Plot ///////////////////////////////
+  public Color getPlotBackgroundColor() {
+
+    return plotBackgroundColor;
+  }
 
   /**
    * set the plot area's background color
@@ -525,9 +459,9 @@ public abstract class Styler {
     return this;
   }
 
-  public Color getPlotBackgroundColor() {
+  public Color getPlotBorderColor() {
 
-    return plotBackgroundColor;
+    return plotBorderColor;
   }
 
   /**
@@ -541,9 +475,9 @@ public abstract class Styler {
     return this;
   }
 
-  public Color getPlotBorderColor() {
+  public boolean isPlotBorderVisible() {
 
-    return plotBorderColor;
+    return isPlotBorderVisible;
   }
 
   /**
@@ -557,10 +491,7 @@ public abstract class Styler {
     return this;
   }
 
-  public boolean isPlotBorderVisible() {
-
-    return isPlotBorderVisible;
-  }
+  // Chart Plot ///////////////////////////////
 
   public double getPlotContentSize() {
 
@@ -568,7 +499,8 @@ public abstract class Styler {
   }
 
   /**
-   * Sets the content size of the plot inside the plot area of the chart. To fill the area 100%, use a value of 1.0.
+   * Sets the content size of the plot inside the plot area of the chart. To fill the area 100%, use
+   * a value of 1.0.
    *
    * @param plotContentSize - Valid range is between 0 and 1.
    */
@@ -581,8 +513,6 @@ public abstract class Styler {
     this.plotContentSize = plotContentSize;
     return this;
   }
-
-  // Tool Tips ///////////////////////////////
 
   public boolean isToolTipsEnabled() {
 
@@ -617,6 +547,8 @@ public abstract class Styler {
     return this;
   }
 
+  // Tool Tips ///////////////////////////////
+
   public Color getToolTipBorderColor() {
 
     return toolTipBorderColor;
@@ -650,8 +582,6 @@ public abstract class Styler {
     return this;
   }
 
-// Annotations ///////////////////////////////
-
   public Boolean hasAnnotations() {
 
     return hasAnnotations;
@@ -684,6 +614,11 @@ public abstract class Styler {
     return this;
   }
 
+  public String getDecimalPattern() {
+
+    return decimalPattern;
+  }
+
   /**
    * Set the decimal formatter for all numbers on the chart rendered as Strings
    *
@@ -695,10 +630,7 @@ public abstract class Styler {
     return this;
   }
 
-  public String getDecimalPattern() {
-
-    return decimalPattern;
-  }
+  // Annotations ///////////////////////////////
 
   public YAxisPosition getYAxisGroupPosistion(int yAxisGroup) {
 
@@ -729,5 +661,59 @@ public abstract class Styler {
   public void setAntiAlias(boolean newVal) {
 
     antiAlias = newVal;
+  }
+
+  public enum LegendPosition {
+    OutsideE,
+    InsideNW,
+    InsideNE,
+    InsideSE,
+    InsideSW,
+    InsideN,
+    InsideS,
+    OutsideS
+  }
+
+  public enum LegendLayout {
+    Vertical,
+    Horizontal
+  }
+
+  public enum ChartTheme {
+    XChart,
+    GGPlot2,
+    Matlab;
+
+    public Theme newInstance(ChartTheme chartTheme) {
+
+      switch (chartTheme) {
+        case GGPlot2:
+          return new GGPlot2Theme();
+
+        case Matlab:
+          return new MatlabTheme();
+
+        case XChart:
+        default:
+          return new XChartTheme();
+      }
+    }
+  }
+
+  public enum TextAlignment {
+    Left,
+    Centre,
+    Right
+  }
+
+  public enum ToolTipType {
+    xLabels,
+    yLabels,
+    xAndYLabels
+  }
+
+  public enum YAxisPosition {
+    Left,
+    Right
   }
 }

@@ -1,26 +1,6 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.style;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Stroke;
-
+import java.awt.*;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
@@ -86,9 +66,7 @@ public abstract class AbstractBaseTheme implements Theme {
 
   // Chart Title ///////////////////////////////
 
-  /**
-   * Base font, bold, size 14.
-   */
+  /** Base font, bold, size 14. */
   @Override
   public Font getChartTitleFont() {
 
@@ -320,7 +298,8 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Stroke getPlotGridLinesStroke() {
 
-    return new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[]{3.0f, 5.0f}, 0.0f);
+    return new BasicStroke(
+        1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] {3.0f, 5.0f}, 0.0f);
   }
 
   @Override
@@ -400,9 +379,7 @@ public abstract class AbstractBaseTheme implements Theme {
     return 0;
   }
 
-  /**
-   * Base font, size 15.
-   */
+  /** Base font, size 15. */
   @Override
   public Font getPieFont() {
 
@@ -469,9 +446,7 @@ public abstract class AbstractBaseTheme implements Theme {
 
   // Annotations ///////////////////////////////
 
-  /**
-   * Pie font, size 12.
-   */
+  /** Pie font, size 12. */
   @Override
   public Font getAnnotationFont() {
 

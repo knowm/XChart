@@ -1,24 +1,20 @@
 package org.knowm.xchart.internal.series;
 
-import java.awt.Color;
-
+import java.awt.*;
 import org.knowm.xchart.style.markers.Marker;
 
 /**
- * A Series containing X and Y data to be plotted on a Chart with X and Y Axes, contains series markers and error bars.
+ * A Series containing X and Y data to be plotted on a Chart with X and Y Axes, contains series
+ * markers and error bars.
  *
  * @author timmolter
  */
 public abstract class MarkerSeries extends AxesChartSeries {
 
-  /**
-   * Marker
-   */
+  /** Marker */
   private Marker marker;
 
-  /**
-   * Marker Color
-   */
+  /** Marker Color */
   private Color markerColor;
 
   /**
@@ -29,7 +25,12 @@ public abstract class MarkerSeries extends AxesChartSeries {
    */
   protected MarkerSeries(String name, DataType xAxisDataType) {
 
-    super(name,xAxisDataType);
+    super(name, xAxisDataType);
+  }
+
+  public Marker getMarker() {
+
+    return marker;
   }
 
   /**
@@ -43,6 +44,11 @@ public abstract class MarkerSeries extends AxesChartSeries {
     return this;
   }
 
+  public Color getMarkerColor() {
+
+    return markerColor;
+  }
+
   /**
    * Sets the marker color for the series
    *
@@ -53,15 +59,4 @@ public abstract class MarkerSeries extends AxesChartSeries {
     this.markerColor = color;
     return this;
   }
-
-  public Marker getMarker() {
-
-    return marker;
-  }
-
-  public Color getMarkerColor() {
-
-    return markerColor;
-  }
-
 }

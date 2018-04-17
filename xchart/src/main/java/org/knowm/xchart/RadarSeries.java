@@ -1,64 +1,34 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-
+import java.awt.*;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.markers.Marker;
 
-/**
- * A Series containing Radar data to be plotted on a Chart
- *
- */
+/** A Series containing Radar data to be plotted on a Chart */
 public class RadarSeries extends Series {
 
-  /**
-   * Line Style
-   */
+  /** Line Style */
   private BasicStroke stroke;
 
-  /**
-   * Line Color
-   */
+  /** Line Color */
   private Color lineColor;
 
-  /**
-   * Line Width
-   */
+  /** Line Width */
   private float lineWidth;
 
-  /**
-   * Marker
-   */
+  /** Marker */
   private Marker marker;
 
-  /**
-   * Marker Color
-   */
+  /** Marker Color */
   private Color markerColor;
 
   private double[] values;
   private String[] tooltipOverrides;
 
   /**
-   * @param tooltipOverrides Adds custom tooltipOverrides for series. If tooltipOverrides is null, they are automatically generated.
+   * @param tooltipOverrides Adds custom tooltipOverrides for series. If tooltipOverrides is null,
+   *     they are automatically generated.
    */
   public RadarSeries(String name, double[] values, String[] tooltipOverrides) {
 
@@ -82,6 +52,11 @@ public class RadarSeries extends Series {
     return tooltipOverrides;
   }
 
+  public BasicStroke getLineStyle() {
+
+    return stroke;
+  }
+
   /**
    * Set the line style of the series
    *
@@ -91,9 +66,21 @@ public class RadarSeries extends Series {
 
     stroke = basicStroke;
     if (this.lineWidth > 0.0f) {
-      stroke = new BasicStroke(lineWidth, this.stroke.getEndCap(), this.stroke.getLineJoin(), this.stroke.getMiterLimit(), this.stroke.getDashArray(), this.stroke.getDashPhase());
+      stroke =
+          new BasicStroke(
+              lineWidth,
+              this.stroke.getEndCap(),
+              this.stroke.getLineJoin(),
+              this.stroke.getMiterLimit(),
+              this.stroke.getDashArray(),
+              this.stroke.getDashPhase());
     }
     return this;
+  }
+
+  public Color getLineColor() {
+
+    return lineColor;
   }
 
   /**
@@ -107,6 +94,11 @@ public class RadarSeries extends Series {
     return this;
   }
 
+  public float getLineWidth() {
+
+    return lineWidth;
+  }
+
   /**
    * Set the line width of the series
    *
@@ -116,6 +108,11 @@ public class RadarSeries extends Series {
 
     this.lineWidth = lineWidth;
     return this;
+  }
+
+  public Marker getMarker() {
+
+    return marker;
   }
 
   /**
@@ -129,6 +126,11 @@ public class RadarSeries extends Series {
     return this;
   }
 
+  public Color getMarkerColor() {
+
+    return markerColor;
+  }
+
   /**
    * Sets the marker color for the series
    *
@@ -138,31 +140,6 @@ public class RadarSeries extends Series {
 
     this.markerColor = color;
     return this;
-  }
-
-  public BasicStroke getLineStyle() {
-
-    return stroke;
-  }
-
-  public Color getLineColor() {
-
-    return lineColor;
-  }
-
-  public float getLineWidth() {
-
-    return lineWidth;
-  }
-
-  public Marker getMarker() {
-
-    return marker;
-  }
-
-  public Color getMarkerColor() {
-
-    return markerColor;
   }
 
   @Override

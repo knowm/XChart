@@ -1,23 +1,6 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart;
 
-import java.awt.Graphics2D;
-
+import java.awt.*;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Dial;
@@ -113,12 +96,14 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
   private void sanityCheck(String seriesName, double value) {
 
     if (seriesMap.keySet().contains(seriesName)) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< has already been used. Use unique names for each series!!!");
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
     }
     if (value < 0 || value > 1) {
       throw new IllegalArgumentException("Value must be in [0, 1] range!!!");
     }
-
   }
 
   @Override
@@ -136,16 +121,18 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     legend.paint(g);
   }
 
-  /**
-   * set the series color based on theme
-   */
+  /** set the series color based on theme */
   private void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler()
-        .getSeriesLines());
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+        new SeriesColorMarkerLineStyleCycler(
+            getStyler().getSeriesColors(),
+            getStyler().getSeriesMarkers(),
+            getStyler().getSeriesLines());
     for (DialSeries series : getSeriesMap().values()) {
 
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
@@ -164,5 +151,4 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
       }
     }
   }
-
 }

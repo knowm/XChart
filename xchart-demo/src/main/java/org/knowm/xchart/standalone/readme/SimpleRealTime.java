@@ -1,28 +1,10 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.standalone.readme;
 
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
-/**
- * Creates a simple real-time chart
- */
+/** Creates a simple real-time chart */
 public class SimpleRealTime {
 
   public static void main(String[] args) throws Exception {
@@ -31,7 +13,9 @@ public class SimpleRealTime {
     double[][] initdata = getSineData(phase);
 
     // Create Chart
-    final XYChart chart = QuickChart.getChart("Simple XChart Real-time Demo", "Radians", "Sine", "sine", initdata[0], initdata[1]);
+    final XYChart chart =
+        QuickChart.getChart(
+            "Simple XChart Real-time Demo", "Radians", "Sine", "sine", initdata[0], initdata[1]);
 
     // Show it
     final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
@@ -59,6 +43,6 @@ public class SimpleRealTime {
       xData[i] = radians;
       yData[i] = Math.sin(radians);
     }
-    return new double[][]{xData, yData};
+    return new double[][] {xData, yData};
   }
 }
