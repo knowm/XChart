@@ -8,7 +8,9 @@ public class XChartSeriesMarkers implements SeriesMarkers {
   /** Constructor */
   public XChartSeriesMarkers() {
 
-    seriesMarkers = new Marker[] {CIRCLE, DIAMOND, SQUARE, TRIANGLE_DOWN, TRIANGLE_UP, CROSS, PLUS};
+
+    seriesMarkers = new Marker[]{CIRCLE, DIAMOND, SQUARE, TRIANGLE_DOWN, TRIANGLE_UP, CROSS, PLUS, RECTANGLE};
+
   }
 
   @Override
