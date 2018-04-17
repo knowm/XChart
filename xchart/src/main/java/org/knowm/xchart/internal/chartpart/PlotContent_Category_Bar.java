@@ -1,47 +1,20 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
+import java.awt.geom.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
-/**
- * @author timmolter
- */
-public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends CategorySeries> extends PlotContent_<ST, S> {
+/** @author timmolter */
+public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends CategorySeries>
+    extends PlotContent_<ST, S> {
 
   private final ST stylerCategory;
 
@@ -73,29 +46,33 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     }
   }
 
-  private void drawStepBar(Graphics2D g, S series, ArrayList<Point2D.Double> path, ArrayList<Point2D.Double> returnPath) {
+  private void drawStepBar(
+      Graphics2D g,
+      S series,
+      ArrayList<Point2D.Double> path,
+      ArrayList<Point2D.Double> returnPath) {
 
     Collections.reverse(returnPath);
 
-    //The last point will be a duplicate of the first.
-    //Pop it before adding all to the main path
+    // The last point will be a duplicate of the first.
+    // Pop it before adding all to the main path
     returnPath.remove(returnPath.size() - 1);
     path.addAll(returnPath);
 
     Path2D.Double drawPath = new Path2D.Double();
 
-    //Start draw path from first point, which can then be discarded
+    // Start draw path from first point, which can then be discarded
     Point2D.Double startPoint = path.remove(0);
     drawPath.moveTo(startPoint.getX(), startPoint.getY());
 
-    //Prepare complete fill path
+    // Prepare complete fill path
     for (Point2D.Double currentPoint : path) {
 
       drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
     }
     drawStepBarFill(g, series, drawPath);
 
-    //Remove the bottom portion and draw only the upper outline
+    // Remove the bottom portion and draw only the upper outline
     drawPath.reset();
     drawPath.moveTo(startPoint.getX(), startPoint.getY());
     List<Point2D.Double> linePath = path.subList(0, path.size() - returnPath.size() + 1);
@@ -131,7 +108,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     } else if (yMin < 0.0 && yMax < 0.0) {
       chartForm = -1; // negative chart
     } else {
-      chartForm = 0;// span chart
+      chartForm = 0; // span chart
     }
     // System.out.println(yMin);
     // System.out.println(yMax);
@@ -167,8 +144,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         ebItr = errorBars.iterator();
       }
 
-      //Stepped bars are drawn in chunks
-      //rather than for each inidivdual bar
+      // Stepped bars are drawn in chunks
+      // rather than for each inidivdual bar
       ArrayList<Point2D.Double> steppedPath = null;
       ArrayList<Point2D.Double> steppedReturnPath = null;
 
@@ -222,9 +199,10 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           case 0: // span chart
             if (y >= 0.0) { // positive
               yTop = y;
-              if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar ||
-                  series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick ||
-                  series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar) {
+              if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar
+                  || series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick
+                  || series.getChartCategorySeriesRenderStyle()
+                      == CategorySeriesRenderStyle.SteppedBar) {
                 yBottom = 0.0;
               } else {
                 yBottom = y;
@@ -235,12 +213,14 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
               }
             } else {
-              if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar ||
-                  series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick ||
-                  series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar) {
+              if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar
+                  || series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick
+                  || series.getChartCategorySeriesRenderStyle()
+                      == CategorySeriesRenderStyle.SteppedBar) {
                 yTop = 0.0;
               } else {
-                yTop = y; // yTransform uses yTop, and for non-bars and stick, it's the same as yBottom.
+                yTop = y; // yTransform uses yTop, and for non-bars and stick, it's the same as
+                // yBottom.
               }
               yBottom = y;
               if (stylerCategory.isStacked()) {
@@ -254,17 +234,19 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             break;
         }
 
-        double yTransform = getBounds().getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
+        double yTransform =
+            getBounds().getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
         double yOffset = getBounds().getY() + yTransform;
 
-        double zeroTransform = getBounds().getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
+        double zeroTransform =
+            getBounds().getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
         double zeroOffset = getBounds().getY() + zeroTransform;
         double xOffset;
         double barWidth;
 
         {
           double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
-          //SteppedBars can not have any space between them
+          // SteppedBars can not have any space between them
           if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar)
             barWidthPercentage = 1;
 
@@ -277,33 +259,38 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
             barWidth = gridStep / chart.getSeriesMap().size() * barWidthPercentage;
             double barMargin = gridStep * (1 - barWidthPercentage) / 2;
-            xOffset = getBounds().getX() + xLeftMargin + gridStep * categoryCounter++ + seriesCounter * barWidth + barMargin;
+            xOffset =
+                getBounds().getX()
+                    + xLeftMargin
+                    + gridStep * categoryCounter++
+                    + seriesCounter * barWidth
+                    + barMargin;
           }
         }
 
-        //SteppedBar. Partially drawn in loop, partially after loop.
+        // SteppedBar. Partially drawn in loop, partially after loop.
         if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar) {
 
           double yCenter = zeroOffset;
           double yTip = yOffset;
           double stepLength = gridStep;
 
-          //yTip should be the value end, yCenter the center (0) end.
+          // yTip should be the value end, yCenter the center (0) end.
           if (y < 0) {
 
             yTip = zeroOffset;
             yCenter = yOffset;
           }
 
-          //Init in first iteration
+          // Init in first iteration
           if (steppedPath == null) {
             steppedPath = new ArrayList<Point2D.Double>();
             steppedReturnPath = new ArrayList<Point2D.Double>();
             steppedPath.add(new Point2D.Double(xOffset, yCenter));
           } else if (stylerCategory.isStacked()) {
-            //If a section of a stacked graph has changed from positive
-            //to negative or vice-versa, draw what we've stored up so far
-            //and resume with a blank slate.
+            // If a section of a stacked graph has changed from positive
+            // to negative or vice-versa, draw what we've stored up so far
+            // and resume with a blank slate.
             if ((previousY > 0 && y < 0) || (previousY < 0 && y > 0)) {
               drawStepBar(g, series, steppedPath, steppedReturnPath);
 
@@ -315,8 +302,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
           if (!yItr.hasNext()) {
 
-            //Shift the far point of the final bar backwards
-            //by the same amount its start was shifted forward.
+            // Shift the far point of the final bar backwards
+            // by the same amount its start was shifted forward.
             if (!(stylerCategory.isOverlapped() || stylerCategory.isStacked())) {
 
               double singleBarStep = stepLength / (double) chart.getSeriesMap().size();
@@ -324,12 +311,12 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             }
           }
 
-          //Draw the vertical line to the new y position, and the horizontal flat of the bar.
+          // Draw the vertical line to the new y position, and the horizontal flat of the bar.
           steppedPath.add(new Point2D.Double(xOffset, yTip));
           steppedPath.add(new Point2D.Double(xOffset + stepLength, yTip));
 
-          //Add the corresponding centerline (or equivalent) to the return path
-          //Could be simplfied and removed for non-stacked graphs
+          // Add the corresponding centerline (or equivalent) to the return path
+          // Could be simplfied and removed for non-stacked graphs
           steppedReturnPath.add(new Point2D.Double(xOffset, yCenter));
           steppedReturnPath.add(new Point2D.Double(xOffset + stepLength, yCenter));
 
@@ -350,14 +337,17 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           g.fill(path);
 
           // TODO maybe we want outlines of the bars?
-          // Legend markers now also draw the outline. It has been disabled for CategorySeriesRenderStyle.Bar
+          // Legend markers now also draw the outline. It has been disabled for
+          // CategorySeriesRenderStyle.Bar
           // in Legend_Marker.java. Modify accordingly if you are enabling bar outlines.
           // if (series.getLineColor() != null) {
           // path = new Path2D.Double();
           // int halfLineWidth = (int) (series.getLineStyle().getLineWidth() / 2 + .1);
           // path.moveTo(xOffset + halfLineWidth, yOffset + halfLineWidth);
-          // path.lineTo(xOffset + halfLineWidth + barWidth - halfLineWidth * 2, yOffset + halfLineWidth);
-          // path.lineTo(xOffset + halfLineWidth + barWidth - halfLineWidth * 2, zeroOffset - halfLineWidth);
+          // path.lineTo(xOffset + halfLineWidth + barWidth - halfLineWidth * 2, yOffset +
+          // halfLineWidth);
+          // path.lineTo(xOffset + halfLineWidth + barWidth - halfLineWidth * 2, zeroOffset -
+          // halfLineWidth);
           // path.lineTo(xOffset + halfLineWidth, zeroOffset - halfLineWidth);
           // path.closePath();
           //
@@ -370,7 +360,11 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
             String numberAsString = chart.getYAxisFormat().format(next);
 
-            TextLayout textLayout = new TextLayout(numberAsString, stylerCategory.getAnnotationsFont(), new FontRenderContext(null, true, false));
+            TextLayout textLayout =
+                new TextLayout(
+                    numberAsString,
+                    stylerCategory.getAnnotationsFont(),
+                    new FontRenderContext(null, true, false));
             Rectangle2D annotationRectangle = textLayout.getBounds();
 
             double annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;
@@ -390,14 +384,17 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             g.fill(shape);
             g.setTransform(orig);
           }
-        } else if (CategorySeriesRenderStyle.Stick.equals(series.getChartCategorySeriesRenderStyle())) {
+        } else if (CategorySeriesRenderStyle.Stick.equals(
+            series.getChartCategorySeriesRenderStyle())) {
 
           // paint stick
           if (series.getLineStyle() != SeriesLines.NONE) {
 
             g.setColor(series.getLineColor());
             g.setStroke(series.getLineStyle());
-            Shape line = new Line2D.Double(xOffset + barWidth / 2, zeroOffset, xOffset + barWidth / 2, yOffset);
+            Shape line =
+                new Line2D.Double(
+                    xOffset + barWidth / 2, zeroOffset, xOffset + barWidth / 2, yOffset);
             g.draw(line);
           }
 
@@ -406,9 +403,13 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             g.setColor(series.getMarkerColor());
 
             if (y <= 0) {
-              series.getMarker().paint(g, xOffset + barWidth / 2, zeroOffset, stylerCategory.getMarkerSize());
+              series
+                  .getMarker()
+                  .paint(g, xOffset + barWidth / 2, zeroOffset, stylerCategory.getMarkerSize());
             } else {
-              series.getMarker().paint(g, xOffset + barWidth / 2, yOffset, stylerCategory.getMarkerSize());
+              series
+                  .getMarker()
+                  .paint(g, xOffset + barWidth / 2, yOffset, stylerCategory.getMarkerSize());
             }
           }
         } else {
@@ -421,7 +422,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
                 g.setColor(series.getLineColor());
                 g.setStroke(series.getLineStyle());
-                Shape line = new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);
+                Shape line =
+                    new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);
                 g.draw(line);
               }
             }
@@ -460,35 +462,44 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
           // Draw it
           double errorBarOffset = xOffset + barWidth / 2;
-          Shape line = new Line2D.Double(errorBarOffset, topEBOffset, errorBarOffset, bottomEBOffset);
+          Shape line =
+              new Line2D.Double(errorBarOffset, topEBOffset, errorBarOffset, bottomEBOffset);
           g.draw(line);
-          line = new Line2D.Double(errorBarOffset - 3, bottomEBOffset, errorBarOffset + 3, bottomEBOffset);
+          line =
+              new Line2D.Double(
+                  errorBarOffset - 3, bottomEBOffset, errorBarOffset + 3, bottomEBOffset);
           g.draw(line);
-          line = new Line2D.Double(errorBarOffset - 3, topEBOffset, errorBarOffset + 3, topEBOffset);
+          line =
+              new Line2D.Double(errorBarOffset - 3, topEBOffset, errorBarOffset + 3, topEBOffset);
           g.draw(line);
         }
         // add data labels
         if (chart.toolTips != null) {
-          Rectangle2D.Double rect = new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
+          Rectangle2D.Double rect =
+              new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
           double yPoint;
           if (y < 0) {
             yPoint = zeroOffset + 4 + 20 + 5;
           } else {
             yPoint = yOffset;
           }
-          chart.toolTips.addData(rect, xOffset, yPoint, barWidth, chart.getXAxisFormat().format(nextCat), chart.getYAxisFormat()
-              .format(y));
+          chart.toolTips.addData(
+              rect,
+              xOffset,
+              yPoint,
+              barWidth,
+              chart.getXAxisFormat().format(nextCat),
+              chart.getYAxisFormat().format(y));
         }
       }
 
-      //Final drawing of a steppedBar is done after the main loop,
-      //as it continues on null and we may end up missing the final iteration.
+      // Final drawing of a steppedBar is done after the main loop,
+      // as it continues on null and we may end up missing the final iteration.
       if (steppedPath != null && !steppedReturnPath.isEmpty()) {
         drawStepBar(g, series, steppedPath, steppedReturnPath);
       }
 
       seriesCounter++;
     }
-
   }
 }

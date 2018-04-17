@@ -9,8 +9,8 @@ public class TestForIssue243 {
 
   public static void main(String[] args) throws Exception {
 
-    double[] xData = new double[] { 1.0, 2.0 };
-    double[] yData = new double[] { Double.NaN, 1.0 };
+    double[] xData = new double[] {1.0, 2.0};
+    double[] yData = new double[] {Double.NaN, 1.0};
 
     // Create Chart
     XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "1", xData, yData);
@@ -19,7 +19,5 @@ public class TestForIssue243 {
 
     // Show it
     new SwingWrapper(chart).displayChart();
-
   }
 }
-

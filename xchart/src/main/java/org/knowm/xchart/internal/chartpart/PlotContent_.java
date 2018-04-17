@@ -1,40 +1,17 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
-/**
- * @author timmolter
- */
+/** @author timmolter */
 public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;
 
   final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
-
-  protected abstract void doPaint(Graphics2D g);
 
   /**
    * Constructor
@@ -45,6 +22,8 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
 
     this.chart = chart;
   }
+
+  protected abstract void doPaint(Graphics2D g);
 
   @Override
   public void paint(Graphics2D g) {
@@ -60,7 +39,8 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     }
 
     java.awt.Shape saveClip = g.getClip();
-    // this is for preventing the series to be drawn outside the plot area if min and max is overridden to fall inside the data range
+    // this is for preventing the series to be drawn outside the plot area if min and max is
+    // overridden to fall inside the data range
     g.setClip(bounds.createIntersection(bounds));
 
     chart.toolTips.prepare(g);
@@ -78,10 +58,9 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     return chart.getPlot().getBounds();
   }
 
-  /**
-   * Closes a path for area charts if one is available.
-   */
-  void closePath(Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
+  /** Closes a path for area charts if one is available. */
+  void closePath(
+      Graphics2D g, Path2D.Double path, double previousX, Rectangle2D bounds, double yTopMargin) {
 
     if (path != null) {
       double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;

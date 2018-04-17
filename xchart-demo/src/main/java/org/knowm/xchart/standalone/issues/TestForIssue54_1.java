@@ -1,26 +1,9 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.standalone.issues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
 import org.knowm.xchart.BubbleChart;
 import org.knowm.xchart.BubbleChartBuilder;
 import org.knowm.xchart.CategoryChart;
@@ -69,13 +52,13 @@ public class TestForIssue54_1 {
       chart.setTitle("Default axis");
       charts.add(chart);
     }
-//    {
-//      Chart chart = getAreaChart();
-//      chart.setTitle("b on second axis");
-//      Series series = (Series) chart.getSeriesMap().get("b");
-//      series.setYAxisGroup(1);
-//      charts.add(chart);
-//    }
+    //    {
+    //      Chart chart = getAreaChart();
+    //      chart.setTitle("b on second axis");
+    //      Series series = (Series) chart.getSeriesMap().get("b");
+    //      series.setYAxisGroup(1);
+    //      charts.add(chart);
+    //    }
     {
       Chart chart = getAreaChart();
       chart.setTitle("all different axis, b & c axis on right");
@@ -145,7 +128,8 @@ public class TestForIssue54_1 {
   }
 
   static Chart getLineChart() {
-    XYChart chart = new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setToolTipsEnabled(true);
@@ -174,7 +158,14 @@ public class TestForIssue54_1 {
   static Chart getAreaChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(WIDTH).height(HEIGHT).title("Area chart").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(WIDTH)
+            .height(HEIGHT)
+            .title("Area chart")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
@@ -187,9 +178,9 @@ public class TestForIssue54_1 {
     chart.getStyler().setToolTipsEnabled(true);
 
     // Series
-    chart.addSeries("a", new double[]{0, 3, 6, 9, 12}, new double[]{-1, 5, 9, 6, 5});
-    chart.addSeries("b", new double[]{1, 4, 7, 10, 13}, new double[]{-10, 50, 90, 60, 50});
-    chart.addSeries("c", new double[]{2, 5, 8, 11, 14}, new double[]{-100, 500, 900, 600, 500});
+    chart.addSeries("a", new double[] {0, 3, 6, 9, 12}, new double[] {-1, 5, 9, 6, 5});
+    chart.addSeries("b", new double[] {1, 4, 7, 10, 13}, new double[] {-10, 50, 90, 60, 50});
+    chart.addSeries("c", new double[] {2, 5, 8, 11, 14}, new double[] {-100, 500, 900, 600, 500});
 
     return chart;
   }
@@ -197,7 +188,14 @@ public class TestForIssue54_1 {
   static CategoryChart getCaregoryChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(WIDTH).height(HEIGHT).title("Score Histogram").xAxisTitle("Mean").yAxisTitle("Count").build();
+    CategoryChart chart =
+        new CategoryChartBuilder()
+            .width(WIDTH)
+            .height(HEIGHT)
+            .title("Score Histogram")
+            .xAxisTitle("Mean")
+            .yAxisTitle("Count")
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
@@ -235,7 +233,15 @@ public class TestForIssue54_1 {
   static CategoryChart getCategoryLineChart() {
 
     // Create Chart
-    CategoryChart chart = new CategoryChartBuilder().width(WIDTH).height(HEIGHT).theme(ChartTheme.GGPlot2).title("ThreadPool Benchmark").xAxisTitle("Threads").yAxisTitle("Executions").build();
+    CategoryChart chart =
+        new CategoryChartBuilder()
+            .width(WIDTH)
+            .height(HEIGHT)
+            .theme(ChartTheme.GGPlot2)
+            .title("ThreadPool Benchmark")
+            .xAxisTitle("Threads")
+            .yAxisTitle("Executions")
+            .build();
 
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Line);
@@ -246,16 +252,17 @@ public class TestForIssue54_1 {
     chart.getStyler().setToolTipsEnabled(true);
 
     // Declare data
-    List<String> xAxisKeys = Arrays.asList("release-0.5", "release-0.6", "release-0.7", "release-0.8", "release-0.9");
-    String[] seriesNames = new String[]{"a", "b", "c", "d"};
+    List<String> xAxisKeys =
+        Arrays.asList("release-0.5", "release-0.6", "release-0.7", "release-0.8", "release-0.9");
+    String[] seriesNames = new String[] {"a", "b", "c", "d"};
 
-    Integer[][] dataPerSeries = new Integer[][]{
-        {5, 20, 15, 25, 35},
-        {10, 40, 30, 50, 70},
-        {20, 80, 60, 100, 140},
-        {45, 121, 151, 231, 381},
-
-    };
+    Integer[][] dataPerSeries =
+        new Integer[][] {
+          {5, 20, 15, 25, 35},
+          {10, 40, 30, 50, 70},
+          {20, 80, 60, 100, 140},
+          {45, 121, 151, 231, 381},
+        };
 
     // Series
     for (int i = 0; i < seriesNames.length; i++) {
@@ -268,22 +275,28 @@ public class TestForIssue54_1 {
   static BubbleChart getBubleChart() {
 
     // Create Chart
-    BubbleChart chart = new BubbleChartBuilder().width(WIDTH).height(HEIGHT).title("BubbleChart01").xAxisTitle("X").yAxisTitle("Y").build();
+    BubbleChart chart =
+        new BubbleChartBuilder()
+            .width(WIDTH)
+            .height(HEIGHT)
+            .title("BubbleChart01")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
     chart.getStyler().setToolTipsEnabled(true);
     // Customize Chart
 
     // Series
-    double[] xData = new double[]{1, 2.0, 3.0, 4.0};
-    double[] yData = new double[]{10, 4, 7, 7.7};
-    double[] bubbleData = new double[]{17, 40, 50, 51};
+    double[] xData = new double[] {1, 2.0, 3.0, 4.0};
+    double[] yData = new double[] {10, 4, 7, 7.7};
+    double[] bubbleData = new double[] {17, 40, 50, 51};
 
-    double[] yData2 = new double[]{10, 20, 30, 40};
-    double[] bubbleData2 = new double[]{37, 35, 80, 27};
+    double[] yData2 = new double[] {10, 20, 30, 40};
+    double[] bubbleData2 = new double[] {37, 35, 80, 27};
 
     chart.addSeries("a", xData, yData, bubbleData);
     chart.addSeries("b", xData, yData2, bubbleData2);
 
     return chart;
   }
-
 }

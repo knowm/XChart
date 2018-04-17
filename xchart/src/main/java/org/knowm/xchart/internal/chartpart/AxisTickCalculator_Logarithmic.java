@@ -1,29 +1,13 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
- * This class encapsulates the logic to generate the axis tick mark and axis tick label data for rendering the axis ticks for logarithmic axes
+ * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
+ * rendering the axis ticks for logarithmic axes
  *
  * @author timmolter
  */
@@ -40,7 +24,12 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_Logarithmic(Direction axisDirection, double workingSpace, double minValue, double maxValue, AxesChartStyler styler) {
+  public AxisTickCalculator_Logarithmic(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
     numberLogFormatter = new NumberLogFormatter(styler, axisDirection);
@@ -66,7 +55,10 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     }
 
     // where the tick should begin in the working space in pixels
-    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin =
+        Utils.getTickStartOffset(
+            workingSpace,
+            tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
 
     // System.out.println("minValue: " + minValue);
     // System.out.println("maxValue: " + maxValue);
@@ -92,6 +84,8 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     // System.out.println("firstPosition: " + firstPosition);
     double tickStep = Utils.pow(10, logMin - 1);
 
+    boolean axisDecadeOnly = (axisDirection == Direction.X) ? styler.isXAxisLogarithmicDecadeOnly() : styler.isYAxisLogarithmicDecadeOnly();
+
     for (int i = logMin; i <= logMax; i++) { // for each decade
 
       // System.out.println("tickStep: " + tickStep);
@@ -116,14 +110,19 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
         }
 
         // only add labels for the decades
-        if (Math.abs(Math.log10(j) % 1) < 0.00000001) {
+        if (!axisDecadeOnly || Math.abs(Math.log10(j) % 1) < 0.00000001) {
           tickLabels.add(numberLogFormatter.format(j));
         } else {
           tickLabels.add(null);
         }
 
         // add all the tick marks though
-        double tickLabelPosition = (int) (margin + (Math.log10(j) - Math.log10(minValue)) / (Math.log10(maxValue) - Math.log10(minValue)) * tickSpace);
+        double tickLabelPosition =
+            (int)
+                (margin
+                    + (Math.log10(j) - Math.log10(minValue))
+                        / (Math.log10(maxValue) - Math.log10(minValue))
+                        * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
       tickStep = tickStep * Utils.pow(10, 1);

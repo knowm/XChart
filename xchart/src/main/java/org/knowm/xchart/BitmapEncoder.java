@@ -1,44 +1,17 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
+import javax.imageio.*;
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.FileImageOutputStream;
-
 import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
@@ -48,19 +21,12 @@ import org.knowm.xchart.internal.chartpart.Chart;
  */
 public final class BitmapEncoder {
 
-  /**
-   * Constructor - Private constructor to prevent instantiation
-   */
-  private BitmapEncoder() {
-
-  }
-
-  public enum BitmapFormat {
-    PNG, JPG, BMP, GIF
-  }
+  /** Constructor - Private constructor to prevent instantiation */
+  private BitmapEncoder() {}
 
   /**
-   * Only adds the extension of the BitmapFormat to the filename if the filename doesn't already have it.
+   * Only adds the extension of the BitmapFormat to the filename if the filename doesn't already
+   * have it.
    *
    * @param fileName
    * @param bitmapFormat
@@ -70,7 +36,10 @@ public final class BitmapEncoder {
 
     String fileNameWithFileExtension = fileName;
     final String newFileExtension = "." + bitmapFormat.toString().toLowerCase();
-    if (fileName.length() <= newFileExtension.length() || !fileName.substring(fileName.length() - newFileExtension.length(), fileName.length()).equalsIgnoreCase(newFileExtension)) {
+    if (fileName.length() <= newFileExtension.length()
+        || !fileName
+            .substring(fileName.length() - newFileExtension.length(), fileName.length())
+            .equalsIgnoreCase(newFileExtension)) {
       fileNameWithFileExtension = fileName + newFileExtension;
     }
     return fileNameWithFileExtension;
@@ -84,7 +53,8 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static void saveBitmap(Chart chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
+  public static void saveBitmap(Chart chart, String fileName, BitmapFormat bitmapFormat)
+      throws IOException {
 
     OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
     try {
@@ -95,7 +65,8 @@ public final class BitmapEncoder {
   }
 
   /**
-   * Write a Chart into a given stream. Does not close the target stream automatically at the end of the operation
+   * Write a Chart into a given stream. Does not close the target stream automatically at the end of
+   * the operation
    *
    * @param chart
    * @param targetStream
@@ -110,9 +81,8 @@ public final class BitmapEncoder {
   }
 
   /**
-   * Save list of Charts as an image file.
-   * Function assumes that all charts are the same size (width, height).
-   * Number of charts should equal rows multiplied by cols.
+   * Save list of Charts as an image file. Function assumes that all charts are the same size
+   * (width, height). Number of charts should equal rows multiplied by cols.
    *
    * @param charts
    * @param rows number of rows
@@ -121,7 +91,13 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static void saveBitmap(List<Chart> charts, Integer rows, Integer cols, String fileName, BitmapEncoder.BitmapFormat bitmapFormat) throws IOException {
+  public static void saveBitmap(
+      List<Chart> charts,
+      Integer rows,
+      Integer cols,
+      String fileName,
+      BitmapEncoder.BitmapFormat bitmapFormat)
+      throws IOException {
 
     OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
     try {
@@ -132,8 +108,8 @@ public final class BitmapEncoder {
   }
 
   /**
-   * Save list of Charts into a given stream. Does not close the target stream automatically at the end of the operation.
-   * Function assumes that all charts are the same size (width, height).
+   * Save list of Charts into a given stream. Does not close the target stream automatically at the
+   * end of the operation. Function assumes that all charts are the same size (width, height).
    * Number of charts should equal rows multiplied by cols.
    *
    * @param charts
@@ -143,35 +119,41 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static void saveBitmap(List<Chart> charts, Integer rows, Integer cols, OutputStream targetStream, BitmapEncoder.BitmapFormat bitmapFormat) throws IOException {
+  public static void saveBitmap(
+      List<Chart> charts,
+      Integer rows,
+      Integer cols,
+      OutputStream targetStream,
+      BitmapEncoder.BitmapFormat bitmapFormat)
+      throws IOException {
 
     List<BufferedImage> chartImages = new LinkedList<BufferedImage>();
-    for (Chart c : charts)
-      chartImages.add(getBufferedImage(c));
+    for (Chart c : charts) chartImages.add(getBufferedImage(c));
 
-    BufferedImage bufferedImage = mergeImages(
-        chartImages,
-        rows,
-        cols
-    );
+    BufferedImage bufferedImage = mergeImages(chartImages, rows, cols);
 
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
   }
 
   /**
-   * Save a chart as a PNG with a custom DPI. The default DPI is 72, which is fine for displaying charts on a computer monitor, but for printing
-   * charts, a DPI of around 300 is much better.
+   * Save a chart as a PNG with a custom DPI. The default DPI is 72, which is fine for displaying
+   * charts on a computer monitor, but for printing charts, a DPI of around 300 is much better.
    *
    * @param chart
    * @param fileName
    * @param DPI
    * @throws IOException
    */
-  public static void saveBitmapWithDPI(Chart chart, String fileName, BitmapFormat bitmapFormat, int DPI) throws IOException {
+  public static void saveBitmapWithDPI(
+      Chart chart, String fileName, BitmapFormat bitmapFormat, int DPI) throws IOException {
 
     double scaleFactor = DPI / 72.0;
 
-    BufferedImage bufferedImage = new BufferedImage((int) (chart.getWidth() * scaleFactor), (int) (chart.getHeight() * scaleFactor), BufferedImage.TYPE_INT_RGB);
+    BufferedImage bufferedImage =
+        new BufferedImage(
+            (int) (chart.getWidth() * scaleFactor),
+            (int) (chart.getHeight() * scaleFactor),
+            BufferedImage.TYPE_INT_RGB);
 
     Graphics2D graphics2D = bufferedImage.createGraphics();
 
@@ -180,16 +162,21 @@ public final class BitmapEncoder {
     graphics2D.setTransform(at);
 
     chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
-    Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(bitmapFormat.toString().toLowerCase());
+    Iterator<ImageWriter> writers =
+        ImageIO.getImageWritersByFormatName(bitmapFormat.toString().toLowerCase());
     if (writers.hasNext()) {
       ImageWriter writer = writers.next();
       // instantiate an ImageWriteParam object with default compression options
       ImageWriteParam iwp = writer.getDefaultWriteParam();
 
-      ImageTypeSpecifier typeSpecifier = ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
+      ImageTypeSpecifier typeSpecifier =
+          ImageTypeSpecifier.createFromBufferedImageType(BufferedImage.TYPE_INT_RGB);
       IIOMetadata metadata = writer.getDefaultImageMetadata(typeSpecifier, iwp);
       if (metadata.isReadOnly() || !metadata.isStandardMetadataFormatSupported()) {
-        throw new IllegalArgumentException("It is not possible to set the DPI on a bitmap with " + bitmapFormat + " format!! Try another format.");
+        throw new IllegalArgumentException(
+            "It is not possible to set the DPI on a bitmap with "
+                + bitmapFormat
+                + " format!! Try another format.");
       }
 
       setDPI(metadata, DPI);
@@ -243,7 +230,8 @@ public final class BitmapEncoder {
    * @param quality - a float between 0 and 1 (1 = maximum quality)
    * @throws IOException
    */
-  public static void saveJPGWithQuality(Chart chart, String fileName, float quality) throws IOException {
+  public static void saveJPGWithQuality(Chart chart, String fileName, float quality)
+      throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
@@ -291,7 +279,8 @@ public final class BitmapEncoder {
 
   public static BufferedImage getBufferedImage(Chart chart) {
 
-    BufferedImage bufferedImage = new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
+    BufferedImage bufferedImage =
+        new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
     Graphics2D graphics2D = bufferedImage.createGraphics();
     chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
     return bufferedImage;
@@ -304,7 +293,8 @@ public final class BitmapEncoder {
     int singleImageHeight = first.getHeight();
     int totalWidth = singleImageWidth * cols;
     int totalHeight = singleImageHeight * rows;
-    BufferedImage mergedImage = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage mergedImage =
+        new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_ARGB);
 
     Graphics g = mergedImage.getGraphics();
     for (int row = 0; row < rows; row++) {
@@ -317,4 +307,10 @@ public final class BitmapEncoder {
     return mergedImage;
   }
 
+  public enum BitmapFormat {
+    PNG,
+    JPG,
+    BMP,
+    GIF
+  }
 }

@@ -1,24 +1,6 @@
-/**
- * Copyright 2015-2017 Knowm Inc. (http://knowm.org) and contributors.
- * Copyright 2011-2015 Xeiam LLC (http://xeiam.com) and contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -28,11 +10,11 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Map;
-
 import org.knowm.xchart.DialSeries;
 import org.knowm.xchart.style.DialStyler;
 
-public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> extends PlotContent_<ST, S> {
+public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
+    extends PlotContent_<ST, S> {
 
   private final ST styler;
   private final NumberFormat df = DecimalFormat.getPercentInstance();
@@ -56,18 +38,14 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> exten
     double height = styler.isCircular() ? min : boundsHeight;
 
     // we need to adjust height when arcAngle is small. To much wasted space on buttom of the chart
-    // Not sure but something like r +=  r - cos((360-arcAngle)/2) where r is vertical radius
- 
+    // Not sure but something like r += r - cos((360-arcAngle)/2) where r is vertical radius
 
-    Rectangle2D pieBounds = new Rectangle2D.Double(
-
-        getBounds().getX() + boundsWidth / 2 - width / 2 + halfBorderPercentage * width,
-
-        getBounds().getY() + boundsHeight / 2 - height / 2 + halfBorderPercentage * height,
-
-        width * pieFillPercentage,
-
-        height * pieFillPercentage);
+    Rectangle2D pieBounds =
+        new Rectangle2D.Double(
+            getBounds().getX() + boundsWidth / 2 - width / 2 + halfBorderPercentage * width,
+            getBounds().getY() + boundsHeight / 2 - height / 2 + halfBorderPercentage * height,
+            width * pieFillPercentage,
+            height * pieFillPercentage);
 
     // get total
     boolean axisTickLabelsVisible = styler.isAxisTickLabelsVisible();
@@ -79,9 +57,9 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> exten
     int markCount = axisTickValues.length;
     String[] axisTickLabels = styler.getAxisTickLabels();
 
-    double[] fromArr = { styler.getNormalFrom(), styler.getGreenFrom(), styler.getRedFrom() };
-    double[] toArr = { styler.getNormalTo(), styler.getGreenTo(), styler.getRedTo() };
-    Color[] donutColorArr = { styler.getNormalColor(), styler.getGreenColor(), styler.getRedColor() };
+    double[] fromArr = {styler.getNormalFrom(), styler.getGreenFrom(), styler.getRedFrom()};
+    double[] toArr = {styler.getNormalTo(), styler.getGreenTo(), styler.getRedTo()};
+    Color[] donutColorArr = {styler.getNormalColor(), styler.getGreenColor(), styler.getRedColor()};
 
     double dountStartAngle = (arcAngle) / 2 + 90;
     // draw shape
@@ -93,7 +71,8 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> exten
       }
       double totalAngle = (to - from) * arcAngle;
       double startAngle = dountStartAngle - from * arcAngle - totalAngle;
-      Shape donutSlice = PlotContent_Pie.getDonutSliceShape(pieBounds, donutThickness, startAngle, totalAngle);
+      Shape donutSlice =
+          PlotContent_Pie.getDonutSliceShape(pieBounds, donutThickness, startAngle, totalAngle);
       g.setColor(donutColorArr[i]);
       g.fill(donutSlice);
       g.draw(donutSlice);
@@ -130,8 +109,9 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> exten
         }
         String annotation = axisTickLabels[i];
 
-        TextLayout textLayout = new TextLayout(annotation, styler.getAxisTitleFont(),
-            new FontRenderContext(null, true, false));
+        TextLayout textLayout =
+            new TextLayout(
+                annotation, styler.getAxisTitleFont(), new FontRenderContext(null, true, false));
         Shape shape = textLayout.getOutline(null);
 
         Rectangle2D annotationBounds = shape.getBounds2D();
@@ -176,8 +156,11 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> exten
 
       // draw title
       if (styler.isAxisTitleVisible()) {
-        TextLayout textLayout = new TextLayout(series.getName(), styler.getAxisTitleFont(),
-            new FontRenderContext(null, true, false));
+        TextLayout textLayout =
+            new TextLayout(
+                series.getName(),
+                styler.getAxisTitleFont(),
+                new FontRenderContext(null, true, false));
         Shape shape = textLayout.getOutline(null);
 
         Rectangle2D annotationBounds = shape.getBounds2D();
@@ -213,8 +196,11 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> exten
           }
         }
         if (!annotation.isEmpty()) {
-          TextLayout textLayout = new TextLayout(annotation, styler.getAnnotationsFont(),
-              new FontRenderContext(null, true, false));
+          TextLayout textLayout =
+              new TextLayout(
+                  annotation,
+                  styler.getAnnotationsFont(),
+                  new FontRenderContext(null, true, false));
           Shape shape = textLayout.getOutline(null);
 
           Rectangle2D annotationBounds = shape.getBounds2D();
@@ -262,7 +248,9 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries> exten
       }
       path.moveTo(xCenter, yCenter);
 
-      double[][] angleValues = { { -arrowArcAngle, arrowArcPercentage }, { 0, 1 }, { arrowArcAngle, arrowArcPercentage } };
+      double[][] angleValues = {
+        {-arrowArcAngle, arrowArcPercentage}, {0, 1}, {arrowArcAngle, arrowArcPercentage}
+      };
       for (double[] ds : angleValues) {
         radians = Math.toRadians(angle - ds[0]);
 
