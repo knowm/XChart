@@ -3,7 +3,6 @@ package org.knowm.xchart.standalone;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.*;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.markers.SeriesMarkers;
@@ -32,7 +31,7 @@ public class Example2 {
     }
     new SwingWrapper<Chart>(charts).displayChartMatrix();
 
-    BitmapEncoder.saveBitmap(charts,2,2, "./Sample_Chart_Matrix", BitmapEncoder.BitmapFormat.PNG);
+    BitmapEncoder.saveBitmap(charts, 2, 2, "./Sample_Chart_Matrix", BitmapEncoder.BitmapFormat.PNG);
   }
 
   /**

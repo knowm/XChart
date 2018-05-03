@@ -8,12 +8,10 @@ import de.erichseifert.vectorgraphics2d.intermediate.CommandSequence;
 import de.erichseifert.vectorgraphics2d.pdf.PDFProcessor;
 import de.erichseifert.vectorgraphics2d.svg.SVGProcessor;
 import de.erichseifert.vectorgraphics2d.util.PageSize;
-import org.knowm.xchart.internal.chartpart.Chart;
-
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
  * A helper class with static methods for saving Charts as vectors
@@ -32,13 +30,13 @@ public final class VectorGraphicsEncoder {
 
     switch (vectorGraphicsFormat) {
       case EPS:
-        p= new EPSProcessor();
+        p = new EPSProcessor();
         break;
       case PDF:
-        p= new PDFProcessor(true);
+        p = new PDFProcessor(true);
         break;
       case SVG:
-        p= new SVGProcessor();
+        p = new SVGProcessor();
         break;
 
       default:
@@ -46,7 +44,7 @@ public final class VectorGraphicsEncoder {
     }
 
     Graphics2D vg2d = new VectorGraphics2D();
-//    vg2d.draw(new Rectangle2D.Double(0.0, 0.0, chart.getWidth(), chart.getHeight()));
+    //    vg2d.draw(new Rectangle2D.Double(0.0, 0.0, chart.getWidth(), chart.getHeight()));
     CommandSequence commands = ((VectorGraphics2D) vg2d).getCommands();
 
     chart.paint(vg2d, chart.getWidth(), chart.getHeight());
