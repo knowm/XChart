@@ -320,6 +320,24 @@ For category charts another way to create custom axis places is using category n
 
       chart.setCustomCategoryLabels(xMarkMap);
 ```
+### Multiple Axes
+
+XChart has multiple y axes feature. Y offset is calculated according to the y axis the series configured. Max `y` value in this axis is calculated according to the series on this axis only. 
+To set the y group: 
+```java
+    series.setYAxisGroup(axisGroup);   
+```
+To manually change max/min of axis group:
+```java
+    ((AxesChartStyler) chart.getStyler()).setYAxisMax(axisGroup, 200.0);
+```
+
+### Axis Placement
+
+Axis can be drawn on the left (default) or on the right of the chart: 
+```java
+    chart.getStyler().setYAxisGroupPosition(axisGroup, Styler.YAxisPosition.Right);
+```
 
 ## Chart Themes
 
