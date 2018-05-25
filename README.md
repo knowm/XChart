@@ -277,6 +277,68 @@ All the styling options can be found in one of two possible places: 1) the Chart
  
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Series_Customization.png)
  
+
+### Customizing Axis Ticks & Axis Labels
+
+XChart automatically creates axis ticks and axis labels. 
+
+Default axis placement can be altered with `chart.getStyler().setXAxisTickMarkSpacingHint(spacingHint);`. 
+
+Default axis label patterns can be altered with one of:
+- `chart.getStyler().setDatePattern(datePattern)` 
+- `chart.getStyler().setXAxisDecimalPattern(pattern);` 
+- `chart.getStyler().setYAxisDecimalPattern(pattern);`
+
+
+You can also create custom axis placements and axis labels. Create a map containing x -> label mappings:
+- x : value where the tick will be drawn (this value is in xData space, not in pixel space). For category charts x is index of the category (0 means first category).
+- label: Tick label. If it is `null`, tick will be generated with a `" "` label.
+
+```java
+      XYChart chart = new AreaChart01().getChart();
+      Map<Double, Object> xMarkMap = new TreeMap<Double, Object>();
+      xMarkMap.put(0.0, "zero");
+      xMarkMap.put(3.5, "3.5");
+      xMarkMap.put(5.0, " ");
+      xMarkMap.put(9.0, "nine");
+
+      Map<Double, Object> yMarkMap = new TreeMap<Double, Object>();
+      yMarkMap.put(1.0, "max c");
+      yMarkMap.put(6.0, "max b");
+      yMarkMap.put(9.0, "max a");
+
+      chart.setXAxisLabelOverrideMap(xMarkMap);
+      chart.setYAxisLabelOverrideMap(yMarkMap);
+```
+
+For category charts another way to create custom axis places is using category names in first series:
+```java
+      CategoryChart chart = new BarChart09().getChart();
+      Map<Object, Object> xMarkMap = new TreeMap<Object, Object>();
+      xMarkMap.put("A", "-A-");
+      xMarkMap.put("D", "+D+");
+
+      chart.setCustomCategoryLabels(xMarkMap);
+```
+### Multiple Axes
+
+XChart has multiple y axes feature. Y offset is calculated according to the y axis the series configured. Max `y` value in this axis is calculated according to the series on this axis only. 
+To set the y group: 
+```java
+    series.setYAxisGroup(axisGroup);   
+```
+To manually change max/min of axis group:
+```java
+    ((AxesChartStyler) chart.getStyler()).setYAxisMax(axisGroup, 200.0);
+```
+
+### Axis Placement
+
+Axis can be drawn on the left (default) or on the right of the chart: 
+```java
+    chart.getStyler().setYAxisGroupPosition(axisGroup, Styler.YAxisPosition.Right);
+```
+
 ## Chart Themes
 
 XChart ships with three different themes: Default `XChart`, `GGPlot2` and `Matlab`. Using a different theme is as simple as setting the Chart's theme with the `theme` method of the `ChartBuilder`.
