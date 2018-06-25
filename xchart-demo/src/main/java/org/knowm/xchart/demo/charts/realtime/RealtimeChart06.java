@@ -3,6 +3,7 @@ package org.knowm.xchart.demo.charts.realtime;
 import java.util.*;
 import org.knowm.xchart.*;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.demo.charts.RealtimeExampleChart;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -16,7 +17,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  *   <li>real-time chart updates with SwingWrapper
  *   <li>Matlab Theme
  */
-public class RealtimeChart06 implements ExampleChart<OHLCChart> {
+public class RealtimeChart06 implements ExampleChart<OHLCChart>, RealtimeExampleChart {
 
   private OHLCChart ohlcChart;
 

@@ -58,6 +58,10 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
       if (!series.isEnabled()) {
         continue;
       }
+
+      String[] toolTips = series.getToolTips();
+      boolean hasCustomToolTips = toolTips != null;
+
       Axis yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
@@ -196,19 +200,31 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
         // add data labels
         if (toolTipsEnabled) {
-          chart.toolTips.addData(
-              toolTipArea,
-              xOffset,
-              highOffset,
-              candleHalfWidth * 2,
-              chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat().format(openOrig)
-                  + ':'
-                  + chart.getYAxisFormat().format(highOrig)
-                  + ':'
-                  + chart.getYAxisFormat().format(lowOrig)
-                  + ':'
-                  + chart.getYAxisFormat().format(closeOrig));
+          if (hasCustomToolTips) {
+            String tt = toolTips[i];
+            if (tt != null) {
+              chart.toolTips.addData(
+                  toolTipArea,
+                  xOffset,
+                  highOffset,
+                  candleHalfWidth * 2,
+                  tt);
+            }
+          } else {
+            chart.toolTips.addData(
+                toolTipArea,
+                xOffset,
+                highOffset,
+                candleHalfWidth * 2,
+                chart.getXAxisFormat().format(x),
+                chart.getYAxisFormat().format(openOrig)
+                    + ':'
+                    + chart.getYAxisFormat().format(highOrig)
+                    + ':'
+                    + chart.getYAxisFormat().format(lowOrig)
+                    + ':'
+                    + chart.getYAxisFormat().format(closeOrig));
+          }
         }
       }
 

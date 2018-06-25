@@ -74,6 +74,10 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       double[] errorBars = series.getExtraValues();
       Path2D.Double path = null;
 
+      boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
+      String[] toolTips = series.getToolTips();
+      boolean hasCustomToolTips = toolTips != null;
+      
       for (int i = 0; i < xData.length; i++) {
 
         double x = xData[i];
@@ -249,12 +253,19 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
         }
 
         // add data labels
-        if (chart.getStyler().isToolTipsEnabled()) {
-          chart.toolTips.addData(
-              xOffset,
-              yOffset,
-              chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat().format(yOrig));
+        if (toolTipsEnabled) {
+          if (hasCustomToolTips) {
+            String tt = toolTips[i];
+            if (tt != null) {
+              chart.toolTips.addData(xOffset, yOffset,tt);
+            }
+          } else {
+            chart.toolTips.addData(
+                xOffset,
+                yOffset,
+                chart.getXAxisFormat().format(x),
+                chart.getYAxisFormat().format(yOrig));
+          }
         }
       }
 

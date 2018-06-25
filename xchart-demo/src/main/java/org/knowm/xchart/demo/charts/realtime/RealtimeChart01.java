@@ -8,6 +8,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.demo.charts.RealtimeExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
@@ -19,7 +20,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  *   <li>real-time chart updates with SwingWrapper
  *   <li>Matlab Theme
  */
-public class RealtimeChart01 implements ExampleChart<XYChart> {
+public class RealtimeChart01 implements ExampleChart<XYChart>, RealtimeExampleChart {
 
   private XYChart xyChart;
 

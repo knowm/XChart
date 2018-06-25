@@ -44,12 +44,16 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
       xMax = Math.log10(xMax);
     }
 
+    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
       if (!series.isEnabled()) {
         continue;
       }
+
+      String[] toolTips = series.getToolTips();
+      boolean hasCustomToolTips = toolTips != null;
 
       double yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       double yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
@@ -136,13 +140,27 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
           g.setStroke(series.getLineStyle());
           g.draw(bubble);
           // add data labels
-          chart.toolTips.addData(
-              bubble,
-              xOffset,
-              yOffset,
-              0,
-              chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat().format(yOrig));
+          if (toolTipsEnabled) {
+            if (hasCustomToolTips) {
+              String tt = toolTips[i];
+              if (tt != null) {
+                chart.toolTips.addData(
+                    bubble,
+                    xOffset,
+                    yOffset,
+                    0,
+                    tt);
+              }
+            } else {
+              chart.toolTips.addData(
+                  bubble,
+                  xOffset,
+                  yOffset,
+                  0,
+                  chart.getXAxisFormat().format(x),
+                  chart.getYAxisFormat().format(yOrig));
+            }
+          }
         }
       }
     }

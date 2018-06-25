@@ -12,6 +12,7 @@ public class PieSeries extends Series {
 
   private PieSeriesRenderStyle chartPieSeriesRenderStyle = null;
   private Number value;
+  private String toolTip;
 
   /**
    * Constructor
@@ -68,5 +69,15 @@ public class PieSeries extends Series {
     Pie(),
 
     Donut();
+  }
+
+  public String getToolTip() {
+
+    return toolTip;
+  }
+  
+  public void setToolTip(String toolTip) {
+
+    this.toolTip = toolTip;
   }
 }

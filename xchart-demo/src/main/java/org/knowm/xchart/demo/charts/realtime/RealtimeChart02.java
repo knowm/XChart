@@ -10,6 +10,7 @@ import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.demo.charts.RealtimeExampleChart;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
@@ -23,7 +24,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  *   <li>Matlab theme
  *   <li>Pie Chart
  */
-public class RealtimeChart02 implements ExampleChart<PieChart> {
+public class RealtimeChart02 implements ExampleChart<PieChart>, RealtimeExampleChart {
 
   private PieChart pieChart;
 

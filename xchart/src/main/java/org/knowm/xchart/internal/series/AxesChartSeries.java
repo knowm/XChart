@@ -26,6 +26,8 @@ public abstract class AxesChartSeries extends Series {
   /** Line Width */
   private float lineWidth = -1.0f;
 
+  protected String[] toolTips;
+  
   /**
    * Constructor
    *
@@ -127,5 +129,15 @@ public abstract class AxesChartSeries extends Series {
   public DataType getyAxisDataType() {
 
     return yAxisType;
+  }
+  
+  public String[] getToolTips() {
+
+    return toolTips;
+  }
+  
+  public void setToolTips(String[] toolTips) {
+
+    this.toolTips = toolTips;
   }
 }

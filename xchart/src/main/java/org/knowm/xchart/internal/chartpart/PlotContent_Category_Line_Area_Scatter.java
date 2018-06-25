@@ -41,6 +41,7 @@ public class PlotContent_Category_Line_Area_Scatter<
     double yTickSpace = categoryStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
+    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
     Map<String, S> seriesMap = chart.getSeriesMap();
 
     int numCategories = seriesMap.values().iterator().next().getXData().size();
@@ -51,6 +52,9 @@ public class PlotContent_Category_Line_Area_Scatter<
       if (!series.isEnabled()) {
         continue;
       }
+      String[] toolTips = series.getToolTips();
+      boolean hasCustomToolTips = toolTips != null;
+
       Axis yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
@@ -228,11 +232,22 @@ public class PlotContent_Category_Line_Area_Scatter<
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
-        chart.toolTips.addData(
-            xOffset,
-            yOffset,
-            chart.getXAxisFormat().format(nextCat),
-            chart.getYAxisFormat().format(y));
+        
+        if (toolTipsEnabled) {
+          if (hasCustomToolTips) {
+            String tt = toolTips[categoryCounter];
+            if (tt != null) {
+              chart.toolTips.addData(xOffset, yOffset,tt);
+            }
+          } else {
+            chart.toolTips.addData(
+                xOffset,
+                yOffset,
+                chart.getXAxisFormat().format(nextCat),
+                chart.getYAxisFormat().format(y));
+          }
+        }
+        
       }
 
       // close any open path for area charts

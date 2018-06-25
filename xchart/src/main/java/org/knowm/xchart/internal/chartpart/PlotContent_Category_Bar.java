@@ -123,11 +123,15 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     double[] accumulatedStackOffsetPos = new double[numCategories];
     double[] accumulatedStackOffsetNeg = new double[numCategories];
 
+    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
+    
     for (S series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
         continue;
       }
+      String[] toolTips = series.getToolTips();
+      boolean hasCustomToolTips = toolTips != null;
 
       yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
@@ -474,7 +478,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           g.draw(line);
         }
         // add data labels
-        if (chart.toolTips != null) {
+        if (toolTipsEnabled) {
           Rectangle2D.Double rect =
               new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
           double yPoint;
@@ -483,13 +487,26 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           } else {
             yPoint = yOffset;
           }
-          chart.toolTips.addData(
-              rect,
-              xOffset,
-              yPoint,
-              barWidth,
-              chart.getXAxisFormat().format(nextCat),
-              chart.getYAxisFormat().format(y));
+          
+          if (hasCustomToolTips) {
+            String tt = toolTips[categoryCounter-1];
+            if (tt != null) {
+              chart.toolTips.addData( 
+                  rect,
+                  xOffset,
+                  yPoint,
+                  barWidth,
+                  tt);
+            }
+          } else {
+            chart.toolTips.addData(
+                rect,
+                xOffset,
+                yPoint,
+                barWidth,
+                chart.getXAxisFormat().format(nextCat),
+                chart.getYAxisFormat().format(y));
+          }
         }
       }
 

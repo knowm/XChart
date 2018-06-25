@@ -10,6 +10,7 @@ import org.knowm.xchart.BubbleChart;
 import org.knowm.xchart.BubbleChartBuilder;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.demo.charts.RealtimeExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
@@ -23,7 +24,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  *   <li>Bubble chart
  *   <li>GGPlot2 theme
  */
-public class RealtimeChart04 implements ExampleChart<BubbleChart> {
+public class RealtimeChart04 implements ExampleChart<BubbleChart>, RealtimeExampleChart {
 
   private BubbleChart bubbleChart;
 

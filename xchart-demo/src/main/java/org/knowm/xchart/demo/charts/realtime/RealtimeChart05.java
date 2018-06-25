@@ -11,6 +11,7 @@ import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.demo.charts.RealtimeExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
@@ -21,7 +22,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  * <ul>
  *   <li>real-time chart updates with SwingWrapper
  */
-public class RealtimeChart05 implements ExampleChart<CategoryChart> {
+public class RealtimeChart05 implements ExampleChart<CategoryChart>, RealtimeExampleChart {
 
   private CategoryChart categoryChart;
 
