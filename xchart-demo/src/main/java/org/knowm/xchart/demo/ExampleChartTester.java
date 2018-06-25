@@ -206,7 +206,6 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
 
       Map<String, Chart> charts = getCharts(chartInfo);
       addCharts(tabbedPane, charts);
-      // TODO repack?
 
       // start running a simulated data feed for the sample real-time plot
       timer.cancel(); // just in case
@@ -219,7 +218,6 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
           public void run() {
 
             realtimeChart.updateData();
-            // TODO
             tabbedPane.revalidate();
             tabbedPane.repaint();
           }
