@@ -148,4 +148,9 @@ public class RadarSeries extends Series {
     // Radar charts are always rendered as a Box in the legend
     return null;
   }
+  
+  public void setTooltipOverrides(String[] tooltipOverrides) {
+
+    this.tooltipOverrides = tooltipOverrides;
+  }
 }

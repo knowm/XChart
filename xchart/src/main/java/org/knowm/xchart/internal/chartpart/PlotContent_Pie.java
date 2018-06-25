@@ -151,6 +151,8 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     // double curValue = 0.0;
     double startAngle = pieStyler.getStartAngleInDegrees() + 90;
 
+    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
+    
     map = chart.getSeriesMap();
     for (S series : map.values()) {
 
@@ -357,7 +359,14 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
               - Math.sin(Math.toRadians(angle))
                   * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
 
-      chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
+      if (toolTipsEnabled) {
+        String tt = series.getToolTip();
+        if (tt != null) {
+          chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, tt);
+        } else {
+          chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
+        }
+      }
       startAngle += arcAngle;
     }
   }

@@ -10,6 +10,7 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.demo.charts.RealtimeExampleChart;
 
 /**
  * Real-time XY Chart with Error Bars
@@ -21,7 +22,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  *   <li>fixed window
  *   <li>error bars
  */
-public class RealtimeChart03 implements ExampleChart<XYChart> {
+public class RealtimeChart03 implements ExampleChart<XYChart>, RealtimeExampleChart {
 
   private XYChart xyChart;
 

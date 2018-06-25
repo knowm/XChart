@@ -27,7 +27,6 @@ public class ToolTips implements MouseMotionListener {
   private double rightEdge;
   private double topEdge;
   private double bottomEdge;
-
   /**
    * Constructor
    *
@@ -104,6 +103,12 @@ public class ToolTips implements MouseMotionListener {
       return;
     }
 
+    if (styler.isToolTipsAlwaysVisible()) {
+      for (DataPoint dataPoint : dataPointList) {
+        paintToolTip(g, dataPoint);
+      }
+    }
+    
     if (dataPoint != null) { // dataPoint was created in mouse move, need to render it
       paintToolTip(g, dataPoint);
     }
@@ -176,10 +181,12 @@ public class ToolTips implements MouseMotionListener {
     double h = annotationRectangle.getHeight() + 2 * MARGIN;
     double halfHeight = h / 2;
 
-    // not the box with label, but the shape
-    // highlight shape for popup
-    g.setColor(styler.getToolTipHighlightColor());
-    g.fill(dataPoint.shape);
+    if (dataPoint == this.dataPoint) {
+      // not the box with label, but the shape
+      // highlight shape for popup
+      g.setColor(styler.getToolTipHighlightColor());
+      g.fill(dataPoint.shape);
+    }
 
     // the label in a box
     x = Math.max(x, leftEdge);

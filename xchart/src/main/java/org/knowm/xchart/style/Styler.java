@@ -46,6 +46,7 @@ public abstract class Styler {
   private double plotContentSize = .92;
   // Tool Tips ///////////////////////////////
   private boolean isToolTipsEnabled;
+  private boolean isToolTipsAlwaysVisible;
   private ToolTipType toolTipType;
   private Color toolTipBackgroundColor;
   private Color toolTipBorderColor;
@@ -525,6 +526,18 @@ public abstract class Styler {
     return this;
   }
 
+  public boolean isToolTipsAlwaysVisible() {
+    
+    return isToolTipsAlwaysVisible;
+  }
+
+  public Styler setToolTipsAlwaysVisible(boolean toolTipsAlwaysVisible) {
+    
+    isToolTipsAlwaysVisible = toolTipsAlwaysVisible;
+    return this;
+  }
+  
+  
   public ToolTipType getToolTipType() {
 
     return toolTipType;
