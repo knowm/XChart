@@ -219,7 +219,14 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         } else if (pieStyler.getAnnotationType() == AnnotationType.Percentage) {
           double percentage = y.doubleValue() / total * 100;
           annotation = df.format(percentage) + "%";
-        }
+        } else if (pieStyler.getAnnotationType() == AnnotationType.LabelAndValue) {
+            if (pieStyler.getDecimalPattern() != null) {
+    		    DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
+    		    annotation = series.getName() +" ("+ df.format(y)+")";
+    		  } else {
+    		    annotation = series.getName() +" ("+y.toString()+")";
+    		  }
+            }
 
         TextLayout textLayout =
             new TextLayout(
