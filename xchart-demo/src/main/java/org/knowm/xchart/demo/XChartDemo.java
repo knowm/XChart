@@ -57,6 +57,7 @@ import org.knowm.xchart.demo.charts.pie.PieChart02;
 import org.knowm.xchart.demo.charts.pie.PieChart03;
 import org.knowm.xchart.demo.charts.pie.PieChart04;
 import org.knowm.xchart.demo.charts.pie.PieChart05;
+import org.knowm.xchart.demo.charts.pie.PieChart06;
 import org.knowm.xchart.demo.charts.radar.RadarChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
@@ -311,6 +312,12 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
             new ChartInfo(
                 "PieChart05 - Pie Chart with Donut Style and Sum", new PieChart05().getChart()));
     category.add(defaultMutableTreeNode);
+    
+    defaultMutableTreeNode =
+            new DefaultMutableTreeNode(
+                new ChartInfo(
+                    "PieChart06 - Pie Chart with Pie Style with Annotation LabelAndValue", new PieChart06().getChart()));
+        category.add(defaultMutableTreeNode);
 
     // Line
     category = new DefaultMutableTreeNode("Line Charts");

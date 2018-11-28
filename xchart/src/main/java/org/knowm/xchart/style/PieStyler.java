@@ -218,6 +218,7 @@ public class PieStyler extends Styler {
     Value,
     Percentage,
     Label,
-    LabelAndPercentage
+    LabelAndPercentage,
+    LabelAndValue
   }
 }
