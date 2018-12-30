@@ -114,46 +114,20 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       total += series.getValue().doubleValue();
     }
 
-    // draw total value if visible
-    if (pieStyler.isSumVisible()) {
-      DecimalFormat totalDf =
-          (pieStyler.getDecimalPattern() == null)
-              ? df
-              : new DecimalFormat(pieStyler.getDecimalPattern());
-
-      String annotation = totalDf.format(total);
-
-      TextLayout textLayout =
-          new TextLayout(
-              annotation, pieStyler.getSumFont(), new FontRenderContext(null, true, false));
-      Shape shape = textLayout.getOutline(null);
-      g.setColor(pieStyler.getChartFontColor());
-
-      // compute center
-      Rectangle2D annotationRectangle = textLayout.getBounds();
-      double xCenter =
-          pieBounds.getX() + pieBounds.getWidth() / 2 - annotationRectangle.getWidth() / 2;
-      double yCenter =
-          pieBounds.getY() + pieBounds.getHeight() / 2 + annotationRectangle.getHeight() / 2;
-
-      // set text
-      AffineTransform orig = g.getTransform();
-      AffineTransform at = new AffineTransform();
-
-      at.translate(xCenter, yCenter);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
-    }
-
     // draw pie slices
     // double curValue = 0.0;
     // double curValue = 0.0;
     double startAngle = pieStyler.getStartAngleInDegrees() + 90;
 
+    paintSlices(g, pieBounds, total, startAngle);
+    paintAnnotations(g, pieBounds, total, startAngle);
+    paintSum(g, pieBounds, total);
+  }
+
+  private void paintSlices(Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
     boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
-    
-    map = chart.getSeriesMap();
+
+    Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
       if (!series.isEnabled()) {
@@ -195,6 +169,49 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         g.draw(donutSlice);
         labelShape = donutSlice;
       }
+
+      // add data labels
+      // maybe another option to construct this label
+      String annotation = series.getName() + " (" + df.format(y) + ")";
+
+      double xCenter =
+              pieBounds.getX() + pieBounds.getWidth() / 2; // - annotationRectangle.getWidth() / 2;
+      double yCenter =
+              pieBounds.getY() + pieBounds.getHeight() / 2; // + annotationRectangle.getHeight() / 2;
+      double angle = (arcAngle + startAngle) - arcAngle / 2;
+      double xOffset =
+              xCenter
+                      + Math.cos(Math.toRadians(angle))
+                      * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
+      double yOffset =
+              yCenter
+                      - Math.sin(Math.toRadians(angle))
+                      * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
+
+      if (toolTipsEnabled) {
+        String tt = series.getToolTip();
+        if (tt != null) {
+          chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, tt);
+        } else {
+          chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
+        }
+      }
+      startAngle += arcAngle;
+    }
+  }
+
+  private void paintAnnotations(Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
+    Map<String, S> map = chart.getSeriesMap();
+    for (S series : map.values()) {
+
+      if (!series.isEnabled()) {
+        continue;
+      }
+
+      Number y = series.getValue();
+
+      // draw slice/donut
+      double arcAngle = (y.doubleValue() * 360 / total);
 
       // curValue += y.doubleValue();
 
@@ -347,34 +364,41 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // System.out.println("annotationHeight= " + annotationHeight);
       //
       // }
-
-      // add data labels
-      // maybe another option to construct this label
-      String annotation = series.getName() + " (" + df.format(y) + ")";
-
-      double xCenter =
-          pieBounds.getX() + pieBounds.getWidth() / 2; // - annotationRectangle.getWidth() / 2;
-      double yCenter =
-          pieBounds.getY() + pieBounds.getHeight() / 2; // + annotationRectangle.getHeight() / 2;
-      double angle = (arcAngle + startAngle) - arcAngle / 2;
-      double xOffset =
-          xCenter
-              + Math.cos(Math.toRadians(angle))
-                  * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
-      double yOffset =
-          yCenter
-              - Math.sin(Math.toRadians(angle))
-                  * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
-
-      if (toolTipsEnabled) {
-        String tt = series.getToolTip();
-        if (tt != null) {
-          chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, tt);
-        } else {
-          chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
-        }
-      }
       startAngle += arcAngle;
+    }
+  }
+
+  private void paintSum(Graphics2D g, Rectangle2D pieBounds, double total) {
+    // draw total value if visible
+    if (pieStyler.isSumVisible()) {
+      DecimalFormat totalDf =
+              (pieStyler.getDecimalPattern() == null)
+                      ? df
+                      : new DecimalFormat(pieStyler.getDecimalPattern());
+
+      String annotation = totalDf.format(total);
+
+      TextLayout textLayout =
+              new TextLayout(
+                      annotation, pieStyler.getSumFont(), new FontRenderContext(null, true, false));
+      Shape shape = textLayout.getOutline(null);
+      g.setColor(pieStyler.getChartFontColor());
+
+      // compute center
+      Rectangle2D annotationRectangle = textLayout.getBounds();
+      double xCenter =
+              pieBounds.getX() + pieBounds.getWidth() / 2 - annotationRectangle.getWidth() / 2;
+      double yCenter =
+              pieBounds.getY() + pieBounds.getHeight() / 2 + annotationRectangle.getHeight() / 2;
+
+      // set text
+      AffineTransform orig = g.getTransform();
+      AffineTransform at = new AffineTransform();
+
+      at.translate(xCenter, yCenter);
+      g.transform(at);
+      g.fill(shape);
+      g.setTransform(orig);
     }
   }
 }
