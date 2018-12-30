@@ -15,6 +15,7 @@ public class PieStyler extends Styler {
   private double donutThickness;
   private boolean isSumVisible;
   private Font sumFont;
+  private SumFormatter sumFormatter;
 
   public PieStyler() {
 
@@ -38,6 +39,7 @@ public class PieStyler extends Styler {
 
     this.isSumVisible = theme.isSumVisible();
     this.sumFont = theme.getSumFont();
+    this.sumFormatter = theme.getSumFormatter(this);
   }
 
   public PieSeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -199,6 +201,22 @@ public class PieStyler extends Styler {
   public PieStyler setSumFontSize(float sumFontSize) {
 
     this.sumFont = this.sumFont.deriveFont(sumFontSize);
+    return this;
+  }
+
+  public SumFormatter getSumFormatter() {
+
+    return sumFormatter;
+  }
+
+  /**
+   * Sets the formatter for the sum.
+   *
+   * @param sumFormatter
+   */
+  public PieStyler setSumFormatter(SumFormatter sumFormatter) {
+
+    this.sumFormatter = sumFormatter;
     return this;
   }
 
