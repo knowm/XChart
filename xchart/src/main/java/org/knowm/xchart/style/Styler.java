@@ -108,7 +108,7 @@ public abstract class Styler {
     annotationsFont = theme.getAnnotationFont();
 
     // Formatting
-    decimalPattern = null;
+    decimalPattern = theme.getDecimalPattern();
   }
 
   public Font getBaseFont() {
