@@ -203,7 +203,9 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   }
 
   private void prepareForPaint() {
-
+    
+    yAxisMap.clear();
+    yAxisMap.put(0, yAxis);
     boolean mainYAxisUsed = false;
     if (chart.getSeriesMap() != null) {
       for (S series : chart.getSeriesMap().values()) {
