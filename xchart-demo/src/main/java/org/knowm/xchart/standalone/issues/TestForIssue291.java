@@ -3,7 +3,6 @@ package org.knowm.xchart.standalone.issues;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.knowm.xchart.SwingWrapper;
@@ -37,7 +36,7 @@ public class TestForIssue291 {
 
     final SwingWrapper<Chart> sw = new SwingWrapper<Chart>(chart);
 
-    final JFrame frame = sw.displayChart();
+    sw.displayChart();
 
     boolean seriesShown = true;
     while (true) {
