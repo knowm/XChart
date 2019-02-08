@@ -77,7 +77,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
       String[] toolTips = series.getToolTips();
       boolean hasCustomToolTips = toolTips != null;
-      
+
       for (int i = 0; i < xData.length; i++) {
 
         double x = xData[i];
@@ -257,7 +257,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           if (hasCustomToolTips) {
             String tt = toolTips[i];
             if (tt != null) {
-              chart.toolTips.addData(xOffset, yOffset,tt);
+              chart.toolTips.addData(xOffset, yOffset, tt);
             }
           } else {
             chart.toolTips.addData(

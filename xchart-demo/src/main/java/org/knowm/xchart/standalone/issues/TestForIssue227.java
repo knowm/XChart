@@ -3,7 +3,6 @@ package org.knowm.xchart.standalone.issues;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.knowm.xchart.BubbleSeries;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.OHLCSeries;
@@ -30,31 +29,31 @@ public class TestForIssue227 {
 
   public static void main(String[] args) {
 
-    ExampleChartTester tester = new ExampleChartTester() {
+    ExampleChartTester tester =
+        new ExampleChartTester() {
 
-      @Override
-      protected Map<String, Chart> getCharts(ExampleChartInfo chartInfo) {
+          @Override
+          protected Map<String, Chart> getCharts(ExampleChartInfo chartInfo) {
 
-        LinkedHashMap<String, Chart> map = new LinkedHashMap<String, Chart>();
-        ExampleChart ec = chartInfo.getExampleChart();
-        Chart c = getChartWithCustomTooltip(ec);
-        if (c != null) {
-          c.getStyler().setToolTipsAlwaysVisible(true);
-          map.put("Custom tooltips always visible", c);
-        }
+            LinkedHashMap<String, Chart> map = new LinkedHashMap<String, Chart>();
+            ExampleChart ec = chartInfo.getExampleChart();
+            Chart c = getChartWithCustomTooltip(ec);
+            if (c != null) {
+              c.getStyler().setToolTipsAlwaysVisible(true);
+              map.put("Custom tooltips always visible", c);
+            }
 
-        map.put("Custom tooltips", getChartWithCustomTooltip(ec));
-        map.put("Default tooltips", getChart(ec));
+            map.put("Custom tooltips", getChartWithCustomTooltip(ec));
+            map.put("Default tooltips", getChart(ec));
 
-        return map;
-      }
-
-    };
+            return map;
+          }
+        };
 
     HashSet<Class> excludeSet = new HashSet();
     // dial has annotation
     excludeSet.add(DialChart01.class);
-    
+
     // in real time charts tooltips must be set for each data point
     excludeSet.add(RealtimeChart01.class);
     excludeSet.add(RealtimeChart02.class);
@@ -76,13 +75,13 @@ public class TestForIssue227 {
     for (Series series : seriesMap.values()) {
       if (series instanceof PieSeries) {
         String[] toolTips = getToolTips(series.getName(), 1);
-        ((PieSeries)series).setToolTip(toolTips[0]);
+        ((PieSeries) series).setToolTip(toolTips[0]);
         flag = true;
         continue;
       } else if (series instanceof RadarSeries) {
         int count = ((RadarSeries) series).getValues().length;
         String[] toolTips = getToolTips(series.getName(), count);
-        ((RadarSeries)series).setTooltipOverrides(toolTips);
+        ((RadarSeries) series).setTooltipOverrides(toolTips);
         flag = true;
         continue;
       }
@@ -93,16 +92,15 @@ public class TestForIssue227 {
       int count = 0;
       if (series instanceof AxesChartSeriesNumericalNoErrorBars) {
         count = ((AxesChartSeriesNumericalNoErrorBars) series).getXData().length;
-      } else if(series instanceof CategorySeries) {
+      } else if (series instanceof CategorySeries) {
         count = ((CategorySeries) series).getYData().size();
-      } else if(series instanceof OHLCSeries) {
+      } else if (series instanceof OHLCSeries) {
         count = ((OHLCSeries) series).getOpenData().length;
-      } else if(series instanceof BubbleSeries) {
+      } else if (series instanceof BubbleSeries) {
         count = ((BubbleSeries) series).getXData().length;
       } else {
         System.out.println(series.getClass());
       }
-      
 
       if (count <= 0) {
         continue;
@@ -127,7 +125,7 @@ public class TestForIssue227 {
 
   private static String[] getToolTips(String name, int count) {
 
-    //only show 10 tooltips
+    // only show 10 tooltips
     int x = (int) Math.ceil(count / 10.0);
     String[] t = new String[count];
     for (int i = 0; i < t.length; i++) {
@@ -139,5 +137,4 @@ public class TestForIssue227 {
     }
     return t;
   }
-
 }

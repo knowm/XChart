@@ -144,12 +144,7 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
             if (hasCustomToolTips) {
               String tt = toolTips[i];
               if (tt != null) {
-                chart.toolTips.addData(
-                    bubble,
-                    xOffset,
-                    yOffset,
-                    0,
-                    tt);
+                chart.toolTips.addData(bubble, xOffset, yOffset, 0, tt);
               }
             } else {
               chart.toolTips.addData(

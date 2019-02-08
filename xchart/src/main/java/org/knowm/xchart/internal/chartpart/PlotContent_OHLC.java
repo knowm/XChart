@@ -203,12 +203,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
           if (hasCustomToolTips) {
             String tt = toolTips[i];
             if (tt != null) {
-              chart.toolTips.addData(
-                  toolTipArea,
-                  xOffset,
-                  highOffset,
-                  candleHalfWidth * 2,
-                  tt);
+              chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth * 2, tt);
             }
           } else {
             chart.toolTips.addData(

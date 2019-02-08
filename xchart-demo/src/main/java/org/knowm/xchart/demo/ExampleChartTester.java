@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,7 +21,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.RealtimeExampleChart;
@@ -164,7 +162,7 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     for (int i = 0; i < tree.getRowCount(); i++) {
       tree.expandRow(i);
     }
-    
+
     // select first leaf
     DefaultMutableTreeNode firstLeaf = top.getFirstLeaf();
     tree.setSelectionPath(new TreePath(firstLeaf.getPath()));
@@ -212,16 +210,17 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
       ExampleChart exampleChart = chartInfo.getExampleChart();
       if (exampleChart instanceof RealtimeExampleChart) {
         final RealtimeExampleChart realtimeChart = (RealtimeExampleChart) exampleChart;
-        TimerTask chartUpdaterTask = new TimerTask() {
+        TimerTask chartUpdaterTask =
+            new TimerTask() {
 
-          @Override
-          public void run() {
+              @Override
+              public void run() {
 
-            realtimeChart.updateData();
-            tabbedPane.revalidate();
-            tabbedPane.repaint();
-          }
-        };
+                realtimeChart.updateData();
+                tabbedPane.revalidate();
+                tabbedPane.repaint();
+              }
+            };
         timer = new Timer();
         timer.scheduleAtFixedRate(chartUpdaterTask, 0, 500);
       }
@@ -282,7 +281,6 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
       defaultMutableTreeNode = new DefaultMutableTreeNode(new ExampleChartInfo(exampleChart));
       category.add(defaultMutableTreeNode);
     }
-
   }
 
   protected boolean skipExampleChart(ExampleChart exampleChart) {
@@ -408,8 +406,8 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
   }
 
   /**
-   * Create the GUI and show it. For thread safety, this method should be
-   * invoked from the event dispatch thread.
+   * Create the GUI and show it. For thread safety, this method should be invoked from the event
+   * dispatch thread.
    */
   public JFrame createAndShowGUI() {
 
@@ -420,21 +418,22 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     // Schedule a job for the event dispatch thread:
     // creating and showing this application's GUI.
 
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    javax.swing.SwingUtilities.invokeLater(
+        new Runnable() {
 
-      @Override
-      public void run() {
+          @Override
+          public void run() {
 
-        // Create and set up the window.
+            // Create and set up the window.
 
-        // Add content to the window.
-        frame.add(ExampleChartTester.this);
+            // Add content to the window.
+            frame.add(ExampleChartTester.this);
 
-        // Display the window.
-        frame.pack();
-        frame.setVisible(true);
-      }
-    });
+            // Display the window.
+            frame.pack();
+            frame.setVisible(true);
+          }
+        });
 
     return frame;
   }

@@ -176,18 +176,18 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       String annotation = series.getName() + " (" + df.format(y) + ")";
 
       double xCenter =
-              pieBounds.getX() + pieBounds.getWidth() / 2; // - annotationRectangle.getWidth() / 2;
+          pieBounds.getX() + pieBounds.getWidth() / 2; // - annotationRectangle.getWidth() / 2;
       double yCenter =
-              pieBounds.getY() + pieBounds.getHeight() / 2; // + annotationRectangle.getHeight() / 2;
+          pieBounds.getY() + pieBounds.getHeight() / 2; // + annotationRectangle.getHeight() / 2;
       double angle = (arcAngle + startAngle) - arcAngle / 2;
       double xOffset =
-              xCenter
-                      + Math.cos(Math.toRadians(angle))
-                      * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
+          xCenter
+              + Math.cos(Math.toRadians(angle))
+                  * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
       double yOffset =
-              yCenter
-                      - Math.sin(Math.toRadians(angle))
-                      * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
+          yCenter
+              - Math.sin(Math.toRadians(angle))
+                  * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
 
       if (toolTipsEnabled) {
         String tt = series.getToolTip();
@@ -201,7 +201,8 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     }
   }
 
-  private void paintAnnotations(Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
+  private void paintAnnotations(
+      Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
@@ -240,13 +241,13 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
           annotation = df.format(percentage) + "%";
         } else if (pieStyler.getAnnotationType() == AnnotationType.LabelAndValue) {
-            if (pieStyler.getDecimalPattern() != null) {
-    		    DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
-    		    annotation = series.getName() +" ("+ df.format(y)+")";
-    		  } else {
-    		    annotation = series.getName() +" ("+y.toString()+")";
-    		  }
-            }
+          if (pieStyler.getDecimalPattern() != null) {
+            DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
+            annotation = series.getName() + " (" + df.format(y) + ")";
+          } else {
+            annotation = series.getName() + " (" + y.toString() + ")";
+          }
+        }
 
         TextLayout textLayout =
             new TextLayout(
@@ -378,17 +379,17 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       String annotation = sumFormatter.format(total);
 
       TextLayout textLayout =
-              new TextLayout(
-                      annotation, pieStyler.getSumFont(), new FontRenderContext(null, true, false));
+          new TextLayout(
+              annotation, pieStyler.getSumFont(), new FontRenderContext(null, true, false));
       Shape shape = textLayout.getOutline(null);
       g.setColor(pieStyler.getChartFontColor());
 
       // compute center
       Rectangle2D annotationRectangle = textLayout.getBounds();
       double xCenter =
-              pieBounds.getX() + pieBounds.getWidth() / 2 - annotationRectangle.getWidth() / 2;
+          pieBounds.getX() + pieBounds.getWidth() / 2 - annotationRectangle.getWidth() / 2;
       double yCenter =
-              pieBounds.getY() + pieBounds.getHeight() / 2 + annotationRectangle.getHeight() / 2;
+          pieBounds.getY() + pieBounds.getHeight() / 2 + annotationRectangle.getHeight() / 2;
 
       // set text
       AffineTransform orig = g.getTransform();

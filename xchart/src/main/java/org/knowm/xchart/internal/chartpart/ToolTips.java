@@ -108,7 +108,7 @@ public class ToolTips implements MouseMotionListener {
         paintToolTip(g, dataPoint);
       }
     }
-    
+
     if (dataPoint != null) { // dataPoint was created in mouse move, need to render it
       paintToolTip(g, dataPoint);
     }

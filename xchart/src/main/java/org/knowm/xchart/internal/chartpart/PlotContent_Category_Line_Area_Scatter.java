@@ -232,12 +232,12 @@ public class PlotContent_Category_Line_Area_Scatter<
           line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
           g.draw(line);
         }
-        
+
         if (toolTipsEnabled) {
           if (hasCustomToolTips) {
             String tt = toolTips[categoryCounter];
             if (tt != null) {
-              chart.toolTips.addData(xOffset, yOffset,tt);
+              chart.toolTips.addData(xOffset, yOffset, tt);
             }
           } else {
             chart.toolTips.addData(
@@ -247,7 +247,6 @@ public class PlotContent_Category_Line_Area_Scatter<
                 chart.getYAxisFormat().format(y));
           }
         }
-        
       }
 
       // close any open path for area charts

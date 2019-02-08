@@ -312,12 +312,13 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
             new ChartInfo(
                 "PieChart05 - Pie Chart with Donut Style and Sum", new PieChart05().getChart()));
     category.add(defaultMutableTreeNode);
-    
+
     defaultMutableTreeNode =
-            new DefaultMutableTreeNode(
-                new ChartInfo(
-                    "PieChart06 - Pie Chart with Pie Style with Annotation LabelAndValue", new PieChart06().getChart()));
-        category.add(defaultMutableTreeNode);
+        new DefaultMutableTreeNode(
+            new ChartInfo(
+                "PieChart06 - Pie Chart with Pie Style with Annotation LabelAndValue",
+                new PieChart06().getChart()));
+    category.add(defaultMutableTreeNode);
 
     // Line
     category = new DefaultMutableTreeNode("Line Charts");

@@ -124,7 +124,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     double[] accumulatedStackOffsetNeg = new double[numCategories];
 
     boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
-    
+
     for (S series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
@@ -487,16 +487,11 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           } else {
             yPoint = yOffset;
           }
-          
+
           if (hasCustomToolTips) {
-            String tt = toolTips[categoryCounter-1];
+            String tt = toolTips[categoryCounter - 1];
             if (tt != null) {
-              chart.toolTips.addData( 
-                  rect,
-                  xOffset,
-                  yPoint,
-                  barWidth,
-                  tt);
+              chart.toolTips.addData(rect, xOffset, yPoint, barWidth, tt);
             }
           } else {
             chart.toolTips.addData(

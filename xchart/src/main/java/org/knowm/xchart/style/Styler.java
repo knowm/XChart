@@ -527,17 +527,16 @@ public abstract class Styler {
   }
 
   public boolean isToolTipsAlwaysVisible() {
-    
+
     return isToolTipsAlwaysVisible;
   }
 
   public Styler setToolTipsAlwaysVisible(boolean toolTipsAlwaysVisible) {
-    
+
     isToolTipsAlwaysVisible = toolTipsAlwaysVisible;
     return this;
   }
-  
-  
+
   public ToolTipType getToolTipType() {
 
     return toolTipType;

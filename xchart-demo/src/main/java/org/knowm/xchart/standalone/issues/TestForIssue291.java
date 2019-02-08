@@ -2,9 +2,7 @@ package org.knowm.xchart.standalone.issues;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.SwingUtilities;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -49,27 +47,28 @@ public class TestForIssue291 {
       if (seriesShown) {
         chart.removeSeries(seriesName);
       } else {
-         double[] xData = series.getXData();
-         double[] yData = series.getYData();
-         chart.addSeries(seriesName, xData, yData);
+        double[] xData = series.getXData();
+        double[] yData = series.getYData();
+        chart.addSeries(seriesName, xData, yData);
       }
       seriesShown = !seriesShown;
       try {
-        SwingUtilities.invokeAndWait(new Runnable() {
-          public void run() {
-            sw.repaintChart();
-          }
-        });
+        SwingUtilities.invokeAndWait(
+            new Runnable() {
+              public void run() {
+                sw.repaintChart();
+              }
+            });
       } catch (Exception e) {
         e.printStackTrace();
       }
     }
-
   }
 
   static XYChart getLineChart() {
 
-    XYChart chart = new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
     chart.getStyler().setToolTipsEnabled(true);

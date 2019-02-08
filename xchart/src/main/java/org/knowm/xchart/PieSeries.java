@@ -75,7 +75,7 @@ public class PieSeries extends Series {
 
     return toolTip;
   }
-  
+
   public void setToolTip(String toolTip) {
 
     this.toolTip = toolTip;
