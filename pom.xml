@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.knowm.xchart</groupId>
 	<artifactId>xchart-parent</artifactId>
-	<version>3.5.4-SNAPSHOT</version>
+	<version>3.5.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>XChart Parent</name>
 	<description>XChart is a light weight Java library for plotting data.</description>
