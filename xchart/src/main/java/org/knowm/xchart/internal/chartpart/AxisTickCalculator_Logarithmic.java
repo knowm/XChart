@@ -131,5 +131,11 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
       tickStep = tickStep * Utils.pow(10, 1);
       firstPosition = tickStep + Utils.pow(10, i);
     }
+    if (tickLocations.size() <= 1) {
+      tickLabels.add(numberLogFormatter.format(minValue));
+      tickLocations.add(margin);
+      tickLabels.add(numberLogFormatter.format(maxValue));
+      tickLocations.add(margin + tickSpace);
+    }
   }
 }
