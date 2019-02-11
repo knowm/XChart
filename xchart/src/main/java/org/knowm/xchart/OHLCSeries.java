@@ -136,10 +136,10 @@ public class OHLCSeries extends AxesChartSeries {
 
     for (int i = 0; i < highs.length; i++) {
 
-      if (highs[i] != Double.NaN && highs[i] > max) {
+      if (!Double.isNaN(highs[i]) && highs[i] > max) {
         max = highs[i];
       }
-      if (lows[i] != Double.NaN && lows[i] < min) {
+      if (!Double.isNaN(lows[i]) && lows[i] < min) {
         min = lows[i];
       }
     }
