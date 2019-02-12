@@ -167,7 +167,9 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
     // now increase the timespan until one is found where all the labels fit nicely. It will often
     // be the first one.
     index--;
+    boolean skip;
     do {
+      skip = false;
 
       tickLabels.clear();
       tickLocations.clear();
@@ -178,6 +180,10 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
       // System.out.println("gridStep: " + gridStep);
 
       gridStepInChartSpace = (int) (gridStep / span * tickSpace);
+      if (gridStepInChartSpace < 10 && index < timeSpans.size() - 1) {
+        skip = true;
+        continue;
+      }
       // System.out.println("gridStepInChartSpace: " + gridStepInChartSpace);
 
       double firstPosition = getFirstPosition(gridStep);
@@ -206,7 +212,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
         tickLocations.add(tickLabelPosition);
         // }
       }
-    } while (!willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    } while (skip || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
   }
 
   static class TimeSpan {
