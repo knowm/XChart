@@ -149,10 +149,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   Font getSumFont();
 
-  String getDecimalPattern();
-
-  SumFormatter getSumFormatter(Styler styler);
-
   // Line, Scatter, Area Charts ///////////////////////////////
 
   int getMarkerSize();

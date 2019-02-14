@@ -11,13 +11,13 @@ import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
-import org.knowm.xchart.style.SumFormatter;
 
 /** @author timmolter */
 public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     extends PlotContent_<ST, S> {
 
   private final ST pieStyler;
+  private final DecimalFormat df = new DecimalFormat("#.0");
 
   /**
    * Constructor
@@ -176,7 +176,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
       // add data labels
       // maybe another option to construct this label
-      DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
       String annotation = series.getName() + " (" + df.format(y) + ")";
 
       double xCenter =
@@ -238,11 +237,9 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           annotation = series.getName();
         } else if (pieStyler.getAnnotationType() == AnnotationType.LabelAndPercentage) {
           double percentage = y.doubleValue() / total * 100;
-          DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
           annotation = series.getName() + " (" + df.format(percentage) + "%)";
         } else if (pieStyler.getAnnotationType() == AnnotationType.Percentage) {
           double percentage = y.doubleValue() / total * 100;
-          DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
           annotation = df.format(percentage) + "%";
         } else if (pieStyler.getAnnotationType() == AnnotationType.LabelAndValue) {
           if (pieStyler.getDecimalPattern() != null) {
@@ -379,8 +376,12 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
   private void paintSum(Graphics2D g, Rectangle2D pieBounds, double total) {
     // draw total value if visible
     if (pieStyler.isSumVisible()) {
-      SumFormatter sumFormatter = pieStyler.getSumFormatter();
-      String annotation = sumFormatter.format(total);
+      DecimalFormat totalDf =
+              (pieStyler.getDecimalPattern() == null)
+                      ? df
+                      : new DecimalFormat(pieStyler.getDecimalPattern());
+
+      String annotation = totalDf.format(total);
 
       TextLayout textLayout =
           new TextLayout(
