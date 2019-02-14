@@ -15,6 +15,7 @@ public class PieStyler extends Styler {
   private double donutThickness;
   private boolean isSumVisible;
   private Font sumFont;
+  private SumFormatter sumFormatter;
 
   public PieStyler() {
 
@@ -38,6 +39,7 @@ public class PieStyler extends Styler {
 
     this.isSumVisible = theme.isSumVisible();
     this.sumFont = theme.getSumFont();
+    this.sumFormatter = new SumFormatter.DefaultSumFormatter();
   }
 
   public PieSeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -165,6 +167,24 @@ public class PieStyler extends Styler {
   }
 
   /**
+   * Set the decimal formatter for all numbers (sumFormatter included) on the chart rendered as Strings
+   * If custom sumFormatter is defined then it left untouched
+   *
+   * @param decimalPattern - the pattern describing the decimal format
+   */
+  @Override
+  public Styler setDecimalPattern(String decimalPattern) {
+
+    super.setDecimalPattern(decimalPattern);
+
+    boolean isDefaultSumFormatter = sumFormatter instanceof SumFormatter.DefaultSumFormatter;
+    if (isDefaultSumFormatter) {
+      this.sumFormatter = new SumFormatter.DefaultSumFormatter(decimalPattern);
+    }
+    return this;
+  }
+
+  /**
    * Sets whether or not the sum is visible in the centre of the pie chart.
    *
    * @param isSumVisible
@@ -199,6 +219,22 @@ public class PieStyler extends Styler {
   public PieStyler setSumFontSize(float sumFontSize) {
 
     this.sumFont = this.sumFont.deriveFont(sumFontSize);
+    return this;
+  }
+
+  public SumFormatter getSumFormatter() {
+
+    return sumFormatter;
+  }
+
+  /**
+   * Sets the formatter for the sum.
+   *
+   * @param sumFormatter
+   */
+  public PieStyler setSumFormatter(SumFormatter sumFormatter) {
+
+    this.sumFormatter = sumFormatter;
     return this;
   }
 

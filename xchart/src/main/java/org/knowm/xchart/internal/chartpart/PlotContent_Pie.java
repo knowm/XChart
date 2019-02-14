@@ -11,6 +11,7 @@ import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.SumFormatter;
 
 /** @author timmolter */
 public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
@@ -376,12 +377,8 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
   private void paintSum(Graphics2D g, Rectangle2D pieBounds, double total) {
     // draw total value if visible
     if (pieStyler.isSumVisible()) {
-      DecimalFormat totalDf =
-          (pieStyler.getDecimalPattern() == null)
-              ? df
-              : new DecimalFormat(pieStyler.getDecimalPattern());
-
-      String annotation = totalDf.format(total);
+      SumFormatter sumFormatter = pieStyler.getSumFormatter();
+      String annotation = sumFormatter.format(total);
 
       TextLayout textLayout =
           new TextLayout(
