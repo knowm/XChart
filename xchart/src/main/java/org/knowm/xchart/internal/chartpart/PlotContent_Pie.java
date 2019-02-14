@@ -65,11 +65,11 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     dummy.append(new Arc2D.Double(x, y, width, height, start + extent, -extent, Arc2D.OPEN), false);
 
     point = dummy.getCurrentPoint();
-    
+
     if (point != null) {
       generalPath.lineTo(point.getX(), point.getY());
     }
-    
+
     return generalPath;
   }
 
@@ -377,9 +377,9 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     // draw total value if visible
     if (pieStyler.isSumVisible()) {
       DecimalFormat totalDf =
-              (pieStyler.getDecimalPattern() == null)
-                      ? df
-                      : new DecimalFormat(pieStyler.getDecimalPattern());
+          (pieStyler.getDecimalPattern() == null)
+              ? df
+              : new DecimalFormat(pieStyler.getDecimalPattern());
 
       String annotation = totalDf.format(total);
 
