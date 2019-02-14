@@ -422,18 +422,6 @@ public abstract class AbstractBaseTheme implements Theme {
     return getAnnotationFont();
   }
 
-  @Override
-  public String getDecimalPattern() {
-
-    return "#.0";
-  }
-
-  @Override
-  public SumFormatter getSumFormatter(Styler styler) {
-
-    return new SumFormatter.DefaultSumFormatter(styler);
-  }
-
   // Line, Scatter, Area Charts ///////////////////////////////
 
   @Override
