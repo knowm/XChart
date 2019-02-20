@@ -174,11 +174,10 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
 
-      series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
     } else { // generate xData
       xData = Utils.getGeneratedDataAsList(yData.size());
-      series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
     }
+    series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
 
     seriesMap.put(seriesName, series);
 
