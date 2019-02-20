@@ -74,7 +74,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @param bubbleData the bubble data
    * @return A Series object that you can set properties on
    */
@@ -96,7 +96,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @param bubbleData the bubble data
    * @return
    */
