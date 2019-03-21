@@ -1,5 +1,7 @@
 package org.knowm.xchart.internal.series;
 
+import java.util.Arrays;
+
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number
  * or Date(epochtime), hence a double[]
@@ -11,8 +13,14 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
   double[] xData; // can be Number or Date(epochtime)
 
   double[] yData;
-
+  
   double[] extraValues;
+
+  // used for filtering
+  double[] xDataAll;
+  double[] yDataAll;
+  double[] extraValuesAll;
+  String[] toolTipsAll;
 
   /**
    * Constructor
@@ -30,8 +38,17 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     this.xData = xData;
     this.yData = yData;
     this.extraValues = extraValues;
+    
+    setAllData();
 
     calculateMinMax();
+  }
+
+  private void setAllData() {
+
+    this.xDataAll = xData;
+    this.yDataAll = yData;
+    this.extraValuesAll = extraValues;
   }
 
   /**
@@ -55,8 +72,92 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     xData = newXData;
     yData = newYData;
     extraValues = newExtraValues;
+    
+    setAllData();
+    
     calculateMinMax();
   }
+  
+  public void filterXByIndex(int startIndex, int endIndex) {
+    
+    startIndex = Math.max(0, startIndex);
+    endIndex = Math.min(yDataAll.length, endIndex);
+    
+    xData = Arrays.copyOfRange(xDataAll, startIndex, endIndex);
+    yData = Arrays.copyOfRange(yDataAll, startIndex, endIndex);
+    if (extraValuesAll != null) {
+      extraValues = Arrays.copyOfRange(extraValuesAll, startIndex, endIndex);
+    }
+    if (toolTipsAll != null) {
+      toolTips = Arrays.copyOfRange(toolTipsAll, startIndex, endIndex);
+    }
+    
+    calculateMinMax();
+  }
+  
+  public boolean filterXByValue(double minValue, double maxValue) {
+    
+    int length = xDataAll.length;
+    boolean[] filterResult = new boolean[length];
+    int remainingDataCount = 0;
+    for (int i = 0; i < length; i++) {
+      double val = xDataAll[i];
+      boolean result = val >= minValue && val <= maxValue;
+      filterResult[i] = result;
+      if (result) {
+        remainingDataCount++;
+      }
+    }
+    
+    if (remainingDataCount == length) {
+      return false;
+    }
+    if (remainingDataCount == 0) {
+      return false;
+    }
+    
+    xData = new double[remainingDataCount];
+    yData = new double[remainingDataCount];
+    boolean extra = extraValuesAll != null;
+    
+    if (extra) {
+      extraValues = new double[remainingDataCount];
+    }
+    boolean tooltips = toolTipsAll != null;
+    if (tooltips) {
+      toolTips = new String[remainingDataCount];
+    }
+    
+    int ind = 0;
+    for (int i = 0; i < length; i++) {
+      if (!filterResult[i]) {
+        continue;
+      }
+      xData[ind] = xDataAll[i];
+      yData[ind] = yDataAll[i];
+      if (extra) {
+        extraValues[ind] = extraValuesAll[i];
+      }
+      if (tooltips) {
+        toolTips[ind] = toolTipsAll[i];
+      }
+      ind++;
+    }
+    
+    calculateMinMax();
+    return true;
+  }
+  
+  public void resetFilter() {
+    
+    xData = xDataAll;
+    yData = yDataAll;
+    extraValues = extraValuesAll;
+    toolTips = toolTipsAll;
+    calculateMinMax();
+  }
+  
+  
 
   /**
    * Finds the min and max of a dataset

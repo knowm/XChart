@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
  *
  * @author timmolter
  */
-interface ChartPart {
+public interface ChartPart {
 
   BasicStroke SOLID_STROKE =
       new BasicStroke(

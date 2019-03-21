@@ -7,6 +7,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Map;
+
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series;
@@ -38,7 +40,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
-
+  
   /**
    * Constructor
    *
@@ -498,6 +500,133 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   public int getYIndex() {
 
     return yIndex;
+  }
+  
+  
+  /**
+   * Converts a chart coordinate value to screen coordinate. Same as AxisTickCalculators calculation.
+   * 
+   * @param chartPoint value in chart coordinate system 
+   * @return Coordinate of screen. eg: MouseEvent.getX(), MouseEvent.getY()
+   */
+  public double getScreenValue(double chartPoint) {
+    
+    double minVal = min;
+    double maxVal = max;
+    
+    // min & max is not set in category charts with string labels 
+    if (min > max) {
+      if (getDirection() == Direction.X) {
+        if (axesChartStyler instanceof CategoryStyler) {
+          AxesChartSeriesCategory axesChartSeries =
+              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+          int count = axesChartSeries.getXData().size();
+          minVal = 0;
+          maxVal = count;
+        }
+      }
+    }
+    
+    double workingSpace;
+    double startOffset;
+    if (direction == Direction.X) {
+      startOffset = bounds.getX();
+      workingSpace = bounds.getWidth();
+    } else {
+      startOffset = 0; //bounds.getY();
+      workingSpace = bounds.getHeight();
+    }
+
+    // a check if all axis data are the exact same values
+    if (min == max) {
+      return workingSpace / 2;
+    }
+
+    
+    // tick space - a percentage of the working space available for ticks
+    double tickSpace = axesChartStyler.getPlotContentSize() * workingSpace; // in plot space
+    
+    // this prevents an infinite loop when the plot gets sized really small.
+    if (tickSpace < axesChartStyler.getXAxisTickMarkSpacingHint()) {
+      return workingSpace / 2;
+    }
+    
+    // where the tick should begin in the working space in pixels
+    double margin =
+        Utils.getTickStartOffset(
+            workingSpace,
+            tickSpace); 
+    
+    double tickLabelPosition = startOffset + 
+        margin + ((chartPoint - minVal) / (maxVal - minVal) * tickSpace);
+
+    if (direction == Direction.Y) {
+      tickLabelPosition = bounds.getHeight() - tickLabelPosition + bounds.getY();
+    }
+    return tickLabelPosition;
+  }
+  
+  /**
+   * Converts a screen coordinate to chart coordinate value. Reverses the AxisTickCalculators calculation.
+   * 
+   * @param screenPoint Coordinate of screen. eg: MouseEvent.getX(), MouseEvent.getY() 
+   * @return value in chart coordinate system
+   */
+  public double getChartValue(double screenPoint) {
+    
+    // a check if all axis data are the exact same values
+    if (min == max) {
+      return min;
+    }
+    
+    double minVal = min;
+    double maxVal = max;
+    
+    // min & max is not set in category charts with string labels 
+    if (min > max) {
+      if (getDirection() == Direction.X) {
+        if (axesChartStyler instanceof CategoryStyler) {
+          AxesChartSeriesCategory axesChartSeries =
+              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+          int count = axesChartSeries.getXData().size();
+          minVal = 0;
+          maxVal = count;
+        }
+      }
+    }
+
+    double workingSpace;
+    double startOffset;
+    if (direction == Direction.X) {
+      startOffset = bounds.getX();
+      workingSpace = bounds.getWidth();
+    } else {
+      startOffset = 0; //bounds.getY();
+      workingSpace = bounds.getHeight();
+      screenPoint = bounds.getHeight() - screenPoint + bounds.getY(); // y increments top to bottom
+    }
+
+    // tick space - a percentage of the working space available for ticks
+    double tickSpace = axesChartStyler.getPlotContentSize() * workingSpace; // in plot space
+
+    // this prevents an infinite loop when the plot gets sized really small.
+    if (tickSpace < axesChartStyler.getXAxisTickMarkSpacingHint()) {
+      return minVal;
+    }
+
+    // where the tick should begin in the working space in pixels
+    double margin =
+        Utils.getTickStartOffset(
+            workingSpace,
+            tickSpace); 
+
+    // given tickLabelPositon (screenPoint) find value
+    // double tickLabelPosition =
+    //       margin + ((value - min) / (max - min) * tickSpace);
+    
+    double value = ((screenPoint - margin - startOffset) * (maxVal - minVal) / tickSpace) + minVal;
+
+    return value;
   }
 
   /** An axis direction */
