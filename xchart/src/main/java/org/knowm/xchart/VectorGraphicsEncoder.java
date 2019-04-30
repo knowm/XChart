@@ -8,9 +8,9 @@ import de.erichseifert.vectorgraphics2d.intermediate.CommandSequence;
 import de.erichseifert.vectorgraphics2d.pdf.PDFProcessor;
 import de.erichseifert.vectorgraphics2d.svg.SVGProcessor;
 import de.erichseifert.vectorgraphics2d.util.PageSize;
-import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
@@ -23,9 +23,21 @@ public final class VectorGraphicsEncoder {
   /** Constructor - Private constructor to prevent instantiation */
   private VectorGraphicsEncoder() {}
 
+  /** Write a chart to a file. */
   public static void saveVectorGraphic(
       Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
+    FileOutputStream file = new FileOutputStream(addFileExtension(fileName, vectorGraphicsFormat));
 
+    try {
+      saveVectorGraphic(chart, file, vectorGraphicsFormat);
+    } finally {
+      file.close();
+    }
+  }
+
+  /** Write a chart to an OutputStream. */
+  public static void saveVectorGraphic(
+      Chart chart, OutputStream os, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
     Processor p = null;
 
     switch (vectorGraphicsFormat) {
@@ -43,22 +55,15 @@ public final class VectorGraphicsEncoder {
         break;
     }
 
-    Graphics2D vg2d = new VectorGraphics2D();
+    VectorGraphics2D vg2d = new VectorGraphics2D();
     //    vg2d.draw(new Rectangle2D.Double(0.0, 0.0, chart.getWidth(), chart.getHeight()));
-    CommandSequence commands = ((VectorGraphics2D) vg2d).getCommands();
+    CommandSequence commands = vg2d.getCommands();
 
     chart.paint(vg2d, chart.getWidth(), chart.getHeight());
 
-    // Write the vector graphic output to a file
-    FileOutputStream file = new FileOutputStream(addFileExtension(fileName, vectorGraphicsFormat));
-
-    try {
-      PageSize pageSize = new PageSize(0.0, 0.0, chart.getWidth(), chart.getHeight());
-      Document doc = p.getDocument(commands, pageSize);
-      doc.writeTo(file);
-    } finally {
-      file.close();
-    }
+    PageSize pageSize = new PageSize(0.0, 0.0, chart.getWidth(), chart.getHeight());
+    Document doc = p.getDocument(commands, pageSize);
+    doc.writeTo(os);
   }
 
   /**
