@@ -162,7 +162,7 @@
 					<quiet>true</quiet>
 					<skip>false</skip>
 					<doclint>none</doclint>
-					<source>1.6</source>
+					<source>1.8</source>
 				</configuration>
 			</plugin>
 			<!-- for deploying to Maven Central -->
