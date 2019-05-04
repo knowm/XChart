@@ -13,7 +13,7 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
   double[] xData; // can be Number or Date(epochtime)
 
   double[] yData;
-  
+
   double[] extraValues;
 
   // used for filtering
@@ -38,7 +38,7 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     this.xData = xData;
     this.yData = yData;
     this.extraValues = extraValues;
-    
+
     setAllData();
 
     calculateMinMax();
@@ -72,17 +72,17 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     xData = newXData;
     yData = newYData;
     extraValues = newExtraValues;
-    
+
     setAllData();
-    
+
     calculateMinMax();
   }
-  
+
   public void filterXByIndex(int startIndex, int endIndex) {
-    
+
     startIndex = Math.max(0, startIndex);
     endIndex = Math.min(yDataAll.length, endIndex);
-    
+
     xData = Arrays.copyOfRange(xDataAll, startIndex, endIndex);
     yData = Arrays.copyOfRange(yDataAll, startIndex, endIndex);
     if (extraValuesAll != null) {
@@ -91,12 +91,12 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     if (toolTipsAll != null) {
       toolTips = Arrays.copyOfRange(toolTipsAll, startIndex, endIndex);
     }
-    
+
     calculateMinMax();
   }
-  
+
   public boolean filterXByValue(double minValue, double maxValue) {
-    
+
     int length = xDataAll.length;
     boolean[] filterResult = new boolean[length];
     int remainingDataCount = 0;
@@ -108,18 +108,18 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
         remainingDataCount++;
       }
     }
-    
+
     if (remainingDataCount == length) {
       return false;
     }
     if (remainingDataCount == 0) {
       return false;
     }
-    
+
     xData = new double[remainingDataCount];
     yData = new double[remainingDataCount];
     boolean extra = extraValuesAll != null;
-    
+
     if (extra) {
       extraValues = new double[remainingDataCount];
     }
@@ -127,7 +127,7 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     if (tooltips) {
       toolTips = new String[remainingDataCount];
     }
-    
+
     int ind = 0;
     for (int i = 0; i < length; i++) {
       if (!filterResult[i]) {
@@ -143,21 +143,19 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
       }
       ind++;
     }
-    
+
     calculateMinMax();
     return true;
   }
-  
+
   public void resetFilter() {
-    
+
     xData = xDataAll;
     yData = yDataAll;
     extraValues = extraValuesAll;
     toolTips = toolTipsAll;
     calculateMinMax();
   }
-  
-  
 
   /**
    * Finds the min and max of a dataset

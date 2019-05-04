@@ -8,11 +8,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -51,7 +49,6 @@ public class TestForCustomChartParts {
       xData.add(x);
       yData.add(y);
       x += increment;
-
     }
     // Series
     XYSeries series = chart.addSeries("series1", xData, yData);
@@ -64,66 +61,74 @@ public class TestForCustomChartParts {
 
     final XYChart chart = getChart();
 
-    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    javax.swing.SwingUtilities.invokeLater(
+        new Runnable() {
 
-      @Override
-      public void run() {
+          @Override
+          public void run() {
 
-        JFrame frame = new JFrame("Advanced Example");
-        frame.setLayout(new BorderLayout());
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            JFrame frame = new JFrame("Advanced Example");
+            frame.setLayout(new BorderLayout());
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        final XChartPanel chartPanel = new XChartPanel<XYChart>(chart);
+            final XChartPanel chartPanel = new XChartPanel<XYChart>(chart);
 
-        XYSeries series = chart.getSeriesMap().get("series1");
+            XYSeries series = chart.getSeriesMap().get("series1");
 
-        int width = 2;
-        BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL,
-            10.0f, new float[] { 3.0f, 0.0f }, 0.0f);
+            int width = 2;
+            BasicStroke stroke =
+                new BasicStroke(
+                    width,
+                    BasicStroke.CAP_BUTT,
+                    BasicStroke.JOIN_BEVEL,
+                    10.0f,
+                    new float[] {3.0f, 0.0f},
+                    0.0f);
 
-        // draw a horizontal line at series max point
-        ChartLine maxY = new ChartLine(series.getYMax(), false, false);
-        maxY.setColor(Color.GREEN);
-        maxY.setStroke(stroke);
-        maxY.init(chartPanel);
-        
-        // draw a horizontal line at series min point
-        ChartLine minY = new ChartLine(series.getYMin(), false, false);
-        minY.setColor(Color.RED);
-        minY.setStroke(stroke);
-        minY.init(chartPanel);
-        
-        // draw a vertical line at 0.45
-        ChartLine xLine = new ChartLine(0.45, true, false);
-        xLine.setColor(Color.MAGENTA);
-        xLine.setStroke(stroke);
-        xLine.init(chartPanel);
-        
-        // draw a vertical line at 100 pixels
-        ChartLine xLinePixel = new ChartLine(100, true, true);
-        xLinePixel.setColor(Color.BLACK);
-        xLinePixel.setStroke(stroke);
-        xLinePixel.init(chartPanel);
+            // draw a horizontal line at series max point
+            ChartLine maxY = new ChartLine(series.getYMax(), false, false);
+            maxY.setColor(Color.GREEN);
+            maxY.setStroke(stroke);
+            maxY.init(chartPanel);
 
-        // add text near to max line
-        ChartText maxText = new ChartText("Max", 0.0, series.getYMax(), false);
-        maxText.init(chartPanel);
-        
-        try {
-          URL url = new URL("https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_64_64.png");
-          BufferedImage image = ImageIO.read(url);
-          ChartImage chartImage = new ChartImage(image, 0, 1, false);
-          chartImage.init(chartPanel);
-        } catch (IOException e) {
-          e.printStackTrace();
-        } 
-      
-        frame.add(chartPanel, BorderLayout.CENTER);
+            // draw a horizontal line at series min point
+            ChartLine minY = new ChartLine(series.getYMin(), false, false);
+            minY.setColor(Color.RED);
+            minY.setStroke(stroke);
+            minY.init(chartPanel);
 
-        frame.pack();
-        frame.setVisible(true);
-      }
-    });
+            // draw a vertical line at 0.45
+            ChartLine xLine = new ChartLine(0.45, true, false);
+            xLine.setColor(Color.MAGENTA);
+            xLine.setStroke(stroke);
+            xLine.init(chartPanel);
+
+            // draw a vertical line at 100 pixels
+            ChartLine xLinePixel = new ChartLine(100, true, true);
+            xLinePixel.setColor(Color.BLACK);
+            xLinePixel.setStroke(stroke);
+            xLinePixel.init(chartPanel);
+
+            // add text near to max line
+            ChartText maxText = new ChartText("Max", 0.0, series.getYMax(), false);
+            maxText.init(chartPanel);
+
+            try {
+              URL url =
+                  new URL(
+                      "https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_64_64.png");
+              BufferedImage image = ImageIO.read(url);
+              ChartImage chartImage = new ChartImage(image, 0, 1, false);
+              chartImage.init(chartPanel);
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+
+            frame.add(chartPanel, BorderLayout.CENTER);
+
+            frame.pack();
+            frame.setVisible(true);
+          }
+        });
   }
-
 }

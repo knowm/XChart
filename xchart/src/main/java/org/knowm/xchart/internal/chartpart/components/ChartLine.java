@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -83,7 +82,6 @@ public class ChartLine implements ChartPart {
       }
     }
 
-    
     g.setStroke(stroke);
     g.setColor(color);
     g.drawLine(x1, y1, x2, y2);
@@ -110,13 +108,12 @@ public class ChartLine implements ChartPart {
   }
 
   public BasicStroke getStroke() {
-  
+
     return stroke;
   }
 
   public void setStroke(BasicStroke stroke) {
-  
+
     this.stroke = stroke;
   }
-  
 }

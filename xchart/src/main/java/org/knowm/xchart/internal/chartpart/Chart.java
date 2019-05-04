@@ -35,7 +35,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private String yAxisTitle = "";
   private Map<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
   protected ArrayList<ChartPart> plotParts = new ArrayList<ChartPart>();
-  
+
   /**
    * Constructor
    *
@@ -225,59 +225,59 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
-  
+
   public ArrayList<ChartPart> getPlotParts() {
 
     return plotParts;
   }
-  
+
   public void addPlotPart(ChartPart chartPart) {
-    
+
     plotParts.add(chartPart);
   }
-  
+
   public double getChartXFromCoordinate(int screenX) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getXAxis().getChartValue(screenX);
   }
-  
+
   public double getChartYFromCoordinate(int screenY) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getYAxis().getChartValue(screenY);
   }
-  
+
   public double getChartYFromCoordinate(int screenY, int yIndex) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getYAxis(yIndex).getChartValue(screenY);
   }
-  
+
   public double getScreenXFromChart(double xValue) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getXAxis().getScreenValue(xValue);
   }
-  
+
   public double getScreenYFromChart(double yValue) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getYAxis().getScreenValue(yValue);
   }
-  
+
   public double getScreenYFromChart(double yValue, int yIndex) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }

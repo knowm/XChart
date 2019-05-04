@@ -52,7 +52,7 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     for (ChartPart part : chart.getPlotParts()) {
       part.paint(g);
     }
-    
+
     g.setClip(saveClip);
   }
 

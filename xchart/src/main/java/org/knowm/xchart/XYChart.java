@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -449,16 +448,16 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
       }
     }
   }
-  
+
   public void resetFilter() {
-    
+
     for (XYSeries series : getSeriesMap().values()) {
       series.resetFilter();
     }
   }
-  
+
   public boolean filterXByScreen(int screenXmin, int screenXmax) {
-    
+
     // convert screen coordinates to axis values
     double minValue = getChartXFromCoordinate(screenXmin);
     double maxValue = getChartXFromCoordinate(screenXmax);
@@ -471,9 +470,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     }
     return filtered;
   }
-  
+
   public void filterXByIndex(int startIndex, int endIndex) {
-    
+
     for (XYSeries series : getSeriesMap().values()) {
       series.filterXByIndex(startIndex, endIndex);
     }
