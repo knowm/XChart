@@ -127,6 +127,8 @@ public class RealtimeChart04 implements ExampleChart<BubbleChart>, RealtimeExamp
     while (bubbleData.size() > 20) {
       bubbleData.remove(0);
     }
-    bubbleChart.updateBubbleSeries(SERIES_NAME, null, yData, bubbleData);
+    bubbleChart.updateBubbleSeries(SERIES_NAME
+    		//, null, yData, bubbleData
+    		);
   }
 }

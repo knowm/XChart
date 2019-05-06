@@ -10,6 +10,7 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_XY;
+import org.knowm.xchart.internal.series.Foo;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -279,6 +280,27 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
+  
+  	public XYSeries addSeries(String seriesName, List<?> list
+		  , XcTrans3<List<?>, Integer, Foo, Number> transX
+		  , XcTrans3<List<?>, Integer, Foo, Number> transY
+		  , XcTrans3<List<?>, Integer, Foo, Number> transExtra
+		  , DataType dataType
+		  ) {
+
+  		if(transX==null)
+  			transX=new XcTrans3<List<?>, Integer, Foo, Number>() {
+				@Override
+				public Number trans(List<?> list, Integer xi, Foo obj) {
+					return xi;
+				}
+  			};
+  			
+  		XYSeries ser=new XYSeries(seriesName, list, dataType, transX, transY, transExtra);
+  		seriesMap.put(seriesName, ser);
+  		return ser;
+	}
+  
   private XYSeries addSeries(
       String seriesName, double[] xData, double[] yData, double[] errorBars, DataType dataType) {
 
@@ -315,29 +337,42 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @param newErrorBarData - set null if there are no error bars
    * @return
    */
-  public XYSeries updateXYSeries(
-      String seriesName,
-      List<?> newXData,
-      List<? extends Number> newYData,
-      List<? extends Number> newErrorBarData) {
-
-    DataType dataType = getDataType(newXData);
-    switch (dataType) {
-      case Date:
-        return updateXYSeries(
-            seriesName,
-            Utils.getDoubleArrayFromDateList(newXData),
-            Utils.getDoubleArrayFromNumberList(newYData),
-            Utils.getDoubleArrayFromNumberList(newErrorBarData));
-
-      default:
-        return updateXYSeries(
-            seriesName,
-            Utils.getDoubleArrayFromNumberList(newXData),
-            Utils.getDoubleArrayFromNumberList(newYData),
-            Utils.getDoubleArrayFromNumberList(newErrorBarData));
-    }
-  }
+//  public XYSeries updateXYSeries(
+//      String seriesName,
+//      List<?> newXData,
+//      List<? extends Number> newYData,
+//      List<? extends Number> newErrorBarData) {
+//
+////    DataType dataType = getDataType(newXData);
+////    switch (dataType) {
+////      case Date:
+////        return updateXYSeries(
+////            seriesName,
+////            Utils.getDoubleArrayFromDateList(newXData),
+////            Utils.getDoubleArrayFromNumberList(newYData),
+////            Utils.getDoubleArrayFromNumberList(newErrorBarData));
+////
+////      default:
+////        return updateXYSeries(
+////            seriesName,
+////            Utils.getDoubleArrayFromNumberList(newXData),
+////            Utils.getDoubleArrayFromNumberList(newYData),
+////            Utils.getDoubleArrayFromNumberList(newErrorBarData));
+////    }
+//	  
+//	  XYSeries series = getSeriesMap().get(seriesName);
+//	  if (series == null)
+//		  throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+//	    
+//	    if (newXData == null) {
+//	      double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
+//	      //series.replaceData(generatedXData, newYData, newErrorBarData);
+//	    }
+//	      series.replaceData(newXData, newYData, newErrorBarData);
+//
+//	    return series;
+//
+//  }
 
   /**
    * Update a series by updating the X-Axis, Y-Axis and error bar data
@@ -350,19 +385,23 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    * @return
    */
   public XYSeries updateXYSeries(
-      String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
+      String seriesName
+      //, double[] newXData, double[] newYData, double[] newErrorBarData
+      ) {
 
     Map<String, XYSeries> seriesMap = getSeriesMap();
     XYSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
     }
-    if (newXData == null) {
-      double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
-      series.replaceData(generatedXData, newYData, newErrorBarData);
-    } else {
-      series.replaceData(newXData, newYData, newErrorBarData);
-    }
+    
+//    if (newXData == null) {
+//      double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
+//      series.replaceData(generatedXData, newYData, newErrorBarData);
+//    } else {
+//      series.replaceData(newXData, newYData, newErrorBarData);
+//    }
+    series.replaceData();
 
     return series;
   }

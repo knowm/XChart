@@ -5,6 +5,7 @@ import java.awt.geom.Ellipse2D;
 import java.util.Map;
 import org.knowm.xchart.BubbleSeries;
 import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.series.Foo;
 import org.knowm.xchart.style.BubbleStyler;
 
 /** @author timmolter */
@@ -52,9 +53,6 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
         continue;
       }
 
-      String[] toolTips = series.getToolTips();
-      boolean hasCustomToolTips = toolTips != null;
-
       double yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       double yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
       if (stylerBubble.isYAxisLogarithmic()) {
@@ -63,34 +61,31 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
       }
 
       // data points
+      for (int fi= 0; fi< series.getData().size(); fi++) {
 
-      for (int i = 0; i < series.getXData().length; i++) {
+    	  Foo obj=series.getData().get(fi);
+        double x =series.getX(obj);
 
-        double x = series.getXData()[i];
-        // System.out.println(x);
         if (stylerBubble.isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
-        // System.out.println(x);
 
-        if (Double.isNaN(series.getYData()[i])) {
+        double yOrig = series.getY(obj);
+		
+        if (Double.isNaN(yOrig)) {
 
           // previousX = -Double.MAX_VALUE;
           // previousY = -Double.MAX_VALUE;
           continue;
         }
 
-        double yOrig = series.getYData()[i];
-
         double y;
 
-        // System.out.println(y);
         if (stylerBubble.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
         } else {
           y = yOrig;
         }
-        // System.out.println(y);
 
         double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
         double yTransform =
@@ -118,10 +113,9 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
         // previousY = yOffset;
 
         // paint bubbles
-        if (series.getExtraValues() != null) {
+        if (series.hasExtraValues()) {
 
-          double bubbleSize = series.getExtraValues()[i];
-
+          double bubbleSize = series.getExtraValue(fi, obj);
           // Draw it
           Shape bubble;
           // if (BubbleSeriesRenderStyle.Round == series.getBubbleSeriesRenderStyle()) {
@@ -141,8 +135,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
           g.draw(bubble);
           // add data labels
           if (toolTipsEnabled) {
-            if (hasCustomToolTips) {
-              String tt = toolTips[i];
+            if (series.hasToolTips()) {
+              String tt = series.getToolTip(fi);
               if (tt != null) {
                 chart.toolTips.addData(bubble, xOffset, yOffset, 0, tt);
               }

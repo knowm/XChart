@@ -7,6 +7,7 @@ import java.util.Map;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.series.Foo;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
@@ -65,29 +66,25 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       }
 
       // data points
-      double[] xData = series.getXData();
-      double[] yData = series.getYData();
-
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
-      double[] errorBars = series.getExtraValues();
       Path2D.Double path = null;
 
       boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
-      String[] toolTips = series.getToolTips();
-      boolean hasCustomToolTips = toolTips != null;
 
-      for (int i = 0; i < xData.length; i++) {
+      for (int fi=0; fi<series.getData().size(); fi++) {
 
-        double x = xData[i];
+    	  Foo obj=series.getData().get(fi);
+        double x = series.getX(obj);
+        
         // System.out.println(x);
         if (xyStyler.isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
         // System.out.println(x);
 
-        double next = yData[i];
+        double next = series.getY(obj);
         if (Double.isNaN(next)) {
 
           // for area charts
@@ -99,7 +96,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           continue;
         }
 
-        double yOrig = yData[i];
+        double yOrig = series.getY(obj);
 
         double y;
 
@@ -204,9 +201,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
         }
 
         // paint error bars
-        if (errorBars != null) {
+        if(series.hasExtraValues()) {
 
-          double eb = errorBars[i];
+          double eb = series.getExtraValue(obj);
 
           // set error bar style
           if (xyStyler.isErrorBarsColorSeriesColor()) {
@@ -254,8 +251,8 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
         // add data labels
         if (toolTipsEnabled) {
-          if (hasCustomToolTips) {
-            String tt = toolTips[i];
+          if (series.hasToolTips()) {
+            String tt = series.getToolTip(fi);
             if (tt != null) {
               chart.toolTips.addData(xOffset, yOffset, tt);
             }

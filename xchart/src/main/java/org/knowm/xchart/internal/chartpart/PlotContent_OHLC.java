@@ -59,9 +59,6 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
         continue;
       }
 
-      String[] toolTips = series.getToolTips();
-      boolean hasCustomToolTips = toolTips != null;
-
       Axis yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
@@ -200,8 +197,8 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
         // add data labels
         if (toolTipsEnabled) {
-          if (hasCustomToolTips) {
-            String tt = toolTips[i];
+          if(series.hasToolTips()) {
+            String tt = series.getToolTip(i);
             if (tt != null) {
               chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth * 2, tt);
             }

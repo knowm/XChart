@@ -131,13 +131,12 @@ public abstract class AxesChartSeries extends Series {
     return yAxisType;
   }
 
-  public String[] getToolTips() {
-
-    return toolTips;
+  public String getToolTip(int i) {
+	  return toolTips[i];
   }
-
-  public void setToolTips(String[] toolTips) {
-
-    this.toolTips = toolTips;
+  
+  public boolean hasToolTips() {
+	  return toolTips!=null;
   }
+  
 }

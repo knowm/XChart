@@ -1,5 +1,8 @@
 package org.knowm.xchart.internal.series;
 
+import java.util.List;
+
+
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number
  * or Date(epochtime), hence a double[]
@@ -7,12 +10,6 @@ package org.knowm.xchart.internal.series;
  * @author timmolter
  */
 public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
-
-  double[] xData; // can be Number or Date(epochtime)
-
-  double[] yData;
-
-  double[] extraValues;
 
   /**
    * Constructor
@@ -23,15 +20,11 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
    * @param xAxisDataType
    */
   public AxesChartSeriesNumericalNoErrorBars(
-      String name, double[] xData, double[] yData, double[] extraValues, DataType xAxisDataType) {
+      String name, DataType xAxisDataType) {
 
     super(name, xAxisDataType);
 
-    this.xData = xData;
-    this.yData = yData;
-    this.extraValues = extraValues;
-
-    calculateMinMax();
+    //calculateMinMax(); // should do this after vals are initialized
   }
 
   /**
@@ -42,111 +35,75 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
    * @param newYData
    * @param newExtraValues
    */
-  public void replaceData(double[] newXData, double[] newYData, double[] newExtraValues) {
-
-    // Sanity check
-    if (newExtraValues != null && newExtraValues.length != newYData.length) {
-      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
-    }
-    if (newXData.length != newYData.length) {
-      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-    }
-
-    xData = newXData;
-    yData = newYData;
-    extraValues = newExtraValues;
-    calculateMinMax();
-  }
-
-  /**
-   * Finds the min and max of a dataset
-   *
-   * @param data
-   * @return
+//  public void replaceData(double[] newXData, double[] newYData, double[] newExtraValues) {
+//
+//    // Sanity check
+//    if (newExtraValues != null && newExtraValues.length != newYData.length) {
+//      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
+//    }
+//    if (newXData.length != newYData.length) {
+//      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+//    }
+//
+//    xData = newXData;
+//    yData = newYData;
+//    extraValues = newExtraValues;
+//    calculateMinMax();
+//  }
+  
+  
+  /** 
+   * Update name with dateUpdated or some such
    */
-  double[] findMinMax(double[] data) {
+	public void replaceData() {
+		calculateMinMax();
+	}
 
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (double dataPoint : data) {
-
-      if (Double.isNaN(dataPoint)) {
-        continue;
-      } else {
-        if (dataPoint < min) {
-          min = dataPoint;
-        }
-        if (dataPoint > max) {
-          max = dataPoint;
-        }
-      }
-    }
-
-    return new double[] {min, max};
-  }
 
   @Override
   protected void calculateMinMax() {
+	  calculateMinMax(true);
+  }
+  
+  protected void calculateMinMax(boolean inclExtraValues) {
 
-    // xData
-    double[] xMinMax = findMinMax(xData);
-    xMin = xMinMax[0];
-    xMax = xMinMax[1];
-    // System.out.println(xMin);
-    // System.out.println(xMax);
+    xMin=Double.MAX_VALUE;
+    xMax=-Double.MAX_VALUE;
+    yMin=Double.MAX_VALUE;
+    yMax=-Double.MAX_VALUE;
+    
+    List<? extends Foo> data = getData();
+	for (int i = 0; i < data.size(); i++) {
+		Foo obj = data.get(i);
+		double x = getX(i, obj).doubleValue();
+    	if(!Double.isNaN(x)) {
+            if(x< xMin)
+            	xMin=x;
+            if (x> xMax)
+                xMax=x;
+    	}
+    	
+    	double y = getY(i,obj).doubleValue();
+    	if(!Double.isNaN(y)) {
+    		double eb = hasExtraValues() ? getExtraValue(i,obj).doubleValue() : 0;
+    		if(!inclExtraValues)
+    			eb=0;
+            if(y-eb<yMin)
+            	yMin=y-eb;
+            if (y+eb>yMax)
+                yMax=y+eb;
+    	}
+	}
 
-    // yData
-    double[] yMinMax;
-    if (extraValues == null) {
-      yMinMax = findMinMax(yData);
-    } else {
-      yMinMax = findMinMaxWithErrorBars(yData, extraValues);
-    }
-    yMin = yMinMax[0];
-    yMax = yMinMax[1];
-    // System.out.println(yMin);
-    // System.out.println(yMax);
   }
 
-  /**
-   * Finds the min and max of a dataset accounting for error bars
-   *
-   * @param data
-   * @param errorBars
-   * @return
-   */
-  private double[] findMinMaxWithErrorBars(double[] data, double[] errorBars) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (int i = 0; i < data.length; i++) {
-
-      double d = data[i];
-      double eb = errorBars[i];
-      if (d - eb < min) {
-        min = d - eb;
-      }
-      if (d + eb > max) {
-        max = d + eb;
-      }
-    }
-    return new double[] {min, max};
-  }
-
-  public double[] getXData() {
-
-    return xData;
-  }
-
-  public double[] getYData() {
-
-    return yData;
-  }
-
-  public double[] getExtraValues() {
-
-    return extraValues;
-  }
+	  public abstract List<? extends Foo> getData();
+//	  public abstract double getX(Foo obj);
+//	  public abstract double getY(Foo obj);
+//	  public abstract double getExtraValue(Foo obj);
+	public abstract Number getX(int observationi, Foo obj);
+	public abstract Number getY(int observationi, Foo obj);
+	public abstract Number getExtraValue(int observationi, Foo obj);
+	public abstract boolean hasExtraValues();
+	  
 }

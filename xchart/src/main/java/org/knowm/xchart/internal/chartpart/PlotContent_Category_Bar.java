@@ -130,8 +130,6 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
       if (!series.isEnabled()) {
         continue;
       }
-      String[] toolTips = series.getToolTips();
-      boolean hasCustomToolTips = toolTips != null;
 
       yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
@@ -488,8 +486,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             yPoint = yOffset;
           }
 
-          if (hasCustomToolTips) {
-            String tt = toolTips[categoryCounter - 1];
+          if(series.hasToolTips()) {
+            String tt = series.getToolTip(categoryCounter - 1);
             if (tt != null) {
               chart.toolTips.addData(rect, xOffset, yPoint, barWidth, tt);
             }

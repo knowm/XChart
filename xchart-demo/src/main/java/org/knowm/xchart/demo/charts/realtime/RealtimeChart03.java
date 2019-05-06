@@ -129,6 +129,8 @@ public class RealtimeChart03 implements ExampleChart<XYChart>, RealtimeExampleCh
     errorBars.add(20 * Math.random());
     errorBars.remove(0);
 
-    xyChart.updateXYSeries(SERIES_NAME, xData, yData, errorBars);
+    xyChart.updateXYSeries(SERIES_NAME
+    		//, xData, yData, errorBars
+    		);
   }
 }

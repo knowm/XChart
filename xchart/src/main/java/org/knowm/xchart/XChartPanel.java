@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
+//import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ToolTips;
 
@@ -147,15 +147,15 @@ public class XChartPanel<T extends Chart> extends JPanel {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.BMP);
           } else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
             BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.GIF);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
-            VectorGraphicsEncoder.saveVectorGraphic(
-                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.SVG);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
-            VectorGraphicsEncoder.saveVectorGraphic(
-                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.EPS);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
-            VectorGraphicsEncoder.saveVectorGraphic(
-                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.PDF);
+//          } else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
+//            VectorGraphicsEncoder.saveVectorGraphic(
+//                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.SVG);
+//          } else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
+//            VectorGraphicsEncoder.saveVectorGraphic(
+//                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.EPS);
+//          } else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
+//            VectorGraphicsEncoder.saveVectorGraphic(
+//                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.PDF);
           }
         } catch (IOException e) {
           e.printStackTrace();
@@ -164,49 +164,49 @@ public class XChartPanel<T extends Chart> extends JPanel {
     }
   }
 
-  private void showExportAsDialog() {
-
-    UIManager.put("FileChooser.saveButtonText", "Export");
-    UIManager.put("FileChooser.fileNameLabelText", "Export To:");
-    UIManager.put("FileChooser.saveDialogFileNameLabel.textAndMnemonic", "Export To:");
-    // UIDefaults defaults = UIManager.getDefaults();
-    // System.out.println(defaults.size()+ " properties");
-    // for (Enumeration e = defaults.keys();
-    // e.hasMoreElements();) {
-    // Object key = e.nextElement();
-    // System.out.println(key + " = " + defaults.get(key));
-    // }
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    fileChooser.setFileFilter(
-        new FileFilter() {
-
-          @Override
-          public boolean accept(File f) {
-
-            return f.isDirectory();
-          }
-
-          @Override
-          public String getDescription() {
-
-            return "Any Directory";
-          }
-        });
-    fileChooser.setAcceptAllFileFilterUsed(false);
-    fileChooser.setDialogTitle("Export");
-
-    if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-
-      File theFileToSave = fileChooser.getSelectedFile();
-      try {
-        CSVExporter.writeCSVColumns(
-            (XYChart) chart, theFileToSave.getCanonicalPath() + File.separatorChar);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
-  }
+//  private void showExportAsDialog() {
+//
+//    UIManager.put("FileChooser.saveButtonText", "Export");
+//    UIManager.put("FileChooser.fileNameLabelText", "Export To:");
+//    UIManager.put("FileChooser.saveDialogFileNameLabel.textAndMnemonic", "Export To:");
+//    // UIDefaults defaults = UIManager.getDefaults();
+//    // System.out.println(defaults.size()+ " properties");
+//    // for (Enumeration e = defaults.keys();
+//    // e.hasMoreElements();) {
+//    // Object key = e.nextElement();
+//    // System.out.println(key + " = " + defaults.get(key));
+//    // }
+//    JFileChooser fileChooser = new JFileChooser();
+//    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//    fileChooser.setFileFilter(
+//        new FileFilter() {
+//
+//          @Override
+//          public boolean accept(File f) {
+//
+//            return f.isDirectory();
+//          }
+//
+//          @Override
+//          public String getDescription() {
+//
+//            return "Any Directory";
+//          }
+//        });
+//    fileChooser.setAcceptAllFileFilterUsed(false);
+//    fileChooser.setDialogTitle("Export");
+//
+//    if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+//
+//      File theFileToSave = fileChooser.getSelectedFile();
+//      try {
+//        CSVExporter.writeCSVColumns(
+//            (XYChart) chart, theFileToSave.getCanonicalPath() + File.separatorChar);
+//      } catch (IOException e) {
+//        e.printStackTrace();
+//      }
+//    }
+//  }
 
   private class SaveAction extends AbstractAction {
 
@@ -232,7 +232,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-      showExportAsDialog();
+      //showExportAsDialog();
     }
   }
 
@@ -338,7 +338,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
               @Override
               public void mouseReleased(MouseEvent e) {
 
-                showExportAsDialog();
+                //showExportAsDialog();
               }
 
               @Override

@@ -43,7 +43,7 @@ public class IntermediateExample {
     new SwingWrapper(chart).displayChart();
   }
 
-  private static List<Double> getGaussian(int number, double mean, double std) {
+  public static List<Double> getGaussian(int number, double mean, double std) {
 
     List<Double> seriesData = new LinkedList<Double>();
     for (int i = 0; i < number; i++) {

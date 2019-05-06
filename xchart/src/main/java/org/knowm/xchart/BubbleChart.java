@@ -136,18 +136,19 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * @param newBubbleData - set null if there are no error bars
    * @return
    */
-  public BubbleSeries updateBubbleSeries(
-      String seriesName,
-      List<?> newXData,
-      List<? extends Number> newYData,
-      List<? extends Number> newBubbleData) {
-
-    return updateBubbleSeries(
-        seriesName,
-        Utils.getDoubleArrayFromNumberList(newXData),
-        Utils.getDoubleArrayFromNumberList(newYData),
-        Utils.getDoubleArrayFromNumberList(newBubbleData));
-  }
+//  public BubbleSeries updateBubbleSeries(
+//      String seriesName
+//      //, List<?> newXData,
+//      //List<? extends Number> newYData,
+//      //List<? extends Number> newBubbleData
+//      ) {
+//
+//    return updateBubbleSeries(
+//        seriesName,
+//        Utils.getDoubleArrayFromNumberList(newXData),
+//        Utils.getDoubleArrayFromNumberList(newYData),
+//        Utils.getDoubleArrayFromNumberList(newBubbleData));
+//  }
 
   /**
    * Update a series by updating the X-Axis, Y-Axis and bubble data
@@ -160,19 +161,22 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    * @return
    */
   public BubbleSeries updateBubbleSeries(
-      String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
+      String seriesName
+      //, double[] newXData, double[] newYData, double[] newBubbleData
+      ) {
 
     Map<String, BubbleSeries> seriesMap = getSeriesMap();
     BubbleSeries series = seriesMap.get(seriesName);
-    if (series == null) {
+    if (series == null)
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
-    }
-    if (newXData == null) {
-      double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
-      series.replaceData(generatedXData, newYData, newBubbleData);
-    } else {
-      series.replaceData(newXData, newYData, newBubbleData);
-    }
+
+//    if (newXData == null) {
+//      double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
+//      series.replaceData(generatedXData, newYData, newBubbleData);
+//    } else {
+//      series.replaceData(newXData, newYData, newBubbleData);
+//    }
+    series.replaceData();
 
     return series;
   }

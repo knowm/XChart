@@ -660,7 +660,7 @@ public class ChartStylePanel extends JPanel {
       String name = pre + lowerCaseName;
       method = methodMap.get(name);
       if (method != null) {
-        if (method.getParameterCount() != (read ? 0 : 1)) {
+        if (method.getParameterTypes().length != (read ? 0 : 1)) {
           method = null;
           continue;
         }

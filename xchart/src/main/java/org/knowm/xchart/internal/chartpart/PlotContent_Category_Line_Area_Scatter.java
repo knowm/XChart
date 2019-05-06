@@ -52,8 +52,6 @@ public class PlotContent_Category_Line_Area_Scatter<
       if (!series.isEnabled()) {
         continue;
       }
-      String[] toolTips = series.getToolTips();
-      boolean hasCustomToolTips = toolTips != null;
 
       Axis yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
@@ -234,8 +232,8 @@ public class PlotContent_Category_Line_Area_Scatter<
         }
 
         if (toolTipsEnabled) {
-          if (hasCustomToolTips) {
-            String tt = toolTips[categoryCounter];
+          if(series.hasToolTips()) {
+            String tt = series.getToolTip(categoryCounter);
             if (tt != null) {
               chart.toolTips.addData(xOffset, yOffset, tt);
             }
