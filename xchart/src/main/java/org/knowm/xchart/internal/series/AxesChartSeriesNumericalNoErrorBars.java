@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author timmolter
  */
-public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
+public abstract class AxesChartSeriesNumericalNoErrorBars<T> extends MarkerSeries {
 
   /**
    * Constructor
@@ -72,9 +72,9 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     yMin=Double.MAX_VALUE;
     yMax=-Double.MAX_VALUE;
     
-    List<? extends Foo> data = getData();
+    List<? extends T> data = getData();
 	for (int i = 0; i < data.size(); i++) {
-		Foo obj = data.get(i);
+		T obj = data.get(i);
 		double x = getX(i, obj).doubleValue();
     	if(!Double.isNaN(x)) {
             if(x< xMin)
@@ -97,13 +97,10 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
   }
 
-	  public abstract List<? extends Foo> getData();
-//	  public abstract double getX(Foo obj);
-//	  public abstract double getY(Foo obj);
-//	  public abstract double getExtraValue(Foo obj);
-	public abstract Number getX(int observationi, Foo obj);
-	public abstract Number getY(int observationi, Foo obj);
-	public abstract Number getExtraValue(int observationi, Foo obj);
+	public abstract List<? extends T> getData();
+	public abstract Number getX(int observationi, T obj);
+	public abstract Number getY(int observationi, T obj);
+	public abstract Number getExtraValue(int observationi, T obj);
 	public abstract boolean hasExtraValues();
 	  
 }

@@ -10,7 +10,6 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_XY;
-import org.knowm.xchart.internal.series.Foo;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -282,16 +281,16 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    */
   
   	public XYSeries addSeries(String seriesName, List<?> list
-		  , XcTrans3<List<?>, Integer, Foo, Number> transX
-		  , XcTrans3<List<?>, Integer, Foo, Number> transY
-		  , XcTrans3<List<?>, Integer, Foo, Number> transExtra
+		  , XcTrans3<List<?>, Integer, Object, Number> transX
+		  , XcTrans3<List<?>, Integer, Object, Number> transY
+		  , XcTrans3<List<?>, Integer, Object, Number> transExtra
 		  , DataType dataType
 		  ) {
 
   		if(transX==null)
-  			transX=new XcTrans3<List<?>, Integer, Foo, Number>() {
+  			transX=new XcTrans3<List<?>, Integer, Object, Number>() {
 				@Override
-				public Number trans(List<?> list, Integer xi, Foo obj) {
+				public Number trans(List<?> list, Integer xi, Object obj) {
 					return xi;
 				}
   			};

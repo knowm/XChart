@@ -5,7 +5,6 @@ import java.awt.geom.Ellipse2D;
 import java.util.Map;
 import org.knowm.xchart.BubbleSeries;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.series.Foo;
 import org.knowm.xchart.style.BubbleStyler;
 
 /** @author timmolter */
@@ -63,14 +62,14 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
       // data points
       for (int fi= 0; fi< series.getData().size(); fi++) {
 
-    	  Foo obj=series.getData().get(fi);
-        double x =series.getX(obj);
+    	  Object obj=series.getData().get(fi);
+        double x =series.getX(fi, obj).doubleValue();
 
         if (stylerBubble.isXAxisLogarithmic()) {
           x = Math.log10(x);
         }
 
-        double yOrig = series.getY(obj);
+        double yOrig = series.getY(fi, obj).doubleValue();
 		
         if (Double.isNaN(yOrig)) {
 
@@ -115,7 +114,7 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
         // paint bubbles
         if (series.hasExtraValues()) {
 
-          double bubbleSize = series.getExtraValue(fi, obj);
+          double bubbleSize = series.getExtraValue(fi, obj).doubleValue();
           // Draw it
           Shape bubble;
           // if (BubbleSeriesRenderStyle.Round == series.getBubbleSeriesRenderStyle()) {

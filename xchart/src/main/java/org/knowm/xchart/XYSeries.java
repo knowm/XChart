@@ -6,7 +6,6 @@ import java.util.List;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
-import org.knowm.xchart.internal.series.Foo;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
@@ -24,10 +23,10 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 	protected XcTrans3<List<?>, Integer, Object, Number> transY;
 	protected XcTrans3<List<?>, Integer, Object, Number> transExtra;
 
-	public XYSeries(String name, List<? extends Foo> list, DataType axisType
-  		  , XcTrans3<List<?>, Integer, Foo, Number> transX
-  		  , XcTrans3<List<? extends Foo>, Integer, Foo, Number> transY
-  		  , XcTrans3<List<? extends Foo>, Integer, Foo, Number> transExtra
+	public XYSeries(String name, List<?> list, DataType axisType
+  		  , XcTrans3<List<?>, Integer, Object, Number> transX
+  		  , XcTrans3<List<?>, Integer, Object, Number> transY
+  		  , XcTrans3<List<?>, Integer, Object, Number> transExtra
 			) {
 
 		super(name, axisType);
@@ -49,22 +48,22 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 		list=createFrom(xData, yData, errorBars);
 		hasExtraValues = errorBars!=null;
 		
-		transX=new XcTrans3<List<? extends Foo>, Integer, Foo, Number>() {
+		transX=new XcTrans3<List<?>, Integer, Object, Number>() {
 			@Override
-			public Number trans(List<? extends Foo> o1, Integer o2, Foo o3) {
-				return ((FooDouble)o3).x;
+			public Number trans(List<?> o1, Integer o2, Object o3) {
+				return ((XcTupleDouble)o3).x;
 			}
 		};
-		transY=new XcTrans3<List<? extends Foo>, Integer, Foo, Number>() {
+		transY=new XcTrans3<List<?>, Integer, Object, Number>() {
 			@Override
-			public Number trans(List<? extends Foo> o1, Integer o2, Foo o3) {
-				return ((FooDouble)o3).y;
+			public Number trans(List<?> o1, Integer o2, Object o3) {
+				return ((XcTupleDouble)o3).y;
 			}
 		};
-		transExtra=new XcTrans3<List<? extends Foo>, Integer, Foo, Number>() {
+		transExtra=new XcTrans3<List<?>, Integer, Object, Number>() {
 			@Override
-			public Number trans(List<? extends Foo> o1, Integer o2, Foo o3) {
-				return ((FooDouble)o3).extra;
+			public Number trans(List<?> o1, Integer o2, Object o3) {
+				return ((XcTupleDouble)o3).extra;
 			}
 		};
 
@@ -74,7 +73,7 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 //	    System.out.println("  y min="+yMin+", max="+yMax);
 	}
 
-	public static List<? extends Foo> createFrom(double[] xData, double[] yData, double[] extraData) {
+	public static List<XcTupleDouble > createFrom(double[] xData, double[] yData, double[] extraData) {
 		
 		if(xData==null) {
 			xData=new double[yData.length];
@@ -90,12 +89,12 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 				throw new IllegalArgumentException();
 		}
 		
-		List<FooDouble> listNew=new ArrayList<FooDouble>();
+		List<XcTupleDouble> listNew=new ArrayList<XcTupleDouble>();
 		for(int i=0; i<xData.length; i++) {
 			Double extrai=null;
 			if(extraData!=null)
 				extrai=extraData[i];
-			FooDouble foo=new FooDouble(xData[i], yData[i], extrai);
+			XcTupleDouble foo=new XcTupleDouble(xData[i], yData[i], extrai);
 			listNew.add(foo);
 		}
 		return listNew;
@@ -144,22 +143,22 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 	}
 
 	@Override
-	public List<? extends Foo> getData() {
+	public List<?> getData() {
 		return list;
 	}
 
 	@Override
-	public Number getX(int observationi, Foo obj) {
+	public Number getX(int observationi, Object obj) {
 		return transX.trans(list, observationi, obj);
 	}
 
 	@Override
-	public Number getY(int observationi, Foo obj) {
+	public Number getY(int observationi, Object obj) {
 		return transY.trans(list, observationi, obj);
 	}
 
 	@Override
-	public Number getExtraValue(int observationi, Foo obj) {
+	public Number getExtraValue(int observationi, Object obj) {
 		return transExtra.trans(list, observationi, obj);
 	}
 
@@ -170,13 +169,14 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
 }
 
-class FooDouble extends Foo {
-	public FooDouble(double x, double y, Double extrai) {
+class XcTupleDouble {
+	public XcTupleDouble(double x, double y, Double extrai) {
 		this.x=x;
 		this.y=y;
 		this.extra=extrai;
 	}
-	double x;
-	double y;
-	Double extra;
+	
+	public double x;
+	public double y;
+	public Double extra;
 }

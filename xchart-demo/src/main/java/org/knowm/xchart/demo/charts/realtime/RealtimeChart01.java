@@ -11,7 +11,6 @@ import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XcTrans3;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.RealtimeExampleChart;
-import org.knowm.xchart.internal.series.Foo;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
@@ -83,18 +82,16 @@ public class RealtimeChart01 implements ExampleChart<XYChart>, RealtimeExampleCh
             .title("Real-time XY Chart")
             .build();
     
-    xyChart.
-    		//addSeries(SERIES_NAME, null, yData);
-		addSeries(SERIES_NAME, yData
-  		  , new XcTrans3<List<? extends Foo>, Integer, Foo, Number>() {
+    xyChart.addSeries(SERIES_NAME, yData
+  		  , new XcTrans3<List<?>, Integer, Object , Number>() {
 			@Override
-			public Number trans(List<? extends Foo> o1, Integer o2, Foo o3) {
+			public Number trans(List<?> o1, Integer o2, Object o3) {
 				return o2;
 			}
 		}
-  		  , new XcTrans3<List<? extends Foo>, Integer, Foo, Number>() {
+  		  , new XcTrans3<List<?>, Integer, Object, Number>() {
   			@Override
-  			public Number trans(List<? extends Foo> o1, Integer o2, Foo o3) {
+  			public Number trans(List<?> o1, Integer o2, Object o3) {
   				return yData.get(o2);
   			}
   		}
@@ -109,9 +106,6 @@ public class RealtimeChart01 implements ExampleChart<XYChart>, RealtimeExampleCh
   public void updateData() {
 
     // Get some new data
-    //List<Double> newData = getRandomData(1);
-
-    //yData.addAll(newData);
     yData.add(nextRandValue());
 
     // Limit the total number of points
@@ -119,9 +113,7 @@ public class RealtimeChart01 implements ExampleChart<XYChart>, RealtimeExampleCh
       yData.remove(0);
     }
 
-    xyChart.updateXYSeries(SERIES_NAME
-    		//, null, yData, null
-    		);
+    xyChart.updateXYSeries(SERIES_NAME);
   }
 
   static double nextRandValue() {

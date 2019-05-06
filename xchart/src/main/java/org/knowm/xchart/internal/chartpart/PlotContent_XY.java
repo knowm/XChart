@@ -7,7 +7,6 @@ import java.util.Map;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.series.Foo;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
@@ -75,8 +74,8 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
       for (int fi=0; fi<series.getData().size(); fi++) {
 
-    	  Foo obj=series.getData().get(fi);
-        double x = series.getX(obj);
+    	  Object obj=series.getData().get(fi);
+        double x = series.getX(fi, obj).doubleValue();
         
         // System.out.println(x);
         if (xyStyler.isXAxisLogarithmic()) {
@@ -84,7 +83,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
         }
         // System.out.println(x);
 
-        double next = series.getY(obj);
+        double next = series.getY(fi, obj).doubleValue();
         if (Double.isNaN(next)) {
 
           // for area charts
@@ -96,7 +95,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           continue;
         }
 
-        double yOrig = series.getY(obj);
+        double yOrig = series.getY(fi, obj).doubleValue();
 
         double y;
 
@@ -203,7 +202,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
         // paint error bars
         if(series.hasExtraValues()) {
 
-          double eb = series.getExtraValue(obj);
+          double eb = series.getExtraValue(fi, obj).doubleValue();
 
           // set error bar style
           if (xyStyler.isErrorBarsColorSeriesColor()) {
