@@ -27,38 +27,12 @@ public abstract class AxesChartSeriesNumericalNoErrorBars<T> extends MarkerSerie
     //calculateMinMax(); // should do this after vals are initialized
   }
 
-  /**
-   * This is an internal method which shouldn't be called from client code. Use
-   * XYChart.updateXYSeries or CategoryChart.updateXYSeries instead!
-   *
-   * @param newXData
-   * @param newYData
-   * @param newExtraValues
-   */
-//  public void replaceData(double[] newXData, double[] newYData, double[] newExtraValues) {
-//
-//    // Sanity check
-//    if (newExtraValues != null && newExtraValues.length != newYData.length) {
-//      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
-//    }
-//    if (newXData.length != newYData.length) {
-//      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-//    }
-//
-//    xData = newXData;
-//    yData = newYData;
-//    extraValues = newExtraValues;
-//    calculateMinMax();
-//  }
-  
-  
   /** 
    * Update name with dateUpdated or some such
    */
 	public void replaceData() {
 		calculateMinMax();
 	}
-
 
   @Override
   protected void calculateMinMax() {
