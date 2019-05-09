@@ -2,6 +2,7 @@ package org.knowm.xchart;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.print.*;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
@@ -10,6 +11,8 @@ import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ToolTips;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -25,6 +28,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
   private final Dimension preferredSize;
   private String saveAsString = "Save As...";
   private String exportAsString = "Export To...";
+  private String printString = "Print...";
 
   /**
    * Constructor
@@ -59,6 +63,12 @@ public class XChartPanel<T extends Chart> extends JPanel {
         KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlE, "export");
     this.getActionMap().put("export", new ExportAction());
+
+    // Control+P key listener for printing chart
+    KeyStroke ctrlP =
+        KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+    this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlP, "print");
+    this.getActionMap().put("print", new PrintAction());
   }
 
   /**
@@ -81,6 +91,16 @@ public class XChartPanel<T extends Chart> extends JPanel {
     this.exportAsString = exportAsString;
   }
 
+  /**
+   * Set the "Print..." String if you want to localize it.
+   *
+   * @param printString
+   */
+  public void setPrintString(String printString) {
+
+    this.printString = printString;
+  }
+
   @Override
   protected void paintComponent(Graphics g) {
 
@@ -100,6 +120,72 @@ public class XChartPanel<T extends Chart> extends JPanel {
   public Dimension getPreferredSize() {
 
     return preferredSize;
+  }
+
+  private void showPrintDialog() {
+    PrinterJob printJob = PrinterJob.getPrinterJob();
+    if (printJob.printDialog()) {
+      try {
+        // Page format
+        PageFormat pageFormat = printJob.defaultPage();
+        Paper paper = pageFormat.getPaper();
+        JFrame w = (JFrame) SwingUtilities.windowForComponent(this);
+        if (w.getWidth() > w.getHeight()) {
+          pageFormat.setOrientation(PageFormat.LANDSCAPE);
+          paper.setImageableArea(0,0, pageFormat.getHeight(), pageFormat.getWidth());
+        } else {
+          paper.setImageableArea(0,0, pageFormat.getWidth(), pageFormat.getHeight());
+        }
+        pageFormat.setPaper(paper);
+        pageFormat = printJob.validatePage(pageFormat);
+
+        String jobName = "XChart " + chart.getTitle().trim();
+        if (!w.getTitle().trim().isEmpty() && !w.getTitle().trim().contentEquals(chart.getTitle().trim())) {
+          jobName = jobName + " " + w.getTitle().trim();
+        }
+        printJob.setJobName(jobName);
+
+        printJob.setPrintable(new Printer(getParent() /*start with parent to include the caption*/), pageFormat);
+
+        Dimension windowSize = w.getSize();
+        Styler styler = getChart().getStyler();
+        Color chartBackgroundColor = styler.getChartBackgroundColor();
+        Color plotBackgroundColor = styler.getPlotBackgroundColor();
+        Color legendBackgroundColor = styler.getLegendBackgroundColor();
+        Color toolTipBackgroundColor = styler.getToolTipBackgroundColor();
+        Color titleBackgroundColor = styler.getChartTitleBoxBackgroundColor();
+        AxesChartStyler cs = (AxesChartStyler) chart.getStyler();
+        int markerSize = cs.getMarkerSize();
+        try {
+          // for printing: white backgrounds
+          styler.setLegendBackgroundColor(Color.white);
+          styler.setToolTipBackgroundColor(Color.white);
+          styler.setChartTitleBoxBackgroundColor(Color.white);
+          styler.setChartBackgroundColor(Color.white);
+          styler.setPlotBackgroundColor(Color.white);
+
+          // optional for printing: higher resolution, larger markers
+          //cs.setMarkerSize(Math.max(markerSize, 5));
+          //double widthPx = (int) Math.floor(pageFormat.getImageableWidth()/72*400);
+          //double heightPx = (int) Math.floor(pageFormat.getImageableHeight()/72*400);
+          //w.setSize((int) Math.floor(widthPx), (int) Math.floor(heightPx));
+          //w.validate();
+
+          printJob.print();
+        } finally {
+          // restore after printing
+          styler.setPlotBackgroundColor(plotBackgroundColor);
+          styler.setChartBackgroundColor(chartBackgroundColor);
+          styler.setChartTitleBoxBackgroundColor(titleBackgroundColor);
+          styler.setToolTipBackgroundColor(toolTipBackgroundColor);
+          styler.setLegendBackgroundColor(legendBackgroundColor);
+          cs.setMarkerSize(markerSize);
+          w.setSize(windowSize);
+        }
+      } catch (PrinterException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   private void showSaveAsDialog() {
@@ -236,6 +322,20 @@ public class XChartPanel<T extends Chart> extends JPanel {
     }
   }
 
+  private class PrintAction extends AbstractAction {
+
+    public PrintAction() {
+
+      super("print");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+      showPrintDialog();
+    }
+  }
+
   /**
    * File filter based on the suffix of a file. This file filter accepts all files that end with
    * .suffix or the capitalized suffix.
@@ -302,6 +402,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
   private class XChartPanelPopupMenu extends JPopupMenu {
 
     final JMenuItem saveAsMenuItem;
+    final JMenuItem printMenuItem;
     JMenuItem exportAsMenuItem;
 
     public XChartPanelPopupMenu() {
@@ -330,6 +431,30 @@ public class XChartPanel<T extends Chart> extends JPanel {
           });
       add(saveAsMenuItem);
 
+      printMenuItem = new JMenuItem(printString);
+      printMenuItem.addMouseListener(
+              new MouseListener() {
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                  showPrintDialog();
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {}
+
+                @Override
+                public void mouseExited(MouseEvent e) {}
+
+                @Override
+                public void mouseEntered(MouseEvent e) {}
+
+                @Override
+                public void mouseClicked(MouseEvent e) {}
+              });
+      add(printMenuItem);
+
       if (chart instanceof XYChart) {
         exportAsMenuItem = new JMenuItem(exportAsString);
         exportAsMenuItem.addMouseListener(
@@ -355,6 +480,31 @@ public class XChartPanel<T extends Chart> extends JPanel {
             });
         add(exportAsMenuItem);
       }
+    }
+  }
+
+  public static class Printer implements Printable {
+    private Component component;
+
+    Printer(Component c) {
+      component = c;
+    }
+
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) {
+      if (pageIndex > 0) {
+        return NO_SUCH_PAGE;
+      }
+
+      Graphics2D g2 = (Graphics2D) graphics;
+      g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+      double sx = pageFormat.getImageableWidth() / component.getWidth();
+      double sy = pageFormat.getImageableHeight() / component.getHeight();
+      g2.scale(sx, sy);
+
+      component.printAll(g2);
+
+      return PAGE_EXISTS;
     }
   }
 }
