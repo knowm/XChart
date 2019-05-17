@@ -1,9 +1,8 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
 import java.util.Map;
+import java.awt.Graphics2D;
+import java.awt.geom.*;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
@@ -203,6 +202,13 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           series.getMarker().paint(g, xOffset, yOffset, xyStyler.getMarkerSize());
         }
 
+        // paint cursor
+        if (series.getCursor() != null) {
+          series.getCursor().addData(xOffset, yOffset, x, y);
+          g.setColor(series.getMarkerColor()); // TODO: introduce color for cursor
+          series.getCursor().paint(g, xOffset, yOffset, xyStyler.getMarkerSize(), getBounds().getWidth(), getBounds().getHeight());
+        }
+
         // paint error bars
         if (errorBars != null) {
 
@@ -252,6 +258,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           g.draw(line);
         }
 
+        
         // add data labels
         if (toolTipsEnabled) {
           if (hasCustomToolTips) {

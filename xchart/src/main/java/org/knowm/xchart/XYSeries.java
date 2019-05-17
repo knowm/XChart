@@ -2,14 +2,14 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
+import org.knowm.xchart.internal.series.*;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
  *
  * @author timmolter
  */
-public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
+public class XYSeries extends CursorSeries {
 
   private XYSeriesRenderStyle xySeriesRenderStyle = null;
 

@@ -3,6 +3,8 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.cursors.Cursor;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -44,6 +46,15 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     g.setClip(bounds.createIntersection(bounds));
 
     chart.toolTips.prepare(g);
+
+    for (S value : chart.getSeriesMap().values()) {
+      if(value instanceof XYSeries) {
+        Cursor cursor = ((XYSeries)value).getCursor();
+        if(cursor != null) {
+          cursor.prepare(g);
+        }
+      }
+    }
 
     doPaint(g);
 

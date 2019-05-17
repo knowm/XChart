@@ -1,18 +1,15 @@
 package org.knowm.xchart;
 
+import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.*;
-import java.io.File;
-import java.io.IOException;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.ToolTips;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.internal.chartpart.*;
+import org.knowm.xchart.style.*;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -51,7 +48,14 @@ public class XChartPanel<T extends Chart> extends JPanel {
         this.addMouseMotionListener(mml);
       }
     }
-
+    for (Object value : chart.getSeriesMap().values()) {
+      if(value instanceof XYSeries) {
+        XYSeries series = (XYSeries)value;
+        if(series.getCursor() != null) {
+          this.addMouseMotionListener(series.getCursor());
+        }
+      }
+    }
     // Control+S key listener for saving chart
     KeyStroke ctrlS =
         KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
@@ -132,20 +136,22 @@ public class XChartPanel<T extends Chart> extends JPanel {
         JFrame w = (JFrame) SwingUtilities.windowForComponent(this);
         if (w.getWidth() > w.getHeight()) {
           pageFormat.setOrientation(PageFormat.LANDSCAPE);
-          paper.setImageableArea(0,0, pageFormat.getHeight(), pageFormat.getWidth());
+          paper.setImageableArea(0, 0, pageFormat.getHeight(), pageFormat.getWidth());
         } else {
-          paper.setImageableArea(0,0, pageFormat.getWidth(), pageFormat.getHeight());
+          paper.setImageableArea(0, 0, pageFormat.getWidth(), pageFormat.getHeight());
         }
         pageFormat.setPaper(paper);
         pageFormat = printJob.validatePage(pageFormat);
 
         String jobName = "XChart " + chart.getTitle().trim();
-        if (!w.getTitle().trim().isEmpty() && !w.getTitle().trim().contentEquals(chart.getTitle().trim())) {
+        if (!w.getTitle().trim().isEmpty()
+            && !w.getTitle().trim().contentEquals(chart.getTitle().trim())) {
           jobName = jobName + " " + w.getTitle().trim();
         }
         printJob.setJobName(jobName);
 
-        printJob.setPrintable(new Printer(getParent() /*start with parent to include the caption*/), pageFormat);
+        printJob.setPrintable(
+            new Printer(getParent() /*start with parent to include the caption*/), pageFormat);
 
         Dimension windowSize = w.getSize();
         Styler styler = getChart().getStyler();
@@ -165,11 +171,11 @@ public class XChartPanel<T extends Chart> extends JPanel {
           styler.setPlotBackgroundColor(Color.white);
 
           // optional for printing: higher resolution, larger markers
-          //cs.setMarkerSize(Math.max(markerSize, 5));
-          //double widthPx = (int) Math.floor(pageFormat.getImageableWidth()/72*400);
-          //double heightPx = (int) Math.floor(pageFormat.getImageableHeight()/72*400);
-          //w.setSize((int) Math.floor(widthPx), (int) Math.floor(heightPx));
-          //w.validate();
+          // cs.setMarkerSize(Math.max(markerSize, 5));
+          // double widthPx = (int) Math.floor(pageFormat.getImageableWidth()/72*400);
+          // double heightPx = (int) Math.floor(pageFormat.getImageableHeight()/72*400);
+          // w.setSize((int) Math.floor(widthPx), (int) Math.floor(heightPx));
+          // w.validate();
 
           printJob.print();
         } finally {
@@ -433,26 +439,26 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
       printMenuItem = new JMenuItem(printString);
       printMenuItem.addMouseListener(
-              new MouseListener() {
+          new MouseListener() {
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
+            @Override
+            public void mouseReleased(MouseEvent e) {
 
-                  showPrintDialog();
-                }
+              showPrintDialog();
+            }
 
-                @Override
-                public void mousePressed(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) {}
 
-                @Override
-                public void mouseExited(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
 
-                @Override
-                public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
 
-                @Override
-                public void mouseClicked(MouseEvent e) {}
-              });
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+          });
       add(printMenuItem);
 
       if (chart instanceof XYChart) {

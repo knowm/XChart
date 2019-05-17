@@ -1,18 +1,14 @@
 package org.knowm.xchart.internal.chartpart;
 
-import static org.knowm.xchart.internal.chartpart.ChartPart.SOLID_STROKE;
-
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.font.*;
+import java.awt.geom.*;
 import org.knowm.xchart.style.Styler;
+
+import static org.knowm.xchart.internal.chartpart.ChartPart.SOLID_STROKE;
 
 /** Data labels can be put on all labels or configured to popup like a tooltip from a mouse over. */
 public class ToolTips implements MouseMotionListener {
@@ -221,13 +217,13 @@ public class ToolTips implements MouseMotionListener {
     return this;
   }
 
-  static class DataPoint {
+  public static class DataPoint {
 
     // width of data point (used for bar charts)
     final double w;
     private final String label;
     // used for popup detection & popup highlight
-    private final Shape shape;
+    public final Shape shape;
     // label center coordinates
     private final double x;
     private final double y;
@@ -239,7 +235,7 @@ public class ToolTips implements MouseMotionListener {
      * @param y
      * @param label
      */
-    DataPoint(double x, double y, String label) {
+    public DataPoint(double x, double y, String label) {
 
       double halfSize = MARGIN * 1.5;
       double markerSize = MARGIN * 3;
