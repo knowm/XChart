@@ -1,21 +1,13 @@
 package org.knowm.xchart;
 
-import java.awt.*;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.awt.Graphics2D;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.AxisPair;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.Legend_Marker;
-import org.knowm.xchart.internal.chartpart.Plot_XY;
+import org.knowm.xchart.internal.chartpart.*;
 import org.knowm.xchart.internal.series.Series.DataType;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
+import org.knowm.xchart.internal.style.*;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
-import org.knowm.xchart.style.XYStyler;
+import org.knowm.xchart.style.*;
 
 public class XYChart extends Chart<XYStyler, XYSeries> {
 
@@ -442,9 +434,6 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
       }
       if (series.getMarker() == null) { // wasn't set manually
         series.setMarker(seriesColorMarkerLineStyle.getMarker());
-      }
-      if (series.getMarkerColor() == null) { // wasn't set manually
-        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
     }
   }

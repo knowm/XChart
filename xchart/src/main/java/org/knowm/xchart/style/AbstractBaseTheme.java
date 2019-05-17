@@ -430,6 +430,13 @@ public abstract class AbstractBaseTheme implements Theme {
     return 8;
   }
 
+  // Line, Scatter, Area Charts ///////////////////////////////
+
+  public int getCursorSize() {
+
+    return 2;
+  }
+
   // Error Bars ///////////////////////////////
 
   @Override

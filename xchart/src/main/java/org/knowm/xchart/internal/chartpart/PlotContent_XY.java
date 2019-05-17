@@ -204,9 +204,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
         // paint cursor
         if (series.getCursor() != null) {
-          series.getCursor().addData(xOffset, yOffset, x, y);
-          g.setColor(series.getMarkerColor()); // TODO: introduce color for cursor
-          series.getCursor().paint(g, xOffset, yOffset, xyStyler.getMarkerSize(), getBounds().getWidth(), getBounds().getHeight());
+          series.getCursor().addData(xOffset, yOffset);
+          g.setColor(series.getCursorColor());
+          series.getCursor().paint(g, xOffset, yOffset, xyStyler.getCursorSize(), getBounds().getWidth(), getBounds().getHeight());
         }
 
         // paint error bars

@@ -1,9 +1,7 @@
 package org.knowm.xchart.style;
 
+import java.util.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /** @author timmolter */
 public abstract class AxesChartStyler extends Styler {
@@ -47,6 +45,9 @@ public abstract class AxesChartStyler extends Styler {
 
   // Line, Scatter, Area Charts ///////////////////////////////
   private int markerSize;
+
+  // Line, Scatter, Area Charts ///////////////////////////////
+  private int cursorSize;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -100,6 +101,9 @@ public abstract class AxesChartStyler extends Styler {
 
     // Line, Scatter, Area Charts ///////////////////////////////
     this.markerSize = theme.getMarkerSize();
+
+    // Line, Scatter, Area Charts ///////////////////////////////
+    this.cursorSize = theme.getCursorSize();
 
     // Error Bars ///////////////////////////////
     this.errorBarsColor = theme.getErrorBarsColor();
@@ -661,6 +665,24 @@ public abstract class AxesChartStyler extends Styler {
   public AxesChartStyler setMarkerSize(int markerSize) {
 
     this.markerSize = markerSize;
+    return this;
+  }
+
+  // Line, Scatter, Area Charts ///////////////////////////////
+
+  public int getCursorSize() {
+
+    return cursorSize;
+  }
+
+  /**
+   * Sets the size of the cursor (in pixels)
+   *
+   * @param cursorSize
+   */
+  public AxesChartStyler setCursorSize(int cursorSize) {
+
+    this.cursorSize = cursorSize;
     return this;
   }
 

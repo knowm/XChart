@@ -1,8 +1,12 @@
 package org.knowm.xchart.internal.series;
 
+import java.awt.Color;
 import org.knowm.xchart.cursors.Cursor;
 
 public abstract class CursorSeries extends AxesChartSeriesNumericalNoErrorBars {
+   private Cursor cursor;
+   private Color cursorColor = Color.DARK_GRAY;
+
    /**
     Constructor
     @param name
@@ -22,5 +26,11 @@ public abstract class CursorSeries extends AxesChartSeriesNumericalNoErrorBars {
       this.cursor = cursor;
    }
 
-   private Cursor cursor;
+   public Color getCursorColor() {
+      return cursorColor;
+   }
+
+   public void setCursorColor(Color cursorColor) {
+      this.cursorColor = cursorColor;
+   }
 }

@@ -53,6 +53,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
         XYSeries series = (XYSeries)value;
         if(series.getCursor() != null) {
           this.addMouseMotionListener(series.getCursor());
+          this.addMouseListener(series.getCursor());
         }
       }
     }

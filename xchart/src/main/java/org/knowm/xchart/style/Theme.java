@@ -153,6 +153,10 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   int getMarkerSize();
 
+  // Line, Scatter, Area Charts ///////////////////////////////
+
+  int getCursorSize();
+
   // Error Bars ///////////////////////////////
 
   Color getErrorBarsColor();

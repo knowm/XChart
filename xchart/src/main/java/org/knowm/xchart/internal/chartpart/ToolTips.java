@@ -224,6 +224,7 @@ public class ToolTips implements MouseMotionListener {
     private final String label;
     // used for popup detection & popup highlight
     public final Shape shape;
+
     // label center coordinates
     private final double x;
     private final double y;
@@ -265,5 +266,22 @@ public class ToolTips implements MouseMotionListener {
       this.shape = shape;
       this.label = label;
     }
+
+    public DataPoint(double xOffset, double yOffset) {
+
+      this(xOffset, yOffset, null);
+    }
+
+    public double getX() {
+
+      return x;
+    }
+
+    public double getY() {
+
+      return y;
+    }
+
+
   }
 }
