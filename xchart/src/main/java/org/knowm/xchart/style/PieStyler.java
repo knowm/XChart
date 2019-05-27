@@ -167,11 +167,11 @@ public class PieStyler extends Styler {
 
   /**
    * Set the Format to be applied to the sum, the default is just to display the sum as a number
-   * using the PieStyler DecimalFormat. This allows a separate MessageFormat @see
-   * java.text.MessageFormat#format()
+   * using the PieStyler DecimalFormat. This allows a separate Formatter @see
+   * java.util.Formatter#format()
    *
-   * @param sumFormat Format to use for the sum display, {0} indicates the original sum value e.g.
-   *     "Total {0}" will display "Total 100.0" (assuming a sum of 100.0)
+   * @param sumFormat Format to use for the sum display, the Double sum value will be passed to this
+   *     to generate the overall sum string.
    * @return PieStyler so that modifiers can be chained.
    */
   public PieStyler setSumFormat(String sumFormat) {
@@ -183,7 +183,7 @@ public class PieStyler extends Styler {
    * Access the current sumFormat value, a value of "" or null implies use the original sum
    * formatted using the PieStyler DecimalFormat.
    *
-   * @return MessageFormat string to be used when displaying the sum value or <code>null</code>
+   * @return Formatter string to be used when displaying the sum value or <code>null</code>
    */
   public String getSumFormat() {
     return sumFormat;
