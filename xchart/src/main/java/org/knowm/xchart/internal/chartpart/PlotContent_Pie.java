@@ -6,6 +6,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.*;
 import java.awt.geom.Arc2D.Double;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.util.Map;
 import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
@@ -381,7 +382,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
               ? df
               : new DecimalFormat(pieStyler.getDecimalPattern());
 
-      String annotation = totalDf.format(total);
+      String annotation =
+          pieStyler.getSumFormat() == null || pieStyler.getSumFormat().isEmpty()
+              ? totalDf.format(total)
+              : MessageFormat.format(pieStyler.getSumFormat(), totalDf.format(total));
 
       TextLayout textLayout =
           new TextLayout(
