@@ -379,7 +379,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               annotationY = zeroOffset + 4 + annotationRectangle.getHeight();
             }
             Shape shape = textLayout.getOutline(null);
-            g.setColor(stylerCategory.getChartFontColor());
+            g.setColor(stylerCategory.getAnnotationsFontColor());
             g.setFont(stylerCategory.getAnnotationsFont());
             AffineTransform orig = g.getTransform();
             AffineTransform at = new AffineTransform();

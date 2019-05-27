@@ -162,4 +162,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   // Annotations ///////////////////////////////
 
   Font getAnnotationFont();
+
+  Color getAnnotationsFontColor();
 }

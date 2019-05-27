@@ -320,7 +320,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         // draw annotation
         if (pieStyler.isDrawAllAnnotations() || annotationWillFit) {
 
-          g.setColor(pieStyler.getChartFontColor());
+          g.setColor(pieStyler.getAnnotationsFontColor());
           g.setFont(pieStyler.getAnnotationsFont());
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();

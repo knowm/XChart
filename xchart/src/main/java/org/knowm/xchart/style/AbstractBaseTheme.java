@@ -452,4 +452,10 @@ public abstract class AbstractBaseTheme implements Theme {
 
     return getPieFont().deriveFont(12f);
   }
+
+  /** Annotations default colour */
+  @Override
+  public Color getAnnotationsFontColor() {
+    return getChartFontColor();
+  }
 }
