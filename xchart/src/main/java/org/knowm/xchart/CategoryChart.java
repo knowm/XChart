@@ -77,7 +77,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public CategorySeries addSeries(String seriesName, double[] xData, double[] yData) {
@@ -90,7 +90,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
@@ -109,7 +109,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public CategorySeries addSeries(String seriesName, int[] xData, int[] yData) {
@@ -122,7 +122,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @param errorBars the error bar data
    * @return A Series object that you can set properties on
    */
@@ -174,11 +174,10 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
 
-      series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
     } else { // generate xData
       xData = Utils.getGeneratedDataAsList(yData.size());
-      series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
     }
+    series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
 
     seriesMap.put(seriesName, series);
 
