@@ -320,7 +320,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         // draw annotation
         if (pieStyler.isDrawAllAnnotations() || annotationWillFit) {
 
-          g.setColor(pieStyler.getChartFontColor());
+          g.setColor(pieStyler.getAnnotationsFontColor());
           g.setFont(pieStyler.getAnnotationsFont());
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
@@ -381,7 +381,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
               ? df
               : new DecimalFormat(pieStyler.getDecimalPattern());
 
-      String annotation = totalDf.format(total);
+      String annotation =
+          pieStyler.getSumFormat() == null || pieStyler.getSumFormat().isEmpty()
+              ? totalDf.format(total)
+              : String.format(pieStyler.getSumFormat(), total);
 
       TextLayout textLayout =
           new TextLayout(

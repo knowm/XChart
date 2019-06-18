@@ -54,6 +54,7 @@ public abstract class Styler {
   private Color toolTipHighlightColor;
   // Annotations ///////////////////////////////
   private Font annotationsFont;
+  private Color annotationsFontColor;
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
   private String decimalPattern;
@@ -106,6 +107,7 @@ public abstract class Styler {
 
     // Annotations ///////////////////////////////
     annotationsFont = theme.getAnnotationFont();
+    annotationsFontColor = theme.getAnnotationsFontColor();
 
     // Formatting
     decimalPattern = null;
@@ -623,6 +625,20 @@ public abstract class Styler {
   public Styler setAnnotationsFont(Font annotationsFont) {
 
     this.annotationsFont = annotationsFont;
+    return this;
+  }
+
+  public Color getAnnotationsFontColor() {
+    return annotationsFontColor;
+  }
+
+  /**
+   * Sets the color of the Font used for chart annotations
+   *
+   * @param annotationsFontColor
+   */
+  public Styler setAnnotationsFontColor(Color annotationsFontColor) {
+    this.annotationsFontColor = annotationsFontColor;
     return this;
   }
 
