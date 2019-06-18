@@ -11,8 +11,6 @@ import org.knowm.xchart.demo.charts.area.AreaChart03;
 import org.knowm.xchart.style.Styler;
 
 /**
- * Create a Chart matrix
- *
  * @author timmolter
  */
 public class TestForIssue106 {

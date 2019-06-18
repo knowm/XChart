@@ -1,6 +1,8 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -137,7 +139,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                     : 0);
 
         width = getYAxisWidthHint(height);
-        // System.out.println("width after: " + width);
+        //         System.out.println("width after: " + width);
 
         // System.out.println("height: " + height);
 
@@ -251,7 +253,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
    * actually determine the tick labels first to get an idea of how tall the X-Axis tick labels will
    * be.
    *
-   * @return
+   * @return the x-axis height hint
    */
   private double getXAxisHeightHint(double workingSpace) {
 

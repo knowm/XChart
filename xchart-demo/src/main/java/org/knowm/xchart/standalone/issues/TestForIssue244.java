@@ -11,11 +11,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
-/**
- * Create a Chart matrix
- *
- * @author timmolter
- */
+/** @author timmolter */
 public class TestForIssue244 {
 
   static final int WIDTH = 465;
