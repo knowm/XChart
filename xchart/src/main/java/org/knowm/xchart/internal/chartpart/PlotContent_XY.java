@@ -78,6 +78,10 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       String[] toolTips = series.getToolTips();
       boolean hasCustomToolTips = toolTips != null;
 
+      double yZeroTransform =
+          getBounds().getHeight() - (yTopMargin + (0 - yMin) / (yMax - yMin) * yTickSpace);
+      double yZeroOffset = yZeroTransform + getBounds().getY();
+
       for (int i = 0; i < xData.length; i++) {
 
         double x = xData[i];
@@ -91,7 +95,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
         if (Double.isNaN(next)) {
 
           // for area charts
-          closePath(g, path, previousX, getBounds(), yTopMargin);
+          closePathXY(g, path, previousX, yZeroOffset);
           path = null;
 
           previousX = -Double.MAX_VALUE;
@@ -170,12 +174,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
             || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
-
-            double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
-
             if (path == null) {
               path = new Path2D.Double();
-              path.moveTo(previousX, yBottomOfArea);
+              path.moveTo(previousX, yZeroOffset);
               path.lineTo(previousX, previousY);
             }
             if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
@@ -271,7 +272,15 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
       // close any open path for area charts
       g.setColor(series.getFillColor());
-      closePath(g, path, previousX, getBounds(), yTopMargin);
+      closePathXY(g, path, previousX, yZeroOffset);
+    }
+  }
+
+  void closePathXY(Graphics2D g, Path2D.Double path, double previousX, double yZeroOffset) {
+    if (path != null) {
+      path.lineTo(previousX, yZeroOffset);
+      path.closePath();
+      g.fill(path);
     }
   }
 }
