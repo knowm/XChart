@@ -60,7 +60,10 @@ public abstract class AxesChartStyler extends Styler {
   private String yAxisDecimalPattern;
   private boolean xAxisLogarithmicDecadeOnly;
   private boolean yAxisLogarithmicDecadeOnly;
-
+  
+  //Annotations ////////////////////////////////
+  private int annotationsRotation = 0;
+  
   @Override
   void setAllStyles() {
 
@@ -116,6 +119,7 @@ public abstract class AxesChartStyler extends Styler {
 
     // Annotations ////////////////////////////////
     this.hasAnnotations = false;
+    
   }
 
   // Chart Axes ///////////////////////////////
@@ -816,5 +820,18 @@ public abstract class AxesChartStyler extends Styler {
   public void setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
 
     this.xAxisLabelAlignmentVertical = xAxisLabelAlignmentVertical;
+  }
+  
+  // Annotations ////////////////////////////////
+
+  public int getAnnotationsRotation() {
+
+    return annotationsRotation;
+  }
+
+  public AxesChartStyler setAnnotationsRotation(int annotationsRotation) {
+
+    this.annotationsRotation = annotationsRotation;
+    return this;
   }
 }

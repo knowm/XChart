@@ -369,16 +369,31 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                     numberAsString,
                     stylerCategory.getAnnotationsFont(),
                     new FontRenderContext(null, true, false));
-            Rectangle2D annotationRectangle = textLayout.getBounds();
 
-            double annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;
+            AffineTransform rot =
+              AffineTransform.getRotateInstance(
+                  -1 * Math.toRadians(stylerCategory.getAnnotationsRotation()), 0, 0);
+            Shape shape = textLayout.getOutline(rot);
+            Rectangle2D annotationRectangle = textLayout.getBounds();
+            
+            double annotationX;
+            if (stylerCategory.getAnnotationsRotation() > 0) {
+              // double baseAnnotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;
+              // double maxAnnotationX = xOffset + barWidth / 2 + annotationRectangle.getHeight() / 2;
+              // double annotationXDelta = maxAnnotationX - baseAnnotationX;
+              double annotationXDelta = annotationRectangle.getHeight() / 2 + annotationRectangle.getWidth() / 2;
+              double rotationOffset = annotationXDelta * stylerCategory.getAnnotationsRotation() / 90;
+              annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2 + rotationOffset;
+            } else {
+              annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;
+            }
             double annotationY;
             if (next.doubleValue() >= 0.0) {
               annotationY = yOffset - 4;
             } else {
               annotationY = zeroOffset + 4 + annotationRectangle.getHeight();
             }
-            Shape shape = textLayout.getOutline(null);
+
             g.setColor(stylerCategory.getAnnotationsFontColor());
             g.setFont(stylerCategory.getAnnotationsFont());
             AffineTransform orig = g.getTransform();
