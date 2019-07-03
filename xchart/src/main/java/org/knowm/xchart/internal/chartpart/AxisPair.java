@@ -209,6 +209,9 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     boolean mainYAxisUsed = false;
     if (chart.getSeriesMap() != null) {
       for (S series : chart.getSeriesMap().values()) {
+        if (!series.isEnabled()) {
+          continue;
+        }
         int yIndex = series.getYAxisGroup();
         if (!mainYAxisUsed && yIndex == 0) {
           mainYAxisUsed = true;
@@ -227,6 +230,10 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
     for (S series : chart.getSeriesMap().values()) {
       xAxis.setDataType(series.getxAxisDataType());
+      if (!series.isEnabled()) {
+        continue;
+      }
+
       getYAxis(series.getYAxisGroup()).setDataType(series.getyAxisDataType());
       if (!mainYAxisUsed) {
         yAxis.setDataType(series.getyAxisDataType());
