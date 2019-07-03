@@ -322,8 +322,10 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
       path.closePath();
       g.setColor(series.getLineColor());
       g.draw(path);
-      g.setColor(series.getFillColor());
-      g.fill(path);
+      if (styler.isSeriesFilled()) {
+        g.setColor(series.getFillColor());
+        g.fill(path);
+      }
     }
   }
 }

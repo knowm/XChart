@@ -25,6 +25,7 @@ public class RadarStyler extends Styler {
   private int axisTitlePadding;
 
   private int markerSize;
+  private boolean seriesFilled = true;
 
   public RadarStyler() {
 
@@ -216,5 +217,15 @@ public class RadarStyler extends Styler {
   public void setAxisTickMarksCount(int axisTickMarksCount) {
 
     this.axisTickMarksCount = axisTickMarksCount;
+  }
+
+  public boolean isSeriesFilled() {
+
+    return seriesFilled;
+  }
+  
+  public void setSeriesFilled(boolean seriesFilled) {
+
+    this.seriesFilled = seriesFilled;
   }
 }
