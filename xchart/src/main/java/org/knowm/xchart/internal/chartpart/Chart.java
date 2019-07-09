@@ -283,4 +283,10 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     }
     return axisPair.getYAxis(yIndex).getScreenValue(yValue);
   }
+  
+  public double getYAxisLeftWidth() {
+    
+    java.awt.geom.Rectangle2D.Double bounds = getAxisPair().getLeftYAxisBounds();
+    return  bounds.width + bounds.x;
+  }
 }
