@@ -59,6 +59,7 @@ public abstract class Styler {
   private boolean antiAlias = true;
   private String decimalPattern;
   private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<Integer, YAxisPosition>();
+  private int yAxisLeftWidthHint;
 
   void setAllStyles() {
 
@@ -691,6 +692,16 @@ public abstract class Styler {
     antiAlias = newVal;
   }
 
+  public int getYAxisLeftWidthHint() {
+
+    return yAxisLeftWidthHint;
+  }
+
+  public void setYAxisLeftWidthHint(int yAxisLeftWidthHint) {
+
+    this.yAxisLeftWidthHint = yAxisLeftWidthHint;
+  }
+  
   public enum LegendPosition {
     OutsideE,
     InsideNW,

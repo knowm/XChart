@@ -65,6 +65,36 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     int leftCount = 0;
     double leftStart = chartPadding;
 
+    int desiredLeftYAxisWidth = styler.getYAxisLeftWidthHint();
+    // calculate width first
+    if (desiredLeftYAxisWidth > 0) {
+      double widthEstimation = 0;
+      for (Entry<Integer, Axis<ST, S>> e : yAxisMap.entrySet()) {
+        Axis<ST, S> ya = e.getValue();
+        if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
+          continue;
+        }
+        ya.preparePaint();
+        Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) ya.getBounds();
+        // add padding before axis
+        double width = bounds.getWidth();
+        widthEstimation += width;
+        leftCount++;
+      }
+
+      if (leftCount > 1) {
+        widthEstimation += (leftCount - 1) * paddingBetweenAxes;
+      }
+      widthEstimation += leftCount * tickMargin;
+
+      if (widthEstimation < desiredLeftYAxisWidth) {
+        leftStart = desiredLeftYAxisWidth - widthEstimation;
+      }
+      
+      leftCount = 0;
+    }
+    double leftStartFirst = leftStart;
+    
     for (Entry<Integer, Axis<ST, S>> e : yAxisMap.entrySet()) {
       Axis<ST, S> ya = e.getValue();
       if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
@@ -174,7 +204,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     // fill left & right bounds
     Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
-    leftYAxisBounds.x = chartPadding;
+    leftYAxisBounds.x = leftStartFirst;
     leftYAxisBounds.y = bounds.y;
     leftYAxisBounds.height = bounds.height;
 

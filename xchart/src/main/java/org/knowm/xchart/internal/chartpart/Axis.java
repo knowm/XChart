@@ -162,7 +162,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
           Math.max(
               leftYAxisBounds.getY() + leftYAxisBounds.getHeight(),
               rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
-      double xOffset = leftYAxisBounds.getWidth() + axesChartStyler.getChartPadding();
+      double xOffset = leftYAxisBounds.getWidth() + leftYAxisBounds.getX();
       double yOffset =
           maxYAxisY
               + axesChartStyler.getPlotMargin()
@@ -179,7 +179,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
           chart.getWidth()
               - leftYAxisBounds.getWidth() // y-axis was already painted
               - rightYAxisBounds.getWidth() // y-axis was already painted
-              - 2 * axesChartStyler.getChartPadding()
+              - leftYAxisBounds.getX() // use left y-axis x instead of padding
+              - 1 * axesChartStyler.getChartPadding() // right y-axis padding
 
               // - tickMargin is included in left & right y axis bounds
 
