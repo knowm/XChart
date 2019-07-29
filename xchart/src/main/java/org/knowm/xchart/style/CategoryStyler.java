@@ -14,13 +14,13 @@ public class CategoryStyler extends AxesChartStyler {
   /** Constructor */
   public CategoryStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
   }
 
   @Override
   protected void setAllStyles() {
 
+    super.setAllStyles();
     this.chartCategorySeriesRenderStyle = CategorySeriesRenderStyle.Bar; // set default to bar
 
     availableSpaceFill = theme.getAvailableSpaceFill();
@@ -105,6 +105,6 @@ public class CategoryStyler extends AxesChartStyler {
   public void setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
   }
 }

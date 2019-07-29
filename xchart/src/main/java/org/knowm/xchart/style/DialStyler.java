@@ -44,12 +44,13 @@ public class DialStyler extends Styler {
 
   public DialStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
   }
 
   @Override
   void setAllStyles() {
+
+    super.setAllStyles();
 
     this.isCircular = theme.isCircular();
 
@@ -90,7 +91,7 @@ public class DialStyler extends Styler {
   public DialStyler setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
     return this;
   }
 
