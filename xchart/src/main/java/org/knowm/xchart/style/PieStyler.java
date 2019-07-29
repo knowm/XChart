@@ -1,7 +1,8 @@
 package org.knowm.xchart.style;
 
-import java.awt.*;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
+
+import java.awt.*;
 
 /** @author timmolter */
 public class PieStyler extends Styler {
@@ -19,12 +20,14 @@ public class PieStyler extends Styler {
 
   public PieStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
+
   }
 
   @Override
   void setAllStyles() {
+
+    super.setAllStyles();
 
     this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie;
     this.isCircular = theme.isCircular();
@@ -235,7 +238,7 @@ public class PieStyler extends Styler {
   public PieStyler setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
     return this;
   }
 

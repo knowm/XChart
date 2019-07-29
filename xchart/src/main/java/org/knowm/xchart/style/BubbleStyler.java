@@ -10,13 +10,13 @@ public class BubbleStyler extends AxesChartStyler {
   /** Constructor */
   public BubbleStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
   }
 
   @Override
   protected void setAllStyles() {
 
+    super.setAllStyles();
     bubbleChartSeriesRenderStyle = BubbleSeriesRenderStyle.Round; // set default to Round
   }
 
@@ -46,6 +46,6 @@ public class BubbleStyler extends AxesChartStyler {
   public void setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
   }
 }

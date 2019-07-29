@@ -29,12 +29,13 @@ public class RadarStyler extends Styler {
 
   public RadarStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
   }
 
   @Override
   void setAllStyles() {
+
+    super.setAllStyles();
 
     this.isCircular = theme.isCircular();
     this.startAngleInDegrees = theme.getStartAngleInDegrees();
@@ -99,7 +100,7 @@ public class RadarStyler extends Styler {
   public RadarStyler setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
     return this;
   }
 
