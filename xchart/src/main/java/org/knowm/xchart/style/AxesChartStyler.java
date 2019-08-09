@@ -60,7 +60,7 @@ public abstract class AxesChartStyler extends Styler {
   private String yAxisDecimalPattern;
   private boolean xAxisLogarithmicDecadeOnly;
   private boolean yAxisLogarithmicDecadeOnly;
-    
+
   @Override
   void setAllStyles() {
 
@@ -116,7 +116,6 @@ public abstract class AxesChartStyler extends Styler {
 
     // Annotations ////////////////////////////////
     this.hasAnnotations = false;
-    
   }
 
   // Chart Axes ///////////////////////////////

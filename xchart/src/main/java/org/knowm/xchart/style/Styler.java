@@ -642,7 +642,7 @@ public abstract class Styler {
     this.annotationsFontColor = annotationsFontColor;
     return this;
   }
-  
+
   public int getAnnotationsRotation() {
     return annotationsRotation;
   }
