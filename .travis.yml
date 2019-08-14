@@ -12,7 +12,7 @@ else
 fi"
 
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 # whitelist
 branches:
