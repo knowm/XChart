@@ -6,9 +6,9 @@ install: true
 script: "
 if [ ${TRAVIS_PULL_REQUEST} = 'false' ];
 then 
-    mvn clean deploy --settings target/travis/settings.xml; 
+    travis_wait 30 mvn clean deploy --settings target/travis/settings.xml;
 else 
-    mvn clean verify --settings target/travis/settings.xml;
+    travis_wait 30 mvn clean verify --settings target/travis/settings.xml;
 fi"
 
 jdk:
