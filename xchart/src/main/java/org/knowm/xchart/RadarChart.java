@@ -138,6 +138,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
+    infoPanel.paint(g);
   }
 
   /** set the series color based on theme */

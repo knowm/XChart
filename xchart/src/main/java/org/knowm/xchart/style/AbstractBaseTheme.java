@@ -1,7 +1,12 @@
 package org.knowm.xchart.style;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Stroke;
+
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.BaseSeriesColors;
@@ -145,6 +150,44 @@ public abstract class AbstractBaseTheme implements Theme {
   public LegendPosition getLegendPosition() {
 
     return LegendPosition.OutsideE;
+  }
+
+  // Chart Info Panel ///////////////////////////////
+
+  @Override
+  public Font getInfoPanelFont() {
+
+    return new Font(Font.MONOSPACED, Font.PLAIN, 10);
+  }
+
+  @Override
+  public boolean isInfoPanelVisible() {
+
+    return false;
+  }
+
+  @Override
+  public Color getInfoPanelBackgroundColor() {
+
+    return ChartColor.getAWTColor(ChartColor.WHITE);
+  }
+
+  @Override
+  public Color getInfoPanelBorderColor() {
+
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+  }
+
+  @Override
+  public int getInfoPanelPadding() {
+
+    return 10;
+  }
+
+  @Override
+  public InfoPanelPosition getInfoPanelPosition() {
+
+    return InfoPanelPosition.OutsideS;
   }
 
   // Chart Axes ///////////////////////////////

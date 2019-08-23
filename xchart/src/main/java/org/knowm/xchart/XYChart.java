@@ -8,6 +8,7 @@ import java.util.Map;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_XY;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -32,6 +33,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     axisPair = new AxisPair<XYStyler, XYSeries>(this);
     plot = new Plot_XY<XYStyler, XYSeries>(this);
     legend = new Legend_Marker<XYStyler, XYSeries>(this);
+    infoPanel = new InfoPanel<XYStyler, XYSeries>(this);
   }
 
   /**
@@ -416,6 +418,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
+    infoPanel.paint(g);
   }
 
   /** set the series color, marker and line style based on theme */

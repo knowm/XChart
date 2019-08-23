@@ -1,12 +1,17 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.text.Format;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -20,12 +25,15 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
+  protected final List<String> infoContent = new ArrayList<>();
   final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
   /** Chart Parts */
   protected AxisPair axisPair;
 
   protected Plot_<ST, S> plot;
   protected Legend_<ST, S> legend;
+  protected InfoPanel infoPanel;
+  
   /** Meta Data */
   private int width;
 
@@ -159,6 +167,20 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return seriesMap;
   }
 
+  public List<String> getInfoContent() {
+	return infoContent;
+  }
+
+  public void setInfoContent(List<String> content) {
+	infoContent.clear();
+	infoContent.addAll(content);
+  }
+
+  public void addInfoContent(String content) {
+	List<String> lines = Arrays.asList(content.split("\\n"));
+	infoContent.addAll(lines);
+  }
+
   public void setXAxisLabelOverrideMap(Map<Double, Object> overrideMap) {
 
     axisPair.getAxisLabelOverrideMap().put("X0", overrideMap);
@@ -189,6 +211,11 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   Legend_<ST, S> getLegend() {
 
     return legend;
+  }
+
+  InfoPanel getInfoPanel() {
+
+    return infoPanel;
   }
 
   Plot_<ST, S> getPlot() {
