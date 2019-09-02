@@ -309,6 +309,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
+    infoPanel.paint(g);
   }
 
   /** set the series color, marker and line style based on theme */

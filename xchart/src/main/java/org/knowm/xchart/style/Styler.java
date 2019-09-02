@@ -39,6 +39,13 @@ public abstract class Styler {
   private int legendSeriesLineLength;
   private LegendPosition legendPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
+  // Chart InfoPanel ///////////////////////////////
+  private boolean infoPanelVisible;
+  private Color infoPanelBackgroundColor;
+  private Color infoPanelBorderColor;
+  private Font infoPanelFont;
+  private int infoPanelPadding;
+  private InfoPanelPosition infoPanelPosition;
   // Chart Plot Area ///////////////////////////////
   private Color plotBackgroundColor;
   private Color plotBorderColor;
@@ -82,7 +89,7 @@ public abstract class Styler {
     chartTitleBoxBorderColor = theme.getChartTitleBoxBorderColor();
     chartTitlePadding = theme.getChartTitlePadding();
 
-    // legend
+    // Legend
     isLegendVisible = theme.isLegendVisible();
     legendBackgroundColor = theme.getLegendBackgroundColor();
     legendBorderColor = theme.getLegendBorderColor();
@@ -90,6 +97,14 @@ public abstract class Styler {
     legendPadding = theme.getLegendPadding();
     legendSeriesLineLength = theme.getLegendSeriesLineLength();
     legendPosition = theme.getLegendPosition();
+
+    // Info Panel
+    isLegendVisible = theme.isInfoPanelVisible();
+    infoPanelBackgroundColor = theme.getInfoPanelBackgroundColor();
+    infoPanelBorderColor = theme.getInfoPanelBorderColor();
+    infoPanelFont = theme.getInfoPanelFont();
+    infoPanelPadding = theme.getInfoPanelPadding();
+    infoPanelPosition = theme.getInfoPanelPosition();
 
     // Chart Plot Area ///////////////////////////////
     plotBackgroundColor = theme.getPlotBackgroundColor();
@@ -447,6 +462,73 @@ public abstract class Styler {
     this.legendLayout = legendLayout;
   }
 
+  // Chart InfoPanel ///////////////////////////////
+
+  public Color getInfoPanelBackgroundColor() {
+
+    return infoPanelBackgroundColor;
+  }
+
+  public Styler setInfoPanelBackgroundColor(Color color) {
+
+    this.infoPanelBackgroundColor = color;
+    return this;
+  }
+
+  public Color getInfoPanelBorderColor() {
+
+    return infoPanelBorderColor;
+  }
+
+  public Styler setInfoPanelBorderColor(Color borderColor) {
+
+    this.infoPanelBorderColor = borderColor;
+    return this;
+  }
+
+  public Font getInfoPanelFont() {
+
+    return infoPanelFont;
+  }
+
+  public Styler setInfoPanelFont(Font font) {
+
+    this.infoPanelFont = font;
+    return this;
+  }
+
+  public boolean isInfoPanelVisible() {
+    return infoPanelVisible;
+  }
+
+  public Styler setInfoPanelVisible(boolean infoPanelVisible) {
+
+    this.infoPanelVisible = infoPanelVisible;
+    return this;
+  }
+
+  public int getInfoPanelPadding() {
+
+    return infoPanelPadding;
+  }
+
+  public Styler setInfoPanelPadding(int infoPanelPadding) {
+
+    this.infoPanelPadding = infoPanelPadding;
+    return this;
+  }
+
+  public InfoPanelPosition getInfoPanelPosition() {
+
+    return infoPanelPosition;
+  }
+
+  public Styler setInfoPanelPosition(InfoPanelPosition infoPanelPosition) {
+
+    this.infoPanelPosition = infoPanelPosition;
+    return this;
+  }
+
   public Color getPlotBackgroundColor() {
 
     return plotBackgroundColor;
@@ -716,6 +798,10 @@ public abstract class Styler {
   public enum LegendLayout {
     Vertical,
     Horizontal
+  }
+
+  public enum InfoPanelPosition {
+	    OutsideS
   }
 
   public enum ChartTheme {

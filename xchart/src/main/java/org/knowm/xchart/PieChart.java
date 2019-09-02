@@ -126,6 +126,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
+    infoPanel.paint(g);
   }
 
   /** set the series color based on theme */

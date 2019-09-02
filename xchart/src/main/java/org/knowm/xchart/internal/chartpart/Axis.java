@@ -16,6 +16,7 @@ import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
@@ -90,6 +91,14 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   public void preparePaint() {
 
+    double legendHeightOffset = 0;
+    if (axesChartStyler.isLegendVisible() && axesChartStyler.getLegendPosition() == LegendPosition.OutsideS)
+  	  legendHeightOffset = chart.getLegend().getBounds().getHeight();
+  
+    double infoPanelHeightOffset = 0;
+    if (axesChartStyler.isInfoPanelVisible() && axesChartStyler.getInfoPanelPosition() == InfoPanelPosition.OutsideS)
+	  infoPanelHeightOffset = axesChartStyler.getInfoPanelPadding() / 2 + chart.getInfoPanel().getBounds().getHeight();
+      
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
 
@@ -114,6 +123,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       double height;
       do {
         // System.out.println("width before: " + width);
+    	  
+        double legendWidthOffset = 0;
+        if (axesChartStyler.isLegendVisible() && axesChartStyler.getLegendPosition() == LegendPosition.OutsideE)
+        	legendWidthOffset = axesChartStyler.getChartPadding();
 
         double approximateXAxisWidth =
             chart.getWidth()
@@ -123,10 +136,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                     : 0)
                 - 2 * axesChartStyler.getChartPadding()
                 - (axesChartStyler.isYAxisTicksVisible() ? (axesChartStyler.getPlotMargin()) : 0)
-                - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE
-                        && axesChartStyler.isLegendVisible()
-                    ? axesChartStyler.getChartPadding()
-                    : 0);
+                - legendWidthOffset;
 
         height =
             chart.getHeight()
@@ -134,9 +144,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth)
                 - axesChartStyler.getPlotMargin()
                 - axesChartStyler.getChartPadding()
-                - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideS
-                    ? chart.getLegend().getBounds().getHeight()
-                    : 0);
+                - legendHeightOffset
+                - infoPanelHeightOffset;
 
         width = getYAxisWidthHint(height);
         //         System.out.println("width after: " + width);
@@ -166,9 +175,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       double yOffset =
           maxYAxisY
               + axesChartStyler.getPlotMargin()
-              - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideS
-                  ? chart.getLegend().getBounds().getHeight()
-                  : 0);
+              - legendHeightOffset
+              - infoPanelHeightOffset;
 
       double legendWidth = 0;
       if (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE

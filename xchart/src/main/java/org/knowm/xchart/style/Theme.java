@@ -1,7 +1,11 @@
 package org.knowm.xchart.style;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Stroke;
+
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.SeriesColors;
@@ -50,6 +54,20 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   int getLegendSeriesLineLength();
 
   LegendPosition getLegendPosition();
+
+  // Chart Info Panel ///////////////////////////////
+
+  Font getInfoPanelFont();
+
+  boolean isInfoPanelVisible();
+
+  Color getInfoPanelBackgroundColor();
+
+  Color getInfoPanelBorderColor();
+
+  int getInfoPanelPadding();
+
+  InfoPanelPosition getInfoPanelPosition();
 
   // Chart Axes ///////////////////////////////
 
