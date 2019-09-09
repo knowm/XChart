@@ -1,11 +1,12 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Bubble;
 import org.knowm.xchart.internal.chartpart.Plot_Bubble;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
@@ -29,6 +30,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     axisPair = new AxisPair<BubbleStyler, BubbleSeries>(this);
     plot = new Plot_Bubble<BubbleStyler, BubbleSeries>(this);
     legend = new Legend_Bubble<BubbleStyler, BubbleSeries>(this);
+    infoPanel = new InfoPanel<BubbleStyler, BubbleSeries>(this);
   }
 
   /**

@@ -3,11 +3,13 @@ package org.knowm.xchart;
 import java.awt.*;
 import java.util.Map;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
+import org.knowm.xchart.style.DialStyler;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
@@ -26,6 +28,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     super(width, height, new PieStyler());
     plot = new Plot_Pie<PieStyler, PieSeries>(this);
     legend = new Legend_Pie<PieStyler, PieSeries>(this);
+    infoPanel = new InfoPanel<PieStyler, PieSeries>(this);
   }
 
   /**

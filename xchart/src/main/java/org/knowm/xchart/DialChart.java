@@ -2,10 +2,12 @@ package org.knowm.xchart;
 
 import java.awt.*;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Dial;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
+import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.DialStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
@@ -23,6 +25,7 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     super(width, height, new DialStyler());
     plot = new Plot_Dial<DialStyler, DialSeries>(this);
     legend = new Legend_Pie<DialStyler, DialSeries>(this);
+    infoPanel = new InfoPanel<DialStyler, DialSeries>(this);
   }
 
   /**

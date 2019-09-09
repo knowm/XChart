@@ -11,15 +11,15 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.knowm.xchart.internal.series.MarkerSeries;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.Styler;
 
 /** 
  * An info panel that can be displayed together with the chart
  * @author tdiesler@redhat.com 
  */
-public class InfoPanel<ST extends AxesChartStyler, S extends MarkerSeries> implements ChartPart {
+public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart {
 
   private static final int INFO_PANEL_MARGIN = 6;
   private static final int MULTI_LINE_SPACE = 3;
@@ -44,10 +44,9 @@ public class InfoPanel<ST extends AxesChartStyler, S extends MarkerSeries> imple
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
     List<String> infoContent = chart.getInfoContent();
-    int markerSize = chart.getStyler().getMarkerSize();
     Map<String, Rectangle2D> textBounds = getTextBounds(infoContent);
 
-    paintInfoContent(g, textBounds, markerSize, startx, starty);
+    paintInfoContent(g, textBounds, startx, starty);
     
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
@@ -121,7 +120,6 @@ public class InfoPanel<ST extends AxesChartStyler, S extends MarkerSeries> imple
   void paintInfoContent(
       Graphics2D g,
       Map<String, Rectangle2D> seriesTextBounds,
-      int markerSize,
       double x,
       double starty) {
 
@@ -133,14 +131,13 @@ public class InfoPanel<ST extends AxesChartStyler, S extends MarkerSeries> imple
     for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
       double height = entry.getValue().getHeight();
-      double centerOffsetY = (Math.max(markerSize, height) - height) / 2.0;
 
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getInfoPanelFont(), frc);
       Shape shape = tl.getOutline(null);
       AffineTransform orig = g.getTransform();
       AffineTransform at = new AffineTransform();
-      at.translate(x, starty + height + centerOffsetY + multiLineOffset);
+      at.translate(x, starty + height + multiLineOffset);
       g.transform(at);
       g.fill(shape);
       g.setTransform(orig);
@@ -171,8 +168,6 @@ public class InfoPanel<ST extends AxesChartStyler, S extends MarkerSeries> imple
     }
 
     entryHeight -= MULTI_LINE_SPACE; // subtract away the bottom MULTI_LINE_SPACE
-    entryHeight = Math.max(entryHeight, chart.getStyler().getMarkerSize());
-
     contentHeight += entryHeight + chart.getStyler().getInfoPanelPadding();
 
     // determine content width
