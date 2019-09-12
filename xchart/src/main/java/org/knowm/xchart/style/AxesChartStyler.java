@@ -38,6 +38,9 @@ public abstract class AxesChartStyler extends Styler {
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
   private int xAxisLabelRotation = 0;
 
+  // By default, all available labels are displayed
+  private int xAxisMaxLabelCount = -1; 
+  
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridHorizontalLinesVisible;
   private boolean isPlotGridVerticalLinesVisible;
@@ -544,6 +547,16 @@ public abstract class AxesChartStyler extends Styler {
 
     this.xAxisLabelRotation = xAxisLabelRotation;
     return this;
+  }
+
+  public int getXAxisMaxLabelCount() {
+    
+    return xAxisMaxLabelCount;
+  }
+
+  public void setXAxisMaxLabelCount(int xAxisMaxLabelCount) {
+    
+    this.xAxisMaxLabelCount = xAxisMaxLabelCount;
   }
 
   // Chart Plot Area ///////////////////////////////

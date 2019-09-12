@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.Series;
@@ -49,10 +50,21 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
     // System.out.println("Margin: " + margin);
 
+    // Compute the spacing between categories when there are more than wanted
+    
+    int xAxisMaxLabelCount = styler.getXAxisMaxLabelCount();
+    
+    double divisor = 1.0;
+    int categoriesCount = categories.size();
+    if (0 < xAxisMaxLabelCount && xAxisMaxLabelCount < categoriesCount) {
+    	divisor = categoriesCount / new Double(xAxisMaxLabelCount);
+    	categoriesCount = xAxisMaxLabelCount;
+    }
+    
     // generate all tickLabels and tickLocations from the first to last position
-    double gridStep = (tickSpace / categories.size());
+    double gridStep = (tickSpace / categoriesCount);
     // System.out.println("GridStep: " + gridStep);
-    double firstPosition = gridStep / 2.0;
+    double firstPosition = divisor > 1.0 ? 0.0 : gridStep / 2.0;
 
     // set up String formatters that may be encountered
     if (axisType == Series.DataType.String) {
@@ -69,19 +81,23 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
       axisFormat = simpleDateformat;
     }
 
-    int counter = 0;
+    Integer labelIndex = null;
 
-    for (Object category : categories) {
-      if (axisType == Series.DataType.String) {
-        tickLabels.add(category.toString());
-      } else if (axisType == Series.DataType.Number) {
-        tickLabels.add(axisFormat.format(new BigDecimal(category.toString()).doubleValue()));
-      } else if (axisType == Series.DataType.Date) {
-        tickLabels.add(axisFormat.format((((Date) category).getTime())));
+    for (int i = 0; i < categories.size(); i++) {
+      Object category = categories.get(i);
+      Integer auxIndex = (int) Math.floor(i / divisor);
+      if (labelIndex == null || labelIndex < auxIndex) {
+        if (axisType == Series.DataType.String) {
+          tickLabels.add(category.toString());
+        } else if (axisType == Series.DataType.Number) {
+          tickLabels.add(axisFormat.format(new BigDecimal(category.toString()).doubleValue()));
+        } else if (axisType == Series.DataType.Date) {
+          tickLabels.add(axisFormat.format((((Date) category).getTime())));
+        }
+        double tickLabelPosition = margin + firstPosition + gridStep * auxIndex;
+        tickLocations.add(tickLabelPosition);
+        labelIndex = auxIndex;
       }
-
-      double tickLabelPosition = margin + firstPosition + gridStep * counter++;
-      tickLocations.add(tickLabelPosition);
     }
   }
 }
