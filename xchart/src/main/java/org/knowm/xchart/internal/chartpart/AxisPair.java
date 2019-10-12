@@ -90,11 +90,11 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       if (widthEstimation < desiredLeftYAxisWidth) {
         leftStart = desiredLeftYAxisWidth - widthEstimation;
       }
-      
+
       leftCount = 0;
     }
     double leftStartFirst = leftStart;
-    
+
     for (Entry<Integer, Axis<ST, S>> e : yAxisMap.entrySet()) {
       Axis<ST, S> ya = e.getValue();
       if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {

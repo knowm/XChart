@@ -12,20 +12,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
-/** 
+/**
  * An info panel that can be displayed together with the chart
- * @author tdiesler@redhat.com 
+ *
+ * @author tdiesler@redhat.com
  */
 public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart {
 
   private static final int INFO_PANEL_MARGIN = 6;
   private static final int MULTI_LINE_SPACE = 3;
-  
+
   private final Chart<ST, S> chart;
-  
+
   private double xOffset = 0;
   private double yOffset = 0;
   private Rectangle2D bounds;
@@ -47,7 +47,7 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
     Map<String, Rectangle2D> textBounds = getTextBounds(infoContent);
 
     paintInfoContent(g, textBounds, startx, starty);
-    
+
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
@@ -65,11 +65,11 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
 
     // Nothing to do when no content is given
     if (chart.getInfoContent().isEmpty()) {
-        return;
+      return;
     }
-    
+
     bounds = getBoundsHintVertical();
-    
+
     // Info panel draw position
     double height = bounds.getHeight();
 
@@ -118,10 +118,7 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
   }
 
   void paintInfoContent(
-      Graphics2D g,
-      Map<String, Rectangle2D> seriesTextBounds,
-      double x,
-      double starty) {
+      Graphics2D g, Map<String, Rectangle2D> seriesTextBounds, double x, double starty) {
 
     g.setColor(chart.getStyler().getChartFontColor());
     g.setFont(chart.getStyler().getInfoPanelFont());
@@ -185,7 +182,8 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
     Font infoPanelFont = chart.getStyler().getInfoPanelFont();
     Map<String, Rectangle2D> textBounds = new LinkedHashMap<String, Rectangle2D>(lines.size());
     for (String line : lines) {
-      TextLayout textLayout = new TextLayout(line, infoPanelFont, new FontRenderContext(null, true, false));
+      TextLayout textLayout =
+          new TextLayout(line, infoPanelFont, new FontRenderContext(null, true, false));
       Shape shape = textLayout.getOutline(null);
       Rectangle2D bounds = shape.getBounds2D();
       textBounds.put(line, bounds);
@@ -195,6 +193,6 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
 
   @Override
   public Rectangle2D getBounds() {
-      return getBoundsHintVertical();
+    return getBoundsHintVertical();
   }
 }

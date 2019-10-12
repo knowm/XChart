@@ -223,7 +223,7 @@ public class RadarStyler extends Styler {
 
     return seriesFilled;
   }
-  
+
   public void setSeriesFilled(boolean seriesFilled) {
 
     this.seriesFilled = seriesFilled;

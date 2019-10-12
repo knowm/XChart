@@ -92,13 +92,16 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   public void preparePaint() {
 
     double legendHeightOffset = 0;
-    if (axesChartStyler.isLegendVisible() && axesChartStyler.getLegendPosition() == LegendPosition.OutsideS)
-  	  legendHeightOffset = chart.getLegend().getBounds().getHeight();
-  
+    if (axesChartStyler.isLegendVisible()
+        && axesChartStyler.getLegendPosition() == LegendPosition.OutsideS)
+      legendHeightOffset = chart.getLegend().getBounds().getHeight();
+
     double infoPanelHeightOffset = 0;
-    if (axesChartStyler.isInfoPanelVisible() && axesChartStyler.getInfoPanelPosition() == InfoPanelPosition.OutsideS)
-	  infoPanelHeightOffset = axesChartStyler.getInfoPanelPadding() / 2 + chart.getInfoPanel().getBounds().getHeight();
-      
+    if (axesChartStyler.isInfoPanelVisible()
+        && axesChartStyler.getInfoPanelPosition() == InfoPanelPosition.OutsideS)
+      infoPanelHeightOffset =
+          axesChartStyler.getInfoPanelPadding() / 2 + chart.getInfoPanel().getBounds().getHeight();
+
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
 
@@ -123,10 +126,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       double height;
       do {
         // System.out.println("width before: " + width);
-    	  
+
         double legendWidthOffset = 0;
-        if (axesChartStyler.isLegendVisible() && axesChartStyler.getLegendPosition() == LegendPosition.OutsideE)
-        	legendWidthOffset = axesChartStyler.getChartPadding();
+        if (axesChartStyler.isLegendVisible()
+            && axesChartStyler.getLegendPosition() == LegendPosition.OutsideE)
+          legendWidthOffset = axesChartStyler.getChartPadding();
 
         double approximateXAxisWidth =
             chart.getWidth()
@@ -173,10 +177,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
       double xOffset = leftYAxisBounds.getWidth() + leftYAxisBounds.getX();
       double yOffset =
-          maxYAxisY
-              + axesChartStyler.getPlotMargin()
-              - legendHeightOffset
-              - infoPanelHeightOffset;
+          maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset - infoPanelHeightOffset;
 
       double legendWidth = 0;
       if (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE

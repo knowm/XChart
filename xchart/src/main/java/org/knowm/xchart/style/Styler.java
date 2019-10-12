@@ -783,7 +783,7 @@ public abstract class Styler {
 
     this.yAxisLeftWidthHint = yAxisLeftWidthHint;
   }
-  
+
   public enum LegendPosition {
     OutsideE,
     InsideNW,
@@ -801,7 +801,7 @@ public abstract class Styler {
   }
 
   public enum InfoPanelPosition {
-	    OutsideS
+    OutsideS
   }
 
   public enum ChartTheme {

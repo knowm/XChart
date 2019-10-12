@@ -9,7 +9,6 @@ import org.knowm.xchart.internal.chartpart.Plot_Pie;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.knowm.xchart.style.DialStyler;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;

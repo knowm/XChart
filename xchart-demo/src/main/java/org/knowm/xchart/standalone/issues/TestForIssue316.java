@@ -3,7 +3,6 @@ package org.knowm.xchart.standalone.issues;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.knowm.xchart.demo.ExampleChartTester;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.radar.RadarChart01;
@@ -44,12 +43,11 @@ public class TestForIssue316 {
     Chart chart = ec.getChart();
     return chart;
   }
-  
+
   private static Chart getChartWithoutFill(ExampleChart ec) {
-    
+
     Chart chart = ec.getChart();
-    ((RadarStyler)chart.getStyler()).setSeriesFilled(false);
+    ((RadarStyler) chart.getStyler()).setSeriesFilled(false);
     return chart;
   }
-
 }

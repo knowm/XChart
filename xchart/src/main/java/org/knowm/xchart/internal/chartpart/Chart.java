@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -33,7 +32,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected Plot_<ST, S> plot;
   protected Legend_<ST, S> legend;
   protected InfoPanel infoPanel;
-  
+
   /** Meta Data */
   private int width;
 
@@ -168,17 +167,17 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   }
 
   public List<String> getInfoContent() {
-	return infoContent;
+    return infoContent;
   }
 
   public void setInfoContent(List<String> content) {
-	infoContent.clear();
-	infoContent.addAll(content);
+    infoContent.clear();
+    infoContent.addAll(content);
   }
 
   public void addInfoContent(String content) {
-	List<String> lines = Arrays.asList(content.split("\\n"));
-	infoContent.addAll(lines);
+    List<String> lines = Arrays.asList(content.split("\\n"));
+    infoContent.addAll(lines);
   }
 
   public void setXAxisLabelOverrideMap(Map<Double, Object> overrideMap) {
@@ -310,10 +309,10 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     }
     return axisPair.getYAxis(yIndex).getScreenValue(yValue);
   }
-  
+
   public double getYAxisLeftWidth() {
-    
+
     java.awt.geom.Rectangle2D.Double bounds = getAxisPair().getLeftYAxisBounds();
-    return  bounds.width + bounds.x;
+    return bounds.width + bounds.x;
   }
 }
