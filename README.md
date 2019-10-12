@@ -139,7 +139,7 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] Export as PNG, JPG, BMP, GIF with custom DPI setting
 * [x] Export SVG, EPS and PDF using optional `de.erichseifert.vectorgraphics2d` library
 * [x] Real-time charts
-* [x] Java 6 and up
+* [x] Java 8 and up
 
 ## Chart Types
 
@@ -376,7 +376,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.5.4</version>
+        <version>3.6.0</version>
     </dependency>
 ```
 
@@ -392,7 +392,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.5.5-SNAPSHOT</version>
+      <version>3.6.1-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -403,7 +403,7 @@ Snapshots can be manually downloaded from Sonatype: [https://oss.sonatype.org/co
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.4" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.6.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
 ## Building
@@ -432,7 +432,7 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-3.5.4.jar:xchart-3.5.4.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-3.6.0.jar:xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
 
