@@ -19,6 +19,7 @@ public class SwingWrapper<T extends Chart> {
   private List<T> charts = new ArrayList<T>();
   private int numRows;
   private int numColumns;
+  private boolean isCenter;
 
   /**
    * Constructor
@@ -91,6 +92,10 @@ public class SwingWrapper<T extends Chart> {
 
               // Display the window.
               frame.pack();
+              if (isCenter) {
+                // frame set in the center of windows
+                frame.setLocationRelativeTo(null);
+              }
               frame.setVisible(true);
             }
           });
@@ -146,6 +151,10 @@ public class SwingWrapper<T extends Chart> {
 
             // Display the window.
             frame.pack();
+            if (isCenter) {
+              // frame set in the center of windows
+              frame.setLocationRelativeTo(null);
+            }
             frame.setVisible(true);
           }
         });
@@ -193,5 +202,16 @@ public class SwingWrapper<T extends Chart> {
 
     chartPanels.get(index).revalidate();
     chartPanels.get(index).repaint();
+  }
+
+  /**
+   * Set the chart in the center
+   *
+   * @param isCenter
+   * @return
+   */
+  public SwingWrapper setCentter(boolean isCenter) {
+    this.isCenter = isCenter;
+    return this;
   }
 }
