@@ -239,7 +239,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         }
 
         double yTransform =
-            getBounds().getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
+            getBounds().getHeight() - (yTopMargin + calculateRatio(yTop, yMin, yMax) * yTickSpace);
         double yOffset = getBounds().getY() + yTransform;
 
         double zeroTransform =
@@ -513,5 +513,34 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
       seriesCounter++;
     }
+  }
+
+  /**
+   * Calculate the ratio of yTop in (yMin, yMax)
+   *
+   * @param yTop yData value
+   * @param yMin yAxis min value
+   * @param yMax yAxis max value
+   * @return ratio
+   */
+  private double calculateRatio(double yTop, double yMin, double yMax) {
+    double ratio = 0.0;
+    if (stylerCategory.isYAxisLogarithmic()) {
+      double temp = yMin;
+      int number = 0;
+      int totalNumber = 0;
+      while (temp < yMax) {
+        temp *= 10;
+        totalNumber++;
+        if (temp <= yTop) {
+          number++;
+        }
+        ratio = number / (double) totalNumber + (yTop - yMin * Math.pow(10, number))
+            / (yMin * Math.pow(10, number + 1) - yMin * Math.pow(10, number)) * (1 / totalNumber);
+      }
+    } else {
+      ratio = (yTop - yMin) / (yMax - yMin);
+    }
+    return ratio;
   }
 }
