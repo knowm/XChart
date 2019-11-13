@@ -460,9 +460,15 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           // Top value
           double errorBarLength = ((eb) / (yMax - yMin) * yTickSpace);
           double topEBOffset = yOffset - errorBarLength;
+          if (y < 0) {
+            topEBOffset = zeroOffset - errorBarLength;
+          }
 
           // Bottom value
           double bottomEBOffset = yOffset + errorBarLength;
+          if (y < 0) {
+            bottomEBOffset = zeroOffset + errorBarLength;
+          }
 
           // Draw it
           double errorBarOffset = xOffset + barWidth / 2;
