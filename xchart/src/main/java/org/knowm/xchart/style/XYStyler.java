@@ -10,13 +10,13 @@ public class XYStyler extends AxesChartStyler {
   /** Constructor */
   public XYStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
   }
 
   @Override
   protected void setAllStyles() {
 
+    super.setAllStyles();
     xySeriesRenderStyle = XYSeriesRenderStyle.Line; // set default to line
   }
 
@@ -45,6 +45,6 @@ public class XYStyler extends AxesChartStyler {
   public void setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
   }
 }
