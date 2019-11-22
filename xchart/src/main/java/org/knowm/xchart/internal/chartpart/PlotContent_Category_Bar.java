@@ -1,11 +1,20 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
@@ -459,15 +468,19 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
           // Top value
           double errorBarLength = ((eb) / (yMax - yMin) * yTickSpace);
-          double topEBOffset = yOffset - errorBarLength;
-          if (y < 0) {
+          double topEBOffset;
+          if (y > 0) {
             topEBOffset = zeroOffset - errorBarLength;
+          } else {
+            topEBOffset = yOffset - errorBarLength;
           }
 
           // Bottom value
-          double bottomEBOffset = yOffset + errorBarLength;
-          if (y < 0) {
+          double bottomEBOffset;
+          if (y > 0) {
             bottomEBOffset = zeroOffset + errorBarLength;
+          } else {
+            bottomEBOffset = yOffset + errorBarLength;
           }
 
           // Draw it
