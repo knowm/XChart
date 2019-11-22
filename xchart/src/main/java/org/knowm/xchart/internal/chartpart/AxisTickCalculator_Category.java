@@ -62,7 +62,7 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
     if (0 < xAxisMaxLabelCount && xAxisMaxLabelCount < categories.size()) {
       List<Object> sparseCategories = new ArrayList<>();
       double step = categories.size() / (double) xAxisMaxLabelCount;
-      for (double stepIdx = 0; stepIdx < categories.size(); stepIdx += step) {
+      for (double stepIdx = 0; Math.round(stepIdx) < categories.size(); stepIdx += step) {
         int idx = (int) Math.round(stepIdx);
         Object label = categories.get(idx);
         sparseCategories.add(label);
