@@ -11,6 +11,7 @@ import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.PieStyler.ClockwiseDirectionType;
 
 /** @author timmolter */
 public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
@@ -145,6 +146,11 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       double arcAngle = (y.doubleValue() * 360 / total);
       g.setColor(series.getFillColor());
 
+      // CLOCKWISE, startAngle minus arcAngle
+      if (ClockwiseDirectionType.CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
+        startAngle -= arcAngle;
+      }
+
       // slice
       if (PieSeriesRenderStyle.Pie == series.getChartPieSeriesRenderStyle()) {
 
@@ -200,7 +206,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
         }
       }
-      startAngle += arcAngle;
+      // COUNTER_CLOCKWISE, startAngle plus arcAngle
+      if (ClockwiseDirectionType.COUNTER_CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
+        startAngle += arcAngle;
+      }
     }
   }
 
@@ -217,6 +226,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
       // draw slice/donut
       double arcAngle = (y.doubleValue() * 360 / total);
+      // CLOCKWISE, startAngle minus arcAngle
+      if (ClockwiseDirectionType.CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
+        startAngle -= arcAngle;
+      }
 
       // curValue += y.doubleValue();
 
@@ -369,7 +382,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // System.out.println("annotationHeight= " + annotationHeight);
       //
       // }
-      startAngle += arcAngle;
+      // COUNTER_CLOCKWISE, startAngle plus arcAngle
+      if (ClockwiseDirectionType.COUNTER_CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
+        startAngle += arcAngle;
+      }
     }
   }
 
