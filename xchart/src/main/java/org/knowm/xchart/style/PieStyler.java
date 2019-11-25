@@ -17,6 +17,7 @@ public class PieStyler extends Styler {
   private boolean isSumVisible;
   private Font sumFont;
   private String sumFormat;
+  private ClockwiseDirectionType clockwiseDirectionType = ClockwiseDirectionType.COUNTER_CLOCKWISE;
 
   public PieStyler() {
 
@@ -242,11 +243,25 @@ public class PieStyler extends Styler {
     return this;
   }
 
+  public ClockwiseDirectionType getClockwiseDirectionType() {
+    return clockwiseDirectionType;
+  }
+
+  public PieStyler setClockwiseDirectionType(ClockwiseDirectionType clockwiseDirectionType) {
+    this.clockwiseDirectionType = clockwiseDirectionType;
+    return this;
+  }
+
   public enum AnnotationType {
     Value,
     Percentage,
     Label,
     LabelAndPercentage,
     LabelAndValue
+  }
+
+  public enum ClockwiseDirectionType {
+    CLOCKWISE,
+    COUNTER_CLOCKWISE
   }
 }
