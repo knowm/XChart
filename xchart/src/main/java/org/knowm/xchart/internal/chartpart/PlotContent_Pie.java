@@ -76,6 +76,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
   @Override
   public void doPaint(Graphics2D g) {
+    // Apply the given pattern to decimalPattern if decimalPattern is not null
+    if (pieStyler.getDecimalPattern() != null) {
+      df.applyPattern(pieStyler.getDecimalPattern());
+    }
 
     // pie getBounds()
     double pieFillPercentage = pieStyler.getPlotContentSize();
@@ -240,8 +244,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         if (pieStyler.getAnnotationType() == AnnotationType.Value) {
 
           if (pieStyler.getDecimalPattern() != null) {
-
-            DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
             annotation = df.format(y);
           } else {
             annotation = y.toString();
@@ -256,7 +258,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           annotation = df.format(percentage) + "%";
         } else if (pieStyler.getAnnotationType() == AnnotationType.LabelAndValue) {
           if (pieStyler.getDecimalPattern() != null) {
-            DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
             annotation = series.getName() + " (" + df.format(y) + ")";
           } else {
             annotation = series.getName() + " (" + y.toString() + ")";
@@ -392,14 +393,9 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
   private void paintSum(Graphics2D g, Rectangle2D pieBounds, double total) {
     // draw total value if visible
     if (pieStyler.isSumVisible()) {
-      DecimalFormat totalDf =
-          (pieStyler.getDecimalPattern() == null)
-              ? df
-              : new DecimalFormat(pieStyler.getDecimalPattern());
-
       String annotation =
           pieStyler.getSumFormat() == null || pieStyler.getSumFormat().isEmpty()
-              ? totalDf.format(total)
+              ? df.format(total)
               : String.format(pieStyler.getSumFormat(), total);
 
       TextLayout textLayout =
