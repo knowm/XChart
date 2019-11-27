@@ -144,6 +144,10 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
       yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
+      if (stylerCategory.isYAxisLogarithmic()) {
+        yMin = Math.log10(yMin);
+        yMax = Math.log10(yMax);
+      }
 
       // for line series
       double previousX = -Double.MAX_VALUE;
@@ -176,7 +180,13 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         }
         Object nextCat = xItr.next();
 
-        double y = next.doubleValue();
+        double yOrig = next.doubleValue();
+        double y;
+        if (stylerCategory.isYAxisLogarithmic()) {
+          y = Math.log10(yOrig);
+        } else {
+          y = yOrig;
+        }
 
         double yTop = 0.0;
         double yBottom = 0.0;
@@ -467,6 +477,9 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           g.setStroke(errorBarStroke);
 
           // Top value
+          if (stylerCategory.isYAxisLogarithmic()) {
+            eb = Math.log10(eb);
+          }
           double errorBarLength = ((eb) / (yMax - yMin) * yTickSpace);
           double topEBOffset;
           if (y > 0) {
@@ -519,7 +532,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 yPoint,
                 barWidth,
                 chart.getXAxisFormat().format(nextCat),
-                chart.getYAxisFormat().format(y));
+                chart.getYAxisFormat().format(yOrig));
           }
         }
       }
