@@ -48,6 +48,13 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       return;
     }
 
+    // a check for no data
+    if (minValue > maxValue && minValue == Double.MAX_VALUE) {
+      tickLabels.add(numberFormatter.format(0.0));
+      tickLocations.add(workingSpace / 2.0);
+      return;
+    }
+
     // tick space - a percentage of the working space available for ticks
     double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space
 

@@ -9,6 +9,7 @@ import org.knowm.xchart.demo.ExampleChartTester;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.SelectionZoom;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class TestForSelectionZoom {
 
@@ -33,6 +34,7 @@ public class TestForSelectionZoom {
               XChartPanel chartPanel = new XChartPanel(chart);
               if (chart instanceof XYChart) {
                 SelectionZoom sz = new SelectionZoom();
+                sz.getResetButton().setPosition(LegendPosition.InsideNW);
                 sz.init(chartPanel);
               }
               tabbedPane.addTab(e.getKey(), chartPanel);

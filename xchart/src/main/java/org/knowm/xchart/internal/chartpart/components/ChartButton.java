@@ -352,4 +352,8 @@ public class ChartButton extends MouseAdapter implements ChartPart {
 
     this.yOffset = yOffset;
   }
+
+  public void setPosition(LegendPosition position) {
+    this.position = position;
+  }
 }
