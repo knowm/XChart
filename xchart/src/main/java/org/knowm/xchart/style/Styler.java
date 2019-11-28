@@ -99,7 +99,7 @@ public abstract class Styler {
     legendPosition = theme.getLegendPosition();
 
     // Info Panel
-    isLegendVisible = theme.isInfoPanelVisible();
+    infoPanelVisible = theme.isInfoPanelVisible();
     infoPanelBackgroundColor = theme.getInfoPanelBackgroundColor();
     infoPanelBorderColor = theme.getInfoPanelBorderColor();
     infoPanelFont = theme.getInfoPanelFont();
