@@ -6,9 +6,11 @@ import java.util.*;
 import java.util.List;
 import java.util.Map.Entry;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.BoxPlotStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
@@ -452,6 +454,28 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
         }
         if (yAxis.getMax() < 0.0) {
           overrideYAxisMaxValue = 0.0;
+        }
+      }
+    } else if (chart.getStyler() instanceof BoxPlotStyler && chart.getSeriesMap().size() >= 3) {
+      // the maximum value of the box plot may be greater than all y values, and the
+      // minimum value of the box plot may be less than all y values
+
+      Map<String, S> seriesMap = chart.getSeriesMap();
+      ST boxPlotStyler = chart.getStyler();
+      BoxPlotData<ST, S> boxPlotData = new BoxPlotData<>();
+      int numBoxPlot = Utils.getAxesChartSeriesXDataSize(seriesMap);
+      Double boxPlotYData[][] = new Double[numBoxPlot][BoxPlotData.BoxDatas.ALL_BOX_DATAS.getIndex()];
+      boxPlotYData = boxPlotData.getBoxPlotData(seriesMap, boxPlotStyler);
+
+      for (int noNumBox = 0; noNumBox < numBoxPlot; noNumBox++) {
+
+        if (boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()] != null
+            && overrideYAxisMinValue > boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()]) {
+          overrideYAxisMinValue = boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()];
+        }
+        if (boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()] != null
+            && overrideYAxisMaxValue < boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()]) {
+          overrideYAxisMaxValue = boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()];
         }
       }
     }
