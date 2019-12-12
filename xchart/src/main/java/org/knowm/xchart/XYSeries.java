@@ -12,6 +12,8 @@ import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
 public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
   private XYSeriesRenderStyle xySeriesRenderStyle = null;
+  // smooth curve
+  private boolean smooth;
 
   /**
    * Constructor
@@ -42,6 +44,14 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
   public LegendRenderType getLegendRenderType() {
 
     return xySeriesRenderStyle.getLegendRenderType();
+  }
+
+  public boolean isSmooth() {
+    return smooth;
+  }
+
+  public void setSmooth(boolean smooth) {
+    this.smooth = smooth;
   }
 
   public enum XYSeriesRenderStyle implements RenderableSeries {
