@@ -97,6 +97,12 @@ public class SelectionZoom extends MouseAdapter implements ChartPart, ActionList
 
   public void mouseReleased(MouseEvent e) {
 
+    if (!isOverlapping()) {
+      x = -1;
+      x2 = -1;
+      return;
+    }
+
     if (bounds != null && x2 != -1) {
       int smallPoint;
       int bigPoint;
@@ -175,5 +181,27 @@ public class SelectionZoom extends MouseAdapter implements ChartPart, ActionList
   public void setResetButton(ChartButton resetButton) {
 
     this.resetButton = resetButton;
+  }
+
+  /**
+   * Whether the selectZoom overlaps with the chart.plot
+   *
+   * @return true:overlapping, false: No overlap
+   */
+  private boolean isOverlapping() {
+
+    boolean isOverlapping = false;
+    double start = x;
+    double end = x2;
+    if (x > x2) {
+      start = x2;
+      end = x;
+    }
+    // If the two intervals overlap, then largest beginning must be smaller than the smallest ending
+    if (Math.max(start, chart.plot.bounds.getX()) < Math.min(end,
+        chart.plot.bounds.getX() + chart.plot.bounds.getWidth())) {
+      isOverlapping = true;
+    }
+    return isOverlapping;
   }
 }
