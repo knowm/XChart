@@ -415,6 +415,9 @@ public abstract class AxesChartStyler extends Styler {
    */
   public AxesChartStyler setYAxisTickMarkSpacingHint(int yAxisTickMarkSpacingHint) {
 
+    if (yAxisTickMarkSpacingHint < 0) {
+      throw new IllegalArgumentException("yAxisTickMarkSpacingHint cannot be less than 0 !!!");
+    }
     this.yAxisTickMarkSpacingHint = yAxisTickMarkSpacingHint;
     return this;
   }
