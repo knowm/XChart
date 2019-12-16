@@ -137,7 +137,8 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] CSV import and export
 * [x] High resolution chart export
 * [x] Export as PNG, JPG, BMP, GIF with custom DPI setting
-* [x] Export SVG, EPS and PDF using optional `de.erichseifert.vectorgraphics2d` library
+* [x] Export SVG, EPS using optional `de.erichseifert.vectorgraphics2d` library
+* [x] Export PDF using optional `pdfbox-graphics2d` library
 * [x] Real-time charts
 * [x] Java 8 and up
 
