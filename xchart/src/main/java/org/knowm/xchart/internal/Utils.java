@@ -3,10 +3,6 @@ package org.knowm.xchart.internal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-import org.knowm.xchart.internal.series.AxesChartSeries;
-import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 
 /** @author timmolter */
 public class Utils {
@@ -138,21 +134,5 @@ public class Utils {
       generatedData[i] = ((double) i + 1);
     }
     return generatedData;
-  }
-
-  public static <S extends AxesChartSeries> int getAxesChartSeriesXDataSize(Map<String, S> seriesMap) {
-
-    int maxXDataSize = 0;
-    for (S seriesMapValue : seriesMap.values()) {
-      if (!seriesMapValue.isEnabled()) {
-        continue;
-      }
-
-      int xDataSize = ((AxesChartSeriesCategory) seriesMapValue).getXData().size();
-      if (xDataSize > maxXDataSize) {
-        maxXDataSize = xDataSize;
-      }
-    }
-    return maxXDataSize;
   }
 }

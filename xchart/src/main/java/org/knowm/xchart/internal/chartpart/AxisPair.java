@@ -6,7 +6,6 @@ import java.util.*;
 import java.util.List;
 import java.util.Map.Entry;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
-import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -456,26 +455,32 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
           overrideYAxisMaxValue = 0.0;
         }
       }
-    } else if (chart.getStyler() instanceof BoxPlotStyler && chart.getSeriesMap().size() >= 3) {
+    } else if (chart.getStyler() instanceof BoxPlotStyler) {
       // the maximum value of the box plot may be greater than all y values, and the
       // minimum value of the box plot may be less than all y values
 
       Map<String, S> seriesMap = chart.getSeriesMap();
       ST boxPlotStyler = chart.getStyler();
       BoxPlotData<ST, S> boxPlotData = new BoxPlotData<>();
-      int numBoxPlot = Utils.getAxesChartSeriesXDataSize(seriesMap);
-      Double boxPlotYData[][] = new Double[numBoxPlot][BoxPlotData.BoxDatas.ALL_BOX_DATAS.getIndex()];
+      int numBoxPlot = seriesMap.size();
+      Double boxPlotYData[][] = new Double[numBoxPlot][BoxPlotData.BOX_DATAS_LENGTH];
       boxPlotYData = boxPlotData.getBoxPlotData(seriesMap, boxPlotStyler);
 
       for (int noNumBox = 0; noNumBox < numBoxPlot; noNumBox++) {
 
-        if (boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()] != null
-            && overrideYAxisMinValue > boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()]) {
-          overrideYAxisMinValue = boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()];
+        if (boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX] != null && !boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMinValue > boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX]) {
+          overrideYAxisMinValue = boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX];
+        } else if (boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX] != null && boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMinValue > Math.pow(10, boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX])) {
+          overrideYAxisMinValue = Math.pow(10, boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX]);
         }
-        if (boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()] != null
-            && overrideYAxisMaxValue < boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()]) {
-          overrideYAxisMaxValue = boxPlotYData[noNumBox][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()];
+        if (boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX] != null && !boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMaxValue < boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX]) {
+          overrideYAxisMaxValue = boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX];
+        } else if (boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX] != null && boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMaxValue < Math.pow(10, boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX])) {
+          overrideYAxisMaxValue = Math.pow(10, boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX]);
         }
       }
     }
@@ -483,13 +488,13 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     // override min and maxValue if specified
     if (chart.getStyler().getYAxisMin(yAxis.getYIndex()) != null) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin(yAxis.getYIndex());
-    } else if (chart.getStyler().getYAxisMin() != null) {
+    } else if (chart.getStyler().getYAxisMin() != null && !(chart.getStyler() instanceof BoxPlotStyler)) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin();
     }
 
     if (chart.getStyler().getYAxisMax(yAxis.getYIndex()) != null) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax(yAxis.getYIndex());
-    } else if (chart.getStyler().getYAxisMax() != null) {
+    } else if (chart.getStyler().getYAxisMax() != null && !(chart.getStyler() instanceof BoxPlotStyler)) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax();
     }
 

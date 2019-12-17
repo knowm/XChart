@@ -27,19 +27,21 @@ public class BoxPlotChart02 implements ExampleChart<BoxPlotChart> {
     // Create Chart
     BoxPlotChart chart =
         new BoxPlotChartBuilder()
-        .title("errorBars-box plot demo")
+        .title("box plot show all point")
         .xAxisTitle("Color")
         .yAxisTitle("temperature")
-        .theme(ChartTheme.GGPlot2)
+        .theme(ChartTheme.Matlab)
         .build();
     // Series
     BoxPlotSeries[] boxSeries = new BoxPlotSeries[3];
-    boxSeries[0] = chart.addSeries("aaa", Arrays.asList("Blue", "Red", "Green", "Yellow", "Orange"),
-        Arrays.asList(40, -30, 20, 60, 50));
-    boxSeries[1] = chart.addSeries("bbb", Arrays.asList("Blue", "Red", "Green", "Yellow", "Orange"),
-        Arrays.asList(10, -10, 20, 50, 60));
-    boxSeries[2] = chart.addSeries("ccc", Arrays.asList("Blue", "Red", "Green", "Yellow", "Orange"),
-        Arrays.asList(50, -20, 20, 40, 50), Arrays.asList(1, 2, 3, 4, 5));
+    boxSeries[0] = chart.addSeries("aaa",
+        Arrays.asList(9634.37, 23886.43, 13828.96, 7773.08, 14959.32, 8046.95, 6547.51, 9528.85, 9241.53, 9353.79, 8224.60, 10436.48, 10399.62, 15067.39, 8505.73, 9398.87, 11611.29, 12280.94, 9631.96));
+    boxSeries[1] = chart.addSeries("bbb",
+        Arrays.asList(7000, 8000, 9000));
+    boxSeries[2] = chart.addSeries("ccc",
+        Arrays.asList(7000, 8000, null, 9000));
+    chart.getStyler().setShowWithinAreaPoint(true);
+    chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
 }

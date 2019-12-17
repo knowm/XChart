@@ -1,5 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -18,30 +19,23 @@ public class PlotContent_BoxPlot<ST extends BoxPlotStyler, S extends BoxPlotSeri
 
   private final ST boxPlotStyler;
   Map<String, S> seriesMap = chart.getSeriesMap();
+  int boxPlotCounter = -1;
   private double yMax;
   private double yMin;
-  private double yOrig;
   private double xLeftMargin;
   private double yTopMargin;
   private double yTickSpace;
   private double xOffset;
   private double yOffset;
-  private double firstPlotQuartiles;
-  private double secondPlotQuartiles;
-  private double thirdPlotQuartiles;
-  private double maxBoxData;
-  private double minBoxData;
 
   PlotContent_BoxPlot(Chart<ST, S> chart) {
     super(chart);
     boxPlotStyler = chart.getStyler();
   }
 
-  @SuppressWarnings("rawtypes")
   @Override
   protected void doPaint(Graphics2D g) {
-    int numBox = seriesMap.values().iterator().next().getXData().size();
-    int xDataSize = Utils.getAxesChartSeriesXDataSize(seriesMap);
+    int numBox = seriesMap.size();
     // X-Axis
     double xTickSpace = boxPlotStyler.getPlotContentSize() * getBounds().getWidth();
     xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
@@ -50,17 +44,13 @@ public class PlotContent_BoxPlot<ST extends BoxPlotStyler, S extends BoxPlotSeri
     yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
     boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
     double gridStep = xTickSpace / numBox;
-    Double[][] boxDatas = new Double[xDataSize][BoxPlotData.BoxDatas.ALL_BOX_DATAS.getIndex()];
+    Double[][] boxDatas = new Double[numBox][BoxPlotData.BOX_DATAS_LENGTH];
+    
 
     // To get all box plot datas
-    if (seriesMap.size() >= 3) {
-      BoxPlotData<ST, S> boxPlotData = new BoxPlotData<>();
-      boxDatas = boxPlotData.getBoxPlotData(seriesMap, boxPlotStyler);
-    }
-
-    int boxCounter = -1;
+    BoxPlotData<ST, S> boxPlotData = new BoxPlotData<>();
+    boxDatas = boxPlotData.getBoxPlotData(seriesMap, boxPlotStyler);
     for (S series : seriesMap.values()) {
-      boxCounter++;
 
       if (!series.isEnabled()) {
         continue;
@@ -78,19 +68,12 @@ public class PlotContent_BoxPlot<ST extends BoxPlotStyler, S extends BoxPlotSeri
       // data points
       Collection<? extends Number> yData = series.getYData();
       double previousX = Double.MAX_VALUE;
-      Iterator<?> xItr = series.getXData().iterator();
       Iterator<? extends Number> yItr = yData.iterator();
-      Iterator<? extends Number> ebItr = null;
-      Collection<? extends Number> errorBars = series.getExtraValues();
-
-      if (errorBars != null) {
-        ebItr = errorBars.iterator();
-      }
+      Object nextCat = series.getName();
       Path2D.Double path = null;
-      int boxPlotCounter = -1;
-
+      boxPlotCounter++;
       while (yItr.hasNext()) {
-        boxPlotCounter++;
+
         Number next = yItr.next();
 
         if (next == null) {
@@ -99,8 +82,7 @@ public class PlotContent_BoxPlot<ST extends BoxPlotStyler, S extends BoxPlotSeri
           previousX = -Double.MAX_VALUE;
           continue;
         }
-        Object nextCat = xItr.next();
-        yOrig = next.doubleValue();
+        double yOrig = next.doubleValue();
         double y;
 
         if (boxPlotStyler.isYAxisLogarithmic()) {
@@ -117,165 +99,124 @@ public class PlotContent_BoxPlot<ST extends BoxPlotStyler, S extends BoxPlotSeri
         xOffset = getBounds().getX() + xLeftMargin + boxPlotCounter * gridStep + gridStep / 2.0;
         yOffset = getBounds().getY() + yTransfrom;
 
-        // Draw the box chart only once
-        // Box plot seriesMap.size() masts greater than 3
-        if (boxCounter == 0 && seriesMap.size() >= 3) {
-
-          if (boxDatas[boxPlotCounter][BoxPlotData.BoxDatas.FIRST_PLOT_QUARTILES.getIndex()] != null) {
-            drawBoxPlot(g, boxDatas, boxPlotCounter);
-          }
-        }
-
         // paint marker
-        if (series.getMarker() != null) {
+        if (boxDatas[boxPlotCounter][BoxPlotData.MAX_BOX_VALUE_INDEX] != null
+            && (y > boxDatas[boxPlotCounter][BoxPlotData.MAX_BOX_VALUE_INDEX]
+                || y < boxDatas[boxPlotCounter][BoxPlotData.MIN_BOX_VALUE_INDEX])) {
+
+          Shape outPointLine1 = new Line2D.Double(xOffset - boxPlotStyler.getMarkerSize(), yOffset,
+              xOffset + boxPlotStyler.getMarkerSize(), yOffset);
+          Shape outPointLine2 = new Line2D.Double(xOffset, yOffset - boxPlotStyler.getMarkerSize(), xOffset,
+              yOffset + boxPlotStyler.getMarkerSize());
+          g.setColor(Color.RED);
+          g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+          g.draw(outPointLine1);
+          g.draw(outPointLine2);
+        } else if (chart.getStyler().getShowWithinAreaPoint()) {
           g.setColor(series.getMarkerColor());
           series.getMarker().paint(g, xOffset, yOffset, boxPlotStyler.getMarkerSize());
         }
         previousX = xOffset;
 
-        // paint error bars
-        if (errorBars != null) {
-          drawErrorBars(g, series, ebItr, y);
-        }
-
         // support toolTipsEnabled
-        if (toolTipsEnabled) {
-          showToolTips(hasCustomToolTips, toolTips, boxPlotCounter, boxDatas, nextCat);
+        if (toolTipsEnabled && chart.getStyler().getShowWithinAreaPoint()) {
+          if (hasCustomToolTips) {
+
+            String tt = toolTips[boxPlotCounter];
+            if (tt != null) {
+              chart.toolTips.addData(xOffset, yOffset, tt);
+            }
+          } else {
+            chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat),
+                chart.getYAxisFormat().format(yOrig));
+          }
         }
+      }
+
+      if (boxDatas[boxPlotCounter][BoxPlotData.FIRST_PLOT_QUARTILES_INDEX] != null) {
+        drawBoxPlot(g, boxDatas, hasCustomToolTips, toolTips, nextCat, toolTipsEnabled);
       }
       g.setColor(series.getFillColor());
       closePath(g, path, previousX, getBounds(), yTopMargin);
     }
   }
 
-  private void drawBoxPlot(Graphics2D g, Double getBoxDatas[][], int boxPlotCounter) {
+  private void drawBoxPlot(Graphics2D g, Double boxDatas[][], boolean hasCustomToolTips,
+      String[] toolTips, Object nexCat, boolean toolTipsEnabled) {
 
-    firstPlotQuartiles = getBounds().getY() + getBounds().getHeight()
-        - (yTopMargin + (getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.FIRST_PLOT_QUARTILES.getIndex()] - yMin)
-            / (yMax - yMin) * yTickSpace);
-    secondPlotQuartiles = getBounds().getY() + getBounds().getHeight()
-        - (yTopMargin + (getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.SECOND_PLOT_QUARTILES.getIndex()] - yMin)
-            / (yMax - yMin) * yTickSpace);
-    thirdPlotQuartiles = getBounds().getY() + getBounds().getHeight()
-        - (yTopMargin + (getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.THIRD_PLOT_QUARTILES.getIndex()] - yMin)
-            / (yMax - yMin) * yTickSpace);
-    maxBoxData = getBounds().getY() + getBounds().getHeight()
-        - (yTopMargin + (getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()] - yMin)
-            / (yMax - yMin) * yTickSpace);
-    minBoxData = getBounds().getY() + getBounds().getHeight()
-        - (yTopMargin + (getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()] - yMin)
-            / (yMax - yMin) * yTickSpace);
+    double firstPlotQuartiles = 0.0;
+    double secondPlotQuartiles = 0.0;
+    double thirdPlotQuartiles = 0.0;
+    double maxBoxData = 0.0;
+    double minBoxData = 0.0;
+    firstPlotQuartiles = getBounds().getY() + getBounds().getHeight() - (yTopMargin
+        + (boxDatas[boxPlotCounter][BoxPlotData.FIRST_PLOT_QUARTILES_INDEX] - yMin) / (yMax - yMin) * yTickSpace);
+    secondPlotQuartiles = getBounds().getY() + getBounds().getHeight() - (yTopMargin
+        + (boxDatas[boxPlotCounter][BoxPlotData.SECOND_PLOT_QUARTILES_INDEX] - yMin) / (yMax - yMin) * yTickSpace);
+    thirdPlotQuartiles = getBounds().getY() + getBounds().getHeight() - (yTopMargin
+        + (boxDatas[boxPlotCounter][BoxPlotData.THIRD_PLOT_QUARTILES_INDEX] - yMin) / (yMax - yMin) * yTickSpace);
+    maxBoxData = getBounds().getY() + getBounds().getHeight() - (yTopMargin
+        + (boxDatas[boxPlotCounter][BoxPlotData.MAX_BOX_VALUE_INDEX] - yMin) / (yMax - yMin) * yTickSpace);
+    minBoxData = getBounds().getY() + getBounds().getHeight() - (yTopMargin
+        + (boxDatas[boxPlotCounter][BoxPlotData.MIN_BOX_VALUE_INDEX] - yMin) / (yMax - yMin) * yTickSpace);
     Shape middleline = new Line2D.Double(xOffset - xLeftMargin, secondPlotQuartiles, xOffset + xLeftMargin,
         secondPlotQuartiles);
     Shape maxLine = new Line2D.Double(xOffset - (xLeftMargin / 2.0), maxBoxData, xOffset + (xLeftMargin / 2.0),
         maxBoxData);
     Shape minLine = new Line2D.Double(xOffset - (xLeftMargin / 2.0), minBoxData, xOffset + (xLeftMargin / 2.0),
         minBoxData);
-    Shape line = new Line2D.Double(xOffset, maxBoxData, xOffset, minBoxData);
-    g.setColor(Color.black);
-    g.draw(middleline);
-    g.draw(maxLine);
-    g.draw(minLine);
-    g.draw(line);
+    Shape upLine = new Line2D.Double(xOffset, maxBoxData, xOffset, thirdPlotQuartiles);
+    Shape lowLine = new Line2D.Double(xOffset, minBoxData, xOffset, firstPlotQuartiles);
     Rectangle2D rect = new Rectangle2D.Double(xOffset - xLeftMargin, thirdPlotQuartiles, 2.0 * xLeftMargin,
         firstPlotQuartiles - thirdPlotQuartiles);
+    g.setColor(Color.BLUE);
+    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     g.draw(rect);
-  }
+    g.setColor(Color.RED);
+    g.draw(middleline);
+    g.setColor(Color.BLACK);
+    g.draw(maxLine);
+    g.draw(minLine);
+    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 6.0f, new float[] { 4f, 0f, 4f }, 6f));
+    g.draw(upLine);
+    g.draw(lowLine);
 
-  private void drawErrorBars(Graphics2D g, S series, Iterator<? extends Number> ebItr, double y) {
+    if (toolTipsEnabled && boxDatas[boxPlotCounter][BoxPlotData.FIRST_PLOT_QUARTILES_INDEX] != null) {
+      if (boxPlotStyler.isYAxisLogarithmic()) {
+        boxDatas[boxPlotCounter][BoxPlotData.FIRST_PLOT_QUARTILES_INDEX] = Math.pow(10,
+            boxDatas[boxPlotCounter][BoxPlotData.FIRST_PLOT_QUARTILES_INDEX]);
+        boxDatas[boxPlotCounter][BoxPlotData.SECOND_PLOT_QUARTILES_INDEX] = Math.pow(10,
+            boxDatas[boxPlotCounter][BoxPlotData.SECOND_PLOT_QUARTILES_INDEX]);
+        boxDatas[boxPlotCounter][BoxPlotData.THIRD_PLOT_QUARTILES_INDEX] = Math.pow(10,
+            boxDatas[boxPlotCounter][BoxPlotData.THIRD_PLOT_QUARTILES_INDEX]);
+        boxDatas[boxPlotCounter][BoxPlotData.MAX_BOX_VALUE_INDEX] = Math.pow(10,
+            boxDatas[boxPlotCounter][BoxPlotData.MAX_BOX_VALUE_INDEX]);
+        boxDatas[boxPlotCounter][BoxPlotData.MIN_BOX_VALUE_INDEX] = Math.pow(10,
+            boxDatas[boxPlotCounter][BoxPlotData.MIN_BOX_VALUE_INDEX]);
+      }
+      if (hasCustomToolTips) {
 
-    double eb = ebItr.next().doubleValue();
+        String tt = toolTips[boxPlotCounter];
 
-    // set error style
-    if (boxPlotStyler.isErrorBarsColorSeriesColor()) {
-      g.setColor(series.getLineColor());
-    } else {
-      g.setColor(boxPlotStyler.getErrorBarsColor());
-    }
-    g.setStroke(errorBarStroke);
-    // top value
-    double topValue;
-
-    if (boxPlotStyler.isYAxisLogarithmic()) {
-      topValue = yOrig + eb;
-      topValue = Math.log10(topValue);
-    } else {
-      topValue = y + eb;
-    }
-    double topEBTransfrom = getBounds().getHeight() - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
-    double topEBOffset = getBounds().getY() + topEBTransfrom;
-    // bottom value
-    double bottomValue;
-
-    if (boxPlotStyler.isYAxisLogarithmic()) {
-      bottomValue = yOrig - eb;
-      bottomValue = Math.log10(bottomValue);
-    } else {
-      bottomValue = y - eb;
-    }
-    double bottomEBTransfrom = getBounds().getHeight()
-        - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
-    double bottomEBOffset = getBounds().getY() + bottomEBTransfrom;
-    // draw it
-    Shape line = new Line2D.Double(xOffset, topEBOffset, xOffset, bottomEBOffset);
-    g.draw(line);
-    line = new Line2D.Double(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
-    g.draw(line);
-    line = new Line2D.Double(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
-    g.draw(line);
-  }
-
-  private void showToolTips(boolean hasCustomToolTips, String[] toolTips, int boxPlotCounter, Double getBoxDatas[][],
-      Object nextCat) {
-
-    if (hasCustomToolTips) {
-      String tt = toolTips[boxPlotCounter];
-
-      if (tt != null) {
-
-        if (seriesMap.size() >= 3
-            && getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.FIRST_PLOT_QUARTILES.getIndex()] != null) {
+        if (tt != null) {
           chart.toolTips.addData(xOffset, firstPlotQuartiles, tt);
           chart.toolTips.addData(xOffset, secondPlotQuartiles, tt);
           chart.toolTips.addData(xOffset, thirdPlotQuartiles, tt);
           chart.toolTips.addData(xOffset, maxBoxData, tt);
           chart.toolTips.addData(xOffset, minBoxData, tt);
         }
-        chart.toolTips.addData(xOffset, yOffset, tt);
+      } else {
+        chart.toolTips.addData(xOffset, firstPlotQuartiles, chart.getXAxisFormat().format(nexCat),
+            chart.getYAxisFormat().format(boxDatas[boxPlotCounter][BoxPlotData.FIRST_PLOT_QUARTILES_INDEX]));
+        chart.toolTips.addData(xOffset, secondPlotQuartiles, chart.getXAxisFormat().format(nexCat),
+            chart.getYAxisFormat().format(boxDatas[boxPlotCounter][BoxPlotData.SECOND_PLOT_QUARTILES_INDEX]));
+        chart.toolTips.addData(xOffset, thirdPlotQuartiles, chart.getXAxisFormat().format(nexCat),
+            chart.getYAxisFormat().format(boxDatas[boxPlotCounter][BoxPlotData.THIRD_PLOT_QUARTILES_INDEX]));
+        chart.toolTips.addData(xOffset, maxBoxData, chart.getXAxisFormat().format(nexCat),
+            chart.getYAxisFormat().format(boxDatas[boxPlotCounter][BoxPlotData.MAX_BOX_VALUE_INDEX]));
+        chart.toolTips.addData(xOffset, minBoxData, chart.getXAxisFormat().format(nexCat),
+            chart.getYAxisFormat().format(boxDatas[boxPlotCounter][BoxPlotData.MIN_BOX_VALUE_INDEX]));
       }
-    } else {
-
-      if (seriesMap.size() >= 3
-          && getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.FIRST_PLOT_QUARTILES.getIndex()] != null) {
-
-        if (boxPlotStyler.isYAxisLogarithmic()) {
-          getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.FIRST_PLOT_QUARTILES.getIndex()] = Math.pow(10,
-              getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.FIRST_PLOT_QUARTILES.getIndex()]);
-          getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.SECOND_PLOT_QUARTILES.getIndex()] = Math.pow(10,
-              getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.SECOND_PLOT_QUARTILES.getIndex()]);
-          getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.THIRD_PLOT_QUARTILES.getIndex()] = Math.pow(10,
-              getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.THIRD_PLOT_QUARTILES.getIndex()]);
-          getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()] = Math.pow(10,
-              getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()]);
-          getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()] = Math.pow(10,
-              getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()]);
-        }
-        chart.toolTips.addData(xOffset, firstPlotQuartiles, chart.getXAxisFormat().format(nextCat),
-            chart.getYAxisFormat()
-                .format(getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.FIRST_PLOT_QUARTILES.getIndex()]));
-        chart.toolTips.addData(xOffset, secondPlotQuartiles, chart.getXAxisFormat().format(nextCat),
-            chart.getYAxisFormat()
-                .format(getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.SECOND_PLOT_QUARTILES.getIndex()]));
-        chart.toolTips.addData(xOffset, thirdPlotQuartiles, chart.getXAxisFormat().format(nextCat),
-            chart.getYAxisFormat()
-                .format(getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.THIRD_PLOT_QUARTILES.getIndex()]));
-        chart.toolTips.addData(xOffset, maxBoxData, chart.getXAxisFormat().format(nextCat),
-            chart.getYAxisFormat().format(getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.MAX_BOX_VALUE.getIndex()]));
-        chart.toolTips.addData(xOffset, minBoxData, chart.getXAxisFormat().format(nextCat),
-            chart.getYAxisFormat().format(getBoxDatas[boxPlotCounter][BoxPlotData.BoxDatas.MIN_BOX_VALUE.getIndex()]));
-      }
-      chart.toolTips.addData(xOffset, yOffset, chart.getXAxisFormat().format(nextCat),
-          chart.getYAxisFormat().format(yOrig));
     }
   }
 }
