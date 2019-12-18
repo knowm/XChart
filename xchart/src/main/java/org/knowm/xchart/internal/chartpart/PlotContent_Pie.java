@@ -135,8 +135,11 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
   private void paintSlices(Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
     boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
+    double borderAngle = startAngle;
 
     Map<String, S> map = chart.getSeriesMap();
+    double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
+    double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
     for (S series : map.values()) {
 
       if (!series.isEnabled()) {
@@ -188,10 +191,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // maybe another option to construct this label
       String annotation = series.getName() + " (" + df.format(y) + ")";
 
-      double xCenter =
-          pieBounds.getX() + pieBounds.getWidth() / 2; // - annotationRectangle.getWidth() / 2;
-      double yCenter =
-          pieBounds.getY() + pieBounds.getHeight() / 2; // + annotationRectangle.getHeight() / 2;
       double angle = (arcAngle + startAngle) - arcAngle / 2;
       double xOffset =
           xCenter
@@ -213,6 +212,28 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // COUNTER_CLOCKWISE, startAngle plus arcAngle
       if (ClockwiseDirectionType.COUNTER_CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
         startAngle += arcAngle;
+      }
+    }
+
+    // draw border
+    float borderWidth = chart.getStyler().getBorderWidth();
+    if (borderWidth > 0) {
+      Color color = pieStyler.getPlotBackgroundColor();
+      g.setColor(color);
+      for (S series : map.values()) {
+        if (!series.isEnabled()) {
+          continue;
+        }
+        Number y = series.getValue();
+        double arcAngle = y.doubleValue() * 360 / total;
+        borderAngle += arcAngle;
+        double xBorder = (pieBounds.getWidth() / 2.0) * Math.cos(Math.toRadians(borderAngle));
+        double yBorder = (pieBounds.getHeight() / 2.0) * Math.sin(Math.toRadians(borderAngle));
+        xBorder = xBorder + pieBounds.getX() + pieBounds.getWidth() / 2.0;
+        yBorder = pieBounds.getY() + pieBounds.getHeight() / 2.0 - yBorder;
+        Shape line = new Line2D.Double(xCenter, yCenter, xBorder, yBorder);
+        g.setStroke(new BasicStroke(borderWidth));
+        g.draw(line);
       }
     }
   }

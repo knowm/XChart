@@ -67,6 +67,9 @@ import org.knowm.xchart.demo.charts.pie.PieChart03;
 import org.knowm.xchart.demo.charts.pie.PieChart04;
 import org.knowm.xchart.demo.charts.pie.PieChart05;
 import org.knowm.xchart.demo.charts.pie.PieChart06;
+import org.knowm.xchart.demo.charts.pie.PieChart07;
+import org.knowm.xchart.demo.charts.pie.PieChart08;
+import org.knowm.xchart.demo.charts.pie.PieChart09;
 import org.knowm.xchart.demo.charts.radar.RadarChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
@@ -313,6 +316,9 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     exList.add(new PieChart04());
     exList.add(new PieChart05());
     exList.add(new PieChart06());
+    exList.add(new PieChart07());
+    exList.add(new PieChart08());
+    exList.add(new PieChart09());
 
     // Line
     exList.add(new LineChart01());

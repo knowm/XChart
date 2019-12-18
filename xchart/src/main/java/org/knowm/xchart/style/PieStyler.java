@@ -18,6 +18,7 @@ public class PieStyler extends Styler {
   private Font sumFont;
   private String sumFormat;
   private ClockwiseDirectionType clockwiseDirectionType = ClockwiseDirectionType.COUNTER_CLOCKWISE;
+  private float borderWidth = 0;
 
   public PieStyler() {
 
@@ -250,6 +251,16 @@ public class PieStyler extends Styler {
   public PieStyler setClockwiseDirectionType(ClockwiseDirectionType clockwiseDirectionType) {
     this.clockwiseDirectionType = clockwiseDirectionType;
     return this;
+  }
+
+  // used to add border width
+  public PieStyler setBorderWidth(double borderWidth) {
+    this.borderWidth = (float)borderWidth;
+    return this;
+  }
+
+  public float getBorderWidth() {
+    return borderWidth;
   }
 
   public enum AnnotationType {
