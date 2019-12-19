@@ -424,7 +424,7 @@ public class ChartStylePanel extends JPanel {
       this.chart = chart;
       properties = getProperties(csp, chart);
       rowCount = properties.size();
-      fireTableDataChanged();
+      fireTableStructureChanged();
     }
 
     @Override
@@ -626,16 +626,6 @@ public class ChartStylePanel extends JPanel {
                 chartMethodMap.get("setyaxisgrouptitle"),
                 i);
         list.add(styleEditor);
-        Method readMethod = stylerMethodMap.get("getyaxisgroupposition");
-        styleEditor =
-            new EditableProperty(
-                csp,
-                "chart.YAxisGroupPosition[" + i + "]",
-                chart.getStyler(),
-                readMethod,
-                stylerMethodMap.get("setyaxisgroupposition"),
-                i);
-        list.add(styleEditor);
       }
     } catch (IntrospectionException e1) {
       e1.printStackTrace();
@@ -729,6 +719,10 @@ public class ChartStylePanel extends JPanel {
 
           if (pd.getReadMethod().getReturnType().isArray()) {
             Object arr = readMethod.invoke(obj);
+            // arr may be null
+            if (arr == null) {
+              continue;
+            }
             int size = Array.getLength(arr);
             Method rm = null;
             Method wm = null;
