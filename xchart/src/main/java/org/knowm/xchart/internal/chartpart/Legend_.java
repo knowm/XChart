@@ -291,7 +291,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // FontMetrics fontMetrics = g.getFontMetrics(getChartPainter().getstyler().getLegendFont());
     // float fontDescent = fontMetrics.getDescent();
 
-    String lines[] = series.getName().split("\\n");
+    String lines[] = series.getLabel().split("\\n");
     Map<String, Rectangle2D> seriesTextBounds =
         new LinkedHashMap<String, Rectangle2D>(lines.length);
     for (String line : lines) {
