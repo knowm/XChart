@@ -67,6 +67,8 @@ public abstract class Styler {
   private String decimalPattern;
   private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<Integer, YAxisPosition>();
   private int yAxisLeftWidthHint;
+  // Box plot data ///////////////////////////////
+  private boolean showWithinAreaPoint = false;
 
   void setAllStyles() {
 
@@ -782,6 +784,14 @@ public abstract class Styler {
   public void setYAxisLeftWidthHint(int yAxisLeftWidthHint) {
 
     this.yAxisLeftWidthHint = yAxisLeftWidthHint;
+  }
+
+  public void setShowWithinAreaPoint(boolean showWithinAreaPoint) {
+    this.showWithinAreaPoint = showWithinAreaPoint;
+  }
+
+  public boolean getShowWithinAreaPoint() {
+    return this.showWithinAreaPoint;
   }
 
   public enum LegendPosition {

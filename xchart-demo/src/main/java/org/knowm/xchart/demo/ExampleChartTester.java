@@ -40,6 +40,9 @@ import org.knowm.xchart.demo.charts.bar.BarChart09;
 import org.knowm.xchart.demo.charts.bar.BarChart10;
 import org.knowm.xchart.demo.charts.bar.BarChart11;
 import org.knowm.xchart.demo.charts.bar.BarChart12;
+import org.knowm.xchart.demo.charts.boxPlot.BoxPlotChart01;
+import org.knowm.xchart.demo.charts.boxPlot.BoxPlotChart02;
+import org.knowm.xchart.demo.charts.boxPlot.BoxPlotChart03;
 import org.knowm.xchart.demo.charts.bubble.BubbleChart01;
 import org.knowm.xchart.demo.charts.date.DateChart01;
 import org.knowm.xchart.demo.charts.date.DateChart02;
@@ -390,6 +393,11 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     exList.add(new RealtimeChart04());
     exList.add(new RealtimeChart05());
     exList.add(new RealtimeChart06());
+
+    // Box plot
+    exList.add(new BoxPlotChart01());
+    exList.add(new BoxPlotChart02());
+    exList.add(new BoxPlotChart03());
     return exList;
   }
 
