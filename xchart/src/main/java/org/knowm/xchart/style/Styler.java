@@ -62,6 +62,7 @@ public abstract class Styler {
   // Annotations ///////////////////////////////
   private Font annotationsFont;
   private Color annotationsFontColor;
+  private int annotationsRotation = 0;
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
   private String decimalPattern;
@@ -724,6 +725,20 @@ public abstract class Styler {
    */
   public Styler setAnnotationsFontColor(Color annotationsFontColor) {
     this.annotationsFontColor = annotationsFontColor;
+    return this;
+  }
+
+  public int getAnnotationsRotation() {
+    return annotationsRotation;
+  }
+
+  /**
+   * Sets the rotation for chart annotations
+   *
+   * @param annotationsRotation
+   */
+  public Styler setAnnotationsRotation(int annotationsRotation) {
+    this.annotationsRotation = annotationsRotation;
     return this;
   }
 
