@@ -124,6 +124,7 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] Dial charts
 * [x] Radar charts
 * [x] OHLC charts
+* [x] Box Plot
 * [x] Error bars
 * [x] Logarithmic axes
 * [x] Number, Date, Bubble and Category X-Axis
@@ -154,6 +155,7 @@ Currently, there are 5 major chart types. Each type has its corresponding `Chart
 | DialChart | DialChartBuilder | DialStyler | DialSeries | double  | Round |
 | RadarChart | RadarChartBuilder | RadarStyler | RadarSeries | double[] | Round |
 | OHLCChart | OHLCChartBuilder | OHLCStyler | OHLCSeries | OHLC with Date | Candle |
+| BoxPlotChart | BoxPlotChartBuilder | BoxPlotStyler | BoxPlotSeries | Number, Date, String | Box |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
 
@@ -210,6 +212,12 @@ Series render styles include: `Polygon` and  `Circle`.
 `OHLCChart` charts take Date data types for the X-Axis and 4 Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals.
 
 Series render styles include: `Candle`, `HiLo`.
+
+### BoxPlot
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_BoxPlot.png)
+
+`BoxPlot` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. Each box chart is calculated from the corresponding series.
 
 ## Real-time Java Charts using XChart
 
