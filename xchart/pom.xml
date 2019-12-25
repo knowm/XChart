@@ -18,6 +18,10 @@
       <groupId>de.erichseifert.vectorgraphics2d</groupId>
       <artifactId>VectorGraphics2D</artifactId>
     </dependency>
+    <dependency>
+      <groupId>de.rototor.pdfbox</groupId>
+      <artifactId>graphics2d</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
