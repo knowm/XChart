@@ -23,7 +23,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
-  protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
+  protected final Map<String, S> seriesMap = new LinkedHashMap<>();
   protected final List<String> infoContent = new ArrayList<>();
   final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
   /** Chart Parts */
@@ -89,11 +89,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public S removeSeries(String seriesName) {
 
     return seriesMap.remove(seriesName);
-  }
-
-  public ToolTips getToolTips() {
-
-    return toolTips;
   }
 
   /** Meta Data Getters and Setters */
@@ -178,27 +173,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public void addInfoContent(String content) {
     List<String> lines = Arrays.asList(content.split("\\n"));
     infoContent.addAll(lines);
-  }
-
-  public void setXAxisLabelOverrideMap(Map<Double, Object> overrideMap) {
-
-    axisPair.getAxisLabelOverrideMap().put("X0", overrideMap);
-  }
-
-  public void setYAxisLabelOverrideMap(Map<Double, Object> overrideMap) {
-
-    axisPair.getAxisLabelOverrideMap().put("Y0", overrideMap);
-  }
-
-  public void setYAxisLabelOverrideMap(Map<Double, Object> overrideMap, int yAxisGroup) {
-
-    axisPair.getAxisLabelOverrideMap().put(("Y" + yAxisGroup), overrideMap);
-  }
-
-  public Map<Double, Object> getYAxisLabelOverrideMap(Axis.Direction direction, int yIndex) {
-
-    Map<String, Map<Double, Object>> axisLabelOverrideMap = axisPair.getAxisLabelOverrideMap();
-    return axisLabelOverrideMap.get((direction.name() + yIndex));
   }
 
   /** Chart Parts Getters */
@@ -314,5 +288,25 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     java.awt.geom.Rectangle2D.Double bounds = getAxisPair().getLeftYAxisBounds();
     return bounds.width + bounds.x;
+  }
+
+  public void setCustomXAxisTickLabelsMap(Map<Object, Object> overrideMap) {
+
+    axisPair.addCustomTickLabelMap("X0", overrideMap);
+  }
+
+  public void setCustomYAxisTickLabelsMap(Map<Object, Object> overrideMap) {
+
+    axisPair.addCustomTickLabelMap("Y0", overrideMap);
+  }
+
+  public void setCustomYAxisTickLabelsMap(Map<Double, Object> overrideMap, int yAxisGroup) {
+
+    axisPair.addCustomTickLabelMap(("Y" + yAxisGroup), overrideMap);
+  }
+
+  public ToolTips getToolTips() {
+
+    return toolTips;
   }
 }

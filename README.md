@@ -278,7 +278,7 @@ All the styling options can be found in one of two possible places: 1) the Chart
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Series_Customization.png)
  
 
-### Customizing Axis Ticks & Axis Labels
+### Customizing Axis Tick Values & Axis Tick Labels
 
 XChart automatically creates axis ticks and axis labels. 
 
@@ -291,35 +291,36 @@ Default axis label patterns can be altered with one of:
 
 
 You can also create custom axis placements and axis labels. Create a map containing x -> label mappings:
-- x : value where the tick will be drawn (this value is in xData space, not in pixel space). For category charts x is index of the category (0 means first category).
+- x : value where the tick will be drawn (this value is in xData space, not in pixel space). 
 - label: Tick label. If it is `null`, tick will be generated with a `" "` label.
 
 ```java
-      XYChart chart = new AreaChart01().getChart();
-      Map<Double, Object> xMarkMap = new TreeMap<Double, Object>();
-      xMarkMap.put(0.0, "zero");
-      xMarkMap.put(3.5, "3.5");
-      xMarkMap.put(5.0, " ");
-      xMarkMap.put(9.0, "nine");
+      Map<Object, Object> customXAxisTickLabelsMap = new HashMap<>();
+      customXAxisTickLabelsMap.put(0, "zero");
+      customXAxisTickLabelsMap.put(3, "3.5");
+      customXAxisTickLabelsMap.put(5, " ");
+      customXAxisTickLabelsMap.put(9, "nine");
+      chart.setXAxisLabelOverrideMap(customXAxisTickLabelsMap);
 
-      Map<Double, Object> yMarkMap = new TreeMap<Double, Object>();
-      yMarkMap.put(1.0, "max c");
-      yMarkMap.put(6.0, "max b");
-      yMarkMap.put(9.0, "max a");
-
-      chart.setXAxisLabelOverrideMap(xMarkMap);
-      chart.setYAxisLabelOverrideMap(yMarkMap);
+      Map<Object, Object> customYAxisTickLabelsMap = new HashMap<>();
+      customYAxisTickLabelsMap.put(1.0, "max c");
+      customYAxisTickLabelsMap.put(6.0, "max b");
+      customYAxisTickLabelsMap.put(9.0, "max a");
+      chart.setYAxisLabelOverrideMap(customYAxisTickLabelsMap);
 ```
 
 For category charts another way to create custom axis places is using category names in first series:
 ```java
-      CategoryChart chart = new BarChart09().getChart();
-      Map<Object, Object> xMarkMap = new TreeMap<Object, Object>();
-      xMarkMap.put("A", "-A-");
-      xMarkMap.put("D", "+D+");
+     Map<Object, Object> tickLabelOverrideMap = new HashMap<Object, Object>();
 
-      chart.setCustomCategoryLabels(xMarkMap);
+      Map<Object, Object> customTickLabelsMap = new HashMap<>();
+      customTickLabelsMap.put("A", "-A-");
+      customTickLabelsMap.put("D", "+D+");
+      chart.setXAxisLabelOverrideMap(customTickLabelsMap);
 ```
+
+Whenever you use `setXAxisLabelOverrideMap` the auto-generated tick labels will be replaced meaning none of the tick labels will be shown besides the ones provided by you in the override map.
+
 ### Multiple Axes
 
 XChart has multiple y axes feature. Y offset is calculated according to the y axis the series configured. Max `y` value in this axis is calculated according to the series on this axis only. 

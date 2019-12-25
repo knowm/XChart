@@ -38,8 +38,8 @@ public class TestForIssue159 {
     styler.setYAxisMax(10.0);
     styler.setXAxisTickMarkSpacingHint(200);
 
-    List<Date> xData = new ArrayList<Date>();
-    List<Integer> yData = new ArrayList<Integer>();
+    List<Date> xData = new ArrayList<>();
+    List<Integer> yData = new ArrayList<>();
 
     yData.add(1);
     yData.add(2);
