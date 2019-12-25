@@ -5,7 +5,6 @@ import de.erichseifert.vectorgraphics2d.Processor;
 import de.erichseifert.vectorgraphics2d.VectorGraphics2D;
 import de.erichseifert.vectorgraphics2d.eps.EPSProcessor;
 import de.erichseifert.vectorgraphics2d.intermediate.CommandSequence;
-import de.erichseifert.vectorgraphics2d.pdf.PDFProcessor;
 import de.erichseifert.vectorgraphics2d.svg.SVGProcessor;
 import de.erichseifert.vectorgraphics2d.util.PageSize;
 import java.io.FileOutputStream;
@@ -45,7 +44,8 @@ public final class VectorGraphicsEncoder {
         p = new EPSProcessor();
         break;
       case PDF:
-        p = new PDFProcessor(true);
+        // p = new PDFProcessor(true);
+        p = new PDFBoxProcessor();
         break;
       case SVG:
         p = new SVGProcessor();
@@ -55,15 +55,19 @@ public final class VectorGraphicsEncoder {
         break;
     }
 
-    VectorGraphics2D vg2d = new VectorGraphics2D();
-    //    vg2d.draw(new Rectangle2D.Double(0.0, 0.0, chart.getWidth(), chart.getHeight()));
-    CommandSequence commands = vg2d.getCommands();
+    if (VectorGraphicsFormat.PDF != vectorGraphicsFormat) {
+      VectorGraphics2D vg2d = new VectorGraphics2D();
+      //    vg2d.draw(new Rectangle2D.Double(0.0, 0.0, chart.getWidth(), chart.getHeight()));
+      CommandSequence commands = vg2d.getCommands();
 
-    chart.paint(vg2d, chart.getWidth(), chart.getHeight());
+      chart.paint(vg2d, chart.getWidth(), chart.getHeight());
 
-    PageSize pageSize = new PageSize(0.0, 0.0, chart.getWidth(), chart.getHeight());
-    Document doc = p.getDocument(commands, pageSize);
-    doc.writeTo(os);
+      PageSize pageSize = new PageSize(0.0, 0.0, chart.getWidth(), chart.getHeight());
+      Document doc = p.getDocument(commands, pageSize);
+      doc.writeTo(os);
+    } else {
+      ((PDFBoxProcessor) p).savePdf(chart, os);
+    }
   }
 
   /**
@@ -92,5 +96,19 @@ public final class VectorGraphicsEncoder {
     EPS,
     PDF,
     SVG
+  }
+
+  private static class PDFBoxProcessor implements Processor {
+
+    @Override
+    public Document getDocument(CommandSequence arg0, PageSize arg1) {
+
+      return null;
+    }
+
+    public void savePdf(Chart chart, OutputStream os) throws IOException {
+
+      PdfboxGraphicsEncoder.savePdfboxGraphics(chart, os);
+    }
   }
 }
