@@ -285,7 +285,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
               chart.toolTips.addData(xOffset, yOffset, tt);
             }
           } else {
-            chart.toolTips.addData(
+            chart.toolTips.  addData(
                 xOffset,
                 yOffset,
                 chart.getXAxisFormat().format(x),

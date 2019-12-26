@@ -2,7 +2,9 @@ package org.knowm.xchart.internal.chartpart;
 
 import static org.knowm.xchart.internal.chartpart.ChartPart.SOLID_STROKE;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
@@ -14,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.style.Styler;
 
-/** Data labels can be put on all labels or configured to popup like a tooltip from a mouse over. */
+/**
+ * Tooltips can be put on all data points or configured to popup like a tooltip from a mouse over.
+ */
 public class ToolTips implements MouseMotionListener {
 
   // edge detection
@@ -27,6 +31,7 @@ public class ToolTips implements MouseMotionListener {
   private double rightEdge;
   private double topEdge;
   private double bottomEdge;
+
   /**
    * Constructor
    *

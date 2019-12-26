@@ -25,7 +25,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
   protected final List<String> infoContent = new ArrayList<>();
-  final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
+  final ToolTips toolTips; // ToolTips is here because XChartPanel needs it for mouse listening
   /** Chart Parts */
   protected AxisPair axisPair;
 
