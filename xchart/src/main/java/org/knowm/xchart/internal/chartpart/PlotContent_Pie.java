@@ -117,7 +117,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
-      if (!series.isEnabled()) {
+      if (!series.isEnabled() || series.getValue() == null) {
         continue;
       }
       total += series.getValue().doubleValue();
@@ -142,7 +142,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
     for (S series : map.values()) {
 
-      if (!series.isEnabled()) {
+      if (!series.isEnabled() || series.getValue() == null) {
         continue;
       }
 
@@ -221,7 +221,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       Color color = pieStyler.getPlotBackgroundColor();
       g.setColor(color);
       for (S series : map.values()) {
-        if (!series.isEnabled()) {
+        if (!series.isEnabled() || series.getValue() == null) {
           continue;
         }
         Number y = series.getValue();
@@ -243,7 +243,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
-      if (!series.isEnabled()) {
+      if (!series.isEnabled() || series.getValue() == null) {
         continue;
       }
 
