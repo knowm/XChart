@@ -3,10 +3,8 @@ package org.knowm.xchart.standalone.issues;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;

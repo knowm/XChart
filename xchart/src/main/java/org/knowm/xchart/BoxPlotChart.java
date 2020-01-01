@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -74,7 +73,9 @@ public class BoxPlotChart extends Chart<BoxPlotStyler, BoxPlotSeries> {
 
     if (seriesMap.keySet().contains(seriesName)) {
       throw new IllegalArgumentException(
-          "Series name > " + seriesName + " < has already been used. Use unique names for each series!!!");
+          "Series name > "
+              + seriesName
+              + " < has already been used. Use unique names for each series!!!");
     }
     if (yData == null) {
       throw new IllegalArgumentException("Y-Axis data connot be null !!!");
@@ -87,11 +88,17 @@ public class BoxPlotChart extends Chart<BoxPlotStyler, BoxPlotSeries> {
   public BoxPlotSeries updateBoxSeries(String seriesName, double[] newYData) {
 
     newXData.add(seriesName);
-    return updateBoxSeries(seriesName, newXData,
-        Utils.getNumberListFromDoubleArray(newYData), Utils.getNumberListFromDoubleArray(null));
+    return updateBoxSeries(
+        seriesName,
+        newXData,
+        Utils.getNumberListFromDoubleArray(newYData),
+        Utils.getNumberListFromDoubleArray(null));
   }
 
-  public BoxPlotSeries updateBoxSeries(String seriesName, List<?> newXData, List<? extends Number> newYData,
+  public BoxPlotSeries updateBoxSeries(
+      String seriesName,
+      List<?> newXData,
+      List<? extends Number> newYData,
       List<? extends Number> newErrorBarData) {
 
     Map<String, BoxPlotSeries> seriesMap = getSeriesMap();
@@ -117,10 +124,13 @@ public class BoxPlotChart extends Chart<BoxPlotStyler, BoxPlotSeries> {
 
   private void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler = new SeriesColorMarkerLineStyleCycler(
-        getStyler().getSeriesColors(), getStyler().getSeriesMarkers(), getStyler().getSeriesLines());
-    SeriesColorMarkerLineStyle seriesColorMarkerLineStyle = seriesColorMarkerLineStyleCycler
-        .getNextSeriesColorMarkerLineStyle();
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+        new SeriesColorMarkerLineStyleCycler(
+            getStyler().getSeriesColors(),
+            getStyler().getSeriesMarkers(),
+            getStyler().getSeriesLines());
+    SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+        seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
     for (BoxPlotSeries series : getSeriesMap().values()) {
 
       if (series.getLineStyle() == null) { // wasn't set manually

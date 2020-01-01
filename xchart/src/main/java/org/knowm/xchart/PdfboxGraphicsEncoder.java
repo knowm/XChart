@@ -1,5 +1,6 @@
 package org.knowm.xchart;
 
+import de.rototor.pdfbox.graphics2d.PdfBoxGraphics2D;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,15 +8,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.knowm.xchart.internal.chartpart.Chart;
-
-import de.rototor.pdfbox.graphics2d.PdfBoxGraphics2D;
 
 /**
  * A helper class with static methods for saving Charts as a PDF file

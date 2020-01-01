@@ -19,15 +19,22 @@ public class TestForIssue159 {
 
   public static void main(String[] args) throws Exception {
 
-    XYChart chart = new XYChartBuilder().width(800).height(600).title("LineChart").xAxisTitle("X").yAxisTitle("Y").build();
+    XYChart chart =
+        new XYChartBuilder()
+            .width(800)
+            .height(600)
+            .title("LineChart")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
+            .build();
 
     XYStyler styler = chart.getStyler();
     styler.setChartTitleVisible(false);
     styler.setLegendVisible(false);
-//    styler.chartBackgroundColor = Color.white;
-//
-//    styler.axisTicksLineVisible = false;
-//    styler.plotGridVerticalLinesVisible = false;
+    //    styler.chartBackgroundColor = Color.white;
+    //
+    //    styler.axisTicksLineVisible = false;
+    //    styler.plotGridVerticalLinesVisible = false;
 
     styler.setXAxisTitleVisible(false);
     styler.setYAxisTitleVisible(false);
@@ -54,8 +61,7 @@ public class TestForIssue159 {
     xData.add(Date.from(localDate.plusDays(3).atStartOfDay(ZoneId.systemDefault()).toInstant()));
     xData.add(Date.from(localDate.plusDays(4).atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-
-// Series
+    // Series
     XYSeries series = chart.addSeries("My Data", xData, yData);
     series.setLineColor(XChartSeriesColors.RED);
     series.setMarkerColor(Color.RED);

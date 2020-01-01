@@ -113,7 +113,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
       // System.out.println("Returning!");
       return;
     }
-    
+
     // minValue & maxValue is not set
     if (minValue > maxValue && minValue == Double.MAX_VALUE) {
       String datePattern = timeSpans.get(0).getDatePattern();

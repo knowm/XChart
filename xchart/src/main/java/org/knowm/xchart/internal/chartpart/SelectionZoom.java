@@ -198,8 +198,8 @@ public class SelectionZoom extends MouseAdapter implements ChartPart, ActionList
       end = x;
     }
     // If the two intervals overlap, then largest beginning must be smaller than the smallest ending
-    if (Math.max(start, chart.plot.bounds.getX()) < Math.min(end,
-        chart.plot.bounds.getX() + chart.plot.bounds.getWidth())) {
+    if (Math.max(start, chart.plot.bounds.getX())
+        < Math.min(end, chart.plot.bounds.getX() + chart.plot.bounds.getWidth())) {
       isOverlapping = true;
     }
     return isOverlapping;

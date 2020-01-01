@@ -109,7 +109,8 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
       }
     }
 
-    // System.out.println("Filtering between " + String.format("%.2f %.2f", minValue, maxValue) + " all: " + length + " rem: " + remainingDataCount);
+    // System.out.println("Filtering between " + String.format("%.2f %.2f", minValue, maxValue) + "
+    // all: " + length + " rem: " + remainingDataCount);
     if (remainingDataCount == length) {
       return false;
     }

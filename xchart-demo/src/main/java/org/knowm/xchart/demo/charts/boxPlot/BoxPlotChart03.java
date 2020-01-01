@@ -1,9 +1,8 @@
 package org.knowm.xchart.demo.charts.boxPlot;
 
 import java.util.Arrays;
-
-import org.knowm.xchart.BoxPlotChartBuilder;
 import org.knowm.xchart.BoxPlotChart;
+import org.knowm.xchart.BoxPlotChartBuilder;
 import org.knowm.xchart.BoxPlotSeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -28,13 +27,13 @@ public class BoxPlotChart03 implements ExampleChart<BoxPlotChart> {
     // Create Chart
     BoxPlotChart chart =
         new BoxPlotChartBuilder()
-        .width(600)
-        .height(450)
-        .title("Y Axis Logarithmic-box plot demo")
-        .xAxisTitle("Color")
-        .yAxisTitle("temperature")
-        .theme(ChartTheme.XChart)
-        .build();
+            .width(600)
+            .height(450)
+            .title("Y Axis Logarithmic-box plot demo")
+            .xAxisTitle("Color")
+            .yAxisTitle("temperature")
+            .theme(ChartTheme.XChart)
+            .build();
     // Series
     BoxPlotSeries[] boxSeries = new BoxPlotSeries[6];
     boxSeries[0] = chart.addSeries("aaa", Arrays.asList(40, 30, 20, 60, 50));

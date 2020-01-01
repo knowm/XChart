@@ -3,14 +3,12 @@ package org.knowm.xchart;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.util.Map.Entry;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
-import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -345,27 +343,28 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     }
   }
 
-//  /**
-//   * Set custom X-Axis category labels
-//   *
-//   * @param customCategoryLabels Map containing category name -> label mappings
-//   */
-//  public void setCustomCategoryLabels(Map<Object, Object> customCategoryLabels) {
-//
-//    // get the first series
-//    AxesChartSeriesCategory axesChartSeries = getSeriesMap().values().iterator().next();
-//    // get the first categories, could be Number Date or String
-//    List<?> categories = (List<?>) axesChartSeries.getXData();
-//
-//    Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
-//    for (Entry<Object, Object> entry : customCategoryLabels.entrySet()) {
-//      int index = categories.indexOf(entry.getKey());
-//      if (index == -1) {
-//        throw new IllegalArgumentException("Could not find category index for " + entry.getKey());
-//      }
-//      axisTickValueLabelMap.put((double) index, entry.getValue());
-//    }
-//
-//    setXAxisLabelOverrideMap(axisTickValueLabelMap);
-//  }
+  //  /**
+  //   * Set custom X-Axis category labels
+  //   *
+  //   * @param customCategoryLabels Map containing category name -> label mappings
+  //   */
+  //  public void setCustomCategoryLabels(Map<Object, Object> customCategoryLabels) {
+  //
+  //    // get the first series
+  //    AxesChartSeriesCategory axesChartSeries = getSeriesMap().values().iterator().next();
+  //    // get the first categories, could be Number Date or String
+  //    List<?> categories = (List<?>) axesChartSeries.getXData();
+  //
+  //    Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
+  //    for (Entry<Object, Object> entry : customCategoryLabels.entrySet()) {
+  //      int index = categories.indexOf(entry.getKey());
+  //      if (index == -1) {
+  //        throw new IllegalArgumentException("Could not find category index for " +
+  // entry.getKey());
+  //      }
+  //      axisTickValueLabelMap.put((double) index, entry.getValue());
+  //    }
+  //
+  //    setXAxisLabelOverrideMap(axisTickValueLabelMap);
+  //  }
 }

@@ -8,13 +8,12 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 /**
  * Pie Chart - oval with border
  *
- * <p>
- * Demonstrates the following:
+ * <p>Demonstrates the following:
  *
  * <ul>
- * <li>Pie Chart
- * <li>ChartBuilderPie
- * <li>Setting Non-circular to match container aspect ratio
+ *   <li>Pie Chart
+ *   <li>ChartBuilderPie
+ *   <li>Setting Non-circular to match container aspect ratio
  */
 public class PieChart07 implements ExampleChart<PieChart> {
 
@@ -29,7 +28,8 @@ public class PieChart07 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600).title("Pie Chart - oval with border").build();
+    PieChart chart =
+        new PieChartBuilder().width(800).height(600).title("Pie Chart - oval with border").build();
 
     // Customize Chart
     chart.getStyler().setCircular(false);
