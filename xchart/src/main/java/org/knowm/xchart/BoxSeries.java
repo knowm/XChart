@@ -4,9 +4,9 @@ import java.util.List;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 
-public class BoxPlotSeries extends AxesChartSeriesCategory {
+public class BoxSeries extends AxesChartSeriesCategory {
 
-  public BoxPlotSeries(
+  public BoxSeries(
       String name,
       List<?> xData,
       List<? extends Number> yData,

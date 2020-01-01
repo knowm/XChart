@@ -17,54 +17,54 @@ import org.knowm.xchart.style.BoxPlotStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
 
-public class BoxPlotChart extends Chart<BoxPlotStyler, BoxPlotSeries> {
+public class BoxChart extends Chart<BoxPlotStyler, BoxSeries> {
 
   private ArrayList xData = new ArrayList();
   private ArrayList newXData = new ArrayList();
 
-  protected BoxPlotChart(int width, int height) {
+  protected BoxChart(int width, int height) {
 
     super(width, height, new BoxPlotStyler());
-    axisPair = new AxisPair<BoxPlotStyler, BoxPlotSeries>(this);
-    plot = new Plot_BoxPlot<BoxPlotStyler, BoxPlotSeries>(this);
-    legend = new Legend_Marker<BoxPlotStyler, BoxPlotSeries>(this);
-    infoPanel = new InfoPanel<BoxPlotStyler, BoxPlotSeries>(this);
+    axisPair = new AxisPair<BoxPlotStyler, BoxSeries>(this);
+    plot = new Plot_BoxPlot<BoxPlotStyler, BoxSeries>(this);
+    legend = new Legend_Marker<BoxPlotStyler, BoxSeries>(this);
+    infoPanel = new InfoPanel<BoxPlotStyler, BoxSeries>(this);
   }
 
-  public BoxPlotChart(int width, int height, Theme theme) {
+  public BoxChart(int width, int height, Theme theme) {
 
     this(width, height);
     styler.setTheme(theme);
   }
 
-  public BoxPlotChart(int width, int height, ChartTheme chartTheme) {
+  public BoxChart(int width, int height, ChartTheme chartTheme) {
     this(width, height, chartTheme.newInstance(chartTheme));
   }
 
-  public BoxPlotChart(BoxPlotChartBuilder chartBuilder) {
+  public BoxChart(BoxChartBuilder chartBuilder) {
     this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
     setTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
   }
 
-  public BoxPlotSeries addSeries(String seriesName, int[] yData) {
+  public BoxSeries addSeries(String seriesName, int[] yData) {
 
     return addSeries(seriesName, Utils.getNumberListFromIntArray(yData));
   }
 
-  public BoxPlotSeries addSeries(String seriesName, double[] yData) {
+  public BoxSeries addSeries(String seriesName, double[] yData) {
 
     return addSeries(seriesName, Utils.getNumberListFromDoubleArray(yData));
   }
 
-  public BoxPlotSeries addSeries(String seriesName, List<? extends Number> yData) {
+  public BoxSeries addSeries(String seriesName, List<? extends Number> yData) {
 
     // Sanity checks
     sanityCheck(seriesName, yData);
-    BoxPlotSeries series = null;
+    BoxSeries series = null;
     xData.add(seriesName);
-    series = new BoxPlotSeries(seriesName, xData, yData, null, DataType.String);
+    series = new BoxSeries(seriesName, xData, yData, null, DataType.String);
     seriesMap.put(seriesName, series);
     return series;
   }
@@ -85,7 +85,7 @@ public class BoxPlotChart extends Chart<BoxPlotStyler, BoxPlotSeries> {
     }
   }
 
-  public BoxPlotSeries updateBoxSeries(String seriesName, double[] newYData) {
+  public BoxSeries updateBoxSeries(String seriesName, double[] newYData) {
 
     newXData.add(seriesName);
     return updateBoxSeries(
@@ -95,14 +95,14 @@ public class BoxPlotChart extends Chart<BoxPlotStyler, BoxPlotSeries> {
         Utils.getNumberListFromDoubleArray(null));
   }
 
-  public BoxPlotSeries updateBoxSeries(
+  public BoxSeries updateBoxSeries(
       String seriesName,
       List<?> newXData,
       List<? extends Number> newYData,
       List<? extends Number> newErrorBarData) {
 
-    Map<String, BoxPlotSeries> seriesMap = getSeriesMap();
-    BoxPlotSeries series = seriesMap.get(seriesName);
+    Map<String, BoxSeries> seriesMap = getSeriesMap();
+    BoxSeries series = seriesMap.get(seriesName);
 
     if (series == null) {
       throw new IllegalArgumentException("Series name > " + seriesName + " < not found !!!");
@@ -131,7 +131,7 @@ public class BoxPlotChart extends Chart<BoxPlotStyler, BoxPlotSeries> {
             getStyler().getSeriesLines());
     SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
         seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
-    for (BoxPlotSeries series : getSeriesMap().values()) {
+    for (BoxSeries series : getSeriesMap().values()) {
 
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());

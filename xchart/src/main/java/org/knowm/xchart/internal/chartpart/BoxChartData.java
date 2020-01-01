@@ -8,8 +8,8 @@ import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
 
-/** All data used to calculate box plot */
-public class BoxPlotData<ST extends AxesChartStyler, S extends AxesChartSeries> {
+/** All data used to calculate box chart */
+public class BoxChartData<ST extends AxesChartStyler, S extends AxesChartSeries> {
 
   // Used to store box plot first quartile
   public static final int FIRST_PLOT_QUARTILES_INDEX = 0;
