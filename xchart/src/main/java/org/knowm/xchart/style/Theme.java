@@ -140,6 +140,20 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   Color getToolTipHighlightColor();
 
+  // Cursor ///////////////////////////////
+
+  boolean isCursorEnabled();
+
+  Color getCursorColor();
+
+  float getCursorSize();
+
+  Font getCursorFont();
+
+  Color getCursorFontColor();
+
+  Color getCursorBackgroundColor();
+
   // Bar Charts ///////////////////////////////
 
   double getAvailableSpaceFill();

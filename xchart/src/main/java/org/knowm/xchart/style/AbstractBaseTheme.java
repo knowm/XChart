@@ -393,6 +393,44 @@ public abstract class AbstractBaseTheme implements Theme {
     return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
   }
 
+  // Cursor ///////////////////////////////
+
+  @Override
+  public boolean isCursorEnabled() {
+
+    return false;
+  }
+
+  @Override
+  public Color getCursorColor() {
+
+    return Color.BLACK;
+  }
+
+  @Override
+  public float getCursorSize() {
+
+    return 1;
+  }
+
+  @Override
+  public Font getCursorFont() {
+
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 16);
+  }
+
+  @Override
+  public Color getCursorFontColor() {
+
+    return Color.WHITE;
+  }
+
+  @Override
+  public Color getCursorBackgroundColor() {
+
+    return Color.GRAY;
+  }
+
   // Category Charts ///////////////////////////////
 
   @Override

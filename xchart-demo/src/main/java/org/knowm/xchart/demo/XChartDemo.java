@@ -49,6 +49,7 @@ import org.knowm.xchart.demo.charts.line.LineChart05;
 import org.knowm.xchart.demo.charts.line.LineChart06;
 import org.knowm.xchart.demo.charts.line.LineChart07;
 import org.knowm.xchart.demo.charts.line.LineChart08;
+import org.knowm.xchart.demo.charts.line.LineChart09;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart02;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart03;
@@ -367,6 +368,11 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode =
         new DefaultMutableTreeNode(
             new ChartInfo("LineChart08 - Step Rendering", new LineChart08().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode =
+        new DefaultMutableTreeNode(
+            new ChartInfo("LineChart09 - Cursor", new LineChart09().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Scatter

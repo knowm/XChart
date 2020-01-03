@@ -10,6 +10,7 @@ import javax.swing.filechooser.FileFilter;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.Cursor;
 import org.knowm.xchart.internal.chartpart.ToolTips;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
@@ -51,6 +52,9 @@ public class XChartPanel<T extends Chart> extends JPanel {
         this.addMouseMotionListener(mml);
       }
     }
+
+    // Mouse motion listener for Cursor
+    this.addMouseMotionListener(chart.getCursor());
 
     // Control+S key listener for saving chart
     KeyStroke ctrlS =

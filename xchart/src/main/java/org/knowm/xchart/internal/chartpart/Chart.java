@@ -26,6 +26,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
   protected final List<String> infoContent = new ArrayList<>();
   final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
+  final Cursor cursor;
   /** Chart Parts */
   protected AxisPair axisPair;
 
@@ -57,6 +58,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.styler = styler;
 
     this.toolTips = new ToolTips(styler);
+    this.cursor = new Cursor(styler);
 
     this.chartTitle = new ChartTitle<ST, S>(this);
   }
@@ -94,6 +96,11 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public ToolTips getToolTips() {
 
     return toolTips;
+  }
+
+  public Cursor getCursor() {
+
+    return cursor;
   }
 
   /** Meta Data Getters and Setters */
