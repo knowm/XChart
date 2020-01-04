@@ -4,31 +4,27 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
 
-/**
- * All data used to calculate box plot
- *
- */
-public class BoxPlotData<ST extends AxesChartStyler, S extends AxesChartSeries> {
+/** All data used to calculate box chart */
+public class BoxChartData<ST extends AxesChartStyler, S extends AxesChartSeries> {
 
   // Used to store box plot first quartile
-  public final static int FIRST_PLOT_QUARTILES_INDEX = 0;
+  public static final int FIRST_PLOT_QUARTILES_INDEX = 0;
   // Used to store box plot second quartile
-  public final static int SECOND_PLOT_QUARTILES_INDEX = 1;
+  public static final int SECOND_PLOT_QUARTILES_INDEX = 1;
   // Uesd to store box plot third quartiles
-  public final static int THIRD_PLOT_QUARTILES_INDEX = 2;
+  public static final int THIRD_PLOT_QUARTILES_INDEX = 2;
   // Used to store box plot max value
-  public final static int MAX_BOX_VALUE_INDEX = 3;
+  public static final int MAX_BOX_VALUE_INDEX = 3;
   // Uesd to store box plot min value
-  public final static int MIN_BOX_VALUE_INDEX = 4;
+  public static final int MIN_BOX_VALUE_INDEX = 4;
   // Uesd to store box plot average value
-  public final static int AVERAGE_VALUE_INDEX = 5;
+  public static final int AVERAGE_VALUE_INDEX = 5;
   // Uesd to store the total number of BoxPlots
-  public final static int BOX_DATAS_LENGTH = 6;
+  public static final int BOX_DATAS_LENGTH = 6;
 
   public Double[][] getBoxPlotData(Map<String, S> seriesMap, ST boxPlotStyler) {
 
@@ -89,37 +85,44 @@ public class BoxPlotData<ST extends AxesChartStyler, S extends AxesChartSeries> 
         } else {
           // when When firstPlotQuartiles,secondPlotQuartiles,thirdPlotQuartiles are not
           // integers, the calculation formula is shown below
-          firstPlotQuartiles = yValue[(int) firstPlotQuartiles - 1]
-              + (yValue[(int) firstPlotQuartiles] - yValue[(int) firstPlotQuartiles - 1]) * (firstPlotQuartiles % 1);
+          firstPlotQuartiles =
+              yValue[(int) firstPlotQuartiles - 1]
+                  + (yValue[(int) firstPlotQuartiles] - yValue[(int) firstPlotQuartiles - 1])
+                      * (firstPlotQuartiles % 1);
         }
         boxPlotYData[boxNo][FIRST_PLOT_QUARTILES_INDEX] = firstPlotQuartiles;
 
         if (secondPlotQuartiles % 1 == 0) {
           secondPlotQuartiles = yValue[(int) secondPlotQuartiles - 1];
         } else {
-          secondPlotQuartiles = yValue[(int) secondPlotQuartiles - 1]
-              + (yValue[(int) secondPlotQuartiles] - yValue[(int) secondPlotQuartiles - 1]) * (secondPlotQuartiles % 1);
+          secondPlotQuartiles =
+              yValue[(int) secondPlotQuartiles - 1]
+                  + (yValue[(int) secondPlotQuartiles] - yValue[(int) secondPlotQuartiles - 1])
+                      * (secondPlotQuartiles % 1);
         }
         boxPlotYData[boxNo][SECOND_PLOT_QUARTILES_INDEX] = secondPlotQuartiles;
 
         if (thirdPlotQuartiles % 1 == 0) {
           thirdPlotQuartiles = yValue[(int) thirdPlotQuartiles - 1];
         } else {
-          thirdPlotQuartiles = yValue[(int) thirdPlotQuartiles - 1]
-              + (yValue[(int) thirdPlotQuartiles] - yValue[(int) thirdPlotQuartiles - 1]) * (thirdPlotQuartiles % 1);
+          thirdPlotQuartiles =
+              yValue[(int) thirdPlotQuartiles - 1]
+                  + (yValue[(int) thirdPlotQuartiles] - yValue[(int) thirdPlotQuartiles - 1])
+                      * (thirdPlotQuartiles % 1);
         }
         boxPlotYData[boxNo][THIRD_PLOT_QUARTILES_INDEX] = thirdPlotQuartiles;
         // Box plot max value = thirdPlotQuartiles + 1.5 * (thirdPlotQuartiles -
         // firstPlotQuartiles)
-        boxPlotYData[boxNo][MAX_BOX_VALUE_INDEX] = thirdPlotQuartiles + 1.5 * (thirdPlotQuartiles - firstPlotQuartiles);
+        boxPlotYData[boxNo][MAX_BOX_VALUE_INDEX] =
+            thirdPlotQuartiles + 1.5 * (thirdPlotQuartiles - firstPlotQuartiles);
         // Box plot min value = firstPlotQuartiles - 1.5 * (thirdPlotQuartiles -
         // firstPlotQuartiles)
-        boxPlotYData[boxNo][MIN_BOX_VALUE_INDEX] = firstPlotQuartiles - 1.5 * (thirdPlotQuartiles - firstPlotQuartiles);
+        boxPlotYData[boxNo][MIN_BOX_VALUE_INDEX] =
+            firstPlotQuartiles - 1.5 * (thirdPlotQuartiles - firstPlotQuartiles);
         // Box plot average
         boxPlotYData[boxNo][AVERAGE_VALUE_INDEX] = yTotleValue / yData.size();
         boxNo++;
       }
-
     }
     return boxPlotYData;
   }

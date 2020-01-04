@@ -1,10 +1,13 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
@@ -26,8 +29,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   private final Rectangle2D.Double rightYAxisBounds;
   private Axis<ST, S> leftMainYAxis;
   private Axis<ST, S> rightMainYAxis;
-  private Map<String, Map<Double, Object>> axisLabelOverrideMap =
-      new HashMap<String, Map<Double, Object>>();
+  private Map<String, Map<Object, Object>> customTickLabelsMap = new HashMap<>();
 
   /**
    * Constructor
@@ -461,26 +463,34 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
       Map<String, S> seriesMap = chart.getSeriesMap();
       ST boxPlotStyler = chart.getStyler();
-      BoxPlotData<ST, S> boxPlotData = new BoxPlotData<>();
+      BoxChartData<ST, S> boxChartData = new BoxChartData<>();
       int numBoxPlot = seriesMap.size();
-      Double boxPlotYData[][] = new Double[numBoxPlot][BoxPlotData.BOX_DATAS_LENGTH];
-      boxPlotYData = boxPlotData.getBoxPlotData(seriesMap, boxPlotStyler);
+      Double boxPlotYData[][] = new Double[numBoxPlot][BoxChartData.BOX_DATAS_LENGTH];
+      boxPlotYData = boxChartData.getBoxPlotData(seriesMap, boxPlotStyler);
 
       for (int noNumBox = 0; noNumBox < numBoxPlot; noNumBox++) {
 
-        if (boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX] != null && !boxPlotStyler.isYAxisLogarithmic()
-            && overrideYAxisMinValue > boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX]) {
-          overrideYAxisMinValue = boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX];
-        } else if (boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX] != null && boxPlotStyler.isYAxisLogarithmic()
-            && overrideYAxisMinValue > Math.pow(10, boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX])) {
-          overrideYAxisMinValue = Math.pow(10, boxPlotYData[noNumBox][BoxPlotData.MIN_BOX_VALUE_INDEX]);
+        if (boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX] != null
+            && !boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMinValue > boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX]) {
+          overrideYAxisMinValue = boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX];
+        } else if (boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX] != null
+            && boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMinValue
+                > Math.pow(10, boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX])) {
+          overrideYAxisMinValue =
+              Math.pow(10, boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX]);
         }
-        if (boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX] != null && !boxPlotStyler.isYAxisLogarithmic()
-            && overrideYAxisMaxValue < boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX]) {
-          overrideYAxisMaxValue = boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX];
-        } else if (boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX] != null && boxPlotStyler.isYAxisLogarithmic()
-            && overrideYAxisMaxValue < Math.pow(10, boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX])) {
-          overrideYAxisMaxValue = Math.pow(10, boxPlotYData[noNumBox][BoxPlotData.MAX_BOX_VALUE_INDEX]);
+        if (boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX] != null
+            && !boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMaxValue < boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX]) {
+          overrideYAxisMaxValue = boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX];
+        } else if (boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX] != null
+            && boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMaxValue
+                < Math.pow(10, boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX])) {
+          overrideYAxisMaxValue =
+              Math.pow(10, boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX]);
         }
       }
     }
@@ -488,13 +498,15 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     // override min and maxValue if specified
     if (chart.getStyler().getYAxisMin(yAxis.getYIndex()) != null) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin(yAxis.getYIndex());
-    } else if (chart.getStyler().getYAxisMin() != null && !(chart.getStyler() instanceof BoxPlotStyler)) {
+    } else if (chart.getStyler().getYAxisMin() != null
+        && !(chart.getStyler() instanceof BoxPlotStyler)) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin();
     }
 
     if (chart.getStyler().getYAxisMax(yAxis.getYIndex()) != null) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax(yAxis.getYIndex());
-    } else if (chart.getStyler().getYAxisMax() != null && !(chart.getStyler() instanceof BoxPlotStyler)) {
+    } else if (chart.getStyler().getYAxisMax() != null
+        && !(chart.getStyler() instanceof BoxPlotStyler)) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax();
     }
 
@@ -520,28 +532,34 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     return null; // should never be called
   }
 
-  public Rectangle2D.Double getLeftYAxisBounds() {
+  Rectangle2D.Double getLeftYAxisBounds() {
 
     return leftYAxisBounds;
   }
 
-  public Rectangle2D.Double getRightYAxisBounds() {
+  Rectangle2D.Double getRightYAxisBounds() {
 
     return rightYAxisBounds;
   }
 
-  public Axis<ST, S> getLeftMainYAxis() {
+  Axis<ST, S> getLeftMainYAxis() {
 
     return leftMainYAxis;
   }
 
-  public Axis<ST, S> getRightMainYAxis() {
+  Axis<ST, S> getRightMainYAxis() {
 
     return rightMainYAxis;
   }
 
-  public Map<String, Map<Double, Object>> getAxisLabelOverrideMap() {
+  void addCustomTickLabelMap(String axis, Map<Object, Object> overrideMap) {
 
-    return axisLabelOverrideMap;
+    customTickLabelsMap.put(axis, overrideMap);
+  }
+
+  /** Helper method to get axis tick label override map */
+  Map<Object, Object> getCustomTickLabelsMap(Axis.Direction direction, int index) {
+
+    return customTickLabelsMap.get((direction.name() + index));
   }
 }

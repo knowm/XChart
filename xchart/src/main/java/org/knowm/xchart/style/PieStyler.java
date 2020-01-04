@@ -1,8 +1,7 @@
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
-
 import java.awt.*;
+import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 
 /** @author timmolter */
 public class PieStyler extends Styler {
@@ -23,7 +22,6 @@ public class PieStyler extends Styler {
   public PieStyler() {
 
     setAllStyles();
-
   }
 
   @Override
@@ -255,7 +253,7 @@ public class PieStyler extends Styler {
 
   // used to add border width
   public PieStyler setBorderWidth(double borderWidth) {
-    this.borderWidth = (float)borderWidth;
+    this.borderWidth = (float) borderWidth;
     return this;
   }
 

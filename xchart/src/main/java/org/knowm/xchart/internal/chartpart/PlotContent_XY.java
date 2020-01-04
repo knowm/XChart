@@ -168,7 +168,12 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
                     smoothPath = new Path2D.Double();
                     smoothPath.moveTo(previousX, previousY);
                   }
-                  smoothPath.curveTo((previousX + xOffset) / 2, previousY, (previousX + xOffset) / 2, yOffset, xOffset,
+                  smoothPath.curveTo(
+                      (previousX + xOffset) / 2,
+                      previousY,
+                      (previousX + xOffset) / 2,
+                      yOffset,
+                      xOffset,
                       yOffset);
                 } else {
                   line.setLine(previousX, previousY, xOffset, yOffset);
@@ -200,7 +205,12 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
             }
             if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
               if (series.isSmooth()) {
-                path.curveTo((previousX + xOffset) / 2, previousY, (previousX + xOffset) / 2, yOffset, xOffset,
+                path.curveTo(
+                    (previousX + xOffset) / 2,
+                    previousY,
+                    (previousX + xOffset) / 2,
+                    yOffset,
+                    xOffset,
                     yOffset);
               } else {
                 path.lineTo(xOffset, yOffset);

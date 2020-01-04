@@ -22,8 +22,12 @@ public class TestForIssue363 implements ExampleChart<PieChart> {
   public PieChart getChart() {
 
     // Create Chart
-    PieChart chart = new PieChartBuilder().width(800).height(600)
-        .title("PieChart - Pie Chart with Pie Style with DirectionType CLOCKWISE").build();
+    PieChart chart =
+        new PieChartBuilder()
+            .width(800)
+            .height(600)
+            .title("PieChart - Pie Chart with Pie Style with DirectionType CLOCKWISE")
+            .build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);

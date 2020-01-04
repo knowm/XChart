@@ -62,7 +62,7 @@ public class Utils {
 
   public static List<Double> getGeneratedDataAsList(int length) {
 
-    List<Double> generatedData = new ArrayList<Double>();
+    List<Double> generatedData = new ArrayList<>();
     for (int i = 1; i < length + 1; i++) {
       generatedData.add((double) i);
     }

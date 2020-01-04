@@ -73,6 +73,12 @@
 				<version>0.13</version>
 				<optional>true</optional>
 			</dependency>
+			<dependency>
+				<groupId>de.rototor.pdfbox</groupId>
+				<artifactId>graphics2d</artifactId>
+				<version>0.25</version>
+				<optional>true</optional>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -141,7 +147,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.0</version>
+				<version>3.2.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
