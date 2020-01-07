@@ -398,6 +398,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
       XChartPanelPopupMenu menu = new XChartPanelPopupMenu();
       menu.show(e.getComponent(), e.getX(), e.getY());
+      menu.getGraphics().dispose();
     }
   }
 
