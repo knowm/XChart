@@ -233,6 +233,16 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     return new double[] {min, max};
   }
 
+  /**
+   * Is xData.length equal to xDataAll.length
+   *
+   * @return true: equal; false: not equal
+   */
+  public boolean isAllXData() {
+
+    return xData.length == xDataAll.length;
+  }
+
   public double[] getXData() {
 
     return xData;

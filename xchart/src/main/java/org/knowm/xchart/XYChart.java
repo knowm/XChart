@@ -465,9 +465,15 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     double minValue = getChartXFromCoordinate(screenXmin);
     double maxValue = getChartXFromCoordinate(screenXmax);
     boolean filtered = false;
-    for (XYSeries series : getSeriesMap().values()) {
-      boolean f = series.filterXByValue(minValue, maxValue);
-      if (f) {
+    if (isOnePointSeleted(minValue, maxValue)) {
+      for (XYSeries series : getSeriesMap().values()) {
+        boolean f = series.filterXByValue(minValue, maxValue);
+        if (f) {
+          filtered = true;
+        }
+      }
+    } else {
+      if (!isAllPointsSelected()) {
         filtered = true;
       }
     }
@@ -479,5 +485,45 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     for (XYSeries series : getSeriesMap().values()) {
       series.filterXByIndex(startIndex, endIndex);
     }
+  }
+
+  /**
+   * Is there a point selected in all series.
+   *
+   * @param minValue
+   * @param maxValue
+   * @return
+   */
+  private boolean isOnePointSeleted(double minValue, double maxValue) {
+
+    boolean isOnePointSeleted = false;
+    double[] xData = null;
+    for (XYSeries series : getSeriesMap().values()) {
+      xData = series.getXData();
+      for (double x : xData) {
+        if (x >= minValue && x <= maxValue) {
+          isOnePointSeleted = true;
+          break;
+        }
+      }
+    }
+    return isOnePointSeleted;
+  }
+
+  /**
+   * Whether all points are selected in all series.
+   *
+   * @return
+   */
+  private boolean isAllPointsSelected() {
+
+    boolean isAllPointsSelected = true;
+    for (XYSeries series : getSeriesMap().values()) {
+      if (!series.isAllXData()) {
+        isAllPointsSelected = false;
+        break;
+      }
+    }
+    return isAllPointsSelected;
   }
 }
