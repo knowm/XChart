@@ -302,6 +302,15 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
                 chart.getYAxisFormat().format(yOrig));
           }
         }
+
+        if (xyStyler.isCursorEnabled()) {
+          chart.cursor.addData(
+              xOffset,
+              yOffset,
+              chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat().format(yOrig),
+              series.getName());
+        }
       }
 
       if (smoothPath != null) {

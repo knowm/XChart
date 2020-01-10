@@ -61,6 +61,7 @@ import org.knowm.xchart.demo.charts.line.LineChart05;
 import org.knowm.xchart.demo.charts.line.LineChart06;
 import org.knowm.xchart.demo.charts.line.LineChart07;
 import org.knowm.xchart.demo.charts.line.LineChart08;
+import org.knowm.xchart.demo.charts.line.LineChart09;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart02;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart03;
@@ -332,6 +333,7 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     exList.add(new LineChart06());
     exList.add(new LineChart07());
     exList.add(new LineChart08());
+    exList.add(new LineChart09());
 
     // Scatter
     exList.add(new ScatterChart01());

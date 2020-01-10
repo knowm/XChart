@@ -59,6 +59,13 @@ public abstract class Styler {
   private Color toolTipBorderColor;
   private Font toolTipFont;
   private Color toolTipHighlightColor;
+  // Cursor ////////////////////////////////
+  private boolean isCursorEnabled;
+  private Color cursorColor;
+  private float cursorSize;
+  private Font cursorFont;
+  private Color cursorFontColor;
+  private Color cursorBackgroundColor;
   // Annotations ///////////////////////////////
   private Font annotationsFont;
   private Color annotationsFontColor;
@@ -123,6 +130,14 @@ public abstract class Styler {
     toolTipBorderColor = theme.getToolTipBorderColor();
     toolTipFont = theme.getToolTipFont();
     toolTipHighlightColor = theme.getToolTipHighlightColor();
+
+    // Cursor ////////////////////////////////
+    this.isCursorEnabled = theme.isCursorEnabled();
+    this.cursorColor = theme.getCursorColor();
+    this.cursorSize = theme.getCursorSize();
+    this.cursorFont = theme.getCursorFont();
+    this.cursorFontColor = theme.getCursorFontColor();
+    this.cursorBackgroundColor = theme.getCursorBackgroundColor();
 
     // Annotations ///////////////////////////////
     annotationsFont = theme.getAnnotationFont();
@@ -679,6 +694,72 @@ public abstract class Styler {
   public Styler setToolTipHighlightColor(Color toolTipHighlightColor) {
 
     this.toolTipHighlightColor = toolTipHighlightColor;
+    return this;
+  }
+
+  // Cursor ///////////////////////////////
+
+  public boolean isCursorEnabled() {
+    return isCursorEnabled;
+  }
+
+  public Styler setCursorEnabled(boolean isCursorEnabled) {
+
+    this.isCursorEnabled = isCursorEnabled;
+    return this;
+  }
+
+  public Color getCursorColor() {
+    return cursorColor;
+  }
+
+  public Styler setCursorColor(Color cursorColor) {
+
+    this.cursorColor = cursorColor;
+    return this;
+  }
+
+  public float getCursorSize() {
+
+    return cursorSize;
+  }
+
+  public Styler setCursorSize(float cursorSize) {
+
+    this.cursorSize = cursorSize;
+    return this;
+  }
+
+  public Font getCursorFont() {
+
+    return cursorFont;
+  }
+
+  public Styler setCursorFont(Font cursorFont) {
+
+    this.cursorFont = cursorFont;
+    return this;
+  }
+
+  public Color getCursorFontColor() {
+
+    return cursorFontColor;
+  }
+
+  public Styler setCursorFontColor(Color cursorFontColor) {
+
+    this.cursorFontColor = cursorFontColor;
+    return this;
+  }
+
+  public Color getCursorBackgroundColor() {
+
+    return cursorBackgroundColor;
+  }
+
+  public Styler setCursorBackgroundColor(Color cursorBackgroundColor) {
+
+    this.cursorBackgroundColor = cursorBackgroundColor;
     return this;
   }
 
