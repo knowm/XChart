@@ -14,7 +14,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.series.MarkerSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;

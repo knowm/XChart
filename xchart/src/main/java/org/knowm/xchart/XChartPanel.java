@@ -10,7 +10,6 @@ import javax.swing.filechooser.FileFilter;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.Cursor;
 import org.knowm.xchart.internal.chartpart.ToolTips;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
