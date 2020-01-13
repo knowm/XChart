@@ -3,6 +3,7 @@ package org.knowm.xchart.style;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 /** @author timmolter */
@@ -61,6 +62,7 @@ public abstract class AxesChartStyler extends Styler {
   private String datePattern;
   private String xAxisDecimalPattern;
   private String yAxisDecimalPattern;
+  private Map<Integer, String> yAxisGroupDecimalPatternMap;
   private boolean xAxisLogarithmicDecadeOnly;
   private boolean yAxisLogarithmicDecadeOnly;
 
@@ -114,6 +116,7 @@ public abstract class AxesChartStyler extends Styler {
     this.datePattern = null; // if not null, this override pattern will be used
     this.xAxisDecimalPattern = null;
     this.yAxisDecimalPattern = null;
+    this.yAxisGroupDecimalPatternMap = new HashMap<>();
     this.xAxisLogarithmicDecadeOnly = true;
     this.yAxisLogarithmicDecadeOnly = true;
 
@@ -794,6 +797,16 @@ public abstract class AxesChartStyler extends Styler {
 
     this.yAxisDecimalPattern = yAxisDecimalPattern;
     return this;
+  }
+
+  public Map<Integer, String> getYAxisGroupDecimalPatternMap() {
+
+    return yAxisGroupDecimalPatternMap;
+  }
+
+  public void putYAxisGroupDecimalPatternMap(int yIndex, String yAxisDecimalPattern) {
+
+    yAxisGroupDecimalPatternMap.put(yIndex, yAxisDecimalPattern);
   }
 
   public boolean isXAxisLogarithmicDecadeOnly() {

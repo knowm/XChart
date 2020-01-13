@@ -37,6 +37,30 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     calculate();
   }
 
+  /**
+   * Constructor
+   *
+   * @param axisDirection
+   * @param workingSpace
+   * @param minValue
+   * @param maxValue
+   * @param styler
+   * @param yIndex
+   */
+  public AxisTickCalculator_Logarithmic(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler,
+      int yIndex) {
+
+    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    numberLogFormatter = new NumberLogFormatter(styler, axisDirection, yIndex);
+    axisFormat = numberLogFormatter;
+    calculate();
+  }
+
   private void calculate() {
 
     // a check if all axis data are the exact same values

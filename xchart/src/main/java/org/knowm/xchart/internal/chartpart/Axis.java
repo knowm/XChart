@@ -463,10 +463,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 
         return new AxisTickCalculator_Logarithmic(
-            getDirection(), workingSpace, min, max, axesChartStyler);
+            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
       } else {
         return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, axesChartStyler);
+            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
       }
     }
   }

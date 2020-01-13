@@ -39,6 +39,30 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
     calculate();
   }
 
+  /**
+   * Constructor
+   *
+   * @param axisDirection
+   * @param workingSpace
+   * @param minValue
+   * @param maxValue
+   * @param styler
+   * @param yIndex
+   */
+  public AxisTickCalculator_Number(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler,
+      int yIndex) {
+
+    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue, yIndex);
+    axisFormat = numberFormatter;
+    calculate();
+  }
+
   private void calculate() {
 
     // a check if all axis data are the exact same values
