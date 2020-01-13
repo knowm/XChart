@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -226,6 +228,17 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   Format getYAxisFormat() {
 
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
+  }
+
+  Format getYAxisFormat(String yAxisDecimalPattern) {
+
+    Format format = null;
+    if (yAxisDecimalPattern != null) {
+      format = new DecimalFormat(yAxisDecimalPattern);
+    } else {
+      format = axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
+    }
+    return format;
   }
 
   public ArrayList<ChartPart> getPlotParts() {

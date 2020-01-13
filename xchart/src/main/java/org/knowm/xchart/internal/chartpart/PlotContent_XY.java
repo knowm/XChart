@@ -299,7 +299,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
                 xOffset,
                 yOffset,
                 chart.getXAxisFormat().format(x),
-                chart.getYAxisFormat().format(yOrig));
+                chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
           }
         }
 
@@ -308,7 +308,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
               xOffset,
               yOffset,
               chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat().format(yOrig),
+              chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig),
               series.getName());
         }
       }

@@ -271,6 +271,13 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       if (!mainYAxisUsed) {
         yAxis.setDataType(series.getyAxisDataType());
       }
+
+      if (series.getYAxisDecimalPattern() != null) {
+        chart
+            .getStyler()
+            .putYAxisGroupDecimalPatternMap(
+                series.getYAxisGroup(), series.getYAxisDecimalPattern());
+      }
     }
 
     // calculate axis min and max
