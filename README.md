@@ -219,6 +219,43 @@ Series render styles include: `Candle`, `HiLo`.
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_BoxPlot.png)
 
 `BoxPlot` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. Each box chart is calculated from the corresponding series.
+Create a BoxPlot via a BoxChartBuilder, style chart, add a series to it
+```java
+// Create Chart
+BoxChart chart = new BoxChartBuilder().title("box plot demo").xAxisTitle("Color").yAxisTitle("temperature").theme(ChartTheme.GGPlot2).build();
+// Customize Chart
+chart.getStyler().setShowWithinAreaPoint(true);
+// Series
+chart.addSeries("seriesName", Arrays.asList(40, -30, 20, 60, 50));
+new SwingWrapper(chart).displayChart();
+```
+The BoxPlot calculation method is as follows:  
+1, If the calculation results are integers, the corresponding position is taken  
+For example, say the y value are y<sub>1</sub> = 1, y<sub>2</sub> = 2, y<sub>3</sub> = 3. And n = 3;  
+The first quartile position should be q1 = (n + 1) /4  
+The second quartile position should be q2 = 2 * (n + 1) /4  
+The third quartile position should be q3 = 3 * (n + 1) /4  
+In this way we can calculate the positions:  
+q1 = (3 + 1) / 4 = 1  
+q2 = 2 * (3 + 1) / 4 = 2  
+q3 = 3 * (3 + 1) / 4 = 3  
+Q1 = y<sub>q1</sub> = 1, Q2 = y<sub>q2</sub> = 2, Q3 = y<sub>q3</sub>  
+Then the first quartile Q1 = 1, the second quartile Q2 = 2, and the third quartile Q3 = 3  
+
+2, If the calculation results are NOT integers, the positions should be calculated with the following formula  
+For another example, say the y value are y<sub>1</sub> = 1, y<sub>2</sub> = 2, y<sub>3</sub> = 3, y<sub>4</sub> = 4. And n = 4;  
+q1 = (n + 1) / 4 = (4 + 1) / 4 = 1.25  
+q2 = 2 * (n + 1) / 4 = 2 * (4 + 1) / 4 = 2.5  
+q3 = 3 * (n + 1) / 4 = 3 * (4 + 1) / 4 = 3.75  
+As we can see, the calculated values are NOT integers. In this case we shold calculate in the following way:  
+Q = y<sub>(int)q</sub> + (y<sub>(int)q + 1</sub> - y<sub>(int)q</sub>) * (q % 1)  
+so  
+the first quartile: Q1 = y<sub>(int)q1</sub> + (y<sub>(int)q1 + 1</sub> - y<sub>(int)q1</sub>) * (q1 % 1) = 1 + (2 - 1) * 0.25 = 1.25  
+the second quartile: Q2 = y<sub>(int)q2</sub> + (y<sub>(int)q2 + 1</sub> - y<sub>(int)q2</sub>) * (q2 % 1) = 2 + (3 - 2) * 0.5 = 2.5  
+the third quartile: Q3 = y<sub>(int)q3</sub> + (y<sub>(int)q3 + 1</sub> - y<sub>(int)q3</sub>) * (q3 % 1) = 3 + (4 - 3) * 0.75 = 3.75  
+
+Upper limit = Q3 + 1.5 * IQR = Q3 + 1.5 * (Q3 - Q1)
+lower limit = Q3 - 1.5 * IQR = Q3 - 1.5 * (Q3 - Q1)
 
 ## Real-time Java Charts using XChart
 
