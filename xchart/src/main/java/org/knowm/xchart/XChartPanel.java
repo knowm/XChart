@@ -11,8 +11,6 @@ import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ToolTips;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.Styler;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -132,8 +130,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
         // Page format
         PageFormat pageFormat = printJob.defaultPage();
         Paper paper = pageFormat.getPaper();
-        JFrame w = (JFrame) SwingUtilities.windowForComponent(this);
-        if (w.getWidth() > w.getHeight()) {
+        if (this.getWidth() > this.getHeight()) {
           pageFormat.setOrientation(PageFormat.LANDSCAPE);
           paper.setImageableArea(0, 0, pageFormat.getHeight(), pageFormat.getWidth());
         } else {
@@ -143,50 +140,10 @@ public class XChartPanel<T extends Chart> extends JPanel {
         pageFormat = printJob.validatePage(pageFormat);
 
         String jobName = "XChart " + chart.getTitle().trim();
-        if (!w.getTitle().trim().isEmpty()
-            && !w.getTitle().trim().contentEquals(chart.getTitle().trim())) {
-          jobName = jobName + " " + w.getTitle().trim();
-        }
         printJob.setJobName(jobName);
 
-        printJob.setPrintable(
-            new Printer(getParent() /*start with parent to include the caption*/), pageFormat);
-
-        Dimension windowSize = w.getSize();
-        Styler styler = getChart().getStyler();
-        Color chartBackgroundColor = styler.getChartBackgroundColor();
-        Color plotBackgroundColor = styler.getPlotBackgroundColor();
-        Color legendBackgroundColor = styler.getLegendBackgroundColor();
-        Color toolTipBackgroundColor = styler.getToolTipBackgroundColor();
-        Color titleBackgroundColor = styler.getChartTitleBoxBackgroundColor();
-        AxesChartStyler cs = (AxesChartStyler) chart.getStyler();
-        int markerSize = cs.getMarkerSize();
-        try {
-          // for printing: white backgrounds
-          styler.setLegendBackgroundColor(Color.white);
-          styler.setToolTipBackgroundColor(Color.white);
-          styler.setChartTitleBoxBackgroundColor(Color.white);
-          styler.setChartBackgroundColor(Color.white);
-          styler.setPlotBackgroundColor(Color.white);
-
-          // optional for printing: higher resolution, larger markers
-          // cs.setMarkerSize(Math.max(markerSize, 5));
-          // double widthPx = (int) Math.floor(pageFormat.getImageableWidth()/72*400);
-          // double heightPx = (int) Math.floor(pageFormat.getImageableHeight()/72*400);
-          // w.setSize((int) Math.floor(widthPx), (int) Math.floor(heightPx));
-          // w.validate();
-
-          printJob.print();
-        } finally {
-          // restore after printing
-          styler.setPlotBackgroundColor(plotBackgroundColor);
-          styler.setChartBackgroundColor(chartBackgroundColor);
-          styler.setChartTitleBoxBackgroundColor(titleBackgroundColor);
-          styler.setToolTipBackgroundColor(toolTipBackgroundColor);
-          styler.setLegendBackgroundColor(legendBackgroundColor);
-          cs.setMarkerSize(markerSize);
-          w.setSize(windowSize);
-        }
+        printJob.setPrintable(new Printer(this), pageFormat);
+        printJob.print();
       } catch (PrinterException e) {
         e.printStackTrace();
       }
