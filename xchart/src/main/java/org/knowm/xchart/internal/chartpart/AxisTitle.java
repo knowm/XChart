@@ -44,6 +44,11 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
     if (direction == Axis.Direction.Y) {
 
       String yAxisTitle = chart.getYAxisGroupTitle(yIndex);
+
+      if (chart.getYAxisGroupTitleColor(yIndex) != null) {
+        g.setColor(chart.getYAxisGroupTitleColor(yIndex));
+      }
+
       if (yAxisTitle != null
           && !yAxisTitle.trim().equalsIgnoreCase("")
           && chart.getStyler().isYAxisTitleVisible()) {

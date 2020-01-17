@@ -1,5 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -12,7 +13,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -43,7 +43,9 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private String title = "";
   private String xAxisTitle = "";
   private String yAxisTitle = "";
+  private Color yAxisTitleColor;
   private Map<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
+  private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<Integer, Color>();
   protected ArrayList<ChartPart> plotParts = new ArrayList<ChartPart>();
 
   /**
@@ -158,6 +160,30 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public void setYAxisGroupTitle(int yAxisGroup, String yAxisTitle) {
 
     yAxisGroupTitleMap.put(yAxisGroup, yAxisTitle);
+  }
+
+  public Color getYAxisTitleColor() {
+
+    return yAxisTitleColor;
+  }
+
+  public void setYAxisTitleColor(Color yAxisColor) {
+
+    this.yAxisTitleColor = yAxisColor;
+  }
+
+  public Color getYAxisGroupTitleColor(int yAxisGroup) {
+
+    Color color = yAxisGroupTitleColorMap.get(yAxisGroup);
+    if (color == null) {
+      return yAxisTitleColor;
+    }
+    return color;
+  }
+
+  public void setYAxisGroupTitleColor(int yAxisGroup, Color yAxisColor) {
+
+    yAxisGroupTitleColorMap.put(yAxisGroup, yAxisColor);
   }
 
   public Map<String, S> getSeriesMap() {
