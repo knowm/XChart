@@ -131,6 +131,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     int seriesCounter = 0;
     double[] accumulatedStackOffsetPos = new double[numCategories];
     double[] accumulatedStackOffsetNeg = new double[numCategories];
+    double[] accumulatedStackOffsetTotalYOffset = new double[numCategories];
 
     boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
 
@@ -261,6 +262,12 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             getBounds().getHeight() - (yTopMargin + (yTop - yMin) / (yMax - yMin) * yTickSpace);
         double yOffset = getBounds().getY() + yTransform;
 
+        // Record the first series yOffset value, update totalYOffset value
+        // when next is greater then 0
+        if (seriesCounter == 0 || next.doubleValue() > 0) {
+          accumulatedStackOffsetTotalYOffset[categoryCounter] = yOffset;
+        }
+
         double zeroTransform =
             getBounds().getHeight() - (yTopMargin + (yBottom - yMin) / (yMax - yMin) * yTickSpace);
         double zeroOffset = getBounds().getY() + zeroTransform;
@@ -380,47 +387,16 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           // }
 
           if (stylerCategory.hasAnnotations() && next != null) {
-
-            String numberAsString = chart.getYAxisFormat().format(next);
-
-            TextLayout textLayout =
-                new TextLayout(
-                    numberAsString,
-                    stylerCategory.getAnnotationsFont(),
-                    new FontRenderContext(null, true, false));
-
-            AffineTransform rot =
-                AffineTransform.getRotateInstance(
-                    -1 * Math.toRadians(stylerCategory.getAnnotationsRotation()), 0, 0);
-            Shape shape = textLayout.getOutline(rot);
-            Rectangle2D annotationRectangle = textLayout.getBounds();
-
-            double annotationX;
-            if (stylerCategory.getAnnotationsRotation() > 0) {
-              double annotationXDelta =
-                  annotationRectangle.getHeight() / 2 + annotationRectangle.getWidth() / 2;
-              double rotationOffset =
-                  annotationXDelta * stylerCategory.getAnnotationsRotation() / 90;
-              annotationX =
-                  xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2 + rotationOffset;
-            } else {
-              annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;
-            }
-            double annotationY;
-            if (next.doubleValue() >= 0.0) {
-              annotationY = yOffset - 4;
-            } else {
-              annotationY = zeroOffset + 4 + annotationRectangle.getHeight();
-            }
-
-            g.setColor(stylerCategory.getAnnotationsFontColor());
-            g.setFont(stylerCategory.getAnnotationsFont());
-            AffineTransform orig = g.getTransform();
-            AffineTransform at = new AffineTransform();
-            at.translate(annotationX, annotationY);
-            g.transform(at);
-            g.fill(shape);
-            g.setTransform(orig);
+            drawAnnotations(g, next, xOffset, yOffset, zeroOffset, barWidth, false);
+          }
+          if (stylerCategory.hasAnnotations()
+              && stylerCategory.isShowTotalAnnotations()
+              && seriesCounter == (seriesMap.size() - 1)) {
+            Number totalNext =
+                accumulatedStackOffsetPos[categoryCounter - 1]
+                    - accumulatedStackOffsetNeg[categoryCounter - 1];
+            double totalYOffset = accumulatedStackOffsetTotalYOffset[categoryCounter - 1];
+            drawAnnotations(g, totalNext, xOffset, totalYOffset, zeroOffset, barWidth, true);
           }
         } else if (CategorySeriesRenderStyle.Stick.equals(
             series.getChartCategorySeriesRenderStyle())) {
@@ -560,5 +536,63 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
       seriesCounter++;
     }
+  }
+
+  private void drawAnnotations(
+      Graphics2D g,
+      Number next,
+      double xOffset,
+      double yOffset,
+      double zeroOffset,
+      double barWidth,
+      boolean isTotalAnnotations) {
+    String numberAsString = chart.getYAxisFormat().format(next);
+
+    TextLayout textLayout =
+        new TextLayout(
+            numberAsString,
+            stylerCategory.getAnnotationsFont(),
+            new FontRenderContext(null, true, false));
+
+    AffineTransform rot =
+        AffineTransform.getRotateInstance(
+            -1 * Math.toRadians(stylerCategory.getAnnotationsRotation()), 0, 0);
+    Shape shape = textLayout.getOutline(rot);
+    Rectangle2D annotationRectangle = textLayout.getBounds();
+
+    double annotationX;
+    if (stylerCategory.getAnnotationsRotation() > 0) {
+      double annotationXDelta =
+          annotationRectangle.getHeight() / 2 + annotationRectangle.getWidth() / 2;
+      double rotationOffset = annotationXDelta * stylerCategory.getAnnotationsRotation() / 90;
+      annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2 + rotationOffset;
+    } else {
+      annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;
+    }
+    double annotationY;
+    if (isTotalAnnotations) {
+      annotationY = yOffset - 4;
+    } else {
+      if (next.doubleValue() >= 0.0) {
+        annotationY =
+            yOffset
+                + (zeroOffset - yOffset) * (1 - stylerCategory.getAnnotationsPosition())
+                + annotationRectangle.getHeight() * stylerCategory.getAnnotationsPosition();
+      } else {
+        annotationY =
+            zeroOffset
+                - (zeroOffset - yOffset) * (1 - stylerCategory.getAnnotationsPosition())
+                + annotationRectangle.getHeight() * (1 - stylerCategory.getAnnotationsPosition());
+      }
+    }
+
+    g.setColor(stylerCategory.getAnnotationsFontColor());
+    g.setFont(stylerCategory.getAnnotationsFont());
+    AffineTransform orig = g.getTransform();
+    AffineTransform at = new AffineTransform();
+    at.translate(annotationX, annotationY);
+    g.transform(at);
+    g.fill(shape);
+    g.setTransform(orig);
   }
 }
