@@ -36,10 +36,8 @@ import org.knowm.xchart.demo.charts.boxPlot.BoxChart02;
 import org.knowm.xchart.demo.charts.boxPlot.BoxChart03;
 import org.knowm.xchart.demo.charts.bubble.BubbleChart01;
 import org.knowm.xchart.demo.charts.date.DateChart01;
-import org.knowm.xchart.demo.charts.date.DateChart01a;
 import org.knowm.xchart.demo.charts.date.DateChart02;
 import org.knowm.xchart.demo.charts.date.DateChart03;
-import org.knowm.xchart.demo.charts.date.DateChart03a;
 import org.knowm.xchart.demo.charts.date.DateChart04;
 import org.knowm.xchart.demo.charts.date.DateChart05;
 import org.knowm.xchart.demo.charts.date.DateChart06;
@@ -49,7 +47,6 @@ import org.knowm.xchart.demo.charts.dial.DialChart01;
 import org.knowm.xchart.demo.charts.line.LineChart01;
 import org.knowm.xchart.demo.charts.line.LineChart02;
 import org.knowm.xchart.demo.charts.line.LineChart03;
-import org.knowm.xchart.demo.charts.line.LineChart03a;
 import org.knowm.xchart.demo.charts.line.LineChart04;
 import org.knowm.xchart.demo.charts.line.LineChart05;
 import org.knowm.xchart.demo.charts.line.LineChart06;
@@ -346,12 +343,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
             new ChartInfo(
                 "LineChart03 - Extensive Chart Customization", new LineChart03().getChart()));
     category.add(defaultMutableTreeNode);
-    
-    defaultMutableTreeNode =
-        new DefaultMutableTreeNode(
-            new ChartInfo(
-                "LineChart03a - Extensive Chart Customization (Y-Axis Title color)", new LineChart03a().getChart()));
-    category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode =
         new DefaultMutableTreeNode(
@@ -590,13 +581,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
                 "DateChart01 - Millisecond Scale with Two Separate Y Axis Groups",
                 new DateChart01().getChart()));
     category.add(defaultMutableTreeNode);
-    
-    defaultMutableTreeNode =
-        new DefaultMutableTreeNode(
-            new ChartInfo(
-                "DateChart01a - Millisecond Scale with Two Separate Y Axis Groups (title & color)",
-                new DateChart01a().getChart()));
-    category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode =
         new DefaultMutableTreeNode(
@@ -608,13 +592,6 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
             new ChartInfo(
                 "DateChart03 - Minute Scale with Two Separate Y Axis Groups",
                 new DateChart03().getChart()));
-    category.add(defaultMutableTreeNode);
-    
-    defaultMutableTreeNode =
-        new DefaultMutableTreeNode(
-            new ChartInfo(
-                "DateChart03a - Minute Scale with Two Separate Y Axis Groups (titled & colored)",
-                new DateChart03a().getChart()));
     category.add(defaultMutableTreeNode);
 
     defaultMutableTreeNode =
