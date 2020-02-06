@@ -1,4 +1,4 @@
-package org.knowm.xchart.demo.charts.boxPlot;
+package org.knowm.xchart.demo.charts.box;
 
 import java.util.Arrays;
 import org.knowm.xchart.BoxChart;

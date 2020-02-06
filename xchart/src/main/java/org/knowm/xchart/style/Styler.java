@@ -70,6 +70,8 @@ public abstract class Styler {
   private Font annotationsFont;
   private Color annotationsFontColor;
   private int annotationsRotation = 0;
+  private float annotationsPosition = 0.5f;
+  private boolean showTotalAnnotations = false;
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
   private String decimalPattern;
@@ -820,6 +822,31 @@ public abstract class Styler {
    */
   public Styler setAnnotationsRotation(int annotationsRotation) {
     this.annotationsRotation = annotationsRotation;
+    return this;
+  }
+
+  public float getAnnotationsPosition() {
+
+    return annotationsPosition;
+  }
+
+  public Styler setAnnotationsPosition(float annotationsPosition) {
+
+    if (annotationsPosition < 0 || annotationsPosition > 1) {
+      throw new IllegalArgumentException("Annotations position must be tween 0 and 1!!!");
+    }
+    this.annotationsPosition = annotationsPosition;
+    return this;
+  }
+
+  public boolean isShowTotalAnnotations() {
+
+    return showTotalAnnotations;
+  }
+
+  public Styler setShowTotalAnnotations(boolean showTotalAnnotations) {
+
+    this.showTotalAnnotations = showTotalAnnotations;
     return this;
   }
 
