@@ -22,6 +22,10 @@
       <groupId>de.rototor.pdfbox</groupId>
       <artifactId>graphics2d</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.madgag</groupId>
+      <artifactId>animated-gif-lib</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
