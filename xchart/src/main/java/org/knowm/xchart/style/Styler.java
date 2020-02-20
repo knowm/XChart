@@ -2,6 +2,8 @@ package org.knowm.xchart.style;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
+
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -79,6 +81,10 @@ public abstract class Styler {
   private int yAxisLeftWidthHint;
   // Box plot data ///////////////////////////////
   private boolean showWithinAreaPoint = false;
+  // Axis Title Font Color
+  private Color xAxisTitleColor;
+  private Color yAxisTitleColor;
+  private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<Integer, Color>();
 
   void setAllStyles() {
 
@@ -909,12 +915,52 @@ public abstract class Styler {
     this.yAxisLeftWidthHint = yAxisLeftWidthHint;
   }
 
-  public void setShowWithinAreaPoint(boolean showWithinAreaPoint) {
+  public Styler setShowWithinAreaPoint(boolean showWithinAreaPoint) {
+
     this.showWithinAreaPoint = showWithinAreaPoint;
+    return this;
   }
 
   public boolean getShowWithinAreaPoint() {
+
     return this.showWithinAreaPoint;
+  }
+
+  public Color getXAxisTitleColor() {
+
+    return xAxisTitleColor;
+  }
+
+  public Styler setXAxisTitleColor(Color xAxisTitleColor) {
+
+    this.xAxisTitleColor = xAxisTitleColor;
+    return this;
+  }
+
+  public Color getYAxisTitleColor() {
+
+    return yAxisTitleColor;
+  }
+
+  public Styler setYAxisTitleColor(Color yAxisColor) {
+
+    this.yAxisTitleColor = yAxisColor;
+    return this;
+  }
+
+  public Color getYAxisGroupTitleColor(int yAxisGroup) {
+
+    Color color = yAxisGroupTitleColorMap.get(yAxisGroup);
+    if (color == null) {
+      return yAxisTitleColor;
+    }
+    return color;
+  }
+
+  public Styler setYAxisGroupTitleColor(int yAxisGroup, Color yAxisColor) {
+
+    yAxisGroupTitleColorMap.put(yAxisGroup, yAxisColor);
+    return this;
   }
 
   public enum LegendPosition {
