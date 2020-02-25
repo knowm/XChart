@@ -1,10 +1,12 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.GridLayout;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import org.knowm.xchart.internal.chartpart.Chart;
 
 /**
@@ -16,6 +18,7 @@ public class SwingWrapper<T extends Chart> {
 
   private final List<XChartPanel<T>> chartPanels = new ArrayList<XChartPanel<T>>();
   private String windowTitle = "XChart";
+  private boolean isCentered = true;
   private List<T> charts = new ArrayList<T>();
   private int numRows;
   private int numColumns;
@@ -57,18 +60,6 @@ public class SwingWrapper<T extends Chart> {
     this.numColumns = numColumns;
   }
 
-  /**
-   * Display the chart in a Swing JFrame
-   *
-   * @param windowTitle the title of the window
-   */
-  public JFrame displayChart(String windowTitle) {
-
-    this.windowTitle = windowTitle;
-
-    return displayChart();
-  }
-
   /** Display the chart in a Swing JFrame */
   public JFrame displayChart() {
 
@@ -91,6 +82,9 @@ public class SwingWrapper<T extends Chart> {
 
               // Display the window.
               frame.pack();
+              if (isCentered) {
+                frame.setLocationRelativeTo(null);
+              }
               frame.setVisible(true);
             }
           });
@@ -101,19 +95,6 @@ public class SwingWrapper<T extends Chart> {
     }
 
     return frame;
-  }
-
-  /**
-   * Display the charts in a Swing JFrame
-   *
-   * @param windowTitle the title of the window
-   * @return the JFrame
-   */
-  public JFrame displayChartMatrix(String windowTitle) {
-
-    this.windowTitle = windowTitle;
-
-    return displayChartMatrix();
   }
 
   /** Display the chart in a Swing JFrame */
@@ -146,6 +127,9 @@ public class SwingWrapper<T extends Chart> {
 
             // Display the window.
             frame.pack();
+            if (isCentered) {
+              frame.setLocationRelativeTo(null);
+            }
             frame.setVisible(true);
           }
         });
@@ -193,5 +177,27 @@ public class SwingWrapper<T extends Chart> {
 
     chartPanels.get(index).revalidate();
     chartPanels.get(index).repaint();
+  }
+
+  /**
+   * Set the Window in the center of screen
+   *
+   * @param isCentered
+   * @return
+   */
+  public SwingWrapper isCentered(boolean isCentered) {
+    this.isCentered = isCentered;
+    return this;
+  }
+
+  /**
+   * Set the Window Title
+   *
+   * @param windowTitle
+   * @return
+   */
+  public SwingWrapper setTitle(String windowTitle) {
+    this.windowTitle = windowTitle;
+    return this;
   }
 }

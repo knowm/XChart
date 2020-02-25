@@ -12,6 +12,7 @@ class NumberFormatter extends Format {
   private final double min;
   private final double max;
   private final NumberFormat numberFormat;
+  private int yIndex;
 
   /** Constructor */
   public NumberFormatter(
@@ -21,6 +22,26 @@ class NumberFormatter extends Format {
     this.axisDirection = axisDirection;
     this.min = min;
     this.max = max;
+    numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
+  }
+
+  /**
+   * Constructor
+   *
+   * @param styler
+   * @param axisDirection
+   * @param min
+   * @param max
+   * @param yIndex
+   */
+  public NumberFormatter(
+      AxesChartStyler styler, Axis.Direction axisDirection, double min, double max, int yIndex) {
+
+    this.styler = styler;
+    this.axisDirection = axisDirection;
+    this.min = min;
+    this.max = max;
+    this.yIndex = yIndex;
     numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
   }
 
@@ -97,8 +118,14 @@ class NumberFormatter extends Format {
     if (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() != null) {
 
       decimalPattern = styler.getXAxisDecimalPattern();
-    } else if (axisDirection == Axis.Direction.Y && styler.getYAxisDecimalPattern() != null) {
-      decimalPattern = styler.getYAxisDecimalPattern();
+    } else if (axisDirection == Axis.Direction.Y
+        && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
+            || styler.getYAxisDecimalPattern() != null)) {
+      if (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null) {
+        decimalPattern = styler.getYAxisGroupDecimalPatternMap().get(yIndex);
+      } else {
+        decimalPattern = styler.getYAxisDecimalPattern();
+      }
     } else if (styler.getDecimalPattern() != null) {
       decimalPattern = styler.getDecimalPattern();
     } else {

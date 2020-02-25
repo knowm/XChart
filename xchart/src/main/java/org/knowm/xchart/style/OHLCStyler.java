@@ -11,13 +11,13 @@ public class OHLCStyler extends AxesChartStyler {
   /** Constructor */
   public OHLCStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
   }
 
   @Override
   protected void setAllStyles() {
 
+    super.setAllStyles();
     ohlcSeriesRenderStyle = OHLCSeriesRenderStyle.Candle; // set default to candle
   }
 
@@ -46,6 +46,6 @@ public class OHLCStyler extends AxesChartStyler {
   public void setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
   }
 }

@@ -3,6 +3,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Map;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -45,14 +46,18 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
 
     chart.toolTips.prepare(g);
 
+    chart.cursor.prepare(bounds, (Map<String, Series>) chart.getSeriesMap());
+
     doPaint(g);
 
     chart.toolTips.paint(g);
 
+    chart.cursor.paint(g);
+
     for (ChartPart part : chart.getPlotParts()) {
       part.paint(g);
     }
-    
+
     g.setClip(saveClip);
   }
 

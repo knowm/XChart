@@ -31,6 +31,9 @@ import org.knowm.xchart.demo.charts.bar.BarChart09;
 import org.knowm.xchart.demo.charts.bar.BarChart10;
 import org.knowm.xchart.demo.charts.bar.BarChart11;
 import org.knowm.xchart.demo.charts.bar.BarChart12;
+import org.knowm.xchart.demo.charts.box.BoxChart01;
+import org.knowm.xchart.demo.charts.box.BoxChart02;
+import org.knowm.xchart.demo.charts.box.BoxChart03;
 import org.knowm.xchart.demo.charts.bubble.BubbleChart01;
 import org.knowm.xchart.demo.charts.date.DateChart01;
 import org.knowm.xchart.demo.charts.date.DateChart02;
@@ -49,6 +52,7 @@ import org.knowm.xchart.demo.charts.line.LineChart05;
 import org.knowm.xchart.demo.charts.line.LineChart06;
 import org.knowm.xchart.demo.charts.line.LineChart07;
 import org.knowm.xchart.demo.charts.line.LineChart08;
+import org.knowm.xchart.demo.charts.line.LineChart09;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart02;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart03;
@@ -369,6 +373,11 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
             new ChartInfo("LineChart08 - Step Rendering", new LineChart08().getChart()));
     category.add(defaultMutableTreeNode);
 
+    defaultMutableTreeNode =
+        new DefaultMutableTreeNode(
+            new ChartInfo("LineChart09 - Cursor", new LineChart09().getChart()));
+    category.add(defaultMutableTreeNode);
+
     // Scatter
     category = new DefaultMutableTreeNode("Scatter Charts");
     top.add(category);
@@ -517,6 +526,25 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode =
         new DefaultMutableTreeNode(
             new ChartInfo("OHLCChart03 - Candle with custom colors", new OHLCChart03().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    // Box
+    category = new DefaultMutableTreeNode("Box Charts");
+    top.add(category);
+
+    defaultMutableTreeNode =
+        new DefaultMutableTreeNode(
+            new ChartInfo("BoxChart01 - Box Chart with 3 series", new BoxChart01().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode =
+        new DefaultMutableTreeNode(
+            new ChartInfo("BoxChart02 - Box Chart with data points", new BoxChart02().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode =
+        new DefaultMutableTreeNode(
+            new ChartInfo("BoxChart03 - Box Chart logarithmic axix", new BoxChart03().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Theme

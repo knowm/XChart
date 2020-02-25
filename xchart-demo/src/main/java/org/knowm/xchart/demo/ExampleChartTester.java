@@ -40,6 +40,9 @@ import org.knowm.xchart.demo.charts.bar.BarChart09;
 import org.knowm.xchart.demo.charts.bar.BarChart10;
 import org.knowm.xchart.demo.charts.bar.BarChart11;
 import org.knowm.xchart.demo.charts.bar.BarChart12;
+import org.knowm.xchart.demo.charts.box.BoxChart01;
+import org.knowm.xchart.demo.charts.box.BoxChart02;
+import org.knowm.xchart.demo.charts.box.BoxChart03;
 import org.knowm.xchart.demo.charts.bubble.BubbleChart01;
 import org.knowm.xchart.demo.charts.date.DateChart01;
 import org.knowm.xchart.demo.charts.date.DateChart02;
@@ -58,6 +61,7 @@ import org.knowm.xchart.demo.charts.line.LineChart05;
 import org.knowm.xchart.demo.charts.line.LineChart06;
 import org.knowm.xchart.demo.charts.line.LineChart07;
 import org.knowm.xchart.demo.charts.line.LineChart08;
+import org.knowm.xchart.demo.charts.line.LineChart09;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart02;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart03;
@@ -67,6 +71,9 @@ import org.knowm.xchart.demo.charts.pie.PieChart03;
 import org.knowm.xchart.demo.charts.pie.PieChart04;
 import org.knowm.xchart.demo.charts.pie.PieChart05;
 import org.knowm.xchart.demo.charts.pie.PieChart06;
+import org.knowm.xchart.demo.charts.pie.PieChart07;
+import org.knowm.xchart.demo.charts.pie.PieChart08;
+import org.knowm.xchart.demo.charts.pie.PieChart09;
 import org.knowm.xchart.demo.charts.radar.RadarChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
 import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
@@ -313,6 +320,9 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     exList.add(new PieChart04());
     exList.add(new PieChart05());
     exList.add(new PieChart06());
+    exList.add(new PieChart07());
+    exList.add(new PieChart08());
+    exList.add(new PieChart09());
 
     // Line
     exList.add(new LineChart01());
@@ -323,6 +333,7 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     exList.add(new LineChart06());
     exList.add(new LineChart07());
     exList.add(new LineChart08());
+    exList.add(new LineChart09());
 
     // Scatter
     exList.add(new ScatterChart01());
@@ -384,6 +395,11 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     exList.add(new RealtimeChart04());
     exList.add(new RealtimeChart05());
     exList.add(new RealtimeChart06());
+
+    // Box plot
+    exList.add(new BoxChart01());
+    exList.add(new BoxChart02());
+    exList.add(new BoxChart03());
     return exList;
   }
 

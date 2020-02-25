@@ -11,6 +11,7 @@ import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.PieStyler.ClockwiseDirectionType;
 
 /** @author timmolter */
 public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
@@ -75,6 +76,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
   @Override
   public void doPaint(Graphics2D g) {
+    // Apply the given pattern to decimalPattern if decimalPattern is not null
+    if (pieStyler.getDecimalPattern() != null) {
+      df.applyPattern(pieStyler.getDecimalPattern());
+    }
 
     // pie getBounds()
     double pieFillPercentage = pieStyler.getPlotContentSize();
@@ -112,7 +117,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
-      if (!series.isEnabled()) {
+      if (!series.isEnabled() || series.getValue() == null) {
         continue;
       }
       total += series.getValue().doubleValue();
@@ -130,11 +135,14 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
   private void paintSlices(Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
     boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
+    double borderAngle = startAngle;
 
     Map<String, S> map = chart.getSeriesMap();
+    double xCenter = pieBounds.getX() + pieBounds.getWidth() / 2;
+    double yCenter = pieBounds.getY() + pieBounds.getHeight() / 2;
     for (S series : map.values()) {
 
-      if (!series.isEnabled()) {
+      if (!series.isEnabled() || series.getValue() == null) {
         continue;
       }
 
@@ -144,6 +152,11 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // draw slice/donut
       double arcAngle = (y.doubleValue() * 360 / total);
       g.setColor(series.getFillColor());
+
+      // CLOCKWISE, startAngle minus arcAngle
+      if (ClockwiseDirectionType.CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
+        startAngle -= arcAngle;
+      }
 
       // slice
       if (PieSeriesRenderStyle.Pie == series.getChartPieSeriesRenderStyle()) {
@@ -178,10 +191,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // maybe another option to construct this label
       String annotation = series.getName() + " (" + df.format(y) + ")";
 
-      double xCenter =
-          pieBounds.getX() + pieBounds.getWidth() / 2; // - annotationRectangle.getWidth() / 2;
-      double yCenter =
-          pieBounds.getY() + pieBounds.getHeight() / 2; // + annotationRectangle.getHeight() / 2;
       double angle = (arcAngle + startAngle) - arcAngle / 2;
       double xOffset =
           xCenter
@@ -200,7 +209,32 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
         }
       }
-      startAngle += arcAngle;
+      // COUNTER_CLOCKWISE, startAngle plus arcAngle
+      if (ClockwiseDirectionType.COUNTER_CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
+        startAngle += arcAngle;
+      }
+    }
+
+    // draw border
+    float borderWidth = chart.getStyler().getBorderWidth();
+    if (borderWidth > 0) {
+      Color color = pieStyler.getPlotBackgroundColor();
+      g.setColor(color);
+      for (S series : map.values()) {
+        if (!series.isEnabled() || series.getValue() == null) {
+          continue;
+        }
+        Number y = series.getValue();
+        double arcAngle = y.doubleValue() * 360 / total;
+        borderAngle += arcAngle;
+        double xBorder = (pieBounds.getWidth() / 2.0) * Math.cos(Math.toRadians(borderAngle));
+        double yBorder = (pieBounds.getHeight() / 2.0) * Math.sin(Math.toRadians(borderAngle));
+        xBorder = xBorder + pieBounds.getX() + pieBounds.getWidth() / 2.0;
+        yBorder = pieBounds.getY() + pieBounds.getHeight() / 2.0 - yBorder;
+        Shape line = new Line2D.Double(xCenter, yCenter, xBorder, yBorder);
+        g.setStroke(new BasicStroke(borderWidth));
+        g.draw(line);
+      }
     }
   }
 
@@ -209,7 +243,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
-      if (!series.isEnabled()) {
+      if (!series.isEnabled() || series.getValue() == null) {
         continue;
       }
 
@@ -217,6 +251,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
       // draw slice/donut
       double arcAngle = (y.doubleValue() * 360 / total);
+      // CLOCKWISE, startAngle minus arcAngle
+      if (ClockwiseDirectionType.CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
+        startAngle -= arcAngle;
+      }
 
       // curValue += y.doubleValue();
 
@@ -227,8 +265,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         if (pieStyler.getAnnotationType() == AnnotationType.Value) {
 
           if (pieStyler.getDecimalPattern() != null) {
-
-            DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
             annotation = df.format(y);
           } else {
             annotation = y.toString();
@@ -243,7 +279,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           annotation = df.format(percentage) + "%";
         } else if (pieStyler.getAnnotationType() == AnnotationType.LabelAndValue) {
           if (pieStyler.getDecimalPattern() != null) {
-            DecimalFormat df = new DecimalFormat(pieStyler.getDecimalPattern());
             annotation = series.getName() + " (" + df.format(y) + ")";
           } else {
             annotation = series.getName() + " (" + y.toString() + ")";
@@ -320,7 +355,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         // draw annotation
         if (pieStyler.isDrawAllAnnotations() || annotationWillFit) {
 
-          g.setColor(pieStyler.getChartFontColor());
+          g.setColor(pieStyler.getAnnotationsFontColor());
           g.setFont(pieStyler.getAnnotationsFont());
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
@@ -369,19 +404,20 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // System.out.println("annotationHeight= " + annotationHeight);
       //
       // }
-      startAngle += arcAngle;
+      // COUNTER_CLOCKWISE, startAngle plus arcAngle
+      if (ClockwiseDirectionType.COUNTER_CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
+        startAngle += arcAngle;
+      }
     }
   }
 
   private void paintSum(Graphics2D g, Rectangle2D pieBounds, double total) {
     // draw total value if visible
     if (pieStyler.isSumVisible()) {
-      DecimalFormat totalDf =
-          (pieStyler.getDecimalPattern() == null)
-              ? df
-              : new DecimalFormat(pieStyler.getDecimalPattern());
-
-      String annotation = totalDf.format(total);
+      String annotation =
+          pieStyler.getSumFormat() == null || pieStyler.getSumFormat().isEmpty()
+              ? df.format(total)
+              : String.format(pieStyler.getSumFormat(), total);
 
       TextLayout textLayout =
           new TextLayout(

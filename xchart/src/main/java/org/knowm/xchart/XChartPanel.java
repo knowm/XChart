@@ -2,6 +2,7 @@ package org.knowm.xchart;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.print.*;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class XChartPanel<T extends Chart> extends JPanel {
   private final Dimension preferredSize;
   private String saveAsString = "Save As...";
   private String exportAsString = "Export To...";
+  private String printString = "Print...";
 
   /**
    * Constructor
@@ -48,6 +50,9 @@ public class XChartPanel<T extends Chart> extends JPanel {
       }
     }
 
+    // Mouse motion listener for Cursor
+    this.addMouseMotionListener(chart.getCursor());
+
     // Control+S key listener for saving chart
     KeyStroke ctrlS =
         KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
@@ -59,6 +64,12 @@ public class XChartPanel<T extends Chart> extends JPanel {
         KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlE, "export");
     this.getActionMap().put("export", new ExportAction());
+
+    // Control+P key listener for printing chart
+    KeyStroke ctrlP =
+        KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+    this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlP, "print");
+    this.getActionMap().put("print", new PrintAction());
   }
 
   /**
@@ -81,6 +92,16 @@ public class XChartPanel<T extends Chart> extends JPanel {
     this.exportAsString = exportAsString;
   }
 
+  /**
+   * Set the "Print..." String if you want to localize it.
+   *
+   * @param printString
+   */
+  public void setPrintString(String printString) {
+
+    this.printString = printString;
+  }
+
   @Override
   protected void paintComponent(Graphics g) {
 
@@ -100,6 +121,33 @@ public class XChartPanel<T extends Chart> extends JPanel {
   public Dimension getPreferredSize() {
 
     return preferredSize;
+  }
+
+  private void showPrintDialog() {
+    PrinterJob printJob = PrinterJob.getPrinterJob();
+    if (printJob.printDialog()) {
+      try {
+        // Page format
+        PageFormat pageFormat = printJob.defaultPage();
+        Paper paper = pageFormat.getPaper();
+        if (this.getWidth() > this.getHeight()) {
+          pageFormat.setOrientation(PageFormat.LANDSCAPE);
+          paper.setImageableArea(0, 0, pageFormat.getHeight(), pageFormat.getWidth());
+        } else {
+          paper.setImageableArea(0, 0, pageFormat.getWidth(), pageFormat.getHeight());
+        }
+        pageFormat.setPaper(paper);
+        pageFormat = printJob.validatePage(pageFormat);
+
+        String jobName = "XChart " + chart.getTitle().trim();
+        printJob.setJobName(jobName);
+
+        printJob.setPrintable(new Printer(this), pageFormat);
+        printJob.print();
+      } catch (PrinterException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   private void showSaveAsDialog() {
@@ -236,6 +284,20 @@ public class XChartPanel<T extends Chart> extends JPanel {
     }
   }
 
+  private class PrintAction extends AbstractAction {
+
+    public PrintAction() {
+
+      super("print");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+      showPrintDialog();
+    }
+  }
+
   /**
    * File filter based on the suffix of a file. This file filter accepts all files that end with
    * .suffix or the capitalized suffix.
@@ -296,12 +358,14 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
       XChartPanelPopupMenu menu = new XChartPanelPopupMenu();
       menu.show(e.getComponent(), e.getX(), e.getY());
+      menu.getGraphics().dispose();
     }
   }
 
   private class XChartPanelPopupMenu extends JPopupMenu {
 
     final JMenuItem saveAsMenuItem;
+    final JMenuItem printMenuItem;
     JMenuItem exportAsMenuItem;
 
     public XChartPanelPopupMenu() {
@@ -330,6 +394,30 @@ public class XChartPanel<T extends Chart> extends JPanel {
           });
       add(saveAsMenuItem);
 
+      printMenuItem = new JMenuItem(printString);
+      printMenuItem.addMouseListener(
+          new MouseListener() {
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+              showPrintDialog();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+          });
+      add(printMenuItem);
+
       if (chart instanceof XYChart) {
         exportAsMenuItem = new JMenuItem(exportAsString);
         exportAsMenuItem.addMouseListener(
@@ -355,6 +443,31 @@ public class XChartPanel<T extends Chart> extends JPanel {
             });
         add(exportAsMenuItem);
       }
+    }
+  }
+
+  public static class Printer implements Printable {
+    private Component component;
+
+    Printer(Component c) {
+      component = c;
+    }
+
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) {
+      if (pageIndex > 0) {
+        return NO_SUCH_PAGE;
+      }
+
+      Graphics2D g2 = (Graphics2D) graphics;
+      g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+      double sx = pageFormat.getImageableWidth() / component.getWidth();
+      double sy = pageFormat.getImageableHeight() / component.getHeight();
+      g2.scale(sx, sy);
+
+      component.printAll(g2);
+
+      return PAGE_EXISTS;
     }
   }
 }

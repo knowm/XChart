@@ -62,7 +62,7 @@ public class Utils {
 
   public static List<Double> getGeneratedDataAsList(int length) {
 
-    List<Double> generatedData = new ArrayList<Double>();
+    List<Double> generatedData = new ArrayList<>();
     for (int i = 1; i < length + 1; i++) {
       generatedData.add((double) i);
     }
@@ -102,12 +102,12 @@ public class Utils {
     }
     double[] doubles = new double[data.size()];
 
-    for (int i = 0; i < data.size(); i++) {
-
-      if (data.get(i) == null) {
-        doubles[i] = Double.NaN;
+    int i = 0;
+    for (Object number : data) {
+      if (number == null) {
+        doubles[i++] = Double.NaN;
       } else {
-        doubles[i] = ((Number) data.get(i)).doubleValue();
+        doubles[i++] = ((Number) number).doubleValue();
       }
     }
     return doubles;
@@ -120,8 +120,9 @@ public class Utils {
     }
     double[] doubles = new double[data.size()];
 
-    for (int i = 0; i < data.size(); i++) {
-      doubles[i] = ((Date) data.get(i)).getTime();
+    int i = 0;
+    for (Object date : data) {
+      doubles[i++] = ((Date) date).getTime();
     }
     return doubles;
   }

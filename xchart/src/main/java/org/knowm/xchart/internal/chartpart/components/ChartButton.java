@@ -14,9 +14,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-
 import javax.swing.event.EventListenerList;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -156,33 +154,33 @@ public class ChartButton extends MouseAdapter implements ChartPart {
 
     if (position != null) {
       switch (position) {
-      case InsideNW:
-        xOffset = bounds.getX() + margin;
-        yOffset = bounds.getY() + margin;
-        break;
-      case InsideNE:
-        xOffset = bounds.getX() + boundsWidth - widthAdjustment;
-        yOffset = bounds.getY() + margin;
-        break;
-      case InsideSE:
-        xOffset = bounds.getX() + boundsWidth - widthAdjustment;
-        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-        break;
-      case InsideSW:
-        xOffset = bounds.getX() + margin;
-        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-        break;
-      case InsideN:
-        xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
-        yOffset = bounds.getY() + margin;
-        break;
-      case InsideS:
-        xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
-        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-        break;
+        case InsideNW:
+          xOffset = bounds.getX() + margin;
+          yOffset = bounds.getY() + margin;
+          break;
+        case InsideNE:
+          xOffset = bounds.getX() + boundsWidth - widthAdjustment;
+          yOffset = bounds.getY() + margin;
+          break;
+        case InsideSE:
+          xOffset = bounds.getX() + boundsWidth - widthAdjustment;
+          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+          break;
+        case InsideSW:
+          xOffset = bounds.getX() + margin;
+          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+          break;
+        case InsideN:
+          xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
+          yOffset = bounds.getY() + margin;
+          break;
+        case InsideS:
+          xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
+          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+          break;
 
-      default:
-        break;
+        default:
+          break;
       }
     }
   }
@@ -215,7 +213,8 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     double textHeight = textBounds.getHeight();
     double textWidth = textBounds.getWidth();
 
-    buttonRect = new Rectangle2D.Double(xOffset, yOffset, textWidth + margin * 2, textHeight + margin * 2);
+    buttonRect =
+        new Rectangle2D.Double(xOffset, yOffset, textWidth + margin * 2, textHeight + margin * 2);
     if (mouseOver) {
       g.setColor(hoverColor);
     } else {
@@ -352,5 +351,9 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   public void setyOffset(double yOffset) {
 
     this.yOffset = yOffset;
+  }
+
+  public void setPosition(LegendPosition position) {
+    this.position = position;
   }
 }

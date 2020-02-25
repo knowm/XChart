@@ -15,15 +15,19 @@ public class PieStyler extends Styler {
   private double donutThickness;
   private boolean isSumVisible;
   private Font sumFont;
+  private String sumFormat;
+  private ClockwiseDirectionType clockwiseDirectionType = ClockwiseDirectionType.COUNTER_CLOCKWISE;
+  private float borderWidth = 0;
 
   public PieStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
   }
 
   @Override
   void setAllStyles() {
+
+    super.setAllStyles();
 
     this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie;
     this.isCircular = theme.isCircular();
@@ -165,6 +169,30 @@ public class PieStyler extends Styler {
   }
 
   /**
+   * Set the Format to be applied to the sum, the default is just to display the sum as a number
+   * using the PieStyler DecimalFormat. This allows a separate Formatter @see
+   * java.util.Formatter#format()
+   *
+   * @param sumFormat Format to use for the sum display, the Double sum value will be passed to this
+   *     to generate the overall sum string.
+   * @return PieStyler so that modifiers can be chained.
+   */
+  public PieStyler setSumFormat(String sumFormat) {
+    this.sumFormat = sumFormat;
+    return this;
+  }
+
+  /**
+   * Access the current sumFormat value, a value of "" or null implies use the original sum
+   * formatted using the PieStyler DecimalFormat.
+   *
+   * @return Formatter string to be used when displaying the sum value or <code>null</code>
+   */
+  public String getSumFormat() {
+    return sumFormat;
+  }
+
+  /**
    * Sets whether or not the sum is visible in the centre of the pie chart.
    *
    * @param isSumVisible
@@ -210,8 +238,27 @@ public class PieStyler extends Styler {
   public PieStyler setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
     return this;
+  }
+
+  public ClockwiseDirectionType getClockwiseDirectionType() {
+    return clockwiseDirectionType;
+  }
+
+  public PieStyler setClockwiseDirectionType(ClockwiseDirectionType clockwiseDirectionType) {
+    this.clockwiseDirectionType = clockwiseDirectionType;
+    return this;
+  }
+
+  // used to add border width
+  public PieStyler setBorderWidth(double borderWidth) {
+    this.borderWidth = (float) borderWidth;
+    return this;
+  }
+
+  public float getBorderWidth() {
+    return borderWidth;
   }
 
   public enum AnnotationType {
@@ -220,5 +267,10 @@ public class PieStyler extends Styler {
     Label,
     LabelAndPercentage,
     LabelAndValue
+  }
+
+  public enum ClockwiseDirectionType {
+    CLOCKWISE,
+    COUNTER_CLOCKWISE
   }
 }

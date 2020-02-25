@@ -124,6 +124,7 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] Dial charts
 * [x] Radar charts
 * [x] OHLC charts
+* [x] Box Plot
 * [x] Error bars
 * [x] Logarithmic axes
 * [x] Number, Date, Bubble and Category X-Axis
@@ -137,9 +138,10 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] CSV import and export
 * [x] High resolution chart export
 * [x] Export as PNG, JPG, BMP, GIF with custom DPI setting
-* [x] Export SVG, EPS and PDF using optional `de.erichseifert.vectorgraphics2d` library
+* [x] Export SVG, EPS using optional `de.erichseifert.vectorgraphics2d` library
+* [x] Export PDF using optional `pdfbox-graphics2d` library
 * [x] Real-time charts
-* [x] Java 6 and up
+* [x] Java 8 and up
 
 ## Chart Types
 
@@ -154,6 +156,7 @@ Currently, there are 5 major chart types. Each type has its corresponding `Chart
 | DialChart | DialChartBuilder | DialStyler | DialSeries | double  | Round |
 | RadarChart | RadarChartBuilder | RadarStyler | RadarSeries | double[] | Round |
 | OHLCChart | OHLCChartBuilder | OHLCStyler | OHLCSeries | OHLC with Date | Candle |
+| BoxPlotChart | BoxPlotChartBuilder | BoxPlotStyler | BoxPlotSeries | Number, Date, String | Box |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
 
@@ -210,6 +213,49 @@ Series render styles include: `Polygon` and  `Circle`.
 `OHLCChart` charts take Date data types for the X-Axis and 4 Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals.
 
 Series render styles include: `Candle`, `HiLo`.
+
+### BoxPlot
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_BoxPlot.png)
+
+`BoxPlot` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. Each box chart is calculated from the corresponding series.
+Create a BoxPlot via a BoxChartBuilder, style chart, add a series to it
+```java
+// Create Chart
+BoxChart chart = new BoxChartBuilder().title("box plot demo").xAxisTitle("Color").yAxisTitle("temperature").theme(ChartTheme.GGPlot2).build();
+// Customize Chart
+chart.getStyler().setShowWithinAreaPoint(true);
+// Series
+chart.addSeries("seriesName", Arrays.asList(40, -30, 20, 60, 50));
+new SwingWrapper(chart).displayChart();
+```
+The BoxPlot calculation method is as follows:  
+1, If the calculation results are integers, the corresponding position is taken  
+For example, say the y value are y<sub>1</sub> = 1, y<sub>2</sub> = 2, y<sub>3</sub> = 3. And n = 3;  
+The first quartile position should be q1 = (n + 1) /4  
+The second quartile position should be q2 = 2 * (n + 1) /4  
+The third quartile position should be q3 = 3 * (n + 1) /4  
+In this way we can calculate the positions:  
+q1 = (3 + 1) / 4 = 1  
+q2 = 2 * (3 + 1) / 4 = 2  
+q3 = 3 * (3 + 1) / 4 = 3  
+Q1 = y<sub>q1</sub> = 1, Q2 = y<sub>q2</sub> = 2, Q3 = y<sub>q3</sub>  
+Then the first quartile Q1 = 1, the second quartile Q2 = 2, and the third quartile Q3 = 3  
+
+2, If the calculation results are NOT integers, the positions should be calculated with the following formula  
+For another example, say the y value are y<sub>1</sub> = 1, y<sub>2</sub> = 2, y<sub>3</sub> = 3, y<sub>4</sub> = 4. And n = 4;  
+q1 = (n + 1) / 4 = (4 + 1) / 4 = 1.25  
+q2 = 2 * (n + 1) / 4 = 2 * (4 + 1) / 4 = 2.5  
+q3 = 3 * (n + 1) / 4 = 3 * (4 + 1) / 4 = 3.75  
+As we can see, the calculated values are NOT integers. In this case we shold calculate in the following way:  
+Q = y<sub>(int)q</sub> + (y<sub>(int)q + 1</sub> - y<sub>(int)q</sub>) * (q % 1)  
+so  
+the first quartile: Q1 = y<sub>(int)q1</sub> + (y<sub>(int)q1 + 1</sub> - y<sub>(int)q1</sub>) * (q1 % 1) = 1 + (2 - 1) * 0.25 = 1.25  
+the second quartile: Q2 = y<sub>(int)q2</sub> + (y<sub>(int)q2 + 1</sub> - y<sub>(int)q2</sub>) * (q2 % 1) = 2 + (3 - 2) * 0.5 = 2.5  
+the third quartile: Q3 = y<sub>(int)q3</sub> + (y<sub>(int)q3 + 1</sub> - y<sub>(int)q3</sub>) * (q3 % 1) = 3 + (4 - 3) * 0.75 = 3.75  
+
+Upper limit = Q3 + 1.5 * IQR = Q3 + 1.5 * (Q3 - Q1)
+lower limit = Q3 - 1.5 * IQR = Q3 - 1.5 * (Q3 - Q1)
 
 ## Real-time Java Charts using XChart
 
@@ -278,7 +324,7 @@ All the styling options can be found in one of two possible places: 1) the Chart
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Series_Customization.png)
  
 
-### Customizing Axis Ticks & Axis Labels
+### Customizing Axis Tick Values & Axis Tick Labels
 
 XChart automatically creates axis ticks and axis labels. 
 
@@ -291,35 +337,36 @@ Default axis label patterns can be altered with one of:
 
 
 You can also create custom axis placements and axis labels. Create a map containing x -> label mappings:
-- x : value where the tick will be drawn (this value is in xData space, not in pixel space). For category charts x is index of the category (0 means first category).
+- x : value where the tick will be drawn (this value is in xData space, not in pixel space). 
 - label: Tick label. If it is `null`, tick will be generated with a `" "` label.
 
 ```java
-      XYChart chart = new AreaChart01().getChart();
-      Map<Double, Object> xMarkMap = new TreeMap<Double, Object>();
-      xMarkMap.put(0.0, "zero");
-      xMarkMap.put(3.5, "3.5");
-      xMarkMap.put(5.0, " ");
-      xMarkMap.put(9.0, "nine");
+      Map<Object, Object> customXAxisTickLabelsMap = new HashMap<>();
+      customXAxisTickLabelsMap.put(0, "zero");
+      customXAxisTickLabelsMap.put(3, "3.5");
+      customXAxisTickLabelsMap.put(5, " ");
+      customXAxisTickLabelsMap.put(9, "nine");
+      chart.setXAxisLabelOverrideMap(customXAxisTickLabelsMap);
 
-      Map<Double, Object> yMarkMap = new TreeMap<Double, Object>();
-      yMarkMap.put(1.0, "max c");
-      yMarkMap.put(6.0, "max b");
-      yMarkMap.put(9.0, "max a");
-
-      chart.setXAxisLabelOverrideMap(xMarkMap);
-      chart.setYAxisLabelOverrideMap(yMarkMap);
+      Map<Object, Object> customYAxisTickLabelsMap = new HashMap<>();
+      customYAxisTickLabelsMap.put(1.0, "max c");
+      customYAxisTickLabelsMap.put(6.0, "max b");
+      customYAxisTickLabelsMap.put(9.0, "max a");
+      chart.setYAxisLabelOverrideMap(customYAxisTickLabelsMap);
 ```
 
 For category charts another way to create custom axis places is using category names in first series:
 ```java
-      CategoryChart chart = new BarChart09().getChart();
-      Map<Object, Object> xMarkMap = new TreeMap<Object, Object>();
-      xMarkMap.put("A", "-A-");
-      xMarkMap.put("D", "+D+");
+     Map<Object, Object> tickLabelOverrideMap = new HashMap<Object, Object>();
 
-      chart.setCustomCategoryLabels(xMarkMap);
+      Map<Object, Object> customTickLabelsMap = new HashMap<>();
+      customTickLabelsMap.put("A", "-A-");
+      customTickLabelsMap.put("D", "+D+");
+      chart.setXAxisLabelOverrideMap(customTickLabelsMap);
 ```
+
+Whenever you use `setXAxisLabelOverrideMap` the auto-generated tick labels will be replaced meaning none of the tick labels will be shown besides the ones provided by you in the override map.
+
 ### Multiple Axes
 
 XChart has multiple y axes feature. Y offset is calculated according to the y axis the series configured. Max `y` value in this axis is calculated according to the series on this axis only. 
@@ -376,7 +423,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.5.4</version>
+        <version>3.6.1</version>
     </dependency>
 ```
 
@@ -392,7 +439,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.5.5-SNAPSHOT</version>
+      <version>3.6.2-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -403,7 +450,7 @@ Snapshots can be manually downloaded from Sonatype: [https://oss.sonatype.org/co
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "3.5.4" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.6.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
 ## Building
@@ -432,7 +479,7 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 ## Running Demo
 
     cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-3.5.4.jar:xchart-3.5.4.jar org.knowm.xchart.demo.XChartDemo
+    java -cp xchart-demo-3.6.0.jar:xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
 

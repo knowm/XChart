@@ -25,15 +25,17 @@ public class RadarStyler extends Styler {
   private int axisTitlePadding;
 
   private int markerSize;
+  private boolean seriesFilled = true;
 
   public RadarStyler() {
 
-    this.setAllStyles();
-    super.setAllStyles();
+    setAllStyles();
   }
 
   @Override
   void setAllStyles() {
+
+    super.setAllStyles();
 
     this.isCircular = theme.isCircular();
     this.startAngleInDegrees = theme.getStartAngleInDegrees();
@@ -98,7 +100,7 @@ public class RadarStyler extends Styler {
   public RadarStyler setTheme(Theme theme) {
 
     this.theme = theme;
-    super.setAllStyles();
+    setAllStyles();
     return this;
   }
 
@@ -216,5 +218,15 @@ public class RadarStyler extends Styler {
   public void setAxisTickMarksCount(int axisTickMarksCount) {
 
     this.axisTickMarksCount = axisTickMarksCount;
+  }
+
+  public boolean isSeriesFilled() {
+
+    return seriesFilled;
+  }
+
+  public void setSeriesFilled(boolean seriesFilled) {
+
+    this.seriesFilled = seriesFilled;
   }
 }

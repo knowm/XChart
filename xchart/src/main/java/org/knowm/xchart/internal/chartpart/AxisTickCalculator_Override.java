@@ -10,12 +10,12 @@ import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
- * rendering the axis ticks for given values&labels
+ * rendering the axis ticks for given values & labels
  */
 class AxisTickCalculator_Override extends AxisTickCalculator_ {
 
   /**
-   * Constructor
+   * Constructor for Numerical axis
    *
    * @param axisDirection
    * @param workingSpace
@@ -38,7 +38,7 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
   }
 
   /**
-   * Constructor
+   * Constructor for category axis
    *
    * @param axisDirection
    * @param workingSpace
@@ -56,6 +56,7 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
       int categoryCount) {
 
     super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
+
     // set up String formatters that may be encountered
     if (axisType == Series.DataType.String) {
       axisFormat = new StringFormatter();

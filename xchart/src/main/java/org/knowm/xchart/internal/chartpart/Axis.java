@@ -1,20 +1,25 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Map.Entry;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.BoxPlotStyler;
 import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
@@ -31,8 +36,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   private final AxisTick<ST, S> axisTick;
   /** the axis direction */
   private final Direction direction;
-
-  private final int yIndex;
+  /** the axis group index * */
+  private final int index;
   /** the dataType */
   private Series.DataType dataType;
   /** the axis tick calculator */
@@ -40,23 +45,24 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
-  
+
   /**
    * Constructor
    *
    * @param chart the Chart
    * @param direction the axis direction (X or Y)
+   * @param index the y-axis index (not relevant for x-axes)
    */
-  public Axis(Chart<ST, S> chart, Direction direction, int yIndex) {
+  public Axis(Chart<ST, S> chart, Direction direction, int index) {
 
     this.chart = chart;
     this.axesChartStyler = chart.getStyler();
 
     this.direction = direction;
-    this.yIndex = yIndex;
+    this.index = index;
     bounds = new Rectangle2D.Double();
     axisTitle =
-        new AxisTitle<ST, S>(chart, direction, direction == Direction.Y ? this : null, yIndex);
+        new AxisTitle<ST, S>(chart, direction, direction == Direction.Y ? this : null, index);
     axisTick = new AxisTick<ST, S>(chart, direction, direction == Direction.Y ? this : null);
   }
 
@@ -89,6 +95,17 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   public void preparePaint() {
 
+    double legendHeightOffset = 0;
+    if (axesChartStyler.isLegendVisible()
+        && axesChartStyler.getLegendPosition() == LegendPosition.OutsideS)
+      legendHeightOffset = chart.getLegend().getBounds().getHeight();
+
+    double infoPanelHeightOffset = 0;
+    if (axesChartStyler.isInfoPanelVisible()
+        && axesChartStyler.getInfoPanelPosition() == InfoPanelPosition.OutsideS)
+      infoPanelHeightOffset =
+          axesChartStyler.getInfoPanelPadding() / 2 + chart.getInfoPanel().getBounds().getHeight();
+
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
 
@@ -114,6 +131,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       do {
         // System.out.println("width before: " + width);
 
+        double legendWidthOffset = 0;
+        if (axesChartStyler.isLegendVisible()
+            && axesChartStyler.getLegendPosition() == LegendPosition.OutsideE)
+          legendWidthOffset = axesChartStyler.getChartPadding();
+
         double approximateXAxisWidth =
             chart.getWidth()
                 - width // y-axis approx. width
@@ -122,10 +144,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                     : 0)
                 - 2 * axesChartStyler.getChartPadding()
                 - (axesChartStyler.isYAxisTicksVisible() ? (axesChartStyler.getPlotMargin()) : 0)
-                - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE
-                        && axesChartStyler.isLegendVisible()
-                    ? axesChartStyler.getChartPadding()
-                    : 0);
+                - legendWidthOffset;
 
         height =
             chart.getHeight()
@@ -133,12 +152,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth)
                 - axesChartStyler.getPlotMargin()
                 - axesChartStyler.getChartPadding()
-                - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideS
-                    ? chart.getLegend().getBounds().getHeight()
-                    : 0);
+                - legendHeightOffset
+                - infoPanelHeightOffset;
 
         width = getYAxisWidthHint(height);
-        // System.out.println("width after: " + width);
+        //         System.out.println("width after: " + width);
 
         // System.out.println("height: " + height);
 
@@ -161,13 +179,9 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
           Math.max(
               leftYAxisBounds.getY() + leftYAxisBounds.getHeight(),
               rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
-      double xOffset = leftYAxisBounds.getWidth() + axesChartStyler.getChartPadding();
+      double xOffset = leftYAxisBounds.getWidth() + leftYAxisBounds.getX();
       double yOffset =
-          maxYAxisY
-              + axesChartStyler.getPlotMargin()
-              - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideS
-                  ? chart.getLegend().getBounds().getHeight()
-                  : 0);
+          maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset - infoPanelHeightOffset;
 
       double legendWidth = 0;
       if (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE
@@ -178,7 +192,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
           chart.getWidth()
               - leftYAxisBounds.getWidth() // y-axis was already painted
               - rightYAxisBounds.getWidth() // y-axis was already painted
-              - 2 * axesChartStyler.getChartPadding()
+              - leftYAxisBounds.getX() // use left y-axis x instead of padding
+              - 1 * axesChartStyler.getChartPadding() // right y-axis padding
 
               // - tickMargin is included in left & right y axis bounds
 
@@ -211,7 +226,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       /////////////////////////
 
       // fill in Axis with sub-components
-      boolean onRight = axesChartStyler.getYAxisGroupPosistion(yIndex) == YAxisPosition.Right;
+      boolean onRight = axesChartStyler.getYAxisGroupPosistion(index) == YAxisPosition.Right;
       if (onRight) {
         axisTick.paint(g);
         axisTitle.paint(g);
@@ -252,7 +267,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
    * actually determine the tick labels first to get an idea of how tall the X-Axis tick labels will
    * be.
    *
-   * @return
+   * @return the x-axis height hint
    */
   private double getXAxisHeightHint(double workingSpace) {
 
@@ -317,7 +332,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
     // Axis title
     double titleHeight = 0.0;
-    String yAxisTitle = chart.getYAxisGroupTitle(yIndex);
+    String yAxisTitle = chart.getYAxisGroupTitle(index);
     if (yAxisTitle != null
         && !yAxisTitle.trim().equalsIgnoreCase("")
         && axesChartStyler.isYAxisTitleVisible()) {
@@ -367,34 +382,55 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
 
-    // check if a custom label map is present
-    Map<Double, Object> labelOverrideMap = chart.getYAxisLabelOverrideMap(getDirection(), yIndex);
-    if (labelOverrideMap != null) {
+    // check if a label override map for the y axis is present
+    Map<Object, Object> customTickLabelsMap =
+        chart.getAxisPair().getCustomTickLabelsMap(getDirection(), index);
+    if (customTickLabelsMap != null) {
 
       if (getDirection() == Direction.X && axesChartStyler instanceof CategoryStyler) {
 
+        // get the first series
         AxesChartSeriesCategory axesChartSeries =
             (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+        // get the first categories, could be Number Date or String
         List<?> categories = (List<?>) axesChartSeries.getXData();
-        DataType axisType = chart.getAxisPair().getXAxis().getDataType();
+
+        // add the custom tick labels for the categories
+        Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
+        for (Entry<Object, Object> entry : customTickLabelsMap.entrySet()) {
+          int index = categories.indexOf(entry.getKey());
+          if (index == -1) {
+            throw new IllegalArgumentException(
+                "Could not find category index for " + entry.getKey());
+          }
+          axisTickValueLabelMap.put((double) index, entry.getValue());
+        }
 
         return new AxisTickCalculator_Override(
             getDirection(),
             workingSpace,
             axesChartStyler,
-            labelOverrideMap,
-            axisType,
+            axisTickValueLabelMap,
+            chart.getAxisPair().getXAxis().getDataType(),
             categories.size());
-      }
+      } else {
 
-      return new AxisTickCalculator_Override(
-          getDirection(), workingSpace, min, max, axesChartStyler, labelOverrideMap);
+        // add the custom tick labels for the values
+        Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
+        for (Entry<Object, Object> entry : customTickLabelsMap.entrySet()) {
+          Number axisTickValue = (Number) entry.getKey();
+          axisTickValueLabelMap.put(axisTickValue.doubleValue(), entry.getValue());
+        }
+
+        return new AxisTickCalculator_Override(
+            getDirection(), workingSpace, min, max, axesChartStyler, axisTickValueLabelMap);
+      }
     }
 
     // X-Axis
     if (getDirection() == Direction.X) {
 
-      if (axesChartStyler instanceof CategoryStyler) {
+      if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxPlotStyler) {
 
         // TODO Cleanup? More elegant way?
         AxesChartSeriesCategory axesChartSeries =
@@ -427,10 +463,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 
         return new AxisTickCalculator_Logarithmic(
-            getDirection(), workingSpace, min, max, axesChartStyler);
+            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
       } else {
         return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, axesChartStyler);
+            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
       }
     }
   }
@@ -499,22 +535,22 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   public int getYIndex() {
 
-    return yIndex;
+    return index;
   }
-  
-  
+
   /**
-   * Converts a chart coordinate value to screen coordinate. Same as AxisTickCalculators calculation.
-   * 
-   * @param chartPoint value in chart coordinate system 
+   * Converts a chart coordinate value to screen coordinate. Same as AxisTickCalculators
+   * calculation.
+   *
+   * @param chartPoint value in chart coordinate system
    * @return Coordinate of screen. eg: MouseEvent.getX(), MouseEvent.getY()
    */
   public double getScreenValue(double chartPoint) {
-    
+
     double minVal = min;
     double maxVal = max;
-    
-    // min & max is not set in category charts with string labels 
+
+    // min & max is not set in category charts with string labels
     if (min > max) {
       if (getDirection() == Direction.X) {
         if (axesChartStyler instanceof CategoryStyler) {
@@ -526,14 +562,14 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         }
       }
     }
-    
+
     double workingSpace;
     double startOffset;
     if (direction == Direction.X) {
       startOffset = bounds.getX();
       workingSpace = bounds.getWidth();
     } else {
-      startOffset = 0; //bounds.getY();
+      startOffset = 0; // bounds.getY();
       workingSpace = bounds.getHeight();
     }
 
@@ -542,47 +578,44 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       return workingSpace / 2;
     }
 
-    
     // tick space - a percentage of the working space available for ticks
     double tickSpace = axesChartStyler.getPlotContentSize() * workingSpace; // in plot space
-    
+
     // this prevents an infinite loop when the plot gets sized really small.
     if (tickSpace < axesChartStyler.getXAxisTickMarkSpacingHint()) {
       return workingSpace / 2;
     }
-    
+
     // where the tick should begin in the working space in pixels
-    double margin =
-        Utils.getTickStartOffset(
-            workingSpace,
-            tickSpace); 
-    
-    double tickLabelPosition = startOffset + 
-        margin + ((chartPoint - minVal) / (maxVal - minVal) * tickSpace);
+    double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
+
+    double tickLabelPosition =
+        startOffset + margin + ((chartPoint - minVal) / (maxVal - minVal) * tickSpace);
 
     if (direction == Direction.Y) {
       tickLabelPosition = bounds.getHeight() - tickLabelPosition + bounds.getY();
     }
     return tickLabelPosition;
   }
-  
+
   /**
-   * Converts a screen coordinate to chart coordinate value. Reverses the AxisTickCalculators calculation.
-   * 
-   * @param screenPoint Coordinate of screen. eg: MouseEvent.getX(), MouseEvent.getY() 
+   * Converts a screen coordinate to chart coordinate value. Reverses the AxisTickCalculators
+   * calculation.
+   *
+   * @param screenPoint Coordinate of screen. eg: MouseEvent.getX(), MouseEvent.getY()
    * @return value in chart coordinate system
    */
   public double getChartValue(double screenPoint) {
-    
+
     // a check if all axis data are the exact same values
     if (min == max) {
       return min;
     }
-    
+
     double minVal = min;
     double maxVal = max;
-    
-    // min & max is not set in category charts with string labels 
+
+    // min & max is not set in category charts with string labels
     if (min > max) {
       if (getDirection() == Direction.X) {
         if (axesChartStyler instanceof CategoryStyler) {
@@ -601,7 +634,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       startOffset = bounds.getX();
       workingSpace = bounds.getWidth();
     } else {
-      startOffset = 0; //bounds.getY();
+      startOffset = 0; // bounds.getY();
       workingSpace = bounds.getHeight();
       screenPoint = bounds.getHeight() - screenPoint + bounds.getY(); // y increments top to bottom
     }
@@ -615,15 +648,12 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     }
 
     // where the tick should begin in the working space in pixels
-    double margin =
-        Utils.getTickStartOffset(
-            workingSpace,
-            tickSpace); 
+    double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
 
     // given tickLabelPositon (screenPoint) find value
     // double tickLabelPosition =
     //       margin + ((value - min) / (max - min) * tickSpace);
-    
+
     double value = ((screenPoint - margin - startOffset) * (maxVal - minVal) / tickSpace) + minVal;
 
     return value;

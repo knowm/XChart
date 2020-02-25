@@ -9,12 +9,28 @@ class NumberLogFormatter extends Format {
   private final AxesChartStyler styler;
   private final Axis.Direction axisDirection;
   private final NumberFormat numberFormat;
+  private int yIndex;
 
   /** Constructor */
   public NumberLogFormatter(AxesChartStyler styler, Axis.Direction axisDirection) {
 
     this.styler = styler;
     this.axisDirection = axisDirection;
+    numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
+  }
+
+  /**
+   * Constructor
+   *
+   * @param styler
+   * @param axisDirection
+   * @param yIndex
+   */
+  public NumberLogFormatter(AxesChartStyler styler, Axis.Direction axisDirection, int yIndex) {
+
+    this.styler = styler;
+    this.axisDirection = axisDirection;
+    this.yIndex = yIndex;
     numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
   }
 
@@ -28,8 +44,14 @@ class NumberLogFormatter extends Format {
     if (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() != null) {
 
       decimalPattern = styler.getXAxisDecimalPattern();
-    } else if (axisDirection == Axis.Direction.Y && styler.getYAxisDecimalPattern() != null) {
-      decimalPattern = styler.getYAxisDecimalPattern();
+    } else if (axisDirection == Axis.Direction.Y
+        && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
+            || styler.getYAxisDecimalPattern() != null)) {
+      if (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null) {
+        decimalPattern = styler.getYAxisGroupDecimalPatternMap().get(yIndex);
+      } else {
+        decimalPattern = styler.getYAxisDecimalPattern();
+      }
     } else if (styler.getDecimalPattern() != null) {
 
       decimalPattern = styler.getDecimalPattern();

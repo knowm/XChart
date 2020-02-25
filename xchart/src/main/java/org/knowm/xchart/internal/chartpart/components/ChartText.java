@@ -10,7 +10,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -146,33 +145,32 @@ public class ChartText implements ChartPart {
   }
 
   public double getxValue() {
-  
+
     return xValue;
   }
 
   public void setxValue(double xValue) {
-  
+
     this.xValue = xValue;
   }
 
   public double getyValue() {
-  
+
     return yValue;
   }
 
   public void setyValue(double yValue) {
-  
+
     this.yValue = yValue;
   }
 
   public boolean isValueInScreenCoordinate() {
-  
+
     return valueInScreenCoordinate;
   }
 
   public void setValueInScreenCoordinate(boolean valueInScreenCoordinate) {
-  
+
     this.valueInScreenCoordinate = valueInScreenCoordinate;
   }
-
 }

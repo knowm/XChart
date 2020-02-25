@@ -3,6 +3,7 @@ package org.knowm.xchart;
 import java.awt.*;
 import java.util.Map;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;
 import org.knowm.xchart.internal.series.Series;
@@ -26,6 +27,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     super(width, height, new PieStyler());
     plot = new Plot_Pie<PieStyler, PieSeries>(this);
     legend = new Legend_Pie<PieStyler, PieSeries>(this);
+    infoPanel = new InfoPanel<PieStyler, PieSeries>(this);
   }
 
   /**
@@ -126,6 +128,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
+    infoPanel.paint(g);
   }
 
   /** set the series color based on theme */

@@ -2,6 +2,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.knowm.xchart.internal.Utils;
@@ -53,6 +54,27 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
     double gridStep = (tickSpace / categories.size());
     // System.out.println("GridStep: " + gridStep);
     double firstPosition = gridStep / 2.0;
+
+    // Compute the spacing between categories when there are more than wanted
+
+    int xAxisMaxLabelCount = styler.getXAxisMaxLabelCount();
+
+    if (0 < xAxisMaxLabelCount && xAxisMaxLabelCount < categories.size()) {
+      List<Object> sparseCategories = new ArrayList<>();
+      double step = categories.size() / (double) xAxisMaxLabelCount;
+      for (double stepIdx = 0; Math.round(stepIdx) < categories.size(); stepIdx += step) {
+        int idx = (int) Math.round(stepIdx);
+        Object label = categories.get(idx);
+        sparseCategories.add(label);
+      }
+
+      Object lastLabel = categories.get(categories.size() - 1);
+      sparseCategories.add(lastLabel);
+      categories = sparseCategories;
+
+      gridStep = (tickSpace / (categories.size() - 1));
+      firstPosition = 0;
+    }
 
     // set up String formatters that may be encountered
     if (axisType == Series.DataType.String) {

@@ -1,7 +1,11 @@
 package org.knowm.xchart.style;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Stroke;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.BaseSeriesColors;
@@ -145,6 +149,44 @@ public abstract class AbstractBaseTheme implements Theme {
   public LegendPosition getLegendPosition() {
 
     return LegendPosition.OutsideE;
+  }
+
+  // Chart Info Panel ///////////////////////////////
+
+  @Override
+  public Font getInfoPanelFont() {
+
+    return new Font(Font.MONOSPACED, Font.PLAIN, 10);
+  }
+
+  @Override
+  public boolean isInfoPanelVisible() {
+
+    return false;
+  }
+
+  @Override
+  public Color getInfoPanelBackgroundColor() {
+
+    return ChartColor.getAWTColor(ChartColor.WHITE);
+  }
+
+  @Override
+  public Color getInfoPanelBorderColor() {
+
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+  }
+
+  @Override
+  public int getInfoPanelPadding() {
+
+    return 10;
+  }
+
+  @Override
+  public InfoPanelPosition getInfoPanelPosition() {
+
+    return InfoPanelPosition.OutsideS;
   }
 
   // Chart Axes ///////////////////////////////
@@ -351,6 +393,44 @@ public abstract class AbstractBaseTheme implements Theme {
     return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
   }
 
+  // Cursor ///////////////////////////////
+
+  @Override
+  public boolean isCursorEnabled() {
+
+    return false;
+  }
+
+  @Override
+  public Color getCursorColor() {
+
+    return Color.BLACK;
+  }
+
+  @Override
+  public float getCursorSize() {
+
+    return 1;
+  }
+
+  @Override
+  public Font getCursorFont() {
+
+    return new Font(Font.SANS_SERIF, Font.PLAIN, 16);
+  }
+
+  @Override
+  public Color getCursorFontColor() {
+
+    return Color.WHITE;
+  }
+
+  @Override
+  public Color getCursorBackgroundColor() {
+
+    return Color.GRAY;
+  }
+
   // Category Charts ///////////////////////////////
 
   @Override
@@ -451,5 +531,11 @@ public abstract class AbstractBaseTheme implements Theme {
   public Font getAnnotationFont() {
 
     return getPieFont().deriveFont(12f);
+  }
+
+  /** Annotations default colour */
+  @Override
+  public Color getAnnotationsFontColor() {
+    return getChartFontColor();
   }
 }

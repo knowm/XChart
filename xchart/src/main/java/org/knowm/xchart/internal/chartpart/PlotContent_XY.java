@@ -73,10 +73,16 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
       double[] errorBars = series.getExtraValues();
       Path2D.Double path = null;
+      // smooth curve
+      Path2D.Double smoothPath = null;
 
       boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
       String[] toolTips = series.getToolTips();
       boolean hasCustomToolTips = toolTips != null;
+
+      double yZeroTransform =
+          getBounds().getHeight() - (yTopMargin + (0 - yMin) / (yMax - yMin) * yTickSpace);
+      double yZeroOffset = yZeroTransform + getBounds().getY();
 
       for (int i = 0; i < xData.length; i++) {
 
@@ -91,8 +97,16 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
         if (Double.isNaN(next)) {
 
           // for area charts
-          closePath(g, path, previousX, getBounds(), yTopMargin);
+          g.setColor(series.getFillColor());
+          closePathXY(g, path, previousX, yZeroOffset);
           path = null;
+
+          if (smoothPath != null) {
+            g.setColor(series.getLineColor());
+            g.setStroke(series.getLineStyle());
+            g.draw(smoothPath);
+            smoothPath = null;
+          }
 
           previousX = -Double.MAX_VALUE;
           previousY = -Double.MAX_VALUE;
@@ -149,8 +163,22 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
               g.setColor(series.getLineColor());
               g.setStroke(series.getLineStyle());
               if (isSeriesLineOrArea) {
-                line.setLine(previousX, previousY, xOffset, yOffset);
-                g.draw(line);
+                if (series.isSmooth()) {
+                  if (smoothPath == null) {
+                    smoothPath = new Path2D.Double();
+                    smoothPath.moveTo(previousX, previousY);
+                  }
+                  smoothPath.curveTo(
+                      (previousX + xOffset) / 2,
+                      previousY,
+                      (previousX + xOffset) / 2,
+                      yOffset,
+                      xOffset,
+                      yOffset);
+                } else {
+                  line.setLine(previousX, previousY, xOffset, yOffset);
+                  g.draw(line);
+                }
               } else {
                 if (previousX != xOffset) {
                   line.setLine(previousX, previousY, xOffset, previousY);
@@ -170,16 +198,23 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
             || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
-
-            double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
-
             if (path == null) {
               path = new Path2D.Double();
-              path.moveTo(previousX, yBottomOfArea);
+              path.moveTo(previousX, yZeroOffset);
               path.lineTo(previousX, previousY);
             }
             if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
-              path.lineTo(xOffset, yOffset);
+              if (series.isSmooth()) {
+                path.curveTo(
+                    (previousX + xOffset) / 2,
+                    previousY,
+                    (previousX + xOffset) / 2,
+                    yOffset,
+                    xOffset,
+                    yOffset);
+              } else {
+                path.lineTo(xOffset, yOffset);
+              }
             } else {
               if (previousX != xOffset) {
                 path.lineTo(xOffset, previousY);
@@ -264,14 +299,36 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
                 xOffset,
                 yOffset,
                 chart.getXAxisFormat().format(x),
-                chart.getYAxisFormat().format(yOrig));
+                chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
           }
+        }
+
+        if (xyStyler.isCursorEnabled()) {
+          chart.cursor.addData(
+              xOffset,
+              yOffset,
+              chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig),
+              series.getName());
         }
       }
 
+      if (smoothPath != null) {
+        g.setColor(series.getLineColor());
+        g.setStroke(series.getLineStyle());
+        g.draw(smoothPath);
+      }
       // close any open path for area charts
       g.setColor(series.getFillColor());
-      closePath(g, path, previousX, getBounds(), yTopMargin);
+      closePathXY(g, path, previousX, yZeroOffset);
+    }
+  }
+
+  void closePathXY(Graphics2D g, Path2D.Double path, double previousX, double yZeroOffset) {
+    if (path != null) {
+      path.lineTo(previousX, yZeroOffset);
+      path.closePath();
+      g.fill(path);
     }
   }
 }

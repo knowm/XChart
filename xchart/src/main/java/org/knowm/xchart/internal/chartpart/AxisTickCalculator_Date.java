@@ -114,6 +114,22 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
       return;
     }
 
+    // minValue & maxValue is not set
+    if (minValue > maxValue && minValue == Double.MAX_VALUE) {
+      String datePattern = timeSpans.get(0).getDatePattern();
+      if (styler.getDatePattern() != null) {
+        datePattern = styler.getDatePattern();
+      }
+
+      SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styler.getLocale());
+      simpleDateformat.setTimeZone(styler.getTimezone());
+      axisFormat = simpleDateformat;
+
+      tickLabels.add(axisFormat.format(0.0));
+      tickLocations.add(workingSpace / 2.0);
+      return;
+    }
+
     // where the tick should begin in the working space in pixels
     double margin =
         Utils.getTickStartOffset(

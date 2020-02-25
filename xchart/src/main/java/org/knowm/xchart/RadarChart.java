@@ -2,6 +2,7 @@ package org.knowm.xchart;
 
 import java.awt.*;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Radar;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
@@ -26,6 +27,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     super(width, height, new RadarStyler());
     plot = new Plot_Radar<RadarStyler, RadarSeries>(this);
     legend = new Legend_Pie<RadarStyler, RadarSeries>(this);
+    infoPanel = new InfoPanel<RadarStyler, RadarSeries>(this);
   }
 
   /**
@@ -138,6 +140,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
+    infoPanel.paint(g);
   }
 
   /** set the series color based on theme */

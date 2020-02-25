@@ -3,6 +3,7 @@ package org.knowm.xchart.style;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 /** @author timmolter */
@@ -38,6 +39,9 @@ public abstract class AxesChartStyler extends Styler {
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
   private int xAxisLabelRotation = 0;
 
+  // By default, all available labels are displayed
+  private int xAxisMaxLabelCount = 0;
+
   // Chart Plot Area ///////////////////////////////
   private boolean isPlotGridHorizontalLinesVisible;
   private boolean isPlotGridVerticalLinesVisible;
@@ -58,6 +62,7 @@ public abstract class AxesChartStyler extends Styler {
   private String datePattern;
   private String xAxisDecimalPattern;
   private String yAxisDecimalPattern;
+  private Map<Integer, String> yAxisGroupDecimalPatternMap;
   private boolean xAxisLogarithmicDecadeOnly;
   private boolean yAxisLogarithmicDecadeOnly;
 
@@ -111,6 +116,7 @@ public abstract class AxesChartStyler extends Styler {
     this.datePattern = null; // if not null, this override pattern will be used
     this.xAxisDecimalPattern = null;
     this.yAxisDecimalPattern = null;
+    this.yAxisGroupDecimalPatternMap = new HashMap<>();
     this.xAxisLogarithmicDecadeOnly = true;
     this.yAxisLogarithmicDecadeOnly = true;
 
@@ -412,6 +418,9 @@ public abstract class AxesChartStyler extends Styler {
    */
   public AxesChartStyler setYAxisTickMarkSpacingHint(int yAxisTickMarkSpacingHint) {
 
+    if (yAxisTickMarkSpacingHint < 0) {
+      throw new IllegalArgumentException("yAxisTickMarkSpacingHint cannot be less than 0 !!!");
+    }
     this.yAxisTickMarkSpacingHint = yAxisTickMarkSpacingHint;
     return this;
   }
@@ -544,6 +553,16 @@ public abstract class AxesChartStyler extends Styler {
 
     this.xAxisLabelRotation = xAxisLabelRotation;
     return this;
+  }
+
+  public int getXAxisMaxLabelCount() {
+
+    return xAxisMaxLabelCount;
+  }
+
+  public void setXAxisMaxLabelCount(int xAxisMaxLabelCount) {
+
+    this.xAxisMaxLabelCount = xAxisMaxLabelCount;
   }
 
   // Chart Plot Area ///////////////////////////////
@@ -778,6 +797,16 @@ public abstract class AxesChartStyler extends Styler {
 
     this.yAxisDecimalPattern = yAxisDecimalPattern;
     return this;
+  }
+
+  public Map<Integer, String> getYAxisGroupDecimalPatternMap() {
+
+    return yAxisGroupDecimalPatternMap;
+  }
+
+  public void putYAxisGroupDecimalPatternMap(int yIndex, String yAxisDecimalPattern) {
+
+    yAxisGroupDecimalPatternMap.put(yIndex, yAxisDecimalPattern);
   }
 
   public boolean isXAxisLogarithmicDecadeOnly() {

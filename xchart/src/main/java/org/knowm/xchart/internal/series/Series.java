@@ -16,6 +16,8 @@ public abstract class Series {
   private boolean showInLegend = true;
   private boolean isEnabled = true;
   private int yAxisGroup = 0;
+  /** the yAxis decimalPattern */
+  private String yAxisDecimalPattern;
 
   /**
    * Constructor
@@ -95,6 +97,17 @@ public abstract class Series {
   public Series setYAxisGroup(int yAxisGroup) {
 
     this.yAxisGroup = yAxisGroup;
+    return this;
+  }
+
+  public String getYAxisDecimalPattern() {
+
+    return yAxisDecimalPattern;
+  }
+
+  public Series setYAxisDecimalPattern(String yAxisDecimalPattern) {
+
+    this.yAxisDecimalPattern = yAxisDecimalPattern;
     return this;
   }
 

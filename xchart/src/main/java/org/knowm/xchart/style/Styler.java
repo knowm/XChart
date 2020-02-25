@@ -39,6 +39,13 @@ public abstract class Styler {
   private int legendSeriesLineLength;
   private LegendPosition legendPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
+  // Chart InfoPanel ///////////////////////////////
+  private boolean infoPanelVisible;
+  private Color infoPanelBackgroundColor;
+  private Color infoPanelBorderColor;
+  private Font infoPanelFont;
+  private int infoPanelPadding;
+  private InfoPanelPosition infoPanelPosition;
   // Chart Plot Area ///////////////////////////////
   private Color plotBackgroundColor;
   private Color plotBorderColor;
@@ -52,12 +59,26 @@ public abstract class Styler {
   private Color toolTipBorderColor;
   private Font toolTipFont;
   private Color toolTipHighlightColor;
+  // Cursor ////////////////////////////////
+  private boolean isCursorEnabled;
+  private Color cursorColor;
+  private float cursorSize;
+  private Font cursorFont;
+  private Color cursorFontColor;
+  private Color cursorBackgroundColor;
   // Annotations ///////////////////////////////
   private Font annotationsFont;
+  private Color annotationsFontColor;
+  private int annotationsRotation = 0;
+  private float annotationsPosition = 0.5f;
+  private boolean showTotalAnnotations = false;
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
   private String decimalPattern;
   private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<Integer, YAxisPosition>();
+  private int yAxisLeftWidthHint;
+  // Box plot data ///////////////////////////////
+  private boolean showWithinAreaPoint = false;
 
   void setAllStyles() {
 
@@ -80,7 +101,7 @@ public abstract class Styler {
     chartTitleBoxBorderColor = theme.getChartTitleBoxBorderColor();
     chartTitlePadding = theme.getChartTitlePadding();
 
-    // legend
+    // Legend
     isLegendVisible = theme.isLegendVisible();
     legendBackgroundColor = theme.getLegendBackgroundColor();
     legendBorderColor = theme.getLegendBorderColor();
@@ -88,6 +109,14 @@ public abstract class Styler {
     legendPadding = theme.getLegendPadding();
     legendSeriesLineLength = theme.getLegendSeriesLineLength();
     legendPosition = theme.getLegendPosition();
+
+    // Info Panel
+    infoPanelVisible = theme.isInfoPanelVisible();
+    infoPanelBackgroundColor = theme.getInfoPanelBackgroundColor();
+    infoPanelBorderColor = theme.getInfoPanelBorderColor();
+    infoPanelFont = theme.getInfoPanelFont();
+    infoPanelPadding = theme.getInfoPanelPadding();
+    infoPanelPosition = theme.getInfoPanelPosition();
 
     // Chart Plot Area ///////////////////////////////
     plotBackgroundColor = theme.getPlotBackgroundColor();
@@ -104,8 +133,17 @@ public abstract class Styler {
     toolTipFont = theme.getToolTipFont();
     toolTipHighlightColor = theme.getToolTipHighlightColor();
 
+    // Cursor ////////////////////////////////
+    this.isCursorEnabled = theme.isCursorEnabled();
+    this.cursorColor = theme.getCursorColor();
+    this.cursorSize = theme.getCursorSize();
+    this.cursorFont = theme.getCursorFont();
+    this.cursorFontColor = theme.getCursorFontColor();
+    this.cursorBackgroundColor = theme.getCursorBackgroundColor();
+
     // Annotations ///////////////////////////////
     annotationsFont = theme.getAnnotationFont();
+    annotationsFontColor = theme.getAnnotationsFontColor();
 
     // Formatting
     decimalPattern = null;
@@ -444,6 +482,73 @@ public abstract class Styler {
     this.legendLayout = legendLayout;
   }
 
+  // Chart InfoPanel ///////////////////////////////
+
+  public Color getInfoPanelBackgroundColor() {
+
+    return infoPanelBackgroundColor;
+  }
+
+  public Styler setInfoPanelBackgroundColor(Color color) {
+
+    this.infoPanelBackgroundColor = color;
+    return this;
+  }
+
+  public Color getInfoPanelBorderColor() {
+
+    return infoPanelBorderColor;
+  }
+
+  public Styler setInfoPanelBorderColor(Color borderColor) {
+
+    this.infoPanelBorderColor = borderColor;
+    return this;
+  }
+
+  public Font getInfoPanelFont() {
+
+    return infoPanelFont;
+  }
+
+  public Styler setInfoPanelFont(Font font) {
+
+    this.infoPanelFont = font;
+    return this;
+  }
+
+  public boolean isInfoPanelVisible() {
+    return infoPanelVisible;
+  }
+
+  public Styler setInfoPanelVisible(boolean infoPanelVisible) {
+
+    this.infoPanelVisible = infoPanelVisible;
+    return this;
+  }
+
+  public int getInfoPanelPadding() {
+
+    return infoPanelPadding;
+  }
+
+  public Styler setInfoPanelPadding(int infoPanelPadding) {
+
+    this.infoPanelPadding = infoPanelPadding;
+    return this;
+  }
+
+  public InfoPanelPosition getInfoPanelPosition() {
+
+    return infoPanelPosition;
+  }
+
+  public Styler setInfoPanelPosition(InfoPanelPosition infoPanelPosition) {
+
+    this.infoPanelPosition = infoPanelPosition;
+    return this;
+  }
+
   public Color getPlotBackgroundColor() {
 
     return plotBackgroundColor;
@@ -594,6 +699,72 @@ public abstract class Styler {
     return this;
   }
 
+  // Cursor ///////////////////////////////
+
+  public boolean isCursorEnabled() {
+    return isCursorEnabled;
+  }
+
+  public Styler setCursorEnabled(boolean isCursorEnabled) {
+
+    this.isCursorEnabled = isCursorEnabled;
+    return this;
+  }
+
+  public Color getCursorColor() {
+    return cursorColor;
+  }
+
+  public Styler setCursorColor(Color cursorColor) {
+
+    this.cursorColor = cursorColor;
+    return this;
+  }
+
+  public float getCursorSize() {
+
+    return cursorSize;
+  }
+
+  public Styler setCursorSize(float cursorSize) {
+
+    this.cursorSize = cursorSize;
+    return this;
+  }
+
+  public Font getCursorFont() {
+
+    return cursorFont;
+  }
+
+  public Styler setCursorFont(Font cursorFont) {
+
+    this.cursorFont = cursorFont;
+    return this;
+  }
+
+  public Color getCursorFontColor() {
+
+    return cursorFontColor;
+  }
+
+  public Styler setCursorFontColor(Color cursorFontColor) {
+
+    this.cursorFontColor = cursorFontColor;
+    return this;
+  }
+
+  public Color getCursorBackgroundColor() {
+
+    return cursorBackgroundColor;
+  }
+
+  public Styler setCursorBackgroundColor(Color cursorBackgroundColor) {
+
+    this.cursorBackgroundColor = cursorBackgroundColor;
+    return this;
+  }
+
   public Boolean hasAnnotations() {
 
     return hasAnnotations;
@@ -623,6 +794,59 @@ public abstract class Styler {
   public Styler setAnnotationsFont(Font annotationsFont) {
 
     this.annotationsFont = annotationsFont;
+    return this;
+  }
+
+  public Color getAnnotationsFontColor() {
+    return annotationsFontColor;
+  }
+
+  /**
+   * Sets the color of the Font used for chart annotations
+   *
+   * @param annotationsFontColor
+   */
+  public Styler setAnnotationsFontColor(Color annotationsFontColor) {
+    this.annotationsFontColor = annotationsFontColor;
+    return this;
+  }
+
+  public int getAnnotationsRotation() {
+    return annotationsRotation;
+  }
+
+  /**
+   * Sets the rotation for chart annotations
+   *
+   * @param annotationsRotation
+   */
+  public Styler setAnnotationsRotation(int annotationsRotation) {
+    this.annotationsRotation = annotationsRotation;
+    return this;
+  }
+
+  public float getAnnotationsPosition() {
+
+    return annotationsPosition;
+  }
+
+  public Styler setAnnotationsPosition(float annotationsPosition) {
+
+    if (annotationsPosition < 0 || annotationsPosition > 1) {
+      throw new IllegalArgumentException("Annotations position must be tween 0 and 1!!!");
+    }
+    this.annotationsPosition = annotationsPosition;
+    return this;
+  }
+
+  public boolean isShowTotalAnnotations() {
+
+    return showTotalAnnotations;
+  }
+
+  public Styler setShowTotalAnnotations(boolean showTotalAnnotations) {
+
+    this.showTotalAnnotations = showTotalAnnotations;
     return this;
   }
 
@@ -675,6 +899,24 @@ public abstract class Styler {
     antiAlias = newVal;
   }
 
+  public int getYAxisLeftWidthHint() {
+
+    return yAxisLeftWidthHint;
+  }
+
+  public void setYAxisLeftWidthHint(int yAxisLeftWidthHint) {
+
+    this.yAxisLeftWidthHint = yAxisLeftWidthHint;
+  }
+
+  public void setShowWithinAreaPoint(boolean showWithinAreaPoint) {
+    this.showWithinAreaPoint = showWithinAreaPoint;
+  }
+
+  public boolean getShowWithinAreaPoint() {
+    return this.showWithinAreaPoint;
+  }
+
   public enum LegendPosition {
     OutsideE,
     InsideNW,
@@ -689,6 +931,10 @@ public abstract class Styler {
   public enum LegendLayout {
     Vertical,
     Horizontal
+  }
+
+  public enum InfoPanelPosition {
+    OutsideS
   }
 
   public enum ChartTheme {

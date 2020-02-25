@@ -1,12 +1,18 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -19,13 +25,17 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
-  protected final Map<String, S> seriesMap = new LinkedHashMap<String, S>();
+  protected final Map<String, S> seriesMap = new LinkedHashMap<>();
+  protected final List<String> infoContent = new ArrayList<>();
   final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
+  final Cursor cursor;
   /** Chart Parts */
   protected AxisPair axisPair;
 
   protected Plot_<ST, S> plot;
   protected Legend_<ST, S> legend;
+  protected InfoPanel infoPanel;
+
   /** Meta Data */
   private int width;
 
@@ -35,7 +45,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private String yAxisTitle = "";
   private Map<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
   protected ArrayList<ChartPart> plotParts = new ArrayList<ChartPart>();
-  
+
   /**
    * Constructor
    *
@@ -50,6 +60,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.styler = styler;
 
     this.toolTips = new ToolTips(styler);
+    this.cursor = new Cursor(styler);
 
     this.chartTitle = new ChartTitle<ST, S>(this);
   }
@@ -82,11 +93,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public S removeSeries(String seriesName) {
 
     return seriesMap.remove(seriesName);
-  }
-
-  public ToolTips getToolTips() {
-
-    return toolTips;
   }
 
   /** Meta Data Getters and Setters */
@@ -159,25 +165,18 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return seriesMap;
   }
 
-  public void setXAxisLabelOverrideMap(Map<Double, Object> overrideMap) {
-
-    axisPair.getAxisLabelOverrideMap().put("X0", overrideMap);
+  public List<String> getInfoContent() {
+    return infoContent;
   }
 
-  public void setYAxisLabelOverrideMap(Map<Double, Object> overrideMap) {
-
-    axisPair.getAxisLabelOverrideMap().put("Y0", overrideMap);
+  public void setInfoContent(List<String> content) {
+    infoContent.clear();
+    infoContent.addAll(content);
   }
 
-  public void setYAxisLabelOverrideMap(Map<Double, Object> overrideMap, int yAxisGroup) {
-
-    axisPair.getAxisLabelOverrideMap().put(("Y" + yAxisGroup), overrideMap);
-  }
-
-  public Map<Double, Object> getYAxisLabelOverrideMap(Axis.Direction direction, int yIndex) {
-
-    Map<String, Map<Double, Object>> axisLabelOverrideMap = axisPair.getAxisLabelOverrideMap();
-    return axisLabelOverrideMap.get((direction.name() + yIndex));
+  public void addInfoContent(String content) {
+    List<String> lines = Arrays.asList(content.split("\\n"));
+    infoContent.addAll(lines);
   }
 
   /** Chart Parts Getters */
@@ -189,6 +188,11 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   Legend_<ST, S> getLegend() {
 
     return legend;
+  }
+
+  InfoPanel getInfoPanel() {
+
+    return infoPanel;
   }
 
   Plot_<ST, S> getPlot() {
@@ -225,62 +229,104 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
-  
+
+  Format getYAxisFormat(String yAxisDecimalPattern) {
+
+    Format format = null;
+    if (yAxisDecimalPattern != null) {
+      format = new DecimalFormat(yAxisDecimalPattern);
+    } else {
+      format = axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
+    }
+    return format;
+  }
+
   public ArrayList<ChartPart> getPlotParts() {
 
     return plotParts;
   }
-  
+
   public void addPlotPart(ChartPart chartPart) {
-    
+
     plotParts.add(chartPart);
   }
-  
+
   public double getChartXFromCoordinate(int screenX) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getXAxis().getChartValue(screenX);
   }
-  
+
   public double getChartYFromCoordinate(int screenY) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getYAxis().getChartValue(screenY);
   }
-  
+
   public double getChartYFromCoordinate(int screenY, int yIndex) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getYAxis(yIndex).getChartValue(screenY);
   }
-  
+
   public double getScreenXFromChart(double xValue) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getXAxis().getScreenValue(xValue);
   }
-  
+
   public double getScreenYFromChart(double yValue) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getYAxis().getScreenValue(yValue);
   }
-  
+
   public double getScreenYFromChart(double yValue, int yIndex) {
-    
+
     if (axisPair == null) {
       return Double.NaN;
     }
     return axisPair.getYAxis(yIndex).getScreenValue(yValue);
+  }
+
+  public double getYAxisLeftWidth() {
+
+    java.awt.geom.Rectangle2D.Double bounds = getAxisPair().getLeftYAxisBounds();
+    return bounds.width + bounds.x;
+  }
+
+  public void setCustomXAxisTickLabelsMap(Map<Object, Object> overrideMap) {
+
+    axisPair.addCustomTickLabelMap("X0", overrideMap);
+  }
+
+  public void setCustomYAxisTickLabelsMap(Map<Object, Object> overrideMap) {
+
+    axisPair.addCustomTickLabelMap("Y0", overrideMap);
+  }
+
+  public void setCustomYAxisTickLabelsMap(Map<Double, Object> overrideMap, int yAxisGroup) {
+
+    axisPair.addCustomTickLabelMap(("Y" + yAxisGroup), overrideMap);
+  }
+
+  public ToolTips getToolTips() {
+
+    return toolTips;
+  }
+
+  public Cursor getCursor() {
+
+    return cursor;
   }
 }

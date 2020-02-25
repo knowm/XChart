@@ -1,14 +1,18 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.BoxPlotStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
@@ -25,8 +29,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   private final Rectangle2D.Double rightYAxisBounds;
   private Axis<ST, S> leftMainYAxis;
   private Axis<ST, S> rightMainYAxis;
-  private Map<String, Map<Double, Object>> axisLabelOverrideMap =
-      new HashMap<String, Map<Double, Object>>();
+  private Map<String, Map<Object, Object>> customTickLabelsMap = new HashMap<>();
 
   /**
    * Constructor
@@ -64,6 +67,36 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     // draw left sided axises
     int leftCount = 0;
     double leftStart = chartPadding;
+
+    int desiredLeftYAxisWidth = styler.getYAxisLeftWidthHint();
+    // calculate width first
+    if (desiredLeftYAxisWidth > 0) {
+      double widthEstimation = 0;
+      for (Entry<Integer, Axis<ST, S>> e : yAxisMap.entrySet()) {
+        Axis<ST, S> ya = e.getValue();
+        if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
+          continue;
+        }
+        ya.preparePaint();
+        Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) ya.getBounds();
+        // add padding before axis
+        double width = bounds.getWidth();
+        widthEstimation += width;
+        leftCount++;
+      }
+
+      if (leftCount > 1) {
+        widthEstimation += (leftCount - 1) * paddingBetweenAxes;
+      }
+      widthEstimation += leftCount * tickMargin;
+
+      if (widthEstimation < desiredLeftYAxisWidth) {
+        leftStart = desiredLeftYAxisWidth - widthEstimation;
+      }
+
+      leftCount = 0;
+    }
+    double leftStartFirst = leftStart;
 
     for (Entry<Integer, Axis<ST, S>> e : yAxisMap.entrySet()) {
       Axis<ST, S> ya = e.getValue();
@@ -174,7 +207,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     // fill left & right bounds
     Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
-    leftYAxisBounds.x = chartPadding;
+    leftYAxisBounds.x = leftStartFirst;
     leftYAxisBounds.y = bounds.y;
     leftYAxisBounds.height = bounds.height;
 
@@ -209,6 +242,9 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     boolean mainYAxisUsed = false;
     if (chart.getSeriesMap() != null) {
       for (S series : chart.getSeriesMap().values()) {
+        if (!series.isEnabled()) {
+          continue;
+        }
         int yIndex = series.getYAxisGroup();
         if (!mainYAxisUsed && yIndex == 0) {
           mainYAxisUsed = true;
@@ -227,9 +263,20 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
     for (S series : chart.getSeriesMap().values()) {
       xAxis.setDataType(series.getxAxisDataType());
+      if (!series.isEnabled()) {
+        continue;
+      }
+
       getYAxis(series.getYAxisGroup()).setDataType(series.getyAxisDataType());
       if (!mainYAxisUsed) {
         yAxis.setDataType(series.getyAxisDataType());
+      }
+
+      if (series.getYAxisDecimalPattern() != null) {
+        chart
+            .getStyler()
+            .putYAxisGroupDecimalPatternMap(
+                series.getYAxisGroup(), series.getYAxisDecimalPattern());
       }
     }
 
@@ -417,18 +464,56 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
           overrideYAxisMaxValue = 0.0;
         }
       }
+    } else if (chart.getStyler() instanceof BoxPlotStyler) {
+      // the maximum value of the box plot may be greater than all y values, and the
+      // minimum value of the box plot may be less than all y values
+
+      Map<String, S> seriesMap = chart.getSeriesMap();
+      ST boxPlotStyler = chart.getStyler();
+      BoxChartData<ST, S> boxChartData = new BoxChartData<>();
+      int numBoxPlot = seriesMap.size();
+      Double boxPlotYData[][] = new Double[numBoxPlot][BoxChartData.BOX_DATAS_LENGTH];
+      boxPlotYData = boxChartData.getBoxPlotData(seriesMap, boxPlotStyler);
+
+      for (int noNumBox = 0; noNumBox < numBoxPlot; noNumBox++) {
+
+        if (boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX] != null
+            && !boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMinValue > boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX]) {
+          overrideYAxisMinValue = boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX];
+        } else if (boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX] != null
+            && boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMinValue
+                > Math.pow(10, boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX])) {
+          overrideYAxisMinValue =
+              Math.pow(10, boxPlotYData[noNumBox][BoxChartData.MIN_BOX_VALUE_INDEX]);
+        }
+        if (boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX] != null
+            && !boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMaxValue < boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX]) {
+          overrideYAxisMaxValue = boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX];
+        } else if (boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX] != null
+            && boxPlotStyler.isYAxisLogarithmic()
+            && overrideYAxisMaxValue
+                < Math.pow(10, boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX])) {
+          overrideYAxisMaxValue =
+              Math.pow(10, boxPlotYData[noNumBox][BoxChartData.MAX_BOX_VALUE_INDEX]);
+        }
+      }
     }
 
     // override min and maxValue if specified
     if (chart.getStyler().getYAxisMin(yAxis.getYIndex()) != null) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin(yAxis.getYIndex());
-    } else if (chart.getStyler().getYAxisMin() != null) {
+    } else if (chart.getStyler().getYAxisMin() != null
+        && !(chart.getStyler() instanceof BoxPlotStyler)) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin();
     }
 
     if (chart.getStyler().getYAxisMax(yAxis.getYIndex()) != null) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax(yAxis.getYIndex());
-    } else if (chart.getStyler().getYAxisMax() != null) {
+    } else if (chart.getStyler().getYAxisMax() != null
+        && !(chart.getStyler() instanceof BoxPlotStyler)) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax();
     }
 
@@ -454,28 +539,34 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     return null; // should never be called
   }
 
-  public Rectangle2D.Double getLeftYAxisBounds() {
+  Rectangle2D.Double getLeftYAxisBounds() {
 
     return leftYAxisBounds;
   }
 
-  public Rectangle2D.Double getRightYAxisBounds() {
+  Rectangle2D.Double getRightYAxisBounds() {
 
     return rightYAxisBounds;
   }
 
-  public Axis<ST, S> getLeftMainYAxis() {
+  Axis<ST, S> getLeftMainYAxis() {
 
     return leftMainYAxis;
   }
 
-  public Axis<ST, S> getRightMainYAxis() {
+  Axis<ST, S> getRightMainYAxis() {
 
     return rightMainYAxis;
   }
 
-  public Map<String, Map<Double, Object>> getAxisLabelOverrideMap() {
+  void addCustomTickLabelMap(String axis, Map<Object, Object> overrideMap) {
 
-    return axisLabelOverrideMap;
+    customTickLabelsMap.put(axis, overrideMap);
+  }
+
+  /** Helper method to get axis tick label override map */
+  Map<Object, Object> getCustomTickLabelsMap(Axis.Direction direction, int index) {
+
+    return customTickLabelsMap.get((direction.name() + index));
   }
 }
