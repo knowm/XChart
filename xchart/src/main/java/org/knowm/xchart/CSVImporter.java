@@ -2,10 +2,14 @@ package org.knowm.xchart;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
@@ -67,6 +71,103 @@ public class CSVImporter {
     }
 
     return chart;
+  }
+
+  /**
+   * Get a particular SerieData from a CSV File that contains a headline
+   *
+   * @param csvFile
+   * @param dataOrientation
+   * @param columnWanted
+   * @param rowWanted
+   * @return
+   * @throws IOException
+   * @author Maxime Colomb
+   */
+  public static SeriesData getSeriesDataFromCSVFile(
+      File csvFile, DataOrientation dataOrientation, String columnWanted, String rowWanted)
+      throws IOException {
+    HashMap<String, List<String>> series = getSeriesFromCSVFile(csvFile, columnWanted, rowWanted);
+    List<String> row = series.get("row");
+    List<String> column = series.get("column");
+    if (dataOrientation == DataOrientation.Columns) {
+      row = series.get("column");
+      column = series.get("row");
+    }
+    List<Number> finalRow = new ArrayList<Number>();
+    List<Number> finalColumn = new ArrayList<Number>();
+
+    for (String r : row) {
+      finalRow.add((Double.valueOf(r)));
+    }
+    for (String c : column) {
+      finalColumn.add((Double.valueOf(c)));
+    }
+    return new SeriesData(
+        finalRow, finalColumn, csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
+  }
+
+  public static CategorySeries getCategorySeriesFromCSVFile(
+      File csv, String columnWanted, String rowWanted, String name, DataType axisType)
+      throws IOException {
+    HashMap<String, List<String>> series = getSeriesFromCSVFile(csv, columnWanted, rowWanted);
+    List<String> rows = series.get("row");
+
+    List<Number> finalRows = new ArrayList<Number>();
+    for (String r : rows) {
+      finalRows.add(Double.valueOf(r));
+    }
+    return new CategorySeries(name, series.get("column"), finalRows, null, axisType);
+  }
+
+  public static HashMap<String, List<String>> getSeriesFromCSVFile(
+      File csvFile, String columnWanted, String rowWanted) throws IOException {
+
+    // 1. get csv file in the dir
+    if (!csvFile.exists() || !csvFile.getName().endsWith(".csv")) {
+      throw new FileNotFoundException("no csv on that path");
+    }
+
+    // 2. get the first line
+    String[] fLine;
+    BufferedReader bufferedReader = null;
+    try {
+      bufferedReader = new BufferedReader(new FileReader(csvFile));
+      fLine = bufferedReader.readLine().split(",");
+    } catch (Exception e) {
+      bufferedReader.close();
+      throw new FileNotFoundException("Exception while reading csv file: " + e);
+    }
+
+    // 3. identify the indice
+    int iColumnWanted = 0;
+    int iRowWanted = 0;
+    for (int i = 0; i < fLine.length; i++) {
+      if (fLine[i].equals(columnWanted)) {
+        iColumnWanted = i;
+      }
+      if (fLine[i].equals(rowWanted)) {
+        iRowWanted = i;
+      }
+    }
+
+    // 4. get the series
+    List<String> column = new LinkedList<String>();
+    List<String> row = new LinkedList<String>();
+    String line;
+    while ((line = bufferedReader.readLine()) != null) {
+      String[] l = line.split(",");
+      column.add((l[iColumnWanted]).replace("\"", ""));
+      row.add((l[iRowWanted]).replace("\"", ""));
+    }
+    bufferedReader.close();
+
+    // 5. Create returned object
+    HashMap<String, List<String>> result = new HashMap<String, List<String>>();
+    result.put("column", column);
+    result.put("row", row);
+
+    return result;
   }
 
   public static SeriesData getSeriesDataFromCSVFile(
