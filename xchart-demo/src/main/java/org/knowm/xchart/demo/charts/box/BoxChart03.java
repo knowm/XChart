@@ -3,13 +3,12 @@ package org.knowm.xchart.demo.charts.box;
 import java.util.Arrays;
 import org.knowm.xchart.BoxChart;
 import org.knowm.xchart.BoxChartBuilder;
-import org.knowm.xchart.BoxSeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /*
- * Box Plot with 6 series
+ * Box Plot with 1 series
  * and show ToolTips
  * and Y-Axis is logarithmic
  */
@@ -30,23 +29,17 @@ public class BoxChart03 implements ExampleChart<BoxChart> {
             .width(600)
             .height(450)
             .title("Y Axis Logarithmic-box plot demo")
-            .xAxisTitle("Color")
-            .yAxisTitle("temperature")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
             .theme(ChartTheme.XChart)
             .build();
-    // Series
-    BoxSeries[] boxSeries = new BoxSeries[6];
-    boxSeries[0] = chart.addSeries("aaa", Arrays.asList(40, 30, 20, 60, 50));
-    boxSeries[1] = chart.addSeries("bbb", Arrays.asList(20, 10, 25, null, 60));
-    boxSeries[2] = chart.addSeries("ccc", Arrays.asList(30, 20, 22, 40, 50));
-    boxSeries[3] = chart.addSeries("ddd", Arrays.asList(10, 15, 28, 50, 65));
-    boxSeries[4] = chart.addSeries("eee", Arrays.asList(25, 25, 30, 30, 55));
-    boxSeries[5] = chart.addSeries("fff", Arrays.asList(15, 18, 29, 20, 50));
+
     // Customize Chart
     chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setYAxisLogarithmic(true);
-    chart.getStyler().setYAxisMin(1d);
-    chart.getStyler().setYAxisMax(160d);
+
+    // Series
+    chart.addSeries("aaa", Arrays.asList(10, 40, 80, 120, 350));
     return chart;
   }
 }
