@@ -48,6 +48,9 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
           && !yAxisTitle.trim().equalsIgnoreCase("")
           && chart.getStyler().isYAxisTitleVisible()) {
 
+        if (chart.getStyler().getYAxisGroupTitleColor(yIndex) != null) {
+          g.setColor(chart.getStyler().getYAxisGroupTitleColor(yIndex));
+        }
         FontRenderContext frc = g.getFontRenderContext();
         TextLayout nonRotatedTextLayout =
             new TextLayout(yAxisTitle, chart.getStyler().getAxisTitleFont(), frc);
@@ -110,6 +113,9 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
           && !chart.getXAxisTitle().trim().equalsIgnoreCase("")
           && chart.getStyler().isXAxisTitleVisible()) {
 
+        if (chart.getStyler().getXAxisTitleColor() != null) {
+          g.setColor(chart.getStyler().getXAxisTitleColor());
+        }
         FontRenderContext frc = g.getFontRenderContext();
         TextLayout textLayout =
             new TextLayout(chart.getXAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
