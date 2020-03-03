@@ -79,6 +79,12 @@
 				<version>0.25</version>
 				<optional>true</optional>
 			</dependency>
+			<dependency>
+				<groupId>com.madgag</groupId>
+				<artifactId>animated-gif-lib</artifactId>
+				<version>1.4</version>
+				<optional>true</optional>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
