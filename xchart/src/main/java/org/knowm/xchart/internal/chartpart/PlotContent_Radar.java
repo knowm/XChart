@@ -320,6 +320,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
         }
       }
       path.closePath();
+      g.setStroke(series.getLineStyle());
       g.setColor(series.getLineColor());
       g.draw(path);
       if (styler.isSeriesFilled()) {
