@@ -219,7 +219,7 @@ Series render styles include: `Candle`, `HiLo`.
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_BoxPlot.png)
 
 `BoxPlot` charts take String data (seriesNames) types for the X-Axis and Number data types for the Y-Axis. Each box chart is calculated from the corresponding series yData.
-Create a BoxPlot via a BoxChartBuilder, style chart, add a series to it
+Create a BoxPlot via a BoxChartBuilder, style chart, add a series to it.
 ```java
 // Create Chart
 BoxChart chart =
@@ -235,20 +235,23 @@ new SwingWrapper<BoxChart>(chart).displayChart();
 ```
 Four calculation methods for boxplots:  
 - "N_PLUS_1": determine the position of the quartile, where Qi is = i (n + 1) / 4, where i = 1, 2, and 3. n represents the number of items contained in the sequence.
-Calculate the corresponding quartile based on location
+Calculate the corresponding quartile based on location.
 - "N_LESS_1": Determine the position of the quartile, where Qi is = i (n-1) / 4, where i = 1, 2, and 3. n represents the number of items contained in the sequence.
-Calculate the corresponding quartile based on location
+Calculate the corresponding quartile based on location.
 - "NP": Determine the position of the quartile, where Qi is np = (i * n) / 4, where i = 1, 2, and 3. n represents the number of items contained in the sequence.
-If np is not an integer, Qi = X [np + 1]
-If np is an integer, Qi = (X [np] + X [np + 1]) / 2
+If np is not an integer, Qi = X [np + 1];
+If np is an integer, Qi = (X [np] + X [np + 1]) / 2.
 - "N_LESS_1_PLUS_1": Determine the position of the quartile, where Qi is = i (n-1) / 4 + 1, where i = 1, 2, 3. n represents the number of items contained in the sequence.
-Calculate the corresponding quartile based on location
+Calculate the corresponding quartile based on location.
 
-Interquartile range, IQR = Q3-Q1
+Interquartile range, IQR = Q3-Q1.
+
 Upper whisker = Q3 + 1.5 * IQR = Q3 + 1.5 * (Q3 - Q1), if Upper whisker is greater than the maximum value of yData, Upper whisker = maximum value of yData.
+
 Lower whisker = Q1 - 1.5 * IQR = Q1 - 1.5 * (Q3 -Q1), if the lower whisker is less than the minimum value of yData, the lower whisker = the minimum value of yData.
 
-Example:
+E.g:
+
 An example of a set of sequence numbers: 12, 15, 17, 19, 20, 23, 25, 28, 30, 33, 34, 35, 36, 37
 - "N_PLUS_1":
 Q1's position = (14 + 1) /4=3.75,
@@ -484,8 +487,15 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 
 ## Running Demo
 
-    cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-3.6.0.jar:xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo
+- Linux: execute command `java -cp xchart-demo-3.6.0.jar:xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo`.
+
+- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.6.0.jar;xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.6.0.jar;xchart-3.6.0.jar" org.knowm.xchart.demo.XChartDemo`.
+
+E.g:
+```sh
+cd /path/to/xchart-demo/jar/
+java -cp xchart-demo-3.6.0.jar:xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo
+```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
 
