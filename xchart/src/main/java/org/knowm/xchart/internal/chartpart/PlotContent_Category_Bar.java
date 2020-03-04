@@ -391,6 +391,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           }
           if (stylerCategory.hasAnnotations()
               && stylerCategory.isShowTotalAnnotations()
+              && stylerCategory.isStacked()
               && seriesCounter == (seriesMap.size() - 1)) {
             Number totalNext =
                 accumulatedStackOffsetPos[categoryCounter - 1]
