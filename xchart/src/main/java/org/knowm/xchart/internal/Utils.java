@@ -135,4 +135,24 @@ public class Utils {
     }
     return generatedData;
   }
+
+  /**
+   * Only adds the extension of the fileExtension to the filename if the filename doesn't already
+   * have it.
+   *
+   * @param fileName File name
+   * @param fileExtension File extension
+   * @return filename (if extension already exists), otherwise;: filename + fileExtension
+   */
+  public static String addFileExtension(String fileName, String fileExtension) {
+
+    String fileNameWithFileExtension = fileName;
+    if (fileName.length() <= fileExtension.length()
+        || !fileName
+            .substring(fileName.length() - fileExtension.length(), fileName.length())
+            .equalsIgnoreCase(fileExtension)) {
+      fileNameWithFileExtension = fileName + fileExtension;
+    }
+    return fileNameWithFileExtension;
+  }
 }

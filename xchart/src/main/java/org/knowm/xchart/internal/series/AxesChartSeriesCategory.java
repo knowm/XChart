@@ -67,6 +67,17 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     calculateMinMax();
   }
 
+  /**
+   * For box plot, replace yData
+   *
+   * @param newYData Updated yData
+   */
+  public void replaceData(List<? extends Number> newYData) {
+
+    yData = newYData;
+    calculateMinMax();
+  }
+
   @Override
   protected void calculateMinMax() {
 

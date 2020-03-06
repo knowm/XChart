@@ -14,6 +14,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.knowm.xchart.style.BoxPlotStyler;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -23,6 +25,8 @@ public class ToolTips implements MouseMotionListener {
 
   // edge detection
   private static final int MARGIN = 5;
+  // mouse margin
+  private static final int MOUSE_MARGIN = 20;
   // for pop up
   private final List<DataPoint> dataPointList = new ArrayList<DataPoint>();
   private final Styler styler;
@@ -31,6 +35,9 @@ public class ToolTips implements MouseMotionListener {
   private double rightEdge;
   private double topEdge;
   private double bottomEdge;
+
+  private int mouseX;
+  private int mouseY;
 
   /**
    * Constructor
@@ -57,10 +64,10 @@ public class ToolTips implements MouseMotionListener {
     }
 
     DataPoint newPoint = null;
-    int x = e.getX();
-    int y = e.getY();
+    mouseX = e.getX();
+    mouseY = e.getY();
     for (DataPoint dataPoint : dataPointList) {
-      if (dataPoint.shape.contains(x, y)) {
+      if (dataPoint.shape.contains(mouseX, mouseY)) {
         newPoint = dataPoint;
         break;
       }
@@ -115,7 +122,11 @@ public class ToolTips implements MouseMotionListener {
     }
 
     if (dataPoint != null) { // dataPoint was created in mouse move, need to render it
-      paintToolTip(g, dataPoint);
+      if (styler instanceof BoxPlotStyler) {
+        paintBoxPlotToolTip(g);
+      } else {
+        paintToolTip(g, dataPoint);
+      }
     }
   }
 
@@ -218,6 +229,61 @@ public class ToolTips implements MouseMotionListener {
     at.translate(x + MARGIN - 1, y + MARGIN - 1 + halfHeight);
     g.transform(at);
     g.fill(shape);
+    g.setTransform(orig);
+  }
+
+  private void paintBoxPlotToolTip(Graphics2D g) {
+
+    String[] texts = dataPoint.label.split(",");
+    List<TextLayout> list = new ArrayList<>();
+    TextLayout textLayout = null;
+    Rectangle2D bounds = null;
+    double backgroundHeight = MARGIN;
+    double backgroundWidth = 0;
+    for (String text : texts) {
+      textLayout =
+          new TextLayout(text, styler.getToolTipFont(), new FontRenderContext(null, true, false));
+      bounds = textLayout.getBounds();
+      bounds.getHeight();
+      if (backgroundWidth < bounds.getWidth()) {
+        backgroundWidth = bounds.getWidth();
+      }
+      backgroundHeight += styler.getToolTipFont().getSize() + MARGIN;
+      list.add(textLayout);
+    }
+
+    Rectangle clipBounds = g.getClipBounds();
+    double startX = mouseX;
+    double startY = mouseY;
+    if (mouseX + MOUSE_MARGIN + backgroundWidth > clipBounds.getX() + clipBounds.getWidth()) {
+      startX = mouseX - backgroundWidth - MOUSE_MARGIN;
+    }
+
+    if (mouseY + MOUSE_MARGIN + backgroundHeight > clipBounds.getY() + clipBounds.getHeight()) {
+      startY = mouseY - backgroundHeight - MOUSE_MARGIN;
+    }
+
+    g.setColor(styler.getToolTipBackgroundColor());
+    g.fillRect(
+        (int) startX + MOUSE_MARGIN,
+        (int) startY + MOUSE_MARGIN,
+        (int) (backgroundWidth) + 2 * MARGIN,
+        (int) (backgroundHeight));
+
+    AffineTransform orig = g.getTransform();
+    AffineTransform at = new AffineTransform();
+    at.translate(
+        startX + MOUSE_MARGIN + MARGIN,
+        startY + textLayout.getBounds().getHeight() + MOUSE_MARGIN + MARGIN);
+    g.transform(at);
+    g.setColor(styler.getChartFontColor());
+    g.setFont(styler.getToolTipFont());
+    for (TextLayout t : list) {
+      g.fill(t.getOutline(null));
+      at = new AffineTransform();
+      at.translate(0, styler.getToolTipFont().getSize() + MARGIN);
+      g.transform(at);
+    }
     g.setTransform(orig);
   }
 

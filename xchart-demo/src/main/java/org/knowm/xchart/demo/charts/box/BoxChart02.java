@@ -5,6 +5,7 @@ import org.knowm.xchart.BoxChart;
 import org.knowm.xchart.BoxChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.BoxPlotStyler.BoxplotCalCulationMethod;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /*
@@ -26,20 +27,18 @@ public class BoxChart02 implements ExampleChart<BoxChart> {
     BoxChart chart =
         new BoxChartBuilder()
             .title("box plot show all point")
-            .xAxisTitle("Color")
-            .yAxisTitle("temperature")
+            .xAxisTitle("X")
+            .yAxisTitle("Y")
             .theme(ChartTheme.Matlab)
             .build();
-    // Series
 
-    chart.addSeries(
-        "aaa",
-        Arrays.asList(
-            9634.37, 23886.43, 13828.96, 7773.08, 14959.32, 8046.95, 6547.51, 9528.85, 9241.53,
-            9353.79, 8224.60, 10436.48, 10399.62, 15067.39, 8505.73, 9398.87, 11611.29, 12280.94,
-            9631.96));
-    chart.addSeries("bbb", Arrays.asList(7000, 8000, 9000));
-    chart.addSeries("ccc", Arrays.asList(7000, 8000, null, 9000));
+    // Customize Chart
+    chart.getStyler().setBoxplotCalCulationMethod(BoxplotCalCulationMethod.N_LESS_1_PLUS_1);
+
+    // Series
+    chart.addSeries("aaa", Arrays.asList(1, 2, 3, 4, 5, 6));
+    chart.addSeries("bbb", Arrays.asList(1, 2, 3, 4, 5, 6, 17));
+    chart.addSeries("ccc", Arrays.asList(-10, -8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 21));
     chart.getStyler().setShowWithinAreaPoint(true);
     chart.getStyler().setToolTipsEnabled(true);
     return chart;

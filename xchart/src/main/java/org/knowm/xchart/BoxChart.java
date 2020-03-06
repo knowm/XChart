@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -19,8 +20,7 @@ import org.knowm.xchart.style.Theme;
 
 public class BoxChart extends Chart<BoxPlotStyler, BoxSeries> {
 
-  private ArrayList xData = new ArrayList();
-  private ArrayList newXData = new ArrayList();
+  private List<String> xData = new ArrayList<>();
 
   protected BoxChart(int width, int height) {
 
@@ -35,6 +35,8 @@ public class BoxChart extends Chart<BoxPlotStyler, BoxSeries> {
 
     this(width, height);
     styler.setTheme(theme);
+    // Box chart Legend does not show
+    styler.setLegendVisible(false);
   }
 
   public BoxChart(int width, int height, ChartTheme chartTheme) {
@@ -77,29 +79,34 @@ public class BoxChart extends Chart<BoxPlotStyler, BoxSeries> {
               + seriesName
               + " < has already been used. Use unique names for each series!!!");
     }
+
+    sanityCheckYData(yData);
+  }
+
+  private void sanityCheckYData(List<? extends Number> yData) {
+
     if (yData == null) {
       throw new IllegalArgumentException("Y-Axis data connot be null !!!");
     }
     if (yData.size() == 0) {
       throw new IllegalArgumentException("Y-Axis data connot be empyt !!!");
     }
+    if (yData.contains(null)) {
+      throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
+    }
+  }
+
+  public BoxSeries updateBoxSeries(String seriesName, int[] newYData) {
+
+    return updateBoxSeries(seriesName, Utils.getNumberListFromIntArray(newYData));
   }
 
   public BoxSeries updateBoxSeries(String seriesName, double[] newYData) {
 
-    newXData.add(seriesName);
-    return updateBoxSeries(
-        seriesName,
-        newXData,
-        Utils.getNumberListFromDoubleArray(newYData),
-        Utils.getNumberListFromDoubleArray(null));
+    return updateBoxSeries(seriesName, Utils.getNumberListFromDoubleArray(newYData));
   }
 
-  public BoxSeries updateBoxSeries(
-      String seriesName,
-      List<?> newXData,
-      List<? extends Number> newYData,
-      List<? extends Number> newErrorBarData) {
+  public BoxSeries updateBoxSeries(String seriesName, List<? extends Number> newYData) {
 
     Map<String, BoxSeries> seriesMap = getSeriesMap();
     BoxSeries series = seriesMap.get(seriesName);
@@ -107,18 +114,8 @@ public class BoxChart extends Chart<BoxPlotStyler, BoxSeries> {
     if (series == null) {
       throw new IllegalArgumentException("Series name > " + seriesName + " < not found !!!");
     }
-
-    if (newXData == null) {
-      // generate X-Data
-      List<Integer> generatedXData = new ArrayList<Integer>();
-
-      for (int i = 1; i <= newYData.size(); i++) {
-        generatedXData.add(i);
-      }
-      series.replaceData(generatedXData, newYData, newErrorBarData);
-    } else {
-      series.replaceData(newXData, newYData, newErrorBarData);
-    }
+    sanityCheckYData(newYData);
+    series.replaceData(newYData);
     return series;
   }
 

@@ -218,44 +218,53 @@ Series render styles include: `Candle`, `HiLo`.
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_BoxPlot.png)
 
-`BoxPlot` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. Each box chart is calculated from the corresponding series.
-Create a BoxPlot via a BoxChartBuilder, style chart, add a series to it
+`BoxPlot` charts take String data (seriesNames) types for the X-Axis and Number data types for the Y-Axis. Each box chart is calculated from the corresponding series yData.
+Create a BoxPlot via a BoxChartBuilder, style chart, add a series to it.
 ```java
 // Create Chart
-BoxChart chart = new BoxChartBuilder().title("box plot demo").xAxisTitle("Color").yAxisTitle("temperature").theme(ChartTheme.GGPlot2).build();
-// Customize Chart
-chart.getStyler().setShowWithinAreaPoint(true);
+BoxChart chart =
+	new BoxChartBuilder().title("box plot demo").build();
+
+// Choose a calculation method
+chart.getStyler().setBoxplotCalCulationMethod(BoxplotCalCulationMethod.N_LESS_1_PLUS_1);
+chart.getStyler().setToolTipsEnabled(true);
+
 // Series
-chart.addSeries("seriesName", Arrays.asList(40, -30, 20, 60, 50));
-new SwingWrapper(chart).displayChart();
+chart.addSeries("boxOne", Arrays.asList(1,2,3,4));
+new SwingWrapper<BoxChart>(chart).displayChart();
 ```
-The BoxPlot calculation method is as follows:  
-1, If the calculation results are integers, the corresponding position is taken  
-For example, say the y value are y<sub>1</sub> = 1, y<sub>2</sub> = 2, y<sub>3</sub> = 3. And n = 3;  
-The first quartile position should be q1 = (n + 1) /4  
-The second quartile position should be q2 = 2 * (n + 1) /4  
-The third quartile position should be q3 = 3 * (n + 1) /4  
-In this way we can calculate the positions:  
-q1 = (3 + 1) / 4 = 1  
-q2 = 2 * (3 + 1) / 4 = 2  
-q3 = 3 * (3 + 1) / 4 = 3  
-Q1 = y<sub>q1</sub> = 1, Q2 = y<sub>q2</sub> = 2, Q3 = y<sub>q3</sub>  
-Then the first quartile Q1 = 1, the second quartile Q2 = 2, and the third quartile Q3 = 3  
+Four calculation methods for boxplots:  
+- "N_PLUS_1": determine the position of the quartile, where Qi is = i (n + 1) / 4, where i = 1, 2, and 3. n represents the number of items contained in the sequence.
+Calculate the corresponding quartile based on location.
+- "N_LESS_1": Determine the position of the quartile, where Qi is = i (n-1) / 4, where i = 1, 2, and 3. n represents the number of items contained in the sequence.
+Calculate the corresponding quartile based on location.
+- "NP": Determine the position of the quartile, where Qi is np = (i * n) / 4, where i = 1, 2, and 3. n represents the number of items contained in the sequence.
+If np is not an integer, Qi = X [np + 1];
+If np is an integer, Qi = (X [np] + X [np + 1]) / 2.
+- "N_LESS_1_PLUS_1": Determine the position of the quartile, where Qi is = i (n-1) / 4 + 1, where i = 1, 2, 3. n represents the number of items contained in the sequence.
+Calculate the corresponding quartile based on location.
 
-2, If the calculation results are NOT integers, the positions should be calculated with the following formula  
-For another example, say the y value are y<sub>1</sub> = 1, y<sub>2</sub> = 2, y<sub>3</sub> = 3, y<sub>4</sub> = 4. And n = 4;  
-q1 = (n + 1) / 4 = (4 + 1) / 4 = 1.25  
-q2 = 2 * (n + 1) / 4 = 2 * (4 + 1) / 4 = 2.5  
-q3 = 3 * (n + 1) / 4 = 3 * (4 + 1) / 4 = 3.75  
-As we can see, the calculated values are NOT integers. In this case we shold calculate in the following way:  
-Q = y<sub>(int)q</sub> + (y<sub>(int)q + 1</sub> - y<sub>(int)q</sub>) * (q % 1)  
-so  
-the first quartile: Q1 = y<sub>(int)q1</sub> + (y<sub>(int)q1 + 1</sub> - y<sub>(int)q1</sub>) * (q1 % 1) = 1 + (2 - 1) * 0.25 = 1.25  
-the second quartile: Q2 = y<sub>(int)q2</sub> + (y<sub>(int)q2 + 1</sub> - y<sub>(int)q2</sub>) * (q2 % 1) = 2 + (3 - 2) * 0.5 = 2.5  
-the third quartile: Q3 = y<sub>(int)q3</sub> + (y<sub>(int)q3 + 1</sub> - y<sub>(int)q3</sub>) * (q3 % 1) = 3 + (4 - 3) * 0.75 = 3.75  
+Interquartile range, IQR = Q3-Q1.
 
-Upper limit = Q3 + 1.5 * IQR = Q3 + 1.5 * (Q3 - Q1)
-lower limit = Q3 - 1.5 * IQR = Q3 - 1.5 * (Q3 - Q1)
+Upper whisker = Q3 + 1.5 * IQR = Q3 + 1.5 * (Q3 - Q1), if Upper whisker is greater than the maximum value of yData, Upper whisker = maximum value of yData.
+
+Lower whisker = Q1 - 1.5 * IQR = Q1 - 1.5 * (Q3 -Q1), if the lower whisker is less than the minimum value of yData, the lower whisker = the minimum value of yData.
+
+E.g:
+
+An example of a set of sequence numbers: 12, 15, 17, 19, 20, 23, 25, 28, 30, 33, 34, 35, 36, 37
+- "N_PLUS_1":
+Q1's position = (14 + 1) /4=3.75,
+Q1 = 0.25 × third term + 0.75 × fourth term = 0.25 × 17 + 0.75 × 19 = 18.5;
+- "N_LESS_1":
+Q1's location = (14-1) /4=3.25,
+Q1 = 0.75 × third term + 0.25 × fourth term = 0.75 × 17 + 0.25 × 19 = 17.5;
+- "NP":
+Q1's position = 14 * 0.25 = 3.5,
+Q1 = 19;
+- "N_LESS_1_PLUS_1":
+Q1's location = (14-1) / 4 + 1 = 4.25
+Q1 = 0.75 × the fourth term + 0.25 × the fifth term = 0.75 × 19 + 0.25 × 20 = 19.25.
 
 ## Real-time Java Charts using XChart
 
@@ -478,8 +487,15 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 
 ## Running Demo
 
-    cd /path/to/xchart-demo/jar/
-    java -cp xchart-demo-3.6.0.jar:xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo
+- Linux: execute command `java -cp xchart-demo-3.6.0.jar:xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo`.
+
+- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.6.0.jar;xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.6.0.jar;xchart-3.6.0.jar" org.knowm.xchart.demo.XChartDemo`.
+
+E.g:
+```sh
+cd /path/to/xchart-demo/jar/
+java -cp xchart-demo-3.6.0.jar:xchart-3.6.0.jar org.knowm.xchart.demo.XChartDemo
+```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
 
