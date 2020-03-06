@@ -131,7 +131,7 @@
 
 	<build>
 		<plugins>
-			<!-- Ensure compilation is done under Java 6 in all environments -->
+			<!-- Ensure compilation is done under Java 8 in all environments -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
