@@ -66,6 +66,14 @@ public abstract class AxesChartStyler extends Styler {
   private boolean xAxisLogarithmicDecadeOnly;
   private boolean yAxisLogarithmicDecadeOnly;
 
+  // TickLabels and MarksColor colors for xAxis, yAxis, yAxisGroup ////////////////////////////////
+  private Color xAxisTickLabelsColor;
+  private Color yAxisTickLabelsColor;
+  private Color xAxisTickMarksColor;
+  private Color yAxisTickMarksColor;
+  private Map<Integer, Color> yAxisGroupTickLabelsColorMap = new HashMap<Integer, Color>();
+  private Map<Integer, Color> yAxisGroupTickMarksColorMap = new HashMap<Integer, Color>();
+
   @Override
   void setAllStyles() {
 
@@ -845,5 +853,92 @@ public abstract class AxesChartStyler extends Styler {
   public void setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
 
     this.xAxisLabelAlignmentVertical = xAxisLabelAlignmentVertical;
+  }
+
+  public Color getXAxisTickLabelsColor() {
+
+    if (xAxisTickLabelsColor == null) {
+      return axisTickLabelsColor;
+    }
+    return xAxisTickLabelsColor;
+  }
+
+  public AxesChartStyler setXAxisTickLabelsColor(Color xAxisTickLabelsColor) {
+
+    this.xAxisTickLabelsColor = xAxisTickLabelsColor;
+    return this;
+  }
+
+  public Color getYAxisTickLabelsColor() {
+
+    if (yAxisTickLabelsColor == null) {
+      return axisTickLabelsColor;
+    }
+    return yAxisTickLabelsColor;
+  }
+
+  public AxesChartStyler setYAxisTickLabelsColor(Color yAxisTickLabelsColor) {
+
+    this.yAxisTickLabelsColor = yAxisTickLabelsColor;
+    return this;
+  }
+
+  public Color getXAxisTickMarksColor() {
+
+    if (xAxisTickMarksColor == null) {
+      return axisTickMarksColor;
+    }
+    return xAxisTickMarksColor;
+  }
+
+  public AxesChartStyler setXAxisTickMarksColor(Color xAxisTickMarksColor) {
+
+    this.xAxisTickMarksColor = xAxisTickMarksColor;
+    return this;
+  }
+
+  public Color getYAxisTickMarksColor() {
+
+    if (yAxisTickMarksColor == null) {
+      return axisTickMarksColor;
+    }
+    return yAxisTickMarksColor;
+  }
+
+  public AxesChartStyler setYAxisTickMarksColor(Color yAxisTickMarksColor) {
+
+    this.yAxisTickMarksColor = yAxisTickMarksColor;
+    return this;
+  }
+
+  public Color getYAxisGroupTickLabelsColorMap(int yAxisGroup) {
+
+    Color color = yAxisGroupTickLabelsColorMap.get(yAxisGroup);
+    if (color == null) {
+      color = getYAxisTickLabelsColor();
+    }
+    return color;
+  }
+
+  public AxesChartStyler setYAxisGroupTickLabelsColorMap(
+      int yAxisGroup, Color yAxisTickLabelsColor) {
+
+    yAxisGroupTickLabelsColorMap.put(yAxisGroup, yAxisTickLabelsColor);
+    return this;
+  }
+
+  public Color getYAxisGroupTickMarksColorMap(int yAxisGroup) {
+
+    Color color = yAxisGroupTickMarksColorMap.get(yAxisGroup);
+    if (color == null) {
+      color = getYAxisTickMarksColor();
+    }
+    return color;
+  }
+
+  public AxesChartStyler setYAxisGroupTickMarksColorMap(int yAxisGroup, Color yAxisTickMarksColor) {
+
+    yAxisGroupTickMarksColorMap.put(yAxisGroup, yAxisTickMarksColor);
+    return this;
   }
 }
