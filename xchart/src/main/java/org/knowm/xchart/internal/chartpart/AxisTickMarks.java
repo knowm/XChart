@@ -34,11 +34,11 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
   public void paint(Graphics2D g) {
 
     ST styler = chart.getStyler();
-    g.setColor(styler.getAxisTickMarksColor());
     g.setStroke(styler.getAxisTickMarksStroke());
 
     if (direction == Axis.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
 
+      g.setColor(styler.getYAxisGroupTickMarksColorMap(yAxis.getYIndex()));
       int axisTickMarkLength = styler.getAxisTickMarkLength();
 
       boolean onRight = styler.getYAxisGroupPosistion(yAxis.getYIndex()) == YAxisPosition.Right;
@@ -102,6 +102,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
     // X-Axis
     else if (direction == Axis.Direction.X && styler.isXAxisTicksVisible()) {
 
+      g.setColor(styler.getXAxisTickMarksColor());
       int axisTickMarkLength = styler.getAxisTickMarkLength();
       double xOffset = chart.getXAxis().getBounds().getX();
       double yOffset =

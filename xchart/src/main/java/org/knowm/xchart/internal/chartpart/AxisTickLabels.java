@@ -40,10 +40,9 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
     ST styler = chart.getStyler();
     g.setFont(styler.getAxisTickLabelsFont());
 
-    g.setColor(styler.getAxisTickLabelsColor());
-
     if (direction == Axis.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
 
+      g.setColor(styler.getYAxisGroupTickLabelsColorMap(yAxis.getYIndex()));
       boolean onRight = styler.getYAxisGroupPosistion(yAxis.getYIndex()) == YAxisPosition.Right;
 
       double xOffset;
@@ -122,6 +121,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
     // X-Axis
     else if (direction == Axis.Direction.X && styler.isXAxisTicksVisible()) {
 
+      g.setColor(styler.getXAxisTickLabelsColor());
       double xOffset = chart.getXAxis().getBounds().getX();
       double yOffset = chart.getXAxis().getAxisTitle().getBounds().getY();
       double width = chart.getXAxis().getBounds().getWidth();
