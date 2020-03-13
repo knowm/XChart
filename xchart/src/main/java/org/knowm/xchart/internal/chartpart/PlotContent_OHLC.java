@@ -4,8 +4,10 @@ import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.Map;
 import org.knowm.xchart.OHLCSeries;
+import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -29,6 +31,10 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
   @Override
   public void doPaint(Graphics2D g) {
+
+    Map<Double, String> candleLabelMap = new HashMap<>();
+    Map<Double, Area> candleAreaMap = new HashMap<>();
+    Map<Double, String> lineLabelMap = new HashMap<>();
 
     // X-Axis
     double xTickSpace = ohlcStyler.getPlotContentSize() * getBounds().getWidth();
@@ -61,7 +67,10 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
       String[] toolTips = series.getToolTips();
       boolean hasCustomToolTips = toolTips != null;
-
+      if (series.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line) {
+        paintLine(g, series, lineLabelMap);
+        continue;
+      }
       Axis yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
@@ -206,25 +215,118 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
               chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth * 2, tt);
             }
           } else {
-            chart.toolTips.addData(
-                toolTipArea,
-                xOffset,
-                highOffset,
-                candleHalfWidth * 2,
-                chart.getXAxisFormat().format(x),
-                chart.getYAxisFormat().format(openOrig)
-                    + ':'
-                    + chart.getYAxisFormat().format(highOrig)
-                    + ':'
-                    + chart.getYAxisFormat().format(lowOrig)
-                    + ':'
-                    + chart.getYAxisFormat().format(closeOrig));
+
+            StringBuilder sb = new StringBuilder();
+            if (series.getVolumeData() != null) {
+              sb.append(chart.getXAxisFormat().format(x));
+              sb.append(System.lineSeparator()).append("Volume: " + series.getVolumeData()[i]);
+              sb.append(System.lineSeparator()).append(" ").append(System.lineSeparator());
+            }
+            sb.append(chart.getXAxisFormat().format(x));
+            sb.append(System.lineSeparator()).append(series.getName()).append(":");
+            sb.append(System.lineSeparator())
+                .append("open: ")
+                .append(chart.getYAxisFormat().format(openOrig));
+            sb.append(System.lineSeparator())
+                .append("close: ")
+                .append(chart.getYAxisFormat().format(closeOrig));
+            sb.append(System.lineSeparator())
+                .append("low: ")
+                .append(chart.getYAxisFormat().format(lowOrig));
+            sb.append(System.lineSeparator())
+                .append("high: ")
+                .append(chart.getYAxisFormat().format(highOrig));
+            candleLabelMap.put(x, sb.toString());
+            candleAreaMap.put(x, toolTipArea);
           }
         }
       }
 
       // close any open path for area charts
       g.setColor(series.getFillColor());
+    }
+
+    if (!candleLabelMap.isEmpty()) {
+      for (double key : candleLabelMap.keySet()) {
+        if (lineLabelMap.get(key) != null && !"".equals(lineLabelMap.get(key))) {
+          chart.toolTips.addData(
+              candleAreaMap.get(key),
+              0,
+              0,
+              0,
+              candleLabelMap.get(key) + System.lineSeparator() + lineLabelMap.get(key));
+        } else {
+          chart.toolTips.addData(candleAreaMap.get(key), 0, 0, 0, candleLabelMap.get(key));
+        }
+      }
+    }
+  }
+
+  private void paintLine(Graphics2D g, S series, Map<Double, String> lineLabelMap) {
+
+    Line2D.Double line = new Line2D.Double();
+
+    double xMin = chart.getXAxis().getMin();
+    double xMax = chart.getXAxis().getMax();
+    double yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
+    double yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
+
+    double xTickSpace = ohlcStyler.getPlotContentSize() * getBounds().getWidth();
+    double xLeftMargin = Utils.getTickStartOffset((int) getBounds().getWidth(), xTickSpace);
+    double yTickSpace = ohlcStyler.getPlotContentSize() * getBounds().getHeight();
+    double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
+
+    double x = 0.0;
+    double y = 0.0;
+    double[] xData = series.getXData();
+    double[] yData = series.getYData();
+    double xOffset = 0.0;
+    double yOffset = 0.0;
+    double previousX = -Double.MAX_VALUE;
+    double previousY = -Double.MAX_VALUE;
+    for (int i = 0; i < xData.length; i++) {
+      x = xData[i];
+      y = yData[i];
+      if (Double.isNaN(y)) {
+        previousX = -Double.MAX_VALUE;
+        previousY = -Double.MAX_VALUE;
+        continue;
+      }
+      xOffset = getBounds().getX() + xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
+
+      yOffset =
+          getBounds().getY()
+              + getBounds().getHeight()
+              - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
+
+      if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
+        g.setColor(series.getLineColor());
+        g.setStroke(series.getLineStyle());
+        line.setLine(previousX, previousY, xOffset, yOffset);
+        g.draw(line);
+      }
+
+      if (series.getMarker() != null) {
+        g.setColor(series.getMarkerColor());
+        series.getMarker().paint(g, xOffset, yOffset, chart.getStyler().getMarkerSize());
+      }
+
+      if (chart.getStyler().isToolTipsEnabled()) {
+
+        if (lineLabelMap.get(x) == null) {
+          lineLabelMap.put(x, series.getName() + ": " + chart.getYAxisFormat().format(y));
+        } else {
+          lineLabelMap.put(
+              x,
+              lineLabelMap.get(x)
+                  + System.lineSeparator()
+                  + series.getName()
+                  + ": "
+                  + chart.getYAxisFormat().format(y));
+        }
+      }
+      previousX = xOffset;
+      previousY = yOffset;
     }
   }
 }

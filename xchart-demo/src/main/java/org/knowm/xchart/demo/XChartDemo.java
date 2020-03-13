@@ -56,6 +56,7 @@ import org.knowm.xchart.demo.charts.line.LineChart09;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart02;
 import org.knowm.xchart.demo.charts.ohlc.OHLCChart03;
+import org.knowm.xchart.demo.charts.ohlc.OHLCChart04;
 import org.knowm.xchart.demo.charts.pie.PieChart01;
 import org.knowm.xchart.demo.charts.pie.PieChart02;
 import org.knowm.xchart.demo.charts.pie.PieChart03;
@@ -526,6 +527,11 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     defaultMutableTreeNode =
         new DefaultMutableTreeNode(
             new ChartInfo("OHLCChart03 - Candle with custom colors", new OHLCChart03().getChart()));
+    category.add(defaultMutableTreeNode);
+
+    defaultMutableTreeNode =
+        new DefaultMutableTreeNode(
+            new ChartInfo("OHLCChart04 - Candle and lines", new OHLCChart04().getChart()));
     category.add(defaultMutableTreeNode);
 
     // Box

@@ -1,18 +1,21 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.Color;
+
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.AxesChartSeries;
+import org.knowm.xchart.internal.series.MarkerSeries;
 
 /** @author arthurmcgibbon */
-public class OHLCSeries extends AxesChartSeries {
+public class OHLCSeries extends MarkerSeries {
 
   private double[] xData; // can be Number or Date(epochtime)
   private double[] openData;
   private double[] highData;
   private double[] lowData;
   private double[] closeData;
+  private long[] volumeData;
+  private double[] yData;
   private OHLCSeriesRenderStyle ohlcSeriesRenderStyle;
   /** Up Color */
   private Color upColor;
@@ -38,12 +41,54 @@ public class OHLCSeries extends AxesChartSeries {
       double[] closeData,
       DataType xAxisDataType) {
 
+    this(name, xData, openData, highData, lowData, closeData, null, xAxisDataType);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param name
+   * @param xData
+   * @param openData
+   * @param highData
+   * @param lowData
+   * @param closeData
+   * @param volumeData
+   */
+  public OHLCSeries(
+      String name,
+      double[] xData,
+      double[] openData,
+      double[] highData,
+      double[] lowData,
+      double[] closeData,
+      long[] volumeData,
+      DataType xAxisDataType) {
+
     super(name, xAxisDataType);
     this.xData = xData;
     this.openData = openData;
     this.highData = highData;
     this.lowData = lowData;
     this.closeData = closeData;
+    this.volumeData = volumeData;
+    calculateMinMax();
+  }
+
+  /**
+   * Constructor
+   *
+   * @param name
+   * @param xData
+   * @param yData
+   * @param xAxisDataType
+   */
+  public OHLCSeries(String name, double[] xData, double[] yData, DataType xAxisDataType) {
+
+    super(name, xAxisDataType);
+    this.xData = xData;
+    this.yData = yData;
+    this.ohlcSeriesRenderStyle = OHLCSeriesRenderStyle.Line;
     calculateMinMax();
   }
 
@@ -54,6 +99,18 @@ public class OHLCSeries extends AxesChartSeries {
 
   public OHLCSeries setOhlcSeriesRenderStyle(OHLCSeriesRenderStyle ohlcSeriesRenderStyle) {
 
+    if (yData == null && ohlcSeriesRenderStyle == OHLCSeriesRenderStyle.Line) {
+      throw new IllegalArgumentException(
+          "Series name >"
+              + this.getName()
+              + ", yData is equal to null and cannot be set to OHLCSeriesRenderStyle.Line");
+    }
+    if (yData != null && ohlcSeriesRenderStyle != OHLCSeriesRenderStyle.Line) {
+      throw new IllegalArgumentException(
+          "Series name >"
+              + this.getName()
+              + ", yData is not equal to null and can only be set to OHLCSeriesRenderStyle.Line");
+    }
     this.ohlcSeriesRenderStyle = ohlcSeriesRenderStyle;
     return this;
   }
@@ -113,12 +170,49 @@ public class OHLCSeries extends AxesChartSeries {
       double[] newLowData,
       double[] newCloseData) {
 
+    replaceData(newXData, newOpenData, newHighData, newLowData, newCloseData, null);
+  }
+
+  /**
+   * This is an internal method which shouldn't be called from client code. Use {@link
+   * org.knowm.xchart.OHLCChart#updateOHLCSeries} instead!
+   *
+   * @param newXData
+   * @param newOpenData
+   * @param newHighData
+   * @param newLowData
+   * @param newCloseData
+   * @param newVolumeData
+   */
+  void replaceData(
+      double[] newXData,
+      double[] newOpenData,
+      double[] newHighData,
+      double[] newLowData,
+      double[] newCloseData,
+      long[] newVolumeData) {
+
     // Sanity check should already by done
     this.xData = newXData;
     this.openData = newOpenData;
     this.highData = newHighData;
     this.lowData = newLowData;
     this.closeData = newCloseData;
+    this.volumeData = newVolumeData;
+    calculateMinMax();
+  }
+
+  /**
+   * This is an internal method which shouldn't be called from client code. Use {@link
+   * org.knowm.xchart.OHLCChart#updateOHLCSeries} instead!
+   *
+   * @param newXData
+   * @param newYData
+   */
+  void replaceData(double[] newXData, double[] newYData) {
+
+    this.xData = newXData;
+    this.yData = newYData;
     calculateMinMax();
   }
 
@@ -153,7 +247,12 @@ public class OHLCSeries extends AxesChartSeries {
     double[] xMinMax = findMinMax(xData, xData);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
-    double[] yMinMax = findMinMax(lowData, highData);
+    double[] yMinMax = null;
+    if (yData == null) {
+      yMinMax = findMinMax(lowData, highData);
+    } else {
+      yMinMax = findMinMax(yData, yData);
+    }
     yMin = yMinMax[0];
     yMax = yMinMax[1];
   }
@@ -183,10 +282,22 @@ public class OHLCSeries extends AxesChartSeries {
     return closeData;
   }
 
+  public long[] getVolumeData() {
+
+    return volumeData;
+  }
+
+  public double[] getYData() {
+
+    return yData;
+  }
+
   public enum OHLCSeriesRenderStyle implements RenderableSeries {
     Candle(LegendRenderType.Line),
 
-    HiLo(LegendRenderType.Line);
+    HiLo(LegendRenderType.Line),
+
+    Line(LegendRenderType.Line);
 
     private final LegendRenderType legendRenderType;
 

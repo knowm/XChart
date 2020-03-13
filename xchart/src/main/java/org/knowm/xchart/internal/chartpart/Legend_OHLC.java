@@ -5,6 +5,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 import org.knowm.xchart.OHLCSeries;
+import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
@@ -50,8 +51,21 @@ public class Legend_OHLC<ST extends OHLCStyler, S extends OHLCSeries> extends Le
       float legendEntryHeight =
           getLegendEntryHeight(seriesTextBounds, axesChartStyler.getMarkerSize());
 
+      if (series.getOhlcSeriesRenderStyle() != OHLCSeriesRenderStyle.Line) {
+
+        Shape rectSmall =
+            new Rectangle2D.Double(
+                startx,
+                starty + legendEntryHeight / 2.0 - BOX_SIZE / 2,
+                chart.getStyler().getLegendSeriesLineLength(),
+                BOX_SIZE);
+        g.setColor(Color.RED);
+        g.fill(rectSmall);
+      }
+
       // paint line
-      if (series.getLegendRenderType() == LegendRenderType.Line
+      if (series.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line
+          && series.getLegendRenderType() == LegendRenderType.Line
           && series.getLineStyle() != SeriesLines.NONE) {
         g.setColor(series.getLineColor());
         g.setStroke(series.getLineStyle());
@@ -62,6 +76,19 @@ public class Legend_OHLC<ST extends OHLCStyler, S extends OHLCSeries> extends Le
                 startx + chart.getStyler().getLegendSeriesLineLength(),
                 starty + legendEntryHeight / 2.0);
         g.draw(line);
+      }
+
+      // paint marker
+      if (series.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line
+          && series.getMarker() != null) {
+        g.setColor(series.getMarkerColor());
+        series
+            .getMarker()
+            .paint(
+                g,
+                startx + chart.getStyler().getLegendSeriesLineLength() / 2.0,
+                starty + legendEntryHeight / 2.0,
+                axesChartStyler.getMarkerSize());
       }
 
       // paint series text

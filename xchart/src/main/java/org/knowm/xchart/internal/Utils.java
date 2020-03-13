@@ -136,6 +136,50 @@ public class Utils {
     return generatedData;
   }
 
+  public static long[] getLongArrayFromIntArray(int[] data) {
+
+    if (data == null) {
+      return null;
+    }
+    long[] longs = new long[data.length];
+
+    for (int i = 0; i < data.length; i++) {
+      longs[i] = data[i];
+    }
+    return longs;
+  }
+
+  public static long[] getLongArrayFromFloatArray(float[] data) {
+
+    if (data == null) {
+      return null;
+    }
+    long[] longs = new long[data.length];
+
+    for (int i = 0; i < data.length; i++) {
+      longs[i] = (long) data[i];
+    }
+    return longs;
+  }
+
+  public static long[] getLongArrayFromNumberList(List<?> data) {
+
+    if (data == null) {
+      return null;
+    }
+    long[] longs = new long[data.size()];
+
+    int i = 0;
+    for (Object number : data) {
+      if (number == null) {
+        longs[i++] = 0;
+      } else {
+        longs[i++] = ((Number) number).longValue();
+      }
+    }
+    return longs;
+  }
+
   /**
    * Only adds the extension of the fileExtension to the filename if the filename doesn't already
    * have it.
