@@ -118,6 +118,39 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
         Utils.getDoubleArrayFromFloatArray(highData),
         Utils.getDoubleArrayFromFloatArray(lowData),
         Utils.getDoubleArrayFromFloatArray(closeData),
+        null,
+        DataType.Number);
+  }
+
+  /**
+   * Add a series for a OHLC type chart using using float arrays
+   *
+   * @param seriesName
+   * @param xData the x-axis data
+   * @param openData the open data
+   * @param highData the high data
+   * @param lowData the low data
+   * @param closeData the close data
+   * @param volumeData the volume data
+   * @return A Series object that you can set properties on
+   */
+  public OHLCSeries addSeries(
+      String seriesName,
+      float[] xData,
+      float[] openData,
+      float[] highData,
+      float[] lowData,
+      float[] closeData,
+      float[] volumeData) {
+
+    return addSeries(
+        seriesName,
+        Utils.getDoubleArrayFromFloatArray(xData),
+        Utils.getDoubleArrayFromFloatArray(openData),
+        Utils.getDoubleArrayFromFloatArray(highData),
+        Utils.getDoubleArrayFromFloatArray(lowData),
+        Utils.getDoubleArrayFromFloatArray(closeData),
+        Utils.getLongArrayFromFloatArray(volumeData),
         DataType.Number);
   }
 
@@ -163,6 +196,39 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
         Utils.getDoubleArrayFromIntArray(highData),
         Utils.getDoubleArrayFromIntArray(lowData),
         Utils.getDoubleArrayFromIntArray(closeData),
+        null,
+        DataType.Number);
+  }
+
+  /**
+   * Add a series for a OHLC type chart using using int arrays
+   *
+   * @param seriesName
+   * @param xData the x-axis data
+   * @param openData the open data
+   * @param highData the high data
+   * @param lowData the low data
+   * @param closeData the close data
+   * @param volumeData the volume data
+   * @return A Series object that you can set properties on
+   */
+  public OHLCSeries addSeries(
+      String seriesName,
+      int[] xData,
+      int[] openData,
+      int[] highData,
+      int[] lowData,
+      int[] closeData,
+      int[] volumeData) {
+
+    return addSeries(
+        seriesName,
+        Utils.getDoubleArrayFromIntArray(xData),
+        Utils.getDoubleArrayFromIntArray(openData),
+        Utils.getDoubleArrayFromIntArray(highData),
+        Utils.getDoubleArrayFromIntArray(lowData),
+        Utils.getDoubleArrayFromIntArray(closeData),
+        Utils.getLongArrayFromIntArray(volumeData),
         DataType.Number);
   }
 
@@ -195,6 +261,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
             Utils.getDoubleArrayFromNumberList(highData),
             Utils.getDoubleArrayFromNumberList(lowData),
             Utils.getDoubleArrayFromNumberList(closeData),
+            null,
             DataType.Date);
 
       default:
@@ -205,6 +272,54 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
             Utils.getDoubleArrayFromNumberList(highData),
             Utils.getDoubleArrayFromNumberList(lowData),
             Utils.getDoubleArrayFromNumberList(closeData),
+            null,
+            DataType.Number);
+    }
+  }
+
+  /**
+   * Add a series for a OHLC type chart using Lists
+   *
+   * @param seriesName
+   * @param xData the x-axis data
+   * @param openData the open data
+   * @param highData the high data
+   * @param lowData the low data
+   * @param closeData the close data
+   * @param volumeData the volume data
+   * @return A Series object that you can set properties on
+   */
+  public OHLCSeries addSeries(
+      String seriesName,
+      List<?> xData,
+      List<? extends Number> openData,
+      List<? extends Number> highData,
+      List<? extends Number> lowData,
+      List<? extends Number> closeData,
+      List<? extends Number> volumeData) {
+
+    DataType dataType = getDataType(xData);
+    switch (dataType) {
+      case Date:
+        return addSeries(
+            seriesName,
+            Utils.getDoubleArrayFromDateList(xData),
+            Utils.getDoubleArrayFromNumberList(openData),
+            Utils.getDoubleArrayFromNumberList(highData),
+            Utils.getDoubleArrayFromNumberList(lowData),
+            Utils.getDoubleArrayFromNumberList(closeData),
+            Utils.getLongArrayFromNumberList(volumeData),
+            DataType.Date);
+
+      default:
+        return addSeries(
+            seriesName,
+            Utils.getDoubleArrayFromNumberList(xData),
+            Utils.getDoubleArrayFromNumberList(openData),
+            Utils.getDoubleArrayFromNumberList(highData),
+            Utils.getDoubleArrayFromNumberList(lowData),
+            Utils.getDoubleArrayFromNumberList(closeData),
+            Utils.getLongArrayFromNumberList(volumeData),
             DataType.Number);
     }
   }
@@ -227,6 +342,81 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       List<? extends Number> closeData) {
 
     return addSeries(seriesName, null, openData, highData, lowData, closeData);
+  }
+
+  /**
+   * Add a series for a Line type chart using int arrays
+   *
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public OHLCSeries addSeries(String seriesName, int[] xData, int[] yData) {
+
+    return addSeries(
+        seriesName,
+        Utils.getDoubleArrayFromIntArray(xData),
+        Utils.getDoubleArrayFromIntArray(yData),
+        DataType.Number);
+  }
+
+  /**
+   * Add a series for a Line type chart using float arrays
+   *
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public OHLCSeries addSeries(String seriesName, float[] xData, float[] yData) {
+
+    return addSeries(
+        seriesName,
+        Utils.getDoubleArrayFromFloatArray(xData),
+        Utils.getDoubleArrayFromFloatArray(yData),
+        DataType.Number);
+  }
+
+  /**
+   * Add a series for a Line type chart using double arrays
+   *
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public OHLCSeries addSeries(String seriesName, double[] xData, double[] yData) {
+
+    return addSeries(seriesName, xData, yData, DataType.Number);
+  }
+
+  /**
+   * Add a series for a Line type chart using Lists
+   *
+   * @param seriesName
+   * @param xData the X-Axis data
+   * @param xData the Y-Axis data
+   * @return A Series object that you can set properties on
+   */
+  public OHLCSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {
+
+    DataType dataType = getDataType(xData);
+    switch (dataType) {
+      case Date:
+        return addSeries(
+            seriesName,
+            Utils.getDoubleArrayFromDateList(xData),
+            Utils.getDoubleArrayFromNumberList(yData),
+            getDataType(xData));
+
+      default:
+        return addSeries(
+            seriesName,
+            Utils.getDoubleArrayFromNumberList(xData),
+            Utils.getDoubleArrayFromNumberList(yData),
+            getDataType(xData));
+    }
   }
 
   private DataType getDataType(List<?> data) {
@@ -257,7 +447,8 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       double[] lowData,
       double[] closeData) {
 
-    return addSeries(seriesName, xData, openData, highData, lowData, closeData, DataType.Number);
+    return addSeries(
+        seriesName, xData, openData, highData, lowData, closeData, null, DataType.Number);
   }
 
   /**
@@ -281,7 +472,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
   }
 
   /**
-   * Add a series for a OHLC type chart
+   * Add a series for a OHLC type chart using using double arrays
    *
    * @param seriesName
    * @param xData the x-axis data
@@ -289,8 +480,22 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
    * @param highData the high data
    * @param lowData the low data
    * @param closeData the close data
+   * @param volumeData the volume data
    * @return A Series object that you can set properties on
    */
+  public OHLCSeries addSeries(
+      String seriesName,
+      double[] xData,
+      double[] openData,
+      double[] highData,
+      double[] lowData,
+      double[] closeData,
+      long[] volumeData) {
+
+    return addSeries(
+        seriesName, xData, openData, highData, lowData, closeData, volumeData, DataType.Number);
+  }
+
   private OHLCSeries addSeries(
       String seriesName,
       double[] xData,
@@ -298,6 +503,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       double[] highData,
       double[] lowData,
       double[] closeData,
+      long[] volumeData,
       DataType dataType) {
 
     if (seriesMap.keySet().contains(seriesName)) {
@@ -308,7 +514,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     }
 
     // Sanity checks
-    sanityCheck(seriesName, openData, highData, lowData, closeData);
+    sanityCheck(seriesName, openData, highData, lowData, closeData, volumeData);
 
     final double[] xDataToUse;
     if (xData != null) {
@@ -320,16 +526,39 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       xDataToUse = Utils.getGeneratedDataAsArray(closeData.length);
     }
     OHLCSeries series =
-        new OHLCSeries(seriesName, xDataToUse, openData, highData, lowData, closeData, dataType);
-    ;
-
+        new OHLCSeries(
+            seriesName, xDataToUse, openData, highData, lowData, closeData, volumeData, dataType);
     seriesMap.put(seriesName, series);
 
     return series;
   }
 
+  private OHLCSeries addSeries(
+      String seriesName, double[] xData, double[] yData, DataType dataType) {
+
+    if (seriesMap.keySet().contains(seriesName)) {
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
+    }
+
+    final double[] xDataToUse;
+    if (xData != null) {
+      // Sanity check
+      checkDataLengths(seriesName, "X-Axis", "Y-Axis", xData, yData);
+
+      xDataToUse = xData;
+    } else { // generate xData
+      xDataToUse = Utils.getGeneratedDataAsArray(yData.length);
+    }
+    OHLCSeries series = new OHLCSeries(seriesName, xDataToUse, yData, dataType);
+    seriesMap.put(seriesName, series);
+    return series;
+  }
+
   /**
-   * Update a series by updating the X-Axis and Y-Axis
+   * Update a series by updating the xData, openData, highData, lowData and closeData
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers
@@ -370,8 +599,41 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     }
   }
 
+  public OHLCSeries updateOHLCSeries(
+      String seriesName,
+      List<?> newXData,
+      List<? extends Number> newOpenData,
+      List<? extends Number> newHighData,
+      List<? extends Number> newLowData,
+      List<? extends Number> newCloseData,
+      List<? extends Number> volumeData) {
+
+    DataType dataType = getDataType(newXData);
+    switch (dataType) {
+      case Date:
+        return updateOHLCSeries(
+            seriesName,
+            Utils.getDoubleArrayFromDateList(newXData),
+            Utils.getDoubleArrayFromNumberList(newOpenData),
+            Utils.getDoubleArrayFromNumberList(newHighData),
+            Utils.getDoubleArrayFromNumberList(newLowData),
+            Utils.getDoubleArrayFromNumberList(newCloseData),
+            Utils.getLongArrayFromNumberList(volumeData));
+
+      default:
+        return updateOHLCSeries(
+            seriesName,
+            Utils.getDoubleArrayFromNumberList(newXData),
+            Utils.getDoubleArrayFromNumberList(newOpenData),
+            Utils.getDoubleArrayFromNumberList(newHighData),
+            Utils.getDoubleArrayFromNumberList(newLowData),
+            Utils.getDoubleArrayFromNumberList(newCloseData),
+            Utils.getLongArrayFromNumberList(volumeData));
+    }
+  }
+
   /**
-   * Update a series by updating the X-Axis and Y-Axis
+   * Update a series by updating the xData, openData, highData, lowData and closeData
    *
    * @param seriesName
    * @param newXData - set null to be automatically generated as a list of increasing Integers
@@ -390,7 +652,33 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       double[] newLowData,
       double[] newCloseData) {
 
-    sanityCheck(seriesName, newOpenData, newHighData, newLowData, newCloseData);
+    return updateOHLCSeries(
+        seriesName, newXData, newOpenData, newHighData, newLowData, newCloseData, null);
+  }
+
+  /**
+   * Update a series by updating the xData, openData, highData, lowData,closeData and volumeData
+   *
+   * @param seriesName
+   * @param newXData - set null to be automatically generated as a list of increasing Integers
+   *     starting from 1 and ending at the size of the new Y-Axis data list.
+   * @param newOpenData
+   * @param newHighData
+   * @param newLowData
+   * @param newCloseData
+   * @param newVolumeData
+   * @return
+   */
+  public OHLCSeries updateOHLCSeries(
+      String seriesName,
+      double[] newXData,
+      double[] newOpenData,
+      double[] newHighData,
+      double[] newLowData,
+      double[] newCloseData,
+      long[] newVolumeData) {
+
+    sanityCheck(seriesName, newOpenData, newHighData, newLowData, newCloseData, newVolumeData);
 
     Map<String, OHLCSeries> seriesMap = getSeriesMap();
     OHLCSeries series = seriesMap.get(seriesName);
@@ -406,8 +694,64 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       xDataToUse = Utils.getGeneratedDataAsArray(newCloseData.length);
     }
 
-    series.replaceData(xDataToUse, newOpenData, newHighData, newLowData, newCloseData);
+    series.replaceData(
+        xDataToUse, newOpenData, newHighData, newLowData, newCloseData, newVolumeData);
 
+    return series;
+  }
+
+  /**
+   * Update a series by updating the X-Axis and Y-Axis data
+   *
+   * @param seriesName
+   * @param newXData
+   * @param newYData
+   * @return
+   */
+  public OHLCSeries updateOHLCSeries(
+      String seriesName, List<?> newXData, List<? extends Number> newYData) {
+
+    DataType dataType = getDataType(newXData);
+    switch (dataType) {
+      case Date:
+        return updateOHLCSeries(
+            seriesName,
+            Utils.getDoubleArrayFromDateList(newXData),
+            Utils.getDoubleArrayFromNumberList(newYData));
+
+      default:
+        return updateOHLCSeries(
+            seriesName,
+            Utils.getDoubleArrayFromNumberList(newXData),
+            Utils.getDoubleArrayFromNumberList(newYData));
+    }
+  }
+
+  /**
+   * Update a series by updating the X-Axis and Y-Axis data
+   *
+   * @param seriesName
+   * @param newXData
+   * @param newYData
+   * @return
+   */
+  public OHLCSeries updateOHLCSeries(String seriesName, double[] newXData, double[] newYData) {
+
+    Map<String, OHLCSeries> seriesMap = getSeriesMap();
+    OHLCSeries series = seriesMap.get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    final double[] xDataToUse;
+    if (newXData != null) {
+      // Sanity check
+      checkDataLengths(seriesName, "newXData", "newYData", newXData, newYData);
+      xDataToUse = newXData;
+    } else {
+      xDataToUse = Utils.getGeneratedDataAsArray(newYData.length);
+    }
+
+    series.replaceData(xDataToUse, newYData);
     return series;
   }
 
@@ -439,7 +783,8 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       double[] openData,
       double[] highData,
       double[] lowData,
-      double[] closeData) {
+      double[] closeData,
+      long[] volumeData) {
 
     checkData(seriesName, "Open", openData);
     checkData(seriesName, "High", highData);
@@ -449,6 +794,12 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     checkDataLengths(seriesName, "Open", "Close", openData, closeData);
     checkDataLengths(seriesName, "High", "Close", highData, closeData);
     checkDataLengths(seriesName, "Low", "Close", lowData, closeData);
+    if (volumeData != null) {
+      if (volumeData.length != closeData.length) {
+        throw new IllegalArgumentException(
+            "Volume and Close sizes are not the same!!! >" + seriesName);
+      }
+    }
   }
 
   @Override
@@ -497,6 +848,12 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       }
       if (series.getFillColor() == null) { // wasn't set manually
         series.setFillColor(seriesColorMarkerLineStyle.getColor());
+      }
+      if (series.getMarker() == null) { // wasn't set manually
+        series.setMarker(seriesColorMarkerLineStyle.getMarker());
+      }
+      if (series.getMarkerColor() == null) { // wasn't set manually
+        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
       if (series.getUpColor() == null) { // wasn't set manually
         series.setUpColor(Color.GREEN);

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.knowm.xchart.style.BoxPlotStyler;
+import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -122,8 +123,8 @@ public class ToolTips implements MouseMotionListener {
     }
 
     if (dataPoint != null) { // dataPoint was created in mouse move, need to render it
-      if (styler instanceof BoxPlotStyler) {
-        paintBoxPlotToolTip(g);
+      if (styler instanceof BoxPlotStyler || styler instanceof OHLCStyler) {
+        paintMultiLineToolTip(g);
       } else {
         paintToolTip(g, dataPoint);
       }
@@ -232,9 +233,9 @@ public class ToolTips implements MouseMotionListener {
     g.setTransform(orig);
   }
 
-  private void paintBoxPlotToolTip(Graphics2D g) {
+  private void paintMultiLineToolTip(Graphics2D g) {
 
-    String[] texts = dataPoint.label.split(",");
+    String[] texts = dataPoint.label.split(System.lineSeparator());
     List<TextLayout> list = new ArrayList<>();
     TextLayout textLayout = null;
     Rectangle2D bounds = null;

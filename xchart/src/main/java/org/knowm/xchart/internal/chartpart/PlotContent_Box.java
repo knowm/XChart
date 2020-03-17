@@ -112,7 +112,12 @@ public class PlotContent_Box<ST extends BoxPlotStyler, S extends BoxSeries>
 
           if (toolTipsEnabled) {
             chart.toolTips.addData(
-                xOffset, yOffset, series.getName() + ":," + chart.getYAxisFormat().format(yOrig));
+                xOffset,
+                yOffset,
+                series.getName()
+                    + ":"
+                    + System.lineSeparator()
+                    + chart.getYAxisFormat().format(yOrig));
           }
         } else if (chart.getStyler().getShowWithinAreaPoint()) {
 
@@ -122,7 +127,12 @@ public class PlotContent_Box<ST extends BoxPlotStyler, S extends BoxSeries>
 
           if (toolTipsEnabled) {
             chart.toolTips.addData(
-                xOffset, yOffset, series.getName() + ":," + chart.getYAxisFormat().format(yOrig));
+                xOffset,
+                yOffset,
+                series.getName()
+                    + ":"
+                    + System.lineSeparator()
+                    + chart.getYAxisFormat().format(yOrig));
           }
         }
       }
@@ -232,15 +242,21 @@ public class PlotContent_Box<ST extends BoxPlotStyler, S extends BoxSeries>
           yOffset,
           10,
           seriesName
-              + ":,upper: "
+              + ":"
+              + System.lineSeparator()
+              + "upper: "
               + chart.getYAxisFormat().format(boxPlotData.upper)
-              + ",q3: "
+              + System.lineSeparator()
+              + "q3: "
               + chart.getYAxisFormat().format(boxPlotData.q3)
-              + ",median: "
+              + System.lineSeparator()
+              + "median: "
               + chart.getYAxisFormat().format(boxPlotData.median)
-              + ",q1: "
+              + System.lineSeparator()
+              + "q1: "
               + chart.getYAxisFormat().format(boxPlotData.q1)
-              + ",lower: "
+              + System.lineSeparator()
+              + "lower: "
               + chart.getYAxisFormat().format(boxPlotData.lower));
     }
   }
