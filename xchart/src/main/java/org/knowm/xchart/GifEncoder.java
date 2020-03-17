@@ -1,11 +1,9 @@
 package org.knowm.xchart;
 
+import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import java.awt.image.BufferedImage;
 import java.util.List;
-
 import org.knowm.xchart.internal.Utils;
-
-import com.madgag.gif.fmsware.AnimatedGifEncoder;
 
 /**
  * A helper class with static methods for saving Charts as a GIF file

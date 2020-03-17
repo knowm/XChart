@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 

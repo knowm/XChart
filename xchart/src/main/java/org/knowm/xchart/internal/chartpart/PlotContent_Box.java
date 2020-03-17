@@ -10,7 +10,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
 import org.knowm.xchart.BoxSeries;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.BoxPlotStyler;

@@ -1,7 +1,6 @@
 package org.knowm.xchart;
 
 import java.awt.Color;
-
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.MarkerSeries;

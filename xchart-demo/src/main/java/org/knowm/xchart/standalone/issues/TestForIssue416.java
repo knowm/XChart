@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.GifEncoder;
 import org.knowm.xchart.XYChart;

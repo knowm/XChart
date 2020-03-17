@@ -1,7 +1,6 @@
 package org.knowm.xchart.standalone.issues;
 
 import java.util.Arrays;
-
 import org.knowm.xchart.BoxChart;
 import org.knowm.xchart.BoxChartBuilder;
 import org.knowm.xchart.SwingWrapper;

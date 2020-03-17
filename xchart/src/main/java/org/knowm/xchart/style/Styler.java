@@ -3,7 +3,6 @@ package org.knowm.xchart.style;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.knowm.xchart.style.markers.Marker;
 
 /**
