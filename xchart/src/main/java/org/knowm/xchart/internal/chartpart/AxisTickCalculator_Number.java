@@ -83,7 +83,10 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
     double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space
 
     // this prevents an infinite loop when the plot gets sized really small.
-    if (tickSpace < styler.getXAxisTickMarkSpacingHint()) {
+    if (axisDirection == Direction.X && tickSpace < styler.getXAxisTickMarkSpacingHint()) {
+      return;
+    }
+    if (axisDirection == Direction.Y && tickSpace < styler.getYAxisTickMarkSpacingHint()) {
       return;
     }
 
