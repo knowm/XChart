@@ -66,7 +66,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
       }
 
       String[] toolTips = series.getToolTips();
-      boolean hasCustomToolTips = toolTips != null;
+
       if (series.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line) {
         paintLine(g, series, lineLabelMap);
         continue;
@@ -209,10 +209,12 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
         // add data labels
         if (toolTipsEnabled) {
-          if (hasCustomToolTips) {
-            String tt = toolTips[i];
-            if (tt != null) {
-              chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth * 2, tt);
+          if (series.isCustomToolTips()) {
+            if (toolTips != null) {
+              String tt = toolTips[i];
+              if (tt != null && !"".equals(tt)) {
+                chart.toolTips.addData(toolTipArea, xOffset, highOffset, candleHalfWidth * 2, tt);
+              }
             }
           } else {
 
