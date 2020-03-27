@@ -94,7 +94,7 @@ public class TestForIssue227 {
         count = ((AxesChartSeriesNumericalNoErrorBars) series).getXData().length;
       } else if (series instanceof CategorySeries) {
         count = ((CategorySeries) series).getYData().size();
-      } else if (series instanceof OHLCSeries) {
+      } else if (series instanceof OHLCSeries && ((OHLCSeries) series).getOpenData() != null) {
         count = ((OHLCSeries) series).getOpenData().length;
       } else if (series instanceof BubbleSeries) {
         count = ((BubbleSeries) series).getXData().length;
@@ -106,6 +106,7 @@ public class TestForIssue227 {
         continue;
       }
       String[] toolTips = getToolTips(series.getName(), count);
+      ((AxesChartSeries) series).setCustomToolTips(true);
       ((AxesChartSeries) series).setToolTips(toolTips);
       flag = true;
     }

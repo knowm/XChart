@@ -28,6 +28,8 @@ public abstract class AxesChartSeries extends Series {
 
   protected String[] toolTips;
 
+  protected boolean isCustomToolTips;
+
   /**
    * Constructor
    *
@@ -139,5 +141,16 @@ public abstract class AxesChartSeries extends Series {
   public void setToolTips(String[] toolTips) {
 
     this.toolTips = toolTips;
+  }
+
+  public boolean isCustomToolTips() {
+
+    return isCustomToolTips;
+  }
+
+  public AxesChartSeries setCustomToolTips(boolean isCustomToolTips) {
+
+    this.isCustomToolTips = isCustomToolTips;
+    return this;
   }
 }

@@ -53,7 +53,6 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
       }
 
       String[] toolTips = series.getToolTips();
-      boolean hasCustomToolTips = toolTips != null;
 
       double yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       double yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
@@ -141,10 +140,12 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
           g.draw(bubble);
           // add data labels
           if (toolTipsEnabled) {
-            if (hasCustomToolTips) {
-              String tt = toolTips[i];
-              if (tt != null) {
-                chart.toolTips.addData(bubble, xOffset, yOffset, 0, tt);
+            if (series.isCustomToolTips()) {
+              if (toolTips != null) {
+                String tt = toolTips[i];
+                if (tt != null && !"".equals(tt)) {
+                  chart.toolTips.addData(bubble, xOffset, yOffset, 0, tt);
+                }
               }
             } else {
               chart.toolTips.addData(

@@ -78,7 +78,6 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
       boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
       String[] toolTips = series.getToolTips();
-      boolean hasCustomToolTips = toolTips != null;
 
       double yZeroTransform =
           getBounds().getHeight() - (yTopMargin + (0 - yMin) / (yMax - yMin) * yTickSpace);
@@ -289,10 +288,12 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
         // add data labels
         if (toolTipsEnabled) {
-          if (hasCustomToolTips) {
-            String tt = toolTips[i];
-            if (tt != null) {
-              chart.toolTips.addData(xOffset, yOffset, tt);
+          if (series.isCustomToolTips()) {
+            if (toolTips != null) {
+              String tt = toolTips[i];
+              if (tt != null && !"".equals(tt)) {
+                chart.toolTips.addData(xOffset, yOffset, tt);
+              }
             }
           } else {
             chart.toolTips.addData(
