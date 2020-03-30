@@ -71,6 +71,10 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
+      // if PolygonArea is used, these coordinates are the starting point for the polygon
+      double polygonStartX = -Double.MAX_VALUE;
+      double polygonStartY = -Double.MAX_VALUE;
+
       double[] errorBars = series.getExtraValues();
       Path2D.Double path = null;
       // smooth curve
@@ -97,7 +101,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
           // for area charts
           g.setColor(series.getFillColor());
-          closePathXY(g, path, previousX, yZeroOffset);
+          closePathXY(g, path, previousX, yZeroOffset, polygonStartX, polygonStartY);
           path = null;
 
           if (smoothPath != null) {
@@ -150,7 +154,8 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
         boolean isSeriesLineOrArea =
             XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle();
+                || XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
+                    || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle();
         boolean isSeriesStepLineOrStepArea =
             XYSeriesRenderStyle.Step == series.getXYSeriesRenderStyle()
                 || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle();
@@ -194,15 +199,23 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
         // paint area
         if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
-            || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()) {
+            || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()
+                || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
             if (path == null) {
               path = new Path2D.Double();
-              path.moveTo(previousX, yZeroOffset);
-              path.lineTo(previousX, previousY);
+              if (XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle()) {
+                path.moveTo(previousX, previousY);
+                polygonStartX = previousX;
+                polygonStartY = previousY;
+              } else {
+                path.moveTo(previousX, yZeroOffset);
+                path.lineTo(previousX, previousY);
+              }
             }
-            if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()) {
+            if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
+                    || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle()) {
               if (series.isSmooth()) {
                 path.curveTo(
                     (previousX + xOffset) / 2,
@@ -223,7 +236,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
               }
             }
           }
-          if (xOffset < previousX) {
+          if (xOffset < previousX &&  XYSeriesRenderStyle.PolygonArea != series.getXYSeriesRenderStyle()) {
             throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
           }
         }
@@ -321,13 +334,17 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       }
       // close any open path for area charts
       g.setColor(series.getFillColor());
-      closePathXY(g, path, previousX, yZeroOffset);
+      closePathXY(g, path, previousX, yZeroOffset, polygonStartX, polygonStartY);
     }
   }
 
-  void closePathXY(Graphics2D g, Path2D.Double path, double previousX, double yZeroOffset) {
+  void closePathXY(Graphics2D g, Path2D.Double path, double previousX, double yZeroOffset, double polygonStartX, double polygonStartY) {
     if (path != null) {
-      path.lineTo(previousX, yZeroOffset);
+      if (polygonStartX != - Double.MAX_VALUE){
+        path.lineTo(polygonStartX, polygonStartY);
+      } else {
+        path.lineTo(previousX, yZeroOffset);
+      }
       path.closePath();
       g.fill(path);
     }
