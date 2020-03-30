@@ -45,11 +45,16 @@ public class AreaChart05 implements ExampleChart<XYChart> {
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.PolygonArea);
 
     // Series
-    chart.addSeries("a",
-            new double[] {0, 3, 5, 7, 9,    // x coordinates ascending
-                          9, 7, 5, 3, 0},   // x coordinates descending
-            new double[] {-1, 6, 9, 6, 5,   // upper y
-                          4, 0, 4, 5, -3}); // lower y
+    chart.addSeries(
+        "a",
+        new double[] {
+          0, 3, 5, 7, 9, // x coordinates ascending
+          9, 7, 5, 3, 0
+        }, // x coordinates descending
+        new double[] {
+          -1, 6, 9, 6, 5, // upper y
+          4, 0, 4, 5, -3
+        }); // lower y
 
     return chart;
   }
