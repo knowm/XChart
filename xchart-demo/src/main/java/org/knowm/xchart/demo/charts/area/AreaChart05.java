@@ -59,3 +59,4 @@ public class AreaChart05 implements ExampleChart<XYChart> {
     return chart;
   }
 }
+
