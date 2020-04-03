@@ -70,4 +70,10 @@ public class AreaChart02 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Null Y-Axis Data Points";
+  }
 }

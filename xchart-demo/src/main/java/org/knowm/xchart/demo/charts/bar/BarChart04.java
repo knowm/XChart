@@ -57,4 +57,10 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Missing Point in Series";
+  }
 }

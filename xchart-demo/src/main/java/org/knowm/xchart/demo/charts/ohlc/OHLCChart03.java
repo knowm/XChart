@@ -52,4 +52,10 @@ public class OHLCChart03 implements ExampleChart<OHLCChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Candle with custom colors";
+  }
 }

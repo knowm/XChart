@@ -37,4 +37,10 @@ public class DialChart01 implements ExampleChart<DialChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Basic Dial Chart";
+  }
 }

@@ -43,4 +43,10 @@ public class PieChart07 implements ExampleChart<PieChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - oval with border";
+  }
 }

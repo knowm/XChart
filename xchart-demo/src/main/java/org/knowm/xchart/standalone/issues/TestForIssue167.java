@@ -96,4 +96,10 @@ public class TestForIssue167 implements ExampleChart<CategoryChart> {
     data4.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Line);
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName();
+  }
 }

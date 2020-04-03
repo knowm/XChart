@@ -51,4 +51,10 @@ public class RadarChart01 implements ExampleChart<RadarChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Basic Radar Chart";
+  }
 }

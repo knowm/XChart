@@ -51,4 +51,10 @@ public class AreaChart04 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Step Area Rendering";
+  }
 }

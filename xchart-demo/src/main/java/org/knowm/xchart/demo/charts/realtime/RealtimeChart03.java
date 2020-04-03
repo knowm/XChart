@@ -131,4 +131,10 @@ public class RealtimeChart03 implements ExampleChart<XYChart>, RealtimeExampleCh
 
     xyChart.updateXYSeries(SERIES_NAME, xData, yData, errorBars);
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Real-time XY Chart with Error Bars";
+  }
 }

@@ -62,4 +62,10 @@ public class ThemeChart04 implements ExampleChart<XYChart> {
     }
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - My Custom Theme";
+  }
 }

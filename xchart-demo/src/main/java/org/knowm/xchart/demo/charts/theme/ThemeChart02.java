@@ -47,4 +47,10 @@ public class ThemeChart02 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - GGPlot2 Theme";
+  }
 }

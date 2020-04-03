@@ -69,4 +69,10 @@ public class LineChart05 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Scatter and Line with Tool Tips";
+  }
 }

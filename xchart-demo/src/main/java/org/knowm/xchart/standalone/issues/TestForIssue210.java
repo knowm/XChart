@@ -81,4 +81,10 @@ public class TestForIssue210 implements ExampleChart<DialChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName();
+  }
 }

@@ -55,4 +55,10 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Basic Bubble Chart";
+  }
 }

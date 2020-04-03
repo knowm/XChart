@@ -51,4 +51,10 @@ public class BarChart01 implements ExampleChart<CategoryChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Basic Bar Chart";
+  }
 }

@@ -66,4 +66,10 @@ public class LineChart08 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Step Rendering";
+  }
 }

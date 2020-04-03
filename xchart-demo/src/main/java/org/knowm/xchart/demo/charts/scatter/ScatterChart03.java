@@ -44,4 +44,10 @@ public class ScatterChart03 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Single Point";
+  }
 }

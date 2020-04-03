@@ -62,4 +62,10 @@ public class TestForIssue308 implements ExampleChart<CategoryChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName();
+  }
 }

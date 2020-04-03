@@ -60,4 +60,10 @@ public class PieChart02 implements ExampleChart<PieChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Pie Chart Custom Color Palette";
+  }
 }

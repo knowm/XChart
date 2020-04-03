@@ -129,4 +129,10 @@ public class RealtimeChart04 implements ExampleChart<BubbleChart>, RealtimeExamp
     }
     bubbleChart.updateBubbleSeries(SERIES_NAME, null, yData, bubbleData);
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Real-time Bubble Chart";
+  }
 }

@@ -103,4 +103,10 @@ public class AreaChart03 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Combination Area & Line Chart";
+  }
 }

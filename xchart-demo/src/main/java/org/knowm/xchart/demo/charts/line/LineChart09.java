@@ -43,4 +43,10 @@ public class LineChart09 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Cursor";
+  }
 }

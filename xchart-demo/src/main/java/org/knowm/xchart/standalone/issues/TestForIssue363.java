@@ -53,4 +53,10 @@ public class TestForIssue363 implements ExampleChart<PieChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName();
+  }
 }

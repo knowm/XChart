@@ -68,4 +68,10 @@ public class ScatterChart04 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Error Bars";
+  }
 }

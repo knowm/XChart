@@ -61,4 +61,10 @@ public class DateChart04 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Hour Scale";
+  }
 }

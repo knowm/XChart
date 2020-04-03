@@ -50,4 +50,10 @@ public class LineChart04 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Hundreds of Series on One Plot";
+  }
 }

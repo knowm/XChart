@@ -61,4 +61,10 @@ public class PieChart06 implements ExampleChart<PieChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Pie Chart with Pie Style with Annotation LabelAndValue";
+  }
 }

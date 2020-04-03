@@ -70,4 +70,10 @@ public class OHLCChart04 implements ExampleChart<OHLCChart> {
     }
     return result;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Candle and lines";
+  }
 }

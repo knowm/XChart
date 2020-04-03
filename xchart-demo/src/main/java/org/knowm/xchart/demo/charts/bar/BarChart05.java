@@ -73,4 +73,10 @@ public class BarChart05 implements ExampleChart<CategoryChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - GGPlot2 Theme";
+  }
 }

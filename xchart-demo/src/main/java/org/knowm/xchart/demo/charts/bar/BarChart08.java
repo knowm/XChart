@@ -78,4 +78,10 @@ public class BarChart08 implements ExampleChart<CategoryChart> {
     }
     return data;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Histogram with Error Bars";
+  }
 }

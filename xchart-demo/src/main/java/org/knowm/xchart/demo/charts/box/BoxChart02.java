@@ -43,4 +43,10 @@ public class BoxChart02 implements ExampleChart<BoxChart> {
     chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + "- Show normal points and abnormal points";
+  }
 }

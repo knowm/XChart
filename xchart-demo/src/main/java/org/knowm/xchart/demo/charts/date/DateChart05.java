@@ -53,4 +53,10 @@ public class DateChart05 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Day Scale";
+  }
 }

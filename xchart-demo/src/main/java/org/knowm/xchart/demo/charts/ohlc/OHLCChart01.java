@@ -114,4 +114,10 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
     chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - HiLo rendering";
+  }
 }

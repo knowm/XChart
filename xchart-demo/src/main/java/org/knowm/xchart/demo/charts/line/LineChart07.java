@@ -186,4 +186,10 @@ public class LineChart07 implements ExampleChart<CategoryChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Category Chart with Line Rendering";
+  }
 }

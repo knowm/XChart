@@ -84,4 +84,10 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Stacked Stepped Bars";
+  }
 }

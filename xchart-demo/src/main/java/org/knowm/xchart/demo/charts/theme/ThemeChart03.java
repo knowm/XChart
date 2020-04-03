@@ -86,4 +86,10 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
     }
     return yData;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Matlab Theme";
+  }
 }
