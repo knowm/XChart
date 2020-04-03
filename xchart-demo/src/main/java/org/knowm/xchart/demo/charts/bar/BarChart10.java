@@ -98,4 +98,10 @@ public class BarChart10 implements ExampleChart<CategoryChart> {
     }
     return data;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Stepped Bars with Line Styling";
+  }
 }

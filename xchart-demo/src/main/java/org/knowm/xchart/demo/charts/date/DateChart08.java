@@ -64,4 +64,10 @@ public class DateChart08 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Rotated Tick Labels";
+  }
 }

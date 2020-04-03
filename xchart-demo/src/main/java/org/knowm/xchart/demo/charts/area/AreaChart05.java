@@ -58,5 +58,10 @@ public class AreaChart05 implements ExampleChart<XYChart> {
 
     return chart;
   }
-}
 
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Polygon Area Rendering";
+  }
+}

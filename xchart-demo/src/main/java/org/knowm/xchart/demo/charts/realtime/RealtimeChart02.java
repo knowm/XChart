@@ -111,4 +111,10 @@ public class RealtimeChart02 implements ExampleChart<PieChart>, RealtimeExampleC
 
     return pieData;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Real-time Pie Chart";
+  }
 }

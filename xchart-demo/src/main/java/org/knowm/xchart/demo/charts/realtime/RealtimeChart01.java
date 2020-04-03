@@ -105,4 +105,10 @@ public class RealtimeChart01 implements ExampleChart<XYChart>, RealtimeExampleCh
     }
     return data;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Real-time XY Chart";
+  }
 }

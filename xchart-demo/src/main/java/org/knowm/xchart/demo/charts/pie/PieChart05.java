@@ -61,4 +61,10 @@ public class PieChart05 implements ExampleChart<PieChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Pie Chart with Donut Style and Sum";
+  }
 }

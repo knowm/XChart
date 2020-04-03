@@ -48,4 +48,10 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
     chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Candle rendering";
+  }
 }

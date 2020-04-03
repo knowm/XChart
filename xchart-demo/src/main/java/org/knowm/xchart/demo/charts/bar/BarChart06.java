@@ -65,4 +65,10 @@ public class BarChart06 implements ExampleChart<CategoryChart> {
     }
     return data;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Histogram Overlapped";
+  }
 }

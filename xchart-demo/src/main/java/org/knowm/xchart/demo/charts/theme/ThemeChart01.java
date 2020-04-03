@@ -59,4 +59,10 @@ public class ThemeChart01 implements ExampleChart<XYChart> {
     }
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Default XChart Theme";
+  }
 }

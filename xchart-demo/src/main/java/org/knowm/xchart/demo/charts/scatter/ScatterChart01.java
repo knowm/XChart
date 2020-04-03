@@ -60,4 +60,10 @@ public class ScatterChart01 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Gaussian Blob with Y Axis on Right";
+  }
 }

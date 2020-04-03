@@ -56,4 +56,10 @@ public class PieChart09 implements ExampleChart<PieChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - ring with border";
+  }
 }

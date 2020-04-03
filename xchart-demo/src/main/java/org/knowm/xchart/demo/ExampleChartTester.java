@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -24,74 +25,9 @@ import javax.swing.tree.TreeSelectionModel;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.RealtimeExampleChart;
-import org.knowm.xchart.demo.charts.area.AreaChart01;
-import org.knowm.xchart.demo.charts.area.AreaChart02;
-import org.knowm.xchart.demo.charts.area.AreaChart03;
-import org.knowm.xchart.demo.charts.area.AreaChart04;
-import org.knowm.xchart.demo.charts.bar.BarChart01;
-import org.knowm.xchart.demo.charts.bar.BarChart02;
-import org.knowm.xchart.demo.charts.bar.BarChart03;
-import org.knowm.xchart.demo.charts.bar.BarChart04;
-import org.knowm.xchart.demo.charts.bar.BarChart05;
-import org.knowm.xchart.demo.charts.bar.BarChart06;
-import org.knowm.xchart.demo.charts.bar.BarChart07;
-import org.knowm.xchart.demo.charts.bar.BarChart08;
-import org.knowm.xchart.demo.charts.bar.BarChart09;
-import org.knowm.xchart.demo.charts.bar.BarChart10;
-import org.knowm.xchart.demo.charts.bar.BarChart11;
-import org.knowm.xchart.demo.charts.bar.BarChart12;
-import org.knowm.xchart.demo.charts.box.BoxChart01;
-import org.knowm.xchart.demo.charts.box.BoxChart02;
-import org.knowm.xchart.demo.charts.box.BoxChart03;
-import org.knowm.xchart.demo.charts.bubble.BubbleChart01;
-import org.knowm.xchart.demo.charts.date.DateChart01;
-import org.knowm.xchart.demo.charts.date.DateChart02;
-import org.knowm.xchart.demo.charts.date.DateChart03;
-import org.knowm.xchart.demo.charts.date.DateChart04;
-import org.knowm.xchart.demo.charts.date.DateChart05;
-import org.knowm.xchart.demo.charts.date.DateChart06;
-import org.knowm.xchart.demo.charts.date.DateChart07;
-import org.knowm.xchart.demo.charts.date.DateChart08;
-import org.knowm.xchart.demo.charts.dial.DialChart01;
-import org.knowm.xchart.demo.charts.line.LineChart01;
-import org.knowm.xchart.demo.charts.line.LineChart02;
-import org.knowm.xchart.demo.charts.line.LineChart03;
-import org.knowm.xchart.demo.charts.line.LineChart04;
-import org.knowm.xchart.demo.charts.line.LineChart05;
-import org.knowm.xchart.demo.charts.line.LineChart06;
-import org.knowm.xchart.demo.charts.line.LineChart07;
-import org.knowm.xchart.demo.charts.line.LineChart08;
-import org.knowm.xchart.demo.charts.line.LineChart09;
-import org.knowm.xchart.demo.charts.ohlc.OHLCChart01;
-import org.knowm.xchart.demo.charts.ohlc.OHLCChart02;
-import org.knowm.xchart.demo.charts.ohlc.OHLCChart03;
-import org.knowm.xchart.demo.charts.ohlc.OHLCChart04;
-import org.knowm.xchart.demo.charts.pie.PieChart01;
-import org.knowm.xchart.demo.charts.pie.PieChart02;
-import org.knowm.xchart.demo.charts.pie.PieChart03;
-import org.knowm.xchart.demo.charts.pie.PieChart04;
-import org.knowm.xchart.demo.charts.pie.PieChart05;
-import org.knowm.xchart.demo.charts.pie.PieChart06;
-import org.knowm.xchart.demo.charts.pie.PieChart07;
-import org.knowm.xchart.demo.charts.pie.PieChart08;
-import org.knowm.xchart.demo.charts.pie.PieChart09;
-import org.knowm.xchart.demo.charts.radar.RadarChart01;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart01;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart02;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart03;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart04;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart05;
-import org.knowm.xchart.demo.charts.realtime.RealtimeChart06;
-import org.knowm.xchart.demo.charts.scatter.ScatterChart01;
-import org.knowm.xchart.demo.charts.scatter.ScatterChart02;
-import org.knowm.xchart.demo.charts.scatter.ScatterChart03;
-import org.knowm.xchart.demo.charts.scatter.ScatterChart04;
-import org.knowm.xchart.demo.charts.stick.StickChart01;
-import org.knowm.xchart.demo.charts.theme.ThemeChart01;
-import org.knowm.xchart.demo.charts.theme.ThemeChart02;
-import org.knowm.xchart.demo.charts.theme.ThemeChart03;
-import org.knowm.xchart.demo.charts.theme.ThemeChart04;
 import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.Styler;
 
 /** Class containing all XChart example charts */
 public class ExampleChartTester extends JPanel implements TreeSelectionListener {
@@ -264,7 +200,7 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
    */
   private void createNodes(DefaultMutableTreeNode top) {
 
-    ArrayList<ExampleChart> exampleList = getExampleCharts();
+    exampleList = getExampleCharts();
 
     // categories
     DefaultMutableTreeNode category = null;
@@ -308,100 +244,12 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
     }
 
     ArrayList<ExampleChart> exList = new ArrayList<ExampleChart>();
-    // Area
-    exList.add(new AreaChart01());
-    exList.add(new AreaChart02());
-    exList.add(new AreaChart03());
-    exList.add(new AreaChart04());
 
-    // Pie
-    exList.add(new PieChart01());
-    exList.add(new PieChart02());
-    exList.add(new PieChart03());
-    exList.add(new PieChart04());
-    exList.add(new PieChart05());
-    exList.add(new PieChart06());
-    exList.add(new PieChart07());
-    exList.add(new PieChart08());
-    exList.add(new PieChart09());
+    List<ExampleChart<Chart<Styler, Series>>> demoCharts = DemoChartsUtil.getAllDemoCharts();
+    if (demoCharts != null) {
 
-    // Line
-    exList.add(new LineChart01());
-    exList.add(new LineChart02());
-    exList.add(new LineChart03());
-    exList.add(new LineChart04());
-    exList.add(new LineChart05());
-    exList.add(new LineChart06());
-    exList.add(new LineChart07());
-    exList.add(new LineChart08());
-    exList.add(new LineChart09());
-
-    // Scatter
-    exList.add(new ScatterChart01());
-    exList.add(new ScatterChart02());
-    exList.add(new ScatterChart03());
-    exList.add(new ScatterChart04());
-
-    // Bar
-    exList.add(new BarChart01());
-    exList.add(new BarChart02());
-    exList.add(new BarChart03());
-    exList.add(new BarChart04());
-    exList.add(new BarChart05());
-    exList.add(new BarChart06());
-    exList.add(new BarChart07());
-    exList.add(new BarChart08());
-    exList.add(new BarChart09());
-    exList.add(new BarChart10());
-    exList.add(new BarChart11());
-    exList.add(new BarChart12());
-
-    // Radar
-    exList.add(new RadarChart01());
-
-    // Dial
-    exList.add(new DialChart01());
-
-    // Stick
-    exList.add(new StickChart01());
-
-    // Bubble
-    exList.add(new BubbleChart01());
-
-    // OHLC
-    exList.add(new OHLCChart01());
-    exList.add(new OHLCChart02());
-    exList.add(new OHLCChart03());
-    exList.add(new OHLCChart04());
-
-    // Theme
-    exList.add(new ThemeChart01());
-    exList.add(new ThemeChart02());
-    exList.add(new ThemeChart03());
-    exList.add(new ThemeChart04());
-
-    // Date
-    exList.add(new DateChart01());
-    exList.add(new DateChart02());
-    exList.add(new DateChart03());
-    exList.add(new DateChart04());
-    exList.add(new DateChart05());
-    exList.add(new DateChart06());
-    exList.add(new DateChart07());
-    exList.add(new DateChart08());
-
-    // Real-time category
-    exList.add(new RealtimeChart01());
-    exList.add(new RealtimeChart02());
-    exList.add(new RealtimeChart03());
-    exList.add(new RealtimeChart04());
-    exList.add(new RealtimeChart05());
-    exList.add(new RealtimeChart06());
-
-    // Box plot
-    exList.add(new BoxChart01());
-    exList.add(new BoxChart02());
-    exList.add(new BoxChart03());
+      exList.addAll(demoCharts);
+    }
     return exList;
   }
 

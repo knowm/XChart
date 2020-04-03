@@ -103,4 +103,10 @@ public class LineChart03 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Extensive Chart Customization";
+  }
 }

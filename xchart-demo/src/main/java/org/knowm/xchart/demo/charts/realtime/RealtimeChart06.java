@@ -112,4 +112,10 @@ public class RealtimeChart06 implements ExampleChart<OHLCChart>, RealtimeExample
 
     ohlcChart.updateOHLCSeries(SERIES_NAME, xData, openData, highData, lowData, closeData);
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Real-time OHLC Chart";
+  }
 }

@@ -47,4 +47,10 @@ public class BarChart03 implements ExampleChart<CategoryChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Stacked Bar Chart";
+  }
 }

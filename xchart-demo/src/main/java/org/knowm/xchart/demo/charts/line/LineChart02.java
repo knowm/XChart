@@ -71,4 +71,10 @@ public class LineChart02 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Customized Series Style";
+  }
 }

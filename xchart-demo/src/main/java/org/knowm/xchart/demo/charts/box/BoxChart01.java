@@ -36,4 +36,10 @@ public class BoxChart01 implements ExampleChart<BoxChart> {
     chart.addSeries("ccc", Arrays.asList(50, -20));
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + "- 3 Boxes";
+  }
 }

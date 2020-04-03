@@ -42,4 +42,10 @@ public class PieChart01 implements ExampleChart<PieChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Pie Chart with 4 Slices";
+  }
 }

@@ -42,4 +42,10 @@ public class BoxChart03 implements ExampleChart<BoxChart> {
     chart.addSeries("aaa", Arrays.asList(10, 40, 80, 120, 350));
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Logarithmic Y-Axis";
+  }
 }

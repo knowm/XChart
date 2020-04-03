@@ -69,4 +69,10 @@ public class BarChart09 implements ExampleChart<CategoryChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Category chart with Bar, Line and Scatter Series";
+  }
 }

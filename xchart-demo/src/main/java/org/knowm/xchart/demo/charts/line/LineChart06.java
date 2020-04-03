@@ -52,4 +52,10 @@ public class LineChart06 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Logarithmic Y-Axis with Error Bars";
+  }
 }

@@ -74,4 +74,10 @@ public class DateChart01 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Millisecond Scale with Two Separate Y Axis Groups";
+  }
 }

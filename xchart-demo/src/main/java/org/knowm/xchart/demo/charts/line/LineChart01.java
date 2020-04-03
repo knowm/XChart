@@ -63,4 +63,10 @@ public class LineChart01 implements ExampleChart<XYChart> {
 
     return chart;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " -  Logarithmic Y-Axis";
+  }
 }

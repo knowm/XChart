@@ -110,4 +110,10 @@ public class RealtimeChart05 implements ExampleChart<CategoryChart>, RealtimeExa
     }
     return data;
   }
+
+  @Override
+  public String getExampleChartName() {
+
+    return getClass().getSimpleName() + " - Real-time Category Chart";
+  }
 }
