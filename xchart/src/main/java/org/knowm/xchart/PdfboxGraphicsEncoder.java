@@ -68,11 +68,12 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to a file
    *
-   * @param charts List<Chart>
+   * @param charts List<? extends Chart>
    * @param fileName file name path
    * @throws IOException
    */
-  public static void savePdfboxGraphics(List<Chart> charts, String fileName) throws IOException {
+  public static void savePdfboxGraphics(List<? extends Chart> charts, String fileName)
+      throws IOException {
 
     savePdfboxGraphics(charts, new File(addFileExtension(fileName)));
   }
@@ -80,11 +81,12 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to a file
    *
-   * @param charts List<Chart>
+   * @param charts List<? extends Chart>
    * @param file File
    * @throws IOException
    */
-  public static void savePdfboxGraphics(List<Chart> charts, File file) throws IOException {
+  public static void savePdfboxGraphics(List<? extends Chart> charts, File file)
+      throws IOException {
 
     savePdfboxGraphics(charts, new BufferedOutputStream(new FileOutputStream(file)));
   }
@@ -92,11 +94,12 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to an OutputStream
    *
-   * @param charts List<Chart>
+   * @param charts List<? extends Chart>
    * @param os OutputStream
    * @throws IOException
    */
-  public static void savePdfboxGraphics(List<Chart> charts, OutputStream os) throws IOException {
+  public static void savePdfboxGraphics(List<? extends Chart> charts, OutputStream os)
+      throws IOException {
 
     PDDocument document = new PDDocument();
     PDRectangle mediaBox = null;
