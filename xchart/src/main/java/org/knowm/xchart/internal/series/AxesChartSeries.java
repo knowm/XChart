@@ -43,6 +43,20 @@ public abstract class AxesChartSeries extends Series {
     yAxisType = DataType.Number;
   }
 
+  /**
+   * Constructor
+   *
+   * @param name
+   * @param xAxisDataType
+   * @param yAxisDataType
+   */
+  protected AxesChartSeries(String name, DataType xAxisDataType, DataType yAxisDataType) {
+
+    super(name);
+    this.xAxisDataType = xAxisDataType;
+    this.yAxisType = yAxisDataType;
+  }
+
   protected abstract void calculateMinMax();
 
   public double getXMin() {

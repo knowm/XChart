@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
@@ -19,6 +20,7 @@ import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BoxPlotStyler;
 import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.HeatMapStyler;
 import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
@@ -441,7 +443,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         return new AxisTickCalculator_Category(
             getDirection(), workingSpace, categories, axisType, axesChartStyler);
 
-      } else if (getDataType() == Series.DataType.Date) {
+      } else if (getDataType() == Series.DataType.Date
+          && !(axesChartStyler instanceof HeatMapStyler)) {
 
         return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, axesChartStyler);
 
@@ -450,6 +453,13 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         return new AxisTickCalculator_Logarithmic(
             getDirection(), workingSpace, min, max, axesChartStyler);
 
+      } else if (axesChartStyler instanceof HeatMapStyler) {
+
+        List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getXData();
+        DataType axisType = chart.getAxisPair().getXAxis().getDataType();
+
+        return new AxisTickCalculator_Category(
+            getDirection(), workingSpace, categories, axisType, axesChartStyler);
       } else {
 
         return new AxisTickCalculator_Number(
@@ -464,6 +474,13 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
         return new AxisTickCalculator_Logarithmic(
             getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
+      } else if (axesChartStyler instanceof HeatMapStyler) {
+
+        List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getYData();
+        DataType axisType = chart.getAxisPair().getYAxis().getDataType();
+
+        return new AxisTickCalculator_Category(
+            getDirection(), workingSpace, categories, axisType, axesChartStyler);
       } else {
         return new AxisTickCalculator_Number(
             getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
