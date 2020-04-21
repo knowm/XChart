@@ -12,6 +12,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.series.MarkerSeries;
@@ -86,8 +87,7 @@ public class Cursor implements MouseMotionListener {
     }
 
     if (dataPoints.size() > 0) {
-      matchingDataPointList.clear();
-      matchingDataPointList.addAll(dataPoints);
+      addMatchingDataPoints(dataPoints);
     }
     e.getComponent().repaint();
   }
@@ -231,6 +231,29 @@ public class Cursor implements MouseMotionListener {
       isMouseOut = true;
     }
     return isMouseOut;
+  }
+
+  /**
+   * One DataPoint per series, keep the DataPoint closest to mouseX
+   *
+   * @param dataPoints
+   */
+  private void addMatchingDataPoints(List<DataPoint> dataPoints) {
+
+    Map<String, DataPoint> map = new HashMap<>();
+    String seriesName = "";
+    for (DataPoint dataPoint : dataPoints) {
+      seriesName = dataPoint.seriesName;
+      if (map.containsKey(seriesName)) {
+        if (Math.abs(dataPoint.x - mouseX) < Math.abs(map.get(seriesName).x - mouseX)) {
+          map.put(seriesName, dataPoint);
+        }
+      } else {
+        map.put(seriesName, dataPoint);
+      }
+    }
+    matchingDataPointList.clear();
+    matchingDataPointList.addAll(map.values());
   }
 
   private class DataPoint {
