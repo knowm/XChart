@@ -27,7 +27,7 @@ public class DialChart01 implements ExampleChart<DialChart> {
   public DialChart getChart() {
 
     // Create Chart
-    DialChart chart = new DialChartBuilder().width(800).height(600).title("Radar Chart").build();
+    DialChart chart = new DialChartBuilder().width(800).height(600).title("Dial Chart").build();
 
     // Series
     chart.addSeries("Rate", 0.9381, "93.81 %");

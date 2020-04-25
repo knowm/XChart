@@ -124,7 +124,8 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 * [x] Dial charts
 * [x] Radar charts
 * [x] OHLC charts
-* [x] Box Plot
+* [x] Box charts
+* [x] Heat maps
 * [x] Error bars
 * [x] Logarithmic axes
 * [x] Number, Date, Bubble and Category X-Axis
@@ -156,13 +157,14 @@ Currently, there are 5 major chart types. Each type has its corresponding `Chart
 | DialChart | DialChartBuilder | DialStyler | DialSeries | double  | Round |
 | RadarChart | RadarChartBuilder | RadarStyler | RadarSeries | double[] | Round |
 | OHLCChart | OHLCChartBuilder | OHLCStyler | OHLCSeries | OHLC with Date | Candle |
-| BoxPlotChart | BoxPlotChartBuilder | BoxPlotStyler | BoxPlotSeries | Number, Date, String | Box |
+| BoxChart | BoxChartBuilder | BoxStyler | BoxSeries | Number, Date, String | Box |
+| HeatMapChart | HeatMapChartBuilder | HeatMapStyler | HeatMapSeries | Number, Date, String | -- |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
 
 ### XYChart
 
-![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XYChart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_XYChart.png)
 
 `XYChart` charts take Date or Number data types for the X-Axis and Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals. 
 
@@ -170,7 +172,7 @@ Series render styles include: `Line`, `Scatter`, `Area`, `Step` and `StepArea`.
 
 ### CategoryChart 
 
-![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/CategoryChart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_CategoryChart.png)
 
 `CategoryChart` charts take Date, Number or String data types for the X-Axis and Number data types for the Y-Axis. For the X-Axis, each category is given its own tick mark.  
 
@@ -178,7 +180,7 @@ Series render styles include: `Bar`, `Line`, `Scatter`, `Area` and `Stick`.
 
 ### PieChart
 
-![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/PieChart.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_PieChart.png)
 
 `PieChart` charts take String data types for the pie slice name and Number data types for the pie slice value.  
 
@@ -208,18 +210,18 @@ Series render styles include: `Polygon` and  `Circle`.
 
 ### OHLCChart
 
-![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Candle.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_OHLC.png)
 
 `OHLCChart` charts take Date data types for the X-Axis and 4 Number data types for the Y-Axis. For both axes, the tick marks are auto generated to span the range and domain of the data in evenly-spaced intervals.
 
 Series render styles include: `Candle`, `HiLo`.
 
-### BoxPlot
+### BoxChart
 
-![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_BoxPlot.png)
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_BoxChart.png)
 
-`BoxPlot` charts take String data (seriesNames) types for the X-Axis and Number data types for the Y-Axis. Each box chart is calculated from the corresponding series yData.
-Create a BoxPlot via a BoxChartBuilder, style chart, add a series to it.
+`BoxChart` charts take String data (seriesNames) types for the X-Axis and Number data types for the Y-Axis. Each box chart is calculated from the corresponding series yData.
+Create a BoxChart via a BoxChartBuilder, style chart, add a series to it.
 ```java
 // Create Chart
 BoxChart chart =
@@ -265,6 +267,12 @@ Q1 = 19;
 - "N_LESS_1_PLUS_1":
 Q1's location = (14-1) / 4 + 1 = 4.25
 Q1 = 0.75 × the fourth term + 0.25 × the fifth term = 0.75 × 19 + 0.25 × 20 = 19.25.
+
+### HeatMapChart
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_HeatMap.png)
+
+`HeatMapChart` take Date, Number or String data types for the X-Axis, Y-Axis. 
 
 ## Real-time Java Charts using XChart
 

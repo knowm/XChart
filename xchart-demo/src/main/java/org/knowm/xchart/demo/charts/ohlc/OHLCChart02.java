@@ -36,16 +36,17 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
-    List<Date> xData = new ArrayList<Date>();
-    List<Double> openData = new ArrayList<Double>();
-    List<Double> highData = new ArrayList<Double>();
-    List<Double> lowData = new ArrayList<Double>();
-    List<Double> closeData = new ArrayList<Double>();
+    List<Date> xData = new ArrayList<>();
+    List<Double> openData = new ArrayList<>();
+    List<Double> highData = new ArrayList<>();
+    List<Double> lowData = new ArrayList<>();
+    List<Double> closeData = new ArrayList<>();
 
     OHLCChart01.populateData(xData, openData, highData, lowData, closeData);
     xData = null;
     chart.addSeries("Series", xData, openData, highData, lowData, closeData);
     chart.getStyler().setToolTipsEnabled(true);
+    chart.getStyler().setLegendVisible(false);
     return chart;
   }
 

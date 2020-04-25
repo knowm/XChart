@@ -66,8 +66,8 @@ public class PieSeries extends Series {
   }
 
   public enum PieSeriesRenderStyle {
-    Pie(),
 
+    Pie(),
     Donut();
   }
 

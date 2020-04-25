@@ -12,9 +12,9 @@ import java.util.Iterator;
 import java.util.List;
 import org.knowm.xchart.BoxSeries;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.style.BoxPlotStyler;
+import org.knowm.xchart.style.BoxStyler;
 
-public class PlotContent_Box<ST extends BoxPlotStyler, S extends BoxSeries>
+public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
     extends PlotContent_<ST, S> {
 
   private final ST boxPlotStyler;

@@ -12,7 +12,7 @@ import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.BoxPlotStyler;
+import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
@@ -468,18 +468,18 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     // override min and maxValue if specified
     if (chart.getStyler().getYAxisMin(yAxis.getYIndex()) != null
-        && !(chart.getStyler() instanceof BoxPlotStyler)) {
+        && !(chart.getStyler() instanceof BoxStyler)) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin(yAxis.getYIndex());
     } else if (chart.getStyler().getYAxisMin() != null
-        && !(chart.getStyler() instanceof BoxPlotStyler)) {
+        && !(chart.getStyler() instanceof BoxStyler)) {
       overrideYAxisMinValue = chart.getStyler().getYAxisMin();
     }
 
     if (chart.getStyler().getYAxisMax(yAxis.getYIndex()) != null
-        && !(chart.getStyler() instanceof BoxPlotStyler)) {
+        && !(chart.getStyler() instanceof BoxStyler)) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax(yAxis.getYIndex());
     } else if (chart.getStyler().getYAxisMax() != null
-        && !(chart.getStyler() instanceof BoxPlotStyler)) {
+        && !(chart.getStyler() instanceof BoxStyler)) {
       overrideYAxisMaxValue = chart.getStyler().getYAxisMax();
     }
 

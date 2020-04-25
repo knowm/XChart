@@ -13,21 +13,21 @@ import org.knowm.xchart.internal.chartpart.Plot_BoxPlot;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
-import org.knowm.xchart.style.BoxPlotStyler;
+import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Theme;
 
-public class BoxChart extends Chart<BoxPlotStyler, BoxSeries> {
+public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
   private List<String> xData = new ArrayList<>();
 
   protected BoxChart(int width, int height) {
 
-    super(width, height, new BoxPlotStyler());
-    axisPair = new AxisPair<BoxPlotStyler, BoxSeries>(this);
-    plot = new Plot_BoxPlot<BoxPlotStyler, BoxSeries>(this);
-    legend = new Legend_Marker<BoxPlotStyler, BoxSeries>(this);
-    infoPanel = new InfoPanel<BoxPlotStyler, BoxSeries>(this);
+    super(width, height, new BoxStyler());
+    axisPair = new AxisPair<BoxStyler, BoxSeries>(this);
+    plot = new Plot_BoxPlot<BoxStyler, BoxSeries>(this);
+    legend = new Legend_Marker<BoxStyler, BoxSeries>(this);
+    infoPanel = new InfoPanel<BoxStyler, BoxSeries>(this);
   }
 
   public BoxChart(int width, int height, Theme theme) {

@@ -1,10 +1,10 @@
 package org.knowm.xchart.style;
 
-public class BoxPlotStyler extends AxesChartStyler {
+public class BoxStyler extends AxesChartStyler {
 
   private BoxplotCalCulationMethod boxplotCalCulationMethod;
 
-  public BoxPlotStyler() {
+  public BoxStyler() {
 
     this.setAllStyles();
     super.setAllStyles();

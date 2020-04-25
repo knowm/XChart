@@ -5,7 +5,7 @@ import org.knowm.xchart.BoxChart;
 import org.knowm.xchart.BoxChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.BoxPlotStyler.BoxplotCalCulationMethod;
+import org.knowm.xchart.style.BoxStyler.BoxplotCalCulationMethod;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /*
@@ -26,7 +26,7 @@ public class BoxChart02 implements ExampleChart<BoxChart> {
     // Create Chart
     BoxChart chart =
         new BoxChartBuilder()
-            .title("box plot show all point")
+            .title("box plot show all points")
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .theme(ChartTheme.Matlab)

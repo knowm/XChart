@@ -9,8 +9,8 @@ import java.util.Map;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.BoxPlotStyler;
-import org.knowm.xchart.style.BoxPlotStyler.BoxplotCalCulationMethod;
+import org.knowm.xchart.style.BoxStyler;
+import org.knowm.xchart.style.BoxStyler.BoxplotCalCulationMethod;
 
 /**
  * Calculate box plot data information for all series of BoxChart.
@@ -57,7 +57,7 @@ public class BoxPlotDataCalculator<ST extends AxesChartStyler, S extends AxesCha
     BoxPlotData boxPlotData = new BoxPlotData();
     int n = data.size();
     BoxplotCalCulationMethod boxplotCalCulationMethod =
-        ((BoxPlotStyler) boxPlotStyler).getBoxplotCalCulationMethod();
+        ((BoxStyler) boxPlotStyler).getBoxplotCalCulationMethod();
     double q1P = 0.0;
     double q2P = 0.0;
     double q3P = 0.0;

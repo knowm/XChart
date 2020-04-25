@@ -14,7 +14,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-import org.knowm.xchart.style.BoxPlotStyler;
+import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
 
@@ -122,7 +122,7 @@ public class ToolTips implements MouseMotionListener {
     }
 
     if (dataPoint != null) { // dataPoint was created in mouse move, need to render it
-      if (styler instanceof BoxPlotStyler || styler instanceof OHLCStyler) {
+      if (styler instanceof BoxStyler || styler instanceof OHLCStyler) {
         paintMultiLineToolTip(g);
       } else {
         paintToolTip(g, dataPoint);

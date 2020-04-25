@@ -18,7 +18,7 @@ import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.BoxPlotStyler;
+import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.HeatMapStyler;
 import org.knowm.xchart.style.Styler.InfoPanelPosition;
@@ -432,7 +432,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     // X-Axis
     if (getDirection() == Direction.X) {
 
-      if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxPlotStyler) {
+      if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxStyler) {
 
         // TODO Cleanup? More elegant way?
         AxesChartSeriesCategory axesChartSeries =
