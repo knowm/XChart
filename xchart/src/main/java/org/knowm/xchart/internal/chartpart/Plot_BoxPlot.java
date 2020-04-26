@@ -4,8 +4,7 @@ import java.awt.Graphics2D;
 import org.knowm.xchart.BoxSeries;
 import org.knowm.xchart.style.BoxStyler;
 
-public class Plot_BoxPlot<ST extends BoxStyler, S extends BoxSeries>
-    extends Plot_AxesChart<ST, S> {
+public class Plot_BoxPlot<ST extends BoxStyler, S extends BoxSeries> extends Plot_AxesChart<ST, S> {
 
   public Plot_BoxPlot(Chart<ST, S> chart) {
 

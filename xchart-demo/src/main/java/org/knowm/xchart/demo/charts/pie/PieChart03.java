@@ -58,5 +58,4 @@ public class PieChart03 implements ExampleChart<PieChart> {
   public String getExampleChartName() {
     return getClass().getSimpleName() + " - Pie Chart GGPlot2 Theme";
   }
-
 }
