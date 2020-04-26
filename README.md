@@ -108,7 +108,6 @@ To make it real-time, simply call `updateXYSeries` on the `XYChart` instance to 
 ## Features
 
 * [x] No *required* additional dependencies
-* [x] ~182KB Jar
 * [x] Multiple Y-Axis charts
 * [x] Line charts
 * [x] Step charts
