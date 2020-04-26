@@ -470,7 +470,7 @@ To use XChart with the Scala Build Tool (SBT) add the following to your build.sb
 libraryDependencies += "org.knowm.xchart" % "xchart" % "3.6.3" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
-## Building
+## Building with Maven
 
 #### general
 
