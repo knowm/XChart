@@ -18,6 +18,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
 
   private final ST styler;
   private final NumberFormat df = DecimalFormat.getPercentInstance();
+  private double height_r;
 
   PlotContent_Dial(Chart<ST, S> chart) {
 
@@ -28,24 +29,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
   @Override
   public void doPaint(Graphics2D g) {
 
-    double pieFillPercentage = styler.getPlotContentSize();
-
-    double halfBorderPercentage = (1 - pieFillPercentage) / 2.0;
-    double boundsWidth = getBounds().getWidth();
-    double boundsHeight = getBounds().getHeight();
-    double min = Math.min(boundsWidth, boundsHeight);
-    double width = styler.isCircular() ? min : boundsWidth;
-    double height = styler.isCircular() ? min : boundsHeight;
-
-    // we need to adjust height when arcAngle is small. To much wasted space on buttom of the chart
-    // Not sure but something like r += r - cos((360-arcAngle)/2) where r is vertical radius
-
-    Rectangle2D pieBounds =
-        new Rectangle2D.Double(
-            getBounds().getX() + boundsWidth / 2 - width / 2 + halfBorderPercentage * width,
-            getBounds().getY() + boundsHeight / 2 - height / 2 + halfBorderPercentage * height,
-            width * pieFillPercentage,
-            height * pieFillPercentage);
+    Rectangle2D pieBounds = getPieBounds();
 
     // get total
     boolean axisTickLabelsVisible = styler.isAxisTickLabelsVisible();
@@ -208,7 +192,12 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
           double annotationHeight = annotationBounds.getHeight();
 
           double tx = xCenter - annotationWidth / 2;
-          double ty = yCenter + yDiameter / 2 - annotationHeight / 2;
+          double ty = yCenter + annotationHeight / 2;
+          if (styler.getArcAngle() > 180) {
+            ty += height_r * Math.cos(Math.toRadians((360 - styler.getArcAngle()) / 2)) / 2;
+          } else {
+            ty -= yDiameter / 4;
+          }
 
           g.setColor(styler.getChartFontColor());
           g.setFont(styler.getAxisTitleFont());
@@ -266,5 +255,66 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
       g.setColor(series.getLineColor());
       g.draw(path);
     }
+  }
+
+  private Rectangle2D getPieBounds() {
+
+    double pieFillPercentage = styler.getPlotContentSize();
+    double halfBorderPercentage = (1 - pieFillPercentage) / 2.0;
+
+    double boundsWidth = getBounds().getWidth();
+    double boundsHeight = getBounds().getHeight();
+    double pieBounds_x = getBounds().getX();
+    double pieBounds_y = getBounds().getY();
+    double pieBounds_w = 0.0;
+    double pieBounds_h = 0.0;
+
+    double r = boundsHeight * pieFillPercentage / 2;
+    if (styler.isCircular()) {
+      if (styler.getArcAngle() > 180) {
+        double cos = Math.cos(Math.toRadians((360 - styler.getArcAngle()) / 2));
+        r = r + r * (1 - cos) / (1 + cos);
+        if (2 * r > boundsWidth * pieFillPercentage) {
+          r = boundsWidth * pieFillPercentage / 2;
+          pieBounds_x += boundsWidth * halfBorderPercentage;
+          pieBounds_y += (boundsHeight - r - r * cos) / 2;
+        } else {
+          pieBounds_x += boundsWidth / 2 - r;
+          pieBounds_y += boundsHeight * halfBorderPercentage;
+        }
+      } else {
+        r = boundsHeight * pieFillPercentage;
+        double sin = Math.sin(Math.toRadians(styler.getArcAngle() / 2));
+        if (2 * sin * r > boundsWidth * pieFillPercentage) {
+          r = boundsWidth * pieFillPercentage / 2 / sin;
+          pieBounds_x += boundsWidth * halfBorderPercentage - r * (1 - sin);
+          pieBounds_y += (boundsHeight - r) / 2;
+        } else {
+          pieBounds_x += boundsWidth / 2 - r;
+          pieBounds_y += boundsHeight * halfBorderPercentage;
+        }
+      }
+      pieBounds_w = r * 2;
+      pieBounds_h = r * 2;
+    } else {
+      pieBounds_x += boundsWidth * halfBorderPercentage;
+      pieBounds_y += boundsHeight * halfBorderPercentage;
+      pieBounds_w = boundsWidth * pieFillPercentage;
+
+      if (styler.getArcAngle() > 180) {
+
+        double cos = Math.cos(Math.toRadians((360 - styler.getArcAngle()) / 2));
+        r = r + r * (1 - cos) / (1 + cos);
+        pieBounds_h = r * 2;
+      } else {
+        pieBounds_h = boundsHeight * pieFillPercentage * 2;
+      }
+    }
+
+    height_r = r;
+    Rectangle2D pieBounds =
+        new Rectangle2D.Double(pieBounds_x, pieBounds_y, pieBounds_w, pieBounds_h);
+
+    return pieBounds;
   }
 }
