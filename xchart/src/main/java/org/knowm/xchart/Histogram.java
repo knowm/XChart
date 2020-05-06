@@ -27,6 +27,9 @@ public class Histogram {
    */
   public Histogram(Collection<? extends Number> data, int numBins) {
 
+    // Sanity checks
+    sanityCheck(data, numBins);
+
     this.numBins = numBins;
     this.originalData = data;
 
@@ -57,12 +60,35 @@ public class Histogram {
    */
   public Histogram(Collection<? extends Number> data, int numBins, double min, double max) {
 
+    // Sanity checks
+    sanityCheck(data, numBins);
+    if (max < min) {
+      throw new IllegalArgumentException("max cannot be less than min!!!");
+    }
+
     this.numBins = numBins;
     this.originalData = data;
     this.min = min;
     this.max = max;
 
     init();
+  }
+
+  private void sanityCheck(Collection<? extends Number> data, int numBins) {
+
+    if (data == null) {
+      throw new IllegalArgumentException("Histogram data cannot be null!!!");
+    }
+    if (data.isEmpty()) {
+      throw new IllegalArgumentException("Histogram data cannot be empty!!!");
+    }
+    if (data.contains(null)) {
+      throw new IllegalArgumentException("Histogram data cannot contain null!!!");
+    }
+
+    if (numBins <= 0) {
+      throw new IllegalArgumentException("Histogram numBins cannot be less than or equal to 0!!!");
+    }
   }
 
   private void init() {
@@ -72,20 +98,21 @@ public class Histogram {
 
     // y axis data
     Iterator<? extends Number> itr = originalData.iterator();
+    double doubleValue = 0.0;
+    int bin = 0;
     while (itr.hasNext()) {
 
-      double doubleValue = itr.next().doubleValue();
-      int bin = (int) ((doubleValue - min) / binSize); // changed this from numBins
-      if (bin < 0) {
-        /* this data is smaller than min */
-        // System.out.println("less than");
-      } else if (doubleValue == max) { // the value falls exactly on the max value
-        tempYAxisData[bin - 1] += 1;
-      } else if (bin > numBins || bin == numBins) {
-        /* this data point is bigger than max */
-        // System.out.println("greater than");
-      } else {
+      doubleValue = itr.next().doubleValue();
+
+      /* this data is smaller than min, or this data point is bigger than max */
+      if (doubleValue < min || doubleValue > max) {
+        continue;
+      }
+      bin = (int) ((doubleValue - min) / binSize); // changed this from numBins
+      if (bin < numBins) {
         tempYAxisData[bin] += 1;
+      } else { // the value falls exactly on the max value
+        tempYAxisData[bin - 1] += 1;
       }
     }
     yAxisData = new ArrayList<Double>(numBins);
