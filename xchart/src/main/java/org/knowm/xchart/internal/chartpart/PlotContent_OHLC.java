@@ -162,7 +162,11 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
               && highOffset != -Double.MAX_VALUE
               && lowOffset != -Double.MAX_VALUE
               && closeOffset != -Double.MAX_VALUE) {
-            g.setColor(series.getLineColor());
+            if (closeOrig > openOrig) {
+              g.setColor(series.getUpColor());
+            } else {
+              g.setColor(series.getDownColor());
+            }
             g.setStroke(series.getLineStyle());
             // high to low line
             line.setLine(xOffset, highOffset, xOffset, lowOffset);

@@ -1,6 +1,7 @@
 package org.knowm.xchart;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Date;
 import java.util.Iterator;
@@ -49,6 +50,8 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
 
     this(width, height);
     styler.setTheme(theme);
+    styler.setToolTipBackgroundColor(new Color(210, 210, 210));
+    styler.setToolTipFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
   }
 
   /**
@@ -856,10 +859,10 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
         series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
       if (series.getUpColor() == null) { // wasn't set manually
-        series.setUpColor(Color.GREEN);
+        series.setUpColor(new Color(242, 39, 42));
       }
       if (series.getDownColor() == null) { // wasn't set manually
-        series.setDownColor(Color.RED);
+        series.setDownColor(new Color(19, 179, 70));
       }
     }
   }
