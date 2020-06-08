@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -846,7 +848,8 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
       }
-      if (series.getLineColor() == null) { // wasn't set manually
+      if (series.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line
+          && series.getLineColor() == null) { // wasn't set manually
         series.setLineColor(seriesColorMarkerLineStyle.getColor());
       }
       if (series.getFillColor() == null) { // wasn't set manually

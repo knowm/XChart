@@ -59,7 +59,11 @@ public class Legend_OHLC<ST extends OHLCStyler, S extends OHLCSeries> extends Le
                 starty + legendEntryHeight / 2.0 - BOX_SIZE / 2,
                 chart.getStyler().getLegendSeriesLineLength(),
                 BOX_SIZE);
-        g.setColor(series.getUpColor());
+        if (series.getLineColor() == null) {
+          g.setColor(series.getUpColor());
+        } else {
+          g.setColor(series.getLineColor());
+        }
         g.fill(rectSmall);
       }
 
