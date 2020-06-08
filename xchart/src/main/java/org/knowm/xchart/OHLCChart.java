@@ -1,11 +1,14 @@
 package org.knowm.xchart;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -49,6 +52,8 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
 
     this(width, height);
     styler.setTheme(theme);
+    styler.setToolTipBackgroundColor(new Color(210, 210, 210));
+    styler.setToolTipFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
   }
 
   /**
@@ -843,7 +848,8 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
       }
-      if (series.getLineColor() == null) { // wasn't set manually
+      if (series.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line
+          && series.getLineColor() == null) { // wasn't set manually
         series.setLineColor(seriesColorMarkerLineStyle.getColor());
       }
       if (series.getFillColor() == null) { // wasn't set manually
@@ -856,10 +862,10 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
         series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
       if (series.getUpColor() == null) { // wasn't set manually
-        series.setUpColor(Color.GREEN);
+        series.setUpColor(new Color(242, 39, 42));
       }
       if (series.getDownColor() == null) { // wasn't set manually
-        series.setDownColor(Color.RED);
+        series.setDownColor(new Color(19, 179, 70));
       }
     }
   }
