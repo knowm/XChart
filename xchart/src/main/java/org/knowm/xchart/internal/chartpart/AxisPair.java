@@ -289,10 +289,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     // if no series, we still want to plot an empty plot with axes. Since there are no min and max
     // with no series added, we just fake it arbitrarily.
     if (chart.getSeriesMap() == null || chart.getSeriesMap().size() < 1) {
-      xAxis.addMinMax(-1, 1);
-      for (Axis<ST, S> ya : yAxisMap.values()) {
-        ya.addMinMax(-1, 1);
-      }
+      setDefaultAxisMinMax();
     } else {
       int disabledCount = 0; // maybe all are disabled, so we check this condition
       for (S series : chart.getSeriesMap().values()) {
@@ -314,10 +311,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
         }
       }
       if (disabledCount == chart.getSeriesMap().values().size()) {
-        xAxis.addMinMax(-1, 1);
-        for (Axis<ST, S> ya : yAxisMap.values()) {
-          ya.addMinMax(-1, 1);
-        }
+        setDefaultAxisMinMax();
       }
     }
 
@@ -359,6 +353,18 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     if (xAxis.getMin() == Double.NEGATIVE_INFINITY || xAxis.getMax() == Double.NEGATIVE_INFINITY) {
       throw new IllegalArgumentException(
           "Series data (accounting for error bars too) cannot be equal to Double.NEGATIVE_INFINITY!!!");
+    }
+  }
+
+  /**
+   * Sets a default minimum and maximum on all axes, for cases where there are no series to compute a range from.
+   */
+  private void setDefaultAxisMinMax() {
+    double xMin = chart.getStyler().isXAxisLogarithmic() ? 0.1 : -1.0;
+    double yMin = chart.getStyler().isYAxisLogarithmic() ? 0.1 : -1.0;
+    xAxis.addMinMax(xMin, 1);
+    for (Axis<ST, S> ya : yAxisMap.values()) {
+      ya.addMinMax(yMin, 1);
     }
   }
 
