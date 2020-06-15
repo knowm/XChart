@@ -65,7 +65,7 @@ public class Cursor implements MouseMotionListener {
   public void mouseMoved(MouseEvent e) {
 
     // don't draw anything
-    if (!styler.isCursorEnabled()) {
+    if (!styler.isCursorEnabled() || seriesMap == null) {
       return;
     }
 
