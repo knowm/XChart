@@ -582,12 +582,15 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
     double workingSpace;
     double startOffset;
+    boolean isLog;
     if (direction == Direction.X) {
       startOffset = bounds.getX();
       workingSpace = bounds.getWidth();
+      isLog = axesChartStyler.isXAxisLogarithmic();
     } else {
       startOffset = 0; // bounds.getY();
       workingSpace = bounds.getHeight();
+      isLog = axesChartStyler.isYAxisLogarithmic();
     }
 
     // a check if all axis data are the exact same values
@@ -606,6 +609,9 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     // where the tick should begin in the working space in pixels
     double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
 
+    minVal = isLog ? Math.log10(minVal) : minVal;
+    maxVal = isLog ? Math.log10(maxVal) : maxVal;
+    chartPoint = isLog ? Math.log10(chartPoint) : chartPoint;
     double tickLabelPosition =
         startOffset + margin + ((chartPoint - minVal) / (maxVal - minVal) * tickSpace);
 
@@ -647,13 +653,16 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
     double workingSpace;
     double startOffset;
+    boolean isLog;
     if (direction == Direction.X) {
       startOffset = bounds.getX();
       workingSpace = bounds.getWidth();
+      isLog = axesChartStyler.isXAxisLogarithmic();
     } else {
       startOffset = 0; // bounds.getY();
       workingSpace = bounds.getHeight();
       screenPoint = bounds.getHeight() - screenPoint + bounds.getY(); // y increments top to bottom
+      isLog = axesChartStyler.isYAxisLogarithmic();
     }
 
     // tick space - a percentage of the working space available for ticks
@@ -671,8 +680,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     // double tickLabelPosition =
     //       margin + ((value - min) / (max - min) * tickSpace);
 
+    minVal = isLog ? Math.log10(minVal) : minVal;
+    maxVal = isLog ? Math.log10(maxVal) : maxVal;
     double value = ((screenPoint - margin - startOffset) * (maxVal - minVal) / tickSpace) + minVal;
-
+    value = isLog ? Math.pow(10, value) : value;
     return value;
   }
 
