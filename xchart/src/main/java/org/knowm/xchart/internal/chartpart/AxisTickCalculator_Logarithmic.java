@@ -104,7 +104,7 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     // logMax = (int) (Math.log10(styler.getXAxisMax())); // no floor
     // }
 
-    double firstPosition = Utils.pow(10, logMin);
+    int firstPosition = 1;
     // System.out.println("firstPosition: " + firstPosition);
     double tickStep = Utils.pow(10, logMin - 1);
 
@@ -120,25 +120,25 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
       // System.out.println("i: " + i);
       // System.out.println("Utils.pow(10, i): " + Utils.pow(10, i));
 
-      // using the .00000001 factor to deal with double value imprecision
-      for (double j = firstPosition; j <= Utils.pow(10, i) + .00000001; j = j + tickStep) {
+      for (int j = firstPosition; j <= 10; j++) {
+        double tickValue = Math.pow(10, i) * j;
 
-        // System.out.println("j: " + j);
-        // System.out.println(Math.log10(j) % 1);
+        // System.out.println("tickValue: " + tickValue);
+        // System.out.println(Math.log10(tickValue) % 1);
 
-        if (j < minValue - tickStep) {
+        if (tickValue < minValue - tickStep) {
           // System.out.println("continue");
           continue;
         }
 
-        if (j > maxValue + tickStep) {
+        if (tickValue > maxValue + tickStep) {
           // System.out.println("break");
           break;
         }
 
         // only add labels for the decades
-        if (!axisDecadeOnly || Math.abs(Math.log10(j) % 1) < 0.00000001) {
-          tickLabels.add(numberLogFormatter.format(j));
+        if (!axisDecadeOnly || j == 1 || j == 10) {
+          tickLabels.add(numberLogFormatter.format(tickValue));
         } else {
           tickLabels.add(null);
         }
@@ -147,13 +147,13 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
         double tickLabelPosition =
             (int)
                 (margin
-                    + (Math.log10(j) - Math.log10(minValue))
+                    + (Math.log10(tickValue) - Math.log10(minValue))
                         / (Math.log10(maxValue) - Math.log10(minValue))
                         * tickSpace);
         tickLocations.add(tickLabelPosition);
       }
-      tickStep = tickStep * Utils.pow(10, 1);
-      firstPosition = tickStep + Utils.pow(10, i);
+      tickStep = Math.pow(10, i);
+      firstPosition = 2;
     }
     if (tickLocations.size() <= 1) {
       tickLabels.add(numberLogFormatter.format(minValue));
