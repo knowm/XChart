@@ -357,7 +357,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   }
 
   /**
-   * Sets a default minimum and maximum on all axes, for cases where there are no series to compute a range from.
+   * Sets a default minimum and maximum on all axes, for cases where there are no series to compute
+   * a range from.
    */
   private void setDefaultAxisMinMax() {
     double xMin = chart.getStyler().isXAxisLogarithmic() ? 0.1 : -1.0;

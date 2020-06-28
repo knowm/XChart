@@ -439,7 +439,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.6.3</version>
+        <version>3.6.4</version>
     </dependency>
 ```
 
@@ -455,7 +455,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.6.4-SNAPSHOT</version>
+      <version>3.6.5-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -466,7 +466,7 @@ Snapshots can be manually downloaded from Sonatype: [https://oss.sonatype.org/co
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "3.6.3" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.6.4" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
 ## Building with Maven
@@ -496,12 +496,12 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 
 - Linux: execute command `java -cp xchart-demo-3.6.3.jar:xchart-3.6.3.jar org.knowm.xchart.demo.XChartDemo`.
 
-- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.6.3.jar;xchart-3.6.3.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.6.3.jar;xchart-3.6.3.jar" org.knowm.xchart.demo.XChartDemo`.
+- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.6.3.jar;xchart-3.6.3.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.6.4.jar;xchart-3.6.4.jar" org.knowm.xchart.demo.XChartDemo`.
 
 E.g:
 ```sh
 cd /path/to/xchart-demo/jar/
-java -cp xchart-demo-3.6.3.jar:xchart-3.6.3.jar org.knowm.xchart.demo.XChartDemo
+java -cp xchart-demo-3.6.4.jar:xchart-3.6.4.jar org.knowm.xchart.demo.XChartDemo
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
