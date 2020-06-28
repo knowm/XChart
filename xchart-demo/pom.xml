@@ -19,6 +19,27 @@
       <artifactId>xchart</artifactId>
       <version>3.6.4-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>11.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>11.0.2</version>
+    </dependency>
   </dependencies>
-
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.4</version>
+        <configuration>
+          <mainClass>org.knowm.xchart.standalone.JavaFXDemo</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
