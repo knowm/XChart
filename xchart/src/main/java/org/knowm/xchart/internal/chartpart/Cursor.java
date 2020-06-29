@@ -79,16 +79,6 @@ public class Cursor implements MouseMotionListener {
       }
       return;
     }
-    List<DataPoint> dataPoints = new ArrayList<>();
-    for (DataPoint dataPoint : dataPointList) {
-      if (dataPoint.shape.contains(mouseX, dataPoint.shape.getBounds().getCenterY())) {
-        dataPoints.add(dataPoint);
-      }
-    }
-
-    if (dataPoints.size() > 0) {
-      addMatchingDataPoints(dataPoints);
-    }
     e.getComponent().repaint();
   }
 
@@ -97,6 +87,8 @@ public class Cursor implements MouseMotionListener {
     if (!styler.isCursorEnabled()) {
       return;
     }
+
+    calculateMatchingDataPoints();
 
     if (matchingDataPointList.size() > 0) {
       DataPoint firstDataPoint = matchingDataPointList.get(0);
@@ -233,27 +225,34 @@ public class Cursor implements MouseMotionListener {
     return isMouseOut;
   }
 
-  /**
-   * One DataPoint per series, keep the DataPoint closest to mouseX
-   *
-   * @param dataPoints
-   */
-  private void addMatchingDataPoints(List<DataPoint> dataPoints) {
+  /** One DataPoint per series, keep the DataPoint closest to mouseX */
+  private void calculateMatchingDataPoints() {
 
-    Map<String, DataPoint> map = new HashMap<>();
-    String seriesName = "";
-    for (DataPoint dataPoint : dataPoints) {
-      seriesName = dataPoint.seriesName;
-      if (map.containsKey(seriesName)) {
-        if (Math.abs(dataPoint.x - mouseX) < Math.abs(map.get(seriesName).x - mouseX)) {
-          map.put(seriesName, dataPoint);
-        }
-      } else {
-        map.put(seriesName, dataPoint);
+    List<DataPoint> dataPoints = new ArrayList<>();
+    for (DataPoint dataPoint : dataPointList) {
+      if (dataPoint.shape.contains(mouseX, dataPoint.shape.getBounds().getCenterY())
+          && bounds.getY() < mouseY
+          && bounds.getY() + bounds.getHeight() > mouseY) {
+        dataPoints.add(dataPoint);
       }
     }
-    matchingDataPointList.clear();
-    matchingDataPointList.addAll(map.values());
+
+    if (dataPoints.size() > 0) {
+      Map<String, DataPoint> map = new HashMap<>();
+      String seriesName = "";
+      for (DataPoint dataPoint : dataPoints) {
+        seriesName = dataPoint.seriesName;
+        if (map.containsKey(seriesName)) {
+          if (Math.abs(dataPoint.x - mouseX) < Math.abs(map.get(seriesName).x - mouseX)) {
+            map.put(seriesName, dataPoint);
+          }
+        } else {
+          map.put(seriesName, dataPoint);
+        }
+      }
+      matchingDataPointList.clear();
+      matchingDataPointList.addAll(map.values());
+    }
   }
 
   private class DataPoint {
