@@ -1,11 +1,32 @@
 package org.knowm.xchart;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.print.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
@@ -216,15 +237,11 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
     UIManager.put("FileChooser.saveButtonText", "Export");
     UIManager.put("FileChooser.fileNameLabelText", "Export To:");
-    UIManager.put("FileChooser.saveDialogFileNameLabel.textAndMnemonic", "Export To:");
-    // UIDefaults defaults = UIManager.getDefaults();
-    // System.out.println(defaults.size()+ " properties");
-    // for (Enumeration e = defaults.keys();
-    // e.hasMoreElements();) {
-    // Object key = e.nextElement();
-    // System.out.println(key + " = " + defaults.get(key));
-    // }
+    UIManager.put("FileChooser.fileNameLabelMnemonic", "Export To:");
     JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+    disableLabel(fileChooser.getComponents());
+    disableTextField(fileChooser.getComponents());
     fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     fileChooser.setFileFilter(
         new FileFilter() {
@@ -246,12 +263,46 @@ public class XChartPanel<T extends Chart> extends JPanel {
 
     if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 
-      File theFileToSave = fileChooser.getSelectedFile();
+      File theFileToSave = null;
+      if (fileChooser.getSelectedFile() != null) {
+        if (fileChooser.getSelectedFile().exists()) {
+          theFileToSave = fileChooser.getSelectedFile();
+        } else {
+          File parentFile = new File(fileChooser.getSelectedFile().getParent());
+          theFileToSave = parentFile;
+        }
+      }
+
       try {
         CSVExporter.writeCSVColumns(
             (XYChart) chart, theFileToSave.getCanonicalPath() + File.separatorChar);
       } catch (IOException e) {
         e.printStackTrace();
+      }
+    }
+  }
+
+  private void disableTextField(Component[] comp) {
+    for (int x = 0; x < comp.length; x++) {
+      //            System.out.println(comp[x].toString());
+      if (comp[x] instanceof JPanel) {
+        disableTextField(((JPanel) comp[x]).getComponents());
+      } else if (comp[x] instanceof JTextField) {
+        ((JTextField) comp[x]).setVisible(false);
+        return;
+      }
+    }
+  }
+
+  private void disableLabel(Component[] comp) {
+    for (int x = 0; x < comp.length; x++) {
+      //      System.out.println(comp[x].toString());
+      if (comp[x] instanceof JPanel) {
+        disableLabel(((JPanel) comp[x]).getComponents());
+      } else if (comp[x] instanceof JLabel) {
+        //        System.out.println(comp[x].toString());
+        ((JLabel) comp[x]).setVisible(false);
+        return;
       }
     }
   }
