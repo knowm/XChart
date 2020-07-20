@@ -1,13 +1,22 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import javax.imageio.*;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
 import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
@@ -56,11 +65,8 @@ public final class BitmapEncoder {
   public static void saveBitmap(Chart chart, String fileName, BitmapFormat bitmapFormat)
       throws IOException {
 
-    OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
-    try {
+    try (OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat)); ) {
       saveBitmap(chart, out, bitmapFormat);
-    } finally {
-      out.close();
     }
   }
 
@@ -99,11 +105,8 @@ public final class BitmapEncoder {
       BitmapEncoder.BitmapFormat bitmapFormat)
       throws IOException {
 
-    OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat));
-    try {
+    try (OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat))) {
       saveBitmap(charts, rows, cols, out, bitmapFormat);
-    } finally {
-      out.close();
     }
   }
 
@@ -127,11 +130,10 @@ public final class BitmapEncoder {
       BitmapEncoder.BitmapFormat bitmapFormat)
       throws IOException {
 
-    List<BufferedImage> chartImages = new LinkedList<BufferedImage>();
+    List<BufferedImage> chartImages = new LinkedList<>();
     for (Chart c : charts) chartImages.add(getBufferedImage(c));
 
     BufferedImage bufferedImage = mergeImages(chartImages, rows, cols);
-
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
   }
 
@@ -182,14 +184,12 @@ public final class BitmapEncoder {
       setDPI(metadata, DPI);
 
       File file = new File(addFileExtension(fileName, bitmapFormat));
-      FileImageOutputStream output = new FileImageOutputStream(file);
-      writer.setOutput(output);
-      IIOImage image = new IIOImage(bufferedImage, null, metadata);
-      try {
+
+      try (FileImageOutputStream output = new FileImageOutputStream(file)) {
+        writer.setOutput(output);
+        IIOImage image = new IIOImage(bufferedImage, null, metadata);
         writer.write(null, image, iwp);
         writer.dispose();
-      } finally {
-        output.close();
       }
     }
   }
@@ -242,14 +242,12 @@ public final class BitmapEncoder {
     iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
     iwp.setCompressionQuality(quality);
     File file = new File(fileName);
-    FileImageOutputStream output = new FileImageOutputStream(file);
-    try {
+
+    try (FileImageOutputStream output = new FileImageOutputStream(file)) {
       writer.setOutput(output);
       IIOImage image = new IIOImage(bufferedImage, null, null);
       writer.write(null, image, iwp);
       writer.dispose();
-    } finally {
-      output.close();
     }
   }
 
@@ -266,13 +264,10 @@ public final class BitmapEncoder {
 
     byte[] imageInBytes;
 
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), baos);
-    try {
+    try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); ) {
+      ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), baos);
       baos.flush();
       imageInBytes = baos.toByteArray();
-    } finally {
-      baos.close();
     }
     return imageInBytes;
   }
@@ -280,7 +275,7 @@ public final class BitmapEncoder {
   public static BufferedImage getBufferedImage(Chart chart) {
 
     BufferedImage bufferedImage =
-        new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
+        new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_ARGB);
     Graphics2D graphics2D = bufferedImage.createGraphics();
     chart.paint(graphics2D, chart.getWidth(), chart.getHeight());
     return bufferedImage;
