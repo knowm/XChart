@@ -41,6 +41,6 @@ public class TestForIssue433 {
     chart.getStyler().setDatePattern("HH:mm:ss");
     chart.getStyler().setXAxisTickMarkSpacingHint(chart.getWidth() / (xData.size() - 1));
 
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 }

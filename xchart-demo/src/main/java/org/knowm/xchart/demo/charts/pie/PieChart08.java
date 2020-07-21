@@ -24,7 +24,7 @@ public class PieChart08 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart08();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<PieChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -35,7 +35,7 @@ public class PieChart08 implements ExampleChart<PieChart> {
         new PieChartBuilder()
             .width(800)
             .height(600)
-            .title("Pie Chart - circle with border")
+            .title(getExampleChartName())
             .build();
 
     // Customize Chart
@@ -65,6 +65,6 @@ public class PieChart08 implements ExampleChart<PieChart> {
   @Override
   public String getExampleChartName() {
 
-    return getClass().getSimpleName() + " - circle with border";
+    return getClass().getSimpleName() + " - Pie Chart with Custom Series Pallete";
   }
 }

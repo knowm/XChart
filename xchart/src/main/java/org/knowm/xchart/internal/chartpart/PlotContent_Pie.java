@@ -76,6 +76,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
   @Override
   public void doPaint(Graphics2D g) {
+
     // Apply the given pattern to decimalPattern if decimalPattern is not null
     if (pieStyler.getDecimalPattern() != null) {
       df.applyPattern(pieStyler.getDecimalPattern());
@@ -107,9 +108,13 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
             width * pieFillPercentage,
             height * pieFillPercentage);
 
-    // g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-    // g.setColor(Color.black);
-    // g.draw(pieBounds);
+//    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+//    g.setColor(Color.black);
+//    g.draw(pieBounds);
+
+//    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+//    g.setColor(Color.red);
+//    g.draw(getBounds());
 
     // get total
     double total = 0.0;
@@ -134,6 +139,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
   }
 
   private void paintSlices(Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
+
     boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
     double borderAngle = startAngle;
 
@@ -240,6 +246,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
   private void paintAnnotations(
       Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
+
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
@@ -412,6 +419,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
   }
 
   private void paintSum(Graphics2D g, Rectangle2D pieBounds, double total) {
+
     // draw total value if visible
     if (pieStyler.isSumVisible()) {
       String annotation =

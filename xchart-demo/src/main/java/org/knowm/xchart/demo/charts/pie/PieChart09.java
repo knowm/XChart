@@ -25,7 +25,7 @@ public class PieChart09 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart09();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<PieChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -33,7 +33,7 @@ public class PieChart09 implements ExampleChart<PieChart> {
 
     // Create Chart
     PieChart chart =
-        new PieChartBuilder().width(800).height(600).title("Pie Chart - ring with border").build();
+        new PieChartBuilder().width(800).height(600).title(getExampleChartName()).build();
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
@@ -60,6 +60,6 @@ public class PieChart09 implements ExampleChart<PieChart> {
   @Override
   public String getExampleChartName() {
 
-    return getClass().getSimpleName() + " - ring with border";
+    return getClass().getSimpleName() + " - Pie Chart with Donut Style and Slice Border Width";
   }
 }

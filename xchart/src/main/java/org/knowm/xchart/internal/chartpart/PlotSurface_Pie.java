@@ -30,6 +30,8 @@ public class PlotSurface_Pie<ST extends Styler, S extends Series> extends PlotSu
 
     Rectangle2D bounds = getBounds();
 
+//    System.out.println("styler.getPlotBackgroundColor() = " + styler.getPlotBackgroundColor());
+
     // paint plot background
     Shape rect =
         new Rectangle2D.Double(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
