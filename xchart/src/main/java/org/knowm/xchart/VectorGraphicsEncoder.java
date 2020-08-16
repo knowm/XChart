@@ -44,7 +44,6 @@ public final class VectorGraphicsEncoder {
         p = new EPSProcessor();
         break;
       case PDF:
-        // p = new PDFProcessor(true);
         p = new PDFBoxProcessor();
         break;
       case SVG:

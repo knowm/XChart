@@ -108,13 +108,13 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
             width * pieFillPercentage,
             height * pieFillPercentage);
 
-//    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-//    g.setColor(Color.black);
-//    g.draw(pieBounds);
+    //    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    //    g.setColor(Color.black);
+    //    g.draw(pieBounds);
 
-//    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
-//    g.setColor(Color.red);
-//    g.draw(getBounds());
+    //    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
+    //    g.setColor(Color.red);
+    //    g.draw(getBounds());
 
     // get total
     double total = 0.0;
