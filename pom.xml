@@ -68,12 +68,6 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>de.erichseifert.vectorgraphics2d</groupId>
-				<artifactId>VectorGraphics2D</artifactId>
-				<version>0.13</version>
-				<optional>true</optional>
-			</dependency>
-			<dependency>
 				<groupId>de.rototor.pdfbox</groupId>
 				<artifactId>graphics2d</artifactId>
 				<version>0.27</version>
