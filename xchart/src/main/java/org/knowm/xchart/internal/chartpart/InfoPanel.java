@@ -6,7 +6,6 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -131,13 +130,7 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
 
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getInfoPanelFont(), frc);
-      Shape shape = tl.getOutline(null);
-      AffineTransform orig = g.getTransform();
-      AffineTransform at = new AffineTransform();
-      at.translate(x, starty + height + multiLineOffset);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
+      tl.draw(g, (float) x, (float) (starty + height + multiLineOffset));
 
       multiLineOffset += height + MULTI_LINE_SPACE;
     }
@@ -184,9 +177,8 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
     for (String line : lines) {
       TextLayout textLayout =
           new TextLayout(line, infoPanelFont, new FontRenderContext(null, true, false));
-      Shape shape = textLayout.getOutline(null);
-      Rectangle2D bounds = shape.getBounds2D();
-      textBounds.put(line, bounds);
+      Rectangle2D shapeBounds = textLayout.getBounds();
+      textBounds.put(line, shapeBounds);
     }
     return textBounds;
   }

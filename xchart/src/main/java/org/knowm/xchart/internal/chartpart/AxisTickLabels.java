@@ -86,13 +86,11 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       for (Double tickLocation : axisLabelTextLayouts.keySet()) {
 
         TextLayout axisLabelTextLayout = axisLabelTextLayouts.get(tickLocation);
-        Shape shape = axisLabelTextLayout.getOutline(null);
-        Rectangle2D tickLabelBounds = shape.getBounds();
+
+        Rectangle2D tickLabelBounds = axisLabelTextLayout.getBounds();
 
         double flippedTickLocation = yOffset + height - tickLocation;
 
-        AffineTransform orig = g.getTransform();
-        AffineTransform at = new AffineTransform();
         double boundWidth = tickLabelBounds.getWidth();
         double xPos;
         switch (styler.getYAxisLabelAlignment()) {
@@ -106,10 +104,8 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           default:
             xPos = xOffset;
         }
-        at.translate(xPos, flippedTickLocation + tickLabelBounds.getHeight() / 2.0);
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
+        axisLabelTextLayout.draw(
+            g, (float) xPos, (float) (flippedTickLocation + tickLabelBounds.getHeight() / 2.0));
       }
 
       // bounds
@@ -149,10 +145,12 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           AffineTransform rot =
               AffineTransform.getRotateInstance(
                   -1 * Math.toRadians(styler.getXAxisLabelRotation()), 0, 0);
-          Shape shape = textLayout.getOutline(rot);
-          Rectangle2D tickLabelBounds = shape.getBounds2D();
-          if (tickLabelBounds.getBounds().height > maxTickLabelY) {
-            maxTickLabelY = tickLabelBounds.getBounds().height;
+          Shape tickLabelBounds = textLayout.getBounds();
+          tickLabelBounds = rot.createTransformedShape(tickLabelBounds);
+
+          int height = tickLabelBounds.getBounds().height;
+          if (height > maxTickLabelY) {
+            maxTickLabelY = height;
           }
         }
       }
@@ -178,8 +176,9 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           AffineTransform rot =
               AffineTransform.getRotateInstance(
                   -1 * Math.toRadians(styler.getXAxisLabelRotation()), 0, 0);
-          Shape shape = textLayout.getOutline(rot);
-          Rectangle2D tickLabelBounds = shape.getBounds2D();
+          Shape shapex = textLayout.getBounds();
+          shapex = rot.createTransformedShape(shapex);
+          Rectangle2D tickLabelBounds = shapex.getBounds2D();
 
           int tickLabelY = tickLabelBounds.getBounds().height;
           int yAlignmentOffset;
@@ -219,9 +218,10 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           // System.out.println(shiftX);
           // System.out.println("shiftY: " + shiftY);
           at.translate(xPos + shiftX, yOffset + shiftY);
+          at.rotate(-1 * Math.toRadians(styler.getXAxisLabelRotation()), 0, 0);
 
           g.transform(at);
-          g.fill(shape);
+          textLayout.draw(g, 0, 0);
           g.setTransform(orig);
 
           // // debug box

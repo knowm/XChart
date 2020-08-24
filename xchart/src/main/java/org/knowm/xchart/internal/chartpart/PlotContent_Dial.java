@@ -96,9 +96,8 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
         TextLayout textLayout =
             new TextLayout(
                 annotation, styler.getAxisTitleFont(), new FontRenderContext(null, true, false));
-        Shape shape = textLayout.getOutline(null);
 
-        Rectangle2D annotationBounds = shape.getBounds2D();
+        Rectangle2D annotationBounds = textLayout.getBounds();
         double annotationWidth = annotationBounds.getWidth();
         double annotationHeight = annotationBounds.getHeight();
 
@@ -127,7 +126,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
         at.translate(tx, ty);
 
         g.transform(at);
-        g.fill(shape);
+        textLayout.draw(g, 0, 0);
         g.setTransform(orig);
       }
     }
@@ -145,9 +144,8 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
                 series.getName(),
                 styler.getAxisTitleFont(),
                 new FontRenderContext(null, true, false));
-        Shape shape = textLayout.getOutline(null);
 
-        Rectangle2D annotationBounds = shape.getBounds2D();
+        Rectangle2D annotationBounds = textLayout.getBounds();
         double annotationWidth = annotationBounds.getWidth();
         double annotationHeight = annotationBounds.getHeight();
 
@@ -157,14 +155,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
 
         g.setColor(styler.getChartFontColor());
         g.setFont(styler.getAxisTitleFont());
-        AffineTransform orig = g.getTransform();
-        AffineTransform at = new AffineTransform();
-
-        at.translate(tx, ty);
-
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
+        textLayout.draw(g, (float) tx, (float) ty);
       }
 
       double value = series.getValue();
@@ -185,9 +176,8 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
                   annotation,
                   styler.getAnnotationsFont(),
                   new FontRenderContext(null, true, false));
-          Shape shape = textLayout.getOutline(null);
 
-          Rectangle2D annotationBounds = shape.getBounds2D();
+          Rectangle2D annotationBounds = textLayout.getBounds();
           double annotationWidth = annotationBounds.getWidth();
           double annotationHeight = annotationBounds.getHeight();
 
@@ -201,14 +191,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
 
           g.setColor(styler.getChartFontColor());
           g.setFont(styler.getAxisTitleFont());
-          AffineTransform orig = g.getTransform();
-          AffineTransform at = new AffineTransform();
-
-          at.translate(tx, ty);
-
-          g.transform(at);
-          g.fill(shape);
-          g.setTransform(orig);
+          textLayout.draw(g, (float) tx, (float) ty);
         }
       }
 

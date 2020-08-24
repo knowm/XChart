@@ -292,7 +292,7 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
       g.transform(at);
       g.setColor(chart.getStyler().getChartFontColor());
       g.setFont(chart.getStyler().getLegendFont());
-      g.fill(textLayout.getOutline(null));
+      textLayout.draw(g, 0, 0);
       g.setTransform(orig);
       if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Horizontal) {
         startx += textLayout.getBounds().getWidth() + chart.getStyler().getLegendPadding();
@@ -374,8 +374,6 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     double tx = 0;
     double ty = 0;
     // paint max
-    AffineTransform orig = g.getTransform();
-    AffineTransform at = new AffineTransform();
     if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
       tx =
           startx
@@ -389,15 +387,12 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
               + chart.getStyler().getGradientColorColumnHeight();
       ty = starty + chart.getStyler().getLegendFont().getSize();
     }
-    at.translate(tx, ty);
-    g.transform(at);
+
     g.setColor(chart.getStyler().getChartFontColor());
     g.setFont(chart.getStyler().getLegendFont());
-    g.fill(textLayoutMax.getOutline(null));
-    g.setTransform(orig);
+    textLayoutMax.draw(g, (float) tx, (float) ty);
 
     // paint min
-    at = new AffineTransform();
     if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
       tx =
           startx
@@ -411,11 +406,8 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
       tx = startx;
       ty = starty + chart.getStyler().getLegendFont().getSize();
     }
-    at.translate(tx, ty);
-    g.transform(at);
     g.setColor(chart.getStyler().getChartFontColor());
     g.setFont(chart.getStyler().getLegendFont());
-    g.fill(textLayoutMin.getOutline(null));
-    g.setTransform(orig);
+    textLayoutMin.draw(g, (float) tx, (float) ty);
   }
 }

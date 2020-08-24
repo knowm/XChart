@@ -111,7 +111,10 @@ public abstract class AxisTickCalculator_ {
             ? null
             : AffineTransform.getRotateInstance(
                 -1 * Math.toRadians(styler.getXAxisLabelRotation()));
-    Shape shape = textLayout.getOutline(rot);
+    Shape shape = textLayout.getBounds();
+    if (rot != null) {
+      shape = rot.createTransformedShape(shape);
+    }
     Rectangle2D rectangle = shape.getBounds();
     double largestLabelWidth = rectangle.getWidth();
     // System.out.println("largestLabelWidth: " + largestLabelWidth);

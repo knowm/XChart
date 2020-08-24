@@ -3,7 +3,6 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
@@ -72,13 +71,7 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
             + chart.getStyler().getChartTitlePadding();
 
     g.setColor(chart.getStyler().getChartFontColor());
-    Shape shape = textLayout.getOutline(null);
-    AffineTransform orig = g.getTransform();
-    AffineTransform at = new AffineTransform();
-    at.translate(xOffset, yOffset);
-    g.transform(at);
-    g.fill(shape);
-    g.setTransform(orig);
+    textLayout.draw(g, (float) xOffset, (float) yOffset);
 
     double width = 2 * chart.getStyler().getChartTitlePadding() + textBounds.getWidth();
     double height = 2 * chart.getStyler().getChartTitlePadding() + textBounds.getHeight();

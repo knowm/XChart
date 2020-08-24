@@ -221,14 +221,13 @@ public class ToolTips implements MouseMotionListener {
     g.draw(rectangle);
 
     // draw text label
-    Shape shape = textLayout.getOutline(null);
     g.setColor(styler.getChartFontColor());
     g.setFont(styler.getToolTipFont());
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();
     at.translate(x + MARGIN - 1, y + MARGIN - 1 + halfHeight);
     g.transform(at);
-    g.fill(shape);
+    textLayout.draw(g, 0, 0);
     g.setTransform(orig);
   }
 
@@ -279,7 +278,7 @@ public class ToolTips implements MouseMotionListener {
     g.setColor(styler.getChartFontColor());
     g.setFont(styler.getToolTipFont());
     for (TextLayout t : list) {
-      g.fill(t.getOutline(null));
+      t.draw(g, 0, 0);
       at = new AffineTransform();
       at.translate(0, styler.getToolTipFont().getSize() + MARGIN);
       g.transform(at);

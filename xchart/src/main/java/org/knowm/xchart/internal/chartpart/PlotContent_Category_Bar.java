@@ -556,10 +556,6 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             stylerCategory.getAnnotationsFont(),
             new FontRenderContext(null, true, false));
 
-    AffineTransform rot =
-        AffineTransform.getRotateInstance(
-            -1 * Math.toRadians(stylerCategory.getAnnotationsRotation()), 0, 0);
-    Shape shape = textLayout.getOutline(rot);
     Rectangle2D annotationRectangle = textLayout.getBounds();
 
     double annotationX;
@@ -593,8 +589,9 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();
     at.translate(annotationX, annotationY);
+    at.rotate(-1 * Math.toRadians(stylerCategory.getAnnotationsRotation()), 0, 0);
     g.transform(at);
-    g.fill(shape);
+    textLayout.draw(g, 0, 0);
     g.setTransform(orig);
   }
 }

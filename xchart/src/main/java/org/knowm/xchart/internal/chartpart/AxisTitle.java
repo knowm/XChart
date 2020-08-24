@@ -76,15 +76,12 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
                 ((yAxis.getBounds().getHeight() + nonRotatedRectangle.getWidth()) / 2.0
                     + yAxis.getBounds().getY());
 
-        AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.PI / 2, 0, 0);
-        Shape shape = nonRotatedTextLayout.getOutline(rot);
-
         AffineTransform orig = g.getTransform();
-        AffineTransform at = new AffineTransform();
+        AffineTransform at = AffineTransform.getTranslateInstance(xOffset, yOffset);
+        at.rotate(-1 * Math.PI / 2, 0, 0);
 
-        at.translate(xOffset, yOffset);
         g.transform(at);
-        g.fill(shape);
+        nonRotatedTextLayout.draw(g, 0, 0);
         g.setTransform(orig);
 
         // ///////////////////////////////////////////////
@@ -130,14 +127,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
                 + chart.getXAxis().getBounds().getHeight()
                 - rectangle.getHeight();
 
-        // textLayout.draw(g, (float) xOffset, (float) (yOffset - rectangle.getY()));
-        Shape shape = textLayout.getOutline(null);
-        AffineTransform orig = g.getTransform();
-        AffineTransform at = new AffineTransform();
-        at.translate((float) xOffset, (float) (yOffset - rectangle.getY()));
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
+        textLayout.draw(g, (float) xOffset, (float) (yOffset - rectangle.getY()));
 
         bounds =
             new Rectangle2D.Double(

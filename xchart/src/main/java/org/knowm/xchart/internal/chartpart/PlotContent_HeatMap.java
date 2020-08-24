@@ -232,7 +232,7 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
         rectCenterX - annotationRectangle.getWidth() / 2,
         rectCenterY + annotationRectangle.getHeight() / 2);
     g.transform(at);
-    g.fill(textLayout.getOutline(null));
+    textLayout.draw(g, 0, 0);
     g.setTransform(orig);
   }
 }

@@ -79,13 +79,13 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
     double[] cosArr = new double[variableCount];
     double[] sinArr = new double[variableCount];
 
-    Shape[] labelShapes = null;
+    TextLayout[] labelShapes = null;
     double[] labelX = null;
     double[] labelY = null;
 
     boolean axisTitleVisible = styler.isAxisTitleVisible();
     if (axisTitleVisible) {
-      labelShapes = new Shape[variableCount];
+      labelShapes = new TextLayout[variableCount];
       labelX = new double[variableCount];
       labelY = new double[variableCount];
     }
@@ -104,8 +104,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
         TextLayout textLayout =
             new TextLayout(
                 annotation, styler.getAxisTitleFont(), new FontRenderContext(null, true, false));
-        Shape shape = textLayout.getOutline(null);
-        labelShapes[i] = shape;
+        labelShapes[i] = textLayout;
       }
       startAngle += angleForSeries;
     }
@@ -127,8 +126,8 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
         double cos = cosArr[i];
         double sin = sinArr[i];
 
-        Shape shape = labelShapes[i];
-        Rectangle2D annotationBounds = shape.getBounds2D();
+        TextLayout shape = labelShapes[i];
+        Rectangle2D annotationBounds = shape.getBounds();
         double annotationWidth = annotationBounds.getWidth();
         double annotationHeight = annotationBounds.getHeight();
 
@@ -208,9 +207,8 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
 
         at.translate(labelX[i], labelY[i]);
 
-        Shape shape = labelShapes[i];
         g.transform(at);
-        g.fill(shape);
+        labelShapes[i].draw(g, 0, 0);
         g.setTransform(orig);
       }
 

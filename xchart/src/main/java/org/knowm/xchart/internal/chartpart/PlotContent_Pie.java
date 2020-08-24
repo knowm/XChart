@@ -314,8 +314,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
                     * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
 
         // get annotation width
-        Shape shape = textLayout.getOutline(null);
-        Rectangle2D annotationBounds = shape.getBounds2D();
+        Rectangle2D annotationBounds = textLayout.getBounds();
         double annotationWidth = annotationBounds.getWidth();
         // System.out.println("annotationWidth= " + annotationWidth);
         double annotationHeight = annotationBounds.getHeight();
@@ -399,7 +398,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           }
 
           g.transform(at);
-          g.fill(shape);
+          textLayout.draw(g, 0, 0);
           g.setTransform(orig);
         }
       }
@@ -430,7 +429,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       TextLayout textLayout =
           new TextLayout(
               annotation, pieStyler.getSumFont(), new FontRenderContext(null, true, false));
-      Shape shape = textLayout.getOutline(null);
       g.setColor(pieStyler.getChartFontColor());
 
       // compute center
@@ -441,13 +439,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           pieBounds.getY() + pieBounds.getHeight() / 2 + annotationRectangle.getHeight() / 2;
 
       // set text
-      AffineTransform orig = g.getTransform();
-      AffineTransform at = new AffineTransform();
-
-      at.translate(xCenter, yCenter);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
+      textLayout.draw(g, (float) xCenter, (float) yCenter);
     }
   }
 }

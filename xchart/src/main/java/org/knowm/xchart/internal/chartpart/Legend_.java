@@ -298,8 +298,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       TextLayout textLayout =
           new TextLayout(
               line, chart.getStyler().getLegendFont(), new FontRenderContext(null, true, false));
-      Shape shape = textLayout.getOutline(null);
-      Rectangle2D bounds = shape.getBounds2D();
+      Rectangle2D shapeBounds = textLayout.getBounds();
       // System.out.println(tl.getAscent());
       // System.out.println(tl.getDescent());
       // System.out.println(tl.getBounds());
@@ -307,7 +306,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       // bounds.getWidth(), bounds.getHeight() - tl.getDescent()));
       // seriesTextBounds.put(line, new Rectangle2D.Double(bounds.getX(), bounds.getY(),
       // bounds.getWidth(), tl.getAscent()));
-      seriesTextBounds.put(line, bounds);
+      seriesTextBounds.put(line, shapeBounds);
     }
     return seriesTextBounds;
   }
@@ -354,12 +353,12 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
-      Shape shape = tl.getOutline(null);
+
       AffineTransform orig = g.getTransform();
       AffineTransform at = new AffineTransform();
       at.translate(x, starty + height + centerOffsetY + multiLineOffset);
       g.transform(at);
-      g.fill(shape);
+      tl.draw(g, 0, 0);
       g.setTransform(orig);
 
       // // debug box

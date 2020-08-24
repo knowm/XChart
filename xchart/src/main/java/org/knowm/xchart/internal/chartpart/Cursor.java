@@ -166,7 +166,7 @@ public class Cursor implements MouseMotionListener {
         startX + MOUSE_SPACING + LINE_SPACING, startY + textHeigh + MOUSE_SPACING + LINE_SPACING);
     g.transform(at);
     g.setColor(styler.getCursorFontColor());
-    g.fill(xValueTextLayout.getOutline(null));
+    xValueTextLayout.draw(g, 0, 0);
 
     MarkerSeries series = null;
     TextLayout dataPointTextLayout = null;
@@ -189,7 +189,7 @@ public class Cursor implements MouseMotionListener {
               dataPoint.seriesName + ": " + dataPoint.yValue,
               styler.getCursorFont(),
               new FontRenderContext(null, true, false));
-      g.fill(dataPointTextLayout.getOutline(null));
+      dataPointTextLayout.draw(g, 0, 0);
 
       at = new AffineTransform();
       at.translate(-textHeigh - LINE_SPACING, 0);
