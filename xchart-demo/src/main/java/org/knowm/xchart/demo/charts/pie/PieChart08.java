@@ -32,11 +32,7 @@ public class PieChart08 implements ExampleChart<PieChart> {
 
     // Create Chart
     PieChart chart =
-        new PieChartBuilder()
-            .width(800)
-            .height(600)
-            .title(getExampleChartName())
-            .build();
+        new PieChartBuilder().width(800).height(600).title(getExampleChartName()).build();
 
     // Customize Chart
     Color[] sliceColors =

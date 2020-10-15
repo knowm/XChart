@@ -1,9 +1,8 @@
 package org.knowm.xchart.internal.chartpart;
 
+import java.util.function.Function;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
-
-import java.util.function.Function;
 
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
@@ -34,5 +33,4 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
     axisFormat = new CustomFormatter(formattingCallback);
     calculate();
   }
-
 }
