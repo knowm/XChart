@@ -56,6 +56,7 @@ public class ToolTips implements MouseMotionListener {
     // ignore
   }
 
+
   @Override
   public void mouseMoved(MouseEvent e) {
 
@@ -89,6 +90,21 @@ public class ToolTips implements MouseMotionListener {
       dataPoint = null;
       e.getComponent().repaint(); // repaint the entire XChartPanel
     }
+
+    /*This loop checks the X position of the mouse in the chart, and runs through
+    * the datapoints to determine if the user is hovering over anything. If so,
+    * a datapoints information can be displayed however a user sees fit.
+    * This could be built on in the future with a custom UI for the info
+    *
+    * chart.getStyler().setToolTipsEnabled(true); must be enabled in your chart. */
+    for (DataPoint dataPoint : dataPointList) {
+      Integer result = Integer.compare((int) dataPoint.x, e.getX());
+      if (result == 0) {
+        System.out.println(dataPoint.label);
+        //This is an execution point for when the mouse is over a datapoint.
+      }
+    }
+
   }
 
   void prepare(Graphics2D g) {
