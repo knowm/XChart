@@ -1,9 +1,5 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
@@ -62,5 +58,4 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
     axisFormat = numberFormatter;
     calculate();
   }
-
 }
