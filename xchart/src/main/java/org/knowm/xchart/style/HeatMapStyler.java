@@ -11,6 +11,8 @@ public class HeatMapStyler extends AxesChartStyler {
 
   private boolean isPiecewise;
 
+  private boolean isPiecewiseRanged = true;
+
   private int splitNumber;
 
   /** default range colors, {'#00FFFF'} */
@@ -242,5 +244,16 @@ public class HeatMapStyler extends AxesChartStyler {
 
   public void setHeatMapDecimalValueFormatter(Function<Double, String> heatMapDecimalValueFormatter) {
     this.heatMapDecimalValueFormatter = heatMapDecimalValueFormatter;
+  }
+
+  public boolean isPiecewiseRanged() {
+    return isPiecewiseRanged;
+  }
+
+  public void setPiecewiseRanged(boolean piecewiseRanged) {
+    if (piecewiseRanged) {
+      setPiecewise(true);
+    }
+    isPiecewiseRanged = piecewiseRanged;
   }
 }

@@ -12,6 +12,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.Format;
+import java.util.function.BiFunction;
 
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.HeatMapSeries;
@@ -120,13 +121,16 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
       double step = (max - min) / splitNumber;
       String text = "";
       TextLayout textLayout = null;
+      BiFunction<Double, Double, String> formattingFunction = chart.getStyler().isPiecewiseRanged()
+              ? (lower, upper) -> format.format(lower) + SPLIT + format.format(upper)
+              : (lower, upper) -> format.format(lower);
       for (int i = 0; i < splitNumber; i++) {
         if (i == 0) {
-          text = format.format(min) + SPLIT + format.format(min + step);
+          text = formattingFunction.apply(min, min + step);
         } else if (i == splitNumber - 1) {
-          text = format.format(min + step * i) + SPLIT + format.format(max);
+          text = formattingFunction.apply(min + step * i, max);
         } else {
-          text = format.format(min + step * i) + SPLIT + format.format(min + step * (i + 1));
+          text = formattingFunction.apply(min + step * i,min + step * (i + 1));
         }
         textLayout =
             new TextLayout(
@@ -233,16 +237,19 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     int green = 0;
     int blue = 0;
     double index = 0;
+    BiFunction<Double, Double, String> formattingFunction = chart.getStyler().isPiecewiseRanged()
+            ? (lower, upper) -> format.format(lower) + SPLIT + format.format(upper)
+            : (lower, upper) -> format.format(lower);
     for (int i = 0; i < splitNumber; i++) {
       index = (double) i / splitNumber * rangeColors.length;
       if (i == 0) {
-        text = format.format(min) + SPLIT + format.format(min + step);
+        text = formattingFunction.apply(min,  min + step);
         splitColor = rangeColors[0];
       } else if (i == splitNumber - 1) {
-        text = format.format(min + step * i) + SPLIT + format.format(max);
+        text = formattingFunction.apply(min + step * i, max);
         splitColor = rangeColors[rangeColors.length - 1];
       } else {
-        text = format.format(min + step * i) + SPLIT + format.format(min + step * (i + 1));
+        text = formattingFunction.apply(min + step * i,min + step * (i + 1));
         beginColorIndex = (int) index;
         if (rangeColors.length != 1) {
           endColorIndex = beginColorIndex + 1;
@@ -425,7 +432,9 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
       format = new CustomFormatter(chart.getStyler().getHeatMapDecimalValueFormatter());
     } else {
       format = new DecimalFormat("");
-      ((DecimalFormat) format).applyPattern(chart.getStyler().getHeatMapValueDecimalPattern());
+      if (chart.getStyler().getHeatMapValueDecimalPattern() != null) {
+        ((DecimalFormat) format).applyPattern(chart.getStyler().getHeatMapValueDecimalPattern());
+      }
     }
   }
 }
