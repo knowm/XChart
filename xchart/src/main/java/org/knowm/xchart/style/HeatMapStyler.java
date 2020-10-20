@@ -3,7 +3,6 @@ package org.knowm.xchart.style;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.function.Function;
-
 import org.knowm.xchart.style.colors.ChartColor;
 
 /** @author Mr14huashao */
@@ -242,7 +241,8 @@ public class HeatMapStyler extends AxesChartStyler {
     return heatMapDecimalValueFormatter;
   }
 
-  public void setHeatMapDecimalValueFormatter(Function<Double, String> heatMapDecimalValueFormatter) {
+  public void setHeatMapDecimalValueFormatter(
+      Function<Double, String> heatMapDecimalValueFormatter) {
     this.heatMapDecimalValueFormatter = heatMapDecimalValueFormatter;
   }
 

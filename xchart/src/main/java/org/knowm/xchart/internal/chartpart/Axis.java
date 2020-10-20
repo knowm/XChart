@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
-
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
@@ -388,7 +387,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
 
-
     // check if a label override map for the y axis is present
     Map<Object, Object> customTickLabelsMap =
         chart.getAxisPair().getCustomTickLabelsMap(getDirection(), index);
@@ -435,7 +433,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     }
 
     if (customFormattingFunction != null) {
-      return new AxisTickCalculator_Callback(customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
+      return new AxisTickCalculator_Callback(
+          customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
     }
 
     // X-Axis
