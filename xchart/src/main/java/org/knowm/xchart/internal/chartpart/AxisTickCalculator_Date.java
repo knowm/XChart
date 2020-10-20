@@ -103,7 +103,8 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
     calculate();
   }
 
-  private void calculate() {
+  @Override
+  protected void calculate() {
 
     // tick space - a percentage of the working space available for ticks
     double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space

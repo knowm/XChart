@@ -61,7 +61,8 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     calculate();
   }
 
-  private void calculate() {
+  @Override
+  protected void calculate() {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {

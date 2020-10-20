@@ -11,6 +11,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
+
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
@@ -47,6 +49,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
+
+  private Function<Double, String> customFormattingFunction;
 
   /**
    * Constructor
@@ -384,6 +388,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
 
+
     // check if a label override map for the y axis is present
     Map<Object, Object> customTickLabelsMap =
         chart.getAxisPair().getCustomTickLabelsMap(getDirection(), index);
@@ -427,6 +432,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         return new AxisTickCalculator_Override(
             getDirection(), workingSpace, min, max, axesChartStyler, axisTickValueLabelMap);
       }
+    }
+
+    if (customFormattingFunction != null) {
+      return new AxisTickCalculator_Callback(customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
     }
 
     // X-Axis
@@ -685,6 +694,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     double value = ((screenPoint - margin - startOffset) * (maxVal - minVal) / tickSpace) + minVal;
     value = isLog ? Math.pow(10, value) : value;
     return value;
+  }
+
+  public void setCustomFormattingFunction(Function<Double, String> customFormattingFunction) {
+    this.customFormattingFunction = customFormattingFunction;
   }
 
   /** An axis direction */
