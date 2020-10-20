@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.Format;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -184,12 +186,16 @@ public abstract class AxisTickCalculator_ {
 
     int gridStepInChartSpace;
 
+    boolean hasDuplicateTickLabels = true;
+
     do {
 
       // System.out.println("calculating ticks...");
       tickLabels.clear();
       tickLocations.clear();
+
       tickSpacingHint += 5;
+
       // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
       // gridStepHint --> significand * 10 ** exponent
@@ -305,7 +311,11 @@ public abstract class AxisTickCalculator_ {
                 margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
         tickLocations.add(tickLabelPosition);
         // }
+
       }
-    } while (!willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+      if (new LinkedHashSet<>(tickLabels).size() == tickLabels.size()) {
+        hasDuplicateTickLabels = false;
+      }
+    } while (hasDuplicateTickLabels || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
   }
 }
