@@ -242,9 +242,9 @@ public abstract class AxisTickCalculator_ {
               .setScale(scale, RoundingMode.HALF_UP)
               .stripTrailingZeros(); // chop off any double imprecision
       BigDecimal cleanedGridStep =
-          cleanedGridStep0
-              .setScale(scale, BigDecimal.ROUND_DOWN)
-              .stripTrailingZeros(); // chop off any double imprecision
+              cleanedGridStep0
+                      .setScale(scale, RoundingMode.HALF_DOWN)
+                      .stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
 
       BigDecimal firstPosition = null;
@@ -260,7 +260,7 @@ public abstract class AxisTickCalculator_ {
       } else {
         try {
           firstPosition = BigDecimal.valueOf(firstPositionAsDouble);
-        } catch (NumberFormatException e) {
+        } catch (java.lang.NumberFormatException e) {
 
           System.out.println(
               "Some debug stuff. This happens once in a blue moon, and I don't know why.");
@@ -277,15 +277,20 @@ public abstract class AxisTickCalculator_ {
 
       // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
       BigDecimal cleanedFirstPosition =
-          firstPosition
-              .setScale(10, RoundingMode.HALF_UP)
-              .stripTrailingZeros(); // chop off any double imprecision
-      // System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
+              firstPosition
+                      .setScale(10, RoundingMode.HALF_UP)
+                      .stripTrailingZeros(); // chop off any double imprecision
+      //      System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
 
       // generate all tickLabels and tickLocations from the first to last position
       for (BigDecimal value = cleanedFirstPosition;
-          value.compareTo(BigDecimal.valueOf(maxValue + 2 * cleanedGridStep.doubleValue())) < 0;
-          value = value.add(cleanedGridStep)) {
+           value.compareTo(
+                   BigDecimal.valueOf(
+                           (maxValue + 2 * cleanedGridStep.doubleValue()) == Double.POSITIVE_INFINITY
+                                   ? Double.MAX_VALUE
+                                   : maxValue + 2 * cleanedGridStep.doubleValue()))
+                   < 0;
+           value = value.add(cleanedGridStep)) {
 
         // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 &&
         // value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
