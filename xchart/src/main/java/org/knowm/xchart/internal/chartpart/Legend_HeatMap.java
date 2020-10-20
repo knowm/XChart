@@ -11,6 +11,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
+import java.text.Format;
+import java.util.function.BiFunction;
+
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.HeatMapSeries;
 import org.knowm.xchart.style.HeatMapStyler;
@@ -24,7 +27,7 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
 
   private static final String SPLIT = " ~ ";
 
-  private final DecimalFormat df = new DecimalFormat("");
+  private Format format = new DecimalFormat("");
 
   public Legend_HeatMap(Chart<ST, S> chart) {
 
@@ -79,6 +82,7 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
 
   @Override
   public void doPaint(Graphics2D g) {
+    applyFormatting();
 
     // Draw legend content inside legend box
     double startx = xOffset + chart.getStyler().getLegendPadding();
@@ -106,9 +110,7 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
   @Override
   public Rectangle2D getBounds() {
 
-    if (chart.getStyler().getHeatMapValueDecimalPattern() != null) {
-      df.applyPattern(chart.getStyler().getHeatMapValueDecimalPattern());
-    }
+    applyFormatting();
     double weight = 0;
     double height = 0;
     HeatMapSeries heatMapSeries = ((HeatMapChart) chart).getHeatMapSeries();
@@ -119,13 +121,16 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
       double step = (max - min) / splitNumber;
       String text = "";
       TextLayout textLayout = null;
+      BiFunction<Double, Double, String> formattingFunction = chart.getStyler().isPiecewiseRanged()
+              ? (lower, upper) -> format.format(lower) + SPLIT + format.format(upper)
+              : (lower, upper) -> format.format(lower);
       for (int i = 0; i < splitNumber; i++) {
         if (i == 0) {
-          text = df.format(min) + SPLIT + df.format(min + step);
+          text = formattingFunction.apply(min, min + step);
         } else if (i == splitNumber - 1) {
-          text = df.format(min + step * i) + SPLIT + df.format(max);
+          text = formattingFunction.apply(min + step * i, max);
         } else {
-          text = df.format(min + step * i) + SPLIT + df.format(min + step * (i + 1));
+          text = formattingFunction.apply(min + step * i,min + step * (i + 1));
         }
         textLayout =
             new TextLayout(
@@ -232,16 +237,19 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     int green = 0;
     int blue = 0;
     double index = 0;
+    BiFunction<Double, Double, String> formattingFunction = chart.getStyler().isPiecewiseRanged()
+            ? (lower, upper) -> format.format(lower) + SPLIT + format.format(upper)
+            : (lower, upper) -> format.format(lower);
     for (int i = 0; i < splitNumber; i++) {
       index = (double) i / splitNumber * rangeColors.length;
       if (i == 0) {
-        text = df.format(min) + SPLIT + df.format(min + step);
+        text = formattingFunction.apply(min,  min + step);
         splitColor = rangeColors[0];
       } else if (i == splitNumber - 1) {
-        text = df.format(min + step * i) + SPLIT + df.format(max);
+        text = formattingFunction.apply(min + step * i, max);
         splitColor = rangeColors[rangeColors.length - 1];
       } else {
-        text = df.format(min + step * i) + SPLIT + df.format(min + step * (i + 1));
+        text = formattingFunction.apply(min + step * i,min + step * (i + 1));
         beginColorIndex = (int) index;
         if (rangeColors.length != 1) {
           endColorIndex = beginColorIndex + 1;
@@ -417,5 +425,16 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     g.setFont(chart.getStyler().getLegendFont());
     g.fill(textLayoutMin.getOutline(null));
     g.setTransform(orig);
+  }
+
+  private void applyFormatting() {
+    if (chart.getStyler().getHeatMapDecimalValueFormatter() != null) {
+      format = new CustomFormatter(chart.getStyler().getHeatMapDecimalValueFormatter());
+    } else {
+      format = new DecimalFormat("");
+      if (chart.getStyler().getHeatMapValueDecimalPattern() != null) {
+        ((DecimalFormat) format).applyPattern(chart.getStyler().getHeatMapValueDecimalPattern());
+      }
+    }
   }
 }
