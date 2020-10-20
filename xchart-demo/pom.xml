@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.velasolaris.xchart</groupId>
     <artifactId>xchart-parent</artifactId>
-    <version>3.6.6-SNAPSHOT</version>
+    <version>3.6.5</version>
   </parent>
 
   <artifactId>xchart-demo</artifactId>

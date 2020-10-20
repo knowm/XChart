@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.Format;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import org.knowm.xchart.internal.Utils;
@@ -183,12 +184,16 @@ public abstract class AxisTickCalculator_ {
 
     int gridStepInChartSpace;
 
+    boolean hasDuplicateTickLabels = true;
+
     do {
 
       // System.out.println("calculating ticks...");
       tickLabels.clear();
       tickLocations.clear();
+
       tickSpacingHint += 5;
+
       // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
       // gridStepHint --> significand * 10 ** exponent
@@ -242,9 +247,9 @@ public abstract class AxisTickCalculator_ {
               .setScale(scale, RoundingMode.HALF_UP)
               .stripTrailingZeros(); // chop off any double imprecision
       BigDecimal cleanedGridStep =
-              cleanedGridStep0
-                      .setScale(scale, RoundingMode.HALF_DOWN)
-                      .stripTrailingZeros(); // chop off any double imprecision
+          cleanedGridStep0
+              .setScale(scale, RoundingMode.HALF_DOWN)
+              .stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
 
       BigDecimal firstPosition = null;
@@ -277,20 +282,20 @@ public abstract class AxisTickCalculator_ {
 
       // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
       BigDecimal cleanedFirstPosition =
-              firstPosition
-                      .setScale(10, RoundingMode.HALF_UP)
-                      .stripTrailingZeros(); // chop off any double imprecision
+          firstPosition
+              .setScale(10, RoundingMode.HALF_UP)
+              .stripTrailingZeros(); // chop off any double imprecision
       //      System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
 
       // generate all tickLabels and tickLocations from the first to last position
       for (BigDecimal value = cleanedFirstPosition;
-           value.compareTo(
-                   BigDecimal.valueOf(
-                           (maxValue + 2 * cleanedGridStep.doubleValue()) == Double.POSITIVE_INFINITY
-                                   ? Double.MAX_VALUE
-                                   : maxValue + 2 * cleanedGridStep.doubleValue()))
-                   < 0;
-           value = value.add(cleanedGridStep)) {
+          value.compareTo(
+                  BigDecimal.valueOf(
+                      (maxValue + 2 * cleanedGridStep.doubleValue()) == Double.POSITIVE_INFINITY
+                          ? Double.MAX_VALUE
+                          : maxValue + 2 * cleanedGridStep.doubleValue()))
+              < 0;
+          value = value.add(cleanedGridStep)) {
 
         // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 &&
         // value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
@@ -304,7 +309,12 @@ public abstract class AxisTickCalculator_ {
             margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
         tickLocations.add(tickLabelPosition);
         // }
+
       }
-    } while (!willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+      if (new LinkedHashSet<>(tickLabels).size() == tickLabels.size()) {
+        hasDuplicateTickLabels = false;
+      }
+    } while (hasDuplicateTickLabels
+        || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
   }
 }
