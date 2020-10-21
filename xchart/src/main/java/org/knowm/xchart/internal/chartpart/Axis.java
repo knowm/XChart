@@ -443,12 +443,13 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 .collect(Collectors.toList());
       }
       if (axesChartStyler instanceof XYStyler) {
-        Iterator<XYSeries> seriesIterator = ((XYChart) chart).getSeriesMap().values().iterator();
-        if (seriesIterator.hasNext()) {
-          xData = Arrays.stream(seriesIterator.next().getXData())
+        Set<Double> uniqueXData = new LinkedHashSet<>();
+        for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
+          uniqueXData.addAll(Arrays.stream(xySeries.getXData())
                   .boxed()
-                  .collect(Collectors.toList());
+                  .collect(Collectors.toList()));
         }
+        xData.addAll(uniqueXData);
       }
 
       if (customFormattingFunction != null) {
@@ -511,12 +512,13 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 .collect(Collectors.toList());
       }
       if (axesChartStyler instanceof XYStyler) {
-        Iterator<XYSeries> seriesIterator = ((XYChart) chart).getSeriesMap().values().iterator();
-        if (seriesIterator.hasNext()) {
-          yData = Arrays.stream(seriesIterator.next().getYData())
+        Set<Double> uniqueYData = new LinkedHashSet<>();
+        for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
+          uniqueYData.addAll(Arrays.stream(xySeries.getYData())
                   .boxed()
-                  .collect(Collectors.toList());
+                  .collect(Collectors.toList()));
         }
+        yData.addAll(uniqueYData);
       }
 
       if (customFormattingFunction != null) {
