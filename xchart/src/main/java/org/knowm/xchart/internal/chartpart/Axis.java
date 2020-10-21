@@ -12,9 +12,7 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.knowm.xchart.HeatMapChart;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.*;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
@@ -442,6 +440,19 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 .boxed()
                 .collect(Collectors.toList());
       }
+      if (axesChartStyler instanceof CategoryStyler) {
+        Set<Double> uniqueXData = new LinkedHashSet<>();
+        for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
+          List<Double> numericCategoryXData = categorySeries.getXData()
+                  .stream()
+                  .filter(x -> x instanceof Number)
+                  .mapToDouble(x -> ((Number) x).doubleValue())
+                  .boxed()
+                  .collect(Collectors.toList());
+          uniqueXData.addAll(numericCategoryXData);
+        }
+        xData.addAll(uniqueXData);
+      }
       if (axesChartStyler instanceof XYStyler) {
         Set<Double> uniqueXData = new LinkedHashSet<>();
         for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
@@ -510,6 +521,17 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
                 .collect(Collectors.toList());
+      }
+      if (axesChartStyler instanceof CategoryStyler) {
+        Set<Double> uniqueYData = new LinkedHashSet<>();
+        for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
+          uniqueYData.addAll(categorySeries.getYData()
+                  .stream()
+                  .mapToDouble(Number::doubleValue)
+                  .boxed()
+                  .collect(Collectors.toList()));
+        }
+        yData.addAll(uniqueYData);
       }
       if (axesChartStyler instanceof XYStyler) {
         Set<Double> uniqueYData = new LinkedHashSet<>();
