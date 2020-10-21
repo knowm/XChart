@@ -58,9 +58,11 @@ public class DateChart09 implements ExampleChart<XYChart> {
     chart.addSeries("blah", xData, yData);
 
     LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL");
-    chart.setCustomXAxisTickLabelsFormatter(x -> startTime.plusDays(x.longValue()).format(formatter));
+    DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
+    DateTimeFormatter cursorXFormatter = DateTimeFormatter.ofPattern("LLL dd");
+    chart.setCustomXAxisTickLabelsFormatter(x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
     chart.getStyler().setCursorEnabled(true);
+    chart.getStyler().setCustomCursorXDataFormattingFunction(x -> startTime.plusDays(x.longValue()).format(cursorXFormatter));
 
     return chart;
   }
