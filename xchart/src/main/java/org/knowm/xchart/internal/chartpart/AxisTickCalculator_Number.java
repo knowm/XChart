@@ -3,6 +3,9 @@ package org.knowm.xchart.internal.chartpart;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
  * rendering the axis ticks for decimal axes
@@ -30,6 +33,17 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
+    numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
+    axisFormat = numberFormatter;
+    calculate();
+  }
+
+  AxisTickCalculator_Number(
+          Direction axisDirection,
+          double workingSpace,
+          List<Double> axisValues,
+          AxesChartStyler styler) {
+    super(axisDirection, workingSpace, axisValues, styler);
     numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
     axisFormat = numberFormatter;
     calculate();

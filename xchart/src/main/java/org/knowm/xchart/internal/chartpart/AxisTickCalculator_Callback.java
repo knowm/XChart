@@ -1,5 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
+import java.util.List;
 import java.util.function.Function;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -30,6 +31,17 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
       AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
+    axisFormat = new CustomFormatter(formattingCallback);
+    calculate();
+  }
+
+  AxisTickCalculator_Callback(
+          Function<Double, String> formattingCallback,
+          Direction axisDirection,
+          double workingSpace,
+          List<Double> axisValues,
+          AxesChartStyler styler) {
+    super(axisDirection, workingSpace, axisValues, styler);
     axisFormat = new CustomFormatter(formattingCallback);
     calculate();
   }
