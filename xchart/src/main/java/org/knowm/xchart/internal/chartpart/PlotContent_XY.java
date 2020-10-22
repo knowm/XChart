@@ -1,16 +1,15 @@
 package org.knowm.xchart.internal.chartpart;
 
-import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.lines.SeriesLines;
-
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.text.Format;
 import java.util.Map;
+import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.lines.SeriesLines;
 
 /** @author timmolter */
 public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
@@ -334,11 +333,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
             yFormat = new CustomFormatter(xyStyler.getCustomCursorYDataFormattingFunction());
           }
           chart.cursor.addData(
-              xOffset,
-              yOffset,
-              xFormat.format(x),
-              yFormat.format(yOrig),
-              series.getName());
+              xOffset, yOffset, xFormat.format(x), yFormat.format(yOrig), series.getName());
         }
       }
 

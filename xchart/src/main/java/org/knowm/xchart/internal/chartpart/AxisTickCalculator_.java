@@ -13,7 +13,6 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -65,15 +64,17 @@ public abstract class AxisTickCalculator_ {
   }
 
   AxisTickCalculator_(
-          Direction axisDirection,
-          double workingSpace,
-          List<Double> axisValues,
-          AxesChartStyler styler) {
+      Direction axisDirection,
+      double workingSpace,
+      List<Double> axisValues,
+      AxesChartStyler styler) {
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
     this.axisValues = axisValues;
-    this.minValue = axisValues.stream().mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new);
-    this.maxValue = axisValues.stream().mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
+    this.minValue =
+        axisValues.stream().mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new);
+    this.maxValue =
+        axisValues.stream().mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
     this.styler = styler;
   }
 
@@ -331,7 +332,8 @@ public abstract class AxisTickCalculator_ {
         // }
 
       }
-    } while (!areAllTickLabelsUnique(tickLabels) || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    } while (!areAllTickLabelsUnique(tickLabels)
+        || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
   }
 
   private static boolean areValuesEquallySpaced(List<Double> values) {
@@ -341,12 +343,13 @@ public abstract class AxisTickCalculator_ {
     double space = values.get(1) - values.get(0);
     double threshold = .0001;
     return IntStream.range(1, values.size())
-            .mapToDouble(i -> values.get(i) - values.get(i-1))
-            .allMatch(x -> Math.abs(x - space) < threshold);
+        .mapToDouble(i -> values.get(i) - values.get(i - 1))
+        .allMatch(x -> Math.abs(x - space) < threshold);
   }
 
   /**
    * Calculates the ticks so that they only appear at positions where data is available.
+   *
    * @param tickSpace a percentage of the working space available for ticks
    * @param margin where the tick should begin in the working space in pixels
    */
@@ -363,34 +366,38 @@ public abstract class AxisTickCalculator_ {
       tickValuesHint++;
       tickLabels.clear();
       int finalTickValuesHint = tickValuesHint;
-      tickLabelValues = IntStream.range(0, axisValues.size())
+      tickLabelValues =
+          IntStream.range(0, axisValues.size())
               .filter(it -> it % finalTickValuesHint == 0)
               .mapToDouble(axisValues::get)
               .boxed()
               .collect(Collectors.toList());
-      tickLabelMaxValue = tickLabelValues.stream()
-              .mapToDouble(x -> x)
-              .max()
-              .orElse(maxValue);
-      tickLabelMinValue = tickLabelValues.stream()
-              .mapToDouble(x -> x)
-              .min()
-              .orElse(minValue);
-      tickLabels.addAll(tickLabelValues.stream()
+      tickLabelMaxValue = tickLabelValues.stream().mapToDouble(x -> x).max().orElse(maxValue);
+      tickLabelMinValue = tickLabelValues.stream().mapToDouble(x -> x).min().orElse(minValue);
+      tickLabels.addAll(
+          tickLabelValues.stream()
               .map(x -> getAxisFormat().format(x))
               .collect(Collectors.toList()));
       // the span of the data
-      double span = Math.abs(Math.min((tickLabelMaxValue - tickLabelMinValue), Double.MAX_VALUE - 1)); // in data space
+      double span =
+          Math.abs(
+              Math.min(
+                  (tickLabelMaxValue - tickLabelMinValue), Double.MAX_VALUE - 1)); // in data space
       double gridStep = span / (tickLabelValues.size() - 1);
 
       gridStepInChartSpace = (int) (gridStep / span * tickSpace);
-    } while (!areAllTickLabelsUnique(tickLabels) || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    } while (!areAllTickLabelsUnique(tickLabels)
+        || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
 
     tickLocations.clear();
-    double finalTickLabelMinValue = tickLabelMinValue;
-    double finalTickLabelMaxValue = tickLabelMaxValue;
-    tickLocations.addAll(tickLabelValues.stream()
-            .map(value -> margin + ((value - finalTickLabelMinValue) / (finalTickLabelMaxValue - finalTickLabelMinValue) * tickSpace))
+    tickLocations.addAll(
+        tickLabelValues.stream()
+            .map(
+                value ->
+                    margin
+                        + ((value - minValue)
+                            / (maxValue - minValue)
+                            * tickSpace))
             .collect(Collectors.toList()));
   }
 
