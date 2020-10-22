@@ -4,7 +4,6 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -972,7 +971,8 @@ public abstract class Styler {
     return customCursorXDataFormattingFunction;
   }
 
-  public void setCustomCursorXDataFormattingFunction(Function<Double, String> customCursorXDataFormattingFunction) {
+  public void setCustomCursorXDataFormattingFunction(
+      Function<Double, String> customCursorXDataFormattingFunction) {
     this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
   }
 
@@ -980,7 +980,8 @@ public abstract class Styler {
     return customCursorYDataFormattingFunction;
   }
 
-  public void setCustomCursorYDataFormattingFunction(Function<Double, String> customCursorYDataFormattingFunction) {
+  public void setCustomCursorYDataFormattingFunction(
+      Function<Double, String> customCursorYDataFormattingFunction) {
     this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
   }
 

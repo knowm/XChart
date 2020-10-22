@@ -36,11 +36,11 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
   }
 
   AxisTickCalculator_Callback(
-          Function<Double, String> formattingCallback,
-          Direction axisDirection,
-          double workingSpace,
-          List<Double> axisValues,
-          AxesChartStyler styler) {
+      Function<Double, String> formattingCallback,
+      Direction axisDirection,
+      double workingSpace,
+      List<Double> axisValues,
+      AxesChartStyler styler) {
     super(axisDirection, workingSpace, axisValues, styler);
     axisFormat = new CustomFormatter(formattingCallback);
     calculate();

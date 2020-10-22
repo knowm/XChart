@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import org.knowm.xchart.*;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
@@ -434,7 +433,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       List<Double> xData = new ArrayList<>();
       if (axesChartStyler instanceof HeatMapStyler) {
         List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getXData();
-        xData = categories.stream()
+        xData =
+            categories.stream()
                 .filter(it -> it instanceof Number)
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
@@ -443,8 +443,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (axesChartStyler instanceof CategoryStyler) {
         Set<Double> uniqueXData = new LinkedHashSet<>();
         for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
-          List<Double> numericCategoryXData = categorySeries.getXData()
-                  .stream()
+          List<Double> numericCategoryXData =
+              categorySeries.getXData().stream()
                   .filter(x -> x instanceof Number)
                   .mapToDouble(x -> ((Number) x).doubleValue())
                   .boxed()
@@ -456,9 +456,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (axesChartStyler instanceof XYStyler) {
         Set<Double> uniqueXData = new LinkedHashSet<>();
         for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
-          uniqueXData.addAll(Arrays.stream(xySeries.getXData())
-                  .boxed()
-                  .collect(Collectors.toList()));
+          uniqueXData.addAll(
+              Arrays.stream(xySeries.getXData()).boxed().collect(Collectors.toList()));
         }
         xData.addAll(uniqueXData);
       }
@@ -466,10 +465,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (customFormattingFunction != null) {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-                  customFormattingFunction, getDirection(), workingSpace, xData, axesChartStyler);
+              customFormattingFunction, getDirection(), workingSpace, xData, axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
-                customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
+            customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
       }
 
       if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxStyler) {
@@ -503,7 +502,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Number(
-                  getDirection(), workingSpace, xData, axesChartStyler);
+              getDirection(), workingSpace, xData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
             getDirection(), workingSpace, min, max, axesChartStyler);
@@ -516,7 +515,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       List<Double> yData = new ArrayList<>();
       if (axesChartStyler instanceof HeatMapStyler) {
         List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getYData();
-        yData = categories.stream()
+        yData =
+            categories.stream()
                 .filter(it -> it instanceof Number)
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
@@ -525,8 +525,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (axesChartStyler instanceof CategoryStyler) {
         Set<Double> uniqueYData = new LinkedHashSet<>();
         for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
-          uniqueYData.addAll(categorySeries.getYData()
-                  .stream()
+          uniqueYData.addAll(
+              categorySeries.getYData().stream()
                   .mapToDouble(Number::doubleValue)
                   .boxed()
                   .collect(Collectors.toList()));
@@ -536,9 +536,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (axesChartStyler instanceof XYStyler) {
         Set<Double> uniqueYData = new LinkedHashSet<>();
         for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
-          uniqueYData.addAll(Arrays.stream(xySeries.getYData())
-                  .boxed()
-                  .collect(Collectors.toList()));
+          uniqueYData.addAll(
+              Arrays.stream(xySeries.getYData()).boxed().collect(Collectors.toList()));
         }
         yData.addAll(uniqueYData);
       }
@@ -546,10 +545,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (customFormattingFunction != null) {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-                  customFormattingFunction, getDirection(), workingSpace, yData, axesChartStyler);
+              customFormattingFunction, getDirection(), workingSpace, yData, axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
-                customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
+            customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
       }
 
       if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
@@ -566,7 +565,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Number(
-                  getDirection(), workingSpace, yData, axesChartStyler);
+              getDirection(), workingSpace, yData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
             getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
