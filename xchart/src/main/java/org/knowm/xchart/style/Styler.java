@@ -3,6 +3,7 @@ package org.knowm.xchart.style;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import org.knowm.xchart.style.markers.Marker;
 
 /**
@@ -84,6 +85,10 @@ public abstract class Styler {
   private Color xAxisTitleColor;
   private Color yAxisTitleColor;
   private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<Integer, Color>();
+
+  // Custom formatting functions for the cursor
+  private Function<Double, String> customCursorXDataFormattingFunction;
+  private Function<Double, String> customCursorYDataFormattingFunction;
 
   void setAllStyles() {
 
@@ -960,6 +965,24 @@ public abstract class Styler {
 
     yAxisGroupTitleColorMap.put(yAxisGroup, yAxisColor);
     return this;
+  }
+
+  public Function<Double, String> getCustomCursorXDataFormattingFunction() {
+    return customCursorXDataFormattingFunction;
+  }
+
+  public void setCustomCursorXDataFormattingFunction(
+      Function<Double, String> customCursorXDataFormattingFunction) {
+    this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
+  }
+
+  public Function<Double, String> getCustomCursorYDataFormattingFunction() {
+    return customCursorYDataFormattingFunction;
+  }
+
+  public void setCustomCursorYDataFormattingFunction(
+      Function<Double, String> customCursorYDataFormattingFunction) {
+    this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
   }
 
   public enum LegendPosition {

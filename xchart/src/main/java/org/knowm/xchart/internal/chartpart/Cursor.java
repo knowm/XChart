@@ -176,6 +176,9 @@ public class Cursor implements MouseMotionListener {
       at.translate(0, textHeigh + LINE_SPACING);
       g.transform(at);
       series = (MarkerSeries) seriesMap.get(dataPoint.seriesName);
+      if (series == null) {
+        continue;
+      }
       g.setColor(series.getMarkerColor());
       circle = new Ellipse2D.Double(0, -textHeigh, textHeigh, textHeigh);
       g.fill(circle);

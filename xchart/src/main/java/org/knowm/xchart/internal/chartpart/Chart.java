@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -220,17 +221,14 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   }
 
   Format getXAxisFormat() {
-
     return axisPair.getXAxis().getAxisTickCalculator().getAxisFormat();
   }
 
   Format getYAxisFormat() {
-
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
 
   Format getYAxisFormat(String yAxisDecimalPattern) {
-
     Format format = null;
     if (yAxisDecimalPattern != null) {
       format = new DecimalFormat(yAxisDecimalPattern);
@@ -317,6 +315,14 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public void setCustomYAxisTickLabelsMap(Map<Double, Object> overrideMap, int yAxisGroup) {
 
     axisPair.addCustomTickLabelMap(("Y" + yAxisGroup), overrideMap);
+  }
+
+  public void setCustomXAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
+    getAxisPair().getXAxis().setCustomFormattingFunction(customFormattingFunction);
+  }
+
+  public void setCustomYAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
+    getAxisPair().getYAxis().setCustomFormattingFunction(customFormattingFunction);
   }
 
   public ToolTips getToolTips() {

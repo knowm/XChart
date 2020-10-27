@@ -2,12 +2,15 @@ package org.knowm.xchart.style;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.function.Function;
 import org.knowm.xchart.style.colors.ChartColor;
 
 /** @author Mr14huashao */
 public class HeatMapStyler extends AxesChartStyler {
 
   private boolean isPiecewise;
+
+  private boolean isPiecewiseRanged = true;
 
   private int splitNumber;
 
@@ -37,6 +40,8 @@ public class HeatMapStyler extends AxesChartStyler {
   private int gradientColorColumnHeight;
 
   private String heatMapValueDecimalPattern;
+
+  private Function<Double, String> heatMapDecimalValueFormatter;
 
   /**
    * Set the theme the styler should use
@@ -230,5 +235,25 @@ public class HeatMapStyler extends AxesChartStyler {
 
     this.heatMapValueDecimalPattern = heatMapValueDecimalPattern;
     return this;
+  }
+
+  public Function<Double, String> getHeatMapDecimalValueFormatter() {
+    return heatMapDecimalValueFormatter;
+  }
+
+  public void setHeatMapDecimalValueFormatter(
+      Function<Double, String> heatMapDecimalValueFormatter) {
+    this.heatMapDecimalValueFormatter = heatMapDecimalValueFormatter;
+  }
+
+  public boolean isPiecewiseRanged() {
+    return isPiecewiseRanged;
+  }
+
+  public void setPiecewiseRanged(boolean piecewiseRanged) {
+    if (piecewiseRanged) {
+      setPiecewise(true);
+    }
+    isPiecewiseRanged = piecewiseRanged;
   }
 }
