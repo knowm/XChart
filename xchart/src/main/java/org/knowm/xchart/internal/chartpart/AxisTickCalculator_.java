@@ -76,11 +76,11 @@ public abstract class AxisTickCalculator_ {
     this.minValue = getAxisMinValue(
             styler,
             axisDirection,
-            axisValues.stream().mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new)
+            axisValues.stream().filter(Objects::nonNull).mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new)
     );
 
     this.maxValue =
-        axisValues.stream().mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
+        axisValues.stream().filter(Objects::nonNull).mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
     this.styler = styler;
   }
 
