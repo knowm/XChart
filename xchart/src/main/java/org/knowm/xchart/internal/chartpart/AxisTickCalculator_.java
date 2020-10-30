@@ -9,9 +9,10 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.Format;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -32,6 +33,8 @@ public abstract class AxisTickCalculator_ {
   final double minValue;
 
   final double maxValue;
+
+  List<Double> axisValues;
 
   final AxesChartStyler styler;
 
@@ -57,6 +60,21 @@ public abstract class AxisTickCalculator_ {
     this.workingSpace = workingSpace;
     this.minValue = minValue;
     this.maxValue = maxValue;
+    this.styler = styler;
+  }
+
+  AxisTickCalculator_(
+      Direction axisDirection,
+      double workingSpace,
+      List<Double> axisValues,
+      AxesChartStyler styler) {
+    this.axisDirection = axisDirection;
+    this.workingSpace = workingSpace;
+    this.axisValues = axisValues;
+    this.minValue =
+        axisValues.stream().mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new);
+    this.maxValue =
+        axisValues.stream().mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
     this.styler = styler;
   }
 
@@ -163,19 +181,24 @@ public abstract class AxisTickCalculator_ {
 
     // where the tick should begin in the working space in pixels
     double margin =
-            Utils.getTickStartOffset(
-                    workingSpace,
-                    tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+        Utils.getTickStartOffset(
+            workingSpace,
+            tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
     // the span of the data
     double span = Math.abs(Math.min((maxValue - minValue), Double.MAX_VALUE - 1)); // in data space
+
+    if (axisValues != null && areValuesEquallySpaced(axisValues)) {
+      calculateForEquallySpacedAxisValues(tickSpace, margin);
+      return;
+    }
 
     //////////////////////////
 
     int tickSpacingHint =
-            (axisDirection == Direction.X
-                    ? styler.getXAxisTickMarkSpacingHint()
-                    : styler.getYAxisTickMarkSpacingHint())
-                    - 5;
+        (axisDirection == Direction.X
+                ? styler.getXAxisTickMarkSpacingHint()
+                : styler.getYAxisTickMarkSpacingHint())
+            - 5;
 
     // for very short plots, squeeze some more ticks in than normal into the Y-Axis
     if (axisDirection == Direction.Y && tickSpace < 160) {
@@ -189,7 +212,9 @@ public abstract class AxisTickCalculator_ {
       // System.out.println("calculating ticks...");
       tickLabels.clear();
       tickLocations.clear();
+
       tickSpacingHint += 5;
+
       // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
       // gridStepHint --> significand * 10 ** exponent
@@ -239,13 +264,13 @@ public abstract class AxisTickCalculator_ {
       // System.out.println("scale: " + scale);
       // int scale = gridStepBigDecimal.scale();
       BigDecimal cleanedGridStep0 =
-              gridStepBigDecimal
-                      .setScale(scale, RoundingMode.HALF_UP)
-                      .stripTrailingZeros(); // chop off any double imprecision
+          gridStepBigDecimal
+              .setScale(scale, RoundingMode.HALF_UP)
+              .stripTrailingZeros(); // chop off any double imprecision
       BigDecimal cleanedGridStep =
-              cleanedGridStep0
-                      .setScale(scale, RoundingMode.HALF_DOWN)
-                      .stripTrailingZeros(); // chop off any double imprecision
+          cleanedGridStep0
+              .setScale(scale, RoundingMode.HALF_DOWN)
+              .stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
 
       BigDecimal firstPosition = null;
@@ -264,34 +289,34 @@ public abstract class AxisTickCalculator_ {
         } catch (java.lang.NumberFormatException e) {
 
           System.out.println(
-                  "Some debug stuff. This happens once in a blue moon, and I don't know why.");
+              "Some debug stuff. This happens once in a blue moon, and I don't know why.");
           System.out.println("scale: " + scale);
           System.out.println("exponent: " + exponent);
           System.out.println("gridStep: " + gridStep);
           System.out.println("cleanedGridStep: " + cleanedGridStep);
           System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
           System.out.println(
-                  "NumberFormatException caused by this number: "
-                          + getFirstPosition(cleanedGridStep.doubleValue()));
+              "NumberFormatException caused by this number: "
+                  + getFirstPosition(cleanedGridStep.doubleValue()));
         }
       }
 
       // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
       BigDecimal cleanedFirstPosition =
-              firstPosition
-                      .setScale(10, RoundingMode.HALF_UP)
-                      .stripTrailingZeros(); // chop off any double imprecision
+          firstPosition
+              .setScale(10, RoundingMode.HALF_UP)
+              .stripTrailingZeros(); // chop off any double imprecision
       //      System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
 
       // generate all tickLabels and tickLocations from the first to last position
       for (BigDecimal value = cleanedFirstPosition;
-           value.compareTo(
-                   BigDecimal.valueOf(
-                           (maxValue + 2 * cleanedGridStep.doubleValue()) == Double.POSITIVE_INFINITY
-                                   ? Double.MAX_VALUE
-                                   : maxValue + 2 * cleanedGridStep.doubleValue()))
-                   < 0;
-           value = value.add(cleanedGridStep)) {
+          value.compareTo(
+                  BigDecimal.valueOf(
+                      (maxValue + 2 * cleanedGridStep.doubleValue()) == Double.POSITIVE_INFINITY
+                          ? Double.MAX_VALUE
+                          : maxValue + 2 * cleanedGridStep.doubleValue()))
+              < 0;
+          value = value.add(cleanedGridStep)) {
 
         // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 &&
         // value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
@@ -302,10 +327,81 @@ public abstract class AxisTickCalculator_ {
 
         // here we convert tickPosition finally to plot space, i.e. pixels
         double tickLabelPosition =
-                margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
+            margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
         tickLocations.add(tickLabelPosition);
         // }
+
       }
-    } while (!willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    } while (!areAllTickLabelsUnique(tickLabels)
+        || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+  }
+
+  private static boolean areValuesEquallySpaced(List<Double> values) {
+    if (values.size() < 2) {
+      return false;
+    }
+    double space = values.get(1) - values.get(0);
+    double threshold = .0001;
+    return IntStream.range(1, values.size())
+        .mapToDouble(i -> values.get(i) - values.get(i - 1))
+        .allMatch(x -> Math.abs(x - space) < threshold);
+  }
+
+  /**
+   * Calculates the ticks so that they only appear at positions where data is available.
+   *
+   * @param tickSpace a percentage of the working space available for ticks
+   * @param margin where the tick should begin in the working space in pixels
+   */
+  private void calculateForEquallySpacedAxisValues(double tickSpace, double margin) {
+    if (axisValues == null) {
+      throw new IllegalStateException("No axis values.");
+    }
+    int gridStepInChartSpace;
+    int tickValuesHint = 0;
+    List<Double> tickLabelValues;
+    double tickLabelMaxValue;
+    double tickLabelMinValue;
+    do {
+      tickValuesHint++;
+      tickLabels.clear();
+      int finalTickValuesHint = tickValuesHint;
+      tickLabelValues =
+          IntStream.range(0, axisValues.size())
+              .filter(it -> it % finalTickValuesHint == 0)
+              .mapToDouble(axisValues::get)
+              .boxed()
+              .collect(Collectors.toList());
+      tickLabelMaxValue = tickLabelValues.stream().mapToDouble(x -> x).max().orElse(maxValue);
+      tickLabelMinValue = tickLabelValues.stream().mapToDouble(x -> x).min().orElse(minValue);
+      tickLabels.addAll(
+          tickLabelValues.stream()
+              .map(x -> getAxisFormat().format(x))
+              .collect(Collectors.toList()));
+      // the span of the data
+      double span =
+          Math.abs(
+              Math.min(
+                  (tickLabelMaxValue - tickLabelMinValue), Double.MAX_VALUE - 1)); // in data space
+      double gridStep = span / (tickLabelValues.size() - 1);
+
+      gridStepInChartSpace = (int) (gridStep / span * tickSpace);
+    } while (!areAllTickLabelsUnique(tickLabels)
+        || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+
+    tickLocations.clear();
+    tickLocations.addAll(
+        tickLabelValues.stream()
+            .map(
+                value ->
+                    margin
+                        + ((value - minValue)
+                            / (maxValue - minValue)
+                            * tickSpace))
+            .collect(Collectors.toList()));
+  }
+
+  private static boolean areAllTickLabelsUnique(List<?> tickLabels) {
+    return new LinkedHashSet<>(tickLabels).size() == tickLabels.size();
   }
 }

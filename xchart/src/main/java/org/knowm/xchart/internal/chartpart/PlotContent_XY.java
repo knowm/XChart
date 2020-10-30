@@ -3,6 +3,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
+import java.text.Format;
 import java.util.Map;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
@@ -319,12 +320,20 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
         }
 
         if (xyStyler.isCursorEnabled()) {
+          Format xFormat;
+          Format yFormat;
+          if (xyStyler.getCustomCursorXDataFormattingFunction() == null) {
+            xFormat = chart.getXAxisFormat();
+          } else {
+            xFormat = new CustomFormatter(xyStyler.getCustomCursorXDataFormattingFunction());
+          }
+          if (xyStyler.getCustomCursorYDataFormattingFunction() == null) {
+            yFormat = chart.getYAxisFormat(series.getYAxisDecimalPattern());
+          } else {
+            yFormat = new CustomFormatter(xyStyler.getCustomCursorYDataFormattingFunction());
+          }
           chart.cursor.addData(
-              xOffset,
-              yOffset,
-              chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig),
-              series.getName());
+              xOffset, yOffset, xFormat.format(x), yFormat.format(yOrig), series.getName());
         }
       }
 
