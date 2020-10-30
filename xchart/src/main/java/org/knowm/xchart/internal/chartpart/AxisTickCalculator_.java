@@ -16,6 +16,8 @@ import java.util.stream.IntStream;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler;
 
 /** @author timmolter */
 public abstract class AxisTickCalculator_ {
@@ -58,7 +60,7 @@ public abstract class AxisTickCalculator_ {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
-    this.minValue = minValue;
+    this.minValue = getAxisMinValue(styler, axisDirection, minValue);
     this.maxValue = maxValue;
     this.styler = styler;
   }
@@ -71,10 +73,14 @@ public abstract class AxisTickCalculator_ {
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
     this.axisValues = axisValues;
-    this.minValue =
-        axisValues.stream().mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new);
+    this.minValue = getAxisMinValue(
+            styler,
+            axisDirection,
+            axisValues.stream().filter(Objects::nonNull).mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new)
+    );
+
     this.maxValue =
-        axisValues.stream().mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
+        axisValues.stream().filter(Objects::nonNull).mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
     this.styler = styler;
   }
 
@@ -403,5 +409,20 @@ public abstract class AxisTickCalculator_ {
 
   private static boolean areAllTickLabelsUnique(List<?> tickLabels) {
     return new LinkedHashSet<>(tickLabels).size() == tickLabels.size();
+  }
+
+  /**
+   * Determines the axis min value, which may differ from the min value of the respective data (e.g. for bar charts).
+   * @param styler the chart {@link Styler}
+   * @param axisDirection the axis {@link Direction}
+   * @param dataMinValue the minimum value of the data corresponding with the axis.
+   * @return the axis min value
+   */
+  private static double getAxisMinValue(Styler styler, Direction axisDirection, double dataMinValue) {
+    if (Direction.Y.equals(axisDirection)
+      && styler instanceof CategoryStyler
+      && dataMinValue > 0)
+        return 0;
+    return dataMinValue;
   }
 }
