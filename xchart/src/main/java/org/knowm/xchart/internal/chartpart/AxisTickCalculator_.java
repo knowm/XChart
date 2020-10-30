@@ -61,7 +61,7 @@ public abstract class AxisTickCalculator_ {
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
     this.minValue = getAxisMinValue(styler, axisDirection, minValue);
-    this.maxValue = maxValue;
+    this.maxValue = getAxisMaxValue(styler, axisDirection, maxValue);
     this.styler = styler;
   }
 
@@ -73,14 +73,25 @@ public abstract class AxisTickCalculator_ {
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
     this.axisValues = axisValues;
-    this.minValue = getAxisMinValue(
+    this.minValue =
+        getAxisMinValue(
             styler,
             axisDirection,
-            axisValues.stream().filter(Objects::nonNull).mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new)
-    );
+            axisValues.stream()
+                .filter(Objects::nonNull)
+                .mapToDouble(x -> x)
+                .min()
+                .orElseThrow(NoSuchElementException::new));
 
     this.maxValue =
-        axisValues.stream().filter(Objects::nonNull).mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
+        getAxisMaxValue(
+            styler,
+            axisDirection,
+            axisValues.stream()
+            .filter(Objects::nonNull)
+            .mapToDouble(x -> x)
+            .max()
+            .orElseThrow(NoSuchElementException::new));
     this.styler = styler;
   }
 
@@ -398,12 +409,7 @@ public abstract class AxisTickCalculator_ {
     tickLocations.clear();
     tickLocations.addAll(
         tickLabelValues.stream()
-            .map(
-                value ->
-                    margin
-                        + ((value - minValue)
-                            / (maxValue - minValue)
-                            * tickSpace))
+            .map(value -> margin + ((value - minValue) / (maxValue - minValue) * tickSpace))
             .collect(Collectors.toList()));
   }
 
@@ -412,17 +418,34 @@ public abstract class AxisTickCalculator_ {
   }
 
   /**
-   * Determines the axis min value, which may differ from the min value of the respective data (e.g. for bar charts).
+   * Determines the axis min value, which may differ from the min value of the respective data (e.g.
+   * for bar charts).
+   *
    * @param styler the chart {@link Styler}
    * @param axisDirection the axis {@link Direction}
    * @param dataMinValue the minimum value of the data corresponding with the axis.
    * @return the axis min value
    */
-  private static double getAxisMinValue(Styler styler, Direction axisDirection, double dataMinValue) {
-    if (Direction.Y.equals(axisDirection)
-      && styler instanceof CategoryStyler
-      && dataMinValue > 0)
-        return 0;
+  private static double getAxisMinValue(
+      Styler styler, Direction axisDirection, double dataMinValue) {
+    if (Direction.Y.equals(axisDirection) && styler instanceof CategoryStyler && dataMinValue > 0)
+      return 0;
     return dataMinValue;
+  }
+
+  /**
+   * Determines the axis max value, which may differ from the max value of the respective data (e.g.
+   * for bar charts).
+   *
+   * @param styler the chart {@link Styler}
+   * @param axisDirection the axis {@link Direction}
+   * @param dataMaxValue the maximum value of the data corresponding with the axis.
+   * @return the axis max value
+   */
+  private static double getAxisMaxValue(
+          Styler styler, Direction axisDirection, double dataMaxValue) {
+    if (Direction.Y.equals(axisDirection) && styler instanceof CategoryStyler && dataMaxValue < 0)
+      return 0;
+    return dataMaxValue;
   }
 }
