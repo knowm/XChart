@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -386,7 +385,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           // }
 
           if (stylerCategory.hasAnnotations() && next != null) {
-            drawAnnotations(g, next, xOffset, yOffset, zeroOffset, barWidth, false);
+            drawAnnotations(g, next, xOffset, yOffset, zeroOffset, barWidth, false, series.getFillColor());
           }
           if (stylerCategory.hasAnnotations()
               && stylerCategory.isShowTotalAnnotations()
@@ -396,7 +395,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 accumulatedStackOffsetPos[categoryCounter - 1]
                     - accumulatedStackOffsetNeg[categoryCounter - 1];
             double totalYOffset = accumulatedStackOffsetTotalYOffset[categoryCounter - 1];
-            drawAnnotations(g, totalNext, xOffset, totalYOffset, zeroOffset, barWidth, true);
+            drawAnnotations(g, totalNext, xOffset, totalYOffset, zeroOffset, barWidth, true, series.getFillColor());
           }
         } else if (CategorySeriesRenderStyle.Stick.equals(
             series.getChartCategorySeriesRenderStyle())) {
@@ -547,7 +546,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
       double yOffset,
       double zeroOffset,
       double barWidth,
-      boolean isTotalAnnotations) {
+      boolean isTotalAnnotations,
+      Color seriesColor) {
     String numberAsString = chart.getYAxisFormat().format(next);
 
     TextLayout textLayout =
@@ -588,7 +588,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
       }
     }
 
-    g.setColor(stylerCategory.getAnnotationsFontColor());
+    g.setColor(stylerCategory.getAnnotationsFontColor(seriesColor));
     g.setFont(stylerCategory.getAnnotationsFont());
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();

@@ -1,10 +1,11 @@
 package org.knowm.xchart.style;
 
+import org.knowm.xchart.style.markers.Marker;
+
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import org.knowm.xchart.style.markers.Marker;
 
 /**
  * The styler is used to manage all things related to styling of the vast number of Chart components
@@ -71,6 +72,7 @@ public abstract class Styler {
   // Annotations ///////////////////////////////
   private Font annotationsFont;
   private Color annotationsFontColor;
+  private FontColorDetector annotationsFontColorDetector;
   private int annotationsRotation = 0;
   private float annotationsPosition = 0.5f;
   private boolean showTotalAnnotations = false;
@@ -807,8 +809,11 @@ public abstract class Styler {
     return this;
   }
 
-  public Color getAnnotationsFontColor() {
-    return annotationsFontColor;
+  public Color getAnnotationsFontColor(Color backgroundColor) {
+    if (annotationsFontColorDetector == null || backgroundColor == null) {
+      return annotationsFontColor;
+    }
+    return annotationsFontColorDetector.getFontColor(backgroundColor);
   }
 
   /**
@@ -818,6 +823,19 @@ public abstract class Styler {
    */
   public Styler setAnnotationsFontColor(Color annotationsFontColor) {
     this.annotationsFontColor = annotationsFontColor;
+    return this;
+  }
+
+  /**
+   * Sets auto-detection colors for chart annotations.
+   * If the series background color is dark, the light annotation color is drawn.
+   * If the series background color is light, the dark annotation color is drawn.
+   * @param annotationsDarkFontColor the dark color to draw on series with a light background
+   * @param annotationsLightFontColor the light color to draw on series with a dark background
+   * @return this styler
+   */
+  public Styler setAnnotationsAutodetectColors(Color annotationsDarkFontColor, Color annotationsLightFontColor) {
+    this.annotationsFontColorDetector = new FontColorDetector(annotationsDarkFontColor, annotationsLightFontColor);
     return this;
   }
 
@@ -1041,5 +1059,30 @@ public abstract class Styler {
   public enum YAxisPosition {
     Left,
     Right
+  }
+
+  private static class FontColorDetector {
+
+    private static final int BRIGHTNESS_THRESHOLD = 130;
+    private static final double RED_FACTOR = .241;
+    private static final double GREEN_FACTOR = .587;
+    private static final double BLUE_FACTOR = .114;
+
+    private final Color darkForegroundColor;
+    private final Color lightForegroundColor;
+
+    private FontColorDetector(Color darkForegroundColor, Color lightForegroundColor) {
+      this.darkForegroundColor = darkForegroundColor;
+      this.lightForegroundColor = lightForegroundColor;
+    }
+
+    public Color getFontColor(Color backgroundColor) {
+      double backgroundColorPerceivedBrightness = Math.sqrt(
+              Math.pow(backgroundColor.getRed(), 2) * RED_FACTOR +
+                      Math.pow(backgroundColor.getGreen(), 2) * GREEN_FACTOR +
+                      Math.pow(backgroundColor.getBlue(), 2) * BLUE_FACTOR
+      );
+      return backgroundColorPerceivedBrightness < BRIGHTNESS_THRESHOLD ? lightForegroundColor : darkForegroundColor;
+    }
   }
 }

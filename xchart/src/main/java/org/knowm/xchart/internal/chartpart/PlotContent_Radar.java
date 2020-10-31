@@ -201,7 +201,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
 
       // draw variable names
       if (axisTitleVisible) {
-        g.setColor(styler.getAnnotationsFontColor());
+        g.setColor(styler.getAnnotationsFontColor(styler.getChartBackgroundColor()));
         g.setFont(styler.getAnnotationsFont());
         AffineTransform orig = g.getTransform();
         AffineTransform at = new AffineTransform();
