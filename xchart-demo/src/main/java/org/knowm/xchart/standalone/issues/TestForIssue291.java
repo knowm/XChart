@@ -28,7 +28,7 @@ public class TestForIssue291 {
     chart.getStyler().setYAxisGroupPosition(0, YAxisPosition.Right);
     chart.setYAxisGroupTitle(1, "sin(x)");
 
-    final SwingWrapper<Chart> sw = new SwingWrapper<Chart>(chart);
+    final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
 
     sw.displayChart();
 

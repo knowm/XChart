@@ -41,7 +41,7 @@ import org.knowm.xchart.internal.chartpart.ToolTips;
  *
  * @author timmolter
  */
-public class XChartPanel<T extends Chart> extends JPanel {
+public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
   private final T chart;
   private final Dimension preferredSize;
