@@ -30,7 +30,7 @@ public class TestForIssue54_2 {
     chart.getStyler().setYAxisGroupPosition(0, YAxisPosition.Right);
     chart.setYAxisGroupTitle(1, "sin(x)");
 
-    new SwingWrapper<Chart>(chart).displayChart();
+    new SwingWrapper(chart).displayChart();
   }
 
   static Chart getLineChart() {

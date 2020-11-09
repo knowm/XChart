@@ -18,7 +18,7 @@ public class Example2 {
 
     int numCharts = 4;
 
-    List<Chart> charts = new ArrayList<Chart>();
+    List<XYChart> charts = new ArrayList<XYChart>();
 
     for (int i = 0; i < numCharts; i++) {
       XYChart chart =
@@ -29,7 +29,7 @@ public class Example2 {
       series.setMarker(SeriesMarkers.NONE);
       charts.add(chart);
     }
-    new SwingWrapper<Chart>(charts).displayChartMatrix();
+    new SwingWrapper<XYChart>(charts).displayChartMatrix();
 
     BitmapEncoder.saveBitmap(charts, 2, 2, "./Sample_Chart_Matrix", BitmapEncoder.BitmapFormat.PNG);
   }
