@@ -435,6 +435,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getXData();
         xData =
             categories.stream()
+                .filter(Objects::nonNull)
                 .filter(it -> it instanceof Number)
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
@@ -445,6 +446,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
           List<Double> numericCategoryXData =
               categorySeries.getXData().stream()
+                  .filter(Objects::nonNull)
                   .filter(x -> x instanceof Number)
                   .mapToDouble(x -> ((Number) x).doubleValue())
                   .boxed()
@@ -517,6 +519,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getYData();
         yData =
             categories.stream()
+                .filter(Objects::nonNull)
                 .filter(it -> it instanceof Number)
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
@@ -527,6 +530,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
           uniqueYData.addAll(
               categorySeries.getYData().stream()
+                  .filter(Objects::nonNull)
                   .mapToDouble(Number::doubleValue)
                   .boxed()
                   .collect(Collectors.toList()));
