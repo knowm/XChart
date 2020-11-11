@@ -128,17 +128,13 @@ public abstract class AxisTickCalculator_ {
    */
   boolean willLabelsFitInTickSpaceHint(List<String> tickLabels, int tickSpacingHint) {
 
-    // Assume that for Y-Axis the ticks will all fit based on their tickSpace hint because the text
-    // is usually horizontal and "short". This more applies to the X-Axis.
-    if (this.axisDirection == Direction.Y) {
-      return true;
-    }
-
-    String sampleLabel = " ";
-    // find the longest String in all the labels
-    for (String tickLabel : tickLabels) {
-      if (tickLabel != null && tickLabel.length() > sampleLabel.length()) {
-        sampleLabel = tickLabel;
+    String sampleLabel = "Y";
+    if (Direction.X.equals(this.axisDirection)) {
+      // find the longest String in all the labels
+      for (String tickLabel : tickLabels) {
+        if (tickLabel != null && tickLabel.length() > sampleLabel.length()) {
+          sampleLabel = tickLabel;
+        }
       }
     }
     // System.out.println("longestLabel: " + sampleLabel);
@@ -153,7 +149,7 @@ public abstract class AxisTickCalculator_ {
                 -1 * Math.toRadians(styler.getXAxisLabelRotation()));
     Shape shape = textLayout.getOutline(rot);
     Rectangle2D rectangle = shape.getBounds();
-    double largestLabelWidth = rectangle.getWidth();
+    double largestLabelWidth = Direction.X.equals(this.axisDirection) ? rectangle.getWidth() : rectangle.getHeight();
     // System.out.println("largestLabelWidth: " + largestLabelWidth);
     // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
@@ -353,12 +349,15 @@ public abstract class AxisTickCalculator_ {
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
   }
 
-  private static boolean areValuesEquallySpaced(List<Double> values) {
+  private boolean areValuesEquallySpaced(List<Double> values) {
     if (values.size() < 2) {
       return false;
     }
     double space = values.get(1) - values.get(0);
     double threshold = .0001;
+    if (threshold > Math.abs(maxValue - minValue)) {
+      return false;
+    }
     return IntStream.range(1, values.size())
         .mapToDouble(i -> values.get(i) - values.get(i - 1))
         .allMatch(x -> Math.abs(x - space) < threshold);

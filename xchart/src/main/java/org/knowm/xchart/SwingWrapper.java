@@ -14,7 +14,7 @@ import org.knowm.xchart.internal.chartpart.Chart;
  *
  * @author timmolter
  */
-public class SwingWrapper<T extends Chart> {
+public class SwingWrapper<T extends Chart<?, ?>> {
 
   private final List<XChartPanel<T>> chartPanels = new ArrayList<XChartPanel<T>>();
   private String windowTitle = "XChart";

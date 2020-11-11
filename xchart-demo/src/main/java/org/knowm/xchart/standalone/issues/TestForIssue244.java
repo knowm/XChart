@@ -107,7 +107,7 @@ public class TestForIssue244 {
       charts.add(chart);
     }
 
-    new SwingWrapper<Chart>(charts).displayChartMatrix();
+    new SwingWrapper(charts).displayChartMatrix();
   }
 
   static Chart getLineChart() {
