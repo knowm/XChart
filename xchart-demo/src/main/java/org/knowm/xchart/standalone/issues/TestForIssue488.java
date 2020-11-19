@@ -32,8 +32,8 @@ public class TestForIssue488 {
     //    chart.getStyler().setChartBackgroundColor(new Color(0, 255, 0, 25));
     //    chart.getStyler().setChartBackgroundColor(new Color(0, 255, 0));
     chart.getStyler().setPlotBackgroundColor(new Color(255, 255, 255));
-//        chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 255, 20));
-//        chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 255));
+    //        chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 255, 20));
+    //        chart.getStyler().setPlotBackgroundColor(new Color(0, 0, 255));
     //    chart.getStyler().setChartBackgroundColor(new Color(255, 255, 255));
     //    chart.getStyler().setChartBackgroundColor(new Color(0, 255, 0, 25));
     //    chart.getStyler().setChartBackgroundColor(new Color(0, 255, 0));

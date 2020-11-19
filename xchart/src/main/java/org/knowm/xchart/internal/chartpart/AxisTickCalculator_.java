@@ -88,10 +88,10 @@ public abstract class AxisTickCalculator_ {
             styler,
             axisDirection,
             axisValues.stream()
-            .filter(Objects::nonNull)
-            .mapToDouble(x -> x)
-            .max()
-            .orElseThrow(NoSuchElementException::new));
+                .filter(Objects::nonNull)
+                .mapToDouble(x -> x)
+                .max()
+                .orElseThrow(NoSuchElementException::new));
     this.styler = styler;
   }
 
@@ -149,7 +149,8 @@ public abstract class AxisTickCalculator_ {
                 -1 * Math.toRadians(styler.getXAxisLabelRotation()));
     Shape shape = textLayout.getOutline(rot);
     Rectangle2D rectangle = shape.getBounds();
-    double largestLabelWidth = Direction.X.equals(this.axisDirection) ? rectangle.getWidth() : rectangle.getHeight();
+    double largestLabelWidth =
+        Direction.X.equals(this.axisDirection) ? rectangle.getWidth() : rectangle.getHeight();
     // System.out.println("largestLabelWidth: " + largestLabelWidth);
     // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
@@ -442,7 +443,7 @@ public abstract class AxisTickCalculator_ {
    * @return the axis max value
    */
   private static double getAxisMaxValue(
-          Styler styler, Direction axisDirection, double dataMaxValue) {
+      Styler styler, Direction axisDirection, double dataMaxValue) {
     if (Direction.Y.equals(axisDirection) && styler instanceof CategoryStyler && dataMaxValue < 0)
       return 0;
     return dataMaxValue;

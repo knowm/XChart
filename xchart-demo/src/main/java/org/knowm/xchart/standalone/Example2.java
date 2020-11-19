@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.*;
-import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**

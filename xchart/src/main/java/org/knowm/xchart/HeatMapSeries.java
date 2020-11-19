@@ -1,9 +1,8 @@
 package org.knowm.xchart;
 
+import java.util.*;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeries;
-
-import java.util.*;
 
 /**
  * A Series containing X, Y and heatData data to be plotted on a Chart
@@ -74,7 +73,6 @@ public class HeatMapSeries extends AxesChartSeries {
     xMax = getMax(xData, xMax);
     yMin = getMin(yData, yMin);
     yMax = getMax(yData, yMax);
-
   }
 
   private static double getMin(List<?> list, double defaultValue) {
@@ -82,10 +80,10 @@ public class HeatMapSeries extends AxesChartSeries {
       return defaultValue;
     }
     return list.stream()
-            .map(x -> (Number) x)
-            .min(Comparator.comparing(Number::doubleValue))
-            .orElse(defaultValue)
-            .doubleValue();
+        .map(x -> (Number) x)
+        .min(Comparator.comparing(Number::doubleValue))
+        .orElse(defaultValue)
+        .doubleValue();
   }
 
   private static double getMax(List<?> list, double defaultValue) {
@@ -93,10 +91,10 @@ public class HeatMapSeries extends AxesChartSeries {
       return defaultValue;
     }
     return list.stream()
-            .map(x -> (Number) x)
-            .max(Comparator.comparing(Number::doubleValue))
-            .orElse(defaultValue)
-            .doubleValue();
+        .map(x -> (Number) x)
+        .max(Comparator.comparing(Number::doubleValue))
+        .orElse(defaultValue)
+        .doubleValue();
   }
 
   @Override
