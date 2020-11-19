@@ -178,6 +178,14 @@
           <doclint>none</doclint>
           <source>1.8</source>
         </configuration>
+          <executions>
+              <execution>
+                  <id>attach-javadocs</id>
+                  <goals>
+                      <goal>jar</goal>
+                  </goals>
+              </execution>
+          </executions>
       </plugin>
       <!-- for deploying to Maven Central -->
       <plugin>
