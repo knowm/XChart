@@ -68,16 +68,22 @@ public abstract class AxisTickCalculator_ {
   AxisTickCalculator_(
       Direction axisDirection,
       double workingSpace,
+      double minValue,
+      double maxValue,
       List<Double> axisValues,
       AxesChartStyler styler) {
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
-    this.axisValues = axisValues;
+    Set<Double> axisValuesWithMinMax = new LinkedHashSet<>();
+    axisValuesWithMinMax.add(minValue);
+    axisValuesWithMinMax.addAll(axisValues);
+    axisValuesWithMinMax.add(maxValue);
+    this.axisValues = new ArrayList<>(axisValuesWithMinMax);
     this.minValue =
         getAxisMinValue(
             styler,
             axisDirection,
-            axisValues.stream()
+            this.axisValues.stream()
                 .filter(Objects::nonNull)
                 .mapToDouble(x -> x)
                 .min()
@@ -87,7 +93,7 @@ public abstract class AxisTickCalculator_ {
         getAxisMaxValue(
             styler,
             axisDirection,
-            axisValues.stream()
+                this.axisValues.stream()
                 .filter(Objects::nonNull)
                 .mapToDouble(x -> x)
                 .max()
