@@ -68,16 +68,22 @@ public abstract class AxisTickCalculator_ {
   AxisTickCalculator_(
       Direction axisDirection,
       double workingSpace,
+      double minValue,
+      double maxValue,
       List<Double> axisValues,
       AxesChartStyler styler) {
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
-    this.axisValues = axisValues;
+    Set<Double> axisValuesWithMinMax = new LinkedHashSet<>();
+    axisValuesWithMinMax.add(minValue);
+    axisValuesWithMinMax.addAll(axisValues);
+    axisValuesWithMinMax.add(maxValue);
+    this.axisValues = new ArrayList<>(axisValuesWithMinMax);
     this.minValue =
         getAxisMinValue(
             styler,
             axisDirection,
-            axisValues.stream()
+            this.axisValues.stream()
                 .filter(Objects::nonNull)
                 .mapToDouble(x -> x)
                 .min()
@@ -87,11 +93,11 @@ public abstract class AxisTickCalculator_ {
         getAxisMaxValue(
             styler,
             axisDirection,
-            axisValues.stream()
-            .filter(Objects::nonNull)
-            .mapToDouble(x -> x)
-            .max()
-            .orElseThrow(NoSuchElementException::new));
+                this.axisValues.stream()
+                .filter(Objects::nonNull)
+                .mapToDouble(x -> x)
+                .max()
+                .orElseThrow(NoSuchElementException::new));
     this.styler = styler;
   }
 
@@ -149,7 +155,8 @@ public abstract class AxisTickCalculator_ {
                 -1 * Math.toRadians(styler.getXAxisLabelRotation()));
     Shape shape = textLayout.getOutline(rot);
     Rectangle2D rectangle = shape.getBounds();
-    double largestLabelWidth = Direction.X.equals(this.axisDirection) ? rectangle.getWidth() : rectangle.getHeight();
+    double largestLabelWidth =
+        Direction.X.equals(this.axisDirection) ? rectangle.getWidth() : rectangle.getHeight();
     // System.out.println("largestLabelWidth: " + largestLabelWidth);
     // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
@@ -442,7 +449,7 @@ public abstract class AxisTickCalculator_ {
    * @return the axis max value
    */
   private static double getAxisMaxValue(
-          Styler styler, Direction axisDirection, double dataMaxValue) {
+      Styler styler, Direction axisDirection, double dataMaxValue) {
     if (Direction.Y.equals(axisDirection) && styler instanceof CategoryStyler && dataMaxValue < 0)
       return 0;
     return dataMaxValue;

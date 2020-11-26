@@ -1,10 +1,5 @@
 package org.knowm.xchart.demo.charts.date;
 
-import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.demo.charts.ExampleChart;
-
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +7,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * Year scale
@@ -24,7 +23,8 @@ import java.util.stream.IntStream;
  */
 public class DateChart09 implements ExampleChart<XYChart> {
 
-  private static final LocalDateTime BEGINNING_OF_THE_YEAR = LocalDateTime.of(2011, Month.JANUARY, 1, 0, 0, 0, 0);
+  private static final LocalDateTime BEGINNING_OF_THE_YEAR =
+      LocalDateTime.of(2011, Month.JANUARY, 1, 0, 0, 0, 0);
 
   public static void main(String[] args) {
 
@@ -63,9 +63,13 @@ public class DateChart09 implements ExampleChart<XYChart> {
     LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
     DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
     DateTimeFormatter cursorXFormatter = DateTimeFormatter.ofPattern("LLL dd");
-    chart.setCustomXAxisTickLabelsFormatter(x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
+    chart.setCustomXAxisTickLabelsFormatter(
+        x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
     chart.getStyler().setCursorEnabled(true);
-    chart.getStyler().setCustomCursorXDataFormattingFunction(x -> startTime.plusDays(x.longValue()).format(cursorXFormatter));
+    chart
+        .getStyler()
+        .setCustomCursorXDataFormattingFunction(
+            x -> startTime.plusDays(x.longValue()).format(cursorXFormatter));
 
     return chart;
   }

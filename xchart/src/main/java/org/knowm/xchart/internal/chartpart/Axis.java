@@ -467,7 +467,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (customFormattingFunction != null) {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-              customFormattingFunction, getDirection(), workingSpace, xData, axesChartStyler);
+              customFormattingFunction, getDirection(), workingSpace, min, max, xData, axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
             customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
@@ -504,7 +504,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, xData, axesChartStyler);
+              getDirection(), workingSpace, min, max, xData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
             getDirection(), workingSpace, min, max, axesChartStyler);
@@ -549,7 +549,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (customFormattingFunction != null) {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-              customFormattingFunction, getDirection(), workingSpace, yData, axesChartStyler);
+              customFormattingFunction, getDirection(), workingSpace, min, max, yData, axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
             customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
@@ -569,7 +569,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, yData, axesChartStyler);
+              getDirection(), workingSpace, min, max, yData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
             getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());

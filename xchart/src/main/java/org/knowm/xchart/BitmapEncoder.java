@@ -62,8 +62,8 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveBitmap(T chart, String fileName, BitmapFormat bitmapFormat)
-      throws IOException {
+  public static <T extends Chart<?, ?>> void saveBitmap(
+      T chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
 
     try (OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat)); ) {
       saveBitmap(chart, out, bitmapFormat);
@@ -79,8 +79,8 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveBitmap(T chart, OutputStream targetStream, BitmapFormat bitmapFormat)
-      throws IOException {
+  public static <T extends Chart<?, ?>> void saveBitmap(
+      T chart, OutputStream targetStream, BitmapFormat bitmapFormat) throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
@@ -197,7 +197,6 @@ public final class BitmapEncoder {
   /**
    * Sets the metadata correctly
    *
-   *
    * @param metadata
    * @param DPI
    * @throws IIOInvalidTreeException
@@ -231,8 +230,8 @@ public final class BitmapEncoder {
    * @param quality - a float between 0 and 1 (1 = maximum quality)
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveJPGWithQuality(T chart, String fileName, float quality)
-      throws IOException {
+  public static <T extends Chart<?, ?>> void saveJPGWithQuality(
+      T chart, String fileName, float quality) throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
