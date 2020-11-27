@@ -39,9 +39,11 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
   AxisTickCalculator_Number(
       Direction axisDirection,
       double workingSpace,
+      double minValue,
+      double maxValue,
       List<Double> axisValues,
       AxesChartStyler styler) {
-    super(axisDirection, workingSpace, axisValues, styler);
+    super(axisDirection, workingSpace, minValue, maxValue, axisValues, styler);
     numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
     axisFormat = numberFormatter;
     calculate();
