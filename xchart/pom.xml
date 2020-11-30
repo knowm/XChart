@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.velasolaris.xchart</groupId>
+    <groupId>org.knowm.xchart</groupId>
     <artifactId>xchart-parent</artifactId>
-    <version>3.6.7-PS</version>
+    <version>3.6.7</version>
   </parent>
 
   <artifactId>xchart</artifactId>
