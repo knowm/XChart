@@ -145,7 +145,7 @@
         <configuration>
           <archive>
             <manifestEntries>
-              <Automatic-Module-Name>knowm.xchart</Automatic-Module-Name>
+              <Automatic-Module-Name>org.knowm.xchart</Automatic-Module-Name>
             </manifestEntries>
           </archive>
         </configuration>
