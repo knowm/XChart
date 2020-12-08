@@ -467,7 +467,13 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (customFormattingFunction != null) {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-              customFormattingFunction, getDirection(), workingSpace, min, max, xData, axesChartStyler);
+              customFormattingFunction,
+              getDirection(),
+              workingSpace,
+              min,
+              max,
+              xData,
+              axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
             customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
@@ -549,7 +555,13 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       if (customFormattingFunction != null) {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-              customFormattingFunction, getDirection(), workingSpace, min, max, yData, axesChartStyler);
+              customFormattingFunction,
+              getDirection(),
+              workingSpace,
+              min,
+              max,
+              yData,
+              axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
             customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);

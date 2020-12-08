@@ -93,7 +93,7 @@ public abstract class AxisTickCalculator_ {
         getAxisMaxValue(
             styler,
             axisDirection,
-                this.axisValues.stream()
+            this.axisValues.stream()
                 .filter(Objects::nonNull)
                 .mapToDouble(x -> x)
                 .max()
