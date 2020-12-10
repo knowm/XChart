@@ -298,8 +298,11 @@ public abstract class AxisTickCalculator_ {
       if (Double.isNaN(firstPositionAsDouble)) {
         // This happens when the data values are almost the same but differ by a very tiny amount.
         // The solution for now is to create a single axis label and tick at the average value
-        tickLabels.add(getAxisFormat().format(BigDecimal.valueOf((maxValue + minValue) / 2.0)));
-        tickLocations.add(workingSpace / 2.0);
+        double averageValue = (maxValue + minValue) / 2.0;
+        String formattedTickLabel = Double.isNaN(averageValue)
+                ? "NaN"
+                : getAxisFormat().format(BigDecimal.valueOf(averageValue));
+        tickLabels.add(formattedTickLabel);
         return;
       } else if (firstPositionAsDouble == Double.NEGATIVE_INFINITY) {
         firstPosition = BigDecimal.valueOf(-1 * Double.MAX_VALUE);
