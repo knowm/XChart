@@ -30,7 +30,7 @@ public class DateChart09 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new DateChart09();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override

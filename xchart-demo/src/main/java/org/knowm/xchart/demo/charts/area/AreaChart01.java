@@ -23,7 +23,7 @@ public class AreaChart01 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new AreaChart01();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override

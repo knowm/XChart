@@ -302,16 +302,18 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return bounds.width + bounds.x;
   }
 
+  /** @Deprecated - use Chart#setCustomXAxisTickLabelsFormatter*/
   public void setCustomXAxisTickLabelsMap(Map<Object, Object> overrideMap) {
 
     axisPair.addCustomTickLabelMap("X0", overrideMap);
   }
+  /** @Deprecated - use Chart#setCustomYAxisTickLabelsFormatter*/
 
   public void setCustomYAxisTickLabelsMap(Map<Object, Object> overrideMap) {
 
     axisPair.addCustomTickLabelMap("Y0", overrideMap);
   }
-
+  /** @Deprecated - use Chart#setCustomYAxisTickLabelsFormatter*/
   public void setCustomYAxisTickLabelsMap(Map<Double, Object> overrideMap, int yAxisGroup) {
 
     axisPair.addCustomTickLabelMap(("Y" + yAxisGroup), overrideMap);
