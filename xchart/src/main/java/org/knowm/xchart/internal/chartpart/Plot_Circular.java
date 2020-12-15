@@ -33,11 +33,11 @@ public abstract class Plot_Circular<ST extends Styler, S extends Series> extends
 
     double width =
         chart.getWidth()
-            - (chart.getStyler().getLegendPosition() == Styler.LegendPosition.OutsideE
+            - (chart.getStyler().getLegendPosition() == Styler.CardinalPosition.OutsideE
                 ? chart.getLegend().getBounds().getWidth()
                 : 0)
             - 2 * chart.getStyler().getChartPadding()
-            - (chart.getStyler().getLegendPosition() == Styler.LegendPosition.OutsideE
+            - (chart.getStyler().getLegendPosition() == Styler.CardinalPosition.OutsideE
                     && chart.getStyler().isLegendVisible()
                 ? chart.getStyler().getChartPadding()
                 : 0);
@@ -45,7 +45,7 @@ public abstract class Plot_Circular<ST extends Styler, S extends Series> extends
     double height =
         chart.getHeight()
             - chart.getChartTitle().getBounds().getHeight()
-            - (chart.getStyler().getLegendPosition() == Styler.LegendPosition.OutsideS
+            - (chart.getStyler().getLegendPosition() == Styler.CardinalPosition.OutsideS
                 ? chart.getLegend().getBounds().getHeight()
                 : 0)
             - 2 * chart.getStyler().getChartPadding();

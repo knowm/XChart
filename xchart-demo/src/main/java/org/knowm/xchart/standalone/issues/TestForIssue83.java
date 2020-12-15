@@ -4,7 +4,7 @@ import java.io.IOException;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /** @author timmolter */
@@ -14,7 +14,7 @@ public class TestForIssue83 {
 
     final XYChart chart = new XYChart(500, 580);
     final Styler styleManager = chart.getStyler();
-    styleManager.setLegendPosition(LegendPosition.InsideNW);
+    styleManager.setLegendPosition(CardinalPosition.InsideNW);
     styleManager.setLegendVisible(false);
 
     final double[] keys = {

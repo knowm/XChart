@@ -8,8 +8,8 @@ import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Category Chart with Line Rendering
@@ -47,7 +47,7 @@ public class LineChart07 implements ExampleChart<CategoryChart> {
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Line);
     chart.getStyler().setXAxisLabelRotation(270);
-    chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
+    chart.getStyler().setLegendPosition(CardinalPosition.OutsideE);
     chart.getStyler().setAvailableSpaceFill(0);
     chart.getStyler().setOverlapped(true);
 

@@ -14,7 +14,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -69,7 +69,7 @@ public class LineChart03 implements ExampleChart<XYChart> {
 
     chart.getStyler().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
     chart.getStyler().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
-    chart.getStyler().setLegendPosition(LegendPosition.InsideSE);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideSE);
     chart.getStyler().setLegendSeriesLineLength(12);
     chart.getStyler().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
     chart.getStyler().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));

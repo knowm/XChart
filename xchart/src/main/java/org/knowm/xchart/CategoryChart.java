@@ -14,7 +14,7 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
 public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {

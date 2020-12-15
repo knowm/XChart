@@ -7,7 +7,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /** @author timmolter */
@@ -67,7 +67,7 @@ public class TestForIssue291 {
 
     // Customize Chart
     chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
     // generates sine data
     int size = 30;
     List<Integer> xData = new ArrayList<Integer>();

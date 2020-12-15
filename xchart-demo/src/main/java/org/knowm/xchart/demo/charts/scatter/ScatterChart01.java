@@ -31,7 +31,7 @@ public class ScatterChart01 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new ScatterChart01();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override

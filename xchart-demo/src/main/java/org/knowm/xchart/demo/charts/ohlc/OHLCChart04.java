@@ -26,7 +26,7 @@ public class OHLCChart04 implements ExampleChart<OHLCChart> {
     OHLCChart chart = new OHLCChartBuilder().width(800).height(600).title("Prices").build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideS);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.InsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
     chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setYAxisDecimalPattern("##.00");

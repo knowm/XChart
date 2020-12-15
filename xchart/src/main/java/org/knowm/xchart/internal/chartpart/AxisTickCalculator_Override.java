@@ -33,7 +33,7 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
       Map<Double, Object> labelOverrideMap) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
-    axisFormat = new NumberFormatter(styler, axisDirection, minValue, maxValue);
+    axisFormat = new Formatter_Number(styler, axisDirection, minValue, maxValue);
     calculate(labelOverrideMap);
   }
 
@@ -59,9 +59,9 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
 
     // set up String formatters that may be encountered
     if (axisType == Series.DataType.String) {
-      axisFormat = new StringFormatter();
+      axisFormat = new Formatter_String();
     } else if (axisType == Series.DataType.Number) {
-      axisFormat = new NumberFormatter(styler, axisDirection, minValue, maxValue);
+      axisFormat = new Formatter_Number(styler, axisDirection, minValue, maxValue);
     } else if (axisType == Series.DataType.Date) {
       if (styler.getDatePattern() == null) {
         throw new RuntimeException("You need to set the Date Formatting Pattern!!!");

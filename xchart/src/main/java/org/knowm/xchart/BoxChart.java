@@ -9,13 +9,13 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
-import org.knowm.xchart.internal.chartpart.Plot_BoxPlot;
+import org.knowm.xchart.internal.chartpart.Plot_Box;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
@@ -25,7 +25,7 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
     super(width, height, new BoxStyler());
     axisPair = new AxisPair<BoxStyler, BoxSeries>(this);
-    plot = new Plot_BoxPlot<BoxStyler, BoxSeries>(this);
+    plot = new Plot_Box<BoxStyler, BoxSeries>(this);
     legend = new Legend_Marker<BoxStyler, BoxSeries>(this);
     infoPanel = new InfoPanel<BoxStyler, BoxSeries>(this);
   }

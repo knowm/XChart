@@ -17,8 +17,8 @@ import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Create a Chart matrix
@@ -133,7 +133,7 @@ public class TestForIssue54_1 {
 
     // Customize Chart
     chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
     // generates sine data
     int size = 30;
     List<Integer> xData = new ArrayList<Integer>();
@@ -168,7 +168,7 @@ public class TestForIssue54_1 {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
     chart.getStyler().setAxisTitlesVisible(true);
     chart.setYAxisGroupTitle(0, "a");
     chart.setYAxisGroupTitle(1, "b");
@@ -198,7 +198,7 @@ public class TestForIssue54_1 {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
     chart.getStyler().setAvailableSpaceFill(.96);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
     chart.getStyler().setToolTipsEnabled(true);
@@ -246,7 +246,7 @@ public class TestForIssue54_1 {
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Line);
     chart.getStyler().setXAxisLabelRotation(270);
-    chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
+    chart.getStyler().setLegendPosition(CardinalPosition.OutsideE);
     chart.getStyler().setAvailableSpaceFill(0);
     chart.getStyler().setOverlapped(true);
     chart.getStyler().setToolTipsEnabled(true);

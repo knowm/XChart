@@ -389,26 +389,45 @@ XChart has multiple y axes feature. Y offset is calculated according to the y ax
 To set the y group: 
 
 ```java
-    series.setYAxisGroup(axisGroup);   
+series.setYAxisGroup(axisGroup);   
 ```
 
 To manually change max/min of axis group: 
 
 ```java
-    ((AxesChartStyler) chart.getStyler()).setYAxisMax(axisGroup, 200.0);
+((AxesChartStyler) chart.getStyler()).setYAxisMax(axisGroup, 200.0);
 ```
 
 Axis can be drawn on the left (default) or on the right of the chart: 
 
 ```java
-    chart.getStyler().setYAxisGroupPosition(axisGroup, Styler.YAxisPosition.Right);
+chart.getStyler().setYAxisGroupPosition(axisGroup, Styler.YAxisPosition.Right);
 ```
 
 To set the Y axes titles:
 
 ```java
-    chart.setYAxisGroupTitle(0, "A");
-    chart.setYAxisGroupTitle(1, "B");
+chart.setYAxisGroupTitle(0, "A");
+chart.setYAxisGroupTitle(1, "B");
+```
+
+### Zooming In
+
+For the `XYChart` chart type, zooming in is possible via select-dragging over a range on the X-Axis. Reverting out of the zoom can be accomplished 
+by double-clicking on the chart or by clicking on the "reset" button, which can be posotioned as desired. 
+
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Zoom.png)
+
+
+The following example zoom style options show which are available:
+
+```java
+chart.getStyler().setZoomEnabled(true);
+chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
+chart.getStyler().setZoomResetByDoubleClick(false);
+chart.getStyler().setZoomResetByButton(true);
+chart.getStyler().setZoomSelectionColor(new Color(0,0 , 192, 128));
 ```
 
 ## Chart Themes

@@ -19,7 +19,7 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author arthurmcgibbon */
 public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {

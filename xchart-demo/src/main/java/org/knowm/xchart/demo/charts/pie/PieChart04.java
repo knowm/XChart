@@ -34,7 +34,7 @@ public class PieChart04 implements ExampleChart<PieChart> {
     // Create Chart
     PieChart chart =
         new PieChartBuilder().width(800).height(600).title("Pie Chart with Donut Style").build();
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     // Customize Chart

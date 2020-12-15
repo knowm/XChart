@@ -49,7 +49,7 @@ public class TestForIssue249 {
 
     // Customize Chart
     chart.getStyler().setChartTitleVisible(true);
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.InsideNW);
     chart.getStyler().setYAxisLogarithmic(true);
 
     chart.getStyler().setYAxisMin(0.001);

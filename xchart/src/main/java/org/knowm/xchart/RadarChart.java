@@ -9,7 +9,7 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.RadarStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 

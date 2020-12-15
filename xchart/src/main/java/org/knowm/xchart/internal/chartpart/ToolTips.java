@@ -28,7 +28,7 @@ public class ToolTips implements MouseMotionListener {
   // mouse margin
   private static final int MOUSE_MARGIN = 20;
   // for pop up
-  private final List<DataPoint> dataPointList = new ArrayList<DataPoint>();
+  private final List<DataPoint> dataPointList = new ArrayList<>();
   private final Styler styler;
   private DataPoint dataPoint;
   private double leftEdge;

@@ -4,7 +4,7 @@ import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 
 public class TestForIssue402 implements ExampleChart<CategoryChart> {
 
@@ -28,7 +28,7 @@ public class TestForIssue402 implements ExampleChart<CategoryChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
+    chart.getStyler().setLegendPosition(CardinalPosition.OutsideE);
     chart.getStyler().setStacked(true);
     chart.getStyler().setHasAnnotations(true);
     chart.getStyler().setShowTotalAnnotations(true);

@@ -32,7 +32,7 @@ public class TestForIssue527 {
             .build();
     chart.getStyler().setPlotBackgroundColor(java.awt.Color.BLACK);
     chart.getStyler().setPlotMargin(0);
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideE);
     chart.getStyler().setXAxisLabelRotation(90);
     chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
 

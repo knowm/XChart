@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import org.knowm.xchart.style.markers.Marker;
+import org.knowm.xchart.style.theme.GGPlot2Theme;
+import org.knowm.xchart.style.theme.MatlabTheme;
+import org.knowm.xchart.style.theme.Theme;
+import org.knowm.xchart.style.theme.XChartTheme;
 
 /**
  * The styler is used to manage all things related to styling of the vast number of Chart components
@@ -39,8 +43,14 @@ public abstract class Styler {
   private Font legendFont;
   private int legendPadding;
   private int legendSeriesLineLength;
-  private LegendPosition legendPosition;
+  private CardinalPosition cardinalPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
+  // Chart Plot Area ///////////////////////////////
+  private Color plotBackgroundColor;
+  private Color plotBorderColor;
+  private boolean isPlotBorderVisible;
+  private double plotContentSize = .92;
+
   // Chart InfoPanel ///////////////////////////////
   private boolean infoPanelVisible;
   private Color infoPanelBackgroundColor;
@@ -48,11 +58,7 @@ public abstract class Styler {
   private Font infoPanelFont;
   private int infoPanelPadding;
   private InfoPanelPosition infoPanelPosition;
-  // Chart Plot Area ///////////////////////////////
-  private Color plotBackgroundColor;
-  private Color plotBorderColor;
-  private boolean isPlotBorderVisible;
-  private double plotContentSize = .92;
+
   // Tool Tips ///////////////////////////////
   private boolean isToolTipsEnabled;
   private boolean isToolTipsAlwaysVisible;
@@ -74,17 +80,22 @@ public abstract class Styler {
   private int annotationsRotation = 0;
   private float annotationsPosition = 0.5f;
   private boolean showTotalAnnotations = false;
+
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
   private String decimalPattern;
-  private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<Integer, YAxisPosition>();
+  // TODO I don't think this should be in styler directly?
+  private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<>();
   private int yAxisLeftWidthHint;
+
+  // TODO move this to boxplot styler
   // Box plot data ///////////////////////////////
   private boolean showWithinAreaPoint = false;
+
   // Axis Title Font Color
   private Color xAxisTitleColor;
   private Color yAxisTitleColor;
-  private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<Integer, Color>();
+  private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
 
   // Custom formatting functions for the cursor
   private Function<Double, String> customCursorXDataFormattingFunction;
@@ -118,7 +129,7 @@ public abstract class Styler {
     legendFont = theme.getLegendFont();
     legendPadding = theme.getLegendPadding();
     legendSeriesLineLength = theme.getLegendSeriesLineLength();
-    legendPosition = theme.getLegendPosition();
+    cardinalPosition = theme.getLegendPosition();
 
     // Info Panel
     infoPanelVisible = theme.isInfoPanelVisible();
@@ -461,19 +472,19 @@ public abstract class Styler {
     return this;
   }
 
-  public LegendPosition getLegendPosition() {
+  public CardinalPosition getLegendPosition() {
 
-    return legendPosition;
+    return cardinalPosition;
   }
 
   /**
    * sets the legend position
    *
-   * @param legendPosition
+   * @param cardinalPosition
    */
-  public Styler setLegendPosition(LegendPosition legendPosition) {
+  public Styler setLegendPosition(CardinalPosition cardinalPosition) {
 
-    this.legendPosition = legendPosition;
+    this.cardinalPosition = cardinalPosition;
     return this;
   }
 
@@ -775,6 +786,8 @@ public abstract class Styler {
     return this;
   }
 
+  // Annotations ///////////////////////////////
+
   public Boolean hasAnnotations() {
 
     return hasAnnotations;
@@ -860,13 +873,15 @@ public abstract class Styler {
     return this;
   }
 
+  // Number Formatter ///////////////////////////////
+
   public String getDecimalPattern() {
 
     return decimalPattern;
   }
 
   /**
-   * Set the decimal formatter for all numbers on the chart rendered as Strings
+   * Set the decimal formatter for all numbers on the chart
    *
    * @param decimalPattern - the pattern describing the decimal format
    */
@@ -876,7 +891,7 @@ public abstract class Styler {
     return this;
   }
 
-  // Annotations ///////////////////////////////
+  // Y-Axis Group Position ///////////////////////////////
 
   public YAxisPosition getYAxisGroupPosistion(int yAxisGroup) {
 
@@ -884,7 +899,7 @@ public abstract class Styler {
   }
 
   /**
-   * Set the YAxis group position.
+   * Set the Y-Axis group position.
    *
    * @param yAxisGroup
    * @param yAxisPosition
@@ -971,6 +986,7 @@ public abstract class Styler {
     return customCursorXDataFormattingFunction;
   }
 
+  // TODO what is this actually??
   public void setCustomCursorXDataFormattingFunction(
       Function<Double, String> customCursorXDataFormattingFunction) {
     this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
@@ -985,7 +1001,7 @@ public abstract class Styler {
     this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
   }
 
-  public enum LegendPosition {
+  public enum CardinalPosition {
     OutsideE,
     InsideNW,
     InsideNE,

@@ -40,7 +40,7 @@ public class DateChart03 implements ExampleChart<XYChart> {
     XYChart chart = new XYChartBuilder().width(800).height(600).title("Minute Scale").build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideS);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.InsideS);
     chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
 
     // Series

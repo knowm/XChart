@@ -1,6 +1,7 @@
 package org.knowm.xchart.style;
 
 import java.awt.*;
+import org.knowm.xchart.style.theme.Theme;
 
 public class RadarStyler extends Styler {
 

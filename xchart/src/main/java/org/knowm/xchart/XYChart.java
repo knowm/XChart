@@ -15,8 +15,8 @@ import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
 import org.knowm.xchart.style.XYStyler;
+import org.knowm.xchart.style.theme.Theme;
 
 public class XYChart extends Chart<XYStyler, XYSeries> {
 
@@ -247,6 +247,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     }
   }
 
+  // TODO make this an interface method??
   private DataType getDataType(List<?> data) {
 
     if (data == null || data.isEmpty()) {
@@ -450,80 +451,5 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
         series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
     }
-  }
-
-  public void resetFilter() {
-
-    for (XYSeries series : getSeriesMap().values()) {
-      series.resetFilter();
-    }
-  }
-
-  public boolean filterXByScreen(int screenXmin, int screenXmax) {
-
-    // convert screen coordinates to axis values
-    double minValue = getChartXFromCoordinate(screenXmin);
-    double maxValue = getChartXFromCoordinate(screenXmax);
-    boolean filtered = false;
-    if (isOnePointSeleted(minValue, maxValue)) {
-      for (XYSeries series : getSeriesMap().values()) {
-        boolean f = series.filterXByValue(minValue, maxValue);
-        if (f) {
-          filtered = true;
-        }
-      }
-    } else {
-      if (!isAllPointsSelected()) {
-        filtered = true;
-      }
-    }
-    return filtered;
-  }
-
-  public void filterXByIndex(int startIndex, int endIndex) {
-
-    for (XYSeries series : getSeriesMap().values()) {
-      series.filterXByIndex(startIndex, endIndex);
-    }
-  }
-
-  /**
-   * Is there a point selected in all series.
-   *
-   * @param minValue
-   * @param maxValue
-   * @return
-   */
-  private boolean isOnePointSeleted(double minValue, double maxValue) {
-
-    boolean isOnePointSeleted = false;
-    double[] xData = null;
-    for (XYSeries series : getSeriesMap().values()) {
-      xData = series.getXData();
-      for (double x : xData) {
-        if (x >= minValue && x <= maxValue) {
-          isOnePointSeleted = true;
-          break;
-        }
-      }
-    }
-    return isOnePointSeleted;
-  }
-
-  /**
-   * Whether all points are selected in all series.
-   *
-   * @return
-   */
-  private boolean isAllPointsSelected() {
-
-    boolean isAllPointsSelected = true;
-    for (XYSeries series : getSeriesMap().values()) {
-      if (!series.isAllXData()) {
-        isAllPointsSelected = false;
-        break;
-      }
-    }
-    return isAllPointsSelected;
   }
 }

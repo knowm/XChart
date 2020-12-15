@@ -24,6 +24,7 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  *   <li>Millisecond Scale
  *   <li>LegendPosition.OutsideS
  *   <li>Two YAxis Groups - both on left
+ *   <li>Zooming by dragging a selection box over area of interest
  */
 public class DateChart01 implements ExampleChart<XYChart> {
 
@@ -31,7 +32,7 @@ public class DateChart01 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new DateChart01();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -41,17 +42,22 @@ public class DateChart01 implements ExampleChart<XYChart> {
     XYChart chart = new XYChartBuilder().width(800).height(600).title("Millisecond Scale").build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
+    chart.getStyler().setZoomEnabled(true);
+    //    chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
+    //    chart.getStyler().setZoomResetByDoubleClick(false);
+    //    chart.getStyler().setZoomResetByButton(true);
+    //    chart.getStyler().setZoomSelectionColor(new Color(0,0 , 192, 128));
 
     // Series
     Random random = new Random();
 
     // generate data
-    List<Date> xData1 = new ArrayList<Date>();
-    List<Double> yData1 = new ArrayList<Double>();
-    List<Date> xData2 = new ArrayList<Date>();
-    List<Double> yData2 = new ArrayList<Double>();
+    List<Date> xData1 = new ArrayList<>();
+    List<Double> yData1 = new ArrayList<>();
+    List<Date> xData2 = new ArrayList<>();
+    List<Double> yData2 = new ArrayList<>();
 
     DateFormat sdf = new SimpleDateFormat("HH:mm:ss.S");
     Date date = null;

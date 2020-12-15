@@ -14,8 +14,8 @@ import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.HeatMapChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.LegendLayout;
-import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * HeatMap X-Axis Data Date Type
@@ -55,7 +55,7 @@ public class HeatMapChart04 implements ExampleChart<HeatMapChart> {
     chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setDatePattern("HH");
     chart.getStyler().setShowValue(true);
-    chart.getStyler().setLegendPosition(LegendPosition.OutsideS);
+    chart.getStyler().setLegendPosition(CardinalPosition.OutsideS);
     chart.getStyler().setLegendLayout(LegendLayout.Horizontal);
 
     Color[] rangeColors = {

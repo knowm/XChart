@@ -7,7 +7,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 
 public class TestForIssue370 {
 
@@ -33,7 +33,7 @@ public class TestForIssue370 {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
+    chart.getStyler().setLegendPosition(CardinalPosition.OutsideE);
     chart.getStyler().setAxisTitlesVisible(false);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
     chart.getStyler().setToolTipsEnabled(true);

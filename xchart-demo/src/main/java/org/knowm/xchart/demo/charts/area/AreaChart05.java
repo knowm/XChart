@@ -5,7 +5,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 
 /**
  * Area Chart with 1 series
@@ -40,7 +40,7 @@ public class AreaChart05 implements ExampleChart<XYChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideNE);
     chart.getStyler().setAxisTitlesVisible(false);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.PolygonArea);
 

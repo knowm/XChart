@@ -15,9 +15,9 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.chartpart.components.ChartImage;
-import org.knowm.xchart.internal.chartpart.components.ChartLine;
-import org.knowm.xchart.internal.chartpart.components.ChartText;
+import org.knowm.xchart.internal.chartpart.ChartImage;
+import org.knowm.xchart.internal.chartpart.ChartLine;
+import org.knowm.xchart.internal.chartpart.ChartText;
 import org.knowm.xchart.style.markers.None;
 
 public class TestForCustomChartParts {

@@ -34,7 +34,7 @@ public class OHLCChart03 implements ExampleChart<OHLCChart> {
     OHLCChart chart = new OHLCChartBuilder().width(800).height(600).title("Prices").build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     List<Date> xData = new ArrayList<Date>();

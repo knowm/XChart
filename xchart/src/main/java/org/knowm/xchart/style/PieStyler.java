@@ -2,6 +2,7 @@ package org.knowm.xchart.style;
 
 import java.awt.*;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
 public class PieStyler extends Styler {

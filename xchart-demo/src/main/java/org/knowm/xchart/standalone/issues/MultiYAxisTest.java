@@ -27,7 +27,7 @@ public class MultiYAxisTest {
     c.setYAxisGroupTitle(0, "A");
     c.setYAxisGroupTitle(1, "B");
     c.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
-    c.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
+    c.getStyler().setLegendPosition(Styler.CardinalPosition.InsideNE);
 
     // series 1
     XYSeries s1 = c.addSeries("th1", timeData, th1Data);

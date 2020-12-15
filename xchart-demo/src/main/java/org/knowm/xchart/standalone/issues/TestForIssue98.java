@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.XYStyler;
 
 /** @author timmolter */
@@ -15,7 +15,7 @@ public class TestForIssue98 {
 
     final XYChart chart = new XYChart(1920, 1080);
     XYStyler manager = chart.getStyler();
-    manager.setLegendPosition(LegendPosition.InsideNW);
+    manager.setLegendPosition(CardinalPosition.InsideNW);
     manager.setYAxisLogarithmic(true);
 
     final double[] vals = {

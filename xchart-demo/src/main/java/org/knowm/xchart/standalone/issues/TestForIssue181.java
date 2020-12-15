@@ -49,7 +49,7 @@ public class TestForIssue181 {
     Color[] colors = {Color.GRAY, Color.BLUE, Color.RED, Color.RED};
 
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideE);
     chart.getStyler().setMarkerSize(5);
     chart.getStyler().setAxisTicksVisible(true);
     chart.getStyler().setXAxisMin(0.0);

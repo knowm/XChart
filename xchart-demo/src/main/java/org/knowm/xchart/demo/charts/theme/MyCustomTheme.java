@@ -4,11 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-import org.knowm.xchart.style.AbstractBaseTheme;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.lines.XChartSeriesLines;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.XChartSeriesMarkers;
+import org.knowm.xchart.style.theme.AbstractBaseTheme;
 
 /** @author timmolter */
 public class MyCustomTheme extends AbstractBaseTheme {

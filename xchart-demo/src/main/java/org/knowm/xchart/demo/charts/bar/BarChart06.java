@@ -8,7 +8,7 @@ import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 
 /**
  * Histogram Overlapped
@@ -42,7 +42,7 @@ public class BarChart06 implements ExampleChart<CategoryChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
     chart.getStyler().setAvailableSpaceFill(.96);
     chart.getStyler().setOverlapped(true);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);

@@ -1,6 +1,7 @@
 package org.knowm.xchart.style;
 
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
 public class CategoryStyler extends AxesChartStyler {

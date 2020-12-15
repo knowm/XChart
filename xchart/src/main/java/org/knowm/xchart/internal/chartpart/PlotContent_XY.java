@@ -325,12 +325,12 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           if (xyStyler.getCustomCursorXDataFormattingFunction() == null) {
             xFormat = chart.getXAxisFormat();
           } else {
-            xFormat = new CustomFormatter(xyStyler.getCustomCursorXDataFormattingFunction());
+            xFormat = new Formatter_Custom(xyStyler.getCustomCursorXDataFormattingFunction());
           }
           if (xyStyler.getCustomCursorYDataFormattingFunction() == null) {
             yFormat = chart.getYAxisFormat(series.getYAxisDecimalPattern());
           } else {
-            yFormat = new CustomFormatter(xyStyler.getCustomCursorYDataFormattingFunction());
+            yFormat = new Formatter_Custom(xyStyler.getCustomCursorYDataFormattingFunction());
           }
           chart.cursor.addData(
               xOffset, yOffset, xFormat.format(x), yFormat.format(yOrig), series.getName());

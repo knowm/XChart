@@ -11,7 +11,7 @@ import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.style.CategoryStyler;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 
 public class TestForIssue530 {
 
@@ -43,7 +43,7 @@ public class TestForIssue530 {
 
     // Définition du style du graphe
     CategoryStyler styler = chart.getStyler();
-    styler.setLegendPosition(LegendPosition.InsideNW);
+    styler.setLegendPosition(CardinalPosition.InsideNW);
     styler.setLegendBackgroundColor(Color.DARK_GRAY);
     styler.setDatePattern("MM/yyyy");
     styler.setXAxisTickMarkSpacingHint(50);

@@ -40,13 +40,13 @@ import javax.swing.table.TableColumnModel;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.GGPlot2Theme;
-import org.knowm.xchart.style.MatlabTheme;
-import org.knowm.xchart.style.Theme;
-import org.knowm.xchart.style.XChartTheme;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.BaseSeriesMarkers;
 import org.knowm.xchart.style.markers.Marker;
+import org.knowm.xchart.style.theme.GGPlot2Theme;
+import org.knowm.xchart.style.theme.MatlabTheme;
+import org.knowm.xchart.style.theme.Theme;
+import org.knowm.xchart.style.theme.XChartTheme;
 
 public class ChartStylePanel extends JPanel {
 

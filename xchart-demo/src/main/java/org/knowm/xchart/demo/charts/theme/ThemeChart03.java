@@ -70,7 +70,7 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
     series.setMarker(SeriesMarkers.NONE);
 
     chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideS);
+    chart.getStyler().setLegendPosition(Styler.CardinalPosition.InsideS);
 
     return chart;
   }

@@ -6,7 +6,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
@@ -44,7 +44,7 @@ public class LineChart05 implements ExampleChart<XYChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideSW);
     chart.getStyler().setYAxisLogarithmic(true);
     chart.getStyler().setYAxisMin(0.01);
     chart.getStyler().setYAxisMax(1000.0);

@@ -14,7 +14,7 @@ import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.CategoryStyler;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /** @author timmolter */
@@ -29,6 +29,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   private final Rectangle2D.Double rightYAxisBounds;
   private Axis<ST, S> leftMainYAxis;
   private Axis<ST, S> rightMainYAxis;
+  // TODO get rid of this in favor of the callback method??
   private Map<String, Map<Object, Object>> customTickLabelsMap = new HashMap<>();
 
   /**
@@ -141,7 +142,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     rightYAxisBounds.width = 0;
 
     double legendWidth = 0;
-    if (styler.getLegendPosition() == LegendPosition.OutsideE && styler.isLegendVisible()) {
+    if (styler.getLegendPosition() == CardinalPosition.OutsideE && styler.isLegendVisible()) {
       legendWidth = chart.getLegend().getBounds().getWidth() + styler.getChartPadding();
     }
     double rightEnd = chart.getWidth() - legendWidth - chartPadding;
@@ -496,7 +497,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
   // Getters & Setters /////////////////////////////////////////////////
 
-  Axis<ST, S> getXAxis() {
+  public Axis<ST, S> getXAxis() {
 
     return xAxis;
   }

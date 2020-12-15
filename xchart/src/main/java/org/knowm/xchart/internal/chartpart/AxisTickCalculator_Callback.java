@@ -31,7 +31,7 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
       AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
-    axisFormat = new CustomFormatter(formattingCallback);
+    axisFormat = new Formatter_Custom(formattingCallback);
     calculate();
   }
 
@@ -44,7 +44,7 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
       List<Double> axisValues,
       AxesChartStyler styler) {
     super(axisDirection, workingSpace, minValue, maxValue, axisValues, styler);
-    axisFormat = new CustomFormatter(formattingCallback);
+    axisFormat = new Formatter_Custom(formattingCallback);
     calculate();
   }
 }

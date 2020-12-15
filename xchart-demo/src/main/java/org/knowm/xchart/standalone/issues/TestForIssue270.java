@@ -4,7 +4,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 
 public class TestForIssue270 {
 
@@ -21,7 +21,7 @@ public class TestForIssue270 {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
+    chart.getStyler().setLegendPosition(CardinalPosition.OutsideE);
     chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setToolTipsAlwaysVisible(true);
 

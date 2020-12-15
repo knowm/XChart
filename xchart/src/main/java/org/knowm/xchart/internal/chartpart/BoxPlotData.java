@@ -6,6 +6,7 @@ package org.knowm.xchart.internal.chartpart;
  *
  * @author Mr14huashao
  */
+// TODO remove these BoxPlot DTOs
 public class BoxPlotData {
 
   /** Upper whisker */

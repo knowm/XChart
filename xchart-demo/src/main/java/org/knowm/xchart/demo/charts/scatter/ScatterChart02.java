@@ -8,7 +8,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 
 /**
  * Logarithmic Data
@@ -41,7 +41,7 @@ public class ScatterChart02 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
     chart.getStyler().setXAxisLogarithmic(true);
-    chart.getStyler().setLegendPosition(LegendPosition.InsideN);
+    chart.getStyler().setLegendPosition(CardinalPosition.InsideN);
 
     // Series
     List<Double> xData = new ArrayList<Double>();

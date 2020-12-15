@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.function.Function;
 import org.knowm.xchart.style.colors.ChartColor;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author Mr14huashao */
 public class HeatMapStyler extends AxesChartStyler {
@@ -74,14 +75,14 @@ public class HeatMapStyler extends AxesChartStyler {
   }
 
   @Override
-  public Styler setLegendPosition(LegendPosition legendPosition) {
+  public Styler setLegendPosition(CardinalPosition cardinalPosition) {
 
-    if (!LegendPosition.OutsideE.equals(legendPosition)
-        && !LegendPosition.OutsideS.equals(legendPosition)) {
+    if (!CardinalPosition.OutsideE.equals(cardinalPosition)
+        && !CardinalPosition.OutsideS.equals(cardinalPosition)) {
       throw new IllegalArgumentException(
           "HeatMapStyler LegendPosition must be OutsideE or OutsideS!!!");
     }
-    return super.setLegendPosition(legendPosition);
+    return super.setLegendPosition(cardinalPosition);
   }
 
   public boolean isPiecewise() {

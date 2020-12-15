@@ -175,7 +175,7 @@ public class ExampleChartTester extends JPanel implements TreeSelectionListener 
   protected Map<String, Chart> getCharts(ExampleChartInfo chartInfo) {
 
     Chart<?, ?> chart = chartInfo.getExampleChart().getChart();
-    HashMap<String, Chart> map = new HashMap<String, Chart>();
+    HashMap<String, Chart> map = new HashMap<>();
     map.put(chart.getTitle(), chart);
     return map;
   }
