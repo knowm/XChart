@@ -15,7 +15,6 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
   protected XChartPanel<XYChart> xChartPanel;
   protected XYChart xyChart;
-
   protected Rectangle bounds;
 
   protected ChartButton resetButton;
@@ -43,6 +42,9 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     resetButton.init(this.xChartPanel);
     resetButton.setVisible(false);
     resetButton.addActionListener(this);
+    resetButton.setColor(xyChart.getStyler().getZoomSelectionColor());
+    resetButton.setHoverColor(xyChart.getStyler().getZoomSelectionColor().darker());
+    resetButton.setBorderColor(xyChart.getStyler().getZoomSelectionColor().darker());
   }
 
   protected void resetZoom() {

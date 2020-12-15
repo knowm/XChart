@@ -46,6 +46,11 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   private Shape buttonRect;
   private boolean mouseOver;
 
+  /**
+   * Constructor
+   *
+   * @param text
+   */
   public ChartButton(String text) {
 
     this.text = text;
@@ -281,77 +286,77 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     }
   }
 
-  public Color getFontColor() {
+   Color getFontColor() {
 
     return fontColor;
   }
 
-  public void setFontColor(Color fontColor) {
+   void setFontColor(Color fontColor) {
 
     this.fontColor = fontColor;
   }
 
-  public Font getTextFont() {
+   Font getTextFont() {
 
     return textFont;
   }
 
-  public void setTextFont(Font textFont) {
+   void setTextFont(Font textFont) {
 
     this.textFont = textFont;
   }
 
-  public Color getBorderColor() {
+   Color getBorderColor() {
 
     return borderColor;
   }
 
-  public void setBorderColor(Color borderColor) {
+   void setBorderColor(Color borderColor) {
 
     this.borderColor = borderColor;
   }
 
-  public int getMargin() {
+   int getMargin() {
 
     return margin;
   }
 
-  public void setMargin(int margin) {
+   void setMargin(int margin) {
 
     this.margin = margin;
   }
 
-  public ActionEvent getAction() {
+   ActionEvent getAction() {
 
     return action;
   }
 
-  public void setAction(ActionEvent action) {
+   void setAction(ActionEvent action) {
 
     this.action = action;
   }
 
-  public double getxOffset() {
+   double getxOffset() {
 
     return xOffset;
   }
 
-  public void setxOffset(double xOffset) {
+   void setxOffset(double xOffset) {
 
     this.xOffset = xOffset;
   }
 
-  public double getyOffset() {
+   double getyOffset() {
 
     return yOffset;
   }
 
-  public void setyOffset(double yOffset) {
+   void setyOffset(double yOffset) {
 
     this.yOffset = yOffset;
   }
 
-  public void setPosition(CardinalPosition position) {
+   void setPosition(CardinalPosition position) {
     this.position = position;
   }
 }
