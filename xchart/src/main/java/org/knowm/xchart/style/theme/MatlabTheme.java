@@ -1,4 +1,4 @@
-package org.knowm.xchart.style;
+package org.knowm.xchart.style.theme;
 
 import java.awt.*;
 import org.knowm.xchart.style.PieStyler.AnnotationType;

@@ -9,10 +9,10 @@ import java.text.ParsePosition;
  *
  * @author timmolter
  */
-class StringFormatter extends Format {
+class Formatter_String extends Format {
 
   /** Constructor */
-  public StringFormatter() {}
+  public Formatter_String() {}
 
   @Override
   public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {

@@ -1,11 +1,11 @@
-package org.knowm.xchart.style;
+package org.knowm.xchart.style.theme;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.InfoPanelPosition;
-import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -52,7 +52,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   int getLegendSeriesLineLength();
 
-  LegendPosition getLegendPosition();
+  CardinalPosition getLegendPosition();
 
   // Chart Info Panel ///////////////////////////////
 
@@ -153,6 +153,12 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   Color getCursorFontColor();
 
   Color getCursorBackgroundColor();
+
+  // Zoom /////////////////////////////////////
+
+  default boolean isZoomEnabled() {
+    return false;
+  }
 
   // Bar Charts ///////////////////////////////
 

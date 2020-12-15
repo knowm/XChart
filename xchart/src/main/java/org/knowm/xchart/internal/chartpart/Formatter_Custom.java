@@ -6,11 +6,11 @@ import java.text.ParsePosition;
 import java.util.function.Function;
 
 /** @author Marc Jakobi */
-public class CustomFormatter extends Format {
+public class Formatter_Custom extends Format {
 
   private final Function<Double, String> customFormattingFunction;
 
-  public CustomFormatter(Function<Double, String> customFormattingFunction) {
+  public Formatter_Custom(Function<Double, String> customFormattingFunction) {
     this.customFormattingFunction = customFormattingFunction;
   }
 

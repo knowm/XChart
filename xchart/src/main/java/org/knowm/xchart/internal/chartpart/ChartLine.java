@@ -1,4 +1,4 @@
-package org.knowm.xchart.internal.chartpart.components;
+package org.knowm.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -7,12 +7,10 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.ChartPart;
 
 public class ChartLine implements ChartPart {
 
-  protected XChartPanel chartPanel;
+  protected XChartPanel xChartPanel;
   protected Chart chart;
   protected Rectangle bounds;
 
@@ -35,7 +33,7 @@ public class ChartLine implements ChartPart {
 
   public void init(XChartPanel<XYChart> chartPanel) {
 
-    this.chartPanel = chartPanel;
+    this.xChartPanel = chartPanel;
     chart = chartPanel.getChart();
     chart.addPlotPart(this);
   }
@@ -74,10 +72,10 @@ public class ChartLine implements ChartPart {
       }
     } else {
       if (vertical) {
-        x1 = (int) chart.getScreenXFromChart(value);
+        x1 = (int) chart.axisPair.getXAxis().getScreenValue(value);
         x2 = x1;
       } else {
-        y1 = (int) chart.getScreenYFromChart(value);
+        y1 = (int) chart.axisPair.getYAxis().getScreenValue(value);
         y2 = y1;
       }
     }

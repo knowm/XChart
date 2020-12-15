@@ -1,4 +1,4 @@
-package org.knowm.xchart.internal.chartpart.components;
+package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -17,13 +17,11 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.event.EventListenerList;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.ChartPart;
-import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.Styler.CardinalPosition;
 
 public class ChartButton extends MouseAdapter implements ChartPart {
 
-  protected XChartPanel chartPanel;
+  protected XChartPanel xChartPanel;
   protected Chart chart;
   protected Rectangle bounds;
 
@@ -39,7 +37,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   protected ActionEvent action;
 
   // button position
-  protected LegendPosition position = LegendPosition.InsideN;
+  protected CardinalPosition position = CardinalPosition.InsideN;
 
   protected double xOffset = 0;
   protected double yOffset = 0;
@@ -79,7 +77,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
 
   public void init(XChartPanel<XYChart> chartPanel) {
 
-    this.chartPanel = chartPanel;
+    this.xChartPanel = chartPanel;
     chart = chartPanel.getChart();
     if (fontColor == null) {
       fontColor = chart.getStyler().getChartFontColor();
@@ -138,8 +136,8 @@ public class ChartButton extends MouseAdapter implements ChartPart {
 
   protected void repaint() {
 
-    chartPanel.invalidate();
-    chartPanel.repaint();
+    xChartPanel.invalidate();
+    xChartPanel.repaint();
   }
 
   protected void calculatePosition(Rectangle2D textBounds) {
@@ -353,7 +351,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     this.yOffset = yOffset;
   }
 
-  public void setPosition(LegendPosition position) {
+  public void setPosition(CardinalPosition position) {
     this.position = position;
   }
 }

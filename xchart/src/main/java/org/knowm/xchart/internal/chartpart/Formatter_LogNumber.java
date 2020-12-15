@@ -4,7 +4,7 @@ import java.text.*;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /** @author timmolter */
-class NumberLogFormatter extends Format {
+class Formatter_LogNumber extends Format {
 
   private final AxesChartStyler styler;
   private final Axis.Direction axisDirection;
@@ -12,7 +12,7 @@ class NumberLogFormatter extends Format {
   private int yIndex;
 
   /** Constructor */
-  public NumberLogFormatter(AxesChartStyler styler, Axis.Direction axisDirection) {
+  public Formatter_LogNumber(AxesChartStyler styler, Axis.Direction axisDirection) {
 
     this.styler = styler;
     this.axisDirection = axisDirection;
@@ -26,7 +26,7 @@ class NumberLogFormatter extends Format {
    * @param axisDirection
    * @param yIndex
    */
-  public NumberLogFormatter(AxesChartStyler styler, Axis.Direction axisDirection, int yIndex) {
+  public Formatter_LogNumber(AxesChartStyler styler, Axis.Direction axisDirection, int yIndex) {
 
     this.styler = styler;
     this.axisDirection = axisDirection;

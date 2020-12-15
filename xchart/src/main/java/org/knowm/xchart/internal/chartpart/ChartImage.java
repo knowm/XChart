@@ -1,28 +1,21 @@
-package org.knowm.xchart.internal.chartpart.components;
+package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.ChartPart;
 
-public class ChartText implements ChartPart {
+public class ChartImage implements ChartPart {
 
-  protected XChartPanel chartPanel;
+  protected XChartPanel xChartPanel;
   protected Chart chart;
   protected Rectangle bounds;
 
   // properties
-  protected String text;
   protected boolean visible = true;
   protected Color fontColor;
   protected Font textFont;
@@ -30,14 +23,15 @@ public class ChartText implements ChartPart {
   protected double xValue;
   protected double yValue;
   protected boolean valueInScreenCoordinate = false;
+  protected Image image;
 
   // internal
-  double startx;
-  double starty;
+  int startx;
+  int starty;
 
-  public ChartText(String text, double xValue, double yValue, boolean valueInScreenCoordinate) {
+  public ChartImage(Image image, double xValue, double yValue, boolean valueInScreenCoordinate) {
 
-    this.text = text;
+    this.image = image;
     this.xValue = xValue;
     this.yValue = yValue;
     this.valueInScreenCoordinate = valueInScreenCoordinate;
@@ -45,7 +39,7 @@ public class ChartText implements ChartPart {
 
   public void init(XChartPanel<XYChart> chartPanel) {
 
-    this.chartPanel = chartPanel;
+    this.xChartPanel = chartPanel;
     chart = chartPanel.getChart();
     if (fontColor == null) {
       fontColor = chart.getStyler().getChartFontColor();
@@ -62,14 +56,14 @@ public class ChartText implements ChartPart {
     return bounds;
   }
 
-  protected void calculatePosition(Rectangle2D textBounds) {
+  protected void calculatePosition() {
 
     if (valueInScreenCoordinate) {
-      startx = xValue;
-      starty = yValue;
+      startx = (int) xValue;
+      starty = (int) yValue;
     } else {
-      startx = chart.getScreenXFromChart(xValue) - textBounds.getWidth() / 2;
-      starty = chart.getScreenYFromChart(yValue) + textBounds.getHeight() / 2;
+      startx = (int) (chart.getXAxis().getScreenValue(xValue) + 0.5) - image.getWidth(null) / 2;
+      starty = (int) (chart.getYAxis().getScreenValue(yValue) + 0.5) - image.getHeight(null) / 2;
     }
   }
 
@@ -81,37 +75,8 @@ public class ChartText implements ChartPart {
     }
     bounds = g.getClipBounds();
 
-    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-    g.setColor(fontColor);
-    g.setFont(textFont);
-
-    FontRenderContext frc = g.getFontRenderContext();
-    TextLayout tl = new TextLayout(text, textFont, frc);
-    Shape shape = tl.getOutline(null);
-
-    Rectangle2D textBounds = shape.getBounds2D();
-    calculatePosition(textBounds);
-
-    AffineTransform orig = g.getTransform();
-    AffineTransform at = new AffineTransform();
-    at.translate(startx, starty);
-    g.transform(at);
-    g.fill(shape);
-    g.setTransform(orig);
-
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
-  }
-
-  public String getText() {
-
-    return text;
-  }
-
-  public void setText(String text) {
-
-    this.text = text;
+    calculatePosition();
+    g.drawImage(image, startx, starty, null);
   }
 
   public boolean isVisible() {
@@ -172,5 +137,15 @@ public class ChartText implements ChartPart {
   public void setValueInScreenCoordinate(boolean valueInScreenCoordinate) {
 
     this.valueInScreenCoordinate = valueInScreenCoordinate;
+  }
+
+  public Image getImage() {
+
+    return image;
+  }
+
+  public void setImage(Image image) {
+
+    this.image = image;
   }
 }
