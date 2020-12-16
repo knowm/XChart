@@ -26,7 +26,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
-  protected final List<String> infoContent = new ArrayList<>();
+  protected final List<InfoPanel> infoPanels = new ArrayList<>();
   // TODO remove these?? move them to XChartPanel??
   final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
   final Cursor cursor;
@@ -36,7 +36,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   protected Plot_<ST, S> plot;
   protected Legend_<ST, S> legend;
-  protected InfoPanel infoPanel;
 
   /** Meta Data */
   private int width;
@@ -45,7 +44,10 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private String title = "";
   private String xAxisTitle = "";
   private String yAxisTitle = "";
+
+  // TODO Does this belong here for all chart types?
   private Map<Integer, String> yAxisGroupTitleMap = new HashMap<>();
+  // TODO is this necessary?
   protected ArrayList<ChartPart> plotParts = new ArrayList<>();
 
   /**
@@ -148,7 +150,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     this.yAxisTitle = yAxisTitle;
   }
-
+  // TODO these related methods don't make sense for all chart types
   public String getYAxisGroupTitle(int yAxisGroup) {
 
     String title = yAxisGroupTitleMap.get(yAxisGroup);
@@ -168,18 +170,40 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return seriesMap;
   }
 
-  public List<String> getInfoContent() {
-    return infoContent;
-  }
+  /**
+   * @param content - multi line (with "\n") String content
+   * @param xPosition - integer x position from left edge of chart
+   * @param yPosition - integer y position from bottom edge of chart
+   */
+  public void addInfoPanelContent(String content, int xPosition, int yPosition) {
 
-  public void setInfoContent(List<String> content) {
-    infoContent.clear();
-    infoContent.addAll(content);
-  }
+    if (xPosition < 0) {
+      throw new IllegalArgumentException("xPosition must be greater than 0!!!");
+    }
+    if (yPosition < 0) {
+      throw new IllegalArgumentException("yPosition must be greater than 0!!!");
+    }
 
-  public void addInfoContent(String content) {
     List<String> lines = Arrays.asList(content.split("\\n"));
-    infoContent.addAll(lines);
+    infoPanels.add(new InfoPanel(lines, xPosition, yPosition, Double.NaN, Double.NaN, this));
+  }
+  /**
+   * @param content - multi line (with "\n") String content
+   * @param xPosition - double x position as a percentage (between 0.0 and 1.0) from left edge of
+   *     chart
+   * @param yPosition - double y position as a percentage (between 0.0 and 1.0) from bottom edge of
+   *     chart
+   */
+  public void addInfoPanelContent(String content, double xPosition, double yPosition) {
+    if (xPosition < 0.0 || xPosition > 1.0) {
+      throw new IllegalArgumentException("xPosition must be between 0.0 and 1.0!!!");
+    }
+    if (yPosition < 0.0 || yPosition > 1.0) {
+      throw new IllegalArgumentException("yPosition must be between 0.0 and 1.0!!!");
+    }
+
+    List<String> lines = Arrays.asList(content.split("\\n"));
+    infoPanels.add(new InfoPanel(lines,0, 0, xPosition, yPosition, this));
   }
 
   /** @Deprecated - use Chart#setCustomXAxisTickLabelsFormatter */
@@ -215,11 +239,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   Legend_<ST, S> getLegend() {
 
     return legend;
-  }
-
-  InfoPanel getInfoPanel() {
-
-    return infoPanel;
   }
 
   Plot_<ST, S> getPlot() {
@@ -291,4 +310,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return cursor;
   }
+
+  public void addAnnotation(AnnotationLine maxY) {}
 }

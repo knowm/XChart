@@ -26,6 +26,7 @@ public abstract class AxesChartSeries extends Series {
   /** Line Width */
   private float lineWidth = -1.0f;
 
+  //TODO investigate this
   protected String[] toolTips;
 
   protected boolean isCustomToolTips;

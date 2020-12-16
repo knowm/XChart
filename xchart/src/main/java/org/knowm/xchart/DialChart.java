@@ -1,8 +1,8 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Dial;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
@@ -24,7 +24,6 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     super(width, height, new DialStyler());
     plot = new Plot_Dial<DialStyler, DialSeries>(this);
     legend = new Legend_Pie<DialStyler, DialSeries>(this);
-    infoPanel = new InfoPanel<DialStyler, DialSeries>(this);
   }
 
   /**
@@ -121,7 +120,7 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanel.paint(g);
+    infoPanels.forEach(x -> x.paint(g));
   }
 
   /** set the series color based on theme */

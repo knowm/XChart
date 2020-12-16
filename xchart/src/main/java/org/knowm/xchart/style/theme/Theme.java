@@ -3,9 +3,9 @@ package org.knowm.xchart.style.theme;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
+
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.CardinalPosition;
-import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -54,7 +54,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   CardinalPosition getLegendPosition();
 
-  // Chart Info Panel ///////////////////////////////
+  // Info Panel ///////////////////////////////
 
   Font getInfoPanelFont();
 
@@ -65,8 +65,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   Color getInfoPanelBorderColor();
 
   int getInfoPanelPadding();
-
-  InfoPanelPosition getInfoPanelPosition();
 
   // Chart Axes ///////////////////////////////
 

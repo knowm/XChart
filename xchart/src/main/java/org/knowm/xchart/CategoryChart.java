@@ -1,12 +1,15 @@
 package org.knowm.xchart;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -31,7 +34,6 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     axisPair = new AxisPair<CategoryStyler, CategorySeries>(this);
     plot = new Plot_Category<CategoryStyler, CategorySeries>(this);
     legend = new Legend_Marker<CategoryStyler, CategorySeries>(this);
-    infoPanel = new InfoPanel<CategoryStyler, CategorySeries>(this);
   }
 
   /**
@@ -309,7 +311,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanel.paint(g);
+    infoPanels.forEach(x -> x.paint(g));
   }
 
   /** set the series color, marker and line style based on theme */

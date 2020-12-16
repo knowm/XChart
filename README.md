@@ -430,6 +430,36 @@ chart.getStyler().setZoomResetByButton(true);
 chart.getStyler().setZoomSelectionColor(new Color(0,0 , 192, 128));
 ```
 
+A working example can be found at [DateChart01](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart01.java).
+
+### Info Panel
+
+For all chart types, one or more `InfoPanel`s can be super-imposed on top of the chart. An `InfoPanel` is simply a box with some text in it. An 
+`InfoPanel` can be added at an absolute position (in pixels) from the bottom left corner via
+
+```java
+chart.addInfoPanelContent("Here are some words in an InfoPanel!", 40, 40);
+```
+
+or the position can be specified at a relative position (in percentage between 0.0 and 1.0) via
+
+```java
+chart.addInfoPanelContent("Here are some additional words", 0.5, 0.5);
+```
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_InfoPanel.png)
+
+The following example `InfoPanel` options show which are available:
+
+```java
+chart.getStyler().setInfoPanelPadding(20);
+chart.getStyler().setInfoPanelFont( new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setInfoPanelBackgroundColor(Color.RED);
+chart.getStyler().setInfoPanelBorderColor(Color.BLUE);
+chart.getStyler().setInfoPanelVisible(false);
+```
+A working example can be found at [ScatterChart04](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/scatter/ScatterChart04.java).
+
 ## Chart Themes
 
 XChart ships with three different themes: Default `XChart`, `GGPlot2` and `Matlab`. Using a different theme is as simple as setting the Chart's theme with the `theme` method of the `ChartBuilder`.

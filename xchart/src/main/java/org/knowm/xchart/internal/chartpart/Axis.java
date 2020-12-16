@@ -19,7 +19,6 @@ import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.style.*;
 import org.knowm.xchart.style.Styler.CardinalPosition;
-import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /** Axis */
@@ -101,12 +100,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         && axesChartStyler.getLegendPosition() == CardinalPosition.OutsideS)
       legendHeightOffset = chart.getLegend().getBounds().getHeight();
 
-    double infoPanelHeightOffset = 0;
-    if (axesChartStyler.isInfoPanelVisible()
-        && axesChartStyler.getInfoPanelPosition() == InfoPanelPosition.OutsideS)
-      infoPanelHeightOffset =
-          axesChartStyler.getInfoPanelPadding() / 2 + chart.getInfoPanel().getBounds().getHeight();
-
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
 
@@ -153,8 +146,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth)
                 - axesChartStyler.getPlotMargin()
                 - axesChartStyler.getChartPadding()
-                - legendHeightOffset
-                - infoPanelHeightOffset;
+                - legendHeightOffset;
 
         width = getYAxisWidthHint(height);
         //         System.out.println("width after: " + width);
@@ -182,7 +174,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
       double xOffset = leftYAxisBounds.getWidth() + leftYAxisBounds.getX();
       double yOffset =
-          maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset - infoPanelHeightOffset;
+          maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset;
 
       double legendWidth = 0;
       if (axesChartStyler.getLegendPosition() == CardinalPosition.OutsideE

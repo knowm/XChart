@@ -57,7 +57,6 @@ public abstract class Styler {
   private Color infoPanelBorderColor;
   private Font infoPanelFont;
   private int infoPanelPadding;
-  private InfoPanelPosition infoPanelPosition;
 
   // Tool Tips ///////////////////////////////
   private boolean isToolTipsEnabled;
@@ -67,6 +66,7 @@ public abstract class Styler {
   private Color toolTipBorderColor;
   private Font toolTipFont;
   private Color toolTipHighlightColor;
+
   // Cursor ////////////////////////////////
   private boolean isCursorEnabled;
   private Color cursorColor;
@@ -74,6 +74,7 @@ public abstract class Styler {
   private Font cursorFont;
   private Color cursorFontColor;
   private Color cursorBackgroundColor;
+
   // Annotations ///////////////////////////////
   private Font annotationsFont;
   private Color annotationsFontColor;
@@ -137,7 +138,6 @@ public abstract class Styler {
     infoPanelBorderColor = theme.getInfoPanelBorderColor();
     infoPanelFont = theme.getInfoPanelFont();
     infoPanelPadding = theme.getInfoPanelPadding();
-    infoPanelPosition = theme.getInfoPanelPosition();
 
     // Chart Plot Area ///////////////////////////////
     plotBackgroundColor = theme.getPlotBackgroundColor();
@@ -556,17 +556,6 @@ public abstract class Styler {
   public Styler setInfoPanelPadding(int infoPanelPadding) {
 
     this.infoPanelPadding = infoPanelPadding;
-    return this;
-  }
-
-  public InfoPanelPosition getInfoPanelPosition() {
-
-    return infoPanelPosition;
-  }
-
-  public Styler setInfoPanelPosition(InfoPanelPosition infoPanelPosition) {
-
-    this.infoPanelPosition = infoPanelPosition;
     return this;
   }
 
@@ -1015,10 +1004,6 @@ public abstract class Styler {
   public enum LegendLayout {
     Vertical,
     Horizontal
-  }
-
-  public enum InfoPanelPosition {
-    OutsideS
   }
 
   public enum ChartTheme {

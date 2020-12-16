@@ -16,7 +16,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.chartpart.ChartImage;
-import org.knowm.xchart.internal.chartpart.ChartLine;
+import org.knowm.xchart.internal.chartpart.AnnotationLine;
 import org.knowm.xchart.internal.chartpart.ChartText;
 import org.knowm.xchart.style.markers.None;
 
@@ -86,25 +86,25 @@ public class TestForCustomChartParts {
                     0.0f);
 
             // draw a horizontal line at series max point
-            ChartLine maxY = new ChartLine(series.getYMax(), false, false);
+            AnnotationLine maxY = new AnnotationLine(series.getYMax(), false, false);
             maxY.setColor(Color.GREEN);
             maxY.setStroke(stroke);
             maxY.init(chartPanel);
 
             // draw a horizontal line at series min point
-            ChartLine minY = new ChartLine(series.getYMin(), false, false);
+            AnnotationLine minY = new AnnotationLine(series.getYMin(), false, false);
             minY.setColor(Color.RED);
             minY.setStroke(stroke);
             minY.init(chartPanel);
 
             // draw a vertical line at 0.45
-            ChartLine xLine = new ChartLine(0.45, true, false);
+            AnnotationLine xLine = new AnnotationLine(0.45, true, false);
             xLine.setColor(Color.MAGENTA);
             xLine.setStroke(stroke);
             xLine.init(chartPanel);
 
             // draw a vertical line at 100 pixels
-            ChartLine xLinePixel = new ChartLine(100, true, true);
+            AnnotationLine xLinePixel = new AnnotationLine(100, true, true);
             xLinePixel.setColor(Color.BLACK);
             xLinePixel.setStroke(stroke);
             xLinePixel.init(chartPanel);

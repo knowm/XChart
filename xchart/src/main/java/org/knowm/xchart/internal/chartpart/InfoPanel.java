@@ -11,141 +11,120 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import org.knowm.xchart.internal.series.Series;
+
 import org.knowm.xchart.style.Styler;
 
-/**
- * An info panel that can be displayed together with the chart
- *
- * @author tdiesler@redhat.com
- */
-public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart {
+/** An info panel that can be displayed together on top of the chart */
+public class InfoPanel implements ChartPart {
 
-  private static final int INFO_PANEL_MARGIN = 6;
   private static final int MULTI_LINE_SPACE = 3;
 
-  private final Chart<ST, S> chart;
+  private final List<String> lines;
+  private final int xPosition;
+  private final int yPosition;
+  private final double xPositionD;
+  private final double yPositionD;
 
+  private final Chart chart;
+  private final Styler styler;
+
+  // TODO Need these???
   private double xOffset = 0;
   private double yOffset = 0;
   private Rectangle2D bounds;
 
-  public InfoPanel(Chart<ST, S> chart) {
+  /** Constructor */
+  public InfoPanel(
+      List<String> lines,
+      int xPosition,
+      int yPosition,
+      double xPositionD,
+      double yPositionD,
+      Chart chart) {
+
+    this.lines = lines;
+    this.xPosition = xPosition;
+    this.yPosition = yPosition;
+    this.xPositionD = xPositionD; // NaN indicates that the positioning was defined via ints
+    this.yPositionD = yPositionD; // NaN indicates that the positioning was defined via ints
     this.chart = chart;
-  }
-
-  public void doPaint(Graphics2D g) {
-
-    // Draw legend content inside legend box
-    double startx = xOffset + chart.getStyler().getInfoPanelPadding();
-    double starty = yOffset + chart.getStyler().getInfoPanelPadding();
-
-    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-    List<String> infoContent = chart.getInfoContent();
-    Map<String, Rectangle2D> textBounds = getTextBounds(infoContent);
-
-    paintInfoContent(g, textBounds, startx, starty);
-
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
+    this.styler = chart.getStyler();
   }
 
   @Override
   public void paint(Graphics2D g) {
 
-    if (!chart.getStyler().isInfoPanelVisible()) {
+    if (!styler.isInfoPanelVisible()) {
       return;
     }
 
-    // if the area to draw a chart on is so small, don't even bother
-    if (chart.getPlot().getBounds().getWidth() < 30) {
-      return;
-    }
-
-    // Nothing to do when no content is given
-    if (chart.getInfoContent().isEmpty()) {
-      return;
-    }
-
-    bounds = getBoundsHintVertical();
+    bounds = getBoundsHint();
+    //    System.out.println("bounds = " + bounds);
 
     // Info panel draw position
     double height = bounds.getHeight();
+    double width = bounds.getWidth();
 
-    switch (chart.getStyler().getInfoPanelPosition()) {
-      case OutsideS:
-        xOffset = chart.getPlot().getBounds().getX();
-        yOffset = chart.getHeight() - bounds.getHeight() - INFO_PANEL_MARGIN;
-        break;
+    // first find out if the positioning was defined as a percatge or an absolute pixel number
+    if (!Double.valueOf(xPositionD).isNaN()) { // relative positioning
 
-      default:
-        break;
+      xOffset = chart.getWidth() * xPositionD;
+      yOffset = chart.getHeight() - height - chart.getHeight() * yPositionD - 1;
+
+    } else { // absolute positioning
+
+      xOffset = xPosition;
+      yOffset = chart.getHeight() - height - yPosition - 1;
     }
+
+    xOffset = Math.min(xOffset, (chart.getWidth() - width - 1));
+    yOffset = Math.max(yOffset, 0);
 
     // Draw info panel box background and border
     Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
-    g.setColor(chart.getStyler().getInfoPanelBackgroundColor());
+    g.setColor(styler.getInfoPanelBackgroundColor());
     g.fill(rect);
     g.setStroke(SOLID_STROKE);
-    g.setColor(chart.getStyler().getInfoPanelBorderColor());
+    g.setColor(styler.getInfoPanelBorderColor());
     g.draw(rect);
 
-    doPaint(g);
-  }
+    // Draw text onto panel box
+    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-  float getEntryHeight(Map<String, Rectangle2D> seriesTextBounds, int markerSize) {
+    Map<String, Rectangle2D> textBounds = getTextBounds(lines);
 
-    float legendEntryHeight = 0;
-    for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
-      legendEntryHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
-    }
-    legendEntryHeight -= MULTI_LINE_SPACE;
+    g.setColor(styler.getChartFontColor());
+    g.setFont(styler.getInfoPanelFont());
 
-    legendEntryHeight = Math.max(legendEntryHeight, markerSize);
-
-    return legendEntryHeight;
-  }
-
-  float getLegendEntryWidth(Map<String, Rectangle2D> seriesTextBounds, int markerSize) {
-
-    float legendEntryWidth = 0;
-    for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
-      legendEntryWidth = Math.max(legendEntryWidth, (float) entry.getValue().getWidth());
-    }
-
-    return legendEntryWidth + markerSize + chart.getStyler().getInfoPanelPadding();
-  }
-
-  void paintInfoContent(
-      Graphics2D g, Map<String, Rectangle2D> seriesTextBounds, double x, double starty) {
-
-    g.setColor(chart.getStyler().getChartFontColor());
-    g.setFont(chart.getStyler().getInfoPanelFont());
+    double startx = xOffset + styler.getInfoPanelPadding();
+    double starty = yOffset + styler.getInfoPanelPadding();
 
     double multiLineOffset = 0.0;
 
-    for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
+    for (Map.Entry<String, Rectangle2D> entry : textBounds.entrySet()) {
 
-      double height = entry.getValue().getHeight();
+      double lineHeight = entry.getValue().getHeight();
 
       FontRenderContext frc = g.getFontRenderContext();
-      TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getInfoPanelFont(), frc);
+      TextLayout tl = new TextLayout(entry.getKey(), styler.getInfoPanelFont(), frc);
       Shape shape = tl.getOutline(null);
       AffineTransform orig = g.getTransform();
       AffineTransform at = new AffineTransform();
-      at.translate(x, starty + height + multiLineOffset);
+      at.translate(startx, starty + lineHeight + multiLineOffset);
       g.transform(at);
       g.fill(shape);
       g.setTransform(orig);
 
-      multiLineOffset += height + MULTI_LINE_SPACE;
+      multiLineOffset += lineHeight + MULTI_LINE_SPACE;
     }
+
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
-  private Rectangle2D getBoundsHintVertical() {
+  private Rectangle2D getBoundsHint() {
 
-    if (!chart.getStyler().isInfoPanelVisible()) {
+    if (!styler.isInfoPanelVisible()) {
       return new Rectangle2D.Double();
     }
 
@@ -155,8 +134,7 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
     // determine total content height
     double contentHeight = 0;
 
-    List<String> infoContent = chart.getInfoContent();
-    Map<String, Rectangle2D> textBounds = getTextBounds(infoContent);
+    Map<String, Rectangle2D> textBounds = getTextBounds(lines);
 
     double entryHeight = 0; // could be multi-line
     for (Map.Entry<String, Rectangle2D> entry : textBounds.entrySet()) {
@@ -165,21 +143,21 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
     }
 
     entryHeight -= MULTI_LINE_SPACE; // subtract away the bottom MULTI_LINE_SPACE
-    contentHeight += entryHeight + chart.getStyler().getInfoPanelPadding();
+    contentHeight += entryHeight + styler.getInfoPanelPadding();
 
     // determine content width
-    double contentWidth = chart.getStyler().getInfoPanelPadding() + contentMaxWidth;
+    double contentWidth = styler.getInfoPanelPadding() + contentMaxWidth;
 
     // Legend Box
-    double width = contentWidth + 2 * chart.getStyler().getInfoPanelPadding();
-    double height = contentHeight + chart.getStyler().getInfoPanelPadding();
+    double width = contentWidth + 2 * styler.getInfoPanelPadding();
+    double height = contentHeight + styler.getInfoPanelPadding();
 
     return new Rectangle2D.Double(0, 0, width, height); // 0 indicates not sure yet.
   }
 
-  Map<String, Rectangle2D> getTextBounds(List<String> lines) {
+  private Map<String, Rectangle2D> getTextBounds(List<String> lines) {
 
-    Font infoPanelFont = chart.getStyler().getInfoPanelFont();
+    Font infoPanelFont = styler.getInfoPanelFont();
     Map<String, Rectangle2D> textBounds = new LinkedHashMap<String, Rectangle2D>(lines.size());
     for (String line : lines) {
       TextLayout textLayout =
@@ -193,6 +171,29 @@ public class InfoPanel<ST extends Styler, S extends Series> implements ChartPart
 
   @Override
   public Rectangle2D getBounds() {
-    return getBoundsHintVertical();
+    return getBoundsHint();
   }
+
+  //  float getEntryHeight(Map<String, Rectangle2D> seriesTextBounds, int markerSize) {
+  //
+  //    float legendEntryHeight = 0;
+  //    for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
+  //      legendEntryHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
+  //    }
+  //    legendEntryHeight -= MULTI_LINE_SPACE;
+  //
+  //    legendEntryHeight = Math.max(legendEntryHeight, markerSize);
+  //
+  //    return legendEntryHeight;
+  //  }
+  //
+  //  float getLegendEntryWidth(Map<String, Rectangle2D> seriesTextBounds, int markerSize) {
+  //
+  //    float legendEntryWidth = 0;
+  //    for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
+  //      legendEntryWidth = Math.max(legendEntryWidth, (float) entry.getValue().getWidth());
+  //    }
+  //
+  //    return legendEntryWidth + markerSize + styler.getInfoPanelPadding();
+  //  }
 }

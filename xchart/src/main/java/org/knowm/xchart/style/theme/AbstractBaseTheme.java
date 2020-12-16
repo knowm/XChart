@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Stroke;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.CardinalPosition;
-import org.knowm.xchart.style.Styler.InfoPanelPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.BaseSeriesColors;
 import org.knowm.xchart.style.colors.ChartColor;
@@ -162,7 +161,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public boolean isInfoPanelVisible() {
 
-    return false;
+    return true;
   }
 
   @Override
@@ -181,12 +180,6 @@ public abstract class AbstractBaseTheme implements Theme {
   public int getInfoPanelPadding() {
 
     return 10;
-  }
-
-  @Override
-  public InfoPanelPosition getInfoPanelPosition() {
-
-    return InfoPanelPosition.OutsideS;
   }
 
   // Chart Axes ///////////////////////////////

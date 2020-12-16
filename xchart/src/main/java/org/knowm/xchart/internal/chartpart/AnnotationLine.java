@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
-public class ChartLine implements ChartPart {
+public class AnnotationLine implements ChartPart {
 
   protected XChartPanel xChartPanel;
   protected Chart chart;
@@ -23,7 +23,7 @@ public class ChartLine implements ChartPart {
   protected boolean vertical;
   protected boolean valueInScreenCoordinate = false;
 
-  public ChartLine(double value, boolean vertical, boolean valueInScreenCoordinate) {
+  public AnnotationLine(double value, boolean vertical, boolean valueInScreenCoordinate) {
 
     super();
     this.value = value;

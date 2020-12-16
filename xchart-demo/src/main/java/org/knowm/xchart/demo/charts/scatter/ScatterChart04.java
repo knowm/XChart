@@ -1,8 +1,10 @@
 package org.knowm.xchart.demo.charts.scatter;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -22,6 +24,7 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  *   <li>List<Number> data sets
  *   <li>Setting Series Marker and Marker Color
  *   <li>Using a custom decimal pattern
+ *   <li>InfoPanel
  */
 public class ScatterChart04 implements ExampleChart<XYChart> {
 
@@ -29,7 +32,7 @@ public class ScatterChart04 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new ScatterChart04();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -52,11 +55,21 @@ public class ScatterChart04 implements ExampleChart<XYChart> {
     chart.getStyler().setAxisTitlesVisible(false);
     chart.getStyler().setXAxisDecimalPattern("0.0000000");
 
+    // InfoPanel
+    chart.addInfoPanelContent("Here are some words in an InfoPanel!", 40, 40);
+    chart.addInfoPanelContent("Here are some additional words", 0.5, 0.5);
+    chart.addInfoPanelContent("Here are some additional words \n in the upper right-hand corner \n with multiple lines", 1.0, 1.0);
+    chart.getStyler().setInfoPanelPadding(20);
+    chart.getStyler().setInfoPanelFont( new Font("Verdana", Font.BOLD, 12));
+//    chart.getStyler().setInfoPanelBackgroundColor(Color.RED);
+//    chart.getStyler().setInfoPanelBorderColor(Color.BLUE);
+//    chart.getStyler().setInfoPanelVisible(false);
+
     // Series
     int size = 10;
-    List<Double> xData = new ArrayList<Double>();
-    List<Double> yData = new ArrayList<Double>();
-    List<Double> errorBars = new ArrayList<Double>();
+    List<Double> xData = new ArrayList<>();
+    List<Double> yData = new ArrayList<>();
+    List<Double> errorBars = new ArrayList<>();
     for (int i = 0; i <= size; i++) {
       xData.add(((double) i) / 1000000);
       yData.add(10 * Math.exp(-i));
