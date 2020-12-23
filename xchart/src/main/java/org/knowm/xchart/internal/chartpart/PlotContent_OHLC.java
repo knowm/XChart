@@ -141,7 +141,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
           // add tooltips
           if (chart.getStyler().isToolTipsEnabled()) {
-            tooltips.addData(
+            toolTips.addData(
                 xOffset,
                 yOffset,
                 chart.getXAxisFormat().format(x),
@@ -313,7 +313,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
             sb.append(System.lineSeparator())
                 .append("high: ")
                 .append(chart.getYAxisFormat().format(highOrig));
-            tooltips.addData(toolTipArea, xOffset, highOffset, 0, sb.toString());
+            toolTips.addData(toolTipArea, xOffset, highOffset, 0, sb.toString());
           }
         }
       }

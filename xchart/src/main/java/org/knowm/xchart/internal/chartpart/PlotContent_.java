@@ -12,7 +12,7 @@ import org.knowm.xchart.style.Styler;
 public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;
-  Tooltips tooltips;
+  ToolTips toolTips;
 
   // TODO create a PlotContent_Axes class to put this in.
   static final Stroke ERROR_BAR_STROKE =
@@ -58,7 +58,7 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
 
     // after painting the plot content, paint the tooltip(s) if necessary
     if (chart.getStyler().isToolTipsEnabled()) {
-      tooltips.paint(g);
+      toolTips.paint(g);
     }
     //    chart.cursor.paint(g);
 
@@ -89,7 +89,7 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     }
   }
 
-  public void setTooltips(Tooltips tooltips) {
-    this.tooltips = tooltips;
+  public void setToolTips(ToolTips toolTips) {
+    this.toolTips = toolTips;
   }
 }

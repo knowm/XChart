@@ -21,7 +21,7 @@ import org.knowm.xchart.style.Styler;
 /**
  * Tooltips can be put on all data points or configured to popup like a tooltip from a mouse over.
  */
-public class Tooltips extends MouseAdapter implements ChartPart {
+public class ToolTips extends MouseAdapter implements ChartPart {
 
   private static final int MARGIN = 5;
   private static final int MOUSE_MARGIN = 20;
@@ -31,8 +31,8 @@ public class Tooltips extends MouseAdapter implements ChartPart {
   private final Styler styler;
 
   // The tool tips and currently shown Tooltip
-  private final List<Tooltip> tooltipList = new ArrayList<>();
-  private Tooltip tooltip = null;
+  private final List<ToolTip> toolTipList = new ArrayList<>();
+  private ToolTip tooltip = null;
 
   /**
    * Constructor
@@ -40,12 +40,12 @@ public class Tooltips extends MouseAdapter implements ChartPart {
    * @param chart
    * @param xChartPanel
    */
-  public Tooltips(Chart chart, XChartPanel xChartPanel) {
+  public ToolTips(Chart chart, XChartPanel xChartPanel) {
 
     this.chart = chart;
     this.xChartPanel = xChartPanel;
     this.styler = chart.getStyler();
-    chart.plot.plotContent.setTooltips(this);
+    chart.plot.plotContent.setToolTips(this);
   }
 
   ////////////////////////////////////////////
@@ -57,7 +57,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
 
     boolean isRepaint = false;
 
-    Tooltip newPoint = getSelectedTooltip(e.getX(), e.getY());
+    ToolTip newPoint = getSelectedTooltip(e.getX(), e.getY());
 
     if (newPoint != null) {
 
@@ -83,11 +83,11 @@ public class Tooltips extends MouseAdapter implements ChartPart {
     }
   }
 
-  private Tooltip getSelectedTooltip(int x, int y) {
+  private ToolTip getSelectedTooltip(int x, int y) {
 
     // find the datapoint based on the mouse location
-    Tooltip newPoint = null;
-    for (Tooltip tooltip : tooltipList) {
+    ToolTip newPoint = null;
+    for (ToolTip tooltip : toolTipList) {
       if (tooltip.shape.contains(x, y)) {
         newPoint = tooltip;
         break;
@@ -110,7 +110,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
   public void paint(Graphics2D g) {
 
     if (styler.isToolTipsAlwaysVisible()) {
-      for (Tooltip tooltip : tooltipList) {
+      for (ToolTip tooltip : toolTipList) {
         paintToolTip(g, tooltip);
       }
     }
@@ -131,7 +131,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
   /// PAINTING //////////////////////////////////
   ///////////////////////////////////////////////
 
-  private void paintToolTip(Graphics2D g, Tooltip tooltip) {
+  private void paintToolTip(Graphics2D g, ToolTip tooltip) {
 
     TextLayout textLayout =
         new TextLayout(
@@ -284,8 +284,8 @@ public class Tooltips extends MouseAdapter implements ChartPart {
    */
   void addData(double xOffset, double yOffset, String label) {
 
-    Tooltip dp = new Tooltip(xOffset, yOffset, label);
-    tooltipList.add(dp);
+    ToolTip toolTip = new ToolTip(xOffset, yOffset, label);
+    toolTipList.add(toolTip);
   }
 
   /**
@@ -301,8 +301,8 @@ public class Tooltips extends MouseAdapter implements ChartPart {
 
   void addData(Shape shape, double xOffset, double yOffset, double width, String label) {
 
-    Tooltip dp = new Tooltip(shape, xOffset, yOffset, width, label);
-    tooltipList.add(dp);
+    ToolTip toolTip = new ToolTip(shape, xOffset, yOffset, width, label);
+    toolTipList.add(toolTip);
   }
 
   private String getLabel(String xValue, String yValue) {
@@ -320,7 +320,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
     return "";
   }
 
-  static class Tooltip {
+  static class ToolTip {
 
     // width of data point (used for bar charts)
     // TODO possibly delete this
@@ -339,7 +339,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
      * @param y
      * @param label
      */
-    Tooltip(double x, double y, String label) {
+    ToolTip(double x, double y, String label) {
 
       double halfSize = MARGIN * 1.5;
       double markerSize = MARGIN * 3;
@@ -361,7 +361,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
      * @param width
      * @param label
      */
-    Tooltip(Shape shape, double x, double y, double width, String label) {
+    ToolTip(Shape shape, double x, double y, double width, String label) {
 
       this.x = x;
       this.y = y;
@@ -391,7 +391,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
     public boolean equals(Object o) {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
-      Tooltip tooltip = (Tooltip) o;
+      ToolTip tooltip = (ToolTip) o;
       return label.equals(tooltip.label) && shape.equals(tooltip.shape);
     }
 

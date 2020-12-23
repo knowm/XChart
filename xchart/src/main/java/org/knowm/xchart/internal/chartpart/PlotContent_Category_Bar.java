@@ -453,7 +453,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             yPoint = yOffset;
           }
 
-          tooltips.addData(
+          toolTips.addData(
               rect,
               xOffset,
               yPoint,

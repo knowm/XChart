@@ -32,7 +32,7 @@ import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ChartZoom;
 import org.knowm.xchart.internal.chartpart.Cursor;
-import org.knowm.xchart.internal.chartpart.Tooltips;
+import org.knowm.xchart.internal.chartpart.ToolTips;
 import org.knowm.xchart.style.XYStyler;
 
 /**
@@ -98,7 +98,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     // Mouse motion listener for Tooltips
     if (chart.getStyler().isToolTipsEnabled()) {
-      Tooltips toolTips = new Tooltips(chart, this);
+      ToolTips toolTips = new ToolTips(chart, this);
       this.addMouseMotionListener(toolTips); // for moving
     }
   }

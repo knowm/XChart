@@ -301,7 +301,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
 
         // add tooltips
         if (chart.getStyler().isToolTipsEnabled()) {
-          tooltips.addData(
+          toolTips.addData(
               xOffset,
               yOffset,
               chart.getXAxisFormat().format(x),

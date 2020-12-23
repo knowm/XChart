@@ -209,7 +209,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
                 - Math.sin(Math.toRadians(angle))
                     * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
 
-        tooltips.addData(toolTipShape, xOffset, yOffset + 10, 0, toolTipLabel);
+        toolTips.addData(toolTipShape, xOffset, yOffset + 10, 0, toolTipLabel);
       }
 
       // TOOLTIPS ////////////////////////////////////////////////////

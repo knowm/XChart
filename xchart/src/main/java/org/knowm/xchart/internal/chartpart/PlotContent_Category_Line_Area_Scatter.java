@@ -230,7 +230,7 @@ public class PlotContent_Category_Line_Area_Scatter<
         }
 
         if (chart.getStyler().isToolTipsEnabled()) {
-          tooltips.addData(
+          toolTips.addData(
               xOffset,
               yOffset,
               chart.getXAxisFormat().format(nextCat),
