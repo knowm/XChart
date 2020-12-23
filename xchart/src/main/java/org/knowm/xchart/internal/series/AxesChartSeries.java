@@ -26,11 +26,6 @@ public abstract class AxesChartSeries extends Series {
   /** Line Width */
   private float lineWidth = -1.0f;
 
-  //TODO investigate this
-  protected String[] toolTips;
-
-  protected boolean isCustomToolTips;
-
   /**
    * Constructor
    *
@@ -148,24 +143,4 @@ public abstract class AxesChartSeries extends Series {
     return yAxisType;
   }
 
-  public String[] getToolTips() {
-
-    return toolTips;
-  }
-
-  public void setToolTips(String[] toolTips) {
-
-    this.toolTips = toolTips;
-  }
-
-  public boolean isCustomToolTips() {
-
-    return isCustomToolTips;
-  }
-
-  public AxesChartSeries setCustomToolTips(boolean isCustomToolTips) {
-
-    this.isCustomToolTips = isCustomToolTips;
-    return this;
-  }
 }

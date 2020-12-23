@@ -26,7 +26,7 @@ public class BarChart09 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart09();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -51,20 +51,20 @@ public class BarChart09 implements ExampleChart<CategoryChart> {
     // Series
     chart.addSeries(
         "China",
-        new ArrayList<String>(Arrays.asList(new String[] {"A", "B", "C", "D", "E"})),
-        new ArrayList<Number>(Arrays.asList(new Number[] {11, 23, 20, 36, 5})));
+        new ArrayList<>(Arrays.asList(new String[] {"A", "B", "C", "D", "E"})),
+        new ArrayList<>(Arrays.asList(new Number[] {11, 23, 20, 36, 5})));
     CategorySeries series2 =
         chart.addSeries(
             "Korea",
-            new ArrayList<String>(Arrays.asList(new String[] {"A", "B", "C", "D", "E"})),
-            new ArrayList<Number>(Arrays.asList(new Number[] {13, 25, 22, 38, 7})),
-            new ArrayList<Number>(Arrays.asList(new Number[] {1, 3, 2, 1, 2})));
+            new ArrayList<>(Arrays.asList(new String[] {"A", "B", "C", "D", "E"})),
+            new ArrayList<>(Arrays.asList(new Number[] {13, 25, 22, 38, 7})),
+            new ArrayList<>(Arrays.asList(new Number[] {1, 3, 2, 1, 2})));
     series2.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Line);
     CategorySeries series3 =
         chart.addSeries(
             "World Ave.",
-            new ArrayList<String>(Arrays.asList(new String[] {"A", "B", "C", "D", "E"})),
-            new ArrayList<Number>(Arrays.asList(new Number[] {20, 22, 18, 36, 32})));
+            new ArrayList<>(Arrays.asList(new String[] {"A", "B", "C", "D", "E"})),
+            new ArrayList<>(Arrays.asList(new Number[] {20, 22, 18, 36, 32})));
     series3.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Scatter);
 
     return chart;

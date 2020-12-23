@@ -316,7 +316,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
             String ystr = decimalFormat.format(perct);
             label = series.getName() + " (" + variableLabels[varInd] + ": " + ystr + ")";
           }
-          chart.toolTips.addData(xOffset, yOffset, label);
+          tooltips.addData(xOffset, yOffset, label);
         }
       }
       path.closePath();

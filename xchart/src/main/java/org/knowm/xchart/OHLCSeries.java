@@ -102,13 +102,13 @@ public class OHLCSeries extends MarkerSeries {
       throw new IllegalArgumentException(
           "Series name >"
               + this.getName()
-              + ", yData is equal to null and cannot be set to OHLCSeriesRenderStyle.Line");
+              + "<, yData is equal to null and cannot be set to OHLCSeriesRenderStyle.Line");
     }
     if (yData != null && ohlcSeriesRenderStyle != OHLCSeriesRenderStyle.Line) {
       throw new IllegalArgumentException(
           "Series name >"
               + this.getName()
-              + ", yData is not equal to null and can only be set to OHLCSeriesRenderStyle.Line");
+              + "<, yData is not equal to null and can only be set to OHLCSeriesRenderStyle.Line");
     }
     this.ohlcSeriesRenderStyle = ohlcSeriesRenderStyle;
     return this;
@@ -281,6 +281,7 @@ public class OHLCSeries extends MarkerSeries {
     return closeData;
   }
 
+  //TODO remove this??
   public long[] getVolumeData() {
 
     return volumeData;
@@ -292,10 +293,9 @@ public class OHLCSeries extends MarkerSeries {
   }
 
   public enum OHLCSeriesRenderStyle implements RenderableSeries {
+
     Candle(LegendRenderType.Line),
-
     HiLo(LegendRenderType.Line),
-
     Line(LegendRenderType.Line);
 
     private final LegendRenderType legendRenderType;

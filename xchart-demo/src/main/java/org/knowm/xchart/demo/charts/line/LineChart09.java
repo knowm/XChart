@@ -3,10 +3,19 @@ package org.knowm.xchart.demo.charts.line;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.CardinalPosition;
 
+/**
+ * Cursor
+ *
+ * <p>Demonstrates the following:
+ *
+ * <ul>
+ *   <li>Cursor
+ *   <li>Building a Chart with ChartBuilder
+ */
 public class LineChart09 implements ExampleChart<XYChart> {
 
   public static void main(String[] args) {
@@ -24,7 +33,7 @@ public class LineChart09 implements ExampleChart<XYChart> {
         new XYChartBuilder()
             .width(800)
             .height(600)
-            .title(getClass().getSimpleName())
+            .title("Cursor")
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();
@@ -32,7 +41,8 @@ public class LineChart09 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setLegendPosition(CardinalPosition.OutsideE);
     chart.getStyler().setAxisTitlesVisible(false);
-    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
+    chart.getStyler().setLegendPosition(CardinalPosition.OutsideS);
+    chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     chart.getStyler().setCursorEnabled(true);
 

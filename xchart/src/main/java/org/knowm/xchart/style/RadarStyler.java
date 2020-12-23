@@ -41,9 +41,6 @@ public class RadarStyler extends Styler {
     this.isCircular = theme.isCircular();
     this.startAngleInDegrees = theme.getStartAngleInDegrees();
 
-    // Annotations ////////////////////////////////
-    this.hasAnnotations = true;
-
     this.markerSize = theme.getMarkerSize();
 
     // Chart Plot Area ///////////////////////////////

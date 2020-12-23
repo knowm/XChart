@@ -31,26 +31,24 @@ public class Cursor implements MouseMotionListener {
   private static final int MOUSE_SPACING = 15;
 
   private final List<DataPoint> dataPointList = new ArrayList<>();
-
   private final List<DataPoint> matchingDataPointList = new ArrayList<>();
 
   private final Styler styler;
-
   private Rectangle2D bounds;
-
   private Map<String, Series> seriesMap;
 
   private double mouseX;
-
   private double mouseY;
-
   private double startX;
-
   private double startY;
+  private double textHeight;
 
-  private double textHeigh;
-
-  Cursor(Styler styler) {
+  /**
+   * Constructor
+   *
+   * @param styler
+   */
+  public Cursor(Styler styler) {
 
     this.styler = styler;
   }
@@ -98,7 +96,7 @@ public class Cursor implements MouseMotionListener {
               firstDataPoint.xValue,
               styler.getCursorFont(),
               new FontRenderContext(null, true, false));
-      textHeigh = xValueTextLayout.getBounds().getHeight();
+      textHeight = xValueTextLayout.getBounds().getHeight();
 
       paintVerticalLine(g, firstDataPoint);
 
@@ -138,7 +136,7 @@ public class Cursor implements MouseMotionListener {
 
     double backgroundWidth = styler.getCursorFont().getSize() + maxLinewidth + 3 * LINE_SPACING;
     double backgroundHeight =
-        textHeigh * (1 + matchingDataPointList.size())
+        textHeight * (1 + matchingDataPointList.size())
             + (2 + matchingDataPointList.size()) * LINE_SPACING;
 
     startX = mouseX;
@@ -163,7 +161,7 @@ public class Cursor implements MouseMotionListener {
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();
     at.translate(
-        startX + MOUSE_SPACING + LINE_SPACING, startY + textHeigh + MOUSE_SPACING + LINE_SPACING);
+        startX + MOUSE_SPACING + LINE_SPACING, startY + textHeight + MOUSE_SPACING + LINE_SPACING);
     g.transform(at);
     g.setColor(styler.getCursorFontColor());
     g.fill(xValueTextLayout.getOutline(null));
@@ -173,18 +171,18 @@ public class Cursor implements MouseMotionListener {
     Shape circle = null;
     for (DataPoint dataPoint : matchingDataPointList) {
       at = new AffineTransform();
-      at.translate(0, textHeigh + LINE_SPACING);
+      at.translate(0, textHeight + LINE_SPACING);
       g.transform(at);
       series = (MarkerSeries) seriesMap.get(dataPoint.seriesName);
       if (series == null) {
         continue;
       }
       g.setColor(series.getMarkerColor());
-      circle = new Ellipse2D.Double(0, -textHeigh, textHeigh, textHeigh);
+      circle = new Ellipse2D.Double(0, -textHeight, textHeight, textHeight);
       g.fill(circle);
 
       at = new AffineTransform();
-      at.translate(textHeigh + LINE_SPACING, 0);
+      at.translate(textHeight + LINE_SPACING, 0);
       g.transform(at);
       g.setColor(styler.getCursorFontColor());
       dataPointTextLayout =
@@ -195,7 +193,7 @@ public class Cursor implements MouseMotionListener {
       g.fill(dataPointTextLayout.getOutline(null));
 
       at = new AffineTransform();
-      at.translate(-textHeigh - LINE_SPACING, 0);
+      at.translate(-textHeight - LINE_SPACING, 0);
       g.transform(at);
     }
     g.setTransform(orig);

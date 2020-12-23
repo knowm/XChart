@@ -28,7 +28,7 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart07();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override

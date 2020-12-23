@@ -81,9 +81,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       // smooth curve
       Path2D.Double smoothPath = null;
 
-      boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
-      String[] toolTips = series.getToolTips();
-
+      // for area charts
       double yZeroTransform =
           getBounds().getHeight() - (yTopMargin + (0 - yMin) / (yMax - yMin) * yTickSpace);
       double yZeroOffset = yZeroTransform + getBounds().getY();
@@ -263,7 +261,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           } else {
             g.setColor(xyStyler.getErrorBarsColor());
           }
-          g.setStroke(errorBarStroke);
+          g.setStroke(ERROR_BAR_STROKE);
 
           // Top value
           double topValue;
@@ -301,22 +299,13 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           g.draw(line);
         }
 
-        // add data labels
-        if (toolTipsEnabled) {
-          if (series.isCustomToolTips()) {
-            if (toolTips != null) {
-              String tt = toolTips[i];
-              if (tt != null && !"".equals(tt)) {
-                chart.toolTips.addData(xOffset, yOffset, tt);
-              }
-            }
-          } else {
-            chart.toolTips.addData(
-                xOffset,
-                yOffset,
-                chart.getXAxisFormat().format(x),
-                chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
-          }
+        // add tooltips
+        if (chart.getStyler().isToolTipsEnabled()) {
+          tooltips.addData(
+              xOffset,
+              yOffset,
+              chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
         }
 
         if (xyStyler.isCursorEnabled()) {

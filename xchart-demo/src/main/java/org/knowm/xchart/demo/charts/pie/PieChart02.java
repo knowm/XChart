@@ -17,6 +17,7 @@ import org.knowm.xchart.style.PieStyler.AnnotationType;
  *   <li>PieChartBuilder
  *   <li>Custom series palette
  *   <li>Value Annotations
+ *   <li>Tooltips
  */
 public class PieChart02 implements ExampleChart<PieChart> {
 
@@ -50,6 +51,8 @@ public class PieChart02 implements ExampleChart<PieChart> {
     chart.getStyler().setSeriesColors(sliceColors);
     chart.getStyler().setAnnotationType(AnnotationType.Value);
     // chart.getStyler().setDecimalPattern("#0.000");
+    chart.getStyler().setToolTipsEnabled(true);
+//    chart.getStyler().setToolTipsAlwaysVisible(true);
 
     // Series
     chart.addSeries("Gold", 24);

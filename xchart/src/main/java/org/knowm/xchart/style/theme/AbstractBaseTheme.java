@@ -492,7 +492,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Font getSumFont() {
 
-    return getAnnotationFont();
+    return getBaseFont().deriveFont(15f);
   }
 
   // Line, Scatter, Area Charts ///////////////////////////////
@@ -517,18 +517,17 @@ public abstract class AbstractBaseTheme implements Theme {
     return false;
   }
 
-  // Annotations ///////////////////////////////
+    // Annotations ///////////////////////////////
 
-  /** Pie font, size 12. */
-  @Override
-  public Font getAnnotationFont() {
+    @Override
+    public Font getAnnotationFont() {
 
-    return getPieFont().deriveFont(12f);
-  }
+      return getPieFont().deriveFont(12f);
+    }
 
-  /** Annotations default colour */
-  @Override
-  public Color getAnnotationsFontColor() {
-    return getChartFontColor();
-  }
+    /** Annotations default colour */
+    @Override
+    public Color getAnnotationsFontColor() {
+      return getChartFontColor();
+    }
 }

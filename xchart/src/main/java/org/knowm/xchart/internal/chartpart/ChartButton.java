@@ -19,6 +19,10 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.style.Styler.CardinalPosition;
 
+/**
+ * A button that can be used on the chart for whatever function. For example the ChartZoom class uses this to reset the zoom function. When it is
+ * clicked it fires it's actionPerformed action and whoever is listening to it can react to it.
+ */
 public class ChartButton extends MouseAdapter implements ChartPart {
 
   protected XChartPanel xChartPanel;
@@ -80,10 +84,11 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     }
   }
 
+  //TODO get rid of init methods
   public void init(XChartPanel<XYChart> chartPanel) {
 
     this.xChartPanel = chartPanel;
-    chart = chartPanel.getChart();
+//    chart = chartPanel.getChart();
     if (fontColor == null) {
       fontColor = chart.getStyler().getChartFontColor();
     }

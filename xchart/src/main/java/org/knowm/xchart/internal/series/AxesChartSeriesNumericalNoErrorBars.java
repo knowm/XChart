@@ -8,19 +8,18 @@ import java.util.Arrays;
  *
  * @author timmolter
  */
+// TODO weird name of class since it does contain extravalues for error bars!
 public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
-  double[] xData; // can be Number or Date(epochtime)
-
-  double[] yData;
-
-  double[] extraValues;
-
-  // used for filtering
+  // permanent data
   double[] xDataAll;
   double[] yDataAll;
   double[] extraValuesAll;
-  String[] toolTipsAll;
+
+  // temporary data different from permanent data if some is filter out for zooming
+  double[] xData; // can be Number or Date(epochtime)
+  double[] yData;
+  double[] extraValues;
 
   /**
    * Constructor
@@ -35,20 +34,15 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
     super(name, xAxisDataType);
 
+    this.xDataAll = xData;
+    this.yDataAll = yData;
+    this.extraValuesAll = extraValues;
+
     this.xData = xData;
     this.yData = yData;
     this.extraValues = extraValues;
 
-    setAllData();
-
     calculateMinMax();
-  }
-
-  private void setAllData() {
-
-    this.xDataAll = xData;
-    this.yDataAll = yData;
-    this.extraValuesAll = extraValues;
   }
 
   /**
@@ -69,11 +63,13 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
       throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
     }
 
+    this.xDataAll = newXData;
+    this.yDataAll = newYData;
+    this.extraValuesAll = newExtraValues;
+
     xData = newXData;
     yData = newYData;
     extraValues = newExtraValues;
-
-    setAllData();
 
     calculateMinMax();
   }
@@ -87,9 +83,6 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     yData = Arrays.copyOfRange(yDataAll, startIndex, endIndex);
     if (extraValuesAll != null) {
       extraValues = Arrays.copyOfRange(extraValuesAll, startIndex, endIndex);
-    }
-    if (toolTipsAll != null) {
-      toolTips = Arrays.copyOfRange(toolTipsAll, startIndex, endIndex);
     }
 
     calculateMinMax();
@@ -122,10 +115,6 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     if (extra) {
       extraValues = new double[remainingDataCount];
     }
-    boolean tooltips = toolTipsAll != null;
-    if (tooltips) {
-      toolTips = new String[remainingDataCount];
-    }
 
     int ind = 0;
     for (int i = 0; i < length; i++) {
@@ -136,9 +125,6 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
       yData[ind] = yDataAll[i];
       if (extra) {
         extraValues[ind] = extraValuesAll[i];
-      }
-      if (tooltips) {
-        toolTips[ind] = toolTipsAll[i];
       }
       ind++;
     }
@@ -152,7 +138,6 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     xData = xDataAll;
     yData = yDataAll;
     extraValues = extraValuesAll;
-    toolTips = toolTipsAll;
     calculateMinMax();
   }
 

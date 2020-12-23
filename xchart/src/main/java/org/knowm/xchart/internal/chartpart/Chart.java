@@ -28,12 +28,11 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
   protected final List<InfoPanel> infoPanels = new ArrayList<>();
   // TODO remove these?? move them to XChartPanel??
-  final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
   final Cursor cursor;
 
   /** Chart Parts */
+  //TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't have an axis for example
   protected AxisPair axisPair;
-
   protected Plot_<ST, S> plot;
   protected Legend_<ST, S> legend;
 
@@ -42,6 +41,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   private int height;
   private String title = "";
+  // TODO maybe move these to a secondary abstract class for inheritors with axes. Pie charts don't
+  // have an axis for example
   private String xAxisTitle = "";
   private String yAxisTitle = "";
 
@@ -63,7 +64,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.height = height;
     this.styler = styler;
 
-    this.toolTips = new ToolTips(styler);
     this.cursor = new Cursor(styler);
 
     this.chartTitle = new ChartTitle<ST, S>(this);
@@ -203,7 +203,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     }
 
     List<String> lines = Arrays.asList(content.split("\\n"));
-    infoPanels.add(new InfoPanel(lines,0, 0, xPosition, yPosition, this));
+    infoPanels.add(new InfoPanel(lines, 0, 0, xPosition, yPosition, this));
   }
 
   /** @Deprecated - use Chart#setCustomXAxisTickLabelsFormatter */
@@ -283,7 +283,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     }
     return format;
   }
-
+//TODO remove this?
   ArrayList<ChartPart> getPlotParts() {
 
     return plotParts;
@@ -300,16 +300,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     java.awt.geom.Rectangle2D.Double bounds = getAxisPair().getLeftYAxisBounds();
     return bounds.width + bounds.x;
   }
-  // TODO remove public
-  public ToolTips getToolTips() {
-
-    return toolTips;
-  }
-  // TODO remove public
-  public Cursor getCursor() {
-
-    return cursor;
-  }
-
+  //TODO remove this?
   public void addAnnotation(AnnotationLine maxY) {}
 }

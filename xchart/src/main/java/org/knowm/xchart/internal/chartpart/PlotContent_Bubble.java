@@ -44,15 +44,12 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
       xMax = Math.log10(xMax);
     }
 
-    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 
       if (!series.isEnabled()) {
         continue;
       }
-
-      String[] toolTips = series.getToolTips();
 
       double yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       double yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
@@ -122,40 +119,27 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
           double bubbleSize = series.getExtraValues()[i];
 
           // Draw it
-          Shape bubble;
-          // if (BubbleSeriesRenderStyle.Round == series.getBubbleSeriesRenderStyle()) {
-          bubble =
+          Shape bubble =
               new Ellipse2D.Double(
                   xOffset - bubbleSize / 2, yOffset - bubbleSize / 2, bubbleSize, bubbleSize);
-          // }
-          // else {
-          // bubble = new Ellipse2D.Double(xOffset, yOffset, xOffset + 10, yOffset + 10);
-          // }
           // set bubble color
           g.setColor(series.getFillColor());
           g.fill(bubble);
+
           // set bubble color
           g.setColor(series.getLineColor());
           g.setStroke(series.getLineStyle());
           g.draw(bubble);
-          // add data labels
-          if (toolTipsEnabled) {
-            if (series.isCustomToolTips()) {
-              if (toolTips != null) {
-                String tt = toolTips[i];
-                if (tt != null && !"".equals(tt)) {
-                  chart.toolTips.addData(bubble, xOffset, yOffset, 0, tt);
-                }
-              }
-            } else {
-              chart.toolTips.addData(
-                  bubble,
-                  xOffset,
-                  yOffset,
-                  0,
-                  chart.getXAxisFormat().format(x),
-                  chart.getYAxisFormat().format(yOrig));
-            }
+
+          // add tooltips
+          if (chart.getStyler().isToolTipsEnabled()) {
+            tooltips.addData(
+                bubble,
+                xOffset,
+                yOffset,
+                0,
+                chart.getXAxisFormat().format(x),
+                chart.getYAxisFormat().format(yOrig));
           }
         }
       }

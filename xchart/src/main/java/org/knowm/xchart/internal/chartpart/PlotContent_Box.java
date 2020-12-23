@@ -110,7 +110,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
           g.draw(outPointLine2);
 
           if (toolTipsEnabled) {
-            chart.toolTips.addData(
+            tooltips.addData(
                 xOffset,
                 yOffset,
                 series.getName()
@@ -125,7 +125,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
           series.getMarker().paint(g, xOffset, yOffset, boxPlotStyler.getMarkerSize());
 
           if (toolTipsEnabled) {
-            chart.toolTips.addData(
+            tooltips.addData(
                 xOffset,
                 yOffset,
                 series.getName()
@@ -235,7 +235,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
     area.add(new Area(rect.getBounds()));
 
     if (boxPlotStyler.isToolTipsEnabled()) {
-      chart.toolTips.addData(
+      tooltips.addData(
           area,
           xOffset,
           yOffset,

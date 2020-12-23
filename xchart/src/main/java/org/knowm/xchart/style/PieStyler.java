@@ -38,9 +38,6 @@ public class PieStyler extends Styler {
     this.drawAllAnnotations = theme.isDrawAllAnnotations();
     this.donutThickness = theme.getDonutThickness();
 
-    // Annotations ////////////////////////////////
-    this.hasAnnotations = true;
-
     this.isSumVisible = theme.isSumVisible();
     this.sumFont = theme.getSumFont();
   }

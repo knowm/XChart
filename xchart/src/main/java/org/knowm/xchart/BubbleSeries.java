@@ -43,6 +43,7 @@ public class BubbleSeries extends NoMarkersSeries {
   }
 
   public enum BubbleSeriesRenderStyle implements RenderableSeries {
+
     Round(LegendRenderType.Box);
 
     private final LegendRenderType legendRenderType;

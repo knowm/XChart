@@ -31,8 +31,9 @@ public abstract class AxesChartStyler extends Styler {
   private boolean isYAxisLogarithmic;
   private Double xAxisMin;
   private Double xAxisMax;
-  private HashMap<Integer, Double> yAxisMinMap = new HashMap<Integer, Double>();
-  private HashMap<Integer, Double> yAxisMaxMap = new HashMap<Integer, Double>();
+  //TODO should this be in styler??
+  private HashMap<Integer, Double> yAxisMinMap = new HashMap<>();
+  private HashMap<Integer, Double> yAxisMaxMap = new HashMap<>();
 
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
   private TextAlignment xAxisLabelAlignmentVertical = TextAlignment.Centre;
@@ -71,8 +72,8 @@ public abstract class AxesChartStyler extends Styler {
   private Color yAxisTickLabelsColor;
   private Color xAxisTickMarksColor;
   private Color yAxisTickMarksColor;
-  private Map<Integer, Color> yAxisGroupTickLabelsColorMap = new HashMap<Integer, Color>();
-  private Map<Integer, Color> yAxisGroupTickMarksColorMap = new HashMap<Integer, Color>();
+  private Map<Integer, Color> yAxisGroupTickLabelsColorMap = new HashMap<>();
+  private Map<Integer, Color> yAxisGroupTickMarksColorMap = new HashMap<>();
 
   @Override
   void setAllStyles() {
@@ -128,8 +129,6 @@ public abstract class AxesChartStyler extends Styler {
     this.xAxisLogarithmicDecadeOnly = true;
     this.yAxisLogarithmicDecadeOnly = true;
 
-    // Annotations ////////////////////////////////
-    this.hasAnnotations = false;
   }
 
   // Chart Axes ///////////////////////////////

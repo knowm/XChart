@@ -30,7 +30,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     super(chart);
     pieStyler = chart.getStyler();
   }
-
+  // TODO get rid of this
   public static Shape getDonutSliceShape(
       Rectangle2D pieBounds, double thickness, double start, double extent) {
 
@@ -129,10 +129,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     }
 
     // draw pie slices
-    // double curValue = 0.0;
-    // double curValue = 0.0;
     double startAngle = pieStyler.getStartAngleInDegrees() + 90;
-
     paintSlices(g, pieBounds, total, startAngle);
     paintAnnotations(g, pieBounds, total, startAngle);
     paintSum(g, pieBounds, total);
@@ -140,7 +137,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
   private void paintSlices(Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
 
-    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
     double borderAngle = startAngle;
 
     Map<String, S> map = chart.getSeriesMap();
@@ -153,7 +149,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       }
 
       Number y = series.getValue();
-      Shape labelShape;
 
       // draw slice/donut
       double arcAngle = (y.doubleValue() * 360 / total);
@@ -164,6 +159,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         startAngle -= arcAngle;
       }
 
+      Shape toolTipShape;
       // slice
       if (PieSeriesRenderStyle.Pie == series.getChartPieSeriesRenderStyle()) {
 
@@ -179,7 +175,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         g.fill(pieShape);
         g.setColor(pieStyler.getPlotBackgroundColor());
         g.draw(pieShape);
-        labelShape = pieShape;
+        toolTipShape = pieShape;
       }
 
       // donut
@@ -190,38 +186,43 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         g.fill(donutSlice);
         g.setColor(pieStyler.getPlotBackgroundColor());
         g.draw(donutSlice);
-        labelShape = donutSlice;
+        toolTipShape = donutSlice;
       }
 
-      // add data labels
-      // maybe another option to construct this label
-      String annotation = series.getName() + " (" + df.format(y) + ")";
+      // TOOLTIPS ////////////////////////////////////////////////////
+      // TOOLTIPS ////////////////////////////////////////////////////
+      // TOOLTIPS ////////////////////////////////////////////////////
 
-      double angle = (arcAngle + startAngle) - arcAngle / 2;
-      double xOffset =
-          xCenter
-              + Math.cos(Math.toRadians(angle))
-                  * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
-      double yOffset =
-          yCenter
-              - Math.sin(Math.toRadians(angle))
-                  * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
+      if (pieStyler.isToolTipsEnabled()) {
+        // add data labels
+        // maybe another option to construct this label
+        // TODO use tool tip label type enum and customize this label
+        String toolTipLabel = series.getName() + " (" + df.format(y) + ")";
 
-      if (toolTipsEnabled) {
-        String tt = series.getToolTip();
-        if (tt != null) {
-          chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, tt);
-        } else {
-          chart.toolTips.addData(labelShape, xOffset, yOffset + 10, 0, annotation);
-        }
+        double angle = (arcAngle + startAngle) - arcAngle / 2;
+        double xOffset =
+            xCenter
+                + Math.cos(Math.toRadians(angle))
+                    * (pieBounds.getWidth() / 2 * pieStyler.getAnnotationDistance());
+        double yOffset =
+            yCenter
+                - Math.sin(Math.toRadians(angle))
+                    * (pieBounds.getHeight() / 2 * pieStyler.getAnnotationDistance());
+
+        tooltips.addData(toolTipShape, xOffset, yOffset + 10, 0, toolTipLabel);
       }
+
+      // TOOLTIPS ////////////////////////////////////////////////////
+      // TOOLTIPS ////////////////////////////////////////////////////
+      // TOOLTIPS ////////////////////////////////////////////////////
+
       // COUNTER_CLOCKWISE, startAngle plus arcAngle
       if (ClockwiseDirectionType.COUNTER_CLOCKWISE == pieStyler.getClockwiseDirectionType()) {
         startAngle += arcAngle;
       }
     }
 
-    // draw border
+    // draw border between the slices
     float borderWidth = chart.getStyler().getBorderWidth();
     if (borderWidth > 0) {
       Color color = pieStyler.getPlotBackgroundColor();

@@ -1,11 +1,14 @@
 package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
+import java.awt.Font;
+
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
@@ -51,6 +54,14 @@ public class LineChart05 implements ExampleChart<XYChart> {
     chart.getStyler().setXAxisMin(2.0);
     chart.getStyler().setXAxisMax(7.0);
     chart.getStyler().setToolTipsEnabled(true);
+    chart.getStyler(). setToolTipsAlwaysVisible(true);
+    chart.getStyler().setToolTipFont( new Font("Verdana", Font.BOLD, 12));
+    chart.getStyler().setToolTipHighlightColor(Color.CYAN);
+    chart.getStyler().setToolTipBorderColor(Color.BLACK);
+    chart.getStyler(). setToolTipBackgroundColor(Color.LIGHT_GRAY);
+    chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
+
+
 
     // Series
     double[] xData = new double[] {0.0, 1.0, 2.0, 3.0, 4.0, 5, 6};

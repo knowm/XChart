@@ -26,18 +26,19 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
    * Constructor
    *
    * @param xChartPanel
+   * @param resetString
    */
-  public ChartZoom(XChartPanel<XYChart> xChartPanel) {
+  public ChartZoom(XYChart xyChart, XChartPanel<XYChart> xChartPanel, String resetString) {
 
     x1 = -1;
     x2 = -1;
 
     this.xChartPanel = xChartPanel;
-
-    xyChart = this.xChartPanel.getChart();
+    this.xyChart = xyChart;
+    //TODO is this necessary?
     xyChart.addPlotPart(this);
 
-    resetButton = new ChartButton("Reset Zoom");
+    resetButton = new ChartButton(resetString);
     resetButton.setPosition(xyChart.getStyler().getZoomResetButtomPosition());
     resetButton.init(this.xChartPanel);
     resetButton.setVisible(false);
@@ -58,7 +59,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     repaint();
   }
 
-  protected void repaint() {
+  private void repaint() {
 
     xChartPanel.invalidate();
     xChartPanel.repaint();

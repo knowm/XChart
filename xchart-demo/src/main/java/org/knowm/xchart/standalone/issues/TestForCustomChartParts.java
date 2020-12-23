@@ -15,9 +15,9 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.chartpart.ChartImage;
+import org.knowm.xchart.internal.chartpart.AnnotationImage;
 import org.knowm.xchart.internal.chartpart.AnnotationLine;
-import org.knowm.xchart.internal.chartpart.ChartText;
+import org.knowm.xchart.internal.chartpart.AnnotationText;
 import org.knowm.xchart.style.markers.None;
 
 public class TestForCustomChartParts {
@@ -110,7 +110,7 @@ public class TestForCustomChartParts {
             xLinePixel.init(chartPanel);
 
             // add text near to max line
-            ChartText maxText = new ChartText("Max", 0.0, series.getYMax(), false);
+            AnnotationText maxText = new AnnotationText("Max", 0.0, series.getYMax(), false);
             maxText.init(chartPanel);
 
             try {
@@ -118,8 +118,8 @@ public class TestForCustomChartParts {
                   new URL(
                       "https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_64_64.png");
               BufferedImage image = ImageIO.read(url);
-              ChartImage chartImage = new ChartImage(image, 0, 1, false);
-              chartImage.init(chartPanel);
+              AnnotationImage annotationImage = new AnnotationImage(image, 0, 1, false);
+              annotationImage.init(chartPanel);
             } catch (IOException e) {
               e.printStackTrace();
             }

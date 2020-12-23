@@ -20,7 +20,7 @@ public abstract class Styler {
   /** the default Theme */
   Theme theme = new XChartTheme();
 
-  boolean hasAnnotations = false; // set by subclass
+
   // Chart Style ///////////////////////////////
   private Font baseFont;
   private Color chartBackgroundColor;
@@ -75,9 +75,11 @@ public abstract class Styler {
   private Color cursorFontColor;
   private Color cursorBackgroundColor;
 
-  // Annotations ///////////////////////////////
+//  // Annotations ///////////////////////////////
+  private boolean hasAnnotations = true; // set by subclass
   private Font annotationsFont;
   private Color annotationsFontColor;
+  // TODO move defaults to theme
   private int annotationsRotation = 0;
   private float annotationsPosition = 0.5f;
   private boolean showTotalAnnotations = false;
@@ -162,9 +164,13 @@ public abstract class Styler {
     this.cursorFontColor = theme.getCursorFontColor();
     this.cursorBackgroundColor = theme.getCursorBackgroundColor();
 
-    // Annotations ///////////////////////////////
-    annotationsFont = theme.getAnnotationFont();
+//    // Annotations ///////////////////////////////
+//    hasAnnotations = false; // set by subclass
+     annotationsFont = theme.getAnnotationFont();
     annotationsFontColor = theme.getAnnotationsFontColor();
+//    annotationsRotation = 0;
+//     annotationsPosition = 0.5f;
+//    showTotalAnnotations = theme.getann;
 
     // Formatting
     decimalPattern = null;
@@ -774,7 +780,7 @@ public abstract class Styler {
     this.cursorBackgroundColor = cursorBackgroundColor;
     return this;
   }
-
+//
   // Annotations ///////////////////////////////
 
   public Boolean hasAnnotations() {

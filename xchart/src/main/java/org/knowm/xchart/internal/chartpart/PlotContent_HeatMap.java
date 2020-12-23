@@ -97,7 +97,7 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
       }
 
       if (heatMapStyler.isToolTipsEnabled()) {
-        chart.toolTips.addData(
+        tooltips.addData(
             rect,
             rect.getCenterX(),
             rect.getCenterY() + heatMapStyler.getToolTipFont().getSize(),

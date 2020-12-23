@@ -15,9 +15,9 @@ import org.knowm.xchart.style.Styler;
  * Demonstrates the following:
  *
  * <ul>
- *   <li>HiLo render style
- *   <li>LegendPosition.OutsideS
- *   <li>Two YAxis Groups - both on left
+ *   <li>Tooltips
+ *   <li>LegendPosition.OutsideS *
+ *   <li>default OHLCSeriesRenderStyle.Candle
  */
 public class OHLCChart01 implements ExampleChart<OHLCChart> {
 
@@ -25,7 +25,7 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
 
     ExampleChart<OHLCChart> exampleChart = new OHLCChart01();
     OHLCChart chart = exampleChart.getChart();
-    new SwingWrapper<OHLCChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   public static void populateData(
@@ -44,6 +44,7 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
     }
   }
 
+  // TODO move this? It's shared by all the OHLC classes
   public static void populateData(
       Date startDate,
       double startPrice,
@@ -93,24 +94,22 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
   public OHLCChart getChart() {
 
     // Create Chart
-    OHLCChart chart = new OHLCChartBuilder().width(800).height(600).title("Prices").build();
+    OHLCChart chart = new OHLCChartBuilder().width(800).height(600).title("OHLCChart01").build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
-    List<Date> xData = new ArrayList<Date>();
-    List<Double> openData = new ArrayList<Double>();
-    List<Double> highData = new ArrayList<Double>();
-    List<Double> lowData = new ArrayList<Double>();
-    List<Double> closeData = new ArrayList<Double>();
+    List<Date> xData = new ArrayList<>();
+    List<Double> openData = new ArrayList<>();
+    List<Double> highData = new ArrayList<>();
+    List<Double> lowData = new ArrayList<>();
+    List<Double> closeData = new ArrayList<>();
 
     populateData(xData, openData, highData, lowData, closeData);
 
     xData = null;
-    chart
-        .addSeries("Series", xData, openData, highData, lowData, closeData)
-        .setOhlcSeriesRenderStyle(OHLCSeries.OHLCSeriesRenderStyle.HiLo);
+    chart.addSeries("Series", xData, openData, highData, lowData, closeData);
     chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }

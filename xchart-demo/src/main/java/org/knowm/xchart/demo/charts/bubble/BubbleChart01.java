@@ -38,6 +38,7 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
             .build();
     chart.getStyler().setLegendPosition(Styler.CardinalPosition.InsideN);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
+    chart.getStyler().setToolTipsEnabled(true);
 
     // Customize Chart
 

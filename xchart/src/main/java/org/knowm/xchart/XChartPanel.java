@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.Printable;
@@ -18,6 +17,7 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -28,11 +28,13 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
+
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ChartZoom;
-import org.knowm.xchart.internal.chartpart.ToolTips;
+import org.knowm.xchart.internal.chartpart.Cursor;
+import org.knowm.xchart.internal.chartpart.Tooltips;
 import org.knowm.xchart.style.XYStyler;
 
 /**
@@ -50,6 +52,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private String saveAsString = "Save As...";
   private String exportAsString = "Export To...";
   private String printString = "Print...";
+  private String resetString = "Reset Zoom";
 
   /**
    * Constructor
@@ -63,25 +66,6 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     // Right-click listener for saving chart
     this.addMouseListener(new PopUpMenuClickListener());
-
-    // Mouse motion listener for data label popup
-    ToolTips toolTips = chart.getToolTips();
-    if (toolTips != null) {
-      MouseMotionListener mml = toolTips.getMouseMotionListener();
-      if (mml != null) {
-        this.addMouseMotionListener(mml);
-      }
-    }
-
-    // Mouse Listener for Zoom
-    if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
-      ChartZoom sz = new ChartZoom((XChartPanel<XYChart>) this);
-      this.addMouseListener(sz);
-      this.addMouseMotionListener(sz);
-    }
-
-    // Mouse motion listener for Cursor
-    this.addMouseMotionListener(chart.getCursor());
 
     // Control+S key listener for saving chart
     KeyStroke ctrlS =
@@ -100,6 +84,25 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
         KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlP, "print");
     this.getActionMap().put("print", new PrintAction());
+
+    // Mouse Listener for Zoom
+    if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
+      ChartZoom chartZoom =
+          new ChartZoom((XYChart) chart, (XChartPanel<XYChart>) this, resetString);
+      this.addMouseListener(chartZoom); // for clicking
+      this.addMouseMotionListener(chartZoom); // for moving
+    }
+
+    // Mouse motion listener for Cursor
+    if (chart.getStyler().isCursorEnabled()) {
+      this.addMouseMotionListener(new Cursor(chart.getStyler()));
+    }
+
+    // Mouse motion listener for Tooltips
+    if (chart.getStyler().isToolTipsEnabled()) {
+      Tooltips toolTips = new Tooltips(chart, this);
+      this.addMouseMotionListener(toolTips); // for moving
+    }
   }
 
   /**
@@ -130,6 +133,17 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   public void setPrintString(String printString) {
 
     this.printString = printString;
+  }
+
+  /**
+   * Set the "Reset" String if you want to localize it. This is on the button which resets the zoom
+   * feature.
+   *
+   * @param resetString
+   */
+  public void setResetString(String resetString) {
+
+    this.resetString = resetString;
   }
 
   @Override

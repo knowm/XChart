@@ -413,7 +413,8 @@ chart.setYAxisGroupTitle(1, "B");
 
 ### Zooming In
 
-For the `XYChart` chart type, zooming in is possible via select-dragging over a range on the X-Axis. Reverting out of the zoom can be accomplished 
+For the `XYChart` chart type, zooming in is possible on an `XChartPanel` via select-dragging over a range on the X-Axis. 
+Reverting out of the zoom can be accomplished 
 by double-clicking on the chart or by clicking on the "reset" button, which can be posotioned as desired. 
 
 
@@ -447,6 +448,12 @@ or the position can be specified at a relative position (in percentage between 0
 chart.addInfoPanelContent("Here are some additional words", 0.5, 0.5);
 ```
 
+. Multiple lines can be specified like this:
+
+```java
+chart.addInfoPanelContent("Here are some additional words \n in the upper right-hand corner \n with multiple lines", 1.0, 1.0);
+```
+
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_InfoPanel.png)
 
 The following example `InfoPanel` options show which are available:
@@ -458,6 +465,31 @@ chart.getStyler().setInfoPanelBackgroundColor(Color.RED);
 chart.getStyler().setInfoPanelBorderColor(Color.BLUE);
 chart.getStyler().setInfoPanelVisible(false);
 ```
+A working example can be found at [ScatterChart04](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/scatter/ScatterChart04.java).
+
+### Tool Tips
+
+For all chart types, tool tips can be activated on an `XChartPanel` via 
+
+```java
+chart.getStyler().setToolTipsEnabled(true);
+```
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Tooltips.png)
+
+
+The following example tooltip options show which are available:
+
+```java
+chart.getStyler().setToolTipsEnabled(true);
+chart.getStyler(). setToolTipsAlwaysVisible(true);
+chart.getStyler().setToolTipFont( new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setToolTipHighlightColor(Color.CYAN);
+chart.getStyler().setToolTipBorderColor(Color.BLACK);
+chart.getStyler(). setToolTipBackgroundColor(Color.LIGHT_GRAY);
+chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
+```
+
 A working example can be found at [ScatterChart04](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/scatter/ScatterChart04.java).
 
 ## Chart Themes

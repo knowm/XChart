@@ -233,7 +233,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
             annotation = df.format(value);
           }
         }
-        chart.toolTips.addData(path, xOffset, yOffset + 10, 0, annotation);
+        tooltips.addData(path, xOffset, yOffset + 10, 0, annotation);
       }
       path.moveTo(xCenter, yCenter);
 

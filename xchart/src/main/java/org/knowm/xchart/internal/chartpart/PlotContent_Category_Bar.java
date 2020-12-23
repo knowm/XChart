@@ -38,61 +38,6 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     this.stylerCategory = chart.getStyler();
   }
 
-  private void drawStepBarLine(Graphics2D g, S series, Path2D.Double path) {
-
-    if (series.getLineColor() != null) {
-      g.setColor(series.getLineColor());
-      g.setStroke(series.getLineStyle());
-      g.draw(path);
-    }
-  }
-
-  private void drawStepBarFill(Graphics2D g, S series, Path2D.Double path) {
-
-    if (series.getFillColor() != null) {
-      g.setColor(series.getFillColor());
-      g.fill(path);
-    }
-  }
-
-  private void drawStepBar(
-      Graphics2D g,
-      S series,
-      ArrayList<Point2D.Double> path,
-      ArrayList<Point2D.Double> returnPath) {
-
-    Collections.reverse(returnPath);
-
-    // The last point will be a duplicate of the first.
-    // Pop it before adding all to the main path
-    returnPath.remove(returnPath.size() - 1);
-    path.addAll(returnPath);
-
-    Path2D.Double drawPath = new Path2D.Double();
-
-    // Start draw path from first point, which can then be discarded
-    Point2D.Double startPoint = path.remove(0);
-    drawPath.moveTo(startPoint.getX(), startPoint.getY());
-
-    // Prepare complete fill path
-    for (Point2D.Double currentPoint : path) {
-
-      drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
-    }
-    drawStepBarFill(g, series, drawPath);
-
-    // Remove the bottom portion and draw only the upper outline
-    drawPath.reset();
-    drawPath.moveTo(startPoint.getX(), startPoint.getY());
-    List<Point2D.Double> linePath = path.subList(0, path.size() - returnPath.size() + 1);
-    for (Point2D.Double currentPoint : linePath) {
-
-      drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
-    }
-
-    drawStepBarLine(g, series, drawPath);
-  }
-
   @Override
   public void doPaint(Graphics2D g) {
 
@@ -133,14 +78,11 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     double[] accumulatedStackOffsetNeg = new double[numCategories];
     double[] accumulatedStackOffsetTotalYOffset = new double[numCategories];
 
-    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
-
     for (S series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
         continue;
       }
-      String[] toolTips = series.getToolTips();
 
       yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
@@ -465,7 +407,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           } else {
             g.setColor(stylerCategory.getErrorBarsColor());
           }
-          g.setStroke(errorBarStroke);
+          g.setStroke(ERROR_BAR_STROKE);
 
           // Top value
           if (stylerCategory.isYAxisLogarithmic()) {
@@ -501,7 +443,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           g.draw(line);
         }
         // add data labels
-        if (toolTipsEnabled) {
+        if (chart.getStyler().isToolTipsEnabled()) {
           Rectangle2D.Double rect =
               new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
           double yPoint;
@@ -511,22 +453,13 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             yPoint = yOffset;
           }
 
-          if (series.isCustomToolTips()) {
-            if (toolTips != null) {
-              String tt = toolTips[categoryCounter - 1];
-              if (tt != null && !"".equals(tt)) {
-                chart.toolTips.addData(rect, xOffset, yPoint, barWidth, tt);
-              }
-            }
-          } else {
-            chart.toolTips.addData(
-                rect,
-                xOffset,
-                yPoint,
-                barWidth,
-                chart.getXAxisFormat().format(nextCat),
-                chart.getYAxisFormat().format(yOrig));
-          }
+          tooltips.addData(
+              rect,
+              xOffset,
+              yPoint,
+              barWidth,
+              chart.getXAxisFormat().format(nextCat),
+              chart.getYAxisFormat().format(yOrig));
         }
       }
 
@@ -538,6 +471,61 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
       seriesCounter++;
     }
+  }
+
+  private void drawStepBarLine(Graphics2D g, S series, Path2D.Double path) {
+
+    if (series.getLineColor() != null) {
+      g.setColor(series.getLineColor());
+      g.setStroke(series.getLineStyle());
+      g.draw(path);
+    }
+  }
+
+  private void drawStepBarFill(Graphics2D g, S series, Path2D.Double path) {
+
+    if (series.getFillColor() != null) {
+      g.setColor(series.getFillColor());
+      g.fill(path);
+    }
+  }
+
+  private void drawStepBar(
+      Graphics2D g,
+      S series,
+      ArrayList<Point2D.Double> path,
+      ArrayList<Point2D.Double> returnPath) {
+
+    Collections.reverse(returnPath);
+
+    // The last point will be a duplicate of the first.
+    // Pop it before adding all to the main path
+    returnPath.remove(returnPath.size() - 1);
+    path.addAll(returnPath);
+
+    Path2D.Double drawPath = new Path2D.Double();
+
+    // Start draw path from first point, which can then be discarded
+    Point2D.Double startPoint = path.remove(0);
+    drawPath.moveTo(startPoint.getX(), startPoint.getY());
+
+    // Prepare complete fill path
+    for (Point2D.Double currentPoint : path) {
+
+      drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
+    }
+    drawStepBarFill(g, series, drawPath);
+
+    // Remove the bottom portion and draw only the upper outline
+    drawPath.reset();
+    drawPath.moveTo(startPoint.getX(), startPoint.getY());
+    List<Point2D.Double> linePath = path.subList(0, path.size() - returnPath.size() + 1);
+    for (Point2D.Double currentPoint : linePath) {
+
+      drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
+    }
+
+    drawStepBarLine(g, series, drawPath);
   }
 
   private void drawAnnotations(

@@ -55,9 +55,6 @@ public class DialStyler extends Styler {
 
     this.isCircular = theme.isCircular();
 
-    // Annotations ////////////////////////////////
-    this.hasAnnotations = true;
-
     this.axisTickMarksColor = theme.getAxisTickMarksColor();
     this.axisTickMarksStroke = theme.getAxisTickMarksStroke();
     this.axisTicksMarksVisible = theme.isAxisTicksMarksVisible();
