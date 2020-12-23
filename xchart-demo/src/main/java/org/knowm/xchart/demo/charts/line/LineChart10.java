@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -65,7 +64,7 @@ public class LineChart10 implements ExampleChart<XYChart> {
     AnnotationLine maxY = new AnnotationLine(series.getYMax(), false, false);
     maxY.setColor(Color.GREEN);
     maxY.setStroke(new BasicStroke(3.0f));
-//    maxY.init(chartPanel);
+    //    maxY.init(chartPanel);
     chart.addAnnotation(maxY);
 
     return chart;

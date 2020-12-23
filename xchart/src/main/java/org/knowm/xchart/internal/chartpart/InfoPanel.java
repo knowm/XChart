@@ -11,7 +11,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.style.Styler;
 
 /** An info panel that can be displayed together on top of the chart */

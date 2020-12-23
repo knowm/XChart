@@ -35,7 +35,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
     this.xChartPanel = xChartPanel;
     this.xyChart = xyChart;
-    //TODO is this necessary?
+    // TODO is this necessary?
     xyChart.addPlotPart(this);
 
     resetButton = new ChartButton(resetString);

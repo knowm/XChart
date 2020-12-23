@@ -16,7 +16,8 @@ public abstract class Series {
   private boolean showInLegend = true;
   private boolean isEnabled = true;
 
-  //TODO there is not always a y-axis group (pie chart for example) move thsi to an axis series tyoe??
+  // TODO there is not always a y-axis group (pie chart for example) move thsi to an axis series
+  // tyoe??
   private int yAxisGroup = 0;
   /** the yAxis decimalPattern */
   private String yAxisDecimalPattern;

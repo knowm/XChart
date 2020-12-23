@@ -142,5 +142,4 @@ public abstract class AxesChartSeries extends Series {
 
     return yAxisType;
   }
-
 }

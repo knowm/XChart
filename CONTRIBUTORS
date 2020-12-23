@@ -17,9 +17,11 @@ The following list of authors was automatically generated from the XChart projec
     git log --format='%aN' | sort -u
 
 Adam Walsh
+Alex Kofke
 Alex Nugent
 AlexanderRadaev
 Anthony Quiros
+Arthur Peters
 Bryan Cardillo
 Bryn Jeffries
 Carlos Lopez-Camey
@@ -28,13 +30,16 @@ Christoffer SOOP
 Colm Costelloe
 Damian Szczypior
 Ekkart Kleinod
+Emil Sauer Lynge
 Hakan
 Hakan Işıktekin
 Hongjia Cao
+Hua Shao
 Hwaipy Li
 Jean Niklas L'orange
 Jonathan Leitschuh
 Juha-Matti Tilli
+Marc Jakobi
 Marshall Pierce
 Martin Crawford
 Matan Rubin
@@ -66,3 +71,4 @@ rebaomi
 ruX[Ruslan Zaharov]
 timmolter
 yuan
+

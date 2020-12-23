@@ -68,5 +68,4 @@ public class PieSeries extends Series {
     Pie(),
     Donut();
   }
-
 }

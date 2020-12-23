@@ -5,7 +5,6 @@ import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
-
 import org.knowm.xchart.OHLCSeries;
 import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;

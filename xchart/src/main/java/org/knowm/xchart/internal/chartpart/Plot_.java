@@ -31,7 +31,7 @@ public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
     // g.draw(bounds);
 
     plotSurface.paint(g);
-    //TODO is this necessary>??
+    // TODO is this necessary>??
     if (chart.getSeriesMap().isEmpty()) {
       return;
     }

@@ -20,8 +20,9 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.style.Styler.CardinalPosition;
 
 /**
- * A button that can be used on the chart for whatever function. For example the ChartZoom class uses this to reset the zoom function. When it is
- * clicked it fires it's actionPerformed action and whoever is listening to it can react to it.
+ * A button that can be used on the chart for whatever function. For example the ChartZoom class
+ * uses this to reset the zoom function. When it is clicked it fires it's actionPerformed action and
+ * whoever is listening to it can react to it.
  */
 public class ChartButton extends MouseAdapter implements ChartPart {
 
@@ -84,11 +85,11 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     }
   }
 
-  //TODO get rid of init methods
+  // TODO get rid of init methods
   public void init(XChartPanel<XYChart> chartPanel) {
 
     this.xChartPanel = chartPanel;
-//    chart = chartPanel.getChart();
+    //    chart = chartPanel.getChart();
     if (fontColor == null) {
       fontColor = chart.getStyler().getChartFontColor();
     }
@@ -291,77 +292,77 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     }
   }
 
-   Color getFontColor() {
+  Color getFontColor() {
 
     return fontColor;
   }
 
-   void setFontColor(Color fontColor) {
+  void setFontColor(Color fontColor) {
 
     this.fontColor = fontColor;
   }
 
-   Font getTextFont() {
+  Font getTextFont() {
 
     return textFont;
   }
 
-   void setTextFont(Font textFont) {
+  void setTextFont(Font textFont) {
 
     this.textFont = textFont;
   }
 
-   Color getBorderColor() {
+  Color getBorderColor() {
 
     return borderColor;
   }
 
-   void setBorderColor(Color borderColor) {
+  void setBorderColor(Color borderColor) {
 
     this.borderColor = borderColor;
   }
 
-   int getMargin() {
+  int getMargin() {
 
     return margin;
   }
 
-   void setMargin(int margin) {
+  void setMargin(int margin) {
 
     this.margin = margin;
   }
 
-   ActionEvent getAction() {
+  ActionEvent getAction() {
 
     return action;
   }
 
-   void setAction(ActionEvent action) {
+  void setAction(ActionEvent action) {
 
     this.action = action;
   }
 
-   double getxOffset() {
+  double getxOffset() {
 
     return xOffset;
   }
 
-   void setxOffset(double xOffset) {
+  void setxOffset(double xOffset) {
 
     this.xOffset = xOffset;
   }
 
-   double getyOffset() {
+  double getyOffset() {
 
     return yOffset;
   }
 
-   void setyOffset(double yOffset) {
+  void setyOffset(double yOffset) {
 
     this.yOffset = yOffset;
   }
 
-   void setPosition(CardinalPosition position) {
+  void setPosition(CardinalPosition position) {
     this.position = position;
   }
 }

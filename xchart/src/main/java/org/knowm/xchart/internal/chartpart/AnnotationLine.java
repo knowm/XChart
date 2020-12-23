@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
-//TODO don't have this be a ChartPart??
+// TODO don't have this be a ChartPart??
 public class AnnotationLine implements ChartPart {
 
   protected XChartPanel xChartPanel;

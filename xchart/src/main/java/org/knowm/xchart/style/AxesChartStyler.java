@@ -31,7 +31,7 @@ public abstract class AxesChartStyler extends Styler {
   private boolean isYAxisLogarithmic;
   private Double xAxisMin;
   private Double xAxisMax;
-  //TODO should this be in styler??
+  // TODO should this be in styler??
   private HashMap<Integer, Double> yAxisMinMap = new HashMap<>();
   private HashMap<Integer, Double> yAxisMaxMap = new HashMap<>();
 
@@ -128,7 +128,6 @@ public abstract class AxesChartStyler extends Styler {
     this.yAxisGroupDecimalPatternMap = new HashMap<>();
     this.xAxisLogarithmicDecadeOnly = true;
     this.yAxisLogarithmicDecadeOnly = true;
-
   }
 
   // Chart Axes ///////////////////////////////

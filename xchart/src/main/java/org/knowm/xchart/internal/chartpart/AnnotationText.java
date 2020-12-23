@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
-//TODO don't have this be a ChartPart??
+// TODO don't have this be a ChartPart??
 public class AnnotationText implements ChartPart {
 
   protected XChartPanel xChartPanel;
@@ -34,7 +34,8 @@ public class AnnotationText implements ChartPart {
   double startx;
   double starty;
 
-  public AnnotationText(String text, double xValue, double yValue, boolean valueInScreenCoordinate) {
+  public AnnotationText(
+      String text, double xValue, double yValue, boolean valueInScreenCoordinate) {
 
     this.text = text;
     this.xValue = xValue;

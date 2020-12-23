@@ -520,7 +520,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.6.6</version>
+        <version>3.7.0</version>
     </dependency>
 ```
 
@@ -536,7 +536,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.7.0-SNAPSHOT</version>
+      <version>3.7.1-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -582,7 +582,7 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 E.g:
 ```sh
 cd /path/to/xchart-demo/jar/
-java -cp xchart-demo-3.6.5.jar:xchart-3.6.5.jar org.knowm.xchart.demo.XChartDemo
+java -cp xchart-demo-3.7.0.jar:xchart-3.7.0.jar org.knowm.xchart.demo.XChartDemo
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)

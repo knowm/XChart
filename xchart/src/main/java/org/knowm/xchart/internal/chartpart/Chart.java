@@ -31,8 +31,10 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   final Cursor cursor;
 
   /** Chart Parts */
-  //TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't have an axis for example
+  // TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't
+  // have an axis for example
   protected AxisPair axisPair;
+
   protected Plot_<ST, S> plot;
   protected Legend_<ST, S> legend;
 
@@ -283,7 +285,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     }
     return format;
   }
-//TODO remove this?
+  // TODO remove this?
   ArrayList<ChartPart> getPlotParts() {
 
     return plotParts;
@@ -300,6 +302,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     java.awt.geom.Rectangle2D.Double bounds = getAxisPair().getLeftYAxisBounds();
     return bounds.width + bounds.x;
   }
-  //TODO remove this?
+  // TODO remove this?
   public void addAnnotation(AnnotationLine maxY) {}
 }

@@ -13,7 +13,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.OHLCStyler;
@@ -154,7 +153,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
       g.fill(tooltip.shape);
     }
 
-//    System.out.println("paintToolTip");
+    //    System.out.println("paintToolTip");
 
     int leftEdge = (int) chart.plot.plotContent.getBounds().getX();
     int rightEdge =
@@ -229,7 +228,7 @@ public class Tooltips extends MouseAdapter implements ChartPart {
       list.add(textLayout);
     }
 
-//    System.out.println("paintMultiLineToolTip");
+    //    System.out.println("paintMultiLineToolTip");
 
     Rectangle clipBounds = g.getClipBounds();
     double startX = tooltip.x;

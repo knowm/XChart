@@ -281,7 +281,7 @@ public class OHLCSeries extends MarkerSeries {
     return closeData;
   }
 
-  //TODO remove this??
+  // TODO remove this??
   public long[] getVolumeData() {
 
     return volumeData;
@@ -293,7 +293,6 @@ public class OHLCSeries extends MarkerSeries {
   }
 
   public enum OHLCSeriesRenderStyle implements RenderableSeries {
-
     Candle(LegendRenderType.Line),
     HiLo(LegendRenderType.Line),
     Line(LegendRenderType.Line);

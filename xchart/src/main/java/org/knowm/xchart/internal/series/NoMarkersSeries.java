@@ -22,7 +22,7 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumericalNoErrorBar
 
     super(name, xData, yData, extraValues, axisType);
 
-    //TODO why do we need this here?
+    // TODO why do we need this here?
     this.extraValues = extraValues;
     calculateMinMax();
   }

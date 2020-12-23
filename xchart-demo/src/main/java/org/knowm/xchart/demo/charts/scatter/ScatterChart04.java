@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -58,12 +57,15 @@ public class ScatterChart04 implements ExampleChart<XYChart> {
     // InfoPanel
     chart.addInfoPanelContent("Here are some words in an InfoPanel!", 40, 40);
     chart.addInfoPanelContent("Here are some additional words", 0.5, 0.5);
-    chart.addInfoPanelContent("Here are some additional words \n in the upper right-hand corner \n with multiple lines", 1.0, 1.0);
+    chart.addInfoPanelContent(
+        "Here are some additional words \n in the upper right-hand corner \n with multiple lines",
+        1.0,
+        1.0);
     chart.getStyler().setInfoPanelPadding(20);
-    chart.getStyler().setInfoPanelFont( new Font("Verdana", Font.BOLD, 12));
-//    chart.getStyler().setInfoPanelBackgroundColor(Color.RED);
-//    chart.getStyler().setInfoPanelBorderColor(Color.BLUE);
-//    chart.getStyler().setInfoPanelVisible(false);
+    chart.getStyler().setInfoPanelFont(new Font("Verdana", Font.BOLD, 12));
+    //    chart.getStyler().setInfoPanelBackgroundColor(Color.RED);
+    //    chart.getStyler().setInfoPanelBorderColor(Color.BLUE);
+    //    chart.getStyler().setInfoPanelVisible(false);
 
     // Series
     int size = 10;

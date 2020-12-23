@@ -15,7 +15,7 @@ public abstract class Plot_Circular<ST extends Styler, S extends Series> extends
   public Plot_Circular(Chart<ST, S> chart) {
 
     super(chart);
-    //TODO is this needed??
+    // TODO is this needed??
     initContentAndSurface(chart);
   }
 

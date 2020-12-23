@@ -173,8 +173,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               leftYAxisBounds.getY() + leftYAxisBounds.getHeight(),
               rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
       double xOffset = leftYAxisBounds.getWidth() + leftYAxisBounds.getX();
-      double yOffset =
-          maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset;
+      double yOffset = maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset;
 
       double legendWidth = 0;
       if (axesChartStyler.getLegendPosition() == CardinalPosition.OutsideE

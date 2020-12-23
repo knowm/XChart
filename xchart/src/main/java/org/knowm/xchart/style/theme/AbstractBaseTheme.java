@@ -517,17 +517,17 @@ public abstract class AbstractBaseTheme implements Theme {
     return false;
   }
 
-    // Annotations ///////////////////////////////
+  // Annotations ///////////////////////////////
 
-    @Override
-    public Font getAnnotationFont() {
+  @Override
+  public Font getAnnotationFont() {
 
-      return getPieFont().deriveFont(12f);
-    }
+    return getPieFont().deriveFont(12f);
+  }
 
-    /** Annotations default colour */
-    @Override
-    public Color getAnnotationsFontColor() {
-      return getChartFontColor();
-    }
+  /** Annotations default colour */
+  @Override
+  public Color getAnnotationsFontColor() {
+    return getChartFontColor();
+  }
 }

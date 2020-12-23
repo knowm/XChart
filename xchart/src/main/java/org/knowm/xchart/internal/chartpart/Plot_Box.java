@@ -10,5 +10,4 @@ public class Plot_Box<ST extends BoxStyler, S extends BoxSeries> extends Plot_Ax
     super(chart);
     this.plotContent = new PlotContent_Box<ST, S>(chart);
   }
-
 }

@@ -2,7 +2,6 @@ package org.knowm.xchart;
 
 import java.awt.Graphics2D;
 import java.util.Map;
-
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;

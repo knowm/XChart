@@ -52,7 +52,7 @@ public class PieChart02 implements ExampleChart<PieChart> {
     chart.getStyler().setAnnotationType(AnnotationType.Value);
     // chart.getStyler().setDecimalPattern("#0.000");
     chart.getStyler().setToolTipsEnabled(true);
-//    chart.getStyler().setToolTipsAlwaysVisible(true);
+    //    chart.getStyler().setToolTipsAlwaysVisible(true);
 
     // Series
     chart.addSeries("Gold", 24);

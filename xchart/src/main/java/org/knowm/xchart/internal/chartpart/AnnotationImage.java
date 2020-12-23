@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 
-//TODO don't have this be a ChartPart??
+// TODO don't have this be a ChartPart??
 public class AnnotationImage implements ChartPart {
 
   protected XChartPanel xChartPanel;
@@ -30,7 +30,8 @@ public class AnnotationImage implements ChartPart {
   int startx;
   int starty;
 
-  public AnnotationImage(Image image, double xValue, double yValue, boolean valueInScreenCoordinate) {
+  public AnnotationImage(
+      Image image, double xValue, double yValue, boolean valueInScreenCoordinate) {
 
     this.image = image;
     this.xValue = xValue;

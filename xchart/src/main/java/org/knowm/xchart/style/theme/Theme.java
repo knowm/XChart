@@ -3,7 +3,6 @@ package org.knowm.xchart.style.theme;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
-
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
