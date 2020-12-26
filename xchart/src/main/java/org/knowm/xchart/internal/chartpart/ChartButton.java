@@ -89,7 +89,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   public void init(XChartPanel<XYChart> chartPanel) {
 
     this.xChartPanel = chartPanel;
-    //    chart = chartPanel.getChart();
+    chart = chartPanel.getChart();
     if (fontColor == null) {
       fontColor = chart.getStyler().getChartFontColor();
     }

@@ -23,10 +23,10 @@ import org.knowm.xchart.style.Styler;
 public abstract class AxisTickCalculator_ {
 
   /** the List of tick label position in pixels */
-  final List<Double> tickLocations = new LinkedList<Double>();
+  final List<Double> tickLocations = new LinkedList<>();
 
   /** the List of tick label values */
-  final List<String> tickLabels = new LinkedList<String>();
+  final List<String> tickLabels = new LinkedList<>();
 
   final Direction axisDirection;
 
