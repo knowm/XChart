@@ -40,6 +40,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   protected Color borderColor;
   protected int margin = 6;
   protected ActionEvent action;
+  private EventListenerList listenerList = new EventListenerList();
 
   // button position
   protected CardinalPosition position = CardinalPosition.InsideN;
@@ -54,42 +55,15 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   /**
    * Constructor
    *
+   * @param xyChart
+   * @param xChartPanel
    * @param text
    */
-  public ChartButton(String text) {
+  public ChartButton(XYChart xyChart, XChartPanel<XYChart> xChartPanel, String text) {
 
     this.text = text;
-  }
 
-  protected EventListenerList listenerList = new EventListenerList();
-
-  public void addActionListener(ActionListener l) {
-
-    listenerList.add(ActionListener.class, l);
-  }
-
-  public void removeActionListener(ActionListener l) {
-
-    listenerList.remove(ActionListener.class, l);
-  }
-
-  protected void fireActionPerformed() {
-
-    Object[] listeners = listenerList.getListenerList();
-    for (int i = listeners.length - 2; i >= 0; i -= 2) {
-      if (action == null) {
-        action = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, text);
-      }
-
-      ((ActionListener) listeners[i + 1]).actionPerformed(action);
-    }
-  }
-
-  // TODO get rid of init methods
-  public void init(XChartPanel<XYChart> chartPanel) {
-
-    this.xChartPanel = chartPanel;
-    chart = chartPanel.getChart();
+    chart = xyChart;
     if (fontColor == null) {
       fontColor = chart.getStyler().getChartFontColor();
     }
@@ -99,9 +73,18 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     if (borderColor == null) {
       borderColor = chart.getStyler().getLegendBorderColor();
     }
-    chartPanel.addMouseListener(this);
-    chartPanel.addMouseMotionListener(this);
-    chart.addPlotPart(this);
+    xChartPanel.addMouseListener(this);
+    xChartPanel.addMouseMotionListener(this);
+  }
+
+  public void addActionListener(ActionListener l) {
+
+    listenerList.add(ActionListener.class, l);
+  }
+
+  public void removeActionListener(ActionListener l) {
+
+    listenerList.remove(ActionListener.class, l);
   }
 
   @Override
@@ -125,72 +108,15 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     }
   }
 
-  @Override
-  public void mouseMoved(MouseEvent e) {
+  private void fireActionPerformed() {
 
-    if (!visible) {
-      return;
-    }
-    if (buttonRect == null) {
-      return;
-    }
-    if (buttonRect.contains(e.getX(), e.getY())) {
-      mouseOver = true;
-      repaint();
-    } else {
-      if (mouseOver) {
-        mouseOver = false;
-        repaint();
+    Object[] listeners = listenerList.getListenerList();
+    for (int i = listeners.length - 2; i >= 0; i -= 2) {
+      if (action == null) {
+        action = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, text);
       }
-    }
-  }
 
-  protected void repaint() {
-
-    xChartPanel.invalidate();
-    xChartPanel.repaint();
-  }
-
-  protected void calculatePosition(Rectangle2D textBounds) {
-
-    double textHeight = textBounds.getHeight();
-    double textWidth = textBounds.getWidth();
-    double widthAdjustment = textWidth + margin * 3;
-    double heightAdjustment = textHeight + margin * 3;
-
-    double boundsWidth = bounds.getWidth();
-    double boundsHeight = bounds.getHeight();
-
-    if (position != null) {
-      switch (position) {
-        case InsideNW:
-          xOffset = bounds.getX() + margin;
-          yOffset = bounds.getY() + margin;
-          break;
-        case InsideNE:
-          xOffset = bounds.getX() + boundsWidth - widthAdjustment;
-          yOffset = bounds.getY() + margin;
-          break;
-        case InsideSE:
-          xOffset = bounds.getX() + boundsWidth - widthAdjustment;
-          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-          break;
-        case InsideSW:
-          xOffset = bounds.getX() + margin;
-          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-          break;
-        case InsideN:
-          xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
-          yOffset = bounds.getY() + margin;
-          break;
-        case InsideS:
-          xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
-          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-          break;
-
-        default:
-          break;
-      }
+      ((ActionListener) listeners[i + 1]).actionPerformed(action);
     }
   }
 
@@ -200,6 +126,8 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     if (!visible) {
       return;
     }
+    //    System.out.println("PAINT BUTTOM");
+
     bounds = g.getClipBounds();
 
     double boundsWidth = bounds.getWidth();
@@ -249,19 +177,54 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
-  public Color getColor() {
+  private void calculatePosition(Rectangle2D textBounds) {
 
-    return color;
+    double textHeight = textBounds.getHeight();
+    double textWidth = textBounds.getWidth();
+    double widthAdjustment = textWidth + margin * 3;
+    double heightAdjustment = textHeight + margin * 3;
+
+    double boundsWidth = bounds.getWidth();
+    double boundsHeight = bounds.getHeight();
+
+    if (position != null) {
+      switch (position) {
+        case InsideNW:
+          xOffset = bounds.getX() + margin;
+          yOffset = bounds.getY() + margin;
+          break;
+        case InsideNE:
+          xOffset = bounds.getX() + boundsWidth - widthAdjustment;
+          yOffset = bounds.getY() + margin;
+          break;
+        case InsideSE:
+          xOffset = bounds.getX() + boundsWidth - widthAdjustment;
+          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+          break;
+        case InsideSW:
+          xOffset = bounds.getX() + margin;
+          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+          break;
+        case InsideN:
+          xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
+          yOffset = bounds.getY() + margin;
+          break;
+        case InsideS:
+          xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
+          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+          break;
+
+        default:
+          break;
+      }
+    }
   }
+
+  //   SETTERS
 
   public void setColor(Color color) {
 
     this.color = color;
-  }
-
-  public Color getHoverColor() {
-
-    return hoverColor;
   }
 
   public void setHoverColor(Color hoverColor) {
@@ -269,19 +232,9 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     this.hoverColor = hoverColor;
   }
 
-  public String getText() {
-
-    return text;
-  }
-
   public void setText(String text) {
 
     this.text = text;
-  }
-
-  public boolean isVisible() {
-
-    return visible;
   }
 
   public void setVisible(boolean visible) {
@@ -292,19 +245,9 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     }
   }
 
-  Color getFontColor() {
-
-    return fontColor;
-  }
-
   void setFontColor(Color fontColor) {
 
     this.fontColor = fontColor;
-  }
-
-  Font getTextFont() {
-
-    return textFont;
   }
 
   void setTextFont(Font textFont) {
@@ -312,54 +255,14 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     this.textFont = textFont;
   }
 
-  Color getBorderColor() {
-
-    return borderColor;
-  }
-
   void setBorderColor(Color borderColor) {
 
     this.borderColor = borderColor;
   }
 
-  int getMargin() {
-
-    return margin;
-  }
-
   void setMargin(int margin) {
 
     this.margin = margin;
-  }
-
-  ActionEvent getAction() {
-
-    return action;
-  }
-
-  void setAction(ActionEvent action) {
-
-    this.action = action;
-  }
-
-  double getxOffset() {
-
-    return xOffset;
-  }
-
-  void setxOffset(double xOffset) {
-
-    this.xOffset = xOffset;
-  }
-
-  double getyOffset() {
-
-    return yOffset;
-  }
-
-  void setyOffset(double yOffset) {
-
-    this.yOffset = yOffset;
   }
 
   void setPosition(CardinalPosition position) {

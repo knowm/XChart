@@ -35,14 +35,12 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
     this.xChartPanel = xChartPanel;
     this.xyChart = xyChart;
-    // TODO is this necessary?
-    xyChart.addPlotPart(this);
+    xyChart.plot.plotContent.setChartZoom(this);
 
-    resetButton = new ChartButton(resetString);
-    resetButton.setPosition(xyChart.getStyler().getZoomResetButtomPosition());
-    resetButton.init(this.xChartPanel);
-    resetButton.setVisible(false);
+    resetButton = new ChartButton(xyChart, xChartPanel, resetString);
     resetButton.addActionListener(this);
+    resetButton.setVisible(false);
+    resetButton.setPosition(xyChart.getStyler().getZoomResetButtomPosition());
     resetButton.setColor(xyChart.getStyler().getZoomSelectionColor());
     resetButton.setHoverColor(xyChart.getStyler().getZoomSelectionColor().darker());
     resetButton.setBorderColor(xyChart.getStyler().getZoomSelectionColor().darker());
@@ -74,14 +72,22 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   @Override
   public void paint(Graphics2D g) {
 
-    if (x1 == -1 || x2 == -1) {
+//    here either 1. the mouse was released and the chart was zoomed so we need the reset button or 2. nothing should be drawn or 3. the zoom area
+//    should be drawn
+
+//    System.out.println("chartZoom.paint()");
+
+    if (resetButton.visible && (x1 == -1 || x2 == -1)) { //
+      resetButton.paint(g);
+    } else if (x1 == -1 || x2 == -1) {
       return;
+    } else {
+      g.setColor(xyChart.getStyler().getZoomSelectionColor());
+      int xStart = Math.min(x1, x2);
+      int width = Math.abs(x1 - x2);
+      bounds = g.getClipBounds();
+      g.fillRect(xStart, 0, width, (int) (bounds.height + bounds.getY()));
     }
-    g.setColor(xyChart.getStyler().getZoomSelectionColor());
-    int xStart = Math.min(x1, x2);
-    int width = Math.abs(x1 - x2);
-    bounds = g.getClipBounds();
-    g.fillRect(xStart, 0, width, (int) (bounds.height + bounds.getY()));
   }
 
   public void mousePressed(MouseEvent e) {
@@ -98,6 +104,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
   public void mouseReleased(MouseEvent e) {
 
+//    System.out.println("Mouse released");
     if (!isOverlapping()) {
       x1 = -1;
       x2 = -1;
@@ -117,6 +124,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
       filtered = filterXByScreen(smallPoint, bigPoint);
       resetButton.setVisible(filtered && xyChart.getStyler().isZoomResetByButton());
+//      System.out.println("set visible");
     }
 
     x1 = -1;
