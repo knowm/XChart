@@ -2,8 +2,10 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -222,6 +224,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
           value = value + gridStep) {
 
         tickLabels.add(axisFormat.format(value));
+        System.out.println(new Date((long)value));
         // here we convert tickPosition finally to plot space, i.e. pixels
         double tickLabelPosition =
             margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
@@ -229,6 +232,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
         tickLocations.add(tickLabelPosition);
         // }
       }
+      System.out.println("************");
     } while (skip || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
   }
 
