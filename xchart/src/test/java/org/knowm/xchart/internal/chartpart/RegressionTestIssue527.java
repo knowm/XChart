@@ -1,26 +1,30 @@
-package org.knowm.xchart.standalone.issues;
+package org.knowm.xchart.internal.chartpart;
 
-import java.text.ParseException;
+import static org.fest.assertions.api.Assertions.assertThat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.knowm.xchart.SwingWrapper;
+import org.junit.Test;
+import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-public class TestForIssue527 {
+/** Regression test for <a href="https://github.com/knowm/XChart/issues/536">issue 536</a>. */
+public class RegressionTestIssue527 {
 
-  public static void main(String[] args) throws ParseException {
+  @Test
+  public void issue546RegressionTest() throws Exception {
+
     String series = "ABC";
 
     List<Date> x = new ArrayList<>(); // List of dates
-    //    List<Integer> x = new ArrayList<Integer>(); // List of ints
     List<Double> y = new ArrayList<>();
 
     XYChart chart =
@@ -41,11 +45,11 @@ public class TestForIssue527 {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
     chart.getStyler().setTimezone(TimeZone.getTimeZone("UTC"));
-//    chart.getStyler().setXAxisTickMarkSpacingHint(160);
 
     x.add(sdf.parse("2020-10-19")); // dates on X
-//    System.out.println("x.get(0).getTime() = " + x.get(0).getTime());
-//    System.out.println("sdf.parse(\"2020-10-19\") = " + sdf.parse("2020-10-19").toGMTString());
+    //    System.out.println("x.get(0).getTime() = " + x.get(0).getTime());
+    //    System.out.println("sdf.parse(\"2020-10-19\") = " +
+    // sdf.parse("2020-10-19").toGMTString());
     x.add(sdf.parse("2020-10-20"));
     x.add(sdf.parse("2020-10-21"));
     x.add(sdf.parse("2020-10-22"));
@@ -55,17 +59,6 @@ public class TestForIssue527 {
     x.add(sdf.parse("2020-10-26"));
     x.add(sdf.parse("2020-10-27"));
     x.add(sdf.parse("2020-10-28"));
-
-    //    x.add(0); // ints on X
-    //    x.add(1);
-    //    x.add(2);
-    //    x.add(3);
-    //    x.add(4);
-    //    x.add(5);
-    //    x.add(6);
-    //    x.add(7);
-    //    x.add(8);
-    //    x.add(9);
 
     y.add(2.1);
     y.add(4.5);
@@ -81,7 +74,14 @@ public class TestForIssue527 {
     XYSeries xyseries = chart.addSeries(series, x, y);
     xyseries.setMarker(SeriesMarkers.NONE);
     xyseries.setYAxisGroup(1);
-    new SwingWrapper<>(chart).displayChart();
-    //      BitmapEncoder.saveBitmap(chart,"XChart.png", BitmapEncoder.BitmapFormat.PNG);
+    byte[] bytes = BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+
+    List<String> tickLabels = chart.axisPair.getXAxis().getAxisTickCalculator().getTickLabels();
+
+    assertThat(tickLabels.size()).isEqualTo(13);
+    assertThat(tickLabels.get(0)).isEqualTo("10-18");
+    boolean areAllLabelsUnique =
+        chart.axisPair.getXAxis().getAxisTickCalculator().areAllTickLabelsUnique(tickLabels);
+    assertThat(areAllLabelsUnique).isEqualTo(true);
   }
 }
