@@ -100,6 +100,7 @@ public abstract class Styler {
   private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
 
   // Custom formatting functions for the cursor
+  //TODO look into this
   private Function<Double, String> customCursorXDataFormattingFunction;
   private Function<Double, String> customCursorYDataFormattingFunction;
 

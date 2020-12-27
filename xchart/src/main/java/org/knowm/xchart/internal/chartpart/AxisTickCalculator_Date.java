@@ -2,7 +2,6 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +26,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
   // private static final long QUARTER_SCALE = TimeUnit.DAYS.toMillis(1L) * 120;
   private static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
 
-  private static final List<TimeSpan> timeSpans = new ArrayList<TimeSpan>();
+  private static final List<TimeSpan> timeSpans = new ArrayList<>();
 
   static {
     timeSpans.add(new TimeSpan(MILLIS_SCALE, 1, "ss.SSS"));
@@ -145,7 +144,11 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
     // Generate the labels first, see if they "look" OK and reiterate with an increased
     // tickSpacingHint
-    int tickSpacingHint = styler.getXAxisTickMarkSpacingHint();
+    int tickSpacingHint =
+        (axisDirection == Direction.X
+                ? styler.getXAxisTickMarkSpacingHint()
+                : styler.getYAxisTickMarkSpacingHint())
+            - 5;
     int gridStepInChartSpace;
 
     // System.out.println("calculating ticks...");
@@ -166,6 +169,8 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
         break;
       }
     }
+    //    TimeSpan timeSpan1 = timeSpans.get(index);
+    //    System.out.println("timeSpan1 = " + timeSpan1);
 
     // use the pattern from the first timeSpan
     String datePattern = timeSpans.get(index).getDatePattern();
@@ -196,16 +201,20 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
       double gridStep =
           timeSpans.get(++index).getUnitAmount()
               * timeSpans.get(index).getMagnitude(); // in time units (ms)
-      // System.out.println("gridStep: " + gridStep);
 
       gridStepInChartSpace = (int) (gridStep / span * tickSpace);
       if (gridStepInChartSpace < 10 && index < timeSpans.size() - 1) {
         skip = true;
         continue;
       }
+      //      TimeSpan timeSpan2 = timeSpans.get(index);
+      //      System.out.println("timeSpan2 = " + timeSpan2);
+
       // System.out.println("gridStepInChartSpace: " + gridStepInChartSpace);
 
       double firstPosition = getFirstPosition(gridStep);
+      //      System.out.println("firstPosition = " + firstPosition);
+      //      System.out.println("   " + new Date((long) firstPosition).toGMTString());
 
       // Define Date Pattern
       // override pattern if one was explicitly given
@@ -216,6 +225,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
       SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styler.getLocale());
       simpleDateformat.setTimeZone(styler.getTimezone());
+      //      simpleDateformat.setTimeZone(TimeZone.getTimeZone("UTC"));
       axisFormat = simpleDateformat;
 
       // generate all tickLabels and tickLocations from the first to last position
@@ -224,7 +234,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
           value = value + gridStep) {
 
         tickLabels.add(axisFormat.format(value));
-        System.out.println(new Date((long)value));
+        //        System.out.println("ticklabel date = " + new Date((long) value).toGMTString());
         // here we convert tickPosition finally to plot space, i.e. pixels
         double tickLabelPosition =
             margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
@@ -232,8 +242,11 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
         tickLocations.add(tickLabelPosition);
         // }
       }
-      System.out.println("************");
-    } while (skip || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+      //      System.out.println("************");
+    } while (skip
+        || !areAllTickLabelsUnique(tickLabels)
+        || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    //    System.out.println("are ticklabels unique? " + areAllTickLabelsUnique(tickLabels));
   }
 
   static class TimeSpan {

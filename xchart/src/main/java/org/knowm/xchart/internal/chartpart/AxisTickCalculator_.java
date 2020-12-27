@@ -94,9 +94,14 @@ public abstract class AxisTickCalculator_ {
 
     // System.out.println("******");
 
+//    System.out.println("minValue = " + minValue);
+//    System.out.println("(minValue % gridStep) = " + (minValue % gridStep));
+
     return minValue - (minValue % gridStep) - gridStep;
   }
 
+
+  //TODO make these non-public??
   public List<Double> getTickLocations() {
 
     return tickLocations;
@@ -403,7 +408,7 @@ public abstract class AxisTickCalculator_ {
             .collect(Collectors.toList()));
   }
 
-  private static boolean areAllTickLabelsUnique(List<?> tickLabels) {
+   boolean areAllTickLabelsUnique(List<?> tickLabels) {
     return new LinkedHashSet<>(tickLabels).size() == tickLabels.size();
   }
 

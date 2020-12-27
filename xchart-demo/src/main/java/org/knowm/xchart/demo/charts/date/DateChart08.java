@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.TimeZone;
+
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -43,12 +45,13 @@ public class DateChart08 implements ExampleChart<XYChart> {
     chart.getStyler().setDatePattern("yyyy-MM-dd");
 
     // Series
-    List<Date> xData = new ArrayList<Date>();
-    List<Double> yData = new ArrayList<Double>();
+    List<Date> xData = new ArrayList<>();
+    List<Double> yData = new ArrayList<>();
 
     Random random = new Random();
 
     DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
     Date date = null;
     for (int i = 1; i <= 14; i++) {
       try {

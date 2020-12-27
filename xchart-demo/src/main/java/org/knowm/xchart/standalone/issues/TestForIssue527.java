@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -17,9 +19,9 @@ public class TestForIssue527 {
   public static void main(String[] args) throws ParseException {
     String series = "ABC";
 
-    List<Date> x = new ArrayList<Date>(); // List of dates
+    List<Date> x = new ArrayList<>(); // List of dates
     //    List<Integer> x = new ArrayList<Integer>(); // List of ints
-    List<Double> y = new ArrayList<Double>();
+    List<Double> y = new ArrayList<>();
 
     XYChart chart =
         new XYChartBuilder()
@@ -30,16 +32,20 @@ public class TestForIssue527 {
             .xAxisTitle("Date")
             .yAxisTitle("%Diff ")
             .build();
-//    chart.getStyler().setPlotBackgroundColor(java.awt.Color.BLACK);
+    //    chart.getStyler().setPlotBackgroundColor(java.awt.Color.BLACK);
     chart.getStyler().setPlotMargin(0);
     chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideE);
     chart.getStyler().setXAxisLabelRotation(90);
     chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+    chart.getStyler().setTimezone(TimeZone.getTimeZone("UTC"));
+//    chart.getStyler().setXAxisTickMarkSpacingHint(160);
 
     x.add(sdf.parse("2020-10-19")); // dates on X
-    System.out.println("sdf.parse(\"2020-10-19\") = " + sdf.parse("2020-10-19"));
+//    System.out.println("x.get(0).getTime() = " + x.get(0).getTime());
+//    System.out.println("sdf.parse(\"2020-10-19\") = " + sdf.parse("2020-10-19").toGMTString());
     x.add(sdf.parse("2020-10-20"));
     x.add(sdf.parse("2020-10-21"));
     x.add(sdf.parse("2020-10-22"));
