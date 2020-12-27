@@ -5,8 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.XYStyler;
 
 /** @author timmolter */
 public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
@@ -69,7 +72,10 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     //      part.paint(g);
     //    }
 
-    chartZoom.paint(g);
+    // TODO create a PlotContent_Axes class to put this in.
+    if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
+      chartZoom.paint(g);
+    }
 
     g.setClip(saveClip);
   }
