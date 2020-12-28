@@ -1,5 +1,7 @@
 package org.knowm.xchart.demo.charts.line;
 
+import java.awt.Color;
+import java.awt.Font;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -22,7 +24,7 @@ public class LineChart09 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new LineChart09();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -33,7 +35,7 @@ public class LineChart09 implements ExampleChart<XYChart> {
         new XYChartBuilder()
             .width(800)
             .height(600)
-            .title("Cursor")
+            .title(getClass().getSimpleName())
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();
@@ -45,6 +47,11 @@ public class LineChart09 implements ExampleChart<XYChart> {
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     chart.getStyler().setCursorEnabled(true);
+    chart.getStyler().setCursorColor(Color.GREEN);
+    chart.getStyler().setCursorLineWidth(30f);
+    chart.getStyler().setCursorFont(new Font("Verdana", Font.BOLD, 12));
+    chart.getStyler().setCursorFontColor(Color.ORANGE);
+    chart.getStyler().setCursorBackgroundColor(Color.BLUE);
 
     // Series
     chart.addSeries("a", new double[] {0, 3, 5, 7, 9}, new double[] {-3, 5, 9, 6, 5});

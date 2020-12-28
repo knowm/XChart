@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -41,11 +40,12 @@ public class TestForIssue527 {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
     chart.getStyler().setTimezone(TimeZone.getTimeZone("UTC"));
-//    chart.getStyler().setXAxisTickMarkSpacingHint(160);
+    //    chart.getStyler().setXAxisTickMarkSpacingHint(160);
 
     x.add(sdf.parse("2020-10-19")); // dates on X
-//    System.out.println("x.get(0).getTime() = " + x.get(0).getTime());
-//    System.out.println("sdf.parse(\"2020-10-19\") = " + sdf.parse("2020-10-19").toGMTString());
+    //    System.out.println("x.get(0).getTime() = " + x.get(0).getTime());
+    //    System.out.println("sdf.parse(\"2020-10-19\") = " +
+    // sdf.parse("2020-10-19").toGMTString());
     x.add(sdf.parse("2020-10-20"));
     x.add(sdf.parse("2020-10-21"));
     x.add(sdf.parse("2020-10-22"));

@@ -9,7 +9,6 @@ import java.awt.*;
  */
 public abstract class AxesChartSeries extends Series {
 
-
   final DataType xAxisDataType;
   final DataType yAxisType;
   /** the minimum value of axis range */

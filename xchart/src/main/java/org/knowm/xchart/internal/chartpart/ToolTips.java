@@ -13,7 +13,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
@@ -75,8 +74,8 @@ public class ToolTips extends MouseAdapter implements ChartPart {
     }
 
     if (isRepaint) {
-//      xChartPanel.invalidate();
-//      xChartPanel.repaint();
+      //      xChartPanel.invalidate();
+      //      xChartPanel.repaint();
       e.getComponent().repaint();
     }
   }

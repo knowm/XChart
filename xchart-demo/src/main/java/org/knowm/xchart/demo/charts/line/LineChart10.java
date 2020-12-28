@@ -73,6 +73,6 @@ public class LineChart10 implements ExampleChart<XYChart> {
   @Override
   public String getExampleChartName() {
 
-    return getClass().getSimpleName() + " - Cursor";
+    return getClass().getSimpleName() + " - Annotations";
   }
 }

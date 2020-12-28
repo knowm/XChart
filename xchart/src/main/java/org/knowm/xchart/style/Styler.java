@@ -1,9 +1,10 @@
 package org.knowm.xchart.style;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.theme.GGPlot2Theme;
 import org.knowm.xchart.style.theme.MatlabTheme;
@@ -66,14 +67,6 @@ public abstract class Styler {
   private Font toolTipFont;
   private Color toolTipHighlightColor;
 
-  // Cursor ////////////////////////////////
-  private boolean isCursorEnabled;
-  private Color cursorColor;
-  private float cursorSize;
-  private Font cursorFont;
-  private Color cursorFontColor;
-  private Color cursorBackgroundColor;
-
   //  // Annotations ///////////////////////////////
   private boolean hasAnnotations = true; // set by subclass
   private Font annotationsFont;
@@ -98,11 +91,6 @@ public abstract class Styler {
   private Color xAxisTitleColor;
   private Color yAxisTitleColor;
   private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
-
-  // Custom formatting functions for the cursor
-  // TODO look into this
-  private Function<Double, String> customCursorXDataFormattingFunction;
-  private Function<Double, String> customCursorYDataFormattingFunction;
 
   void setAllStyles() {
 
@@ -155,14 +143,6 @@ public abstract class Styler {
     toolTipBorderColor = theme.getToolTipBorderColor();
     toolTipFont = theme.getToolTipFont();
     toolTipHighlightColor = theme.getToolTipHighlightColor();
-
-    // Cursor ////////////////////////////////
-    this.isCursorEnabled = theme.isCursorEnabled();
-    this.cursorColor = theme.getCursorColor();
-    this.cursorSize = theme.getCursorSize();
-    this.cursorFont = theme.getCursorFont();
-    this.cursorFontColor = theme.getCursorFontColor();
-    this.cursorBackgroundColor = theme.getCursorBackgroundColor();
 
     //    // Annotations ///////////////////////////////
     //    hasAnnotations = false; // set by subclass
@@ -735,97 +715,6 @@ public abstract class Styler {
     return this;
   }
 
-  // Cursor ///////////////////////////////
-
-  public boolean isCursorEnabled() {
-    return isCursorEnabled;
-  }
-
-  public Styler setCursorEnabled(boolean isCursorEnabled) {
-
-    this.isCursorEnabled = isCursorEnabled;
-    return this;
-  }
-
-  public Color getCursorColor() {
-    return cursorColor;
-  }
-
-  public Styler setCursorColor(Color cursorColor) {
-
-    this.cursorColor = cursorColor;
-    return this;
-  }
-
-  public float getCursorSize() {
-
-    return cursorSize;
-  }
-
-  public Styler setCursorSize(float cursorSize) {
-
-    this.cursorSize = cursorSize;
-    return this;
-  }
-
-  public Font getCursorFont() {
-
-    return cursorFont;
-  }
-
-  public Styler setCursorFont(Font cursorFont) {
-
-    this.cursorFont = cursorFont;
-    return this;
-  }
-
-  public Color getCursorFontColor() {
-
-    return cursorFontColor;
-  }
-
-  public Styler setCursorFontColor(Color cursorFontColor) {
-
-    this.cursorFontColor = cursorFontColor;
-    return this;
-  }
-
-  public Color getCursorBackgroundColor() {
-
-    return cursorBackgroundColor;
-  }
-
-  public Styler setCursorBackgroundColor(Color cursorBackgroundColor) {
-
-    this.cursorBackgroundColor = cursorBackgroundColor;
-    return this;
-  }
-
-  public Function<Double, String> getCustomCursorXDataFormattingFunction() {
-    return customCursorXDataFormattingFunction;
-  }
-
-  /**
-   * Set the custom function for formatting the cursor tooltip based on the series X-Axis data
-   * @param customCursorXDataFormattingFunction
-   */
-  public void setCustomCursorXDataFormattingFunction(
-      Function<Double, String> customCursorXDataFormattingFunction) {
-    this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
-  }
-
-  public Function<Double, String> getCustomCursorYDataFormattingFunction() {
-    return customCursorYDataFormattingFunction;
-  }
-  /**
-   * Set the custom function for formatting the cursor tooltip based on the series Y-Axis data
-   * @param customCursorYDataFormattingFunction
-   */
-  public void setCustomCursorYDataFormattingFunction(
-      Function<Double, String> customCursorYDataFormattingFunction) {
-    this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
-  }
-
   // Annotations ///////////////////////////////
 
   public Boolean hasAnnotations() {
@@ -1028,8 +917,6 @@ public abstract class Styler {
     yAxisGroupTitleColorMap.put(yAxisGroup, yAxisColor);
     return this;
   }
-
-
 
   public enum ChartTheme {
     XChart,

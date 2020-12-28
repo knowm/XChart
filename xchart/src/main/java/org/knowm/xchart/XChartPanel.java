@@ -83,7 +83,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlP, "print");
     this.getActionMap().put("print", new PrintAction());
 
-    // Mouse Listener for Zoom
+    // Mouse Listener for Zoom. Only available for XYCharts
     if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
       ChartZoom chartZoom =
           new ChartZoom((XYChart) chart, (XChartPanel<XYChart>) this, resetString);
@@ -92,7 +92,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     }
 
     // Mouse motion listener for Cursor
-    if (chart.getStyler().isCursorEnabled()) {
+    if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isCursorEnabled()) {
       this.addMouseMotionListener(new Cursor(chart));
     }
 

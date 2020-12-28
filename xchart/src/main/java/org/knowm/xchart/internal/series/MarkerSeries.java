@@ -11,7 +11,6 @@ import org.knowm.xchart.style.markers.Marker;
  */
 public abstract class MarkerSeries extends AxesChartSeries {
 
-
   /** Marker */
   private Marker marker;
 

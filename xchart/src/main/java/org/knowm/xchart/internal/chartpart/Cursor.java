@@ -15,17 +15,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.knowm.xchart.internal.series.MarkerSeries;
 import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.XYStyler;
 
 /**
  * Cursor movement to display matching point data information.
  *
  * @author Mr14huashao
  */
-public class Cursor extends MouseAdapter {
+public class Cursor extends MouseAdapter implements ChartPart {
 
   private static final int LINE_SPACING = 5;
 
@@ -35,7 +34,7 @@ public class Cursor extends MouseAdapter {
   private final List<DataPoint> matchingDataPointList = new ArrayList<>();
 
   private final Chart chart;
-  private final Styler styler;
+  private final XYStyler styler;
 
   private Map<String, Series> seriesMap;
 
@@ -53,8 +52,9 @@ public class Cursor extends MouseAdapter {
   public Cursor(Chart chart) {
 
     this.chart = chart;
-    this.styler = chart.getStyler();
-    chart.plot.plotContent.setCursor(this);
+    this.styler = (XYStyler) chart.getStyler();
+    PlotContent_XY plotContent_xy = (PlotContent_XY) (chart.plot.plotContent);
+    plotContent_xy.setCursor(this);
 
     // clear lists
     dataPointList.clear();
@@ -65,14 +65,14 @@ public class Cursor extends MouseAdapter {
   @Override
   public void mouseMoved(MouseEvent e) {
 
-//    // don't draw anything
-//    if (!styler.isCursorEnabled() || seriesMap == null) {
-//      return;
-//    }
+    //    // don't draw anything
+    //    if (!styler.isCursorEnabled() || seriesMap == null) {
+    //      return;
+    //    }
 
     mouseX = e.getX();
     mouseY = e.getY();
-    if (isMouseOut()) {
+    if (isMouseOutOfPlotContent()) {
 
       if (matchingDataPointList.size() > 0) {
         matchingDataPointList.clear();
@@ -80,10 +80,11 @@ public class Cursor extends MouseAdapter {
       }
       return;
     }
+    calculateMatchingDataPoints();
     e.getComponent().repaint();
   }
 
-  private boolean isMouseOut() {
+  private boolean isMouseOutOfPlotContent() {
 
     boolean isMouseOut = false;
     if (!chart.plot.plotContent.getBounds().contains(mouseX, mouseY)) {
@@ -92,14 +93,17 @@ public class Cursor extends MouseAdapter {
     return isMouseOut;
   }
 
+  @Override
+  public Rectangle2D getBounds() {
+    return null;
+  }
+
+  @Override
   public void paint(Graphics2D g) {
 
-//    if (!styler.isCursorEnabled()) {
-//      return;
-//    }
-//    System.out.println("HERE");
-
-    calculateMatchingDataPoints();
+    //    if (!styler.isCursorEnabled()) {
+    //      return;
+    //    }
 
     if (matchingDataPointList.size() > 0) {
       DataPoint firstDataPoint = matchingDataPointList.get(0);
@@ -122,7 +126,7 @@ public class Cursor extends MouseAdapter {
   private void paintVerticalLine(Graphics2D g, DataPoint dataPoint) {
 
     BasicStroke stroke =
-        new BasicStroke(styler.getCursorSize(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
+        new BasicStroke(styler.getCursorLineWidth(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
     g.setStroke(stroke);
     g.setColor(styler.getCursorColor());
     Line2D.Double line = new Line2D.Double();

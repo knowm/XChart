@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
@@ -15,10 +14,9 @@ import org.knowm.xchart.style.XYStyler;
 public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;
-  ToolTips toolTips;
+  ToolTips toolTips; // tooltips are available for Category, OHLC and XY charts
   ChartZoom chartZoom;
-  Cursor cursor;
-
+  //  Cursor cursor;
 
   // TODO create a PlotContent_Axes class to put this in.
   static final Stroke ERROR_BAR_STROKE =
@@ -58,15 +56,12 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
       g.setClip(bounds);
     }
 
-    //    chart.cursor.prepare(bounds, (Map<String, Series>) chart.getSeriesMap());
-
     doPaint(g);
 
     // after painting the plot content, paint the tooltip(s) if necessary
     if (chart.getStyler().isToolTipsEnabled()) {
       toolTips.paint(g);
     }
-    //    chart.cursor.paint(g);
 
     // TODO here the annotation classes are added. Refactor this!
 
@@ -74,14 +69,14 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     //      part.paint(g);
     //    }
 
-    // TODO create a PlotContent_Axes class to put this in.
+    // TODO  PlotContent_XY - put this in.
     if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
       chartZoom.paint(g);
     }
 
-    if(chart.getStyler().isCursorEnabled()){
-      cursor.paint(g);
-    }
+    //    if(chart.getStyler().isCursorEnabled()){
+    //      cursor.paint(g);
+    //    }
 
     g.setClip(saveClip);
   }
@@ -110,9 +105,5 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
 
   public void setChartZoom(ChartZoom chartZoom) {
     this.chartZoom = chartZoom;
-  }
-
-  public void setCursor(Cursor cursor) {
-    this.cursor = cursor;
   }
 }

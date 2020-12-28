@@ -413,9 +413,7 @@ chart.setYAxisGroupTitle(1, "B");
 
 ### Zooming In
 
-For the `XYChart` chart type, zooming in is possible on an `XChartPanel` via select-dragging over a range on the X-Axis. 
-Reverting out of the zoom can be accomplished 
-by double-clicking on the chart or by clicking on the "reset" button, which can be posotioned as desired. 
+For the `XYChart` chart type, zooming in is possible on an `XChartPanel` via select-dragging over a range on the X-Axis. Reverting out of the zoom can be accomplished by double-clicking on the chart or by clicking on the "reset" button, which can be posotioned as desired. 
 
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Zoom.png)
@@ -493,6 +491,30 @@ chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
 A working example can be found at [LineChart05](https://github.
 com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart05.java).
 
+### Cursor
+
+For the `XYChart` chart type, it is possible to add an interactive cursor on an `XChartPanel` via
+
+```java
+chart.getStyler().setCursorEnabled(true);
+```
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Cursor.png)
+
+The following example cursor options show which are available:
+
+```java
+chart.getStyler().setCursorEnabled(true);
+chart.getStyler().setCursorColor(Color.GREEN);
+chart.getStyler().setCursorLineWidth(30f);
+chart.getStyler().setCursorFont(new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setCursorFontColor(Color.ORANGE);
+chart.getStyler().setCursorBackgroundColor(Color.BLUE);
+```
+
+A working example can be found at [LineChart09](https://github.
+com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart09.java).
+
 ## Chart Themes
 
 XChart ships with three different themes: Default `XChart`, `GGPlot2` and `Matlab`. Using a different theme is as simple as setting the Chart's theme with the `theme` method of the `ChartBuilder`.
@@ -548,7 +570,7 @@ Snapshots can be manually downloaded from Sonatype: [https://oss.sonatype.org/co
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "3.6.6" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.7.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
 ## Building with Maven

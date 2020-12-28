@@ -1,6 +1,8 @@
 package org.knowm.xchart.style;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.util.function.Function;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.style.theme.Theme;
 
@@ -16,6 +18,16 @@ public class XYStyler extends AxesChartStyler {
   private boolean zoomResetByButton;
   private CardinalPosition zoomResetButtomPosition;
 
+  // Cursor ////////////////////////////////
+  private boolean isCursorEnabled;
+  private Color cursorColor;
+  private float cursorLineWidth;
+  private Font cursorFont;
+  private Color cursorFontColor;
+  private Color cursorBackgroundColor;
+  private Function<Double, String> customCursorXDataFormattingFunction;
+  private Function<Double, String> customCursorYDataFormattingFunction;
+
   /** Constructor */
   public XYStyler() {
 
@@ -26,12 +38,23 @@ public class XYStyler extends AxesChartStyler {
   protected void setAllStyles() {
 
     super.setAllStyles();
+
+    // Zoom ///////////////////////////
+    // TODO set this from the theme
     xySeriesRenderStyle = XYSeriesRenderStyle.Line; // set default to line
     isZoomEnabled = false; // set default to false
     zoomSelectionColor = new Color(155, 155, 155, 128);
     zoomResetByDoubleClick = true;
     zoomResetByButton = true;
     zoomResetButtomPosition = CardinalPosition.InsideN;
+
+    // Cursor ////////////////////////////////
+    this.isCursorEnabled = theme.isCursorEnabled();
+    this.cursorColor = theme.getCursorColor();
+    this.cursorLineWidth = theme.getCursorSize();
+    this.cursorFont = theme.getCursorFont();
+    this.cursorFontColor = theme.getCursorFontColor();
+    this.cursorBackgroundColor = theme.getCursorBackgroundColor();
   }
   /**
    * Set the theme the styler should use
@@ -108,5 +131,98 @@ public class XYStyler extends AxesChartStyler {
 
   public void setZoomResetButtomPosition(CardinalPosition zoomResetButtomPosition) {
     this.zoomResetButtomPosition = zoomResetButtomPosition;
+  }
+
+  // Cursor ///////////////////////////////
+
+  public boolean isCursorEnabled() {
+    return isCursorEnabled;
+  }
+
+  public Styler setCursorEnabled(boolean isCursorEnabled) {
+
+    this.isCursorEnabled = isCursorEnabled;
+    return this;
+  }
+
+  public Color getCursorColor() {
+    return cursorColor;
+  }
+
+  public Styler setCursorColor(Color cursorColor) {
+
+    this.cursorColor = cursorColor;
+    return this;
+  }
+
+  public float getCursorLineWidth() {
+
+    return cursorLineWidth;
+  }
+
+  public Styler setCursorLineWidth(float cursorLineWidth) {
+
+    this.cursorLineWidth = cursorLineWidth;
+    return this;
+  }
+
+  public Font getCursorFont() {
+
+    return cursorFont;
+  }
+
+  public Styler setCursorFont(Font cursorFont) {
+
+    this.cursorFont = cursorFont;
+    return this;
+  }
+
+  public Color getCursorFontColor() {
+
+    return cursorFontColor;
+  }
+
+  public Styler setCursorFontColor(Color cursorFontColor) {
+
+    this.cursorFontColor = cursorFontColor;
+    return this;
+  }
+
+  public Color getCursorBackgroundColor() {
+
+    return cursorBackgroundColor;
+  }
+
+  public Styler setCursorBackgroundColor(Color cursorBackgroundColor) {
+
+    this.cursorBackgroundColor = cursorBackgroundColor;
+    return this;
+  }
+
+  public Function<Double, String> getCustomCursorXDataFormattingFunction() {
+    return customCursorXDataFormattingFunction;
+  }
+
+  /**
+   * Set the custom function for formatting the cursor tooltip based on the series X-Axis data
+   *
+   * @param customCursorXDataFormattingFunction
+   */
+  public void setCustomCursorXDataFormattingFunction(
+      Function<Double, String> customCursorXDataFormattingFunction) {
+    this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
+  }
+
+  public Function<Double, String> getCustomCursorYDataFormattingFunction() {
+    return customCursorYDataFormattingFunction;
+  }
+  /**
+   * Set the custom function for formatting the cursor tooltip based on the series Y-Axis data
+   *
+   * @param customCursorYDataFormattingFunction
+   */
+  public void setCustomCursorYDataFormattingFunction(
+      Function<Double, String> customCursorYDataFormattingFunction) {
+    this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
   }
 }

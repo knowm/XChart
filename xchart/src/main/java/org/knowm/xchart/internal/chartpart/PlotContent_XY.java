@@ -1,6 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.text.Format;
@@ -8,14 +8,15 @@ import java.util.Map;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.XYStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /** @author timmolter */
-public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
-    extends PlotContent_<ST, S> {
+public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends PlotContent_<ST, S> {
 
   private final ST xyStyler;
+
+  Cursor cursor;
 
   /**
    * Constructor
@@ -335,6 +336,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       g.setColor(series.getFillColor());
       closePathXY(g, path, previousX, yZeroOffset, polygonStartX, polygonStartY);
     }
+    if (chart.getStyler().isCursorEnabled()) {
+      cursor.paint(g);
+    }
   }
 
   void closePathXY(
@@ -353,5 +357,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       path.closePath();
       g.fill(path);
     }
+  }
+
+  public void setCursor(Cursor cursor) {
+    this.cursor = cursor;
   }
 }

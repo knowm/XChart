@@ -72,7 +72,7 @@ public abstract class AxesChartStyler extends Styler {
   private Color yAxisTickLabelsColor;
   private Color xAxisTickMarksColor;
   private Color yAxisTickMarksColor;
-  //TODO where's the axis title color map?? Add it here!
+  // TODO where's the axis title color map?? Add it here!
   private Map<Integer, Color> yAxisGroupTickLabelsColorMap = new HashMap<>();
   private Map<Integer, Color> yAxisGroupTickMarksColorMap = new HashMap<>();
 
@@ -550,11 +550,13 @@ public abstract class AxesChartStyler extends Styler {
     this.yAxisLabelAlignment = yAxisLabelAlignment;
     return this;
   }
+
   public enum TextAlignment {
     Left,
     Centre,
     Right
   }
+
   public int getXAxisLabelRotation() {
 
     return xAxisLabelRotation;

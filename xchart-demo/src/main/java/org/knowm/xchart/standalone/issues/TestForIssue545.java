@@ -2,7 +2,6 @@ package org.knowm.xchart.standalone.issues;
 
 import java.awt.Font;
 import java.text.ParseException;
-
 import org.knowm.xchart.BubbleChart;
 import org.knowm.xchart.BubbleChartBuilder;
 import org.knowm.xchart.BubbleSeries;
@@ -11,7 +10,6 @@ import org.knowm.xchart.style.BubbleStyler;
 import org.knowm.xchart.style.Styler;
 
 public class TestForIssue545 {
-
 
   public static void main(String[] args) throws ParseException {
 
@@ -34,11 +32,12 @@ public class TestForIssue545 {
     BubbleSeries bubbleSeries =
         chart.addSeries(
             "serieName", new double[] {data[0]}, new double[] {data[1]}, new double[] {data[2]});
-//    bubbleSeries.setCustomToolTips(true);
-//    String tooltip =
-//        new DecimalFormat("#%").format(data[1]) + " (" + ((int) data[2]) + "/" + ((int) data[0]) + ")";
-//
-//    bubbleSeries.setToolTips(new String[] {tooltip});
+    //    bubbleSeries.setCustomToolTips(true);
+    //    String tooltip =
+    //        new DecimalFormat("#%").format(data[1]) + " (" + ((int) data[2]) + "/" + ((int)
+    // data[0]) + ")";
+    //
+    //    bubbleSeries.setToolTips(new String[] {tooltip});
 
     return chart;
   }

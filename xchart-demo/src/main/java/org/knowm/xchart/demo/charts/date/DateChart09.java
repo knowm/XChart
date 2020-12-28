@@ -24,7 +24,6 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  */
 public class DateChart09 implements ExampleChart<XYChart> {
 
-
   public static void main(String[] args) {
 
     ExampleChart<XYChart> exampleChart = new DateChart09();
@@ -37,11 +36,7 @@ public class DateChart09 implements ExampleChart<XYChart> {
 
     // Create Chart
     XYChart chart =
-        new XYChartBuilder()
-            .width(800)
-            .height(600)
-            .title(getClass().getSimpleName())
-            .build();
+        new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
@@ -62,7 +57,7 @@ public class DateChart09 implements ExampleChart<XYChart> {
     // set custom X-Axis tick labels
     LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
     DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
-    //TODO deprecate this and move it into the styler
+    // TODO deprecate this and move it into the styler
     chart.setCustomXAxisTickLabelsFormatter(
         x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
 

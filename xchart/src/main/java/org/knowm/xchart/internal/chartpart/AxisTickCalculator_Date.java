@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;

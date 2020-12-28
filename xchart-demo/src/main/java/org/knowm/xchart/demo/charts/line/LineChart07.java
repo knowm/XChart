@@ -27,7 +27,7 @@ public class LineChart07 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new LineChart07();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -39,7 +39,7 @@ public class LineChart07 implements ExampleChart<CategoryChart> {
             .width(800)
             .height(600)
             .theme(ChartTheme.GGPlot2)
-            .title("ThreadPool Benchmark")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Threads")
             .yAxisTitle("Executions")
             .build();

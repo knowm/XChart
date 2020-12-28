@@ -11,7 +11,6 @@ import java.util.Arrays;
 // TODO weird name of class since it does contain extravalues for error bars!
 public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
-
   // permanent data
   double[] xDataAll;
   double[] yDataAll;

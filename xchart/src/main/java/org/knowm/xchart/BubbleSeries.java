@@ -13,7 +13,6 @@ public class BubbleSeries extends NoMarkersSeries {
 
   private BubbleSeriesRenderStyle bubbleSeriesRenderStyle = null;
 
-
   /**
    * Constructor
    *
