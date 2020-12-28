@@ -68,7 +68,7 @@ public abstract class Styler {
   private Color toolTipHighlightColor;
 
   //  // Annotations ///////////////////////////////
-  private boolean hasAnnotations = true; // set by subclass
+  private boolean hasAnnotations = false; // set by subclass
   private Font annotationsFont;
   private Color annotationsFontColor;
   // TODO move defaults to theme

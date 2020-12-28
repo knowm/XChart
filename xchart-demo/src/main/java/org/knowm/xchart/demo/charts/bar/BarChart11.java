@@ -26,7 +26,7 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart11();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   private static int[] getRandomValues(int startRange, int endRange, int count) {
@@ -57,7 +57,7 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("Tumbler Speed  vs. Average Spin")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Speed")
             .yAxisTitle("Spin")
             .build();

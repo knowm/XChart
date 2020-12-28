@@ -39,7 +39,7 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("Score Histogram")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Mean")
             .yAxisTitle("Count")
             .build();

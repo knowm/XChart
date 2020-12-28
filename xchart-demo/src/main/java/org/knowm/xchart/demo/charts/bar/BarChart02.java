@@ -34,7 +34,7 @@ public class BarChart02 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart02();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -46,7 +46,7 @@ public class BarChart02 implements ExampleChart<CategoryChart> {
             .theme(ChartTheme.Matlab)
             .width(800)
             .height(600)
-            .title("Units Sold Per Year")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Year")
             .yAxisTitle("Units Sold")
             .build();

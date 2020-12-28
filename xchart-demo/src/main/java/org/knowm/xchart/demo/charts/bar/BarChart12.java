@@ -28,7 +28,7 @@ public class BarChart12 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart12();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -39,7 +39,7 @@ public class BarChart12 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("Temperature vs. Color")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Color")
             .yAxisTitle("Temperature")
             .theme(ChartTheme.GGPlot2)

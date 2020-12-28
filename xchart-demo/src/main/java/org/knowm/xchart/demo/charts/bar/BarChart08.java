@@ -37,7 +37,7 @@ public class BarChart08 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("Histogram")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Mean")
             .theme(ChartTheme.Matlab)
             .yAxisTitle("Count")

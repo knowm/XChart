@@ -37,7 +37,7 @@ public class BarChart09 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("Value vs. Letter")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Letter")
             .yAxisTitle("Value")
             .theme(ChartTheme.GGPlot2)

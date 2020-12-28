@@ -30,6 +30,8 @@ public class PieStyler extends Styler {
 
     super.setAllStyles();
 
+    this.setHasAnnotations(true);
+
     this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie;
     this.isCircular = theme.isCircular();
     this.startAngleInDegrees = theme.getStartAngleInDegrees();

@@ -25,7 +25,7 @@ public class BarChart01 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart01();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -36,7 +36,7 @@ public class BarChart01 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("Score Histogram")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Score")
             .yAxisTitle("Number")
             .build();

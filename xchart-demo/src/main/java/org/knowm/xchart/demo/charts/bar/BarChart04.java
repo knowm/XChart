@@ -27,7 +27,7 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart04();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -38,7 +38,7 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("XFactor vs. Age")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Age")
             .yAxisTitle("XFactor")
             .build();

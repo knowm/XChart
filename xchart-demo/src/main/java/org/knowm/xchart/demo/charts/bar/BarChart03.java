@@ -32,7 +32,7 @@ public class BarChart03 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("Score vs. Age")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Age")
             .yAxisTitle("Score")
             .build();
