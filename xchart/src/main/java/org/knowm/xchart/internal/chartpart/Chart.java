@@ -27,8 +27,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
   protected final List<InfoPanel> infoPanels = new ArrayList<>();
-  // TODO remove these?? move them to XChartPanel??
-  final Cursor cursor;
+  //  // TODO remove these?? move them to XChartPanel??
+  //  final Cursor cursor;
 
   /** Chart Parts */
   // TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't
@@ -66,8 +66,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.height = height;
     this.styler = styler;
 
-    this.cursor = new Cursor(styler);
-
+    //    this.cursor = new Cursor(styler);
+    // TODO move this out??
     this.chartTitle = new ChartTitle<ST, S>(this);
   }
 
@@ -121,7 +121,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     this.height = height;
   }
-
+  // TODO remove public
   public String getTitle() {
 
     return title;
@@ -165,11 +165,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public void setYAxisGroupTitle(int yAxisGroup, String yAxisTitle) {
 
     yAxisGroupTitleMap.put(yAxisGroup, yAxisTitle);
-  }
-
-  public Map<String, S> getSeriesMap() {
-
-    return seriesMap;
   }
 
   /**
@@ -285,7 +280,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     }
     return format;
   }
-  // TODO remove this?
+
   ArrayList<ChartPart> getPlotParts() {
 
     return plotParts;
@@ -304,4 +299,10 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   }
   // TODO remove this?
   public void addAnnotation(AnnotationLine maxY) {}
+
+  // TODO remove this?
+  public Map<String, S> getSeriesMap() {
+
+    return seriesMap;
+  }
 }

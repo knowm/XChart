@@ -100,7 +100,7 @@ public abstract class Styler {
   private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
 
   // Custom formatting functions for the cursor
-  //TODO look into this
+  // TODO look into this
   private Function<Double, String> customCursorXDataFormattingFunction;
   private Function<Double, String> customCursorYDataFormattingFunction;
 
@@ -494,6 +494,16 @@ public abstract class Styler {
     return this;
   }
 
+  public enum CardinalPosition {
+    OutsideE,
+    InsideNW,
+    InsideNE,
+    InsideSE,
+    InsideSW,
+    InsideN,
+    InsideS,
+    OutsideS
+  }
   /**
    * Set the legend layout
    *
@@ -509,6 +519,10 @@ public abstract class Styler {
     this.legendLayout = legendLayout;
   }
 
+  public enum LegendLayout {
+    Vertical,
+    Horizontal
+  }
   // Chart InfoPanel ///////////////////////////////
 
   public Color getInfoPanelBackgroundColor() {
@@ -669,6 +683,12 @@ public abstract class Styler {
     return this;
   }
 
+  public enum ToolTipType {
+    xLabels,
+    yLabels,
+    xAndYLabels
+  }
+
   public Color getToolTipBackgroundColor() {
 
     return toolTipBackgroundColor;
@@ -780,7 +800,32 @@ public abstract class Styler {
     this.cursorBackgroundColor = cursorBackgroundColor;
     return this;
   }
-  //
+
+  public Function<Double, String> getCustomCursorXDataFormattingFunction() {
+    return customCursorXDataFormattingFunction;
+  }
+
+  /**
+   * Set the custom function for formatting the cursor tooltip based on the series X-Axis data
+   * @param customCursorXDataFormattingFunction
+   */
+  public void setCustomCursorXDataFormattingFunction(
+      Function<Double, String> customCursorXDataFormattingFunction) {
+    this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
+  }
+
+  public Function<Double, String> getCustomCursorYDataFormattingFunction() {
+    return customCursorYDataFormattingFunction;
+  }
+  /**
+   * Set the custom function for formatting the cursor tooltip based on the series Y-Axis data
+   * @param customCursorYDataFormattingFunction
+   */
+  public void setCustomCursorYDataFormattingFunction(
+      Function<Double, String> customCursorYDataFormattingFunction) {
+    this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
+  }
+
   // Annotations ///////////////////////////////
 
   public Boolean hasAnnotations() {
@@ -904,16 +949,16 @@ public abstract class Styler {
     yAxisAlignmentMap.put(yAxisGroup, yAxisPosition);
   }
 
-  public Theme getTheme() {
-
-    return theme;
+  public enum YAxisPosition {
+    Left,
+    Right
   }
 
   public boolean getAntiAlias() {
 
     return antiAlias;
   }
-
+  // TODO add javadocs to all setters that are not yet documented.
   public void setAntiAlias(boolean newVal) {
 
     antiAlias = newVal;
@@ -924,6 +969,12 @@ public abstract class Styler {
     return yAxisLeftWidthHint;
   }
 
+  /**
+   * Set the width of the Y-Axis tick labels on the left side of the chart. This can help to align
+   * the start of the X-Axis for two or more charts that are arranged in a column of charts.
+   *
+   * @param yAxisLeftWidthHint
+   */
   public void setYAxisLeftWidthHint(int yAxisLeftWidthHint) {
 
     this.yAxisLeftWidthHint = yAxisLeftWidthHint;
@@ -951,6 +1002,7 @@ public abstract class Styler {
     return this;
   }
 
+  // TODO is this not used internally??
   public Color getYAxisTitleColor() {
 
     return yAxisTitleColor;
@@ -977,40 +1029,7 @@ public abstract class Styler {
     return this;
   }
 
-  public Function<Double, String> getCustomCursorXDataFormattingFunction() {
-    return customCursorXDataFormattingFunction;
-  }
 
-  // TODO what is this actually??
-  public void setCustomCursorXDataFormattingFunction(
-      Function<Double, String> customCursorXDataFormattingFunction) {
-    this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
-  }
-
-  public Function<Double, String> getCustomCursorYDataFormattingFunction() {
-    return customCursorYDataFormattingFunction;
-  }
-
-  public void setCustomCursorYDataFormattingFunction(
-      Function<Double, String> customCursorYDataFormattingFunction) {
-    this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
-  }
-
-  public enum CardinalPosition {
-    OutsideE,
-    InsideNW,
-    InsideNE,
-    InsideSE,
-    InsideSW,
-    InsideN,
-    InsideS,
-    OutsideS
-  }
-
-  public enum LegendLayout {
-    Vertical,
-    Horizontal
-  }
 
   public enum ChartTheme {
     XChart,
@@ -1033,20 +1052,8 @@ public abstract class Styler {
     }
   }
 
-  public enum TextAlignment {
-    Left,
-    Centre,
-    Right
-  }
+  public Theme getTheme() {
 
-  public enum ToolTipType {
-    xLabels,
-    yLabels,
-    xAndYLabels
-  }
-
-  public enum YAxisPosition {
-    Left,
-    Right
+    return theme;
   }
 }

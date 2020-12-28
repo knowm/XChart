@@ -17,6 +17,8 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
   final Chart<ST, S> chart;
   ToolTips toolTips;
   ChartZoom chartZoom;
+  Cursor cursor;
+
 
   // TODO create a PlotContent_Axes class to put this in.
   static final Stroke ERROR_BAR_STROKE =
@@ -77,6 +79,10 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
       chartZoom.paint(g);
     }
 
+    if(chart.getStyler().isCursorEnabled()){
+      cursor.paint(g);
+    }
+
     g.setClip(saveClip);
   }
 
@@ -104,5 +110,9 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
 
   public void setChartZoom(ChartZoom chartZoom) {
     this.chartZoom = chartZoom;
+  }
+
+  public void setCursor(Cursor cursor) {
+    this.cursor = cursor;
   }
 }

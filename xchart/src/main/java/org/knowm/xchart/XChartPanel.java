@@ -93,12 +93,12 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     // Mouse motion listener for Cursor
     if (chart.getStyler().isCursorEnabled()) {
-      this.addMouseMotionListener(new Cursor(chart.getStyler()));
+      this.addMouseMotionListener(new Cursor(chart));
     }
 
     // Mouse motion listener for Tooltips
     if (chart.getStyler().isToolTipsEnabled()) {
-      ToolTips toolTips = new ToolTips(chart, this);
+      ToolTips toolTips = new ToolTips(chart);
       this.addMouseMotionListener(toolTips); // for moving
     }
   }

@@ -43,7 +43,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   private EventListenerList listenerList = new EventListenerList();
 
   // button position
-  protected CardinalPosition position = CardinalPosition.InsideN;
+  protected CardinalPosition cardinalPosition = CardinalPosition.InsideN;
 
   protected double xOffset = 0;
   protected double yOffset = 0;
@@ -187,8 +187,8 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     double boundsWidth = bounds.getWidth();
     double boundsHeight = bounds.getHeight();
 
-    if (position != null) {
-      switch (position) {
+    if (cardinalPosition != null) {
+      switch (cardinalPosition) {
         case InsideNW:
           xOffset = bounds.getX() + margin;
           yOffset = bounds.getY() + margin;
@@ -213,7 +213,9 @@ public class ChartButton extends MouseAdapter implements ChartPart {
           xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
           yOffset = bounds.getY() + boundsHeight - heightAdjustment;
           break;
-
+        case OutsideE:
+        case OutsideS:
+          throw new IllegalArgumentException("Button cannot be placed outside of plot area!!!");
         default:
           break;
       }
@@ -265,7 +267,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     this.margin = margin;
   }
 
-  void setPosition(CardinalPosition position) {
-    this.position = position;
+  void setCardinalPosition(CardinalPosition cardinalPosition) {
+    this.cardinalPosition = cardinalPosition;
   }
 }

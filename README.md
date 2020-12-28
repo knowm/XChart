@@ -490,7 +490,8 @@ chart.getStyler(). setToolTipBackgroundColor(Color.LIGHT_GRAY);
 chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
 ```
 
-A working example can be found at [ScatterChart04](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/scatter/ScatterChart04.java).
+A working example can be found at [LineChart05](https://github.
+com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart05.java).
 
 ## Chart Themes
 

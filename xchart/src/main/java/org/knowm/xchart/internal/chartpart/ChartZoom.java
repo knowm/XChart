@@ -40,7 +40,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     resetButton = new ChartButton(xyChart, xChartPanel, resetString);
     resetButton.addActionListener(this);
     resetButton.setVisible(false);
-    resetButton.setPosition(xyChart.getStyler().getZoomResetButtomPosition());
+    resetButton.setCardinalPosition(xyChart.getStyler().getZoomResetButtomPosition());
     resetButton.setColor(xyChart.getStyler().getZoomSelectionColor());
     resetButton.setHoverColor(xyChart.getStyler().getZoomSelectionColor().darker());
     resetButton.setBorderColor(xyChart.getStyler().getZoomSelectionColor().darker());

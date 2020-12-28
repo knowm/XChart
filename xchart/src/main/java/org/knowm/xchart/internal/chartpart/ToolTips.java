@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.knowm.xchart.XChartPanel;
+
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
@@ -26,7 +26,6 @@ public class ToolTips extends MouseAdapter implements ChartPart {
   private static final int MARGIN = 5;
   private static final int MOUSE_MARGIN = 20;
 
-  private final XChartPanel xChartPanel;
   private final Chart chart;
   private final Styler styler;
 
@@ -38,12 +37,10 @@ public class ToolTips extends MouseAdapter implements ChartPart {
    * Constructor
    *
    * @param chart
-   * @param xChartPanel
    */
-  public ToolTips(Chart chart, XChartPanel xChartPanel) {
+  public ToolTips(Chart chart) {
 
     this.chart = chart;
-    this.xChartPanel = xChartPanel;
     this.styler = chart.getStyler();
     chart.plot.plotContent.setToolTips(this);
   }
@@ -78,8 +75,9 @@ public class ToolTips extends MouseAdapter implements ChartPart {
     }
 
     if (isRepaint) {
-      xChartPanel.invalidate();
-      xChartPanel.repaint();
+//      xChartPanel.invalidate();
+//      xChartPanel.repaint();
+      e.getComponent().repaint();
     }
   }
 

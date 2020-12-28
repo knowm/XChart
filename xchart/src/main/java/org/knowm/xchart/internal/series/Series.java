@@ -10,6 +10,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
  */
 public abstract class Series {
 
+
   private final String name;
   private String label;
   private Color fillColor;

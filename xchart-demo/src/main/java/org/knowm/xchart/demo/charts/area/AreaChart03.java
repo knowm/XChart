@@ -6,7 +6,7 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
@@ -46,7 +46,7 @@ public class AreaChart03 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
-    chart.getStyler().setYAxisLabelAlignment(Styler.TextAlignment.Right);
+    chart.getStyler().setYAxisLabelAlignment(AxesChartStyler.TextAlignment.Right);
     chart.getStyler().setYAxisDecimalPattern("$ #,###.##");
     chart.getStyler().setPlotMargin(0);
     chart.getStyler().setPlotContentSize(.95);

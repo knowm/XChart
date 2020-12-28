@@ -321,7 +321,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           } else {
             yFormat = new Formatter_Custom(xyStyler.getCustomCursorYDataFormattingFunction());
           }
-          chart.cursor.addData(
+          cursor.addData(
               xOffset, yOffset, xFormat.format(x), yFormat.format(yOrig), series.getName());
         }
       }

@@ -37,7 +37,7 @@ public class DateChart08 implements ExampleChart<XYChart> {
 
     // Create Chart
     XYChart chart =
-        new XYChartBuilder().width(800).height(600).title("Rotated Tick Labels").build();
+        new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
