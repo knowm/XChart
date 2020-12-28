@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -203,13 +204,23 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     infoPanels.add(new InfoPanel(lines, 0, 0, xPosition, yPosition, this));
   }
 
-
+  /**
+   * @Deprecated - use styler instead
+   *
+   * @param customFormattingFunction
+   */
   public void setCustomXAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
-    getAxisPair().getXAxis().setCustomFormattingFunction(customFormattingFunction);
+    AxesChartStyler axesChartStyler = (AxesChartStyler) (styler);
+    axesChartStyler.setxAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
-
+  /**
+   * @Deprecated - use styler instead
+   *
+   * @param customFormattingFunction
+   */
   public void setCustomYAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
-    getAxisPair().getYAxis().setCustomFormattingFunction(customFormattingFunction);
+    AxesChartStyler axesChartStyler = (AxesChartStyler) (styler);
+    axesChartStyler.setyAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
 
   /** Chart Parts Getters */

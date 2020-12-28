@@ -1,10 +1,13 @@
 package org.knowm.xchart.style;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Stroke;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.function.Function;
 
 /** @author timmolter */
 public abstract class AxesChartStyler extends Styler {
@@ -29,18 +32,17 @@ public abstract class AxesChartStyler extends Styler {
   private int yAxisTickMarkSpacingHint;
   private boolean isXAxisLogarithmic;
   private boolean isYAxisLogarithmic;
+  // TODO should this be in styler??
   private Double xAxisMin;
   private Double xAxisMax;
   // TODO should this be in styler??
   private HashMap<Integer, Double> yAxisMinMap = new HashMap<>();
   private HashMap<Integer, Double> yAxisMaxMap = new HashMap<>();
 
-  private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
-  private TextAlignment xAxisLabelAlignmentVertical = TextAlignment.Centre;
-  private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
-  private int xAxisLabelRotation = 0;
+
 
   // By default, all available labels are displayed
+  //TODO what's this for anyway??
   private int xAxisMaxLabelCount = 0;
 
   // Chart Plot Area ///////////////////////////////
@@ -66,6 +68,8 @@ public abstract class AxesChartStyler extends Styler {
   private Map<Integer, String> yAxisGroupDecimalPatternMap;
   private boolean xAxisLogarithmicDecadeOnly;
   private boolean yAxisLogarithmicDecadeOnly;
+  private Function<Double, String> xAxisTickLabelsFormattingFunction;
+  private Function<Double, String> yAxisTickLabelsFormattingFunction;
 
   // TickLabels and MarksColor colors for xAxis, yAxis, yAxisGroup ////////////////////////////////
   private Color xAxisTickLabelsColor;
@@ -75,6 +79,10 @@ public abstract class AxesChartStyler extends Styler {
   // TODO where's the axis title color map?? Add it here!
   private Map<Integer, Color> yAxisGroupTickLabelsColorMap = new HashMap<>();
   private Map<Integer, Color> yAxisGroupTickMarksColorMap = new HashMap<>();
+  private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
+  private TextAlignment xAxisLabelAlignmentVertical = TextAlignment.Centre;
+  private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
+  private int xAxisLabelRotation = 0;
 
   @Override
   void setAllStyles() {
@@ -530,43 +538,6 @@ public abstract class AxesChartStyler extends Styler {
     return yAxisMaxMap.get(yAxisGroup);
   }
 
-  public TextAlignment getXAxisLabelAlignment() {
-
-    return xAxisLabelAlignment;
-  }
-
-  public void setXAxisLabelAlignment(TextAlignment xAxisLabelAlignment) {
-
-    this.xAxisLabelAlignment = xAxisLabelAlignment;
-  }
-
-  public TextAlignment getYAxisLabelAlignment() {
-
-    return yAxisLabelAlignment;
-  }
-
-  public AxesChartStyler setYAxisLabelAlignment(TextAlignment yAxisLabelAlignment) {
-
-    this.yAxisLabelAlignment = yAxisLabelAlignment;
-    return this;
-  }
-
-  public enum TextAlignment {
-    Left,
-    Centre,
-    Right
-  }
-
-  public int getXAxisLabelRotation() {
-
-    return xAxisLabelRotation;
-  }
-
-  public AxesChartStyler setXAxisLabelRotation(int xAxisLabelRotation) {
-
-    this.xAxisLabelRotation = xAxisLabelRotation;
-    return this;
-  }
 
   public int getXAxisMaxLabelCount() {
 
@@ -850,15 +821,23 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public TextAlignment getXAxisLabelAlignmentVertical() {
-
-    return xAxisLabelAlignmentVertical;
+  public Function<Double, String> getxAxisTickLabelsFormattingFunction() {
+    return xAxisTickLabelsFormattingFunction;
   }
 
-  public void setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
-
-    this.xAxisLabelAlignmentVertical = xAxisLabelAlignmentVertical;
+  public void setxAxisTickLabelsFormattingFunction(Function<Double, String> xAxisTickLabelsFormattingFunction) {
+    this.xAxisTickLabelsFormattingFunction = xAxisTickLabelsFormattingFunction;
   }
+
+  public Function<Double, String> getyAxisTickLabelsFormattingFunction() {
+    return yAxisTickLabelsFormattingFunction;
+  }
+
+  public void setyAxisTickLabelsFormattingFunction(Function<Double, String> yAxisTickLabelsFormattingFunction) {
+    this.yAxisTickLabelsFormattingFunction = yAxisTickLabelsFormattingFunction;
+  }
+
+// TickLabels and MarksColor colors for xAxis, yAxis, yAxisGroup ////////////////////////////////
 
   public Color getXAxisTickLabelsColor() {
 
@@ -946,4 +925,54 @@ public abstract class AxesChartStyler extends Styler {
     yAxisGroupTickMarksColorMap.put(yAxisGroup, yAxisTickMarksColor);
     return this;
   }
+
+
+  public TextAlignment getXAxisLabelAlignment() {
+
+    return xAxisLabelAlignment;
+  }
+
+  public void setXAxisLabelAlignment(TextAlignment xAxisLabelAlignment) {
+
+    this.xAxisLabelAlignment = xAxisLabelAlignment;
+  }
+
+  public TextAlignment getXAxisLabelAlignmentVertical() {
+
+    return xAxisLabelAlignmentVertical;
+  }
+
+  public void setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
+
+    this.xAxisLabelAlignmentVertical = xAxisLabelAlignmentVertical;
+  }
+
+  public TextAlignment getYAxisLabelAlignment() {
+
+    return yAxisLabelAlignment;
+  }
+
+  public AxesChartStyler setYAxisLabelAlignment(TextAlignment yAxisLabelAlignment) {
+
+    this.yAxisLabelAlignment = yAxisLabelAlignment;
+    return this;
+  }
+
+  public enum TextAlignment {
+    Left,
+    Centre,
+    Right
+  }
+
+  public int getXAxisLabelRotation() {
+
+    return xAxisLabelRotation;
+  }
+
+  public AxesChartStyler setXAxisLabelRotation(int xAxisLabelRotation) {
+
+    this.xAxisLabelRotation = xAxisLabelRotation;
+    return this;
+  }
+
 }

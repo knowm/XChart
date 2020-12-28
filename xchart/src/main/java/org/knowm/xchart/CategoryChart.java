@@ -344,28 +344,5 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     }
   }
 
-  //  /**
-  //   * Set custom X-Axis category labels
-  //   *
-  //   * @param customCategoryLabels Map containing category name -> label mappings
-  //   */
-  //  public void setCustomCategoryLabels(Map<Object, Object> customCategoryLabels) {
-  //
-  //    // get the first series
-  //    AxesChartSeriesCategory axesChartSeries = getSeriesMap().values().iterator().next();
-  //    // get the first categories, could be Number Date or String
-  //    List<?> categories = (List<?>) axesChartSeries.getXData();
-  //
-  //    Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
-  //    for (Entry<Object, Object> entry : customCategoryLabels.entrySet()) {
-  //      int index = categories.indexOf(entry.getKey());
-  //      if (index == -1) {
-  //        throw new IllegalArgumentException("Could not find category index for " +
-  // entry.getKey());
-  //      }
-  //      axisTickValueLabelMap.put((double) index, entry.getValue());
-  //    }
-  //
-  //    setXAxisLabelOverrideMap(axisTickValueLabelMap);
-  //  }
+
 }

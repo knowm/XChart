@@ -13,7 +13,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.knowm.xchart.CategoryChart;
@@ -57,7 +56,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   private double min;
   private double max;
 
-  private Function<Double, String> customFormattingFunction;
 
   /**
    * Constructor
@@ -399,8 +397,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
                 .collect(Collectors.toList());
-      }
-      if (axesChartStyler instanceof CategoryStyler) {
+      } else if (axesChartStyler instanceof CategoryStyler) {
         Set<Double> uniqueXData = new LinkedHashSet<>();
         for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
           List<Double> numericCategoryXData =
@@ -413,8 +410,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
           uniqueXData.addAll(numericCategoryXData);
         }
         xData.addAll(uniqueXData);
-      }
-      if (axesChartStyler instanceof XYStyler) {
+      } else if (axesChartStyler instanceof XYStyler) {
         Set<Double> uniqueXData = new LinkedHashSet<>();
         for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
           uniqueXData.addAll(
@@ -423,10 +419,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         xData.addAll(uniqueXData);
       }
 
-      if (customFormattingFunction != null) {
-        if (!xData.isEmpty()) {
+      if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
+        if (!xData.isEmpty()) { //TODO why would this be empty?
           return new AxisTickCalculator_Callback(
-              customFormattingFunction,
+              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
               getDirection(),
               workingSpace,
               min,
@@ -435,10 +431,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
-            customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
-      }
+            axesChartStyler.getxAxisTickLabelsFormattingFunction(), getDirection(), workingSpace, min, max, axesChartStyler);
 
-      if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxStyler) {
+      } else if (axesChartStyler instanceof CategoryStyler
+          || axesChartStyler instanceof BoxStyler) {
 
         // TODO Cleanup? More elegant way?
         AxesChartSeriesCategory axesChartSeries =
@@ -489,8 +485,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
                 .collect(Collectors.toList());
-      }
-      if (axesChartStyler instanceof CategoryStyler) {
+      } else if (axesChartStyler instanceof CategoryStyler) {
         Set<Double> uniqueYData = new LinkedHashSet<>();
         for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
           uniqueYData.addAll(
@@ -501,8 +496,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                   .collect(Collectors.toList()));
         }
         yData.addAll(uniqueYData);
-      }
-      if (axesChartStyler instanceof XYStyler) {
+      } else if (axesChartStyler instanceof XYStyler) {
         Set<Double> uniqueYData = new LinkedHashSet<>();
         for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
           uniqueYData.addAll(
@@ -511,10 +505,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         yData.addAll(uniqueYData);
       }
 
-      if (customFormattingFunction != null) {
+      if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-              customFormattingFunction,
+              axesChartStyler.getyAxisTickLabelsFormattingFunction(),
               getDirection(),
               workingSpace,
               min,
@@ -523,10 +517,9 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
-            customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
-      }
+            axesChartStyler.getyAxisTickLabelsFormattingFunction(), getDirection(), workingSpace, min, max, axesChartStyler);
 
-      if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
+      } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 
         return new AxisTickCalculator_Logarithmic(
             getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
@@ -745,10 +738,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     double value = ((screenPoint - margin - startOffset) * (maxVal - minVal) / tickSpace) + minVal;
     value = isLog ? Math.pow(10, value) : value;
     return value;
-  }
-
-  public void setCustomFormattingFunction(Function<Double, String> customFormattingFunction) {
-    this.customFormattingFunction = customFormattingFunction;
   }
 
   /** An axis direction */

@@ -340,48 +340,40 @@ All the styling options can be found in one of two possible places: 1) the Chart
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Series_Customization.png)
  
 
-### Customizing Axis Tick Values & Axis Tick Labels
+### Customizing Axis Tick Labels
 
-XChart automatically creates axis ticks and axis labels. 
+XChart automatically creates axis tick labels for chart types with axes. 
 
-Default axis placement can be altered with `chart.getStyler().setXAxisTickMarkSpacingHint(spacingHint);`. 
+Default axis tick placement can be altered with `chart.getStyler().setXAxisTickMarkSpacingHint(spacingHint);`. 
 
-Default axis label patterns can be altered with one of:
-- `chart.getStyler().setDatePattern(datePattern)` 
-- `chart.getStyler().setXAxisDecimalPattern(pattern);` 
-- `chart.getStyler().setYAxisDecimalPattern(pattern);`
-
-
-You can also create custom axis placements and axis labels. Create a map containing x -> label mappings:
-- x : value where the tick will be drawn (this value is in xData space, not in pixel space). 
-- label: Tick label. If it is `null`, tick will be generated with a `" "` label.
+Default axis label labels can be altered with one of:
 
 ```java
-      Map<Object, Object> customXAxisTickLabelsMap = new HashMap<>();
-      customXAxisTickLabelsMap.put(0, "zero");
-      customXAxisTickLabelsMap.put(3, "3.5");
-      customXAxisTickLabelsMap.put(5, " ");
-      customXAxisTickLabelsMap.put(9, "nine");
-      chart.setXAxisLabelOverrideMap(customXAxisTickLabelsMap);
-
-      Map<Object, Object> customYAxisTickLabelsMap = new HashMap<>();
-      customYAxisTickLabelsMap.put(1.0, "max c");
-      customYAxisTickLabelsMap.put(6.0, "max b");
-      customYAxisTickLabelsMap.put(9.0, "max a");
-      chart.setYAxisLabelOverrideMap(customYAxisTickLabelsMap);
+chart.getStyler().setDatePattern(datePattern)
+chart.getStyler().setXAxisDecimalPattern(pattern);
+chart.getStyler().setYAxisDecimalPattern(pattern);
 ```
 
-For category charts another way to create custom axis places is using category names in first series:
+
+You can also create custom axis tick labels with a callback function. In the following example taken from [DateChart09](https://github.
+com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart09.java), the X-Axis tick labels are generated 
+via a custom lambda function which takes the numerical (double) tick label values and converts them to a `String`.
+
+
 ```java
-     Map<Object, Object> tickLabelOverrideMap = new HashMap<Object, Object>();
-
-      Map<Object, Object> customTickLabelsMap = new HashMap<>();
-      customTickLabelsMap.put("A", "-A-");
-      customTickLabelsMap.put("D", "+D+");
-      chart.setXAxisLabelOverrideMap(customTickLabelsMap);
+// set custom X-Axis tick labels
+LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
+DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
+chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
 ```
 
-Whenever you use `setXAxisLabelOverrideMap` the auto-generated tick labels will be replaced meaning none of the tick labels will be shown besides the ones provided by you in the override map.
+In the following example taken from [DateChart06](https://github.
+com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart06.java), the Y-Axis tick labels are converted 
+to the englich word reprentation of the numbers.
+
+```java
+chart.getStyler().setyAxisTickLabelsFormattingFunction(x -> NumberWordConverter.convert(x.intValue()));
+```
 
 ### Multiple Axes
 
@@ -598,9 +590,9 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 
 ## Running Demo
 
-- Linux: execute command `java -cp xchart-demo-3.6.5.jar:xchart-3.6.5.jar org.knowm.xchart.demo.XChartDemo`.
+- Linux: execute command `java -cp xchart-demo-3.7.0.jar:xchart-3.7.0.jar org.knowm.xchart.demo.XChartDemo`.
 
-- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.6.5.jar;xchart-3.6.3.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.6.5.jar;xchart-3.6.5.jar" org.knowm.xchart.demo.XChartDemo`.
+- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.7.0.jar;xchart-3.6.3.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.7.0.jar;xchart-3.7.0.jar" org.knowm.xchart.demo.XChartDemo`.
 
 E.g:
 ```sh

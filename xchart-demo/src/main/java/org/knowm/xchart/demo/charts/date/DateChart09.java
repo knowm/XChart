@@ -57,9 +57,10 @@ public class DateChart09 implements ExampleChart<XYChart> {
     // set custom X-Axis tick labels
     LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
     DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
-    // TODO deprecate this and move it into the styler
-    chart.setCustomXAxisTickLabelsFormatter(
-        x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
+    chart
+        .getStyler()
+        .setxAxisTickLabelsFormattingFunction(
+            x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
 
     // set custom cursor tool tip text
     chart.getStyler().setCursorEnabled(true);
