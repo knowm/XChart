@@ -488,8 +488,7 @@ chart.getStyler(). setToolTipBackgroundColor(Color.LIGHT_GRAY);
 chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
 ```
 
-A working example can be found at [LineChart05](https://github.
-com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart05.java).
+A working example can be found at [LineChart05](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart05.java).
 
 ### Cursor
 
@@ -510,10 +509,11 @@ chart.getStyler().setCursorLineWidth(30f);
 chart.getStyler().setCursorFont(new Font("Verdana", Font.BOLD, 12));
 chart.getStyler().setCursorFontColor(Color.ORANGE);
 chart.getStyler().setCursorBackgroundColor(Color.BLUE);
+chart.getStyler().setCustomCursorXDataFormattingFunction(x -> "hello xvalue: " + x);
+chart.getStyler().setCustomCursorYDataFormattingFunction(y -> "hello yvalue divided by 2: " + y / 2);
 ```
 
-A working example can be found at [LineChart09](https://github.
-com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart09.java).
+A working example can be found at [LineChart09](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart09.java).
 
 ## Chart Themes
 
