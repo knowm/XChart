@@ -7,19 +7,32 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.knowm.xchart.*;
+
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.HeatMapChart;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
-import org.knowm.xchart.style.*;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.BoxStyler;
+import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.HeatMapStyler;
 import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
+import org.knowm.xchart.style.XYStyler;
 
 /** Axis */
 public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
@@ -373,51 +386,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   }
 
   private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
-
-    // check if a label override map for the y axis is present
-    Map<Object, Object> customTickLabelsMap =
-        chart.getAxisPair().getCustomTickLabelsMap(getDirection(), index);
-    if (customTickLabelsMap != null) {
-
-      if (getDirection() == Direction.X && axesChartStyler instanceof CategoryStyler) {
-
-        // get the first series
-        AxesChartSeriesCategory axesChartSeries =
-            (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
-        // get the first categories, could be Number Date or String
-        List<?> categories = (List<?>) axesChartSeries.getXData();
-
-        // add the custom tick labels for the categories
-        Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
-        for (Entry<Object, Object> entry : customTickLabelsMap.entrySet()) {
-          int index = categories.indexOf(entry.getKey());
-          if (index == -1) {
-            throw new IllegalArgumentException(
-                "Could not find category index for " + entry.getKey());
-          }
-          axisTickValueLabelMap.put((double) index, entry.getValue());
-        }
-
-        return new AxisTickCalculator_Override(
-            getDirection(),
-            workingSpace,
-            axesChartStyler,
-            axisTickValueLabelMap,
-            chart.getAxisPair().getXAxis().getDataType(),
-            categories.size());
-      } else {
-
-        // add the custom tick labels for the values
-        Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
-        for (Entry<Object, Object> entry : customTickLabelsMap.entrySet()) {
-          Number axisTickValue = (Number) entry.getKey();
-          axisTickValueLabelMap.put(axisTickValue.doubleValue(), entry.getValue());
-        }
-
-        return new AxisTickCalculator_Override(
-            getDirection(), workingSpace, min, max, axesChartStyler, axisTickValueLabelMap);
-      }
-    }
 
     // X-Axis
     if (getDirection() == Direction.X) {
