@@ -310,7 +310,6 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanels.forEach(x -> x.paint(g));
     annotations.forEach(x -> x.paint(g));
   }
 
@@ -344,6 +343,4 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       }
     }
   }
-
-
 }

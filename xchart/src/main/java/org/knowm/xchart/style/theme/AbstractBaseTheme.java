@@ -159,12 +159,6 @@ public abstract class AbstractBaseTheme implements Theme {
   }
 
   @Override
-  public boolean isInfoPanelVisible() {
-
-    return true;
-  }
-
-  @Override
   public Color getInfoPanelBackgroundColor() {
 
     return ChartColor.getAWTColor(ChartColor.WHITE);

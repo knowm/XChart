@@ -7,10 +7,8 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import org.knowm.xchart.internal.series.Series;
@@ -27,8 +25,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
-  protected final List<InfoPanel> infoPanels = new ArrayList<>();
-  //TODO combine this with infoPanels and rename it annotations-something...
   protected ArrayList<ChartPart> annotations = new ArrayList<>();
 
   /** Chart Parts */
@@ -65,7 +61,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.height = height;
     this.styler = styler;
 
-    //    this.cursor = new Cursor(styler);
     // TODO move this out??
     this.chartTitle = new ChartTitle<ST, S>(this);
   }
@@ -166,42 +161,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     yAxisGroupTitleMap.put(yAxisGroup, yAxisTitle);
   }
 
-  /**
-   * @param content - multi line (with "\n") String content
-   * @param xPosition - integer x position from left edge of chart
-   * @param yPosition - integer y position from bottom edge of chart
-   */
-  public void addInfoPanelContent(String content, int xPosition, int yPosition) {
-
-    if (xPosition < 0) {
-      throw new IllegalArgumentException("xPosition must be greater than 0!!!");
-    }
-    if (yPosition < 0) {
-      throw new IllegalArgumentException("yPosition must be greater than 0!!!");
-    }
-
-    List<String> lines = Arrays.asList(content.split("\\n"));
-    infoPanels.add(new InfoPanel(lines, xPosition, yPosition, Double.NaN, Double.NaN, this));
-  }
-  /**
-   * @param content - multi line (with "\n") String content
-   * @param xPosition - double x position as a percentage (between 0.0 and 1.0) from left edge of
-   *     chart
-   * @param yPosition - double y position as a percentage (between 0.0 and 1.0) from bottom edge of
-   *     chart
-   */
-  public void addInfoPanelContent(String content, double xPosition, double yPosition) {
-    if (xPosition < 0.0 || xPosition > 1.0) {
-      throw new IllegalArgumentException("xPosition must be between 0.0 and 1.0!!!");
-    }
-    if (yPosition < 0.0 || yPosition > 1.0) {
-      throw new IllegalArgumentException("yPosition must be between 0.0 and 1.0!!!");
-    }
-
-    List<String> lines = Arrays.asList(content.split("\\n"));
-    infoPanels.add(new InfoPanel(lines, 0, 0, xPosition, yPosition, this));
-  }
-
   public void addAnnotation(Annotation annotation) {
 
     annotations.add(annotation);
@@ -226,8 +185,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     AxesChartStyler axesChartStyler = (AxesChartStyler) (styler);
     axesChartStyler.setyAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
-
-
 
   /** Chart Parts Getters */
   ChartTitle<ST, S> getChartTitle() {
@@ -273,6 +230,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
 
+  // TODO investigate this
   Format getYAxisFormat(String yAxisDecimalPattern) {
     Format format = null;
     if (yAxisDecimalPattern != null) {
@@ -283,11 +241,10 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return format;
   }
 
-  ArrayList<ChartPart> getAnnotations() {
-
-    return annotations;
-  }
-
+  //  ArrayList<ChartPart> getAnnotations() {
+  //
+  //    return annotations;
+  //  }
 
   // TODO remove public
   public double getYAxisLeftWidth() {

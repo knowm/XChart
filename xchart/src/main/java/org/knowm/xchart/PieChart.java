@@ -126,7 +126,6 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanels.forEach(x -> x.paint(g));
     annotations.forEach(x -> x.paint(g));
   }
 

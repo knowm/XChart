@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.HeatMapChart;
@@ -55,7 +54,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
-
 
   /**
    * Constructor
@@ -420,7 +418,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
-        if (!xData.isEmpty()) { //TODO why would this be empty?
+        if (!xData.isEmpty()) { // TODO why would this be empty?
           return new AxisTickCalculator_Callback(
               axesChartStyler.getxAxisTickLabelsFormattingFunction(),
               getDirection(),
@@ -431,7 +429,12 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
-            axesChartStyler.getxAxisTickLabelsFormattingFunction(), getDirection(), workingSpace, min, max, axesChartStyler);
+            axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            axesChartStyler);
 
       } else if (axesChartStyler instanceof CategoryStyler
           || axesChartStyler instanceof BoxStyler) {
@@ -517,7 +520,12 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
-            axesChartStyler.getyAxisTickLabelsFormattingFunction(), getDirection(), workingSpace, min, max, axesChartStyler);
+            axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            axesChartStyler);
 
       } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 
@@ -615,7 +623,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
    * @param chartPoint value in chart coordinate system
    * @return Coordinate of screen. eg: MouseEvent.getX(), MouseEvent.getY()
    */
-  //TODO check these method out and make non public??
+  // TODO check these method out and make non public??
   public double getScreenValue(double chartPoint) {
 
     double minVal = min;

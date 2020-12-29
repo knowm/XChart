@@ -39,10 +39,8 @@ public abstract class AxesChartStyler extends Styler {
   private HashMap<Integer, Double> yAxisMinMap = new HashMap<>();
   private HashMap<Integer, Double> yAxisMaxMap = new HashMap<>();
 
-
-
   // By default, all available labels are displayed
-  //TODO what's this for anyway??
+  // TODO what's this for anyway??
   private int xAxisMaxLabelCount = 0;
 
   // Chart Plot Area ///////////////////////////////
@@ -538,7 +536,6 @@ public abstract class AxesChartStyler extends Styler {
     return yAxisMaxMap.get(yAxisGroup);
   }
 
-
   public int getXAxisMaxLabelCount() {
 
     return xAxisMaxLabelCount;
@@ -825,7 +822,8 @@ public abstract class AxesChartStyler extends Styler {
     return xAxisTickLabelsFormattingFunction;
   }
 
-  public void setxAxisTickLabelsFormattingFunction(Function<Double, String> xAxisTickLabelsFormattingFunction) {
+  public void setxAxisTickLabelsFormattingFunction(
+      Function<Double, String> xAxisTickLabelsFormattingFunction) {
     this.xAxisTickLabelsFormattingFunction = xAxisTickLabelsFormattingFunction;
   }
 
@@ -833,11 +831,12 @@ public abstract class AxesChartStyler extends Styler {
     return yAxisTickLabelsFormattingFunction;
   }
 
-  public void setyAxisTickLabelsFormattingFunction(Function<Double, String> yAxisTickLabelsFormattingFunction) {
+  public void setyAxisTickLabelsFormattingFunction(
+      Function<Double, String> yAxisTickLabelsFormattingFunction) {
     this.yAxisTickLabelsFormattingFunction = yAxisTickLabelsFormattingFunction;
   }
 
-// TickLabels and MarksColor colors for xAxis, yAxis, yAxisGroup ////////////////////////////////
+  // TickLabels and MarksColor colors for xAxis, yAxis, yAxisGroup ////////////////////////////////
 
   public Color getXAxisTickLabelsColor() {
 
@@ -926,7 +925,6 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-
   public TextAlignment getXAxisLabelAlignment() {
 
     return xAxisLabelAlignment;
@@ -974,5 +972,4 @@ public abstract class AxesChartStyler extends Styler {
     this.xAxisLabelRotation = xAxisLabelRotation;
     return this;
   }
-
 }

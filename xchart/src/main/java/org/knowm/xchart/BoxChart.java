@@ -156,7 +156,6 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
     axisPair.paint(g);
     plot.paint(g);
     chartTitle.paint(g);
-    infoPanels.forEach(x -> x.paint(g));
     annotations.forEach(x -> x.paint(g));
   }
 }

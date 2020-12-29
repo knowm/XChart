@@ -51,10 +51,10 @@ public class LineChart09 implements ExampleChart<XYChart> {
     //    chart.getStyler().setCursorFont(new Font("Verdana", Font.BOLD, 12));
     //    chart.getStyler().setCursorFontColor(Color.ORANGE);
     //    chart.getStyler().setCursorBackgroundColor(Color.BLUE);
-//    chart.getStyler().setCustomCursorXDataFormattingFunction(x -> "hello xvalue: " + x);
-//    chart
-//        .getStyler()
-//        .setCustomCursorYDataFormattingFunction(y -> "hello yvalue divided by 2: " + y / 2);
+    //    chart.getStyler().setCustomCursorXDataFormattingFunction(x -> "hello xvalue: " + x);
+    //    chart
+    //        .getStyler()
+    //        .setCustomCursorYDataFormattingFunction(y -> "hello yvalue divided by 2: " + y / 2);
 
     // Series
     chart.addSeries("a", new double[] {0, 3, 5, 7, 9}, new double[] {-3, 5, 9, 6, 5});

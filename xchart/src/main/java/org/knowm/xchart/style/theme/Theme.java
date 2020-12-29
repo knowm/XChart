@@ -57,8 +57,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   Font getInfoPanelFont();
 
-  boolean isInfoPanelVisible();
-
   Color getInfoPanelBackgroundColor();
 
   Color getInfoPanelBorderColor();

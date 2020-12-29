@@ -52,7 +52,7 @@ public abstract class Styler {
   private double plotContentSize = .92;
 
   // Chart InfoPanel ///////////////////////////////
-  private boolean infoPanelVisible;
+  // TODO move these to an annotation styler
   private Color infoPanelBackgroundColor;
   private Color infoPanelBorderColor;
   private Font infoPanelFont;
@@ -123,7 +123,7 @@ public abstract class Styler {
     cardinalPosition = theme.getLegendPosition();
 
     // Info Panel
-    infoPanelVisible = theme.isInfoPanelVisible();
+    // TODO move these to an annotation styler
     infoPanelBackgroundColor = theme.getInfoPanelBackgroundColor();
     infoPanelBorderColor = theme.getInfoPanelBorderColor();
     infoPanelFont = theme.getInfoPanelFont();
@@ -535,16 +535,6 @@ public abstract class Styler {
   public Styler setInfoPanelFont(Font font) {
 
     this.infoPanelFont = font;
-    return this;
-  }
-
-  public boolean isInfoPanelVisible() {
-    return infoPanelVisible;
-  }
-
-  public Styler setInfoPanelVisible(boolean infoPanelVisible) {
-
-    this.infoPanelVisible = infoPanelVisible;
     return this;
   }
 
