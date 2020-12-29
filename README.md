@@ -355,8 +355,7 @@ chart.getStyler().setYAxisDecimalPattern(pattern);
 ```
 
 
-You can also create custom axis tick labels with a callback function. In the following example taken from [DateChart09](https://github.
-com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart09.java), the X-Axis tick labels are generated 
+You can also create custom axis tick labels with a callback function. In the following example taken from [DateChart09](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart09.java), the X-Axis tick labels are generated 
 via a custom lambda function which takes the numerical (double) tick label values and converts them to a `String`.
 
 
@@ -367,8 +366,7 @@ DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
 chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
 ```
 
-In the following example taken from [DateChart06](https://github.
-com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart06.java), the Y-Axis tick labels are converted 
+In the following example taken from [DateChart06](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart06.java), the Y-Axis tick labels are converted 
 to the englich word reprentation of the numbers.
 
 ```java
@@ -377,7 +375,8 @@ chart.getStyler().setyAxisTickLabelsFormattingFunction(x -> NumberWordConverter.
 
 ### Multiple Axes
 
-XChart has multiple y axes feature. Y offset is calculated according to the y axis the series configured. Max `y` value in this axis is calculated according to the series on this axis only. 
+XChart has multiple y axes feature. Y offset is calculated according to the Y-Axis the series configured. Max `y` value in this axis is calculated 
+according to the series on this axis only. 
 To set the y group: 
 
 ```java
@@ -422,6 +421,18 @@ chart.getStyler().setZoomSelectionColor(new Color(0,0 , 192, 128));
 ```
 
 A working example can be found at [DateChart01](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart01.java).
+
+### Chart Annotations
+
+For all chart types, one or more chart annotations can be super-imposed on top of the chart. the following types of annotatins are available:
+
+- AnnotationLine
+- AnnotationText
+- AnnotationImage
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Annotations.png)
+
+A working example can be found at [LineChart10](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart10.java).
 
 ### Info Panel
 

@@ -615,6 +615,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
    * @param chartPoint value in chart coordinate system
    * @return Coordinate of screen. eg: MouseEvent.getX(), MouseEvent.getY()
    */
+  //TODO check these method out and make non public??
   public double getScreenValue(double chartPoint) {
 
     double minVal = min;

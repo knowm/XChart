@@ -28,8 +28,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
   protected final List<InfoPanel> infoPanels = new ArrayList<>();
-  //  // TODO remove these?? move them to XChartPanel??
-  //  final Cursor cursor;
+  //TODO combine this with infoPanels and rename it annotations-something...
+  protected ArrayList<ChartPart> annotations = new ArrayList<>();
 
   /** Chart Parts */
   // TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't
@@ -51,8 +51,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   // TODO Does this belong here for all chart types?
   private Map<Integer, String> yAxisGroupTitleMap = new HashMap<>();
-  // TODO is this necessary?
-  protected ArrayList<ChartPart> plotParts = new ArrayList<>();
 
   /**
    * Constructor
@@ -204,6 +202,12 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     infoPanels.add(new InfoPanel(lines, 0, 0, xPosition, yPosition, this));
   }
 
+  public void addAnnotation(Annotation annotation) {
+
+    annotations.add(annotation);
+    annotation.init(this);
+  }
+
   /**
    * @Deprecated - use styler instead
    *
@@ -222,6 +226,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     AxesChartStyler axesChartStyler = (AxesChartStyler) (styler);
     axesChartStyler.setyAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
+
+
 
   /** Chart Parts Getters */
   ChartTitle<ST, S> getChartTitle() {
@@ -277,15 +283,11 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return format;
   }
 
-  ArrayList<ChartPart> getPlotParts() {
+  ArrayList<ChartPart> getAnnotations() {
 
-    return plotParts;
+    return annotations;
   }
-  // TODO remove public
-  public void addPlotPart(ChartPart chartPart) {
 
-    plotParts.add(chartPart);
-  }
 
   // TODO remove public
   public double getYAxisLeftWidth() {
@@ -293,8 +295,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     java.awt.geom.Rectangle2D.Double bounds = getAxisPair().getLeftYAxisBounds();
     return bounds.width + bounds.x;
   }
-  // TODO remove this?
-  public void addAnnotation(AnnotationLine maxY) {}
 
   // TODO remove this?
   public Map<String, S> getSeriesMap() {

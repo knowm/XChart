@@ -3,17 +3,11 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
-import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
 
-// TODO don't have this be a ChartPart??
-public class AnnotationLine implements ChartPart {
+public class AnnotationLine extends Annotation{
 
-  protected XChartPanel xChartPanel;
-  protected Chart chart;
-  protected Rectangle bounds;
+
 
   // properties
   protected boolean visible = true;
@@ -26,22 +20,16 @@ public class AnnotationLine implements ChartPart {
 
   public AnnotationLine(double value, boolean vertical, boolean valueInScreenCoordinate) {
 
-    super();
     this.value = value;
     this.vertical = vertical;
     this.valueInScreenCoordinate = valueInScreenCoordinate;
   }
 
-  public void init(XChartPanel<XYChart> chartPanel) {
 
-    this.xChartPanel = chartPanel;
-    chart = chartPanel.getChart();
-    chart.addPlotPart(this);
-  }
 
   @Override
   public Rectangle2D getBounds() {
-
+    // TODO implment this correctly
     return bounds;
   }
 

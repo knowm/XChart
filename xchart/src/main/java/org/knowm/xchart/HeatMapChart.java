@@ -165,6 +165,7 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
     chartTitle.paint(g);
     legend.paint(g);
     infoPanels.forEach(x -> x.paint(g));
+    annotations.forEach(x -> x.paint(g));
   }
 
   private List<Integer> arrayToList(int[] data) {

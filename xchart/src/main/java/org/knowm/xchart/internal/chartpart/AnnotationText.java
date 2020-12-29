@@ -3,22 +3,15 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
 
-// TODO don't have this be a ChartPart??
-public class AnnotationText implements ChartPart {
+public class AnnotationText extends Annotation {
 
-  protected XChartPanel xChartPanel;
-  protected Chart chart;
-  protected Rectangle bounds;
 
   // properties
   protected String text;
@@ -43,17 +36,16 @@ public class AnnotationText implements ChartPart {
     this.valueInScreenCoordinate = valueInScreenCoordinate;
   }
 
-  public void init(XChartPanel<XYChart> chartPanel) {
+  public void init(Chart chart) {
 
-    this.xChartPanel = chartPanel;
-    chart = chartPanel.getChart();
+    super.init(chart);
+
     if (fontColor == null) {
       fontColor = chart.getStyler().getChartFontColor();
     }
     if (textFont == null) {
       textFont = chart.getStyler().getLegendFont();
     }
-    chart.addPlotPart(this);
   }
 
   @Override

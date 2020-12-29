@@ -13,7 +13,7 @@ import org.knowm.xchart.style.Styler.CardinalPosition;
  * <p>Demonstrates the following:
  *
  * <ul>
- *   <li>Cursor *
+ *   <li>Cursor
  *   <li>Setting custom cursor tool tip text
  *   <li>Building a Chart with ChartBuilder
  */

@@ -311,6 +311,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     chartTitle.paint(g);
     legend.paint(g);
     infoPanels.forEach(x -> x.paint(g));
+    annotations.forEach(x -> x.paint(g));
   }
 
   /** set the series color, marker and line style based on theme */

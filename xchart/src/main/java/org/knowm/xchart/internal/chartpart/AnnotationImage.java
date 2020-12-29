@@ -4,17 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
-import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
 
-// TODO don't have this be a ChartPart??
-public class AnnotationImage implements ChartPart {
+public class AnnotationImage extends Annotation {
 
-  protected XChartPanel xChartPanel;
-  protected Chart chart;
-  protected Rectangle bounds;
 
   // properties
   protected boolean visible = true;
@@ -39,17 +32,15 @@ public class AnnotationImage implements ChartPart {
     this.valueInScreenCoordinate = valueInScreenCoordinate;
   }
 
-  public void init(XChartPanel<XYChart> chartPanel) {
+  public void init(Chart chart) {
 
-    this.xChartPanel = chartPanel;
-    chart = chartPanel.getChart();
+    super.init(chart);
     if (fontColor == null) {
       fontColor = chart.getStyler().getChartFontColor();
     }
     if (textFont == null) {
       textFont = chart.getStyler().getLegendFont();
     }
-    chart.addPlotPart(this);
   }
 
   @Override
