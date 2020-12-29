@@ -8,8 +8,8 @@ import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.CardinalPosition;
 import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Category chart with Bar, Line and Scatter Series
@@ -44,7 +44,7 @@ public class BarChart09 implements ExampleChart<CategoryChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setAvailableSpaceFill(.55);
     chart.getStyler().setOverlapped(true);
 

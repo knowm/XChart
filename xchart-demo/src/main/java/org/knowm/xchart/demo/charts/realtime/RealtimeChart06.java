@@ -79,7 +79,7 @@ public class RealtimeChart06 implements ExampleChart<OHLCChart>, RealtimeExample
             .build();
 
     // Customize Chart
-    ohlcChart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideS);
+    ohlcChart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     ohlcChart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
     // generate data
     OHLCChart01.populateData(xData, openData, highData, lowData, closeData);

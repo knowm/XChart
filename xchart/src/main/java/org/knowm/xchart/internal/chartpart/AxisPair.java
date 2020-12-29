@@ -12,7 +12,7 @@ import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.CategoryStyler;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /** @author timmolter */
@@ -138,7 +138,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     rightYAxisBounds.width = 0;
 
     double legendWidth = 0;
-    if (styler.getLegendPosition() == CardinalPosition.OutsideE && styler.isLegendVisible()) {
+    if (styler.getLegendPosition() == LegendPosition.OutsideE && styler.isLegendVisible()) {
       legendWidth = chart.getLegend().getBounds().getWidth() + styler.getChartPadding();
     }
     double rightEnd = chart.getWidth() - legendWidth - chartPadding;

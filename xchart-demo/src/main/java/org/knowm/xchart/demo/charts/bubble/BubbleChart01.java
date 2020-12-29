@@ -36,7 +36,7 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();
-    chart.getStyler().setLegendPosition(Styler.CardinalPosition.InsideN);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideN);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
     chart.getStyler().setToolTipsEnabled(true);
 

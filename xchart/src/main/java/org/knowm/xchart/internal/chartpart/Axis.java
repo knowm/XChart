@@ -28,7 +28,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.HeatMapStyler;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 import org.knowm.xchart.style.XYStyler;
 
@@ -106,7 +106,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
     double legendHeightOffset = 0;
     if (axesChartStyler.isLegendVisible()
-        && axesChartStyler.getLegendPosition() == CardinalPosition.OutsideS)
+        && axesChartStyler.getLegendPosition() == LegendPosition.OutsideS)
       legendHeightOffset = chart.getLegend().getBounds().getHeight();
 
     // determine Axis bounds
@@ -136,13 +136,13 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
         double legendWidthOffset = 0;
         if (axesChartStyler.isLegendVisible()
-            && axesChartStyler.getLegendPosition() == CardinalPosition.OutsideE)
+            && axesChartStyler.getLegendPosition() == LegendPosition.OutsideE)
           legendWidthOffset = axesChartStyler.getChartPadding();
 
         double approximateXAxisWidth =
             chart.getWidth()
                 - width // y-axis approx. width
-                - (axesChartStyler.getLegendPosition() == CardinalPosition.OutsideE
+                - (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE
                     ? chart.getLegend().getBounds().getWidth()
                     : 0)
                 - 2 * axesChartStyler.getChartPadding()
@@ -185,7 +185,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       double yOffset = maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset;
 
       double legendWidth = 0;
-      if (axesChartStyler.getLegendPosition() == CardinalPosition.OutsideE
+      if (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE
           && axesChartStyler.isLegendVisible()) {
         legendWidth = chart.getLegend().getBounds().getWidth() + axesChartStyler.getChartPadding();
       }

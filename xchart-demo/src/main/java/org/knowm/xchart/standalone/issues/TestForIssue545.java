@@ -45,7 +45,7 @@ public class TestForIssue545 {
   public static void setBubbleStyler(BubbleChart chart) {
 
     BubbleStyler styler = chart.getStyler();
-    styler.setLegendPosition(Styler.CardinalPosition.InsideSW);
+    styler.setLegendPosition(Styler.LegendPosition.InsideSW);
     styler.setLegendLayout(Styler.LegendLayout.Horizontal);
     styler.setYAxisDecimalPattern("%");
     styler.setXAxisTickMarkSpacingHint(50);

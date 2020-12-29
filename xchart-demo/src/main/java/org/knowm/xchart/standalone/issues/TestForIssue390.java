@@ -8,7 +8,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class TestForIssue390 {
 
@@ -40,7 +40,7 @@ public class TestForIssue390 {
 
     // Customize Chart
     chart.getStyler().setLegendVisible(true);
-    chart.getStyler().setLegendPosition(CardinalPosition.InsideSW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
     // chart.getStyler().setYAxisMax(2.0);
 

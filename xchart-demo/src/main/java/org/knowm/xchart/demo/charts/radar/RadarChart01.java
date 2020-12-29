@@ -4,7 +4,7 @@ import org.knowm.xchart.RadarChart;
 import org.knowm.xchart.RadarChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Radar Chart
@@ -32,7 +32,7 @@ public class RadarChart01 implements ExampleChart<RadarChart> {
     RadarChart chart = new RadarChartBuilder().width(800).height(600).title("Radar Chart").build();
     chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setHasAnnotations(true);
-    chart.getStyler().setLegendPosition(CardinalPosition.InsideSW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
 
     // Series
     chart.setVariableLabels(

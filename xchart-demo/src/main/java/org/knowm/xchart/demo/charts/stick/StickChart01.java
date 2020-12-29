@@ -7,7 +7,7 @@ import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Basic Stick Chart
@@ -34,7 +34,7 @@ public class StickChart01 implements ExampleChart<CategoryChart> {
 
     // Customize Chart
     chart.getStyler().setChartTitleVisible(true);
-    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Stick);
 
     // Series

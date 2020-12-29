@@ -7,7 +7,7 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Logarithmic Y-Axis
@@ -52,7 +52,7 @@ public class LineChart08 implements ExampleChart<XYChart> {
 
     // Customize Chart
     chart.getStyler().setChartTitleVisible(true);
-    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setYAxisLogarithmic(true);
     chart.getStyler().setXAxisLabelRotation(45);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Step);

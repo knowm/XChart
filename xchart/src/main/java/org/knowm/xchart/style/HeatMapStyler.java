@@ -75,14 +75,14 @@ public class HeatMapStyler extends AxesChartStyler {
   }
 
   @Override
-  public Styler setLegendPosition(CardinalPosition cardinalPosition) {
+  public Styler setLegendPosition(LegendPosition legendPosition) {
 
-    if (!CardinalPosition.OutsideE.equals(cardinalPosition)
-        && !CardinalPosition.OutsideS.equals(cardinalPosition)) {
+    if (!LegendPosition.OutsideE.equals(legendPosition)
+        && !LegendPosition.OutsideS.equals(legendPosition)) {
       throw new IllegalArgumentException(
           "HeatMapStyler LegendPosition must be OutsideE or OutsideS!!!");
     }
-    return super.setLegendPosition(cardinalPosition);
+    return super.setLegendPosition(legendPosition);
   }
 
   public boolean isPiecewise() {

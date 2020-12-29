@@ -23,7 +23,7 @@ public class TestForIssue257 {
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
     chart.getStyler().setStacked(true);
     chart.getStyler().setPlotGridHorizontalLinesVisible(true);
-    chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideS);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
     List<String> category_values = new ArrayList<String>();
 

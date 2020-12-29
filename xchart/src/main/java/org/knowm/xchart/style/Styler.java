@@ -43,7 +43,7 @@ public abstract class Styler {
   private Font legendFont;
   private int legendPadding;
   private int legendSeriesLineLength;
-  private CardinalPosition cardinalPosition;
+  private LegendPosition legendPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
   // Chart Plot Area ///////////////////////////////
   private Color plotBackgroundColor;
@@ -120,7 +120,7 @@ public abstract class Styler {
     legendFont = theme.getLegendFont();
     legendPadding = theme.getLegendPadding();
     legendSeriesLineLength = theme.getLegendSeriesLineLength();
-    cardinalPosition = theme.getLegendPosition();
+    legendPosition = theme.getLegendPosition();
 
     // Info Panel
     // TODO move these to an annotation styler
@@ -458,23 +458,23 @@ public abstract class Styler {
     return this;
   }
 
-  public CardinalPosition getLegendPosition() {
+  public LegendPosition getLegendPosition() {
 
-    return cardinalPosition;
+    return legendPosition;
   }
 
   /**
    * sets the legend position
    *
-   * @param cardinalPosition
+   * @param legendPosition
    */
-  public Styler setLegendPosition(CardinalPosition cardinalPosition) {
+  public Styler setLegendPosition(LegendPosition legendPosition) {
 
-    this.cardinalPosition = cardinalPosition;
+    this.legendPosition = legendPosition;
     return this;
   }
 
-  public enum CardinalPosition {
+  public enum LegendPosition {
     OutsideE,
     InsideNW,
     InsideNE,

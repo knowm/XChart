@@ -6,7 +6,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class TestForIssue315 {
 
@@ -26,7 +26,7 @@ public class TestForIssue315 {
     XYSeries xySeries2 = chart.addSeries("Series 1", xData, yData2);
     xySeries2.setYAxisGroup(1);
     xySeries2.setEnabled(group1Enabled);
-    chart.getStyler().setLegendPosition(CardinalPosition.OutsideS);
+    chart.getStyler().setLegendPosition(LegendPosition.OutsideS);
     return chart;
   }
 

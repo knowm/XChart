@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Stroke;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -51,7 +51,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   int getLegendSeriesLineLength();
 
-  CardinalPosition getLegendPosition();
+  LegendPosition getLegendPosition();
 
   // Info Panel ///////////////////////////////
 

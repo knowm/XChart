@@ -10,7 +10,7 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /** @author timmolter */
 public class AdvancedExample {
@@ -28,7 +28,7 @@ public class AdvancedExample {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(CardinalPosition.InsideNE);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
 
     // Series

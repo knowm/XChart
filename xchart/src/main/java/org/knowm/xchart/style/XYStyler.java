@@ -16,7 +16,7 @@ public class XYStyler extends AxesChartStyler {
   private Color zoomSelectionColor;
   private boolean zoomResetByDoubleClick;
   private boolean zoomResetByButton;
-  private CardinalPosition zoomResetButtomPosition;
+  private ButtonPosition zoomResetButtomPosition;
 
   // Cursor ////////////////////////////////
   private boolean isCursorEnabled;
@@ -46,7 +46,7 @@ public class XYStyler extends AxesChartStyler {
     zoomSelectionColor = new Color(155, 155, 155, 128);
     zoomResetByDoubleClick = true;
     zoomResetByButton = true;
-    zoomResetButtomPosition = CardinalPosition.InsideN;
+    zoomResetButtomPosition = ButtonPosition.InsideN;
 
     // Cursor ////////////////////////////////
     this.isCursorEnabled = theme.isCursorEnabled();
@@ -125,14 +125,22 @@ public class XYStyler extends AxesChartStyler {
     this.zoomResetByButton = zoomResetByButton;
   }
 
-  public CardinalPosition getZoomResetButtomPosition() {
+  public ButtonPosition getZoomResetButtomPosition() {
     return zoomResetButtomPosition;
   }
 
-  public void setZoomResetButtomPosition(CardinalPosition zoomResetButtomPosition) {
+  public void setZoomResetButtomPosition(ButtonPosition zoomResetButtomPosition) {
     this.zoomResetButtomPosition = zoomResetButtomPosition;
   }
 
+  public enum ButtonPosition {
+    InsideNW,
+    InsideNE,
+    InsideSE,
+    InsideSW,
+    InsideN,
+    InsideS
+  }
   // Cursor ///////////////////////////////
 
   public boolean isCursorEnabled() {

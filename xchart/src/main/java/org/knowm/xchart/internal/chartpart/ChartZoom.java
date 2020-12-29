@@ -37,10 +37,12 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     this.xyChart = xyChart;
     xyChart.plot.plotContent.setChartZoom(this);
 
+    // TODO don't set the style stuff like this but get the styles directly in the paint method from
+    // the styler.
     resetButton = new ChartButton(xyChart, xChartPanel, resetString);
     resetButton.addActionListener(this);
     resetButton.setVisible(false);
-    resetButton.setCardinalPosition(xyChart.getStyler().getZoomResetButtomPosition());
+    resetButton.setButtonPosition(xyChart.getStyler().getZoomResetButtomPosition());
     resetButton.setColor(xyChart.getStyler().getZoomSelectionColor());
     resetButton.setHoverColor(xyChart.getStyler().getZoomSelectionColor().darker());
     resetButton.setBorderColor(xyChart.getStyler().getZoomSelectionColor().darker());

@@ -43,7 +43,7 @@ public class DateChart01 implements ExampleChart<XYChart> {
     XYChart chart = new XYChartBuilder().width(800).height(600).title("Millisecond Scale").build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideS);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
     chart.getStyler().setZoomEnabled(true);
     //    chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);

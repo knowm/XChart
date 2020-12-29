@@ -97,7 +97,7 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
     OHLCChart chart = new OHLCChartBuilder().width(800).height(600).title("OHLCChart01").build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(Styler.CardinalPosition.OutsideS);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     List<Date> xData = new ArrayList<>();

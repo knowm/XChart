@@ -5,7 +5,7 @@ import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Basic Bar Chart
@@ -42,7 +42,7 @@ public class BarChart01 implements ExampleChart<CategoryChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendPosition(CardinalPosition.InsideNW);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setHasAnnotations(false);
     chart.getStyler().setPlotGridLinesVisible(false);
 

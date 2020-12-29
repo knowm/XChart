@@ -17,13 +17,14 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.event.EventListenerList;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.style.Styler.CardinalPosition;
+import org.knowm.xchart.style.XYStyler;
 
 /**
  * A button that can be used on the chart for whatever function. For example the ChartZoom class
  * uses this to reset the zoom function. When it is clicked it fires it's actionPerformed action and
  * whoever is listening to it can react to it.
  */
+// TODO tie this to the styler properties
 public class ChartButton extends MouseAdapter implements ChartPart {
 
   protected XChartPanel xChartPanel;
@@ -43,7 +44,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   private EventListenerList listenerList = new EventListenerList();
 
   // button position
-  protected CardinalPosition cardinalPosition = CardinalPosition.InsideN;
+  protected XYStyler.ButtonPosition buttonPosition = XYStyler.ButtonPosition.InsideN;
 
   protected double xOffset = 0;
   protected double yOffset = 0;
@@ -187,8 +188,8 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     double boundsWidth = bounds.getWidth();
     double boundsHeight = bounds.getHeight();
 
-    if (cardinalPosition != null) {
-      switch (cardinalPosition) {
+    if (buttonPosition != null) {
+      switch (buttonPosition) {
         case InsideNW:
           xOffset = bounds.getX() + margin;
           yOffset = bounds.getY() + margin;
@@ -213,9 +214,6 @@ public class ChartButton extends MouseAdapter implements ChartPart {
           xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
           yOffset = bounds.getY() + boundsHeight - heightAdjustment;
           break;
-        case OutsideE:
-        case OutsideS:
-          throw new IllegalArgumentException("Button cannot be placed outside of plot area!!!");
         default:
           break;
       }
@@ -223,7 +221,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   }
 
   //   SETTERS
-
+  // TODO move some of these to a styler
   public void setColor(Color color) {
 
     this.color = color;
@@ -267,7 +265,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     this.margin = margin;
   }
 
-  void setCardinalPosition(CardinalPosition cardinalPosition) {
-    this.cardinalPosition = cardinalPosition;
+  void setButtonPosition(XYStyler.ButtonPosition legendPosition) {
+    this.buttonPosition = legendPosition;
   }
 }
