@@ -6,10 +6,6 @@ import org.knowm.xchart.internal.chartpart.Annotation;
 
 public class AnnotationLine extends Annotation {
 
-  //  style
-  // TODO move these to an annotation styler
-  //  private Color color = new Color(114, 147, 203);
-  //  private BasicStroke stroke = SOLID_STROKE;
   private final boolean isVertical;
   private double value;
 
@@ -28,27 +24,20 @@ public class AnnotationLine extends Annotation {
   }
 
   @Override
-  public Rectangle2D getBounds() {
-    // TODO implment this correctly
-    return bounds;
-  }
-
-  @Override
   public void paint(Graphics2D g) {
 
     if (!isVisible) {
       return;
     }
 
-    bounds = g.getClipBounds();
     int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
 
     if (isVertical) {
-      y1 = (int) bounds.getY();
-      y2 = (int) (bounds.getY() + bounds.getHeight());
+      y1 = 0;
+      y2 = chart.getHeight();
     } else {
-      x1 = (int) bounds.getX();
-      x2 = (int) (bounds.getX() + bounds.getWidth());
+      x1 = 0;
+      x2 = chart.getWidth();
     }
 
     if (isValueInScreenSpace) {
@@ -56,7 +45,7 @@ public class AnnotationLine extends Annotation {
         x1 = (int) value;
         x2 = x1;
       } else {
-        y1 = (int) value;
+        y1 = chart.getHeight() - (int) value;
         y2 = y1;
       }
     } else {
@@ -72,6 +61,13 @@ public class AnnotationLine extends Annotation {
     g.setStroke(styler.getAnnotationLineStroke());
     g.setColor(styler.getAnnotationLineColor());
     g.drawLine(x1, y1, x2, y2);
+
+    bounds =
+        new Rectangle2D.Double(
+            x1,
+            y1,
+            Math.max(x2 - x1, styler.getAnnotationLineStroke().getLineWidth()),
+            Math.max(y2 - y1, styler.getAnnotationLineStroke().getLineWidth()));
   }
 
   public void setValue(double value) {

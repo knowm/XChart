@@ -18,6 +18,12 @@ public abstract class Annotation implements ChartPart {
     this.styler = chart.getStyler();
   }
 
+  @Override
+  public Rectangle2D getBounds() {
+
+    return bounds;
+  }
+
   public void setVisible(boolean visible) {
     isVisible = visible;
   }

@@ -1,21 +1,17 @@
 package org.knowm.xchart;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import org.knowm.xchart.internal.chartpart.Annotation;
 import org.knowm.xchart.internal.chartpart.Chart;
 
 public class AnnotationImage extends Annotation {
 
   // internal
-  private Image image;
+  private BufferedImage image;
   protected double x;
   protected double y;
-
-  // internal
-  private int startx;
-  private int starty;
 
   /**
    * Constructor
@@ -25,7 +21,7 @@ public class AnnotationImage extends Annotation {
    * @param y
    * @param isValueInScreenSpace
    */
-  public AnnotationImage(Image image, double x, double y, boolean isValueInScreenSpace) {
+  public AnnotationImage(BufferedImage image, double x, double y, boolean isValueInScreenSpace) {
 
     this.image = image;
     this.x = x;
@@ -39,36 +35,28 @@ public class AnnotationImage extends Annotation {
   }
 
   @Override
-  public Rectangle2D getBounds() {
-
-    // TODO implement this correctly
-    return bounds;
-  }
-
-  @Override
   public void paint(Graphics2D g) {
 
     if (!isVisible) {
       return;
     }
-    bounds = g.getClipBounds();
 
-    calculatePosition();
-    g.drawImage(image, startx, starty, null);
-  }
-
-  private void calculatePosition() {
+    int xOffset;
+    int yOffset;
 
     if (isValueInScreenSpace) {
-      startx = (int) x;
-      starty = (int) y;
+      xOffset = (int) x - image.getWidth() / 2;
+      yOffset = chart.getHeight() - (int) y - image.getWidth() / 2;
     } else {
-      startx = (int) (getXAxisSreenValue(x) + 0.5) - image.getWidth(null) / 2;
-      starty = (int) (getYAxisSreenValue(y) + 0.5) - image.getHeight(null) / 2;
+      xOffset = (int) (getXAxisSreenValue(x) + 0.5) - image.getWidth() / 2;
+      yOffset = (int) (getYAxisSreenValue(y) + 0.5) - image.getHeight() / 2;
     }
+    g.drawImage(image, xOffset, yOffset, null);
+
+    bounds = new Rectangle2D.Double(xOffset, yOffset, image.getWidth(), image.getHeight());
   }
 
-  public void setImage(Image image) {
+  public void setImage(BufferedImage image) {
     this.image = image;
   }
 

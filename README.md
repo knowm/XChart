@@ -431,6 +431,8 @@ The following is a chart with four `AnnotationLine`s, one `AnnotationImage` and 
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_AnnotationLineImageText.png)
 
+Positioning is relative to the bottom-left corner of the chart and to the center of the `AnnotationImage` or `AnnotationText`.
+
 The following example `AnnotationLine` and `AnnotationText` styling parameters show which are available:
 
 ```java
@@ -445,6 +447,8 @@ A working example can be found at [LineChart10](https://github.com/knowm/XChart/
 The following is a chart with three `AnnotationTextPanel`s:
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_AnnotationTextPanel.png)
+
+Positioning is relative to the bottom-left corner of the chart and to the bottom-left corner of the `AnnotationTextPanel`.
 
 The following example `AnnotationTextPanel` styling parameters show which are available:
 

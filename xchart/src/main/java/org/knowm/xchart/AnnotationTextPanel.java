@@ -23,10 +23,6 @@ public class AnnotationTextPanel extends Annotation {
   protected double x;
   protected double y;
 
-  // internal
-  private double startx;
-  private double starty;
-
   /**
    * Constructor
    *
@@ -55,72 +51,6 @@ public class AnnotationTextPanel extends Annotation {
       return;
     }
 
-    bounds = getBoundsHint();
-
-    calculatePosition();
-
-    // Draw info panel box background and border
-    Shape rect = new Rectangle2D.Double(startx, starty, bounds.getWidth(), bounds.getHeight());
-    g.setColor(styler.getAnnotationTextPanelBackgroundColor());
-    g.fill(rect);
-    g.setStroke(SOLID_STROKE);
-    g.setColor(styler.getAnnotationTextPanelBorderColor());
-    g.draw(rect);
-
-    // Draw text onto panel box
-    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-    Map<String, Rectangle2D> textBounds = getTextBounds(lines);
-
-    g.setColor(styler.getAnnotationTextPanelFontColor());
-    g.setFont(styler.getAnnotationTextPanelFont());
-
-    startx = startx + styler.getAnnotationTextPanelPadding();
-    starty = starty + styler.getAnnotationTextPanelPadding();
-
-    double multiLineOffset = 0.0;
-
-    for (Map.Entry<String, Rectangle2D> entry : textBounds.entrySet()) {
-
-      double lineHeight = entry.getValue().getHeight();
-
-      FontRenderContext frc = g.getFontRenderContext();
-      TextLayout tl = new TextLayout(entry.getKey(), styler.getAnnotationTextPanelFont(), frc);
-      Shape shape = tl.getOutline(null);
-      AffineTransform orig = g.getTransform();
-      AffineTransform at = new AffineTransform();
-      at.translate(startx, starty + lineHeight + multiLineOffset);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
-
-      multiLineOffset += lineHeight + MULTI_LINE_SPACE;
-    }
-
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
-  }
-
-  protected void calculatePosition() {
-
-    if (isValueInScreenSpace) {
-      startx = x;
-      starty = chart.getHeight() - bounds.getHeight() - y - 1;
-    } else {
-      startx = getXAxisSreenValue(x);
-      starty = getYAxisSreenValue(y) - bounds.getHeight() - 1;
-    }
-
-    startx = Math.min(startx, (chart.getWidth() - bounds.getWidth() - 1));
-    starty = Math.max(starty, 1);
-  }
-
-  private Rectangle2D getBoundsHint() {
-
-    if (!isVisible) {
-      return new Rectangle2D.Double();
-    }
-
     // determine text content max width
     double contentMaxWidth = 0;
 
@@ -136,16 +66,68 @@ public class AnnotationTextPanel extends Annotation {
     }
 
     entryHeight -= MULTI_LINE_SPACE; // subtract away the bottom MULTI_LINE_SPACE
-    contentHeight += entryHeight + styler.getAnnotationTextPanelPadding();
+    contentHeight += entryHeight;
 
     // determine content width
     double contentWidth = styler.getAnnotationTextPanelPadding() + contentMaxWidth;
 
-    // Legend Box
     double width = contentWidth + 2 * styler.getAnnotationTextPanelPadding();
-    double height = contentHeight + styler.getAnnotationTextPanelPadding();
+    double height = contentHeight + 2 * styler.getAnnotationTextPanelPadding();
 
-    return new Rectangle2D.Double(0, 0, width, height); // 0 indicates not sure yet.
+    double xOffset;
+    double yOffset;
+
+    if (isValueInScreenSpace) {
+      xOffset = x;
+      yOffset = chart.getHeight() - height - y - 1;
+    } else {
+      xOffset = getXAxisSreenValue(x);
+      yOffset = getYAxisSreenValue(y) - height - 1;
+    }
+
+    xOffset = Math.min(xOffset, (chart.getWidth() - width - 1));
+    yOffset = Math.max(yOffset, 1);
+
+    bounds = new Rectangle2D.Double(xOffset, yOffset, width, height); // 0 indicates not sure yet.
+
+    // Draw info panel box background and border
+    Shape rect = new Rectangle2D.Double(xOffset, yOffset, width, height);
+    g.setColor(styler.getAnnotationTextPanelBackgroundColor());
+    g.fill(rect);
+    g.setStroke(SOLID_STROKE);
+    g.setColor(styler.getAnnotationTextPanelBorderColor());
+    g.draw(rect);
+
+    // Draw text onto panel box
+    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+    g.setColor(styler.getAnnotationTextPanelFontColor());
+    g.setFont(styler.getAnnotationTextPanelFont());
+
+    xOffset = xOffset + styler.getAnnotationTextPanelPadding();
+    yOffset = yOffset + styler.getAnnotationTextPanelPadding();
+
+    double multiLineOffset = 0.0;
+
+    for (Map.Entry<String, Rectangle2D> entry : textBounds.entrySet()) {
+
+      double lineHeight = entry.getValue().getHeight();
+
+      FontRenderContext frc = g.getFontRenderContext();
+      TextLayout tl = new TextLayout(entry.getKey(), styler.getAnnotationTextPanelFont(), frc);
+      Shape shape = tl.getOutline(null);
+      AffineTransform orig = g.getTransform();
+      AffineTransform at = new AffineTransform();
+      at.translate(xOffset, yOffset + lineHeight + multiLineOffset);
+      g.transform(at);
+      g.fill(shape);
+      g.setTransform(orig);
+
+      multiLineOffset += lineHeight + MULTI_LINE_SPACE;
+    }
+    //    System.out.println("bounds = " + bounds);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   private Map<String, Rectangle2D> getTextBounds(List<String> lines) {
@@ -160,11 +142,6 @@ public class AnnotationTextPanel extends Annotation {
       textBounds.put(line, bounds);
     }
     return textBounds;
-  }
-
-  @Override
-  public Rectangle2D getBounds() {
-    return getBoundsHint();
   }
 
   public void setLines(List<String> lines) {

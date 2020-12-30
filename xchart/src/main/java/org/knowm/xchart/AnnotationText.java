@@ -15,10 +15,6 @@ public class AnnotationText extends Annotation {
   protected double x;
   protected double y;
 
-  // internal
-  private double startx;
-  private double starty;
-
   /**
    * Constructor
    *
@@ -36,19 +32,11 @@ public class AnnotationText extends Annotation {
   }
 
   @Override
-  public Rectangle2D getBounds() {
-
-    return bounds;
-  }
-
-  @Override
   public void paint(Graphics2D g) {
 
     if (!isVisible) {
       return;
     }
-    // TODO implment this correctly
-    bounds = g.getClipBounds();
 
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -61,27 +49,29 @@ public class AnnotationText extends Annotation {
     Shape shape = tl.getOutline(null);
 
     Rectangle2D textBounds = shape.getBounds2D();
-    calculatePosition(textBounds);
+
+    double xOffset;
+    double yOffset;
+
+    if (isValueInScreenSpace) {
+      xOffset = x - textBounds.getWidth() / 2;
+      yOffset = chart.getHeight() - y + textBounds.getHeight() / 2;
+    } else {
+      xOffset = getXAxisSreenValue(x) - textBounds.getWidth() / 2;
+      yOffset = getYAxisSreenValue(y) + textBounds.getHeight() / 2;
+    }
 
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();
-    at.translate(startx, starty);
+    at.translate(xOffset, yOffset);
     g.transform(at);
     g.fill(shape);
     g.setTransform(orig);
 
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
-  }
 
-  protected void calculatePosition(Rectangle2D textBounds) {
-
-    if (isValueInScreenSpace) {
-      startx = x;
-      starty = y;
-    } else {
-      startx = getXAxisSreenValue(x) - textBounds.getWidth() / 2;
-      starty = getYAxisSreenValue(y) + textBounds.getHeight() / 2;
-    }
+    bounds =
+        new Rectangle2D.Double(xOffset, yOffset, textBounds.getWidth(), textBounds.getHeight());
   }
 
   public void setText(String text) {
