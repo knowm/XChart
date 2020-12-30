@@ -3,7 +3,6 @@ package org.knowm.xchart.style.theme;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Stroke;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
@@ -18,8 +17,6 @@ import org.knowm.xchart.style.markers.Marker;
  * @author ekleinod
  */
 public abstract class AbstractBaseTheme implements Theme {
-
-  private static final Font BASE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
 
   // Chart Style ///////////////////////////////
 
@@ -150,32 +147,6 @@ public abstract class AbstractBaseTheme implements Theme {
     return LegendPosition.OutsideE;
   }
 
-  // Chart Info Panel ///////////////////////////////
-
-  @Override
-  public Font getInfoPanelFont() {
-
-    return new Font(Font.MONOSPACED, Font.PLAIN, 10);
-  }
-
-  @Override
-  public Color getInfoPanelBackgroundColor() {
-
-    return ChartColor.getAWTColor(ChartColor.WHITE);
-  }
-
-  @Override
-  public Color getInfoPanelBorderColor() {
-
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
-  }
-
-  @Override
-  public int getInfoPanelPadding() {
-
-    return 10;
-  }
-
   // Chart Axes ///////////////////////////////
 
   @Override
@@ -233,9 +204,9 @@ public abstract class AbstractBaseTheme implements Theme {
   }
 
   @Override
-  public Stroke getAxisTickMarksStroke() {
+  public BasicStroke getAxisTickMarksStroke() {
 
-    return new BasicStroke(1.0f);
+    return BASE_STROKE;
   }
 
   @Override
@@ -325,7 +296,7 @@ public abstract class AbstractBaseTheme implements Theme {
   }
 
   @Override
-  public Stroke getPlotGridLinesStroke() {
+  public BasicStroke getPlotGridLinesStroke() {
 
     return new BasicStroke(
         1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[] {3.0f, 5.0f}, 0.0f);

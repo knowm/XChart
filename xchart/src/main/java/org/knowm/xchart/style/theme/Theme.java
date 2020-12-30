@@ -1,17 +1,21 @@
 package org.knowm.xchart.style.theme;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Stroke;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.ToolTipType;
+import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /** @author timmolter */
 public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
+
+  Font BASE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
+  BasicStroke BASE_STROKE = new BasicStroke(1.0f);
 
   // Chart Style ///////////////////////////////
 
@@ -53,15 +57,67 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   LegendPosition getLegendPosition();
 
-  // Info Panel ///////////////////////////////
+  // Chart Plot Area ///////////////////////////////
 
-  Font getInfoPanelFont();
+  boolean isPlotGridLinesVisible();
 
-  Color getInfoPanelBackgroundColor();
+  boolean isPlotGridVerticalLinesVisible();
 
-  Color getInfoPanelBorderColor();
+  boolean isPlotGridHorizontalLinesVisible();
 
-  int getInfoPanelPadding();
+  Color getPlotBackgroundColor();
+
+  Color getPlotBorderColor();
+
+  boolean isPlotBorderVisible();
+
+  Color getPlotGridLinesColor();
+
+  BasicStroke getPlotGridLinesStroke();
+
+  boolean isPlotTicksMarksVisible();
+
+  double getPlotContentSize();
+
+  int getPlotMargin();
+
+  // Chart Annotations ///////////////////////////////
+
+  default Font getAnnotationTextPanelFont() {
+    return new Font(Font.MONOSPACED, Font.PLAIN, 10);
+  }
+
+  default Color getAnnotationTextPanelFontColor() {
+    return ChartColor.getAWTColor(ChartColor.BLACK);
+  }
+
+  default Color getAnnotationTextPanelBackgroundColor() {
+    return ChartColor.getAWTColor(ChartColor.WHITE);
+  }
+
+  default Color getAnnotationTextPanelBorderColor() {
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+  }
+
+  default int getAnnotationTextPanelPadding() {
+    return 10;
+  }
+
+  default Font getAnnotationTextFont() {
+    return new Font(Font.MONOSPACED, Font.PLAIN, 10);
+  }
+
+  default Color getAnnotationTextFontColor() {
+    return ChartColor.getAWTColor(ChartColor.BLACK);
+  }
+
+  default BasicStroke getAnnotationLineStroke() {
+    return BASE_STROKE;
+  }
+
+  default Color getAnnotationLineColor() {
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+  }
 
   // Chart Axes ///////////////////////////////
 
@@ -83,7 +139,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   Color getAxisTickMarksColor();
 
-  Stroke getAxisTickMarksStroke();
+  BasicStroke getAxisTickMarksStroke();
 
   Color getAxisTickLabelsColor();
 
@@ -96,30 +152,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   int getXAxisTickMarkSpacingHint();
 
   int getYAxisTickMarkSpacingHint();
-
-  // Chart Plot Area ///////////////////////////////
-
-  boolean isPlotGridLinesVisible();
-
-  boolean isPlotGridVerticalLinesVisible();
-
-  boolean isPlotGridHorizontalLinesVisible();
-
-  Color getPlotBackgroundColor();
-
-  Color getPlotBorderColor();
-
-  boolean isPlotBorderVisible();
-
-  Color getPlotGridLinesColor();
-
-  Stroke getPlotGridLinesStroke();
-
-  boolean isPlotTicksMarksVisible();
-
-  double getPlotContentSize();
-
-  int getPlotMargin();
 
   // ToolTips ///////////////////////////////
 

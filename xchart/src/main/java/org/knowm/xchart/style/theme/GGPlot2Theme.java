@@ -94,7 +94,7 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   }
 
   @Override
-  public Stroke getAxisTickMarksStroke() {
+  public BasicStroke getAxisTickMarksStroke() {
 
     return new BasicStroke(1.5f);
   }
@@ -144,7 +144,7 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   }
 
   @Override
-  public Stroke getPlotGridLinesStroke() {
+  public BasicStroke getPlotGridLinesStroke() {
 
     return new BasicStroke(1.0f);
   }

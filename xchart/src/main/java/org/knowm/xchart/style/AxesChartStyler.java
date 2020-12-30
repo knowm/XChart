@@ -1,8 +1,8 @@
 package org.knowm.xchart.style;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Stroke;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -22,7 +22,7 @@ public abstract class AxesChartStyler extends Styler {
   private int axisTickMarkLength;
   private int axisTickPadding;
   private Color axisTickMarksColor;
-  private Stroke axisTickMarksStroke;
+  private BasicStroke axisTickMarksStroke;
   private Color axisTickLabelsColor;
   private boolean isAxisTicksLineVisible;
   private boolean isAxisTicksMarksVisible;
@@ -48,7 +48,7 @@ public abstract class AxesChartStyler extends Styler {
   private boolean isPlotGridVerticalLinesVisible;
   private boolean isPlotTicksMarksVisible;
   private Color plotGridLinesColor;
-  private Stroke plotGridLinesStroke;
+  private BasicStroke plotGridLinesStroke;
 
   // Line, Scatter, Area Charts ///////////////////////////////
   private int markerSize;
@@ -307,7 +307,7 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Stroke getAxisTickMarksStroke() {
+  public BasicStroke getAxisTickMarksStroke() {
 
     return axisTickMarksStroke;
   }
@@ -317,7 +317,7 @@ public abstract class AxesChartStyler extends Styler {
    *
    * @param axisTickMarksStroke
    */
-  public AxesChartStyler setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
+  public AxesChartStyler setAxisTickMarksStroke(BasicStroke axisTickMarksStroke) {
 
     this.axisTickMarksStroke = axisTickMarksStroke;
     return this;
@@ -630,7 +630,7 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Stroke getPlotGridLinesStroke() {
+  public BasicStroke getPlotGridLinesStroke() {
 
     return plotGridLinesStroke;
   }
@@ -640,7 +640,7 @@ public abstract class AxesChartStyler extends Styler {
    *
    * @param plotGridLinesStroke
    */
-  public AxesChartStyler setPlotGridLinesStroke(Stroke plotGridLinesStroke) {
+  public AxesChartStyler setPlotGridLinesStroke(BasicStroke plotGridLinesStroke) {
 
     this.plotGridLinesStroke = plotGridLinesStroke;
     return this;

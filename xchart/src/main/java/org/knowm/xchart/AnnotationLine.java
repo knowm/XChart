@@ -1,7 +1,5 @@
 package org.knowm.xchart;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.chartpart.Annotation;
@@ -10,8 +8,8 @@ public class AnnotationLine extends Annotation {
 
   //  style
   // TODO move these to an annotation styler
-  private Color color = new Color(114, 147, 203);
-  private BasicStroke stroke = SOLID_STROKE;
+  //  private Color color = new Color(114, 147, 203);
+  //  private BasicStroke stroke = SOLID_STROKE;
   private final boolean isVertical;
   private double value;
 
@@ -71,17 +69,9 @@ public class AnnotationLine extends Annotation {
       }
     }
 
-    g.setStroke(stroke);
-    g.setColor(color);
+    g.setStroke(styler.getAnnotationLineStroke());
+    g.setColor(styler.getAnnotationLineColor());
     g.drawLine(x1, y1, x2, y2);
-  }
-
-  public void setColor(Color color) {
-    this.color = color;
-  }
-
-  public void setStroke(BasicStroke stroke) {
-    this.stroke = stroke;
   }
 
   public void setValue(double value) {

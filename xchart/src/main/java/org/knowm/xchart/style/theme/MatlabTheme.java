@@ -70,7 +70,7 @@ public class MatlabTheme extends AbstractBaseTheme {
   }
 
   @Override
-  public Stroke getAxisTickMarksStroke() {
+  public BasicStroke getAxisTickMarksStroke() {
 
     return new BasicStroke(.5f);
   }
@@ -102,7 +102,7 @@ public class MatlabTheme extends AbstractBaseTheme {
   }
 
   @Override
-  public Stroke getPlotGridLinesStroke() {
+  public BasicStroke getPlotGridLinesStroke() {
 
     return new BasicStroke(
         .5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, new float[] {1f, 3.0f}, 0.0f);

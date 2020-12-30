@@ -2,7 +2,6 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.XYChart;
@@ -19,7 +18,7 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
   //  Cursor cursor;
 
   // TODO create a PlotContent_Axes class to put this in.
-  static final Stroke ERROR_BAR_STROKE =
+  static final BasicStroke ERROR_BAR_STROKE =
       new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /**

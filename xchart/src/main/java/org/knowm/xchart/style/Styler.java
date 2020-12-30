@@ -29,6 +29,7 @@ public abstract class Styler {
   private Color[] seriesColors;
   private BasicStroke[] seriesLines;
   private Marker[] seriesMarkers;
+
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
   private boolean isChartTitleVisible;
@@ -36,6 +37,7 @@ public abstract class Styler {
   private Color chartTitleBoxBackgroundColor;
   private Color chartTitleBoxBorderColor;
   private int chartTitlePadding;
+
   // Chart Legend ///////////////////////////////
   private boolean isLegendVisible;
   private Color legendBackgroundColor;
@@ -45,19 +47,27 @@ public abstract class Styler {
   private int legendSeriesLineLength;
   private LegendPosition legendPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
+
   // Chart Plot Area ///////////////////////////////
   private Color plotBackgroundColor;
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
   private double plotContentSize = .92;
 
-  // Chart InfoPanel ///////////////////////////////
-  // TODO move these to an annotation styler
-  private Color infoPanelBackgroundColor;
-  private Color infoPanelBorderColor;
-  private Font infoPanelFont;
-  private int infoPanelPadding;
+  // Chart Annotations ///////////////////////////////
+  private Color annotationTextPanelBackgroundColor;
+  private Color annotationTextPanelBorderColor;
+  private Font annotationTextPanelFont;
+  private Color annotationTextPanelFontColor;
+  private int annotationTextPanelPadding;
 
+  private Font annotationTextFont;
+  private Color annotationTextFontColor;
+
+  private BasicStroke annotationLineStroke;
+  private Color annotationLineColor;
+
+  // TODO move these to the correct styler
   // Tool Tips ///////////////////////////////
   private boolean isToolTipsEnabled;
   private boolean isToolTipsAlwaysVisible;
@@ -67,6 +77,7 @@ public abstract class Styler {
   private Font toolTipFont;
   private Color toolTipHighlightColor;
 
+  // Move these to the respective stylers where it is needed
   //  // Annotations ///////////////////////////////
   private boolean hasAnnotations = false; // set by subclass
   private Font annotationsFont;
@@ -96,10 +107,8 @@ public abstract class Styler {
 
     // Chart Style ///////////////////////////////
     baseFont = theme.getBaseFont();
-
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
-
     chartPadding = theme.getChartPadding();
     seriesColors = theme.getSeriesColors();
     seriesLines = theme.getSeriesLines();
@@ -122,18 +131,24 @@ public abstract class Styler {
     legendSeriesLineLength = theme.getLegendSeriesLineLength();
     legendPosition = theme.getLegendPosition();
 
-    // Info Panel
-    // TODO move these to an annotation styler
-    infoPanelBackgroundColor = theme.getInfoPanelBackgroundColor();
-    infoPanelBorderColor = theme.getInfoPanelBorderColor();
-    infoPanelFont = theme.getInfoPanelFont();
-    infoPanelPadding = theme.getInfoPanelPadding();
-
     // Chart Plot Area ///////////////////////////////
     plotBackgroundColor = theme.getPlotBackgroundColor();
     plotBorderColor = theme.getPlotBorderColor();
     isPlotBorderVisible = theme.isPlotBorderVisible();
     plotContentSize = theme.getPlotContentSize();
+
+    // Chart Annotations
+    annotationTextPanelBackgroundColor = theme.getAnnotationTextPanelBackgroundColor();
+    annotationTextPanelBorderColor = theme.getAnnotationTextPanelBorderColor();
+    annotationTextPanelFont = theme.getAnnotationTextPanelFont();
+    annotationTextPanelFontColor = theme.getAnnotationTextPanelFontColor();
+    annotationTextPanelPadding = theme.getAnnotationTextPanelPadding();
+
+    annotationTextFont = theme.getAnnotationTextFont();
+    annotationTextFontColor = theme.getAnnotationTextFontColor();
+
+    annotationLineStroke = theme.getAnnotationLineStroke();
+    annotationLineColor = theme.getAnnotationLineColor();
 
     // Tool Tips ///////////////////////////////
 
@@ -355,11 +370,28 @@ public abstract class Styler {
     return this;
   }
 
+  // Chart Legend ///////////////////////////////
+
+  public boolean isLegendVisible() {
+
+    return isLegendVisible;
+  }
+
+  /**
+   * Set the chart legend visibility
+   *
+   * @param isLegendVisible
+   */
+  public Styler setLegendVisible(boolean isLegendVisible) {
+
+    this.isLegendVisible = isLegendVisible;
+    return this;
+  }
+
   public Color getLegendBackgroundColor() {
 
     return legendBackgroundColor;
   }
-
   /**
    * Set the chart legend background color
    *
@@ -400,24 +432,6 @@ public abstract class Styler {
   public Styler setLegendFont(Font font) {
 
     this.legendFont = font;
-    return this;
-  }
-
-  // Chart Legend ///////////////////////////////
-
-  public boolean isLegendVisible() {
-
-    return isLegendVisible;
-  }
-
-  /**
-   * Set the chart legend visibility
-   *
-   * @param isLegendVisible
-   */
-  public Styler setLegendVisible(boolean isLegendVisible) {
-
-    this.isLegendVisible = isLegendVisible;
     return this;
   }
 
@@ -494,61 +508,18 @@ public abstract class Styler {
     return legendLayout;
   }
 
-  public void setLegendLayout(LegendLayout legendLayout) {
+  public Styler setLegendLayout(LegendLayout legendLayout) {
 
     this.legendLayout = legendLayout;
+    return this;
   }
 
   public enum LegendLayout {
     Vertical,
     Horizontal
   }
-  // Chart InfoPanel ///////////////////////////////
 
-  public Color getInfoPanelBackgroundColor() {
-
-    return infoPanelBackgroundColor;
-  }
-
-  public Styler setInfoPanelBackgroundColor(Color color) {
-
-    this.infoPanelBackgroundColor = color;
-    return this;
-  }
-
-  public Color getInfoPanelBorderColor() {
-
-    return infoPanelBorderColor;
-  }
-
-  public Styler setInfoPanelBorderColor(Color borderColor) {
-
-    this.infoPanelBorderColor = borderColor;
-    return this;
-  }
-
-  public Font getInfoPanelFont() {
-
-    return infoPanelFont;
-  }
-
-  public Styler setInfoPanelFont(Font font) {
-
-    this.infoPanelFont = font;
-    return this;
-  }
-
-  public int getInfoPanelPadding() {
-
-    return infoPanelPadding;
-  }
-
-  public Styler setInfoPanelPadding(int infoPanelPadding) {
-
-    this.infoPanelPadding = infoPanelPadding;
-    return this;
-  }
-
+  // Chart Plot ///////////////////////////////
   public Color getPlotBackgroundColor() {
 
     return plotBackgroundColor;
@@ -597,8 +568,6 @@ public abstract class Styler {
     return this;
   }
 
-  // Chart Plot ///////////////////////////////
-
   public double getPlotContentSize() {
 
     return plotContentSize;
@@ -619,6 +588,99 @@ public abstract class Styler {
     this.plotContentSize = plotContentSize;
     return this;
   }
+
+  // Chart Annotations ///////////////////////////////
+
+  public Color getAnnotationTextPanelBackgroundColor() {
+
+    return annotationTextPanelBackgroundColor;
+  }
+
+  public Styler setAnnotationTextPanelBackgroundColor(Color color) {
+
+    this.annotationTextPanelBackgroundColor = color;
+    return this;
+  }
+
+  public Color getAnnotationTextPanelBorderColor() {
+
+    return annotationTextPanelBorderColor;
+  }
+
+  public Styler setAnnotationTextPanelBorderColor(Color borderColor) {
+
+    this.annotationTextPanelBorderColor = borderColor;
+    return this;
+  }
+
+  public Font getAnnotationTextPanelFont() {
+
+    return annotationTextPanelFont;
+  }
+
+  public Styler setAnnotationTextPanelFont(Font font) {
+
+    this.annotationTextPanelFont = font;
+    return this;
+  }
+
+  public Color getAnnotationTextPanelFontColor() {
+    return annotationTextPanelFontColor;
+  }
+
+  public Styler setAnnotationTextPanelFontColor(Color annotationTextPanelFontColor) {
+    this.annotationTextPanelFontColor = annotationTextPanelFontColor;
+    return this;
+  }
+
+  public int getAnnotationTextPanelPadding() {
+
+    return annotationTextPanelPadding;
+  }
+
+  public Styler setAnnotationTextPanelPadding(int annotationTextPanelPadding) {
+
+    this.annotationTextPanelPadding = annotationTextPanelPadding;
+    return this;
+  }
+
+  public Font getAnnotationTextFont() {
+    return annotationTextFont;
+  }
+
+  public Styler setAnnotationTextFont(Font annotationTextFont) {
+    this.annotationTextFont = annotationTextFont;
+    return this;
+  }
+
+  public Color getAnnotationTextFontColor() {
+    return annotationTextFontColor;
+  }
+
+  public Styler setAnnotationTextFontColor(Color annotationTextFontColor) {
+    this.annotationTextFontColor = annotationTextFontColor;
+    return this;
+  }
+
+  public BasicStroke getAnnotationLineStroke() {
+    return annotationLineStroke;
+  }
+
+  public Styler setAnnotationLineStroke(BasicStroke annotationLineStroke) {
+    this.annotationLineStroke = annotationLineStroke;
+    return this;
+  }
+
+  public Color getAnnotationLineColor() {
+    return annotationLineColor;
+  }
+
+  public Styler setAnnotationLineColor(Color annotationLineColor) {
+    this.annotationLineColor = annotationLineColor;
+    return this;
+  }
+
+  // Tool Tips ///////////////////////////////
 
   public boolean isToolTipsEnabled() {
 
@@ -669,8 +731,6 @@ public abstract class Styler {
     this.toolTipBackgroundColor = toolTipBackgroundColor;
     return this;
   }
-
-  // Tool Tips ///////////////////////////////
 
   public Color getToolTipBorderColor() {
 
@@ -823,9 +883,10 @@ public abstract class Styler {
    * @param yAxisGroup
    * @param yAxisPosition
    */
-  public void setYAxisGroupPosition(int yAxisGroup, YAxisPosition yAxisPosition) {
+  public Styler setYAxisGroupPosition(int yAxisGroup, YAxisPosition yAxisPosition) {
 
     yAxisAlignmentMap.put(yAxisGroup, yAxisPosition);
+    return this;
   }
 
   public enum YAxisPosition {
@@ -838,9 +899,10 @@ public abstract class Styler {
     return antiAlias;
   }
   // TODO add javadocs to all setters that are not yet documented.
-  public void setAntiAlias(boolean newVal) {
+  public Styler setAntiAlias(boolean newVal) {
 
     antiAlias = newVal;
+    return this;
   }
 
   public int getYAxisLeftWidthHint() {
@@ -854,9 +916,10 @@ public abstract class Styler {
    *
    * @param yAxisLeftWidthHint
    */
-  public void setYAxisLeftWidthHint(int yAxisLeftWidthHint) {
+  public Styler setYAxisLeftWidthHint(int yAxisLeftWidthHint) {
 
     this.yAxisLeftWidthHint = yAxisLeftWidthHint;
+    return this;
   }
 
   public Styler setShowWithinAreaPoint(boolean showWithinAreaPoint) {

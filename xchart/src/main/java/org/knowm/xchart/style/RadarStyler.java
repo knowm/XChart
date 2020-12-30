@@ -12,12 +12,12 @@ public class RadarStyler extends Styler {
   // main lines
   private boolean plotGridLinesVisible;
   private Color plotGridLinesColor;
-  private Stroke plotGridLinesStroke;
+  private BasicStroke plotGridLinesStroke;
 
   // helper tick lines
   private boolean axisTicksMarksVisible;
   private Color axisTickMarksColor;
-  private Stroke axisTickMarksStroke;
+  private BasicStroke axisTickMarksStroke;
   private int axisTickMarksCount = 5;
 
   // variable labels
@@ -138,12 +138,12 @@ public class RadarStyler extends Styler {
     this.plotGridLinesColor = plotGridLinesColor;
   }
 
-  public Stroke getPlotGridLinesStroke() {
+  public BasicStroke getPlotGridLinesStroke() {
 
     return plotGridLinesStroke;
   }
 
-  public void setPlotGridLinesStroke(Stroke plotGridLinesStroke) {
+  public void setPlotGridLinesStroke(BasicStroke plotGridLinesStroke) {
 
     this.plotGridLinesStroke = plotGridLinesStroke;
   }
@@ -168,12 +168,12 @@ public class RadarStyler extends Styler {
     this.axisTickMarksColor = axisTickMarksColor;
   }
 
-  public Stroke getAxisTickMarksStroke() {
+  public BasicStroke getAxisTickMarksStroke() {
 
     return axisTickMarksStroke;
   }
 
-  public void setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
+  public void setAxisTickMarksStroke(BasicStroke axisTickMarksStroke) {
 
     this.axisTickMarksStroke = axisTickMarksStroke;
   }

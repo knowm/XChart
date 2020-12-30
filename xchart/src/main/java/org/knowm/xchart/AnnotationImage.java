@@ -1,7 +1,5 @@
 package org.knowm.xchart;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
@@ -10,12 +8,12 @@ import org.knowm.xchart.internal.chartpart.Chart;
 
 public class AnnotationImage extends Annotation {
 
-  // style
-  private Color fontColor;
-  private Font textFont;
+  // internal
+  private Image image;
+  protected double x;
+  protected double y;
 
   // internal
-  private final Image image;
   private int startx;
   private int starty;
 
@@ -38,13 +36,6 @@ public class AnnotationImage extends Annotation {
   public void init(Chart chart) {
 
     super.init(chart);
-    // TODO move these to an annotation styler
-    if (fontColor == null) {
-      fontColor = chart.getStyler().getChartFontColor();
-    }
-    if (textFont == null) {
-      textFont = chart.getStyler().getLegendFont();
-    }
   }
 
   @Override
@@ -52,17 +43,6 @@ public class AnnotationImage extends Annotation {
 
     // TODO implement this correctly
     return bounds;
-  }
-
-  protected void calculatePosition() {
-
-    if (isValueInScreenSpace) {
-      startx = (int) x;
-      starty = (int) y;
-    } else {
-      startx = (int) (getXAxisSreenValue(x) + 0.5) - image.getWidth(null) / 2;
-      starty = (int) (getYAxisSreenValue(y) + 0.5) - image.getHeight(null) / 2;
-    }
   }
 
   @Override
@@ -77,11 +57,26 @@ public class AnnotationImage extends Annotation {
     g.drawImage(image, startx, starty, null);
   }
 
-  public void setFontColor(Color fontColor) {
-    this.fontColor = fontColor;
+  private void calculatePosition() {
+
+    if (isValueInScreenSpace) {
+      startx = (int) x;
+      starty = (int) y;
+    } else {
+      startx = (int) (getXAxisSreenValue(x) + 0.5) - image.getWidth(null) / 2;
+      starty = (int) (getYAxisSreenValue(y) + 0.5) - image.getHeight(null) / 2;
+    }
   }
 
-  public void setTextFont(Font textFont) {
-    this.textFont = textFont;
+  public void setImage(Image image) {
+    this.image = image;
+  }
+
+  public void setX(double x) {
+    this.x = x;
+  }
+
+  public void setY(double y) {
+    this.y = y;
   }
 }

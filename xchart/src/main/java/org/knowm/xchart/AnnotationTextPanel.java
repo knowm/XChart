@@ -14,17 +14,14 @@ import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.chartpart.Annotation;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.style.Styler;
 
 public class AnnotationTextPanel extends Annotation {
 
   private static final int MULTI_LINE_SPACE = 3;
 
-  private final List<String> lines;
-
-  private Styler styler;
-
-  private Rectangle2D bounds;
+  private List<String> lines;
+  protected double x;
+  protected double y;
 
   // internal
   private double startx;
@@ -34,23 +31,21 @@ public class AnnotationTextPanel extends Annotation {
    * Constructor
    *
    * @param lines
-   * @param xPosition
-   * @param yPosition
+   * @param x
+   * @param y
    * @param isValueInScreenSpace
    */
-  public AnnotationTextPanel(
-      String lines, double xPosition, double yPosition, boolean isValueInScreenSpace) {
+  public AnnotationTextPanel(String lines, double x, double y, boolean isValueInScreenSpace) {
 
     this.lines = Arrays.asList(lines.split("\\n"));
-    this.x = xPosition;
-    this.y = yPosition;
+    this.x = x;
+    this.y = y;
     this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
   public void init(Chart chart) {
 
     super.init(chart);
-    this.styler = chart.getStyler();
   }
 
   @Override
@@ -61,20 +56,15 @@ public class AnnotationTextPanel extends Annotation {
     }
 
     bounds = getBoundsHint();
-    //    System.out.println("bounds = " + bounds);
-
-    // Info panel draw position
-    //    double height = bounds.getHeight();
-    //    double width = bounds.getWidth();
 
     calculatePosition();
 
     // Draw info panel box background and border
     Shape rect = new Rectangle2D.Double(startx, starty, bounds.getWidth(), bounds.getHeight());
-    g.setColor(styler.getInfoPanelBackgroundColor());
+    g.setColor(styler.getAnnotationTextPanelBackgroundColor());
     g.fill(rect);
     g.setStroke(SOLID_STROKE);
-    g.setColor(styler.getInfoPanelBorderColor());
+    g.setColor(styler.getAnnotationTextPanelBorderColor());
     g.draw(rect);
 
     // Draw text onto panel box
@@ -83,11 +73,11 @@ public class AnnotationTextPanel extends Annotation {
 
     Map<String, Rectangle2D> textBounds = getTextBounds(lines);
 
-    g.setColor(styler.getChartFontColor());
-    g.setFont(styler.getInfoPanelFont());
+    g.setColor(styler.getAnnotationTextPanelFontColor());
+    g.setFont(styler.getAnnotationTextPanelFont());
 
-    startx = startx + styler.getInfoPanelPadding();
-    starty = starty + styler.getInfoPanelPadding();
+    startx = startx + styler.getAnnotationTextPanelPadding();
+    starty = starty + styler.getAnnotationTextPanelPadding();
 
     double multiLineOffset = 0.0;
 
@@ -96,7 +86,7 @@ public class AnnotationTextPanel extends Annotation {
       double lineHeight = entry.getValue().getHeight();
 
       FontRenderContext frc = g.getFontRenderContext();
-      TextLayout tl = new TextLayout(entry.getKey(), styler.getInfoPanelFont(), frc);
+      TextLayout tl = new TextLayout(entry.getKey(), styler.getAnnotationTextPanelFont(), frc);
       Shape shape = tl.getOutline(null);
       AffineTransform orig = g.getTransform();
       AffineTransform at = new AffineTransform();
@@ -146,21 +136,21 @@ public class AnnotationTextPanel extends Annotation {
     }
 
     entryHeight -= MULTI_LINE_SPACE; // subtract away the bottom MULTI_LINE_SPACE
-    contentHeight += entryHeight + styler.getInfoPanelPadding();
+    contentHeight += entryHeight + styler.getAnnotationTextPanelPadding();
 
     // determine content width
-    double contentWidth = styler.getInfoPanelPadding() + contentMaxWidth;
+    double contentWidth = styler.getAnnotationTextPanelPadding() + contentMaxWidth;
 
     // Legend Box
-    double width = contentWidth + 2 * styler.getInfoPanelPadding();
-    double height = contentHeight + styler.getInfoPanelPadding();
+    double width = contentWidth + 2 * styler.getAnnotationTextPanelPadding();
+    double height = contentHeight + styler.getAnnotationTextPanelPadding();
 
     return new Rectangle2D.Double(0, 0, width, height); // 0 indicates not sure yet.
   }
 
   private Map<String, Rectangle2D> getTextBounds(List<String> lines) {
 
-    Font infoPanelFont = styler.getInfoPanelFont();
+    Font infoPanelFont = styler.getAnnotationTextPanelFont();
     Map<String, Rectangle2D> textBounds = new LinkedHashMap<>(lines.size());
     for (String line : lines) {
       TextLayout textLayout =
@@ -175,5 +165,17 @@ public class AnnotationTextPanel extends Annotation {
   @Override
   public Rectangle2D getBounds() {
     return getBoundsHint();
+  }
+
+  public void setLines(List<String> lines) {
+    this.lines = lines;
+  }
+
+  public void setX(double x) {
+    this.x = x;
+  }
+
+  public void setY(double y) {
+    this.y = y;
   }
 }

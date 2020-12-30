@@ -10,7 +10,7 @@ public class DialStyler extends Styler {
   // helper tick lines
   private boolean axisTicksMarksVisible;
   private Color axisTickMarksColor;
-  private Stroke axisTickMarksStroke;
+  private BasicStroke axisTickMarksStroke;
   private double[] axisTickValues = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
   private String[] axisTickLabels = {
     "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
@@ -113,12 +113,12 @@ public class DialStyler extends Styler {
     this.axisTickMarksColor = axisTickMarksColor;
   }
 
-  public Stroke getAxisTickMarksStroke() {
+  public BasicStroke getAxisTickMarksStroke() {
 
     return axisTickMarksStroke;
   }
 
-  public void setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
+  public void setAxisTickMarksStroke(BasicStroke axisTickMarksStroke) {
 
     this.axisTickMarksStroke = axisTickMarksStroke;
   }

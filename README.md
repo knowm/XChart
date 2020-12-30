@@ -401,14 +401,11 @@ To set the Y axes titles:
 chart.setYAxisGroupTitle(0, "A");
 chart.setYAxisGroupTitle(1, "B");
 ```
-
 ### Zooming In
 
 For the `XYChart` chart type, zooming in is possible on an `XChartPanel` via select-dragging over a range on the X-Axis. Reverting out of the zoom can be accomplished by double-clicking on the chart or by clicking on the "reset" button, which can be posotioned as desired. 
 
-
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Zoom.png)
-
 
 The following example zoom style options show which are available:
 
@@ -419,7 +416,6 @@ chart.getStyler().setZoomResetByDoubleClick(false);
 chart.getStyler().setZoomResetByButton(true);
 chart.getStyler().setZoomSelectionColor(new Color(0,0 , 192, 128));
 ```
-
 A working example can be found at [DateChart01](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart01.java).
 
 ### Chart Annotations
@@ -431,11 +427,34 @@ For all chart types, one or more chart annotations can be super-imposed on top o
 - AnnotationText
 - AnnotationTextPanel
 
+The following is a chart with four `AnnotationLine`s, one `AnnotationImage` and one `AnnotationText`:
+
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_AnnotationLineImageText.png)
+
+The following example `AnnotationLine` and `AnnotationText` styling parameters show which are available:
+
+```java
+chart.getStyler().setAnnotationLineColor(Color.GREEN);
+chart.getStyler().setAnnotationLineStroke(new BasicStroke(3.0f));
+chart.getStyler().setAnnotationTextFont(new Font(Font.MONOSPACED, Font.ITALIC, 8));
+chart.getStyler().setAnnotationTextFontColor(Color.BLUE);
+```
 
 A working example can be found at [LineChart10](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart10.java).
 
+The following is a chart with three `AnnotationTextPanel`s:
+
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_AnnotationTextPanel.png)
+
+The following example `AnnotationTextPanel` styling parameters show which are available:
+
+```java
+chart.getStyler().setAnnotationTextPanelPadding(20);
+chart.getStyler().setAnnotationTextPanelFont(new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setAnnotationTextPanelBackgroundColor(Color.RED);
+chart.getStyler().setAnnotationTextPanelBorderColor(Color.BLUE);
+chart.getStyler().setAnnotationTextPanelFontColor(Color.GREEN);
+```
 
 A working example can be found at [ScatterChart04](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/scatter/ScatterChart04.java).
 
@@ -448,7 +467,6 @@ chart.getStyler().setToolTipsEnabled(true);
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Tooltips.png)
-
 
 The following example tooltip options show which are available:
 

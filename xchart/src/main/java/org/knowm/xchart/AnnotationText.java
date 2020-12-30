@@ -1,7 +1,5 @@
 package org.knowm.xchart;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -10,15 +8,12 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.chartpart.Annotation;
-import org.knowm.xchart.internal.chartpart.Chart;
 
 public class AnnotationText extends Annotation {
 
-  // style
-  private Color fontColor;
-  private Font textFont;
-
   private String text;
+  protected double x;
+  protected double y;
 
   // internal
   private double startx;
@@ -40,19 +35,6 @@ public class AnnotationText extends Annotation {
     this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
-  public void init(Chart chart) {
-
-    super.init(chart);
-
-    // TODO move these to an annotation styler
-    if (fontColor == null) {
-      fontColor = chart.getStyler().getChartFontColor();
-    }
-    if (textFont == null) {
-      textFont = chart.getStyler().getLegendFont();
-    }
-  }
-
   @Override
   public Rectangle2D getBounds() {
 
@@ -71,11 +53,11 @@ public class AnnotationText extends Annotation {
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    g.setColor(fontColor);
-    g.setFont(textFont);
+    g.setColor(styler.getAnnotationTextFontColor());
+    g.setFont(styler.getAnnotationTextFont());
 
     FontRenderContext frc = g.getFontRenderContext();
-    TextLayout tl = new TextLayout(text, textFont, frc);
+    TextLayout tl = new TextLayout(text, styler.getAnnotationTextFont(), frc);
     Shape shape = tl.getOutline(null);
 
     Rectangle2D textBounds = shape.getBounds2D();
@@ -102,15 +84,15 @@ public class AnnotationText extends Annotation {
     }
   }
 
-  public void setFontColor(Color fontColor) {
-    this.fontColor = fontColor;
-  }
-
-  public void setTextFont(Font textFont) {
-    this.textFont = textFont;
-  }
-
   public void setText(String text) {
     this.text = text;
+  }
+
+  public void setX(double x) {
+    this.x = x;
+  }
+
+  public void setY(double y) {
+    this.y = y;
   }
 }

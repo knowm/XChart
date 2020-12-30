@@ -1,7 +1,6 @@
 package org.knowm.xchart.demo.charts.scatter;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.AnnotationTextPanel;
@@ -57,7 +56,7 @@ public class ScatterChart04 implements ExampleChart<XYChart> {
 
     // InfoPanel
     chart.addAnnotation(
-        new AnnotationTextPanel("Here are some words in an InfoPanel!", 40, 40, true));
+        new AnnotationTextPanel("Here are some words in an AnnotationTextPanel!", 40, 40, true));
     chart.addAnnotation(
         new AnnotationTextPanel("Here are some additional words", 0.000004, 4, false));
     chart.addAnnotation(
@@ -66,11 +65,11 @@ public class ScatterChart04 implements ExampleChart<XYChart> {
             800,
             600,
             true));
-    chart.getStyler().setInfoPanelPadding(20);
-    chart.getStyler().setInfoPanelFont(new Font("Verdana", Font.BOLD, 12));
-    //    chart.getStyler().setInfoPanelBackgroundColor(Color.RED);
-    //    chart.getStyler().setInfoPanelBorderColor(Color.BLUE);
-    //    chart.getStyler().setInfoPanelVisible(false);
+    //    chart.getStyler().setAnnotationTextPanelPadding(20);
+    //    chart.getStyler().setAnnotationTextPanelFont(new Font("Verdana", Font.BOLD, 12));
+    //    chart.getStyler().setAnnotationTextPanelBackgroundColor(Color.RED);
+    //    chart.getStyler().setAnnotationTextPanelBorderColor(Color.BLUE);
+    //    chart.getStyler().setAnnotationTextPanelFontColor(Color.GREEN);
 
     // Series
     int size = 10;
