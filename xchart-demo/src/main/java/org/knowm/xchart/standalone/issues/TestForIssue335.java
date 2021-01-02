@@ -23,7 +23,7 @@ public class TestForIssue335 {
     chart.getStyler().setSeriesFilled(false);
 
     // Series
-    chart.setVariableLabels(
+    chart.setRadiiLabels(
         new String[] {
           "Sales",
           "Marketing",

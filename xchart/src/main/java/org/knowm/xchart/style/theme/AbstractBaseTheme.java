@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.Styler.LegendPosition;
-import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.BaseSeriesColors;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.lines.BaseSeriesLines;
@@ -303,52 +302,9 @@ public abstract class AbstractBaseTheme implements Theme {
   }
 
   @Override
-  public double getPlotContentSize() {
-
-    return .92;
-  }
-
-  @Override
   public int getPlotMargin() {
 
     return 4;
-  }
-  // Tool Tips ///////////////////////////////
-
-  @Override
-  public boolean isToolTipsEnabled() {
-
-    return false;
-  }
-
-  @Override
-  public ToolTipType getToolTipType() {
-
-    return ToolTipType.xAndYLabels;
-  }
-
-  @Override
-  public Font getToolTipFont() {
-
-    return BASE_FONT;
-  }
-
-  @Override
-  public Color getToolTipBackgroundColor() {
-
-    return ChartColor.getAWTColor(ChartColor.WHITE);
-  }
-
-  @Override
-  public Color getToolTipBorderColor() {
-
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
-  }
-
-  @Override
-  public Color getToolTipHighlightColor() {
-
-    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
   }
 
   // Cursor ///////////////////////////////

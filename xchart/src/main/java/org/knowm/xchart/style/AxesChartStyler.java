@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.function.Function;
 
-/** @author timmolter */
 public abstract class AxesChartStyler extends Styler {
 
   // Chart Axes ///////////////////////////////
@@ -49,9 +48,6 @@ public abstract class AxesChartStyler extends Styler {
   private boolean isPlotTicksMarksVisible;
   private Color plotGridLinesColor;
   private BasicStroke plotGridLinesStroke;
-
-  // Line, Scatter, Area Charts ///////////////////////////////
-  private int markerSize;
 
   // Error Bars ///////////////////////////////
   private Color errorBarsColor;
@@ -118,9 +114,6 @@ public abstract class AxesChartStyler extends Styler {
     this.isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
     this.plotGridLinesColor = theme.getPlotGridLinesColor();
     this.plotGridLinesStroke = theme.getPlotGridLinesStroke();
-
-    // Line, Scatter, Area Charts ///////////////////////////////
-    this.markerSize = theme.getMarkerSize();
 
     // Error Bars ///////////////////////////////
     this.errorBarsColor = theme.getErrorBarsColor();
@@ -643,24 +636,6 @@ public abstract class AxesChartStyler extends Styler {
   public AxesChartStyler setPlotGridLinesStroke(BasicStroke plotGridLinesStroke) {
 
     this.plotGridLinesStroke = plotGridLinesStroke;
-    return this;
-  }
-
-  // Line, Scatter, Area Charts ///////////////////////////////
-
-  public int getMarkerSize() {
-
-    return markerSize;
-  }
-
-  /**
-   * Sets the size of the markers (in pixels)
-   *
-   * @param markerSize
-   */
-  public AxesChartStyler setMarkerSize(int markerSize) {
-
-    this.markerSize = markerSize;
     return this;
   }
 

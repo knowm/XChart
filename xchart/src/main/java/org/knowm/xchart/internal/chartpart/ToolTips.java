@@ -17,6 +17,7 @@ import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
 
+// TODO make the background color the same color as the series??
 /**
  * Tooltips can be put on all data points or configured to popup like a tooltip from a mouse over.
  */
@@ -251,6 +252,7 @@ public class ToolTips extends MouseAdapter implements ChartPart {
         startX + MOUSE_MARGIN + MARGIN,
         startY + textLayout.getBounds().getHeight() + MOUSE_MARGIN + MARGIN);
     g.transform(at);
+    // TODO make a fontcolor for tooltips in styler
     g.setColor(styler.getChartFontColor());
     g.setFont(styler.getToolTipFont());
     for (TextLayout t : list) {

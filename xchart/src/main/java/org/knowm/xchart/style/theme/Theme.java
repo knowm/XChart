@@ -4,8 +4,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
-import org.knowm.xchart.style.Styler.ToolTipType;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
@@ -77,7 +77,9 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   boolean isPlotTicksMarksVisible();
 
-  double getPlotContentSize();
+  default double getPlotContentSize() {
+    return .92;
+  }
 
   int getPlotMargin();
 
@@ -119,6 +121,38 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
     return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
+  // ToolTips ///////////////////////////////
+
+  default boolean isToolTipsEnabled() {
+
+    return false;
+  }
+
+  default Styler.ToolTipType getToolTipType() {
+
+    return Styler.ToolTipType.xAndYLabels;
+  }
+
+  default Font getToolTipFont() {
+
+    return BASE_FONT;
+  }
+
+  default Color getToolTipBackgroundColor() {
+
+    return ChartColor.getAWTColor(ChartColor.WHITE);
+  }
+
+  default Color getToolTipBorderColor() {
+
+    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+  }
+
+  default Color getToolTipHighlightColor() {
+
+    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+  }
+
   // Chart Axes ///////////////////////////////
 
   boolean isXAxisTitleVisible();
@@ -152,20 +186,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   int getXAxisTickMarkSpacingHint();
 
   int getYAxisTickMarkSpacingHint();
-
-  // ToolTips ///////////////////////////////
-
-  boolean isToolTipsEnabled();
-
-  ToolTipType getToolTipType();
-
-  Font getToolTipFont();
-
-  Color getToolTipBackgroundColor();
-
-  Color getToolTipBorderColor();
-
-  Color getToolTipHighlightColor();
 
   // Cursor ///////////////////////////////
 

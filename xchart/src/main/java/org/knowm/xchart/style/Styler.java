@@ -52,7 +52,7 @@ public abstract class Styler {
   private Color plotBackgroundColor;
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
-  private double plotContentSize = .92;
+  private double plotContentSize;
 
   // Chart Annotations ///////////////////////////////
   private Color annotationTextPanelBackgroundColor;
@@ -67,7 +67,6 @@ public abstract class Styler {
   private BasicStroke annotationLineStroke;
   private Color annotationLineColor;
 
-  // TODO move these to the correct styler
   // Tool Tips ///////////////////////////////
   private boolean isToolTipsEnabled;
   private boolean isToolTipsAlwaysVisible;
@@ -77,8 +76,8 @@ public abstract class Styler {
   private Font toolTipFont;
   private Color toolTipHighlightColor;
 
-  // Move these to the respective stylers where it is needed
-  //  // Annotations ///////////////////////////////
+  // TODO Move these to the respective stylers where it is needed
+  // Annotations ///////////////////////////////
   private boolean hasAnnotations = false; // set by subclass
   private Font annotationsFont;
   private Color annotationsFontColor;
@@ -102,6 +101,9 @@ public abstract class Styler {
   private Color xAxisTitleColor;
   private Color yAxisTitleColor;
   private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
+
+  // Line, Scatter, Area , Radar Charts///////////////////////////////
+  private int markerSize;
 
   void setAllStyles() {
 
@@ -169,6 +171,9 @@ public abstract class Styler {
 
     // Formatting
     decimalPattern = null;
+
+    // Line, Scatter, Area, Radar Charts ///////////////////////////////
+    this.markerSize = theme.getMarkerSize();
   }
 
   public Font getBaseFont() {
@@ -767,7 +772,7 @@ public abstract class Styler {
 
   // Annotations ///////////////////////////////
 
-  public Boolean hasAnnotations() {
+  public boolean hasAnnotations() {
 
     return hasAnnotations;
   }
@@ -968,6 +973,23 @@ public abstract class Styler {
   public Styler setYAxisGroupTitleColor(int yAxisGroup, Color yAxisColor) {
 
     yAxisGroupTitleColorMap.put(yAxisGroup, yAxisColor);
+    return this;
+  }
+  // Line, Scatter, Area Charts ///////////////////////////////
+
+  public int getMarkerSize() {
+
+    return markerSize;
+  }
+
+  /**
+   * Sets the size of the markers (in pixels)
+   *
+   * @param markerSize
+   */
+  public Styler setMarkerSize(int markerSize) {
+
+    this.markerSize = markerSize;
     return this;
   }
 

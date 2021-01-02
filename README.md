@@ -203,9 +203,10 @@ Series render styles include: `Round` and in the near future `Square`.
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Radar_Chart.png)
 
-`RadarChart` charts take a `double[]` of values between `0` and `1` to set the position of radar node.
+`RadarChart` charts take a `double[]` of values between `0.0.` and `1.0` to set the position of the series' data point along each radii. Radii 
+labels, if displayed, are set by passing a `String[]`. 
 
-Series render styles include: `Polygon` and  `Circle`.
+Radar chart render styles are: `Polygon` or `Circle`.
 
 ### OHLCChart
 
