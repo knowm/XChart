@@ -76,16 +76,6 @@ public abstract class Styler {
   private Font toolTipFont;
   private Color toolTipHighlightColor;
 
-  // TODO Move these to the respective stylers where it is needed
-  // Annotations ///////////////////////////////
-  private boolean hasAnnotations = false; // set by subclass
-  private Font annotationsFont;
-  private Color annotationsFontColor;
-  // TODO move defaults to theme
-  private int annotationsRotation = 0;
-  private float annotationsPosition = 0.5f;
-  private boolean showTotalAnnotations = false;
-
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
   private String decimalPattern;
@@ -103,6 +93,7 @@ public abstract class Styler {
   private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
 
   // Line, Scatter, Area , Radar Charts///////////////////////////////
+  // TODO Move these to the respective stylers where it is needed
   private int markerSize;
 
   void setAllStyles() {
@@ -160,14 +151,6 @@ public abstract class Styler {
     toolTipBorderColor = theme.getToolTipBorderColor();
     toolTipFont = theme.getToolTipFont();
     toolTipHighlightColor = theme.getToolTipHighlightColor();
-
-    //    // Annotations ///////////////////////////////
-    //    hasAnnotations = false; // set by subclass
-    annotationsFont = theme.getAnnotationFont();
-    annotationsFontColor = theme.getAnnotationsFontColor();
-    //    annotationsRotation = 0;
-    //     annotationsPosition = 0.5f;
-    //    showTotalAnnotations = theme.getann;
 
     // Formatting
     decimalPattern = null;
@@ -767,93 +750,6 @@ public abstract class Styler {
   public Styler setToolTipHighlightColor(Color toolTipHighlightColor) {
 
     this.toolTipHighlightColor = toolTipHighlightColor;
-    return this;
-  }
-
-  // Annotations ///////////////////////////////
-
-  public boolean hasAnnotations() {
-
-    return hasAnnotations;
-  }
-
-  /**
-   * Sets if annotations should be added to charts. Each chart type has a different annotation type
-   *
-   * @param hasAnnotations
-   */
-  public Styler setHasAnnotations(boolean hasAnnotations) {
-
-    this.hasAnnotations = hasAnnotations;
-    return this;
-  }
-
-  public Font getAnnotationsFont() {
-
-    return annotationsFont;
-  }
-
-  /**
-   * Sets the Font used for chart annotations
-   *
-   * @param annotationsFont
-   */
-  public Styler setAnnotationsFont(Font annotationsFont) {
-
-    this.annotationsFont = annotationsFont;
-    return this;
-  }
-
-  public Color getAnnotationsFontColor() {
-    return annotationsFontColor;
-  }
-
-  /**
-   * Sets the color of the Font used for chart annotations
-   *
-   * @param annotationsFontColor
-   */
-  public Styler setAnnotationsFontColor(Color annotationsFontColor) {
-    this.annotationsFontColor = annotationsFontColor;
-    return this;
-  }
-
-  public int getAnnotationsRotation() {
-    return annotationsRotation;
-  }
-
-  /**
-   * Sets the rotation for chart annotations
-   *
-   * @param annotationsRotation
-   */
-  public Styler setAnnotationsRotation(int annotationsRotation) {
-    this.annotationsRotation = annotationsRotation;
-    return this;
-  }
-
-  public float getAnnotationsPosition() {
-
-    return annotationsPosition;
-  }
-
-  public Styler setAnnotationsPosition(float annotationsPosition) {
-
-    if (annotationsPosition < 0 || annotationsPosition > 1) {
-      throw new IllegalArgumentException("Annotations position must be tween 0 and 1!!!");
-    }
-    this.annotationsPosition = annotationsPosition;
-    return this;
-  }
-
-  public boolean isShowTotalAnnotations() {
-
-    return showTotalAnnotations;
-  }
-
-  public Styler setShowTotalAnnotations(boolean showTotalAnnotations) {
-
-    this.showTotalAnnotations = showTotalAnnotations;
     return this;
   }
 

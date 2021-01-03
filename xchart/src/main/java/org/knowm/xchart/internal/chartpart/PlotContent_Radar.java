@@ -117,8 +117,8 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
                 - (Math.cos(Math.toRadians(startAngle - 90)) - 1) * labelHeight / 2
                 - (Math.cos(Math.toRadians(startAngle - 90)) * 1.4 * styler.getRadiiTitlePadding());
 
-        g.setColor(styler.getAnnotationsFontColor());
-        g.setFont(styler.getAnnotationsFont());
+        g.setColor(styler.getChartFontColor());
+        g.setFont(styler.getBaseFont());
         AffineTransform orig = g.getTransform();
         AffineTransform at = new AffineTransform();
 

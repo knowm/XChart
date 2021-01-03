@@ -5,7 +5,7 @@ import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.PieStyler.LabelType;
 
 /**
  * Pie Chart Custom Color Palette
@@ -25,7 +25,7 @@ public class PieChart02 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart02();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<PieChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -33,11 +33,7 @@ public class PieChart02 implements ExampleChart<PieChart> {
 
     // Create Chart
     PieChart chart =
-        new PieChartBuilder()
-            .width(800)
-            .height(600)
-            .title("Pie Chart Custom Color Palette")
-            .build();
+        new PieChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
     Color[] sliceColors =
@@ -49,7 +45,7 @@ public class PieChart02 implements ExampleChart<PieChart> {
           new Color(246, 199, 182)
         };
     chart.getStyler().setSeriesColors(sliceColors);
-    chart.getStyler().setAnnotationType(AnnotationType.Value);
+    chart.getStyler().setLabelType(LabelType.Value);
     // chart.getStyler().setDecimalPattern("#0.000");
     chart.getStyler().setToolTipsEnabled(true);
     //    chart.getStyler().setToolTipsAlwaysVisible(true);

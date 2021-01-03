@@ -3,7 +3,7 @@ package org.knowm.xchart.style.theme;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.PieStyler.LabelType;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.ChartColor;
@@ -221,11 +221,11 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   Font getPieFont();
 
-  double getAnnotationDistance();
+  double getLabelsDistance();
 
-  AnnotationType getAnnotationType();
+  LabelType getLabelType();
 
-  boolean isDrawAllAnnotations();
+  boolean setForceAllLabelsVisible();
 
   double getDonutThickness();
 
@@ -242,10 +242,4 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   Color getErrorBarsColor();
 
   boolean isErrorBarsColorSeriesColor();
-
-  // Annotations ///////////////////////////////
-
-  Font getAnnotationFont();
-
-  Color getAnnotationsFontColor();
 }

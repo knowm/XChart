@@ -1,7 +1,7 @@
 package org.knowm.xchart.style.theme;
 
 import java.awt.*;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.PieStyler.LabelType;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.MatlabSeriesColors;
 import org.knowm.xchart.style.lines.MatlabSeriesLines;
@@ -139,15 +139,15 @@ public class MatlabTheme extends AbstractBaseTheme {
   // Pie Charts ///////////////////////////////
 
   @Override
-  public AnnotationType getAnnotationType() {
+  public LabelType getLabelType() {
 
-    return AnnotationType.Label;
+    return LabelType.Name;
   }
 
   // Line, Scatter, Area Charts ///////////////////////////////
 
   // Error Bars ///////////////////////////////
 
-  // Annotations ///////////////////////////////
+  // Chart Annotations ///////////////////////////////
 
 }

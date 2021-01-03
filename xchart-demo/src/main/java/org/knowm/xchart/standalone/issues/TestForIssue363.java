@@ -5,8 +5,8 @@ import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
 import org.knowm.xchart.style.PieStyler.ClockwiseDirectionType;
+import org.knowm.xchart.style.PieStyler.LabelType;
 import org.knowm.xchart.style.colors.BaseSeriesColors;
 
 public class TestForIssue363 implements ExampleChart<PieChart> {
@@ -31,8 +31,8 @@ public class TestForIssue363 implements ExampleChart<PieChart> {
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setAnnotationType(AnnotationType.LabelAndValue);
-    chart.getStyler().setAnnotationDistance(.82);
+    chart.getStyler().setLabelType(LabelType.NameAndValue);
+    chart.getStyler().setLabelsDistance(.82);
     chart.getStyler().setPlotContentSize(.9);
     chart.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Pie);
     chart.getStyler().setClockwiseDirectionType(ClockwiseDirectionType.CLOCKWISE);

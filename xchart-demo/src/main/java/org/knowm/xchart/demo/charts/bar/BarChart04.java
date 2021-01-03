@@ -46,7 +46,7 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
     // Customize Chart
     chart.getStyler().setYAxisMin(5.0);
     chart.getStyler().setYAxisMax(70.0);
-    chart.getStyler().setHasAnnotations(true);
+    chart.getStyler().setLabelsVisible(true);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);

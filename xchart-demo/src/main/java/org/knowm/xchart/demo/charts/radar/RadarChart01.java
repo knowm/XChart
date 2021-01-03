@@ -32,7 +32,6 @@ public class RadarChart01 implements ExampleChart<RadarChart> {
     RadarChart chart =
         new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
     chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setHasAnnotations(false);
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
 
     // Series

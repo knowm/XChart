@@ -13,7 +13,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <ul>
  *   <li>int categories as array
  *   <li>Positive and negative values
- *   <li>Single series
+ *   <li>data labels and stack sum labels
  */
 public class BarChart03 implements ExampleChart<CategoryChart> {
 
@@ -21,7 +21,7 @@ public class BarChart03 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart03();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -40,6 +40,8 @@ public class BarChart03 implements ExampleChart<CategoryChart> {
     // Customize Chart
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
     chart.getStyler().setStacked(true);
+    chart.getStyler().setLabelsVisible(true);
+    chart.getStyler().setShowStackSum(true);
 
     // Series
     chart.addSeries("males", new int[] {10, 20, 30, 40}, new int[] {40, -30, -20, -60});
@@ -51,6 +53,6 @@ public class BarChart03 implements ExampleChart<CategoryChart> {
   @Override
   public String getExampleChartName() {
 
-    return getClass().getSimpleName() + " - Stacked Bar Chart";
+    return getClass().getSimpleName() + " - Stacked Bar Chart with Data and Stack Sum Labels";
   }
 }

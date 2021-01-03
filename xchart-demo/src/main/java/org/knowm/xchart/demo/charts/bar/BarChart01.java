@@ -43,7 +43,7 @@ public class BarChart01 implements ExampleChart<CategoryChart> {
 
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
-    chart.getStyler().setHasAnnotations(false);
+    chart.getStyler().setLabelsVisible(false);
     chart.getStyler().setPlotGridLinesVisible(false);
 
     // Series

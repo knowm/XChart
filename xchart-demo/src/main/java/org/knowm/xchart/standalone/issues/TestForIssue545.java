@@ -52,7 +52,6 @@ public class TestForIssue545 {
     styler.setAntiAlias(true);
     styler.setToolTipsEnabled(true);
     styler.setToolTipsAlwaysVisible(true);
-    styler.setHasAnnotations(true);
     styler.setToolTipFont(new Font("SansSerif", Font.PLAIN, 14));
   }
 }

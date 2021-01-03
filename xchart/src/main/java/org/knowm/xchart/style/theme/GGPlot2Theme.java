@@ -1,7 +1,7 @@
 package org.knowm.xchart.style.theme;
 
 import java.awt.*;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.PieStyler.LabelType;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.GGPlot2SeriesColors;
 import org.knowm.xchart.style.lines.GGPlot2SeriesLines;
@@ -180,9 +180,9 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   // Pie Charts ///////////////////////////////
 
   @Override
-  public AnnotationType getAnnotationType() {
+  public LabelType getLabelType() {
 
-    return AnnotationType.LabelAndPercentage;
+    return LabelType.NameAndPercentage;
   }
 
   @Override
@@ -201,6 +201,6 @@ public class GGPlot2Theme extends AbstractBaseTheme {
     return ChartColor.getAWTColor(ChartColor.DARK_GREY);
   }
 
-  // Annotations ///////////////////////////////
+  // Chart Annotations ///////////////////////////////
 
 }

@@ -4,6 +4,7 @@ import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
+import org.knowm.xchart.style.Styler;
 
 /**
  * Pie Chart with 4 Slices
@@ -14,6 +15,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  *   <li>Pie Chart
  *   <li>ChartBuilderPie
  *   <li>Setting Non-circular to match container aspect ratio
+ *   <li>Legend outside south, with Horizontal Legend Layout
  */
 public class PieChart01 implements ExampleChart<PieChart> {
 
@@ -21,7 +23,7 @@ public class PieChart01 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart01();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<PieChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -29,10 +31,12 @@ public class PieChart01 implements ExampleChart<PieChart> {
 
     // Create Chart
     PieChart chart =
-        new PieChartBuilder().width(800).height(600).title("Pie Chart with 4 Slices").build();
+        new PieChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
     chart.getStyler().setCircular(false);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
+    chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
     // Series
     chart.addSeries("Pennies", 100);

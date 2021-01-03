@@ -11,7 +11,7 @@ import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.RealtimeExampleChart;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.PieStyler.LabelType;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
@@ -79,8 +79,8 @@ public class RealtimeChart02 implements ExampleChart<PieChart>, RealtimeExampleC
 
     // Customize Chart
     pieChart.getStyler().setLegendVisible(false);
-    pieChart.getStyler().setAnnotationType(AnnotationType.LabelAndPercentage);
-    pieChart.getStyler().setAnnotationDistance(1.22);
+    pieChart.getStyler().setLabelType(LabelType.NameAndPercentage);
+    pieChart.getStyler().setLabelsDistance(1.22);
     pieChart.getStyler().setPlotContentSize(.7);
     pieChart.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
 

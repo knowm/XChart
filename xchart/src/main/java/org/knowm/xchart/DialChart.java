@@ -78,15 +78,15 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
    *
    * @param seriesName
    * @param value
-   * @param annotation
+   * @param label
    * @return
    */
-  public DialSeries addSeries(String seriesName, double value, String annotation) {
+  public DialSeries addSeries(String seriesName, double value, String label) {
 
     // Sanity checks
     sanityCheck(seriesName, value);
 
-    DialSeries series = new DialSeries(seriesName, value, annotation);
+    DialSeries series = new DialSeries(seriesName, value, label);
 
     seriesMap.put(seriesName, series);
 

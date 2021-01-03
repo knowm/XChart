@@ -40,7 +40,6 @@ public class RadarChart02 implements ExampleChart<RadarChart> {
             .theme(Styler.ChartTheme.GGPlot2)
             .build();
     chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setHasAnnotations(false);
     chart.getStyler().setRadarRenderStyle(RadarStyler.RadarRenderStyle.Circle);
     chart.getStyler().setSeriesFilled(false);
     chart.getStyler().setRadiiTickMarksCount(4);

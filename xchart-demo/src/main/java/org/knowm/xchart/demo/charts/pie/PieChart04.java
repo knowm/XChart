@@ -5,8 +5,7 @@ import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.PieStyler.LabelType;
 
 /**
  * Pie Chart with Donut Style
@@ -17,7 +16,8 @@ import org.knowm.xchart.style.Styler;
  *   <li>Donut Chart
  *   <li>PieChartBuilder
  *   <li>XChart Theme
- *   <li>Horizontal Legend OutsideS
+ *   <li>NameAndValue data labels
+ *   <li>Sum in center of pie
  */
 public class PieChart04 implements ExampleChart<PieChart> {
 
@@ -25,7 +25,7 @@ public class PieChart04 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart04();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<PieChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -33,17 +33,17 @@ public class PieChart04 implements ExampleChart<PieChart> {
 
     // Create Chart
     PieChart chart =
-        new PieChartBuilder().width(800).height(600).title("Pie Chart with Donut Style").build();
-    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
-    chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
+        new PieChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
-    //    chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setAnnotationType(AnnotationType.Label);
-    chart.getStyler().setAnnotationDistance(.82);
-    chart.getStyler().setPlotContentSize(.9);
+    chart.getStyler().setLegendVisible(false);
     chart.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
-    // chart.getStyler().setCircular(false);
+    chart.getStyler().setLabelType(LabelType.NameAndValue);
+    // TODO make this relative to the inner and outer edge of the doughnut slice, not the center of
+    // the pie
+    chart.getStyler().setLabelsDistance(.82);
+    chart.getStyler().setPlotContentSize(.9);
+    chart.getStyler().setSumVisible(true);
 
     // Series
     chart.addSeries("A", 22);

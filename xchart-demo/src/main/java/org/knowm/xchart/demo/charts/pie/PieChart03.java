@@ -14,8 +14,9 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  * <ul>
  *   <li>Pie Chart
  *   <li>PieChartBuilder
- *   <li>GGPlot2 Theme
- *   <li>Setting start angle
+ *   <li>Matlab Theme
+ *   <li>custom start angle
+ *   <li>Custom labels distance outside of pie (>1.0)
  */
 public class PieChart03 implements ExampleChart<PieChart> {
 
@@ -23,7 +24,7 @@ public class PieChart03 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart03();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<PieChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -34,13 +35,13 @@ public class PieChart03 implements ExampleChart<PieChart> {
         new PieChartBuilder()
             .width(800)
             .height(600)
-            .title("Pie Chart GGPlot2 Theme")
+            .title(getClass().getSimpleName())
             .theme(ChartTheme.GGPlot2)
             .build();
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setAnnotationDistance(1.15);
+    chart.getStyler().setLabelsDistance(1.15);
     chart.getStyler().setPlotContentSize(.7);
     chart.getStyler().setStartAngleInDegrees(90);
 

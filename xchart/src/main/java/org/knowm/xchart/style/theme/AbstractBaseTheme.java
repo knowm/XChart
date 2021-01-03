@@ -3,7 +3,7 @@ package org.knowm.xchart.style.theme;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
+import org.knowm.xchart.style.PieStyler.LabelType;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.BaseSeriesColors;
 import org.knowm.xchart.style.colors.ChartColor;
@@ -381,19 +381,19 @@ public abstract class AbstractBaseTheme implements Theme {
   }
 
   @Override
-  public double getAnnotationDistance() {
+  public double getLabelsDistance() {
 
     return .67;
   }
 
   @Override
-  public AnnotationType getAnnotationType() {
+  public LabelType getLabelType() {
 
-    return AnnotationType.Percentage;
+    return LabelType.Percentage;
   }
 
   @Override
-  public boolean isDrawAllAnnotations() {
+  public boolean setForceAllLabelsVisible() {
 
     return false;
   }
@@ -436,19 +436,5 @@ public abstract class AbstractBaseTheme implements Theme {
   public boolean isErrorBarsColorSeriesColor() {
 
     return false;
-  }
-
-  // Annotations ///////////////////////////////
-
-  @Override
-  public Font getAnnotationFont() {
-
-    return getPieFont().deriveFont(12f);
-  }
-
-  /** Annotations default colour */
-  @Override
-  public Color getAnnotationsFontColor() {
-    return getChartFontColor();
   }
 }
