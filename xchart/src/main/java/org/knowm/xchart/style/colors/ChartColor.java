@@ -59,4 +59,8 @@ public enum ChartColor {
   public Color getColor() {
     return color;
   }
+
+  public Color getColorTranslucent() {
+    return new Color(color.getRed(), color.getGreen(), color.getBlue(), 128);
+  }
 }

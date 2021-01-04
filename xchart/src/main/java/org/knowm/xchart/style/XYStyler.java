@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.function.Function;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
@@ -16,7 +17,6 @@ public class XYStyler extends AxesChartStyler {
   private Color zoomSelectionColor;
   private boolean zoomResetByDoubleClick;
   private boolean zoomResetByButton;
-  private ButtonPosition zoomResetButtomPosition;
 
   // Cursor ////////////////////////////////
   private boolean isCursorEnabled;
@@ -43,10 +43,9 @@ public class XYStyler extends AxesChartStyler {
     // TODO set this from the theme
     xySeriesRenderStyle = XYSeriesRenderStyle.Line; // set default to line
     isZoomEnabled = false; // set default to false
-    zoomSelectionColor = new Color(155, 155, 155, 128);
+    zoomSelectionColor = ChartColor.LIGHT_GREY.getColorTranslucent();
     zoomResetByDoubleClick = true;
     zoomResetByButton = true;
-    zoomResetButtomPosition = ButtonPosition.InsideN;
 
     // Cursor ////////////////////////////////
     this.isCursorEnabled = theme.isCursorEnabled();
@@ -125,22 +124,6 @@ public class XYStyler extends AxesChartStyler {
     this.zoomResetByButton = zoomResetByButton;
   }
 
-  public ButtonPosition getZoomResetButtomPosition() {
-    return zoomResetButtomPosition;
-  }
-
-  public void setZoomResetButtomPosition(ButtonPosition zoomResetButtomPosition) {
-    this.zoomResetButtomPosition = zoomResetButtomPosition;
-  }
-
-  public enum ButtonPosition {
-    InsideNW,
-    InsideNE,
-    InsideSE,
-    InsideSW,
-    InsideN,
-    InsideS
-  }
   // Cursor ///////////////////////////////
 
   public boolean isCursorEnabled() {

@@ -62,20 +62,10 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
       toolTips.paint(g);
     }
 
-    // TODO here the annotation classes are added. Refactor this!
-
-    //    for (ChartPart part : chart.getPlotParts()) {
-    //      part.paint(g);
-    //    }
-
-    // TODO  PlotContent_XY - put this in.
+    // TODO put this in PlotContent_XY.
     if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
       chartZoom.paint(g);
     }
-
-    //    if(chart.getStyler().isCursorEnabled()){
-    //      cursor.paint(g);
-    //    }
 
     g.setClip(saveClip);
   }

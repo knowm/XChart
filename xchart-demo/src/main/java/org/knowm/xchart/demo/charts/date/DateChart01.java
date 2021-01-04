@@ -40,7 +40,8 @@ public class DateChart01 implements ExampleChart<XYChart> {
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).title("Millisecond Scale").build();
+    XYChart chart =
+        new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
@@ -49,7 +50,7 @@ public class DateChart01 implements ExampleChart<XYChart> {
     //    chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
     //    chart.getStyler().setZoomResetByDoubleClick(false);
     //    chart.getStyler().setZoomResetByButton(true);
-    //    chart.getStyler().setZoomSelectionColor(new Color(0,0 , 192, 128));
+    //    chart.getStyler().setZoomSelectionColor(new Color(0, 0, 192, 128));
 
     // Series
     Random random = new Random();

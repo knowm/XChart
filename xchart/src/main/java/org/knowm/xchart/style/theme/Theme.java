@@ -118,7 +118,33 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   }
 
   default Color getAnnotationLineColor() {
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
+  }
+
+  // Chart Button ///////////////////////////////
+
+  default Color getChartButtonBackgroundColor() {
+    return ChartColor.BLUE.getColor().brighter();
+  }
+
+  default Color getChartButtonBorderColor() {
+    return ChartColor.BLUE.getColor().darker();
+  }
+
+  default Color getChartButtonHoverColor() {
+    return ChartColor.BLUE.getColor();
+  }
+
+  default Color getChartButtonFontColor() {
+    return getChartFontColor();
+  }
+
+  default Font getChartButtonFont() {
+    return getLegendFont();
+  }
+
+  default int getChartButtonMargin() {
+    return 6;
   }
 
   // ToolTips ///////////////////////////////

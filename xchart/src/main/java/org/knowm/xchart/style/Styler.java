@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
+import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.theme.GGPlot2Theme;
 import org.knowm.xchart.style.theme.MatlabTheme;
@@ -66,6 +67,15 @@ public abstract class Styler {
 
   private BasicStroke annotationLineStroke;
   private Color annotationLineColor;
+
+  // Chart Button ///////////////////////////////
+
+  private Color chartButtonBackgroundColor;
+  private Color chartButtonBorderColor;
+  private Color chartButtonFontColor;
+  private Font chartButtonFont;
+  private int chartButtonMargin;
+  private ChartButtonPosition chartButtonPosition;
 
   // Tool Tips ///////////////////////////////
   private boolean isToolTipsEnabled;
@@ -142,6 +152,15 @@ public abstract class Styler {
 
     annotationLineStroke = theme.getAnnotationLineStroke();
     annotationLineColor = theme.getAnnotationLineColor();
+
+    // Chart Button
+    // TODO move these to theme
+    chartButtonBackgroundColor = ChartColor.LIGHT_GREY.getColor();
+    chartButtonBorderColor = ChartColor.DARK_GREY.getColor();
+    chartButtonFontColor = getChartFontColor();
+    chartButtonFont = getBaseFont().deriveFont(11f);
+    chartButtonMargin = 6;
+    chartButtonPosition = ChartButtonPosition.InsideN;
 
     // Tool Tips ///////////////////////////////
 
@@ -666,6 +685,70 @@ public abstract class Styler {
   public Styler setAnnotationLineColor(Color annotationLineColor) {
     this.annotationLineColor = annotationLineColor;
     return this;
+  }
+  // Chart Button ///////////////////////////////
+
+  public Color getChartButtonBackgroundColor() {
+    return chartButtonBackgroundColor;
+  }
+
+  public Styler setChartButtonBackgroundColor(Color chartButtonBackgroundColor) {
+    this.chartButtonBackgroundColor = chartButtonBackgroundColor;
+    return this;
+  }
+
+  public Color getChartButtonBorderColor() {
+    return chartButtonBorderColor;
+  }
+
+  public Styler setChartButtonBorderColor(Color chartButtonBorderColor) {
+    this.chartButtonBorderColor = chartButtonBorderColor;
+    return this;
+  }
+
+  public Color getChartButtonFontColor() {
+    return chartButtonFontColor;
+  }
+
+  public Styler setChartButtonFontColor(Color chartButtonFontColor) {
+    this.chartButtonFontColor = chartButtonFontColor;
+    return this;
+  }
+
+  public Font getChartButtonFont() {
+    return chartButtonFont;
+  }
+
+  public Styler setChartButtonFont(Font chartButtonFont) {
+    this.chartButtonFont = chartButtonFont;
+    return this;
+  }
+
+  public int getChartButtonMargin() {
+    return chartButtonMargin;
+  }
+
+  public Styler setChartButtonMargin(int chartButtonMargin) {
+    this.chartButtonMargin = chartButtonMargin;
+    return this;
+  }
+
+  public ChartButtonPosition getChartButtonPosition() {
+    return chartButtonPosition;
+  }
+
+  public Styler setChartButtonPosition(ChartButtonPosition chartButtonPosition) {
+    this.chartButtonPosition = chartButtonPosition;
+    return this;
+  }
+
+  public enum ChartButtonPosition {
+    InsideNW,
+    InsideNE,
+    InsideSE,
+    InsideSW,
+    InsideN,
+    InsideS
   }
 
   // Tool Tips ///////////////////////////////

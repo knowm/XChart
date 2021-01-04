@@ -1,7 +1,5 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -17,41 +15,33 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.event.EventListenerList;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.style.XYStyler;
+import org.knowm.xchart.style.Styler;
 
 /**
  * A button that can be used on the chart for whatever function. For example the ChartZoom class
- * uses this to reset the zoom function. When it is clicked it fires it's actionPerformed action and
+ * uses this to reset the zoom function. When it is clicked it fires its actionPerformed action and
  * whoever is listening to it can react to it.
  */
 // TODO tie this to the styler properties
 public class ChartButton extends MouseAdapter implements ChartPart {
 
-  protected XChartPanel xChartPanel;
-  protected Chart chart;
-  protected Rectangle bounds;
+  private final Chart chart;
+  private final Styler styler;
+  private Rectangle bounds;
 
   // properties
-  protected Color color = new Color(114, 147, 203);
-  protected Color hoverColor = new Color(57, 106, 177);
-  protected String text;
-  protected boolean visible = true;
-  protected Color fontColor;
-  protected Font textFont;
-  protected Color borderColor;
-  protected int margin = 6;
-  protected ActionEvent action;
-  private EventListenerList listenerList = new EventListenerList();
 
-  // button position
-  protected XYStyler.ButtonPosition buttonPosition = XYStyler.ButtonPosition.InsideN;
+  protected String text;
+  boolean visible = true;
+
+  private ActionEvent action;
+  private EventListenerList listenerList = new EventListenerList();
 
   protected double xOffset = 0;
   protected double yOffset = 0;
 
   // internal
   private Shape buttonRect;
-  private boolean mouseOver;
 
   /**
    * Constructor
@@ -65,15 +55,8 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     this.text = text;
 
     chart = xyChart;
-    if (fontColor == null) {
-      fontColor = chart.getStyler().getChartFontColor();
-    }
-    if (textFont == null) {
-      textFont = chart.getStyler().getLegendFont();
-    }
-    if (borderColor == null) {
-      borderColor = chart.getStyler().getLegendBorderColor();
-    }
+    styler = chart.getStyler();
+
     xChartPanel.addMouseListener(this);
     xChartPanel.addMouseMotionListener(this);
   }
@@ -109,6 +92,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     }
   }
 
+  /** Notify listeners that this button was clicked or interacted with in some way */
   private void fireActionPerformed() {
 
     Object[] listeners = listenerList.getListenerList();
@@ -127,7 +111,6 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     if (!visible) {
       return;
     }
-    //    System.out.println("PAINT BUTTOM");
 
     bounds = g.getClipBounds();
 
@@ -139,11 +122,11 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    g.setColor(fontColor);
-    g.setFont(textFont);
+    g.setColor(styler.getChartButtonFontColor());
+    g.setFont(styler.getChartButtonFont());
 
     FontRenderContext frc = g.getFontRenderContext();
-    TextLayout tl = new TextLayout(text, textFont, frc);
+    TextLayout tl = new TextLayout(text, styler.getChartButtonFont(), frc);
     Shape shape = tl.getOutline(null);
 
     Rectangle2D textBounds = shape.getBounds2D();
@@ -152,21 +135,21 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     double textWidth = textBounds.getWidth();
 
     buttonRect =
-        new Rectangle2D.Double(xOffset, yOffset, textWidth + margin * 2, textHeight + margin * 2);
-    if (mouseOver) {
-      g.setColor(hoverColor);
-    } else {
-      g.setColor(color);
-    }
+        new Rectangle2D.Double(
+            xOffset,
+            yOffset,
+            textWidth + styler.getChartButtonMargin() * 2,
+            textHeight + styler.getChartButtonMargin() * 2);
+    g.setColor(styler.getChartButtonBackgroundColor());
     g.fill(buttonRect);
     g.setStroke(SOLID_STROKE);
-    g.setColor(borderColor);
+    g.setColor(styler.getChartButtonBorderColor());
     g.draw(buttonRect);
 
-    double startx = xOffset + margin;
-    double starty = yOffset + margin;
+    double startx = xOffset + styler.getChartButtonMargin();
+    double starty = yOffset + styler.getChartButtonMargin();
 
-    g.setColor(fontColor);
+    g.setColor(styler.getChartButtonFontColor());
 
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();
@@ -182,90 +165,51 @@ public class ChartButton extends MouseAdapter implements ChartPart {
 
     double textHeight = textBounds.getHeight();
     double textWidth = textBounds.getWidth();
-    double widthAdjustment = textWidth + margin * 3;
-    double heightAdjustment = textHeight + margin * 3;
+    double widthAdjustment = textWidth + styler.getChartButtonMargin() * 3;
+    double heightAdjustment = textHeight + styler.getChartButtonMargin() * 3;
 
     double boundsWidth = bounds.getWidth();
     double boundsHeight = bounds.getHeight();
 
-    if (buttonPosition != null) {
-      switch (buttonPosition) {
-        case InsideNW:
-          xOffset = bounds.getX() + margin;
-          yOffset = bounds.getY() + margin;
-          break;
-        case InsideNE:
-          xOffset = bounds.getX() + boundsWidth - widthAdjustment;
-          yOffset = bounds.getY() + margin;
-          break;
-        case InsideSE:
-          xOffset = bounds.getX() + boundsWidth - widthAdjustment;
-          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-          break;
-        case InsideSW:
-          xOffset = bounds.getX() + margin;
-          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-          break;
-        case InsideN:
-          xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
-          yOffset = bounds.getY() + margin;
-          break;
-        case InsideS:
-          xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - margin;
-          yOffset = bounds.getY() + boundsHeight - heightAdjustment;
-          break;
-        default:
-          break;
-      }
+    switch (styler.getChartButtonPosition()) {
+      case InsideNW:
+        xOffset = bounds.getX() + styler.getChartButtonMargin();
+        yOffset = bounds.getY() + styler.getChartButtonMargin();
+        break;
+      case InsideNE:
+        xOffset = bounds.getX() + boundsWidth - widthAdjustment;
+        yOffset = bounds.getY() + styler.getChartButtonMargin();
+        break;
+      case InsideSE:
+        xOffset = bounds.getX() + boundsWidth - widthAdjustment;
+        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+        break;
+      case InsideSW:
+        xOffset = bounds.getX() + styler.getChartButtonMargin();
+        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+        break;
+      case InsideN:
+        xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - styler.getChartButtonMargin();
+        yOffset = bounds.getY() + styler.getChartButtonMargin();
+        break;
+      case InsideS:
+        xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - styler.getChartButtonMargin();
+        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+        break;
+      default:
+        break;
     }
   }
 
   //   SETTERS
-  // TODO move some of these to a styler
-  public void setColor(Color color) {
 
-    this.color = color;
-  }
-
-  public void setHoverColor(Color hoverColor) {
-
-    this.hoverColor = hoverColor;
-  }
-
-  public void setText(String text) {
+  void setText(String text) {
 
     this.text = text;
   }
 
-  public void setVisible(boolean visible) {
+  void setVisible(boolean visible) {
 
     this.visible = visible;
-    if (!visible) {
-      mouseOver = false;
-    }
-  }
-
-  void setFontColor(Color fontColor) {
-
-    this.fontColor = fontColor;
-  }
-
-  void setTextFont(Font textFont) {
-
-    this.textFont = textFont;
-  }
-
-  void setBorderColor(Color borderColor) {
-
-    this.borderColor = borderColor;
-  }
-
-  void setMargin(int margin) {
-
-    this.margin = margin;
-  }
-
-  void setButtonPosition(XYStyler.ButtonPosition legendPosition) {
-    this.buttonPosition = legendPosition;
   }
 }

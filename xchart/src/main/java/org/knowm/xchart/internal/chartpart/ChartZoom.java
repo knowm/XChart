@@ -37,15 +37,9 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     this.xyChart = xyChart;
     xyChart.plot.plotContent.setChartZoom(this);
 
-    // TODO don't set the style stuff like this but get the styles directly in the paint method from
-    // the styler.
     resetButton = new ChartButton(xyChart, xChartPanel, resetString);
     resetButton.addActionListener(this);
     resetButton.setVisible(false);
-    resetButton.setButtonPosition(xyChart.getStyler().getZoomResetButtomPosition());
-    resetButton.setColor(xyChart.getStyler().getZoomSelectionColor());
-    resetButton.setHoverColor(xyChart.getStyler().getZoomSelectionColor().darker());
-    resetButton.setBorderColor(xyChart.getStyler().getZoomSelectionColor().darker());
   }
 
   protected void resetZoom() {
@@ -77,8 +71,6 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     //    here either 1. the mouse was released and the chart was zoomed so we need the reset button
     // or 2. nothing should be drawn or 3. the zoom area
     //    should be drawn
-
-    //    System.out.println("chartZoom.paint()");
 
     if (resetButton.visible && (x1 == -1 || x2 == -1)) { //
       resetButton.paint(g);
@@ -127,7 +119,6 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
       filtered = filterXByScreen(smallPoint, bigPoint);
       resetButton.setVisible(filtered && xyChart.getStyler().isZoomResetByButton());
-      //      System.out.println("set visible");
     }
 
     x1 = -1;
