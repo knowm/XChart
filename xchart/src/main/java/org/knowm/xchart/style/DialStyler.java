@@ -1,6 +1,12 @@
 package org.knowm.xchart.style;
 
-import java.awt.*;
+import static org.knowm.xchart.style.colors.ChartColor.BLUE;
+import static org.knowm.xchart.style.colors.ChartColor.GREEN;
+import static org.knowm.xchart.style.colors.ChartColor.RED;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import org.knowm.xchart.style.theme.Theme;
 
 public class DialStyler extends Styler {
@@ -24,24 +30,25 @@ public class DialStyler extends Styler {
 
   // donut area
   private double arcAngle = 270;
-  private double donutThickness = .11;
+  private double donutThickness = .17;
 
-  private double normalFrom = 0;
-  private double normalTo = 1;
-  private Color normalColor = Color.LIGHT_GRAY;
+  private double lowerFrom = 0;
+  private double lowerTo = 0.2;
+  private Color lowerColor = GREEN.getColor();
 
-  private double greenFrom = 0;
-  private double greenTo = 0.2;
-  private Color greenColor = Color.GREEN;
+  private double middleFrom = 0.2;
+  private double middleTo = .8;
+  private Color middleColor = Color.LIGHT_GRAY;
 
-  private double redFrom = 0.8;
-  private double redTo = 1;
-  private Color redColor = Color.RED;
+  private double upperFrom = 0.8;
+  private double upperTo = 1;
+  private Color upperColor = RED.getColor();
 
   //
-  private double arrowLengthPercentage = 0.85;
+  private double arrowLengthPercentage = 0.7;
   private double arrowArcAngle = 20;
   private double arrowArcPercentage = 0.15;
+  private Color arrowColor = BLUE.getColor();
 
   private boolean isLabelsVisible;
   private Font labelsFont;
@@ -187,102 +194,102 @@ public class DialStyler extends Styler {
     return this;
   }
 
-  public double getNormalFrom() {
+  public double getMiddleFrom() {
 
-    return normalFrom;
+    return middleFrom;
   }
 
-  public DialStyler setNormalFrom(double normalFrom) {
+  public DialStyler setMiddleFrom(double middleFrom) {
 
-    this.normalFrom = normalFrom;
+    this.middleFrom = middleFrom;
     return this;
   }
 
-  public double getNormalTo() {
+  public double getMiddleTo() {
 
-    return normalTo;
+    return middleTo;
   }
 
-  public DialStyler setNormalTo(double normalTo) {
+  public DialStyler setMiddleTo(double middleTo) {
 
-    this.normalTo = normalTo;
+    this.middleTo = middleTo;
     return this;
   }
 
-  public Color getNormalColor() {
+  public Color getMiddleColor() {
 
-    return normalColor;
+    return middleColor;
   }
 
-  public DialStyler setNormalColor(Color normalColor) {
+  public DialStyler setMiddleColor(Color middleColor) {
 
-    this.normalColor = normalColor;
+    this.middleColor = middleColor;
     return this;
   }
 
-  public double getGreenFrom() {
+  public double getLowerFrom() {
 
-    return greenFrom;
+    return lowerFrom;
   }
 
-  public DialStyler setGreenFrom(double greenFrom) {
+  public DialStyler setLowerFrom(double lowerFrom) {
 
-    this.greenFrom = greenFrom;
+    this.lowerFrom = lowerFrom;
     return this;
   }
 
-  public double getGreenTo() {
+  public double getLowerTo() {
 
-    return greenTo;
+    return lowerTo;
   }
 
-  public DialStyler setGreenTo(double greenTo) {
+  public DialStyler setLowerTo(double lowerTo) {
 
-    this.greenTo = greenTo;
+    this.lowerTo = lowerTo;
     return this;
   }
 
-  public Color getGreenColor() {
+  public Color getLowerColor() {
 
-    return greenColor;
+    return lowerColor;
   }
 
-  public DialStyler setGreenColor(Color greenColor) {
+  public DialStyler setLowerColor(Color lowerColor) {
 
-    this.greenColor = greenColor;
+    this.lowerColor = lowerColor;
     return this;
   }
 
-  public double getRedFrom() {
+  public double getUpperFrom() {
 
-    return redFrom;
+    return upperFrom;
   }
 
-  public DialStyler setRedFrom(double redFrom) {
+  public DialStyler setUpperFrom(double upperFrom) {
 
-    this.redFrom = redFrom;
+    this.upperFrom = upperFrom;
     return this;
   }
 
-  public double getRedTo() {
+  public double getUpperTo() {
 
-    return redTo;
+    return upperTo;
   }
 
-  public DialStyler setRedTo(double redTo) {
+  public DialStyler setUpperTo(double upperTo) {
 
-    this.redTo = redTo;
+    this.upperTo = upperTo;
     return this;
   }
 
-  public Color getRedColor() {
+  public Color getUpperColor() {
 
-    return redColor;
+    return upperColor;
   }
 
-  public DialStyler setRedColor(Color redColor) {
+  public DialStyler setUpperColor(Color upperColor) {
 
-    this.redColor = redColor;
+    this.upperColor = upperColor;
     return this;
   }
 
@@ -352,17 +359,33 @@ public class DialStyler extends Styler {
     return this;
   }
 
+  public Color getArrowColor() {
+
+    return arrowColor;
+  }
+
+  /**
+   * Set the line color of the series
+   *
+   * @param color
+   */
+  public DialStyler setArrowColor(java.awt.Color color) {
+
+    this.arrowColor = color;
+    return this;
+  }
+
   public boolean isLabelsVisible() {
 
     return isLabelsVisible;
   }
 
   /**
-   * Sets if labels should be added to charts. Each chart type has a different annotation type
+   * Sets if labels should be added to charts.
    *
    * @param labelsVisible
    */
-  public DialStyler setLabelsVisible(boolean labelsVisible) {
+  public DialStyler setLabelVisible(boolean labelsVisible) {
 
     this.isLabelsVisible = labelsVisible;
     return this;
@@ -378,7 +401,7 @@ public class DialStyler extends Styler {
    *
    * @param labelsFont
    */
-  public DialStyler setLabelsFont(Font labelsFont) {
+  public DialStyler setLabelFont(Font labelsFont) {
 
     this.labelsFont = labelsFont;
     return this;

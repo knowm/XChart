@@ -29,8 +29,8 @@ public class TestForIssue210 implements ExampleChart<DialChart> {
     {
       DialChart chart = exampleChart.getChart();
       chart.setTitle("Dial chart without green&red parts");
-      chart.getStyler().setRedFrom(-1);
-      chart.getStyler().setGreenFrom(-1);
+      chart.getStyler().setUpperFrom(-1);
+      chart.getStyler().setLowerFrom(-1);
 
       charts.add(chart);
     }

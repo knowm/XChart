@@ -41,9 +41,11 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
     int markCount = axisTickValues.length;
     String[] axisTickLabels = styler.getAxisTickLabels();
 
-    double[] fromArr = {styler.getNormalFrom(), styler.getGreenFrom(), styler.getRedFrom()};
-    double[] toArr = {styler.getNormalTo(), styler.getGreenTo(), styler.getRedTo()};
-    Color[] donutColorArr = {styler.getNormalColor(), styler.getGreenColor(), styler.getRedColor()};
+    double[] fromArr = {styler.getMiddleFrom(), styler.getLowerFrom(), styler.getUpperFrom()};
+    double[] toArr = {styler.getMiddleTo(), styler.getLowerTo(), styler.getUpperTo()};
+    Color[] donutColorArr = {
+      styler.getMiddleColor(), styler.getLowerColor(), styler.getUpperColor()
+    };
 
     double dountStartAngle = (arcAngle) / 2 + 90;
     // draw shape
@@ -248,9 +250,9 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
       }
 
       path.closePath();
-      g.setColor(series.getFillColor());
+      g.setColor(styler.getArrowColor());
       g.fill(path);
-      g.setColor(series.getLineColor());
+      g.setColor(styler.getArrowColor());
       g.draw(path);
     }
   }

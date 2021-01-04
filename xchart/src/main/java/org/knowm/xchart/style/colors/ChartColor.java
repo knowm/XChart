@@ -22,7 +22,16 @@ public enum ChartColor {
   LIGHT_GREY(new Color(230, 230, 230)),
 
   /** WHITE */
-  WHITE(new Color(255, 255, 255));
+  WHITE(new Color(255, 255, 255)),
+
+  /** RED */
+  RED(new Color(237, 67, 55)),
+
+  /** BLUE */
+  BLUE(new Color(67, 55, 237)),
+
+  /** GREEN */
+  GREEN(new Color(67, 237, 55));
 
   final Color color;
 

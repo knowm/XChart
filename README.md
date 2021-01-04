@@ -197,7 +197,7 @@ Series render styles include: `Round` and in the near future `Square`.
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Dial_Chart.png)
 
-`DialChart` charts take a `double` to set the position of the dial pointer.
+`DialChart` charts take a `double` to set the position of the dial pointer and a `String` to set the label. Extensive customization is possible.
 
 ### RadarChart
 

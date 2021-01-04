@@ -14,20 +14,6 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 
   private String[] radiiLabels;
 
-  public String[] getRadiiLabels() {
-
-    return radiiLabels;
-  }
-
-  /**
-   * Sets the radii labels
-   *
-   * @param radiiLabels
-   */
-  public void setRadiiLabels(String[] radiiLabels) {
-
-    this.radiiLabels = radiiLabels;
-  }
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
    *
@@ -77,6 +63,20 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     setTitle(radarChartBuilder.title);
   }
 
+  public String[] getRadiiLabels() {
+
+    return radiiLabels;
+  }
+
+  /**
+   * Sets the radii labels
+   *
+   * @param radiiLabels
+   */
+  public void setRadiiLabels(String[] radiiLabels) {
+
+    this.radiiLabels = radiiLabels;
+  }
   /**
    * Add a series for a Radar type chart
    *

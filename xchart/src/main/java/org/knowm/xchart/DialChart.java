@@ -4,8 +4,6 @@ import java.awt.Graphics2D;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Dial;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.DialStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
@@ -88,6 +86,7 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
 
     DialSeries series = new DialSeries(seriesName, value, label);
 
+    seriesMap.clear(); // only allow one series per dial chart
     seriesMap.put(seriesName, series);
 
     return series;
@@ -112,44 +111,11 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     setWidth(width);
     setHeight(height);
 
-    setSeriesStyles();
-
     paintBackground(g);
 
     plot.paint(g);
     chartTitle.paint(g);
-    legend.paint(g);
+    //    legend.paint(g); // no legend for dial charts
     annotations.forEach(x -> x.paint(g));
-  }
-
-  /** set the series color based on theme */
-  private void setSeriesStyles() {
-
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
-        new SeriesColorMarkerLineStyleCycler(
-            getStyler().getSeriesColors(),
-            getStyler().getSeriesMarkers(),
-            getStyler().getSeriesLines());
-    for (DialSeries series : getSeriesMap().values()) {
-
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
-          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
-
-      if (series.getLineStyle() == null) { // wasn't set manually
-        series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
-      }
-      if (series.getLineColor() == null) { // wasn't set manually
-        series.setLineColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getFillColor() == null) { // wasn't set manually
-        series.setFillColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getMarker() == null) { // wasn't set manually
-        series.setMarker(seriesColorMarkerLineStyle.getMarker());
-      }
-      if (series.getMarkerColor() == null) { // wasn't set manually
-        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
-      }
-    }
   }
 }

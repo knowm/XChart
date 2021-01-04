@@ -20,7 +20,7 @@ public class DialChart01 implements ExampleChart<DialChart> {
 
     ExampleChart<DialChart> exampleChart = new DialChart01();
     DialChart chart = exampleChart.getChart();
-    new SwingWrapper<DialChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -33,9 +33,8 @@ public class DialChart01 implements ExampleChart<DialChart> {
     // Series
     chart.addSeries("Rate", 0.9381, "93.81 %");
     chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setLabelsVisible(true);
+    chart.getStyler().setLabelVisible(true);
     chart.getStyler().setLegendVisible(false);
-
     return chart;
   }
 
