@@ -51,7 +51,7 @@ public class LineChart03 implements ExampleChart<XYChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
+    chart.getStyler().setPlotBackgroundColor(ChartColor.GREY.getColor());
     chart.getStyler().setPlotGridLinesColor(new Color(255, 255, 255));
     chart.getStyler().setChartBackgroundColor(Color.WHITE);
     chart.getStyler().setLegendBackgroundColor(Color.PINK);

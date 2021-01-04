@@ -90,15 +90,15 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   }
 
   default Color getAnnotationTextPanelFontColor() {
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   default Color getAnnotationTextPanelBackgroundColor() {
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   default Color getAnnotationTextPanelBorderColor() {
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   default int getAnnotationTextPanelPadding() {
@@ -110,7 +110,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   }
 
   default Color getAnnotationTextFontColor() {
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   default BasicStroke getAnnotationLineStroke() {
@@ -166,17 +166,17 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   default Color getToolTipBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   default Color getToolTipBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   default Color getToolTipHighlightColor() {
 
-    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+    return ChartColor.LIGHT_GREY.getColor();
   }
 
   // Chart Axes ///////////////////////////////

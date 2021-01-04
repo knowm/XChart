@@ -28,13 +28,13 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getChartBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   @Override
   public Color getChartFontColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   @Override
@@ -87,13 +87,13 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getChartTitleBoxBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   @Override
   public Color getChartTitleBoxBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   @Override
@@ -119,13 +119,13 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getLegendBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   @Override
   public Color getLegendBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   @Override
@@ -199,7 +199,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getAxisTickMarksColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   @Override
@@ -211,7 +211,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getAxisTickLabelsColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   @Override
@@ -267,13 +267,13 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getPlotBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   @Override
   public Color getPlotBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   @Override
@@ -291,7 +291,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getPlotGridLinesColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.GREY.getColor();
   }
 
   @Override
@@ -429,7 +429,7 @@ public abstract class AbstractBaseTheme implements Theme {
   @Override
   public Color getErrorBarsColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   @Override

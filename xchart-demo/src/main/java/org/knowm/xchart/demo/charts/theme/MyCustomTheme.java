@@ -23,13 +23,13 @@ public class MyCustomTheme extends AbstractBaseTheme {
   @Override
   public Color getChartBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   @Override
   public Color getChartFontColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   @Override
@@ -73,13 +73,13 @@ public class MyCustomTheme extends AbstractBaseTheme {
   @Override
   public Color getChartTitleBoxBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.GREY.getColor();
   }
 
   @Override
   public Color getChartTitleBoxBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.GREY.getColor();
   }
 
   // Chart Legend ///////////////////////////////

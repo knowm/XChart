@@ -46,7 +46,7 @@ public class MatlabTheme extends AbstractBaseTheme {
   @Override
   public Color getLegendBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   // Chart Axes ///////////////////////////////
@@ -66,7 +66,7 @@ public class MatlabTheme extends AbstractBaseTheme {
   @Override
   public Color getAxisTickMarksColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   @Override
@@ -92,13 +92,13 @@ public class MatlabTheme extends AbstractBaseTheme {
   @Override
   public Color getPlotBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   @Override
   public Color getPlotGridLinesColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   @Override
@@ -125,13 +125,13 @@ public class MatlabTheme extends AbstractBaseTheme {
   @Override
   public Color getToolTipBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   @Override
   public Color getToolTipHighlightColor() {
 
-    return ChartColor.getAWTColor(ChartColor.BLACK);
+    return ChartColor.BLACK.getColor();
   }
 
   // Category Charts ///////////////////////////////

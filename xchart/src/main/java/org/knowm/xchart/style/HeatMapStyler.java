@@ -67,7 +67,7 @@ public class HeatMapStyler extends AxesChartStyler {
 
     splitNumber = 5;
     valueFont = new Font(Font.SANS_SERIF, Font.PLAIN, 16);
-    valueFontColor = ChartColor.getAWTColor(ChartColor.BLACK);
+    valueFontColor = ChartColor.BLACK.getColor();
     min = Double.MIN_VALUE;
     max = Double.MAX_VALUE;
     gradientColorColumnWeight = 30;

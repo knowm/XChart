@@ -16,7 +16,7 @@ public class XChartTheme extends AbstractBaseTheme {
   @Override
   public Color getChartBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.GREY.getColor();
   }
 
   // SeriesMarkers, SeriesLines, SeriesColors ///////////////////////////////
@@ -50,13 +50,13 @@ public class XChartTheme extends AbstractBaseTheme {
   @Override
   public Color getChartTitleBoxBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.GREY.getColor();
   }
 
   @Override
   public Color getChartTitleBoxBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.GREY.getColor();
   }
 
   // Chart Legend ///////////////////////////////

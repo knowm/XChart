@@ -44,13 +44,13 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public Color getChartTitleBoxBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.GREY.getColor();
   }
 
   @Override
   public Color getChartTitleBoxBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.GREY);
+    return ChartColor.GREY.getColor();
   }
 
   // Chart Legend ///////////////////////////////
@@ -64,7 +64,7 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public Color getLegendBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   // Chart Axes ///////////////////////////////
@@ -102,7 +102,7 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public Color getAxisTickLabelsColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   @Override
@@ -116,13 +116,13 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public Color getPlotBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+    return ChartColor.LIGHT_GREY.getColor();
   }
 
   @Override
   public Color getPlotBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   @Override
@@ -140,7 +140,7 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public Color getPlotGridLinesColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   @Override
@@ -160,19 +160,19 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public Color getToolTipBackgroundColor() {
 
-    return ChartColor.getAWTColor(ChartColor.WHITE);
+    return ChartColor.WHITE.getColor();
   }
 
   @Override
   public Color getToolTipBorderColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   @Override
   public Color getToolTipHighlightColor() {
 
-    return ChartColor.getAWTColor(ChartColor.LIGHT_GREY);
+    return ChartColor.LIGHT_GREY.getColor();
   }
 
   // Category Charts ///////////////////////////////
@@ -198,7 +198,7 @@ public class GGPlot2Theme extends AbstractBaseTheme {
   @Override
   public Color getErrorBarsColor() {
 
-    return ChartColor.getAWTColor(ChartColor.DARK_GREY);
+    return ChartColor.DARK_GREY.getColor();
   }
 
   // Chart Annotations ///////////////////////////////
