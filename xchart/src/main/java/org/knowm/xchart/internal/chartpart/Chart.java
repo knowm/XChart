@@ -241,6 +241,54 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return format;
   }
 
+  public double getChartXFromCoordinate(int screenX) {
+
+    if (axisPair == null) {
+      return Double.NaN;
+    }
+    return axisPair.getXAxis().getChartValue(screenX);
+  }
+
+  public double getChartYFromCoordinate(int screenY) {
+
+    if (axisPair == null) {
+      return Double.NaN;
+    }
+    return axisPair.getYAxis().getChartValue(screenY);
+  }
+
+  public double getChartYFromCoordinate(int screenY, int yIndex) {
+
+    if (axisPair == null) {
+      return Double.NaN;
+    }
+    return axisPair.getYAxis(yIndex).getChartValue(screenY);
+  }
+
+  public double getScreenXFromChart(double xValue) {
+
+    if (axisPair == null) {
+      return Double.NaN;
+    }
+    return axisPair.getXAxis().getScreenValue(xValue);
+  }
+
+  public double getScreenYFromChart(double yValue) {
+
+    if (axisPair == null) {
+      return Double.NaN;
+    }
+    return axisPair.getYAxis().getScreenValue(yValue);
+  }
+
+  public double getScreenYFromChart(double yValue, int yIndex) {
+
+    if (axisPair == null) {
+      return Double.NaN;
+    }
+    return axisPair.getYAxis(yIndex).getScreenValue(yValue);
+  }
+
   //  ArrayList<ChartPart> getAnnotations() {
   //
   //    return annotations;
