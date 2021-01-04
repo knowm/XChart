@@ -1,18 +1,25 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Map;
+import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.XYStyler;
 
 /** @author timmolter */
 public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;
+  ToolTips toolTips; // tooltips are available for Category, OHLC and XY charts
+  ChartZoom chartZoom;
+  //  Cursor cursor;
 
-  final Stroke errorBarStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
+  // TODO create a PlotContent_Axes class to put this in.
+  static final BasicStroke ERROR_BAR_STROKE =
+      new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
   /**
    * Constructor
@@ -48,19 +55,27 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
       g.setClip(bounds);
     }
 
-    chart.toolTips.prepare(g);
-
-    chart.cursor.prepare(bounds, (Map<String, Series>) chart.getSeriesMap());
-
     doPaint(g);
 
-    chart.toolTips.paint(g);
-
-    chart.cursor.paint(g);
-
-    for (ChartPart part : chart.getPlotParts()) {
-      part.paint(g);
+    // after painting the plot content, paint the tooltip(s) if necessary
+    if (chart.getStyler().isToolTipsEnabled()) {
+      toolTips.paint(g);
     }
+
+    // TODO here the annotation classes are added. Refactor this!
+
+    //    for (ChartPart part : chart.getPlotParts()) {
+    //      part.paint(g);
+    //    }
+
+    // TODO  PlotContent_XY - put this in.
+    if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
+      chartZoom.paint(g);
+    }
+
+    //    if(chart.getStyler().isCursorEnabled()){
+    //      cursor.paint(g);
+    //    }
 
     g.setClip(saveClip);
   }
@@ -81,5 +96,13 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
       path.closePath();
       g.fill(path);
     }
+  }
+
+  public void setToolTips(ToolTips toolTips) {
+    this.toolTips = toolTips;
+  }
+
+  public void setChartZoom(ChartZoom chartZoom) {
+    this.chartZoom = chartZoom;
   }
 }

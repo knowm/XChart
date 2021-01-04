@@ -1,6 +1,9 @@
 package org.knowm.xchart.style;
 
+import java.awt.Color;
+import java.awt.Font;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
 public class CategoryStyler extends AxesChartStyler {
@@ -10,6 +13,13 @@ public class CategoryStyler extends AxesChartStyler {
   private double availableSpaceFill;
   private boolean isOverlapped;
   private boolean isStacked;
+
+  private boolean isLabelsVisible = false; // set by subclass
+  private boolean showStackSum = false;
+  private Font labelsFont;
+  private Color labelsFontColor;
+  private int labelsRotation;
+  private double labelsPosition;
 
   /** Constructor */
   public CategoryStyler() {
@@ -25,6 +35,12 @@ public class CategoryStyler extends AxesChartStyler {
 
     availableSpaceFill = theme.getAvailableSpaceFill();
     isOverlapped = theme.isOverlapped();
+    isStacked = false;
+    isLabelsVisible = false;
+    labelsFont = theme.getBaseFont();
+    labelsFontColor = theme.getChartFontColor();
+    labelsRotation = 0;
+    labelsPosition = 0.5;
   }
 
   public CategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -92,11 +108,113 @@ public class CategoryStyler extends AxesChartStyler {
    *
    * @param isStacked
    */
-  public void setStacked(boolean isStacked) {
+  public CategoryStyler setStacked(boolean isStacked) {
 
     this.isStacked = isStacked;
+    return this;
   }
 
+  public boolean isLabelsVisible() {
+
+    return isLabelsVisible;
+  }
+
+  /**
+   * Sets if labels should be added to charts. Each chart type has a different annotation type
+   *
+   * @param labelsVisible
+   */
+  public CategoryStyler setLabelsVisible(boolean labelsVisible) {
+
+    this.isLabelsVisible = labelsVisible;
+    return this;
+  }
+
+  public boolean isShowStackSum() {
+
+    return showStackSum;
+  }
+
+  /**
+   * If the category chart is set to be "stacked", the total value of the stack can be painted above
+   * the stack.
+   *
+   * @param showStackSum
+   * @return
+   */
+  public CategoryStyler setShowStackSum(boolean showStackSum) {
+
+    this.showStackSum = showStackSum;
+    return this;
+  }
+
+  public Font getLabelsFont() {
+
+    return labelsFont;
+  }
+
+  /**
+   * Sets the Font used for chart labels
+   *
+   * @param labelsFont
+   */
+  public CategoryStyler setLabelsFont(Font labelsFont) {
+
+    this.labelsFont = labelsFont;
+    return this;
+  }
+
+  public Color getLabelsFontColor(Color backgroundColor) {
+    if (annotationsFontColorDetector == null || backgroundColor == null) {
+      return labelsFontColor;
+    }
+    return getAnnotationsFontColor(backgroundColor);
+  }
+
+  /**
+   * Sets the color of the Font used for chart labels
+   *
+   * @param labelsFontColor
+   */
+  public CategoryStyler setLabelsFontColor(Color labelsFontColor) {
+    this.labelsFontColor = labelsFontColor;
+    return this;
+  }
+
+  public int getLabelsRotation() {
+    return labelsRotation;
+  }
+
+  /**
+   * Sets the rotation (in degrees) for chart labels.
+   *
+   * @param labelsRotation
+   */
+  public CategoryStyler setLabelsRotation(int labelsRotation) {
+    this.labelsRotation = labelsRotation;
+    return this;
+  }
+
+  public double getLabelsPosition() {
+
+    return labelsPosition;
+  }
+
+  /**
+   * A number between 0 and 1 setting the vertical position of the data label. Default is 0.5
+   * placing it in the center.
+   *
+   * @param labelsPosition
+   * @return
+   */
+  public CategoryStyler setLabelsPosition(double labelsPosition) {
+
+    if (labelsPosition < 0 || labelsPosition > 1) {
+      throw new IllegalArgumentException("Annotations position must between 0 and 1!!!");
+    }
+    this.labelsPosition = labelsPosition;
+    return this;
+  }
   /**
    * Set the theme the styler should use
    *

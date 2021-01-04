@@ -64,7 +64,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       for (int i = 0; i < yAxis.getAxisTickCalculator().getTickLabels().size(); i++) {
 
         String tickLabel = yAxis.getAxisTickCalculator().getTickLabels().get(i);
-        // System.out.println("** " + tickLabel);
+        //         System.out.println("** " + tickLabel);
         double tickLocation = yAxis.getAxisTickCalculator().getTickLocations().get(i);
         double flippedTickLocation = yOffset + height - tickLocation;
 
@@ -127,6 +127,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       double width = chart.getXAxis().getBounds().getWidth();
       double maxTickLabelHeight = 0;
 
+      // determine maxTickLabelY
       int maxTickLabelY = 0;
       for (int i = 0; i < chart.getXAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
@@ -209,7 +210,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
             default:
               xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
           }
-          // System.out.println("tickLabelBounds: " + tickLabelBounds.toString());
+          //          System.out.println("tickLabelBounds: " + tickLabelBounds.toString());
           double shiftX =
               -1
                   * tickLabelBounds.getX()
@@ -220,30 +221,38 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           // System.out.println("shiftY: " + shiftY);
           at.translate(xPos + shiftX, yOffset + shiftY);
 
-          g.transform(at);
-          g.fill(shape);
-          g.setTransform(orig);
+          if (xPos > 0 && xPos + tickLabelBounds.getWidth() < chart.getWidth()) {
+            g.transform(at);
+            g.fill(shape);
+            g.setTransform(orig);
 
-          // // debug box
-          // g.setColor(Color.MAGENTA);
-          // g.draw(new Rectangle2D.Double(xPos, yOffset - tickLabelBounds.getHeight(),
-          // tickLabelBounds.getWidth(), tickLabelBounds.getHeight()));
-          // g.setColor(getChartPainter().getstyler().getAxisTickLabelsColor());
-
+            //            // debug box
+            //            g.setColor(Color.MAGENTA);
+            //            g.draw(
+            //                new Rectangle2D.Double(
+            //                    xPos,
+            //                    yOffset - tickLabelBounds.getHeight(),
+            //                    tickLabelBounds.getWidth(),
+            //                    tickLabelBounds.getHeight()));
+            //            g.setColor(chart.getStyler().getAxisTickLabelsColor());
+          }
+          //          else { // discarding based on the outside edges of the tick labels
+          //            System.out.println("discarding: " + tickLabel);
+          //          }
           if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
             maxTickLabelHeight = tickLabelBounds.getHeight();
           }
         }
-        // else {
-        // System.out.println("discarding: " + tickLabel);
-        // }
+        //        else {// discarding based on the center of the tick labels
+        //          System.out.println("discarding: " + tickLabel);
+        //        }
       }
 
       // bounds
       bounds =
           new Rectangle2D.Double(xOffset, yOffset - maxTickLabelHeight, width, maxTickLabelHeight);
-      // g.setColor(Color.blue);
-      // g.draw(bounds);
+      //      g.setColor(Color.blue);
+      //      g.draw(bounds);
 
     } else {
       bounds = new Rectangle2D.Double();

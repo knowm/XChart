@@ -1,11 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.knowm.xchart</groupId>
   <artifactId>xchart-parent</artifactId>
-  <version>3.6.6-SNAPSHOT</version>
+  <version>3.8.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>XChart Parent</name>
   <description>XChart is a light weight Java library for plotting data.</description>
@@ -78,7 +76,7 @@
       <dependency>
         <groupId>de.rototor.pdfbox</groupId>
         <artifactId>graphics2d</artifactId>
-        <version>0.27</version>
+        <version>0.30</version>
         <optional>true</optional>
       </dependency>
       <dependency>
@@ -139,6 +137,19 @@
 
   <build>
     <plugins>
+      <!-- Add Automatic Module Name to MANIFEST for compatibility with modular applications -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Automatic-Module-Name>org.knowm.xchart</Automatic-Module-Name>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
       <!-- Ensure compilation is done under Java 8 in all environments -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -178,12 +189,20 @@
           <doclint>none</doclint>
           <source>1.8</source>
         </configuration>
+          <executions>
+              <execution>
+                  <id>attach-javadocs</id>
+                  <goals>
+                      <goal>jar</goal>
+                  </goals>
+              </execution>
+          </executions>
       </plugin>
       <!-- for deploying to Maven Central -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
+        <version>3.0.0-M1</version>
         <configuration>
           <autoVersionSubmodules>true</autoVersionSubmodules>
         </configuration>
@@ -204,6 +223,17 @@
           </execution>
         </executions>
       </plugin>
+        <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.8</version>
+            <extensions>true</extensions>
+            <configuration>
+                <serverId>ossrh</serverId>
+                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
 

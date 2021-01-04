@@ -2,21 +2,22 @@ package org.knowm.xchart.demo.charts.pie;
 
 import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
-import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.PieStyler.AnnotationType;
-import org.knowm.xchart.style.colors.BaseSeriesColors;
+import org.knowm.xchart.style.PieStyler.LabelType;
+import org.knowm.xchart.style.Styler;
 
 /**
- * Pie Chart with Donut Style and sum.
+ * Pie Chart - circle with border
  *
  * <p>Demonstrates the following:
  *
  * <ul>
- *   <li>Donut Chart
+ *   <li>Pie Chart
  *   <li>PieChartBuilder
- *   <li>XChart Theme
+ *   <li>Custom series palette
+ *   <li>Percentage Labels
+ *   <li>Custom pie slice border width
  */
 public class PieChart05 implements ExampleChart<PieChart> {
 
@@ -24,7 +25,7 @@ public class PieChart05 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart05();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<PieChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -35,29 +36,20 @@ public class PieChart05 implements ExampleChart<PieChart> {
         new PieChartBuilder()
             .width(800)
             .height(600)
-            .title("Pie Chart with Donut Style and Sum")
+            .title(getClass().getSimpleName())
+            .theme(Styler.ChartTheme.Matlab)
             .build();
 
     // Customize Chart
-    chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setAnnotationType(AnnotationType.Label);
-    chart.getStyler().setAnnotationDistance(.82);
-    chart.getStyler().setPlotContentSize(.9);
-    chart.getStyler().setDefaultSeriesRenderStyle(PieSeriesRenderStyle.Donut);
-    chart.getStyler().setDecimalPattern("#");
-
-    chart.getStyler().setSeriesColors(new BaseSeriesColors().getSeriesColors());
-
-    chart.getStyler().setSumVisible(true);
-    chart.getStyler().setSumFontSize(20f);
+    chart.getStyler().setLabelType(LabelType.Percentage);
+    chart.getStyler().setSliceBorderWidth(10);
+    // chart.getStyler().setDecimalPattern("#0.000");
 
     // Series
-    chart.addSeries("A", 22);
-    chart.addSeries("B", 10);
-    chart.addSeries("C", 34);
-    chart.addSeries("D", 22);
-    chart.addSeries("E", 29);
-    chart.addSeries("F", 40);
+    chart.addSeries("Married", 2889);
+    chart.addSeries("Single", 1932);
+    chart.addSeries("Widowed", 390);
+    chart.addSeries("Divorced", 789);
 
     return chart;
   }
@@ -65,6 +57,6 @@ public class PieChart05 implements ExampleChart<PieChart> {
   @Override
   public String getExampleChartName() {
 
-    return getClass().getSimpleName() + " - Pie Chart with Donut Style and Sum";
+    return getClass().getSimpleName() + " - Pie Chart with Matlab Theme";
   }
 }

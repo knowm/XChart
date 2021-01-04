@@ -1,11 +1,11 @@
 package org.knowm.xchart.demo.charts.bar;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.Random;
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategorySeries;
-import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
@@ -16,9 +16,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  *
  * <ul>
  *   <li>int categories as array
- *   <li>Positive and negative values
- *   <li>Single series
- *   <li>Render style - Stacked stepped bars
+ *   <li>customized data labels
  */
 public class BarChart11 implements ExampleChart<CategoryChart> {
 
@@ -26,7 +24,7 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart11();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   private static int[] getRandomValues(int startRange, int endRange, int count) {
@@ -57,30 +55,26 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
         new CategoryChartBuilder()
             .width(800)
             .height(600)
-            .title("Tumbler Speed  vs. Average Spin")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Speed")
             .yAxisTitle("Spin")
             .build();
 
     // Customize Chart
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
+    chart.getStyler().setLegendVisible(false);
     chart.getStyler().setStacked(true);
+    chart.getStyler().setLabelsVisible(true);
+    chart.getStyler().setLabelsFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
+    chart.getStyler().setLabelsFontColor(Color.WHITE);
+    chart.getStyler().setLabelsPosition(.5);
+    chart.getStyler().setLabelsRotation(45);
 
     // Series
     CategorySeries series1 =
-        chart.addSeries("Cats", getLinearValues(0, 200, 21), getRandomValues(-50, 50, 21));
+        chart.addSeries("series1", getLinearValues(0, 200, 6), getRandomValues(10, 50, 6));
     CategorySeries series2 =
-        chart.addSeries("Hamsters", getLinearValues(0, 200, 21), getRandomValues(-50, 50, 21));
-
-    // Set render style to SteppedBar
-    series1.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.SteppedBar);
-    series2.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.SteppedBar);
-
-    // Make the line of series1 transparent
-    series1.setLineColor(new Color(0, 0, 0, 0));
-
-    // Make the fill of series 2 transparent
-    series2.setFillColor(new Color(0, 0, 0, 0));
+        chart.addSeries("series2", getLinearValues(0, 200, 6), getRandomValues(10, 50, 6));
 
     return chart;
   }
@@ -88,6 +82,6 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
   @Override
   public String getExampleChartName() {
 
-    return getClass().getSimpleName() + " - Stacked Stepped Bars";
+    return getClass().getSimpleName() + " - Stacked Stepped Bars with Customized Data Labels";
   }
 }

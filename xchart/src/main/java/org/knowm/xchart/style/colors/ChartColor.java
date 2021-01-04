@@ -46,4 +46,8 @@ public enum ChartColor {
 
     return chartColor.color;
   }
+
+  public Color getColor() {
+    return color;
+  }
 }

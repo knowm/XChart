@@ -16,15 +16,17 @@ import java.util.stream.IntStream;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.Styler;
 
 /** @author timmolter */
 public abstract class AxisTickCalculator_ {
 
   /** the List of tick label position in pixels */
-  final List<Double> tickLocations = new LinkedList<Double>();
+  final List<Double> tickLocations = new LinkedList<>();
 
   /** the List of tick label values */
-  final List<String> tickLabels = new LinkedList<String>();
+  final List<String> tickLabels = new LinkedList<>();
 
   final Direction axisDirection;
 
@@ -58,23 +60,27 @@ public abstract class AxisTickCalculator_ {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
-    this.minValue = minValue;
-    this.maxValue = maxValue;
+    this.minValue = getAxisMinValue(styler, axisDirection, minValue);
+    this.maxValue = getAxisMaxValue(styler, axisDirection, maxValue);
     this.styler = styler;
   }
 
   AxisTickCalculator_(
       Direction axisDirection,
       double workingSpace,
+      double minValue,
+      double maxValue,
       List<Double> axisValues,
       AxesChartStyler styler) {
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
-    this.axisValues = axisValues;
-    this.minValue =
-        axisValues.stream().mapToDouble(x -> x).min().orElseThrow(NoSuchElementException::new);
-    this.maxValue =
-        axisValues.stream().mapToDouble(x -> x).max().orElseThrow(NoSuchElementException::new);
+    Set<Double> axisValuesWithMinMax = new LinkedHashSet<>();
+    axisValuesWithMinMax.add(minValue);
+    axisValuesWithMinMax.addAll(axisValues);
+    axisValuesWithMinMax.add(maxValue);
+    this.axisValues = new ArrayList<>(axisValuesWithMinMax);
+    this.minValue = getAxisMinValue(styler, axisDirection, minValue);
+    this.maxValue = getAxisMaxValue(styler, axisDirection, maxValue);
     this.styler = styler;
   }
 
@@ -88,9 +94,13 @@ public abstract class AxisTickCalculator_ {
 
     // System.out.println("******");
 
+    //    System.out.println("minValue = " + minValue);
+    //    System.out.println("(minValue % gridStep) = " + (minValue % gridStep));
+
     return minValue - (minValue % gridStep) - gridStep;
   }
 
+  // TODO make these non-public??
   public List<Double> getTickLocations() {
 
     return tickLocations;
@@ -111,17 +121,13 @@ public abstract class AxisTickCalculator_ {
    */
   boolean willLabelsFitInTickSpaceHint(List<String> tickLabels, int tickSpacingHint) {
 
-    // Assume that for Y-Axis the ticks will all fit based on their tickSpace hint because the text
-    // is usually horizontal and "short". This more applies to the X-Axis.
-    if (this.axisDirection == Direction.Y) {
-      return true;
-    }
-
-    String sampleLabel = " ";
-    // find the longest String in all the labels
-    for (String tickLabel : tickLabels) {
-      if (tickLabel != null && tickLabel.length() > sampleLabel.length()) {
-        sampleLabel = tickLabel;
+    String sampleLabel = "Y";
+    if (Direction.X.equals(this.axisDirection)) {
+      // find the longest String in all the labels
+      for (String tickLabel : tickLabels) {
+        if (tickLabel != null && tickLabel.length() > sampleLabel.length()) {
+          sampleLabel = tickLabel;
+        }
       }
     }
     // System.out.println("longestLabel: " + sampleLabel);
@@ -136,7 +142,8 @@ public abstract class AxisTickCalculator_ {
                 -1 * Math.toRadians(styler.getXAxisLabelRotation()));
     Shape shape = textLayout.getOutline(rot);
     Rectangle2D rectangle = shape.getBounds();
-    double largestLabelWidth = rectangle.getWidth();
+    double largestLabelWidth =
+        Direction.X.equals(this.axisDirection) ? rectangle.getWidth() : rectangle.getHeight();
     // System.out.println("largestLabelWidth: " + largestLabelWidth);
     // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
@@ -279,6 +286,7 @@ public abstract class AxisTickCalculator_ {
         // This happens when the data values are almost the same but differ by a very tiny amount.
         // The solution for now is to create a single axis label and tick at the average value
         tickLabels.add(getAxisFormat().format(BigDecimal.valueOf((maxValue + minValue) / 2.0)));
+        double averageValue = (maxValue + minValue) / 2.0;
         tickLocations.add(workingSpace / 2.0);
         return;
       } else if (firstPositionAsDouble == Double.NEGATIVE_INFINITY) {
@@ -336,12 +344,15 @@ public abstract class AxisTickCalculator_ {
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
   }
 
-  private static boolean areValuesEquallySpaced(List<Double> values) {
+  private boolean areValuesEquallySpaced(List<Double> values) {
     if (values.size() < 2) {
       return false;
     }
     double space = values.get(1) - values.get(0);
     double threshold = .0001;
+    if (threshold > Math.abs(maxValue - minValue)) {
+      return false;
+    }
     return IntStream.range(1, values.size())
         .mapToDouble(i -> values.get(i) - values.get(i - 1))
         .allMatch(x -> Math.abs(x - space) < threshold);
@@ -392,16 +403,43 @@ public abstract class AxisTickCalculator_ {
     tickLocations.clear();
     tickLocations.addAll(
         tickLabelValues.stream()
-            .map(
-                value ->
-                    margin
-                        + ((value - minValue)
-                            / (maxValue - minValue)
-                            * tickSpace))
+            .map(value -> margin + ((value - minValue) / (maxValue - minValue) * tickSpace))
             .collect(Collectors.toList()));
   }
 
-  private static boolean areAllTickLabelsUnique(List<?> tickLabels) {
+  boolean areAllTickLabelsUnique(List<?> tickLabels) {
     return new LinkedHashSet<>(tickLabels).size() == tickLabels.size();
+  }
+
+  /**
+   * Determines the axis min value, which may differ from the min value of the respective data (e.g.
+   * for bar charts).
+   *
+   * @param styler the chart {@link Styler}
+   * @param axisDirection the axis {@link Direction}
+   * @param dataMinValue the minimum value of the data corresponding with the axis.
+   * @return the axis min value
+   */
+  private static double getAxisMinValue(
+      Styler styler, Direction axisDirection, double dataMinValue) {
+    if (Direction.Y.equals(axisDirection) && styler instanceof CategoryStyler && dataMinValue > 0)
+      return 0;
+    return dataMinValue;
+  }
+
+  /**
+   * Determines the axis max value, which may differ from the max value of the respective data (e.g.
+   * for bar charts).
+   *
+   * @param styler the chart {@link Styler}
+   * @param axisDirection the axis {@link Direction}
+   * @param dataMaxValue the maximum value of the data corresponding with the axis.
+   * @return the axis max value
+   */
+  private static double getAxisMaxValue(
+      Styler styler, Direction axisDirection, double dataMaxValue) {
+    if (Direction.Y.equals(axisDirection) && styler instanceof CategoryStyler && dataMaxValue < 0)
+      return 0;
+    return dataMaxValue;
   }
 }

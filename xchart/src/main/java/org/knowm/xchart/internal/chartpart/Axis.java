@@ -7,20 +7,30 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.function.Function;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
-import org.knowm.xchart.*;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.HeatMapChart;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
-import org.knowm.xchart.style.*;
-import org.knowm.xchart.style.Styler.InfoPanelPosition;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.BoxStyler;
+import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.HeatMapStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
+import org.knowm.xchart.style.XYStyler;
 
 /** Axis */
 public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
@@ -44,8 +54,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
-
-  private Function<Double, String> customFormattingFunction;
 
   /**
    * Constructor
@@ -101,12 +109,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         && axesChartStyler.getLegendPosition() == LegendPosition.OutsideS)
       legendHeightOffset = chart.getLegend().getBounds().getHeight();
 
-    double infoPanelHeightOffset = 0;
-    if (axesChartStyler.isInfoPanelVisible()
-        && axesChartStyler.getInfoPanelPosition() == InfoPanelPosition.OutsideS)
-      infoPanelHeightOffset =
-          axesChartStyler.getInfoPanelPadding() / 2 + chart.getInfoPanel().getBounds().getHeight();
-
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first
 
@@ -153,8 +155,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
                 - chart.getXAxis().getXAxisHeightHint(approximateXAxisWidth)
                 - axesChartStyler.getPlotMargin()
                 - axesChartStyler.getChartPadding()
-                - legendHeightOffset
-                - infoPanelHeightOffset;
+                - legendHeightOffset;
 
         width = getYAxisWidthHint(height);
         //         System.out.println("width after: " + width);
@@ -181,8 +182,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               leftYAxisBounds.getY() + leftYAxisBounds.getHeight(),
               rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
       double xOffset = leftYAxisBounds.getWidth() + leftYAxisBounds.getX();
-      double yOffset =
-          maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset - infoPanelHeightOffset;
+      double yOffset = maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset;
 
       double legendWidth = 0;
       if (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE
@@ -383,51 +383,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
 
-    // check if a label override map for the y axis is present
-    Map<Object, Object> customTickLabelsMap =
-        chart.getAxisPair().getCustomTickLabelsMap(getDirection(), index);
-    if (customTickLabelsMap != null) {
-
-      if (getDirection() == Direction.X && axesChartStyler instanceof CategoryStyler) {
-
-        // get the first series
-        AxesChartSeriesCategory axesChartSeries =
-            (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
-        // get the first categories, could be Number Date or String
-        List<?> categories = (List<?>) axesChartSeries.getXData();
-
-        // add the custom tick labels for the categories
-        Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
-        for (Entry<Object, Object> entry : customTickLabelsMap.entrySet()) {
-          int index = categories.indexOf(entry.getKey());
-          if (index == -1) {
-            throw new IllegalArgumentException(
-                "Could not find category index for " + entry.getKey());
-          }
-          axisTickValueLabelMap.put((double) index, entry.getValue());
-        }
-
-        return new AxisTickCalculator_Override(
-            getDirection(),
-            workingSpace,
-            axesChartStyler,
-            axisTickValueLabelMap,
-            chart.getAxisPair().getXAxis().getDataType(),
-            categories.size());
-      } else {
-
-        // add the custom tick labels for the values
-        Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
-        for (Entry<Object, Object> entry : customTickLabelsMap.entrySet()) {
-          Number axisTickValue = (Number) entry.getKey();
-          axisTickValueLabelMap.put(axisTickValue.doubleValue(), entry.getValue());
-        }
-
-        return new AxisTickCalculator_Override(
-            getDirection(), workingSpace, min, max, axesChartStyler, axisTickValueLabelMap);
-      }
-    }
-
     // X-Axis
     if (getDirection() == Direction.X) {
       List<Double> xData = new ArrayList<>();
@@ -435,16 +390,17 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getXData();
         xData =
             categories.stream()
+                .filter(Objects::nonNull)
                 .filter(it -> it instanceof Number)
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
                 .collect(Collectors.toList());
-      }
-      if (axesChartStyler instanceof CategoryStyler) {
+      } else if (axesChartStyler instanceof CategoryStyler) {
         Set<Double> uniqueXData = new LinkedHashSet<>();
         for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
           List<Double> numericCategoryXData =
               categorySeries.getXData().stream()
+                  .filter(Objects::nonNull)
                   .filter(x -> x instanceof Number)
                   .mapToDouble(x -> ((Number) x).doubleValue())
                   .boxed()
@@ -452,8 +408,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
           uniqueXData.addAll(numericCategoryXData);
         }
         xData.addAll(uniqueXData);
-      }
-      if (axesChartStyler instanceof XYStyler) {
+      } else if (axesChartStyler instanceof XYStyler) {
         Set<Double> uniqueXData = new LinkedHashSet<>();
         for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
           uniqueXData.addAll(
@@ -462,16 +417,27 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         xData.addAll(uniqueXData);
       }
 
-      if (customFormattingFunction != null) {
-        if (!xData.isEmpty()) {
+      if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
+        if (!xData.isEmpty()) { // TODO why would this be empty?
           return new AxisTickCalculator_Callback(
-              customFormattingFunction, getDirection(), workingSpace, xData, axesChartStyler);
+              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+              getDirection(),
+              workingSpace,
+              min,
+              max,
+              xData,
+              axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
-            customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
-      }
+            axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            axesChartStyler);
 
-      if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxStyler) {
+      } else if (axesChartStyler instanceof CategoryStyler
+          || axesChartStyler instanceof BoxStyler) {
 
         // TODO Cleanup? More elegant way?
         AxesChartSeriesCategory axesChartSeries =
@@ -502,7 +468,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, xData, axesChartStyler);
+              getDirection(), workingSpace, min, max, xData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
             getDirection(), workingSpace, min, max, axesChartStyler);
@@ -517,23 +483,23 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getYData();
         yData =
             categories.stream()
+                .filter(Objects::nonNull)
                 .filter(it -> it instanceof Number)
                 .mapToDouble(it -> ((Number) it).doubleValue())
                 .boxed()
                 .collect(Collectors.toList());
-      }
-      if (axesChartStyler instanceof CategoryStyler) {
+      } else if (axesChartStyler instanceof CategoryStyler) {
         Set<Double> uniqueYData = new LinkedHashSet<>();
         for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
           uniqueYData.addAll(
               categorySeries.getYData().stream()
+                  .filter(Objects::nonNull)
                   .mapToDouble(Number::doubleValue)
                   .boxed()
                   .collect(Collectors.toList()));
         }
         yData.addAll(uniqueYData);
-      }
-      if (axesChartStyler instanceof XYStyler) {
+      } else if (axesChartStyler instanceof XYStyler) {
         Set<Double> uniqueYData = new LinkedHashSet<>();
         for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
           uniqueYData.addAll(
@@ -542,16 +508,26 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
         yData.addAll(uniqueYData);
       }
 
-      if (customFormattingFunction != null) {
+      if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-              customFormattingFunction, getDirection(), workingSpace, yData, axesChartStyler);
+              axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+              getDirection(),
+              workingSpace,
+              min,
+              max,
+              yData,
+              axesChartStyler);
         }
         return new AxisTickCalculator_Callback(
-            customFormattingFunction, getDirection(), workingSpace, min, max, axesChartStyler);
-      }
+            axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            axesChartStyler);
 
-      if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
+      } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 
         return new AxisTickCalculator_Logarithmic(
             getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
@@ -565,7 +541,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, yData, axesChartStyler);
+              getDirection(), workingSpace, min, max, yData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
             getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
@@ -647,6 +623,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
    * @param chartPoint value in chart coordinate system
    * @return Coordinate of screen. eg: MouseEvent.getX(), MouseEvent.getY()
    */
+  // TODO check these method out and make non public??
   public double getScreenValue(double chartPoint) {
 
     double minVal = min;
@@ -770,10 +747,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     double value = ((screenPoint - margin - startOffset) * (maxVal - minVal) / tickSpace) + minVal;
     value = isLog ? Math.pow(10, value) : value;
     return value;
-  }
-
-  public void setCustomFormattingFunction(Function<Double, String> customFormattingFunction) {
-    this.customFormattingFunction = customFormattingFunction;
   }
 
   /** An axis direction */

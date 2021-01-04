@@ -9,8 +9,6 @@ import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.internal.chartpart.SelectionZoom;
-import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class TestForIssue349 implements ExampleChart<XYChart> {
 
@@ -19,9 +17,6 @@ public class TestForIssue349 implements ExampleChart<XYChart> {
     ExampleChart<XYChart> exampleChart = new TestForIssue349();
     XYChart chart = exampleChart.getChart();
     XChartPanel chartPanel = new XChartPanel(chart);
-    SelectionZoom sz = new SelectionZoom();
-    sz.getResetButton().setPosition(LegendPosition.InsideNW);
-    sz.init(chartPanel);
 
     // Create and set up the window.
     final JFrame frame = new JFrame("TestForIssue349");
@@ -59,6 +54,7 @@ public class TestForIssue349 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setChartTitleVisible(false);
     chart.getStyler().setLegendVisible(false);
+    chart.getStyler().setZoomEnabled(true);
 
     List<Integer> xData = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     List<Double> yData = Arrays.asList(1.1, 2.2, 7.3, 8.4, 4.5, 6.6, 2.7, 6.8, 4.9, 3.10);

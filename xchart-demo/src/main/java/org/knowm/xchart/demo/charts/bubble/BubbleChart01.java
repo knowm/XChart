@@ -21,7 +21,7 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
 
     ExampleChart<BubbleChart> exampleChart = new BubbleChart01();
     BubbleChart chart = exampleChart.getChart();
-    new SwingWrapper<BubbleChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -32,12 +32,13 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
         new BubbleChartBuilder()
             .width(800)
             .height(600)
-            .title("BubbleChart01")
+            .title(getClass().getSimpleName())
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();
     chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideN);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
+    chart.getStyler().setToolTipsEnabled(true);
 
     // Customize Chart
 

@@ -1,6 +1,7 @@
 package org.knowm.xchart.style;
 
 import java.awt.*;
+import org.knowm.xchart.style.theme.Theme;
 
 public class DialStyler extends Styler {
 
@@ -9,7 +10,7 @@ public class DialStyler extends Styler {
   // helper tick lines
   private boolean axisTicksMarksVisible;
   private Color axisTickMarksColor;
-  private Stroke axisTickMarksStroke;
+  private BasicStroke axisTickMarksStroke;
   private double[] axisTickValues = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
   private String[] axisTickLabels = {
     "0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"
@@ -42,6 +43,9 @@ public class DialStyler extends Styler {
   private double arrowArcAngle = 20;
   private double arrowArcPercentage = 0.15;
 
+  private boolean isLabelsVisible;
+  private Font labelsFont;
+
   public DialStyler() {
 
     setAllStyles();
@@ -54,9 +58,6 @@ public class DialStyler extends Styler {
 
     this.isCircular = theme.isCircular();
 
-    // Annotations ////////////////////////////////
-    this.hasAnnotations = true;
-
     this.axisTickMarksColor = theme.getAxisTickMarksColor();
     this.axisTickMarksStroke = theme.getAxisTickMarksStroke();
     this.axisTicksMarksVisible = theme.isAxisTicksMarksVisible();
@@ -64,6 +65,21 @@ public class DialStyler extends Styler {
     this.axisTitleVisible = theme.isXAxisTitleVisible() || theme.isYAxisTitleVisible();
     this.axisTitleFont = theme.getAxisTitleFont();
     this.axisTitlePadding = theme.getAxisTitlePadding();
+
+    this.isLabelsVisible = true;
+    labelsFont = theme.getBaseFont();
+  }
+
+  /**
+   * Set the theme the styler should use
+   *
+   * @param theme
+   */
+  public DialStyler setTheme(Theme theme) {
+
+    this.theme = theme;
+    setAllStyles();
+    return this;
   }
 
   public boolean isCircular() {
@@ -83,26 +99,15 @@ public class DialStyler extends Styler {
     return this;
   }
 
-  /**
-   * Set the theme the styler should use
-   *
-   * @param theme
-   */
-  public DialStyler setTheme(Theme theme) {
-
-    this.theme = theme;
-    setAllStyles();
-    return this;
-  }
-
   public boolean isAxisTicksMarksVisible() {
 
     return axisTicksMarksVisible;
   }
 
-  public void setAxisTicksMarksVisible(boolean axisTicksMarksVisible) {
+  public DialStyler setAxisTicksMarksVisible(boolean axisTicksMarksVisible) {
 
     this.axisTicksMarksVisible = axisTicksMarksVisible;
+    return this;
   }
 
   public Color getAxisTickMarksColor() {
@@ -110,19 +115,21 @@ public class DialStyler extends Styler {
     return axisTickMarksColor;
   }
 
-  public void setAxisTickMarksColor(Color axisTickMarksColor) {
+  public DialStyler setAxisTickMarksColor(Color axisTickMarksColor) {
 
     this.axisTickMarksColor = axisTickMarksColor;
+    return this;
   }
 
-  public Stroke getAxisTickMarksStroke() {
+  public BasicStroke getAxisTickMarksStroke() {
 
     return axisTickMarksStroke;
   }
 
-  public void setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
+  public DialStyler setAxisTickMarksStroke(BasicStroke axisTickMarksStroke) {
 
     this.axisTickMarksStroke = axisTickMarksStroke;
+    return this;
   }
 
   public boolean isAxisTitleVisible() {
@@ -130,9 +137,10 @@ public class DialStyler extends Styler {
     return axisTitleVisible;
   }
 
-  public void setAxisTitleVisible(boolean axisTitleVisible) {
+  public DialStyler setAxisTitleVisible(boolean axisTitleVisible) {
 
     this.axisTitleVisible = axisTitleVisible;
+    return this;
   }
 
   public Font getAxisTitleFont() {
@@ -140,9 +148,10 @@ public class DialStyler extends Styler {
     return axisTitleFont;
   }
 
-  public void setAxisTitleFont(Font axisTitleFont) {
+  public DialStyler setAxisTitleFont(Font axisTitleFont) {
 
     this.axisTitleFont = axisTitleFont;
+    return this;
   }
 
   public int getAxisTitlePadding() {
@@ -150,9 +159,10 @@ public class DialStyler extends Styler {
     return axisTitlePadding;
   }
 
-  public void setAxisTitlePadding(int axisTitlePadding) {
+  public DialStyler setAxisTitlePadding(int axisTitlePadding) {
 
     this.axisTitlePadding = axisTitlePadding;
+    return this;
   }
 
   public double[] getAxisTickValues() {
@@ -160,9 +170,10 @@ public class DialStyler extends Styler {
     return axisTickValues;
   }
 
-  public void setAxisTickValues(double[] axisTickValues) {
+  public DialStyler setAxisTickValues(double[] axisTickValues) {
 
     this.axisTickValues = axisTickValues;
+    return this;
   }
 
   public String[] getAxisTickLabels() {
@@ -170,9 +181,10 @@ public class DialStyler extends Styler {
     return axisTickLabels;
   }
 
-  public void setAxisTickLabels(String[] axisTickLabels) {
+  public DialStyler setAxisTickLabels(String[] axisTickLabels) {
 
     this.axisTickLabels = axisTickLabels;
+    return this;
   }
 
   public double getNormalFrom() {
@@ -180,9 +192,10 @@ public class DialStyler extends Styler {
     return normalFrom;
   }
 
-  public void setNormalFrom(double normalFrom) {
+  public DialStyler setNormalFrom(double normalFrom) {
 
     this.normalFrom = normalFrom;
+    return this;
   }
 
   public double getNormalTo() {
@@ -190,9 +203,10 @@ public class DialStyler extends Styler {
     return normalTo;
   }
 
-  public void setNormalTo(double normalTo) {
+  public DialStyler setNormalTo(double normalTo) {
 
     this.normalTo = normalTo;
+    return this;
   }
 
   public Color getNormalColor() {
@@ -200,9 +214,10 @@ public class DialStyler extends Styler {
     return normalColor;
   }
 
-  public void setNormalColor(Color normalColor) {
+  public DialStyler setNormalColor(Color normalColor) {
 
     this.normalColor = normalColor;
+    return this;
   }
 
   public double getGreenFrom() {
@@ -210,9 +225,10 @@ public class DialStyler extends Styler {
     return greenFrom;
   }
 
-  public void setGreenFrom(double greenFrom) {
+  public DialStyler setGreenFrom(double greenFrom) {
 
     this.greenFrom = greenFrom;
+    return this;
   }
 
   public double getGreenTo() {
@@ -220,9 +236,10 @@ public class DialStyler extends Styler {
     return greenTo;
   }
 
-  public void setGreenTo(double greenTo) {
+  public DialStyler setGreenTo(double greenTo) {
 
     this.greenTo = greenTo;
+    return this;
   }
 
   public Color getGreenColor() {
@@ -230,9 +247,10 @@ public class DialStyler extends Styler {
     return greenColor;
   }
 
-  public void setGreenColor(Color greenColor) {
+  public DialStyler setGreenColor(Color greenColor) {
 
     this.greenColor = greenColor;
+    return this;
   }
 
   public double getRedFrom() {
@@ -240,9 +258,10 @@ public class DialStyler extends Styler {
     return redFrom;
   }
 
-  public void setRedFrom(double redFrom) {
+  public DialStyler setRedFrom(double redFrom) {
 
     this.redFrom = redFrom;
+    return this;
   }
 
   public double getRedTo() {
@@ -250,9 +269,10 @@ public class DialStyler extends Styler {
     return redTo;
   }
 
-  public void setRedTo(double redTo) {
+  public DialStyler setRedTo(double redTo) {
 
     this.redTo = redTo;
+    return this;
   }
 
   public Color getRedColor() {
@@ -260,9 +280,10 @@ public class DialStyler extends Styler {
     return redColor;
   }
 
-  public void setRedColor(Color redColor) {
+  public DialStyler setRedColor(Color redColor) {
 
     this.redColor = redColor;
+    return this;
   }
 
   public double getArcAngle() {
@@ -270,9 +291,10 @@ public class DialStyler extends Styler {
     return arcAngle;
   }
 
-  public void setArcAngle(double arcAngle) {
+  public DialStyler setArcAngle(double arcAngle) {
 
     this.arcAngle = arcAngle;
+    return this;
   }
 
   public boolean isAxisTickLabelsVisible() {
@@ -280,9 +302,10 @@ public class DialStyler extends Styler {
     return axisTickLabelsVisible;
   }
 
-  public void setAxisTickLabelsVisible(boolean axisTickLabelsVisible) {
+  public DialStyler setAxisTickLabelsVisible(boolean axisTickLabelsVisible) {
 
     this.axisTickLabelsVisible = axisTickLabelsVisible;
+    return this;
   }
 
   public double getDonutThickness() {
@@ -290,9 +313,10 @@ public class DialStyler extends Styler {
     return donutThickness;
   }
 
-  public void setDonutThickness(double donutThickness) {
+  public DialStyler setDonutThickness(double donutThickness) {
 
     this.donutThickness = donutThickness;
+    return this;
   }
 
   public double getArrowLengthPercentage() {
@@ -300,9 +324,10 @@ public class DialStyler extends Styler {
     return arrowLengthPercentage;
   }
 
-  public void setArrowLengthPercentage(double arrowLengthPercentage) {
+  public DialStyler setArrowLengthPercentage(double arrowLengthPercentage) {
 
     this.arrowLengthPercentage = arrowLengthPercentage;
+    return this;
   }
 
   public double getArrowArcAngle() {
@@ -310,9 +335,10 @@ public class DialStyler extends Styler {
     return arrowArcAngle;
   }
 
-  public void setArrowArcAngle(double arrowArcAngle) {
+  public DialStyler setArrowArcAngle(double arrowArcAngle) {
 
     this.arrowArcAngle = arrowArcAngle;
+    return this;
   }
 
   public double getArrowArcPercentage() {
@@ -320,8 +346,41 @@ public class DialStyler extends Styler {
     return arrowArcPercentage;
   }
 
-  public void setArrowArcPercentage(double arrowArcPercentage) {
+  public DialStyler setArrowArcPercentage(double arrowArcPercentage) {
 
     this.arrowArcPercentage = arrowArcPercentage;
+    return this;
+  }
+
+  public boolean isLabelsVisible() {
+
+    return isLabelsVisible;
+  }
+
+  /**
+   * Sets if labels should be added to charts. Each chart type has a different annotation type
+   *
+   * @param labelsVisible
+   */
+  public DialStyler setLabelsVisible(boolean labelsVisible) {
+
+    this.isLabelsVisible = labelsVisible;
+    return this;
+  }
+
+  public Font getLabelsFont() {
+
+    return labelsFont;
+  }
+
+  /**
+   * Sets the Font used for chart labels
+   *
+   * @param labelsFont
+   */
+  public DialStyler setLabelsFont(Font labelsFont) {
+
+    this.labelsFont = labelsFont;
+    return this;
   }
 }

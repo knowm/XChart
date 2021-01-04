@@ -26,15 +26,15 @@ public class LineChart08 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new LineChart08();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
   public XYChart getChart() {
 
     // generates Log data
-    List<Integer> xData = new ArrayList<Integer>();
-    List<Double> yData = new ArrayList<Double>();
+    List<Integer> xData = new ArrayList<>();
+    List<Double> yData = new ArrayList<>();
     for (int i = -3; i <= 3; i++) {
       xData.add(i);
       yData.add(Math.pow(10, i));
@@ -45,7 +45,7 @@ public class LineChart08 implements ExampleChart<XYChart> {
         new XYChartBuilder()
             .width(800)
             .height(600)
-            .title("Powers of Ten")
+            .title(getClass().getSimpleName())
             .xAxisTitle("Power")
             .yAxisTitle("Value")
             .build();

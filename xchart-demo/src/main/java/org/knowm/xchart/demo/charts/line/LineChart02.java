@@ -25,14 +25,15 @@ public class LineChart02 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new LineChart02();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+    XYChart chart =
+        new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
     chart.getStyler().setChartTitleVisible(false);
@@ -40,8 +41,8 @@ public class LineChart02 implements ExampleChart<XYChart> {
 
     // generates sine data
     int size = 30;
-    List<Integer> xData = new ArrayList<Integer>();
-    List<Double> yData = new ArrayList<Double>();
+    List<Integer> xData = new ArrayList<>();
+    List<Double> yData = new ArrayList<>();
     for (int i = 0; i <= size; i++) {
       double radians = (Math.PI / (size / 2) * i);
       xData.add(i - size / 2);
@@ -49,8 +50,8 @@ public class LineChart02 implements ExampleChart<XYChart> {
     }
 
     // generates cos data
-    List<Integer> xData2 = new ArrayList<Integer>();
-    List<Double> yData2 = new ArrayList<Double>();
+    List<Integer> xData2 = new ArrayList<>();
+    List<Double> yData2 = new ArrayList<>();
     for (int i = 0; i <= size; i++) {
       double radians = (Math.PI / (size / 2) * i);
       xData2.add(i - size / 2);

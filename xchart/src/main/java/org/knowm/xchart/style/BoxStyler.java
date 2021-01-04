@@ -1,5 +1,7 @@
 package org.knowm.xchart.style;
 
+import org.knowm.xchart.style.theme.Theme;
+
 public class BoxStyler extends AxesChartStyler {
 
   private BoxplotCalCulationMethod boxplotCalCulationMethod;

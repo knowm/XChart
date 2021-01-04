@@ -27,7 +27,7 @@ public class LineChart04 implements ExampleChart<XYChart> {
         new XYChartBuilder()
             .width(800)
             .height(600)
-            .title("LineChart04")
+            .title(getClass().getSimpleName())
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();

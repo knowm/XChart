@@ -1,6 +1,6 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -8,15 +8,14 @@ import java.util.Map;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_XY;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
 import org.knowm.xchart.style.XYStyler;
+import org.knowm.xchart.style.theme.Theme;
 
 public class XYChart extends Chart<XYStyler, XYSeries> {
 
@@ -33,7 +32,6 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     axisPair = new AxisPair<XYStyler, XYSeries>(this);
     plot = new Plot_XY<XYStyler, XYSeries>(this);
     legend = new Legend_Marker<XYStyler, XYSeries>(this);
-    infoPanel = new InfoPanel<XYStyler, XYSeries>(this);
   }
 
   /**
@@ -247,6 +245,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     }
   }
 
+  // TODO make this an interface method??
   private DataType getDataType(List<?> data) {
 
     if (data == null || data.isEmpty()) {
@@ -418,7 +417,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanel.paint(g);
+    annotations.forEach(x -> x.paint(g));
   }
 
   /** set the series color, marker and line style based on theme */
@@ -450,80 +449,5 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
         series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
     }
-  }
-
-  public void resetFilter() {
-
-    for (XYSeries series : getSeriesMap().values()) {
-      series.resetFilter();
-    }
-  }
-
-  public boolean filterXByScreen(int screenXmin, int screenXmax) {
-
-    // convert screen coordinates to axis values
-    double minValue = getChartXFromCoordinate(screenXmin);
-    double maxValue = getChartXFromCoordinate(screenXmax);
-    boolean filtered = false;
-    if (isOnePointSeleted(minValue, maxValue)) {
-      for (XYSeries series : getSeriesMap().values()) {
-        boolean f = series.filterXByValue(minValue, maxValue);
-        if (f) {
-          filtered = true;
-        }
-      }
-    } else {
-      if (!isAllPointsSelected()) {
-        filtered = true;
-      }
-    }
-    return filtered;
-  }
-
-  public void filterXByIndex(int startIndex, int endIndex) {
-
-    for (XYSeries series : getSeriesMap().values()) {
-      series.filterXByIndex(startIndex, endIndex);
-    }
-  }
-
-  /**
-   * Is there a point selected in all series.
-   *
-   * @param minValue
-   * @param maxValue
-   * @return
-   */
-  private boolean isOnePointSeleted(double minValue, double maxValue) {
-
-    boolean isOnePointSeleted = false;
-    double[] xData = null;
-    for (XYSeries series : getSeriesMap().values()) {
-      xData = series.getXData();
-      for (double x : xData) {
-        if (x >= minValue && x <= maxValue) {
-          isOnePointSeleted = true;
-          break;
-        }
-      }
-    }
-    return isOnePointSeleted;
-  }
-
-  /**
-   * Whether all points are selected in all series.
-   *
-   * @return
-   */
-  private boolean isAllPointsSelected() {
-
-    boolean isAllPointsSelected = true;
-    for (XYSeries series : getSeriesMap().values()) {
-      if (!series.isAllXData()) {
-        isAllPointsSelected = false;
-        break;
-      }
-    }
-    return isAllPointsSelected;
   }
 }

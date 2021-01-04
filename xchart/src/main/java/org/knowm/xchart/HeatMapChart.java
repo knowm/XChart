@@ -6,12 +6,11 @@ import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_HeatMap;
 import org.knowm.xchart.internal.chartpart.Plot_HeatMap;
 import org.knowm.xchart.style.HeatMapStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author Mr14huashao */
 public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
@@ -31,7 +30,6 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
     axisPair = new AxisPair<HeatMapStyler, HeatMapSeries>(this);
     plot = new Plot_HeatMap<HeatMapStyler, HeatMapSeries>(this);
     legend = new Legend_HeatMap<HeatMapStyler, HeatMapSeries>(this);
-    infoPanel = new InfoPanel<HeatMapStyler, HeatMapSeries>(this);
   }
 
   /**
@@ -166,7 +164,7 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanel.paint(g);
+    annotations.forEach(x -> x.paint(g));
   }
 
   private List<Integer> arrayToList(int[] data) {

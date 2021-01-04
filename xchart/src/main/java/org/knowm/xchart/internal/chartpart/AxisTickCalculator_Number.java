@@ -12,7 +12,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 class AxisTickCalculator_Number extends AxisTickCalculator_ {
 
-  private final NumberFormatter numberFormatter;
+  private final Formatter_Number formatterNumber;
 
   /**
    * Constructor
@@ -31,19 +31,21 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
-    numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
-    axisFormat = numberFormatter;
+    formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue);
+    axisFormat = formatterNumber;
     calculate();
   }
 
   AxisTickCalculator_Number(
       Direction axisDirection,
       double workingSpace,
+      double minValue,
+      double maxValue,
       List<Double> axisValues,
       AxesChartStyler styler) {
-    super(axisDirection, workingSpace, axisValues, styler);
-    numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue);
-    axisFormat = numberFormatter;
+    super(axisDirection, workingSpace, minValue, maxValue, axisValues, styler);
+    formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue);
+    axisFormat = formatterNumber;
     calculate();
   }
 
@@ -66,8 +68,8 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       int yIndex) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
-    numberFormatter = new NumberFormatter(styler, axisDirection, minValue, maxValue, yIndex);
-    axisFormat = numberFormatter;
+    formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue, yIndex);
+    axisFormat = formatterNumber;
     calculate();
   }
 }

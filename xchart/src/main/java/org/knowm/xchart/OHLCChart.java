@@ -11,7 +11,6 @@ import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_OHLC;
 import org.knowm.xchart.internal.chartpart.Plot_OHLC;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -19,7 +18,7 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author arthurmcgibbon */
 public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
@@ -37,7 +36,6 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     axisPair = new AxisPair<OHLCStyler, OHLCSeries>(this);
     plot = new Plot_OHLC<OHLCStyler, OHLCSeries>(this);
     legend = new Legend_OHLC<OHLCStyler, OHLCSeries>(this);
-    infoPanel = new InfoPanel<OHLCStyler, OHLCSeries>(this);
   }
 
   /**
@@ -828,7 +826,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanel.paint(g);
+    annotations.forEach(x -> x.paint(g));
   }
 
   /** set the series color, marker and line style based on theme */

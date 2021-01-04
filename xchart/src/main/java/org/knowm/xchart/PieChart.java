@@ -1,9 +1,8 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.util.Map;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Pie;
 import org.knowm.xchart.internal.series.Series;
@@ -11,7 +10,7 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
 public class PieChart extends Chart<PieStyler, PieSeries> {
@@ -27,7 +26,6 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     super(width, height, new PieStyler());
     plot = new Plot_Pie<PieStyler, PieSeries>(this);
     legend = new Legend_Pie<PieStyler, PieSeries>(this);
-    infoPanel = new InfoPanel<PieStyler, PieSeries>(this);
   }
 
   /**
@@ -128,7 +126,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanel.paint(g);
+    annotations.forEach(x -> x.paint(g));
   }
 
   /** set the series color based on theme */

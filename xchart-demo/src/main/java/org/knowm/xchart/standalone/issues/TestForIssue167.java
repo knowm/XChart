@@ -35,7 +35,7 @@ public class TestForIssue167 implements ExampleChart<CategoryChart> {
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setHasAnnotations(true);
+    chart.getStyler().setLabelsVisible(true);
     chart.getStyler().setOverlapped(true);
 
     // This is the setting that causes troubles. When setting this to .Bar
@@ -70,7 +70,7 @@ public class TestForIssue167 implements ExampleChart<CategoryChart> {
 
     // Customize Chart
     chart.getStyler().setLegendVisible(false);
-    chart.getStyler().setHasAnnotations(true);
+    chart.getStyler().setLabelsVisible(true);
     chart.getStyler().setOverlapped(true);
 
     // Series

@@ -22,20 +22,20 @@ public class RadarChart01 implements ExampleChart<RadarChart> {
 
     ExampleChart<RadarChart> exampleChart = new RadarChart01();
     RadarChart chart = exampleChart.getChart();
-    new SwingWrapper<RadarChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
   public RadarChart getChart() {
 
     // Create Chart
-    RadarChart chart = new RadarChartBuilder().width(800).height(600).title("Radar Chart").build();
+    RadarChart chart =
+        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
     chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setHasAnnotations(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
 
     // Series
-    chart.setVariableLabels(
+    chart.setRadiiLabels(
         new String[] {
           "Sales",
           "Marketing",

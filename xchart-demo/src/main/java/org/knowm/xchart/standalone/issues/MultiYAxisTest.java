@@ -13,9 +13,9 @@ public class MultiYAxisTest {
 
   public static void main(String[] args) throws Exception {
 
-    List<Double> timeData = new LinkedList<Double>();
-    List<Double> th1Data = new LinkedList<Double>();
-    List<Double> th2Data = new LinkedList<Double>();
+    List<Double> timeData = new LinkedList<>();
+    List<Double> th1Data = new LinkedList<>();
+    List<Double> th2Data = new LinkedList<>();
 
     // Generate data
     for (int i = 0; i < 20; i++) {
@@ -39,6 +39,6 @@ public class MultiYAxisTest {
     s2.setYAxisGroup(1);
     s2.setMarker(SeriesMarkers.NONE);
 
-    new SwingWrapper<XYChart>(c).displayChart();
+    new SwingWrapper<>(c).displayChart();
   }
 }

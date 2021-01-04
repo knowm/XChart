@@ -203,9 +203,10 @@ Series render styles include: `Round` and in the near future `Square`.
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Radar_Chart.png)
 
-`RadarChart` charts take a `double[]` of values between `0` and `1` to set the position of radar node.
+`RadarChart` charts take a `double[]` of values between `0.0.` and `1.0` to set the position of the series' data point along each radii. Radii 
+labels, if displayed, are set by passing a `String[]`. 
 
-Series render styles include: `Polygon` and  `Circle`.
+Radar chart render styles are: `Polygon` or `Circle`.
 
 ### OHLCChart
 
@@ -340,76 +341,176 @@ All the styling options can be found in one of two possible places: 1) the Chart
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Series_Customization.png)
  
 
-### Customizing Axis Tick Values & Axis Tick Labels
+### Customizing Axis Tick Labels
 
-XChart automatically creates axis ticks and axis labels. 
+XChart automatically creates axis tick labels for chart types with axes. 
 
-Default axis placement can be altered with `chart.getStyler().setXAxisTickMarkSpacingHint(spacingHint);`. 
+Default axis tick placement can be altered with `chart.getStyler().setXAxisTickMarkSpacingHint(spacingHint);`. 
 
-Default axis label patterns can be altered with one of:
-- `chart.getStyler().setDatePattern(datePattern)` 
-- `chart.getStyler().setXAxisDecimalPattern(pattern);` 
-- `chart.getStyler().setYAxisDecimalPattern(pattern);`
-
-
-You can also create custom axis placements and axis labels. Create a map containing x -> label mappings:
-- x : value where the tick will be drawn (this value is in xData space, not in pixel space). 
-- label: Tick label. If it is `null`, tick will be generated with a `" "` label.
+Default axis label labels can be altered with one of:
 
 ```java
-      Map<Object, Object> customXAxisTickLabelsMap = new HashMap<>();
-      customXAxisTickLabelsMap.put(0, "zero");
-      customXAxisTickLabelsMap.put(3, "3.5");
-      customXAxisTickLabelsMap.put(5, " ");
-      customXAxisTickLabelsMap.put(9, "nine");
-      chart.setXAxisLabelOverrideMap(customXAxisTickLabelsMap);
-
-      Map<Object, Object> customYAxisTickLabelsMap = new HashMap<>();
-      customYAxisTickLabelsMap.put(1.0, "max c");
-      customYAxisTickLabelsMap.put(6.0, "max b");
-      customYAxisTickLabelsMap.put(9.0, "max a");
-      chart.setYAxisLabelOverrideMap(customYAxisTickLabelsMap);
+chart.getStyler().setDatePattern(datePattern)
+chart.getStyler().setXAxisDecimalPattern(pattern);
+chart.getStyler().setYAxisDecimalPattern(pattern);
 ```
 
-For category charts another way to create custom axis places is using category names in first series:
+
+You can also create custom axis tick labels with a callback function. In the following example taken from [DateChart09](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart09.java), the X-Axis tick labels are generated 
+via a custom lambda function which takes the numerical (double) tick label values and converts them to a `String`.
+
+
 ```java
-     Map<Object, Object> tickLabelOverrideMap = new HashMap<Object, Object>();
-
-      Map<Object, Object> customTickLabelsMap = new HashMap<>();
-      customTickLabelsMap.put("A", "-A-");
-      customTickLabelsMap.put("D", "+D+");
-      chart.setXAxisLabelOverrideMap(customTickLabelsMap);
+// set custom X-Axis tick labels
+LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
+DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
+chart.getStyler().setxAxisTickLabelsFormattingFunction(x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
 ```
 
-Whenever you use `setXAxisLabelOverrideMap` the auto-generated tick labels will be replaced meaning none of the tick labels will be shown besides the ones provided by you in the override map.
+In the following example taken from [DateChart06](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart06.java), the Y-Axis tick labels are converted 
+to the englich word reprentation of the numbers.
+
+```java
+chart.getStyler().setyAxisTickLabelsFormattingFunction(x -> NumberWordConverter.convert(x.intValue()));
+```
 
 ### Multiple Axes
 
-XChart has multiple y axes feature. Y offset is calculated according to the y axis the series configured. Max `y` value in this axis is calculated according to the series on this axis only. 
+XChart has multiple y axes feature. Y offset is calculated according to the Y-Axis the series configured. Max `y` value in this axis is calculated 
+according to the series on this axis only. 
 To set the y group: 
 
 ```java
-    series.setYAxisGroup(axisGroup);   
+series.setYAxisGroup(axisGroup);   
 ```
 
 To manually change max/min of axis group: 
 
 ```java
-    ((AxesChartStyler) chart.getStyler()).setYAxisMax(axisGroup, 200.0);
+((AxesChartStyler) chart.getStyler()).setYAxisMax(axisGroup, 200.0);
 ```
 
 Axis can be drawn on the left (default) or on the right of the chart: 
 
 ```java
-    chart.getStyler().setYAxisGroupPosition(axisGroup, Styler.YAxisPosition.Right);
+chart.getStyler().setYAxisGroupPosition(axisGroup, Styler.YAxisPosition.Right);
 ```
 
 To set the Y axes titles:
 
 ```java
-    chart.setYAxisGroupTitle(0, "A");
-    chart.setYAxisGroupTitle(1, "B");
+chart.setYAxisGroupTitle(0, "A");
+chart.setYAxisGroupTitle(1, "B");
 ```
+### Zooming In
+
+For the `XYChart` chart type, zooming in is possible on an `XChartPanel` via select-dragging over a range on the X-Axis. Reverting out of the zoom can be accomplished by double-clicking on the chart or by clicking on the "reset" button, which can be posotioned as desired. 
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Zoom.png)
+
+The following example zoom style options show which are available:
+
+```java
+chart.getStyler().setZoomEnabled(true);
+chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
+chart.getStyler().setZoomResetByDoubleClick(false);
+chart.getStyler().setZoomResetByButton(true);
+chart.getStyler().setZoomSelectionColor(new Color(0,0 , 192, 128));
+```
+A working example can be found at [DateChart01](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart01.java).
+
+### Chart Annotations
+
+For all chart types, one or more chart annotations can be super-imposed on top of the chart. The following types of annotatins are available:
+
+- AnnotationLine
+- AnnotationImage
+- AnnotationText
+- AnnotationTextPanel
+
+The following is a chart with four `AnnotationLine`s, one `AnnotationImage` and one `AnnotationText`:
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_AnnotationLineImageText.png)
+
+Positioning is relative to the bottom-left corner of the chart and to the center of the `AnnotationImage` or `AnnotationText`.
+
+The following example `AnnotationLine` and `AnnotationText` styling parameters show which are available:
+
+```java
+chart.getStyler().setAnnotationLineColor(Color.GREEN);
+chart.getStyler().setAnnotationLineStroke(new BasicStroke(3.0f));
+chart.getStyler().setAnnotationTextFont(new Font(Font.MONOSPACED, Font.ITALIC, 8));
+chart.getStyler().setAnnotationTextFontColor(Color.BLUE);
+```
+
+A working example can be found at [LineChart10](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart10.java).
+
+The following is a chart with three `AnnotationTextPanel`s:
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_AnnotationTextPanel.png)
+
+Positioning is relative to the bottom-left corner of the chart and to the bottom-left corner of the `AnnotationTextPanel`.
+
+The following example `AnnotationTextPanel` styling parameters show which are available:
+
+```java
+chart.getStyler().setAnnotationTextPanelPadding(20);
+chart.getStyler().setAnnotationTextPanelFont(new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setAnnotationTextPanelBackgroundColor(Color.RED);
+chart.getStyler().setAnnotationTextPanelBorderColor(Color.BLUE);
+chart.getStyler().setAnnotationTextPanelFontColor(Color.GREEN);
+```
+
+A working example can be found at [ScatterChart04](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/scatter/ScatterChart04.java).
+
+### Tool Tips
+
+For all chart types, tool tips can be activated on an `XChartPanel` via 
+
+```java
+chart.getStyler().setToolTipsEnabled(true);
+```
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Tooltips.png)
+
+The following example tooltip options show which are available:
+
+```java
+chart.getStyler().setToolTipsEnabled(true);
+chart.getStyler(). setToolTipsAlwaysVisible(true);
+chart.getStyler().setToolTipFont( new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setToolTipHighlightColor(Color.CYAN);
+chart.getStyler().setToolTipBorderColor(Color.BLACK);
+chart.getStyler(). setToolTipBackgroundColor(Color.LIGHT_GRAY);
+chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
+```
+
+A working example can be found at [LineChart05](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart05.java).
+
+### Cursor
+
+For the `XYChart` chart type, it is possible to add an interactive cursor on an `XChartPanel` via
+
+```java
+chart.getStyler().setCursorEnabled(true);
+```
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Cursor.png)
+
+The following example cursor options show which are available:
+
+```java
+chart.getStyler().setCursorEnabled(true);
+chart.getStyler().setCursorColor(Color.GREEN);
+chart.getStyler().setCursorLineWidth(30f);
+chart.getStyler().setCursorFont(new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setCursorFontColor(Color.ORANGE);
+chart.getStyler().setCursorBackgroundColor(Color.BLUE);
+chart.getStyler().setCustomCursorXDataFormattingFunction(x -> "hello xvalue: " + x);
+chart.getStyler().setCustomCursorYDataFormattingFunction(y -> "hello yvalue divided by 2: " + y / 2);
+```
+
+A working example can be found at [LineChart09](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart09.java).
 
 ## Chart Themes
 
@@ -439,7 +540,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.6.5</version>
+        <version>3.8.0</version>
     </dependency>
 ```
 
@@ -455,7 +556,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.6.6-SNAPSHOT</version>
+      <version>3.8.1-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -466,7 +567,7 @@ Snapshots can be manually downloaded from Sonatype: [https://oss.sonatype.org/co
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "3.6.5" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.8.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
 ## Building with Maven
@@ -494,14 +595,14 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 
 ## Running Demo
 
-- Linux: execute command `java -cp xchart-demo-3.6.5.jar:xchart-3.6.5.jar org.knowm.xchart.demo.XChartDemo`.
+- Linux: execute command `java -cp xchart-demo-3.8.0.jar:xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo`.
 
-- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.6.5.jar;xchart-3.6.3.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.6.5.jar;xchart-3.6.5.jar" org.knowm.xchart.demo.XChartDemo`.
+- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.8.0.jar;xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.8.0.jar;xchart-3.8.0.jar" org.knowm.xchart.demo.XChartDemo`.
 
 E.g:
 ```sh
 cd /path/to/xchart-demo/jar/
-java -cp xchart-demo-3.6.5.jar:xchart-3.6.5.jar org.knowm.xchart.demo.XChartDemo
+java -cp xchart-demo-3.8.0.jar:xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)

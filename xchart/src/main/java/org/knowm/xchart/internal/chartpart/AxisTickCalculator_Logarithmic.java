@@ -13,7 +13,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
 
-  private final NumberLogFormatter numberLogFormatter;
+  private final Formatter_LogNumber formatterLogNumber;
 
   /**
    * Constructor
@@ -32,8 +32,8 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
       AxesChartStyler styler) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
-    numberLogFormatter = new NumberLogFormatter(styler, axisDirection);
-    axisFormat = numberLogFormatter;
+    formatterLogNumber = new Formatter_LogNumber(styler, axisDirection);
+    axisFormat = formatterLogNumber;
     calculate();
   }
 
@@ -56,8 +56,8 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
       int yIndex) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
-    numberLogFormatter = new NumberLogFormatter(styler, axisDirection, yIndex);
-    axisFormat = numberLogFormatter;
+    formatterLogNumber = new Formatter_LogNumber(styler, axisDirection, yIndex);
+    axisFormat = formatterLogNumber;
     calculate();
   }
 
@@ -66,7 +66,7 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(numberLogFormatter.format(BigDecimal.valueOf(maxValue).doubleValue()));
+      tickLabels.add(formatterLogNumber.format(BigDecimal.valueOf(maxValue).doubleValue()));
       tickLocations.add(workingSpace / 2.0);
       return;
     }
@@ -139,7 +139,7 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
 
         // only add labels for the decades
         if (!axisDecadeOnly || j == 1 || j == 10) {
-          tickLabels.add(numberLogFormatter.format(tickValue));
+          tickLabels.add(formatterLogNumber.format(tickValue));
         } else {
           tickLabels.add(null);
         }
@@ -157,9 +157,9 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
       firstPosition = 2;
     }
     if (tickLocations.size() <= 1) {
-      tickLabels.add(numberLogFormatter.format(minValue));
+      tickLabels.add(formatterLogNumber.format(minValue));
       tickLocations.add(margin);
-      tickLabels.add(numberLogFormatter.format(maxValue));
+      tickLabels.add(formatterLogNumber.format(maxValue));
       tickLocations.add(margin + tickSpace);
     }
   }

@@ -2,10 +2,8 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
@@ -29,7 +27,6 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   private final Rectangle2D.Double rightYAxisBounds;
   private Axis<ST, S> leftMainYAxis;
   private Axis<ST, S> rightMainYAxis;
-  private Map<String, Map<Object, Object>> customTickLabelsMap = new HashMap<>();
 
   /**
    * Constructor
@@ -496,7 +493,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
   // Getters & Setters /////////////////////////////////////////////////
 
-  Axis<ST, S> getXAxis() {
+  public Axis<ST, S> getXAxis() {
 
     return xAxis;
   }
@@ -530,16 +527,5 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   Axis<ST, S> getRightMainYAxis() {
 
     return rightMainYAxis;
-  }
-
-  void addCustomTickLabelMap(String axis, Map<Object, Object> overrideMap) {
-
-    customTickLabelsMap.put(axis, overrideMap);
-  }
-
-  /** Helper method to get axis tick label override map */
-  Map<Object, Object> getCustomTickLabelsMap(Axis.Direction direction, int index) {
-
-    return customTickLabelsMap.get((direction.name() + index));
   }
 }

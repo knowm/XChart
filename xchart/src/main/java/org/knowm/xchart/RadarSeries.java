@@ -1,12 +1,13 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.MarkerSeries;
 import org.knowm.xchart.style.markers.Marker;
 
 /** A Series containing Radar data to be plotted on a Chart */
-public class RadarSeries extends Series {
+public class RadarSeries extends MarkerSeries {
 
   /** Line Style */
   private BasicStroke stroke;
@@ -26,13 +27,14 @@ public class RadarSeries extends Series {
   private double[] values;
   private String[] tooltipOverrides;
 
+  // TODO refactor tooltips overrride
   /**
    * @param tooltipOverrides Adds custom tooltipOverrides for series. If tooltipOverrides is null,
    *     they are automatically generated.
    */
   public RadarSeries(String name, double[] values, String[] tooltipOverrides) {
 
-    super(name);
+    super(name, DataType.Number);
     this.values = values;
     this.tooltipOverrides = tooltipOverrides;
   }
@@ -51,6 +53,9 @@ public class RadarSeries extends Series {
 
     return tooltipOverrides;
   }
+
+  @Override
+  protected void calculateMinMax() {}
 
   public BasicStroke getLineStyle() {
 
@@ -145,8 +150,7 @@ public class RadarSeries extends Series {
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    // Radar charts are always rendered as a Box in the legend
-    return null;
+    return LegendRenderType.Line;
   }
 
   public void setTooltipOverrides(String[] tooltipOverrides) {

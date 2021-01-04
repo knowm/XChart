@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.function.Function;
 import org.knowm.xchart.style.colors.ChartColor;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author Mr14huashao */
 public class HeatMapStyler extends AxesChartStyler {

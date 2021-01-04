@@ -430,7 +430,7 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
 
   private void applyFormatting() {
     if (chart.getStyler().getHeatMapDecimalValueFormatter() != null) {
-      format = new CustomFormatter(chart.getStyler().getHeatMapDecimalValueFormatter());
+      format = new Formatter_Custom(chart.getStyler().getHeatMapDecimalValueFormatter());
     } else {
       format = new DecimalFormat("");
       if (chart.getStyler().getHeatMapValueDecimalPattern() != null) {

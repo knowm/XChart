@@ -1,31 +1,29 @@
 package org.knowm.xchart.style;
 
 import java.awt.*;
+import org.knowm.xchart.style.theme.Theme;
 
 public class RadarStyler extends Styler {
 
+  // radar chart
+  private RadarRenderStyle radarRenderStyle;
   private boolean isCircular;
   private double startAngleInDegrees;
 
-  // Chart Plot Area ///////////////////////////////
-  // main lines
-  private boolean plotGridLinesVisible;
-  private Color plotGridLinesColor;
-  private Stroke plotGridLinesStroke;
+  // radii tick marks
+  private boolean radiiTicksMarksVisible;
+  private Color radiiTickMarksColor;
+  private BasicStroke radiiTickMarksStroke;
+  private int radiiTickMarksCount;
 
-  // helper tick lines
-  private boolean axisTicksMarksVisible;
-  private Color axisTickMarksColor;
-  private Stroke axisTickMarksStroke;
-  private int axisTickMarksCount = 5;
+  // radii  labels
+  private boolean isRadiiTitleVisible;
+  private Font radiiTitleFont;
+  private int radiiTitlePadding;
 
-  // variable labels
-  private boolean axisTitleVisible;
-  private Font axisTitleFont;
-  private int axisTitlePadding;
-
+  // series style
   private int markerSize;
-  private boolean seriesFilled = true;
+  private boolean isSeriesFilled = true;
 
   public RadarStyler() {
 
@@ -37,26 +35,20 @@ public class RadarStyler extends Styler {
 
     super.setAllStyles();
 
+    this.radarRenderStyle = RadarRenderStyle.Polygon;
     this.isCircular = theme.isCircular();
     this.startAngleInDegrees = theme.getStartAngleInDegrees();
 
-    // Annotations ////////////////////////////////
-    this.hasAnnotations = true;
-
     this.markerSize = theme.getMarkerSize();
 
-    // Chart Plot Area ///////////////////////////////
-    this.plotGridLinesVisible = theme.isPlotGridLinesVisible();
-    this.plotGridLinesColor = theme.getPlotGridLinesColor();
-    this.plotGridLinesStroke = theme.getPlotGridLinesStroke();
+    this.radiiTicksMarksVisible = theme.isAxisTicksMarksVisible();
+    this.radiiTickMarksColor = theme.getPlotGridLinesColor();
+    this.radiiTickMarksStroke = theme.getPlotGridLinesStroke();
+    this.radiiTickMarksCount = 5;
 
-    this.axisTickMarksColor = theme.getAxisTickMarksColor();
-    this.axisTickMarksStroke = theme.getAxisTickMarksStroke();
-    this.axisTicksMarksVisible = theme.isAxisTicksMarksVisible();
-
-    this.axisTitleVisible = theme.isXAxisTitleVisible() || theme.isYAxisTitleVisible();
-    this.axisTitleFont = theme.getAxisTitleFont();
-    this.axisTitlePadding = theme.getAxisTitlePadding();
+    this.isRadiiTitleVisible = theme.isXAxisTitleVisible() || theme.isYAxisTitleVisible();
+    this.radiiTitleFont = theme.getAxisTitleFont();
+    this.radiiTitlePadding = theme.getAxisTitlePadding();
   }
 
   public boolean isCircular() {
@@ -120,113 +112,98 @@ public class RadarStyler extends Styler {
     return this;
   }
 
-  public boolean isPlotGridLinesVisible() {
+  public boolean isRadiiTicksMarksVisible() {
 
-    return plotGridLinesVisible;
+    return radiiTicksMarksVisible;
   }
 
-  public void setPlotGridLinesVisible(boolean plotGridLinesVisible) {
+  public void setRadiiTicksMarksVisible(boolean radiiTicksMarksVisible) {
 
-    this.plotGridLinesVisible = plotGridLinesVisible;
+    this.radiiTicksMarksVisible = radiiTicksMarksVisible;
   }
 
-  public Color getPlotGridLinesColor() {
+  public Color getRadiiTickMarksColor() {
 
-    return plotGridLinesColor;
+    return radiiTickMarksColor;
   }
 
-  public void setPlotGridLinesColor(Color plotGridLinesColor) {
+  public void setRadiiTickMarksColor(Color radiiTickMarksColor) {
 
-    this.plotGridLinesColor = plotGridLinesColor;
+    this.radiiTickMarksColor = radiiTickMarksColor;
   }
 
-  public Stroke getPlotGridLinesStroke() {
+  public BasicStroke getRadiiTickMarksStroke() {
 
-    return plotGridLinesStroke;
+    return radiiTickMarksStroke;
   }
 
-  public void setPlotGridLinesStroke(Stroke plotGridLinesStroke) {
+  public void setRadiiTickMarksStroke(BasicStroke radiiTickMarksStroke) {
 
-    this.plotGridLinesStroke = plotGridLinesStroke;
+    this.radiiTickMarksStroke = radiiTickMarksStroke;
   }
 
-  public boolean isAxisTicksMarksVisible() {
+  public boolean isRadiiTitleVisible() {
 
-    return axisTicksMarksVisible;
+    return isRadiiTitleVisible;
   }
 
-  public void setAxisTicksMarksVisible(boolean axisTicksMarksVisible) {
+  public void setRadiiTitleVisible(boolean radiiTitleVisible) {
 
-    this.axisTicksMarksVisible = axisTicksMarksVisible;
+    this.isRadiiTitleVisible = radiiTitleVisible;
   }
 
-  public Color getAxisTickMarksColor() {
+  public Font getRadiiTitleFont() {
 
-    return axisTickMarksColor;
+    return radiiTitleFont;
   }
 
-  public void setAxisTickMarksColor(Color axisTickMarksColor) {
+  public void setRadiiTitleFont(Font radiiTitleFont) {
 
-    this.axisTickMarksColor = axisTickMarksColor;
+    this.radiiTitleFont = radiiTitleFont;
   }
 
-  public Stroke getAxisTickMarksStroke() {
+  public int getRadiiTitlePadding() {
 
-    return axisTickMarksStroke;
+    return radiiTitlePadding;
   }
 
-  public void setAxisTickMarksStroke(Stroke axisTickMarksStroke) {
+  public void setRadiiTitlePadding(int radiiTitlePadding) {
 
-    this.axisTickMarksStroke = axisTickMarksStroke;
+    this.radiiTitlePadding = radiiTitlePadding;
   }
 
-  public boolean isAxisTitleVisible() {
+  public int getRadiiTickMarksCount() {
 
-    return axisTitleVisible;
+    return radiiTickMarksCount;
   }
 
-  public void setAxisTitleVisible(boolean axisTitleVisible) {
+  public void setRadiiTickMarksCount(int radiiTickMarksCount) {
 
-    this.axisTitleVisible = axisTitleVisible;
-  }
-
-  public Font getAxisTitleFont() {
-
-    return axisTitleFont;
-  }
-
-  public void setAxisTitleFont(Font axisTitleFont) {
-
-    this.axisTitleFont = axisTitleFont;
-  }
-
-  public int getAxisTitlePadding() {
-
-    return axisTitlePadding;
-  }
-
-  public void setAxisTitlePadding(int axisTitlePadding) {
-
-    this.axisTitlePadding = axisTitlePadding;
-  }
-
-  public int getAxisTickMarksCount() {
-
-    return axisTickMarksCount;
-  }
-
-  public void setAxisTickMarksCount(int axisTickMarksCount) {
-
-    this.axisTickMarksCount = axisTickMarksCount;
+    this.radiiTickMarksCount = radiiTickMarksCount;
   }
 
   public boolean isSeriesFilled() {
 
-    return seriesFilled;
+    return isSeriesFilled;
   }
 
   public void setSeriesFilled(boolean seriesFilled) {
 
-    this.seriesFilled = seriesFilled;
+    this.isSeriesFilled = seriesFilled;
+  }
+
+  public RadarRenderStyle getRadarRenderStyle() {
+
+    return radarRenderStyle;
+  }
+
+  public void setRadarRenderStyle(RadarRenderStyle radarRenderStyle) {
+
+    this.radarRenderStyle = radarRenderStyle;
+  }
+
+  public enum RadarRenderStyle {
+    Polygon,
+    Circle;
   }
 }

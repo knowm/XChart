@@ -30,8 +30,8 @@ public class TestForIssue402 implements ExampleChart<CategoryChart> {
     // Customize Chart
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
     chart.getStyler().setStacked(true);
-    chart.getStyler().setHasAnnotations(true);
-    chart.getStyler().setShowTotalAnnotations(true);
+    chart.getStyler().setLabelsVisible(true);
+    chart.getStyler().setShowStackSum(true);
 
     // Series
     chart.addSeries("a", new double[] {0, 1, 2, 3, 4}, new double[] {40, 35, -45, -60, -60});

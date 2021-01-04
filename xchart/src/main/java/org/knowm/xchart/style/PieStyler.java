@@ -2,6 +2,7 @@ package org.knowm.xchart.style;
 
 import java.awt.*;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
 public class PieStyler extends Styler {
@@ -9,15 +10,20 @@ public class PieStyler extends Styler {
   private PieSeriesRenderStyle chartPieSeriesRenderStyle;
   private boolean isCircular;
   private double startAngleInDegrees;
-  private double annotationDistance;
-  private AnnotationType annotationType;
-  private boolean drawAllAnnotations;
+
   private double donutThickness;
   private boolean isSumVisible;
   private Font sumFont;
   private String sumFormat;
   private ClockwiseDirectionType clockwiseDirectionType = ClockwiseDirectionType.COUNTER_CLOCKWISE;
-  private float borderWidth = 0;
+  private float sliceBorderWidth = 0;
+
+  private boolean isLabelsVisible;
+  private Font labelsFont;
+  private Color labelsFontColor;
+  private double labelsDistance;
+  private LabelType labelType;
+  private boolean isForceAllLabelsVisible;
 
   public PieStyler() {
 
@@ -32,16 +38,18 @@ public class PieStyler extends Styler {
     this.chartPieSeriesRenderStyle = PieSeriesRenderStyle.Pie;
     this.isCircular = theme.isCircular();
     this.startAngleInDegrees = theme.getStartAngleInDegrees();
-    this.annotationDistance = theme.getAnnotationDistance();
-    this.annotationType = theme.getAnnotationType();
-    this.drawAllAnnotations = theme.isDrawAllAnnotations();
-    this.donutThickness = theme.getDonutThickness();
 
-    // Annotations ////////////////////////////////
-    this.hasAnnotations = true;
+    this.donutThickness = theme.getDonutThickness();
 
     this.isSumVisible = theme.isSumVisible();
     this.sumFont = theme.getSumFont();
+
+    this.isLabelsVisible = true; // default to true
+    this.labelsFont = theme.getBaseFont();
+    this.labelsFontColor = theme.getChartFontColor();
+    this.labelsDistance = theme.getLabelsDistance();
+    this.labelType = theme.getLabelType();
+    this.isForceAllLabelsVisible = theme.setForceAllLabelsVisible();
   }
 
   public PieSeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -94,45 +102,45 @@ public class PieStyler extends Styler {
     return this;
   }
 
-  public double getAnnotationDistance() {
+  public double getLabelsDistance() {
 
-    return annotationDistance;
+    return labelsDistance;
   }
 
   /**
    * Sets the distance of the pie chart's annotation where 0 is the center, 1 is at the edge and
    * greater than 1 is outside of the pie chart.
    *
-   * @param annotationDistance
+   * @param labelsDistance
    */
-  public void setAnnotationDistance(double annotationDistance) {
+  public void setLabelsDistance(double labelsDistance) {
 
-    this.annotationDistance = annotationDistance;
+    this.labelsDistance = labelsDistance;
   }
 
-  public AnnotationType getAnnotationType() {
+  public LabelType getLabelType() {
 
-    return annotationType;
+    return labelType;
   }
 
   /**
    * Sets the Pie chart's annotation type
    *
-   * @param annotationType
+   * @param labelType
    */
-  public PieStyler setAnnotationType(AnnotationType annotationType) {
+  public PieStyler setLabelType(LabelType labelType) {
 
-    this.annotationType = annotationType;
+    this.labelType = labelType;
     return this;
   }
 
-  public boolean isDrawAllAnnotations() {
+  public boolean isForceAllLabelsVisible() {
 
-    return drawAllAnnotations;
+    return isForceAllLabelsVisible;
   }
 
   /**
-   * By default, only the annotations that will "fit", as determined algorithmically, will be drawn.
+   * By default, only the labels that will "fit", as determined algorithmically, will be drawn.
    * Otherwise, you can end up with annotations drawn overlapping. If `drawAllAnnotations` is set
    * true with this method, it will override the algorithmic determination, and always draw all the
    * annotations, one for each slice. You can also try playing around with the method
@@ -140,11 +148,11 @@ public class PieStyler extends Styler {
    * try changing the font size. Also, you can order the slices so that a small slice is followed by
    * a larger slice, while setting this method with `true`.
    *
-   * @param drawAllAnnotations
+   * @param forceAllLabelsVisible
    */
-  public PieStyler setDrawAllAnnotations(boolean drawAllAnnotations) {
+  public PieStyler setForceAllLabelsVisible(boolean forceAllLabelsVisible) {
 
-    this.drawAllAnnotations = drawAllAnnotations;
+    this.isForceAllLabelsVisible = forceAllLabelsVisible;
     return this;
   }
 
@@ -158,9 +166,10 @@ public class PieStyler extends Styler {
    *
    * @param donutThickness - Valid range is between 0 and 1.
    */
-  public void setDonutThickness(double donutThickness) {
+  public PieStyler setDonutThickness(double donutThickness) {
 
     this.donutThickness = donutThickness;
+    return this;
   }
 
   public boolean isSumVisible() {
@@ -230,6 +239,52 @@ public class PieStyler extends Styler {
     return this;
   }
 
+  public boolean isLabelsVisible() {
+
+    return isLabelsVisible;
+  }
+
+  /**
+   * Sets if annotations should be added to charts. Each chart type has a different annotation type
+   *
+   * @param labelsVisible
+   */
+  public PieStyler setLabelsVisible(boolean labelsVisible) {
+
+    this.isLabelsVisible = labelsVisible;
+    return this;
+  }
+
+  public Font getLabelsFont() {
+
+    return labelsFont;
+  }
+
+  /**
+   * Sets the Font used for chart annotations
+   *
+   * @param labelsFont
+   */
+  public PieStyler setLabelsFont(Font labelsFont) {
+
+    this.labelsFont = labelsFont;
+    return this;
+  }
+
+  public Color getLabelsFontColor() {
+    return labelsFontColor;
+  }
+
+  /**
+   * Sets the color of the Font used for chart annotations
+   *
+   * @param labelsFontColor
+   */
+  public PieStyler setLabelsFontColor(Color labelsFontColor) {
+    this.labelsFontColor = labelsFontColor;
+    return this;
+  }
+
   /**
    * Set the theme the styler should use
    *
@@ -252,21 +307,21 @@ public class PieStyler extends Styler {
   }
 
   // used to add border width
-  public PieStyler setBorderWidth(double borderWidth) {
-    this.borderWidth = (float) borderWidth;
+  public PieStyler setSliceBorderWidth(double sliceBorderWidth) {
+    this.sliceBorderWidth = (float) sliceBorderWidth;
     return this;
   }
 
-  public float getBorderWidth() {
-    return borderWidth;
+  public float getSliceBorderWidth() {
+    return sliceBorderWidth;
   }
 
-  public enum AnnotationType {
+  public enum LabelType {
     Value,
     Percentage,
-    Label,
-    LabelAndPercentage,
-    LabelAndValue
+    Name,
+    NameAndPercentage,
+    NameAndValue
   }
 
   public enum ClockwiseDirectionType {

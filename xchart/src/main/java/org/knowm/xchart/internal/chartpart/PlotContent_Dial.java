@@ -91,16 +91,16 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
         if (!axisTickLabelsVisible) {
           continue;
         }
-        String annotation = axisTickLabels[i];
+        String labels = axisTickLabels[i];
 
         TextLayout textLayout =
             new TextLayout(
-                annotation, styler.getAxisTitleFont(), new FontRenderContext(null, true, false));
+                labels, styler.getAxisTitleFont(), new FontRenderContext(null, true, false));
         Shape shape = textLayout.getOutline(null);
 
-        Rectangle2D annotationBounds = shape.getBounds2D();
-        double annotationWidth = annotationBounds.getWidth();
-        double annotationHeight = annotationBounds.getHeight();
+        Rectangle2D labelBounds = shape.getBounds2D();
+        double labelWidth = labelBounds.getWidth();
+        double labelHeight = labelBounds.getHeight();
 
         // calculate corrections
         double xc;
@@ -108,19 +108,19 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
         if (axisTickValues[i] < 0.49) {
           xc = 0;
         } else if (axisTickValues[i] > 0.51) {
-          xc = -annotationWidth;
+          xc = -labelWidth;
         } else {
-          xc = -annotationWidth / 2;
-          yc = annotationHeight / 2;
+          xc = -labelWidth / 2;
+          yc = labelHeight / 2;
         }
         xOffset2 = xCenter + cos * (xDiameter - axisTitlePadding) * (1 - donutThickness);
         yOffset2 = yCenter - sin * (yDiameter - axisTitlePadding) * (1 - donutThickness);
 
         double tx = xOffset2 + xc;
-        double ty = yOffset2 + yc + annotationHeight / 2;
+        double ty = yOffset2 + yc + labelHeight / 2;
 
         g.setColor(styler.getChartFontColor());
-        g.setFont(styler.getAnnotationsFont());
+        g.setFont(styler.getBaseFont());
         AffineTransform orig = g.getTransform();
         AffineTransform at = new AffineTransform();
 
@@ -147,13 +147,13 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
                 new FontRenderContext(null, true, false));
         Shape shape = textLayout.getOutline(null);
 
-        Rectangle2D annotationBounds = shape.getBounds2D();
-        double annotationWidth = annotationBounds.getWidth();
-        double annotationHeight = annotationBounds.getHeight();
+        Rectangle2D labelBounds = shape.getBounds2D();
+        double labelWidth = labelBounds.getWidth();
+        double labelHeight = labelBounds.getHeight();
 
         // calculate corrections
-        double tx = xCenter - annotationWidth / 2;
-        double ty = yCenter - yDiameter / 2 + annotationHeight / 2;
+        double tx = xCenter - labelWidth / 2;
+        double ty = yCenter - yDiameter / 2 + labelHeight / 2;
 
         g.setColor(styler.getChartFontColor());
         g.setFont(styler.getAxisTitleFont());
@@ -169,30 +169,28 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
 
       double value = series.getValue();
       // draw title
-      if (styler.hasAnnotations()) {
-        String annotation = series.getAnnotation();
-        if (annotation == null) {
+      if (styler.isLabelsVisible()) {
+        String label = series.getLabel();
+        if (label == null) {
           if (styler.getDecimalPattern() != null) {
             DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
-            annotation = df.format(value);
+            label = df.format(value);
           } else {
-            annotation = df.format(value);
+            label = df.format(value);
           }
         }
-        if (!annotation.isEmpty()) {
+        if (!label.isEmpty()) {
           TextLayout textLayout =
               new TextLayout(
-                  annotation,
-                  styler.getAnnotationsFont(),
-                  new FontRenderContext(null, true, false));
+                  label, styler.getLabelsFont(), new FontRenderContext(null, true, false));
           Shape shape = textLayout.getOutline(null);
 
-          Rectangle2D annotationBounds = shape.getBounds2D();
-          double annotationWidth = annotationBounds.getWidth();
-          double annotationHeight = annotationBounds.getHeight();
+          Rectangle2D labelBounds = shape.getBounds2D();
+          double labelnWidth = labelBounds.getWidth();
+          double labelHeight = labelBounds.getHeight();
 
-          double tx = xCenter - annotationWidth / 2;
-          double ty = yCenter + annotationHeight / 2;
+          double tx = xCenter - labelnWidth / 2;
+          double ty = yCenter + labelHeight / 2;
           if (styler.getArcAngle() > 180) {
             ty += height_r * Math.cos(Math.toRadians((360 - styler.getArcAngle()) / 2)) / 2;
           } else {
@@ -224,16 +222,16 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
 
       Path2D.Double path = new Path2D.Double();
       if (styler.isToolTipsEnabled()) {
-        String annotation = series.getAnnotation();
-        if (annotation == null) {
+        String label = series.getLabel();
+        if (label == null) {
           if (styler.getDecimalPattern() != null) {
             DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
-            annotation = df.format(value);
+            label = df.format(value);
           } else {
-            annotation = df.format(value);
+            label = df.format(value);
           }
         }
-        chart.toolTips.addData(path, xOffset, yOffset + 10, 0, annotation);
+        toolTips.addData(path, xOffset, yOffset + 10, 0, label);
       }
       path.moveTo(xCenter, yCenter);
 

@@ -7,7 +7,6 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
@@ -28,7 +27,7 @@ public class TestForIssue291 {
     chart.getStyler().setYAxisGroupPosition(0, YAxisPosition.Right);
     chart.setYAxisGroupTitle(1, "sin(x)");
 
-    final SwingWrapper<Chart> sw = new SwingWrapper<Chart>(chart);
+    final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
 
     sw.displayChart();
 

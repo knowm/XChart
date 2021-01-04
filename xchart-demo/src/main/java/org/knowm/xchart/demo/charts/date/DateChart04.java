@@ -26,7 +26,7 @@ public class DateChart04 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new DateChart04();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -40,8 +40,8 @@ public class DateChart04 implements ExampleChart<XYChart> {
     chart.getStyler().setYAxisTicksVisible(false);
 
     // Series
-    List<Date> xData = new ArrayList<Date>();
-    List<Double> yData = new ArrayList<Double>();
+    List<Date> xData = new ArrayList<>();
+    List<Double> yData = new ArrayList<>();
 
     Random random = new Random();
 

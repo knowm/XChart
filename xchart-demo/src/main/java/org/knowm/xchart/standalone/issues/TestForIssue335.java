@@ -19,11 +19,10 @@ public class TestForIssue335 {
     RadarChart chart =
         new RadarChartBuilder().width(800).height(600).title("TestForIssue335").build();
     chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setHasAnnotations(true);
     chart.getStyler().setSeriesFilled(false);
 
     // Series
-    chart.setVariableLabels(
+    chart.setRadiiLabels(
         new String[] {
           "Sales",
           "Marketing",

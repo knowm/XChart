@@ -1,11 +1,15 @@
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.style.markers.Marker;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import org.knowm.xchart.style.markers.Marker;
+import org.knowm.xchart.style.theme.GGPlot2Theme;
+import org.knowm.xchart.style.theme.MatlabTheme;
+import org.knowm.xchart.style.theme.Theme;
+import org.knowm.xchart.style.theme.XChartTheme;
 
 /**
  * The styler is used to manage all things related to styling of the vast number of Chart components
@@ -17,7 +21,6 @@ public abstract class Styler {
   /** the default Theme */
   Theme theme = new XChartTheme();
 
-  boolean hasAnnotations = false; // set by subclass
   // Chart Style ///////////////////////////////
   private Font baseFont;
   private Color chartBackgroundColor;
@@ -26,6 +29,7 @@ public abstract class Styler {
   private Color[] seriesColors;
   private BasicStroke[] seriesLines;
   private Marker[] seriesMarkers;
+
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
   private boolean isChartTitleVisible;
@@ -33,6 +37,7 @@ public abstract class Styler {
   private Color chartTitleBoxBackgroundColor;
   private Color chartTitleBoxBorderColor;
   private int chartTitlePadding;
+
   // Chart Legend ///////////////////////////////
   private boolean isLegendVisible;
   private Color legendBackgroundColor;
@@ -42,18 +47,26 @@ public abstract class Styler {
   private int legendSeriesLineLength;
   private LegendPosition legendPosition;
   private LegendLayout legendLayout = LegendLayout.Vertical;
-  // Chart InfoPanel ///////////////////////////////
-  private boolean infoPanelVisible;
-  private Color infoPanelBackgroundColor;
-  private Color infoPanelBorderColor;
-  private Font infoPanelFont;
-  private int infoPanelPadding;
-  private InfoPanelPosition infoPanelPosition;
+
   // Chart Plot Area ///////////////////////////////
   private Color plotBackgroundColor;
   private Color plotBorderColor;
   private boolean isPlotBorderVisible;
-  private double plotContentSize = .92;
+  private double plotContentSize;
+
+  // Chart Annotations ///////////////////////////////
+  private Color annotationTextPanelBackgroundColor;
+  private Color annotationTextPanelBorderColor;
+  private Font annotationTextPanelFont;
+  private Color annotationTextPanelFontColor;
+  private int annotationTextPanelPadding;
+
+  private Font annotationTextFont;
+  private Color annotationTextFontColor;
+
+  private BasicStroke annotationLineStroke;
+  private Color annotationLineColor;
+
   // Tool Tips ///////////////////////////////
   private boolean isToolTipsEnabled;
   private boolean isToolTipsAlwaysVisible;
@@ -72,34 +85,38 @@ public abstract class Styler {
   // Annotations ///////////////////////////////
   private Font annotationsFont;
   private Color annotationsFontColor;
-  private FontColorDetector annotationsFontColorDetector;
+  protected FontColorDetector annotationsFontColorDetector;
+  private boolean isAnnotationAutoColorDetectionEnabled;
   private int annotationsRotation = 0;
   private float annotationsPosition = 0.5f;
   private boolean showTotalAnnotations = false;
+
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
   private String decimalPattern;
-  private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<Integer, YAxisPosition>();
+  // TODO I don't think this should be in styler directly?
+  private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<>();
   private int yAxisLeftWidthHint;
+
+  // TODO move this to boxplot styler
   // Box plot data ///////////////////////////////
   private boolean showWithinAreaPoint = false;
+
   // Axis Title Font Color
   private Color xAxisTitleColor;
   private Color yAxisTitleColor;
-  private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<Integer, Color>();
+  private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
 
-  // Custom formatting functions for the cursor
-  private Function<Double, String> customCursorXDataFormattingFunction;
-  private Function<Double, String> customCursorYDataFormattingFunction;
+  // Line, Scatter, Area , Radar Charts///////////////////////////////
+  // TODO Move these to the respective stylers where it is needed
+  private int markerSize;
 
   void setAllStyles() {
 
     // Chart Style ///////////////////////////////
     baseFont = theme.getBaseFont();
-
     chartBackgroundColor = theme.getChartBackgroundColor();
     chartFontColor = theme.getChartFontColor();
-
     chartPadding = theme.getChartPadding();
     seriesColors = theme.getSeriesColors();
     seriesLines = theme.getSeriesLines();
@@ -122,19 +139,24 @@ public abstract class Styler {
     legendSeriesLineLength = theme.getLegendSeriesLineLength();
     legendPosition = theme.getLegendPosition();
 
-    // Info Panel
-    infoPanelVisible = theme.isInfoPanelVisible();
-    infoPanelBackgroundColor = theme.getInfoPanelBackgroundColor();
-    infoPanelBorderColor = theme.getInfoPanelBorderColor();
-    infoPanelFont = theme.getInfoPanelFont();
-    infoPanelPadding = theme.getInfoPanelPadding();
-    infoPanelPosition = theme.getInfoPanelPosition();
-
     // Chart Plot Area ///////////////////////////////
     plotBackgroundColor = theme.getPlotBackgroundColor();
     plotBorderColor = theme.getPlotBorderColor();
     isPlotBorderVisible = theme.isPlotBorderVisible();
     plotContentSize = theme.getPlotContentSize();
+
+    // Chart Annotations
+    annotationTextPanelBackgroundColor = theme.getAnnotationTextPanelBackgroundColor();
+    annotationTextPanelBorderColor = theme.getAnnotationTextPanelBorderColor();
+    annotationTextPanelFont = theme.getAnnotationTextPanelFont();
+    annotationTextPanelFontColor = theme.getAnnotationTextPanelFontColor();
+    annotationTextPanelPadding = theme.getAnnotationTextPanelPadding();
+
+    annotationTextFont = theme.getAnnotationTextFont();
+    annotationTextFontColor = theme.getAnnotationTextFontColor();
+
+    annotationLineStroke = theme.getAnnotationLineStroke();
+    annotationLineColor = theme.getAnnotationLineColor();
 
     // Tool Tips ///////////////////////////////
 
@@ -145,20 +167,14 @@ public abstract class Styler {
     toolTipFont = theme.getToolTipFont();
     toolTipHighlightColor = theme.getToolTipHighlightColor();
 
-    // Cursor ////////////////////////////////
-    this.isCursorEnabled = theme.isCursorEnabled();
-    this.cursorColor = theme.getCursorColor();
-    this.cursorSize = theme.getCursorSize();
-    this.cursorFont = theme.getCursorFont();
-    this.cursorFontColor = theme.getCursorFontColor();
-    this.cursorBackgroundColor = theme.getCursorBackgroundColor();
-
-    // Annotations ///////////////////////////////
-    annotationsFont = theme.getAnnotationFont();
-    annotationsFontColor = theme.getAnnotationsFontColor();
-
     // Formatting
     decimalPattern = null;
+
+    // Line, Scatter, Area, Radar Charts ///////////////////////////////
+    this.markerSize = theme.getMarkerSize();
+
+    setAnnotationsAutodetectColors(theme.getAnnotationAutodetectDarkFontColor(), theme.getAnnotationAutodetectLightFontColor());
+    setAnnotationAutoColorDetectionEnabled(theme.isAnnotationAutoColorDetectionEnabled());
   }
 
   public Font getBaseFont() {
@@ -360,11 +376,28 @@ public abstract class Styler {
     return this;
   }
 
+  // Chart Legend ///////////////////////////////
+
+  public boolean isLegendVisible() {
+
+    return isLegendVisible;
+  }
+
+  /**
+   * Set the chart legend visibility
+   *
+   * @param isLegendVisible
+   */
+  public Styler setLegendVisible(boolean isLegendVisible) {
+
+    this.isLegendVisible = isLegendVisible;
+    return this;
+  }
+
   public Color getLegendBackgroundColor() {
 
     return legendBackgroundColor;
   }
-
   /**
    * Set the chart legend background color
    *
@@ -405,24 +438,6 @@ public abstract class Styler {
   public Styler setLegendFont(Font font) {
 
     this.legendFont = font;
-    return this;
-  }
-
-  // Chart Legend ///////////////////////////////
-
-  public boolean isLegendVisible() {
-
-    return isLegendVisible;
-  }
-
-  /**
-   * Set the chart legend visibility
-   *
-   * @param isLegendVisible
-   */
-  public Styler setLegendVisible(boolean isLegendVisible) {
-
-    this.isLegendVisible = isLegendVisible;
     return this;
   }
 
@@ -479,6 +494,24 @@ public abstract class Styler {
     return this;
   }
 
+  public boolean isAnnotationAutoColorDetectionEnabled() {
+    return isAnnotationAutoColorDetectionEnabled;
+  }
+
+  public void setAnnotationAutoColorDetectionEnabled(boolean annotationAutoColorDetectionEnabled) {
+    isAnnotationAutoColorDetectionEnabled = annotationAutoColorDetectionEnabled;
+  }
+
+  public enum LegendPosition {
+    OutsideE,
+    InsideNW,
+    InsideNE,
+    InsideSE,
+    InsideSW,
+    InsideN,
+    InsideS,
+    OutsideS
+  }
   /**
    * Set the legend layout
    *
@@ -489,78 +522,18 @@ public abstract class Styler {
     return legendLayout;
   }
 
-  public void setLegendLayout(LegendLayout legendLayout) {
+  public Styler setLegendLayout(LegendLayout legendLayout) {
 
     this.legendLayout = legendLayout;
-  }
-
-  // Chart InfoPanel ///////////////////////////////
-
-  public Color getInfoPanelBackgroundColor() {
-
-    return infoPanelBackgroundColor;
-  }
-
-  public Styler setInfoPanelBackgroundColor(Color color) {
-
-    this.infoPanelBackgroundColor = color;
     return this;
   }
 
-  public Color getInfoPanelBorderColor() {
-
-    return infoPanelBorderColor;
+  public enum LegendLayout {
+    Vertical,
+    Horizontal
   }
 
-  public Styler setInfoPanelBorderColor(Color borderColor) {
-
-    this.infoPanelBorderColor = borderColor;
-    return this;
-  }
-
-  public Font getInfoPanelFont() {
-
-    return infoPanelFont;
-  }
-
-  public Styler setInfoPanelFont(Font font) {
-
-    this.infoPanelFont = font;
-    return this;
-  }
-
-  public boolean isInfoPanelVisible() {
-    return infoPanelVisible;
-  }
-
-  public Styler setInfoPanelVisible(boolean infoPanelVisible) {
-
-    this.infoPanelVisible = infoPanelVisible;
-    return this;
-  }
-
-  public int getInfoPanelPadding() {
-
-    return infoPanelPadding;
-  }
-
-  public Styler setInfoPanelPadding(int infoPanelPadding) {
-
-    this.infoPanelPadding = infoPanelPadding;
-    return this;
-  }
-
-  public InfoPanelPosition getInfoPanelPosition() {
-
-    return infoPanelPosition;
-  }
-
-  public Styler setInfoPanelPosition(InfoPanelPosition infoPanelPosition) {
-
-    this.infoPanelPosition = infoPanelPosition;
-    return this;
-  }
-
+  // Chart Plot ///////////////////////////////
   public Color getPlotBackgroundColor() {
 
     return plotBackgroundColor;
@@ -609,8 +582,6 @@ public abstract class Styler {
     return this;
   }
 
-  // Chart Plot ///////////////////////////////
-
   public double getPlotContentSize() {
 
     return plotContentSize;
@@ -631,6 +602,99 @@ public abstract class Styler {
     this.plotContentSize = plotContentSize;
     return this;
   }
+
+  // Chart Annotations ///////////////////////////////
+
+  public Color getAnnotationTextPanelBackgroundColor() {
+
+    return annotationTextPanelBackgroundColor;
+  }
+
+  public Styler setAnnotationTextPanelBackgroundColor(Color color) {
+
+    this.annotationTextPanelBackgroundColor = color;
+    return this;
+  }
+
+  public Color getAnnotationTextPanelBorderColor() {
+
+    return annotationTextPanelBorderColor;
+  }
+
+  public Styler setAnnotationTextPanelBorderColor(Color borderColor) {
+
+    this.annotationTextPanelBorderColor = borderColor;
+    return this;
+  }
+
+  public Font getAnnotationTextPanelFont() {
+
+    return annotationTextPanelFont;
+  }
+
+  public Styler setAnnotationTextPanelFont(Font font) {
+
+    this.annotationTextPanelFont = font;
+    return this;
+  }
+
+  public Color getAnnotationTextPanelFontColor() {
+    return annotationTextPanelFontColor;
+  }
+
+  public Styler setAnnotationTextPanelFontColor(Color annotationTextPanelFontColor) {
+    this.annotationTextPanelFontColor = annotationTextPanelFontColor;
+    return this;
+  }
+
+  public int getAnnotationTextPanelPadding() {
+
+    return annotationTextPanelPadding;
+  }
+
+  public Styler setAnnotationTextPanelPadding(int annotationTextPanelPadding) {
+
+    this.annotationTextPanelPadding = annotationTextPanelPadding;
+    return this;
+  }
+
+  public Font getAnnotationTextFont() {
+    return annotationTextFont;
+  }
+
+  public Styler setAnnotationTextFont(Font annotationTextFont) {
+    this.annotationTextFont = annotationTextFont;
+    return this;
+  }
+
+  public Color getAnnotationTextFontColor() {
+    return annotationTextFontColor;
+  }
+
+  public Styler setAnnotationTextFontColor(Color annotationTextFontColor) {
+    this.annotationTextFontColor = annotationTextFontColor;
+    return this;
+  }
+
+  public BasicStroke getAnnotationLineStroke() {
+    return annotationLineStroke;
+  }
+
+  public Styler setAnnotationLineStroke(BasicStroke annotationLineStroke) {
+    this.annotationLineStroke = annotationLineStroke;
+    return this;
+  }
+
+  public Color getAnnotationLineColor() {
+    return annotationLineColor;
+  }
+
+  public Styler setAnnotationLineColor(Color annotationLineColor) {
+    this.annotationLineColor = annotationLineColor;
+    return this;
+  }
+
+  // Tool Tips ///////////////////////////////
 
   public boolean isToolTipsEnabled() {
 
@@ -665,6 +729,12 @@ public abstract class Styler {
     return this;
   }
 
+  public enum ToolTipType {
+    xLabels,
+    yLabels,
+    xAndYLabels
+  }
+
   public Color getToolTipBackgroundColor() {
 
     return toolTipBackgroundColor;
@@ -676,11 +746,36 @@ public abstract class Styler {
     return this;
   }
 
-  // Tool Tips ///////////////////////////////
-
   public Color getToolTipBorderColor() {
 
     return toolTipBorderColor;
+  }
+
+  public Color getAnnotationsFontColor(Color backgroundColor) {
+    if (annotationsFontColorDetector == null || backgroundColor == null) {
+      return annotationsFontColor;
+    }
+    return annotationsFontColorDetector.getFontColor(backgroundColor);
+  }
+
+  /**
+   * Sets auto-detection colors for chart annotations. If the series background color is dark, the
+   * light annotation color is drawn. If the series background color is light, the dark annotation
+   * color is drawn.
+   *
+   * @param annotationsDarkFontColor the dark color to draw on series with a light background
+   * @param annotationsLightFontColor the light color to draw on series with a dark background
+   * @return this styler
+   */
+  public Styler setAnnotationsAutodetectColors(
+      Color annotationsDarkFontColor, Color annotationsLightFontColor) {
+    this.annotationsFontColorDetector =
+        new FontColorDetector(annotationsDarkFontColor, annotationsLightFontColor);
+    return this;
+  }
+
+  public int getAnnotationsRotation() {
+    return annotationsRotation;
   }
 
   public Styler setToolTipBorderColor(Color toolTipBorderColor) {
@@ -711,172 +806,7 @@ public abstract class Styler {
     return this;
   }
 
-  // Cursor ///////////////////////////////
-
-  public boolean isCursorEnabled() {
-    return isCursorEnabled;
-  }
-
-  public Styler setCursorEnabled(boolean isCursorEnabled) {
-
-    this.isCursorEnabled = isCursorEnabled;
-    return this;
-  }
-
-  public Color getCursorColor() {
-    return cursorColor;
-  }
-
-  public Styler setCursorColor(Color cursorColor) {
-
-    this.cursorColor = cursorColor;
-    return this;
-  }
-
-  public float getCursorSize() {
-
-    return cursorSize;
-  }
-
-  public Styler setCursorSize(float cursorSize) {
-
-    this.cursorSize = cursorSize;
-    return this;
-  }
-
-  public Font getCursorFont() {
-
-    return cursorFont;
-  }
-
-  public Styler setCursorFont(Font cursorFont) {
-
-    this.cursorFont = cursorFont;
-    return this;
-  }
-
-  public Color getCursorFontColor() {
-
-    return cursorFontColor;
-  }
-
-  public Styler setCursorFontColor(Color cursorFontColor) {
-
-    this.cursorFontColor = cursorFontColor;
-    return this;
-  }
-
-  public Color getCursorBackgroundColor() {
-
-    return cursorBackgroundColor;
-  }
-
-  public Styler setCursorBackgroundColor(Color cursorBackgroundColor) {
-
-    this.cursorBackgroundColor = cursorBackgroundColor;
-    return this;
-  }
-
-  public Boolean hasAnnotations() {
-
-    return hasAnnotations;
-  }
-
-  /**
-   * Sets if annotations should be added to charts. Each chart type has a different annotation type
-   *
-   * @param hasAnnotations
-   */
-  public Styler setHasAnnotations(boolean hasAnnotations) {
-
-    this.hasAnnotations = hasAnnotations;
-    return this;
-  }
-
-  public Font getAnnotationsFont() {
-
-    return annotationsFont;
-  }
-
-  /**
-   * Sets the Font used for chart annotations
-   *
-   * @param annotationsFont
-   */
-  public Styler setAnnotationsFont(Font annotationsFont) {
-
-    this.annotationsFont = annotationsFont;
-    return this;
-  }
-
-  public Color getAnnotationsFontColor(Color backgroundColor) {
-    if (annotationsFontColorDetector == null || backgroundColor == null) {
-      return annotationsFontColor;
-    }
-    return annotationsFontColorDetector.getFontColor(backgroundColor);
-  }
-
-  /**
-   * Sets the color of the Font used for chart annotations
-   *
-   * @param annotationsFontColor
-   */
-  public Styler setAnnotationsFontColor(Color annotationsFontColor) {
-    this.annotationsFontColor = annotationsFontColor;
-    return this;
-  }
-
-  /**
-   * Sets auto-detection colors for chart annotations.
-   * If the series background color is dark, the light annotation color is drawn.
-   * If the series background color is light, the dark annotation color is drawn.
-   * @param annotationsDarkFontColor the dark color to draw on series with a light background
-   * @param annotationsLightFontColor the light color to draw on series with a dark background
-   * @return this styler
-   */
-  public Styler setAnnotationsAutodetectColors(Color annotationsDarkFontColor, Color annotationsLightFontColor) {
-    this.annotationsFontColorDetector = new FontColorDetector(annotationsDarkFontColor, annotationsLightFontColor);
-    return this;
-  }
-
-  public int getAnnotationsRotation() {
-    return annotationsRotation;
-  }
-
-  /**
-   * Sets the rotation for chart annotations
-   *
-   * @param annotationsRotation
-   */
-  public Styler setAnnotationsRotation(int annotationsRotation) {
-    this.annotationsRotation = annotationsRotation;
-    return this;
-  }
-
-  public float getAnnotationsPosition() {
-
-    return annotationsPosition;
-  }
-
-  public Styler setAnnotationsPosition(float annotationsPosition) {
-
-    if (annotationsPosition < 0 || annotationsPosition > 1) {
-      throw new IllegalArgumentException("Annotations position must be tween 0 and 1!!!");
-    }
-    this.annotationsPosition = annotationsPosition;
-    return this;
-  }
-
-  public boolean isShowTotalAnnotations() {
-
-    return showTotalAnnotations;
-  }
-
-  public Styler setShowTotalAnnotations(boolean showTotalAnnotations) {
-
-    this.showTotalAnnotations = showTotalAnnotations;
-    return this;
-  }
+  // Number Formatter ///////////////////////////////
 
   public String getDecimalPattern() {
 
@@ -884,7 +814,7 @@ public abstract class Styler {
   }
 
   /**
-   * Set the decimal formatter for all numbers on the chart rendered as Strings
+   * Set the decimal formatter for all numbers on the chart
    *
    * @param decimalPattern - the pattern describing the decimal format
    */
@@ -894,7 +824,7 @@ public abstract class Styler {
     return this;
   }
 
-  // Annotations ///////////////////////////////
+  // Y-Axis Group Position ///////////////////////////////
 
   public YAxisPosition getYAxisGroupPosistion(int yAxisGroup) {
 
@@ -902,29 +832,31 @@ public abstract class Styler {
   }
 
   /**
-   * Set the YAxis group position.
+   * Set the Y-Axis group position.
    *
    * @param yAxisGroup
    * @param yAxisPosition
    */
-  public void setYAxisGroupPosition(int yAxisGroup, YAxisPosition yAxisPosition) {
+  public Styler setYAxisGroupPosition(int yAxisGroup, YAxisPosition yAxisPosition) {
 
     yAxisAlignmentMap.put(yAxisGroup, yAxisPosition);
+    return this;
   }
 
-  public Theme getTheme() {
-
-    return theme;
+  public enum YAxisPosition {
+    Left,
+    Right
   }
 
   public boolean getAntiAlias() {
 
     return antiAlias;
   }
-
-  public void setAntiAlias(boolean newVal) {
+  // TODO add javadocs to all setters that are not yet documented.
+  public Styler setAntiAlias(boolean newVal) {
 
     antiAlias = newVal;
+    return this;
   }
 
   public int getYAxisLeftWidthHint() {
@@ -932,9 +864,16 @@ public abstract class Styler {
     return yAxisLeftWidthHint;
   }
 
-  public void setYAxisLeftWidthHint(int yAxisLeftWidthHint) {
+  /**
+   * Set the width of the Y-Axis tick labels on the left side of the chart. This can help to align
+   * the start of the X-Axis for two or more charts that are arranged in a column of charts.
+   *
+   * @param yAxisLeftWidthHint
+   */
+  public Styler setYAxisLeftWidthHint(int yAxisLeftWidthHint) {
 
     this.yAxisLeftWidthHint = yAxisLeftWidthHint;
+    return this;
   }
 
   public Styler setShowWithinAreaPoint(boolean showWithinAreaPoint) {
@@ -959,6 +898,7 @@ public abstract class Styler {
     return this;
   }
 
+  // TODO is this not used internally??
   public Color getYAxisTitleColor() {
 
     return yAxisTitleColor;
@@ -984,43 +924,22 @@ public abstract class Styler {
     yAxisGroupTitleColorMap.put(yAxisGroup, yAxisColor);
     return this;
   }
+  // Line, Scatter, Area Charts ///////////////////////////////
 
-  public Function<Double, String> getCustomCursorXDataFormattingFunction() {
-    return customCursorXDataFormattingFunction;
+  public int getMarkerSize() {
+
+    return markerSize;
   }
 
-  public void setCustomCursorXDataFormattingFunction(
-      Function<Double, String> customCursorXDataFormattingFunction) {
-    this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
-  }
+  /**
+   * Sets the size of the markers (in pixels)
+   *
+   * @param markerSize
+   */
+  public Styler setMarkerSize(int markerSize) {
 
-  public Function<Double, String> getCustomCursorYDataFormattingFunction() {
-    return customCursorYDataFormattingFunction;
-  }
-
-  public void setCustomCursorYDataFormattingFunction(
-      Function<Double, String> customCursorYDataFormattingFunction) {
-    this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
-  }
-
-  public enum LegendPosition {
-    OutsideE,
-    InsideNW,
-    InsideNE,
-    InsideSE,
-    InsideSW,
-    InsideN,
-    InsideS,
-    OutsideS
-  }
-
-  public enum LegendLayout {
-    Vertical,
-    Horizontal
-  }
-
-  public enum InfoPanelPosition {
-    OutsideS
+    this.markerSize = markerSize;
+    return this;
   }
 
   public enum ChartTheme {
@@ -1044,21 +963,9 @@ public abstract class Styler {
     }
   }
 
-  public enum TextAlignment {
-    Left,
-    Centre,
-    Right
-  }
+  public Theme getTheme() {
 
-  public enum ToolTipType {
-    xLabels,
-    yLabels,
-    xAndYLabels
-  }
-
-  public enum YAxisPosition {
-    Left,
-    Right
+    return theme;
   }
 
   private static class FontColorDetector {
@@ -1077,12 +984,14 @@ public abstract class Styler {
     }
 
     public Color getFontColor(Color backgroundColor) {
-      double backgroundColorPerceivedBrightness = Math.sqrt(
-              Math.pow(backgroundColor.getRed(), 2) * RED_FACTOR +
-                      Math.pow(backgroundColor.getGreen(), 2) * GREEN_FACTOR +
-                      Math.pow(backgroundColor.getBlue(), 2) * BLUE_FACTOR
-      );
-      return backgroundColorPerceivedBrightness < BRIGHTNESS_THRESHOLD ? lightForegroundColor : darkForegroundColor;
+      double backgroundColorPerceivedBrightness =
+          Math.sqrt(
+              Math.pow(backgroundColor.getRed(), 2) * RED_FACTOR
+                  + Math.pow(backgroundColor.getGreen(), 2) * GREEN_FACTOR
+                  + Math.pow(backgroundColor.getBlue(), 2) * BLUE_FACTOR);
+      return backgroundColorPerceivedBrightness < BRIGHTNESS_THRESHOLD
+          ? lightForegroundColor
+          : darkForegroundColor;
     }
   }
 }

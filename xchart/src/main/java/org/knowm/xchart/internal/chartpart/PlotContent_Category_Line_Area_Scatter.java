@@ -41,7 +41,6 @@ public class PlotContent_Category_Line_Area_Scatter<
     double yTickSpace = categoryStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
-    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
     Map<String, S> seriesMap = chart.getSeriesMap();
 
     int numCategories = seriesMap.values().iterator().next().getXData().size();
@@ -52,8 +51,6 @@ public class PlotContent_Category_Line_Area_Scatter<
       if (!series.isEnabled()) {
         continue;
       }
-      String[] toolTips = series.getToolTips();
-
       Axis yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
@@ -194,7 +191,7 @@ public class PlotContent_Category_Line_Area_Scatter<
           } else {
             g.setColor(categoryStyler.getErrorBarsColor());
           }
-          g.setStroke(errorBarStroke);
+          g.setStroke(ERROR_BAR_STROKE);
 
           // Top value
           double topValue;
@@ -232,21 +229,12 @@ public class PlotContent_Category_Line_Area_Scatter<
           g.draw(line);
         }
 
-        if (toolTipsEnabled) {
-          if (series.isCustomToolTips()) {
-            if (toolTips != null) {
-              String tt = toolTips[categoryCounter];
-              if (tt != null && !"".equals(tt)) {
-                chart.toolTips.addData(xOffset, yOffset, tt);
-              }
-            }
-          } else {
-            chart.toolTips.addData(
-                xOffset,
-                yOffset,
-                chart.getXAxisFormat().format(nextCat),
-                chart.getYAxisFormat().format(y));
-          }
+        if (chart.getStyler().isToolTipsEnabled()) {
+          toolTips.addData(
+              xOffset,
+              yOffset,
+              chart.getXAxisFormat().format(nextCat),
+              chart.getYAxisFormat().format(y));
         }
       }
 

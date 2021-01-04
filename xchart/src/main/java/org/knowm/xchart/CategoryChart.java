@@ -1,12 +1,14 @@
 package org.knowm.xchart;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -14,7 +16,7 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
 public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
@@ -31,7 +33,6 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     axisPair = new AxisPair<CategoryStyler, CategorySeries>(this);
     plot = new Plot_Category<CategoryStyler, CategorySeries>(this);
     legend = new Legend_Marker<CategoryStyler, CategorySeries>(this);
-    infoPanel = new InfoPanel<CategoryStyler, CategorySeries>(this);
   }
 
   /**
@@ -309,7 +310,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanel.paint(g);
+    annotations.forEach(x -> x.paint(g));
   }
 
   /** set the series color, marker and line style based on theme */
@@ -342,29 +343,4 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       }
     }
   }
-
-  //  /**
-  //   * Set custom X-Axis category labels
-  //   *
-  //   * @param customCategoryLabels Map containing category name -> label mappings
-  //   */
-  //  public void setCustomCategoryLabels(Map<Object, Object> customCategoryLabels) {
-  //
-  //    // get the first series
-  //    AxesChartSeriesCategory axesChartSeries = getSeriesMap().values().iterator().next();
-  //    // get the first categories, could be Number Date or String
-  //    List<?> categories = (List<?>) axesChartSeries.getXData();
-  //
-  //    Map<Double, Object> axisTickValueLabelMap = new LinkedHashMap<>();
-  //    for (Entry<Object, Object> entry : customCategoryLabels.entrySet()) {
-  //      int index = categories.indexOf(entry.getKey());
-  //      if (index == -1) {
-  //        throw new IllegalArgumentException("Could not find category index for " +
-  // entry.getKey());
-  //      }
-  //      axisTickValueLabelMap.put((double) index, entry.getValue());
-  //    }
-  //
-  //    setXAxisLabelOverrideMap(axisTickValueLabelMap);
-  //  }
 }

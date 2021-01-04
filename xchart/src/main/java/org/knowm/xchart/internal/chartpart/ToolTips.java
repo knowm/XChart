@@ -1,12 +1,10 @@
 package org.knowm.xchart.internal.chartpart;
 
-import static org.knowm.xchart.internal.chartpart.ChartPart.SOLID_STROKE;
-
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -14,201 +12,177 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
 
+// TODO make the background color the same color as the series??
 /**
  * Tooltips can be put on all data points or configured to popup like a tooltip from a mouse over.
  */
-public class ToolTips implements MouseMotionListener {
+public class ToolTips extends MouseAdapter implements ChartPart {
 
-  // edge detection
   private static final int MARGIN = 5;
-  // mouse margin
   private static final int MOUSE_MARGIN = 20;
-  // for pop up
-  private final List<DataPoint> dataPointList = new ArrayList<DataPoint>();
-  private final Styler styler;
-  private DataPoint dataPoint;
-  private double leftEdge;
-  private double rightEdge;
-  private double topEdge;
-  private double bottomEdge;
 
-  private int mouseX;
-  private int mouseY;
+  private final Chart chart;
+  private final Styler styler;
+
+  // The tool tips and currently shown Tooltip
+  private final List<ToolTip> toolTipList = new ArrayList<>();
+  private ToolTip tooltip = null;
 
   /**
    * Constructor
    *
-   * @param styler
+   * @param chart
    */
-  ToolTips(Styler styler) {
+  public ToolTips(Chart chart) {
 
-    this.styler = styler;
-    this.dataPoint = null;
+    this.chart = chart;
+    this.styler = chart.getStyler();
+    chart.plot.plotContent.setToolTips(this);
   }
 
-  @Override
-  public void mouseDragged(MouseEvent e) {
-
-    // ignore
-  }
+  ////////////////////////////////////////////
+  // MouseAdapter method /////////////////////
+  ////////////////////////////////////////////
 
   @Override
   public void mouseMoved(MouseEvent e) {
 
-    if (!styler.isToolTipsEnabled()) { // don't draw anything or all labels aready drawn
-      return;
-    }
+    boolean isRepaint = false;
 
-    DataPoint newPoint = null;
-    mouseX = e.getX();
-    mouseY = e.getY();
-    for (DataPoint dataPoint : dataPointList) {
-      if (dataPoint.shape.contains(mouseX, mouseY)) {
-        newPoint = dataPoint;
-        break;
-      }
-    }
+    ToolTip newPoint = getSelectedTooltip(e.getX(), e.getY());
 
     if (newPoint != null) {
 
       // if the existing shown data point is already shown, abort
-      if (dataPoint != null) {
-        if (dataPoint.equals(newPoint)) {
-          return;
+      if (tooltip != null) {
+        if (tooltip.equals(newPoint)) {
+          isRepaint = false; // Don't need to repaint again as it's already showing
         }
       }
-      dataPoint = newPoint;
-      e.getComponent().repaint(); // repaint the entire XChartPanel
+      tooltip = newPoint;
+      isRepaint = true;
+
     }
     // remove the popup shape
-    else if (dataPoint != null) {
-      dataPoint = null;
-      e.getComponent().repaint(); // repaint the entire XChartPanel
+    else if (tooltip != null) {
+      tooltip = null;
+      isRepaint = true;
+    }
+
+    if (isRepaint) {
+      //      xChartPanel.invalidate();
+      //      xChartPanel.repaint();
+      e.getComponent().repaint();
     }
   }
 
-  void prepare(Graphics2D g) {
+  private ToolTip getSelectedTooltip(int x, int y) {
 
-    if (!styler.isToolTipsEnabled()) {
-      return;
+    // find the datapoint based on the mouse location
+    ToolTip newPoint = null;
+    for (ToolTip tooltip : toolTipList) {
+      if (tooltip.shape.contains(x, y)) {
+        newPoint = tooltip;
+        break;
+      }
     }
-    // clear lists
-    dataPointList.clear();
-
-    Rectangle clipBounds = g.getClipBounds();
-
-    leftEdge = clipBounds.getX() + MARGIN;
-    rightEdge = clipBounds.getMaxX() - MARGIN * 2;
-
-    topEdge = clipBounds.getY() + MARGIN;
-    bottomEdge = clipBounds.getMaxY() - MARGIN * 2;
+    //    System.out.println("newPoint = " + newPoint);
+    return newPoint;
   }
 
+  ////////////////////////////////////////////
+  // ChartPart methods ///////////////////////
+  ////////////////////////////////////////////
+
+  @Override
+  public Rectangle2D getBounds() {
+    return null;
+  }
+
+  @Override
   public void paint(Graphics2D g) {
 
-    // abort of data labels is not enabled
-    if (!styler.isToolTipsEnabled()) {
-      return;
-    }
-
     if (styler.isToolTipsAlwaysVisible()) {
-      for (DataPoint dataPoint : dataPointList) {
-        paintToolTip(g, dataPoint);
+      for (ToolTip tooltip : toolTipList) {
+        paintToolTip(g, tooltip);
       }
     }
 
-    if (dataPoint != null) { // dataPoint was created in mouse move, need to render it
+    // TODO need this null check??
+    if (tooltip != null) { // dataPoint was created in mouse move, need to render it
+      // TODO See OHLC04. The line series are rendering as multi-line. Can we just define the
+      // tooltip during creation and if it's multiline, paint it
+      // as multiline??
       if (styler instanceof BoxStyler || styler instanceof OHLCStyler) {
         paintMultiLineToolTip(g);
       } else {
-        paintToolTip(g, dataPoint);
+        paintToolTip(g, tooltip);
       }
     }
   }
+  ////////////////////////////////////////////////
+  /// PAINTING //////////////////////////////////
+  ///////////////////////////////////////////////
 
-  /**
-   * Adds a data (xValue, yValue) with coordinates (xOffset, yOffset). This point will be
-   * highlighted with a circle centering (xOffset, yOffset)
-   */
-  void addData(double xOffset, double yOffset, String xValue, String yValue) {
-
-    String label = getLabel(xValue, yValue);
-
-    addData(xOffset, yOffset, label);
-  }
-
-  /**
-   * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with
-   * a circle centering (xOffset, yOffset)
-   */
-  public void addData(double xOffset, double yOffset, String label) {
-
-    DataPoint dp = new DataPoint(xOffset, yOffset, label);
-    dataPointList.add(dp);
-  }
-
-  /**
-   * Adds a data (xValue, yValue) with geometry defined with shape. This point will be highlighted
-   * using the shape
-   */
-  void addData(
-      Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
-
-    String label = getLabel(xValue, yValue);
-    addData(shape, xOffset, yOffset, width, label);
-  }
-
-  void addData(Shape shape, double xOffset, double yOffset, double width, String label) {
-
-    DataPoint dp = new DataPoint(shape, xOffset, yOffset, width, label);
-    dataPointList.add(dp);
-  }
-
-  private String getLabel(String xValue, String yValue) {
-
-    switch (styler.getToolTipType()) {
-      case xAndYLabels:
-        return "(" + xValue + ", " + yValue + ")";
-      case xLabels:
-        return xValue;
-      case yLabels:
-        return yValue;
-      default:
-        break;
-    }
-    return "";
-  }
-
-  private void paintToolTip(Graphics2D g, DataPoint dataPoint) {
+  private void paintToolTip(Graphics2D g, ToolTip tooltip) {
 
     TextLayout textLayout =
         new TextLayout(
-            dataPoint.label, styler.getToolTipFont(), new FontRenderContext(null, true, false));
+            tooltip.label, styler.getToolTipFont(), new FontRenderContext(null, true, false));
     Rectangle2D annotationRectangle = textLayout.getBounds();
-
-    double x = dataPoint.x + dataPoint.w / 2 - annotationRectangle.getWidth() / 2 - MARGIN;
-    double y = dataPoint.y - 3 * MARGIN - annotationRectangle.getHeight();
 
     double w = annotationRectangle.getWidth() + 2 * MARGIN;
     double h = annotationRectangle.getHeight() + 2 * MARGIN;
     double halfHeight = h / 2;
+    //    System.out.println("w = " + w);
+    //    System.out.println("h = " + h);
+    //    System.out.println("halfHeight = " + halfHeight);
 
-    if (dataPoint == this.dataPoint) {
+    // TODO is this needed??
+    if (tooltip == this.tooltip) {
       // not the box with label, but the shape
       // highlight shape for popup
       g.setColor(styler.getToolTipHighlightColor());
-      g.fill(dataPoint.shape);
+      g.fill(tooltip.shape);
     }
+
+    //    System.out.println("paintToolTip");
+
+    int leftEdge = (int) chart.plot.plotContent.getBounds().getX();
+    int rightEdge =
+        (int)
+            (chart.plot.plotContent.getBounds().getX()
+                + chart.plot.plotContent.getBounds().getWidth());
+    int topEdge = (int) chart.plot.plotContent.getBounds().getY();
+    int bottomEdge =
+        (int)
+            (chart.plot.plotContent.getBounds().getY()
+                + chart.plot.plotContent.getBounds().getHeight());
+    //    System.out.println("leftEdge = " + leftEdge);
+    //    System.out.println("rightEdge = " + rightEdge);
+    //    System.out.println("topEdge = " + topEdge);
+    //    System.out.println("bottomEdge = " + bottomEdge);
+
+    double x = tooltip.x + tooltip.w / 2 - annotationRectangle.getWidth() / 2 - MARGIN;
+    double y = tooltip.y - 3 * MARGIN - annotationRectangle.getHeight();
+    //    System.out.println("x = " + x);
+    //    System.out.println("y = " + y);
+    //    x = Math.min(x, -w);
+    //    System.out.println("x = " + x);
 
     // the label in a box
     x = Math.max(x, leftEdge);
     x = Math.min(x, rightEdge - w);
     y = Math.max(y, topEdge);
     y = Math.min(y, bottomEdge - h);
+    //    System.out.println("x = " + x);
+    //    System.out.println("y = " + y);
+
     Rectangle2D rectangle = new Rectangle2D.Double(x, y, w, h);
 
     // fill background
@@ -234,7 +208,7 @@ public class ToolTips implements MouseMotionListener {
 
   private void paintMultiLineToolTip(Graphics2D g) {
 
-    String[] texts = dataPoint.label.split(System.lineSeparator());
+    String[] texts = tooltip.label.split(System.lineSeparator());
     List<TextLayout> list = new ArrayList<>();
     TextLayout textLayout = null;
     Rectangle2D bounds = null;
@@ -252,15 +226,17 @@ public class ToolTips implements MouseMotionListener {
       list.add(textLayout);
     }
 
+    //    System.out.println("paintMultiLineToolTip");
+
     Rectangle clipBounds = g.getClipBounds();
-    double startX = mouseX;
-    double startY = mouseY;
-    if (mouseX + MOUSE_MARGIN + backgroundWidth > clipBounds.getX() + clipBounds.getWidth()) {
-      startX = mouseX - backgroundWidth - MOUSE_MARGIN;
+    double startX = tooltip.x;
+    double startY = tooltip.y;
+    if (tooltip.x + MOUSE_MARGIN + backgroundWidth > clipBounds.getX() + clipBounds.getWidth()) {
+      startX = tooltip.x - backgroundWidth - MOUSE_MARGIN;
     }
 
-    if (mouseY + MOUSE_MARGIN + backgroundHeight > clipBounds.getY() + clipBounds.getHeight()) {
-      startY = mouseY - backgroundHeight - MOUSE_MARGIN;
+    if (tooltip.y + MOUSE_MARGIN + backgroundHeight > clipBounds.getY() + clipBounds.getHeight()) {
+      startY = tooltip.y - backgroundHeight - MOUSE_MARGIN;
     }
 
     g.setColor(styler.getToolTipBackgroundColor());
@@ -276,6 +252,7 @@ public class ToolTips implements MouseMotionListener {
         startX + MOUSE_MARGIN + MARGIN,
         startY + textLayout.getBounds().getHeight() + MOUSE_MARGIN + MARGIN);
     g.transform(at);
+    // TODO make a fontcolor for tooltips in styler
     g.setColor(styler.getChartFontColor());
     g.setFont(styler.getToolTipFont());
     for (TextLayout t : list) {
@@ -287,14 +264,65 @@ public class ToolTips implements MouseMotionListener {
     g.setTransform(orig);
   }
 
-  public MouseMotionListener getMouseMotionListener() {
+  // Adding Tooltips ////////////////////////////
 
-    return this;
+  /**
+   * Adds a data (xValue, yValue) with coordinates (xOffset, yOffset). This point will be
+   * highlighted with a circle centering (xOffset, yOffset)
+   */
+  void addData(double xOffset, double yOffset, String xValue, String yValue) {
+
+    String label = getLabel(xValue, yValue);
+
+    addData(xOffset, yOffset, label);
   }
 
-  static class DataPoint {
+  /**
+   * Adds a data with label with coordinates (xOffset, yOffset). This point will be highlighted with
+   * a circle centering (xOffset, yOffset)
+   */
+  void addData(double xOffset, double yOffset, String label) {
+
+    ToolTip toolTip = new ToolTip(xOffset, yOffset, label);
+    toolTipList.add(toolTip);
+  }
+
+  /**
+   * Adds a data (xValue, yValue) with geometry defined with shape. This point will be highlighted
+   * using the shape
+   */
+  void addData(
+      Shape shape, double xOffset, double yOffset, double width, String xValue, String yValue) {
+
+    String label = getLabel(xValue, yValue);
+    addData(shape, xOffset, yOffset, width, label);
+  }
+
+  void addData(Shape shape, double xOffset, double yOffset, double width, String label) {
+
+    ToolTip toolTip = new ToolTip(shape, xOffset, yOffset, width, label);
+    toolTipList.add(toolTip);
+  }
+
+  private String getLabel(String xValue, String yValue) {
+
+    switch (styler.getToolTipType()) {
+      case xAndYLabels:
+        return "(" + xValue + ", " + yValue + ")";
+      case xLabels:
+        return xValue;
+      case yLabels:
+        return yValue;
+      default:
+        break;
+    }
+    return "";
+  }
+
+  static class ToolTip {
 
     // width of data point (used for bar charts)
+    // TODO possibly delete this
     final double w;
     private final String label;
     // used for popup detection & popup highlight
@@ -310,7 +338,7 @@ public class ToolTips implements MouseMotionListener {
      * @param y
      * @param label
      */
-    DataPoint(double x, double y, String label) {
+    ToolTip(double x, double y, String label) {
 
       double halfSize = MARGIN * 1.5;
       double markerSize = MARGIN * 3;
@@ -332,13 +360,43 @@ public class ToolTips implements MouseMotionListener {
      * @param width
      * @param label
      */
-    DataPoint(Shape shape, double x, double y, double width, String label) {
+    ToolTip(Shape shape, double x, double y, double width, String label) {
 
       this.x = x;
       this.y = y;
       this.w = width;
       this.shape = shape;
       this.label = label;
+    }
+
+    @Override
+    public String toString() {
+      return "DataPoint{"
+          + "w="
+          + w
+          + ", label='"
+          + label
+          + '\''
+          + ", shape="
+          + shape
+          + ", x="
+          + x
+          + ", y="
+          + y
+          + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      ToolTip tooltip = (ToolTip) o;
+      return label.equals(tooltip.label) && shape.equals(tooltip.shape);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(label, shape);
     }
   }
 }

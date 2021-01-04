@@ -50,7 +50,7 @@ public class SeriesColorMarkerLineStyleCycler {
     }
     Color seriesColor = seriesColorList[colorCounter++];
 
-    // 2. Stroke - cycle through strokes one by one but only after a color cycle
+    // 2. BasicStroke - cycle through strokes one by one but only after a color cycle
     if (strokeCounter >= seriesLineStyleList.length) {
       strokeCounter = 0;
     }

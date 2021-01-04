@@ -3,8 +3,8 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -17,61 +17,62 @@ import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.series.MarkerSeries;
 import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.XYStyler;
 
 /**
  * Cursor movement to display matching point data information.
  *
  * @author Mr14huashao
  */
-public class Cursor implements MouseMotionListener {
+public class Cursor extends MouseAdapter implements ChartPart {
 
   private static final int LINE_SPACING = 5;
 
   private static final int MOUSE_SPACING = 15;
 
   private final List<DataPoint> dataPointList = new ArrayList<>();
-
   private final List<DataPoint> matchingDataPointList = new ArrayList<>();
 
-  private final Styler styler;
-
-  private Rectangle2D bounds;
+  private final Chart chart;
+  private final XYStyler styler;
 
   private Map<String, Series> seriesMap;
 
   private double mouseX;
-
   private double mouseY;
-
   private double startX;
-
   private double startY;
+  private double textHeight;
 
-  private double textHeigh;
+  /**
+   * Constructor
+   *
+   * @param chart
+   */
+  public Cursor(Chart chart) {
 
-  Cursor(Styler styler) {
+    this.chart = chart;
+    this.styler = (XYStyler) chart.getStyler();
+    PlotContent_XY plotContent_xy = (PlotContent_XY) (chart.plot.plotContent);
+    plotContent_xy.setCursor(this);
 
-    this.styler = styler;
-  }
+    // clear lists
+    dataPointList.clear();
 
-  @Override
-  public void mouseDragged(MouseEvent e) {
-
-    // ignore
+    this.seriesMap = chart.getSeriesMap();
   }
 
   @Override
   public void mouseMoved(MouseEvent e) {
 
-    // don't draw anything
-    if (!styler.isCursorEnabled() || seriesMap == null) {
-      return;
-    }
+    //    // don't draw anything
+    //    if (!styler.isCursorEnabled() || seriesMap == null) {
+    //      return;
+    //    }
 
     mouseX = e.getX();
     mouseY = e.getY();
-    if (isMouseOut()) {
+    if (isMouseOutOfPlotContent()) {
 
       if (matchingDataPointList.size() > 0) {
         matchingDataPointList.clear();
@@ -79,16 +80,30 @@ public class Cursor implements MouseMotionListener {
       }
       return;
     }
+    calculateMatchingDataPoints();
     e.getComponent().repaint();
   }
 
+  private boolean isMouseOutOfPlotContent() {
+
+    boolean isMouseOut = false;
+    if (!chart.plot.plotContent.getBounds().contains(mouseX, mouseY)) {
+      isMouseOut = true;
+    }
+    return isMouseOut;
+  }
+
+  @Override
+  public Rectangle2D getBounds() {
+    return null;
+  }
+
+  @Override
   public void paint(Graphics2D g) {
 
-    if (!styler.isCursorEnabled()) {
-      return;
-    }
-
-    calculateMatchingDataPoints();
+    //    if (!styler.isCursorEnabled()) {
+    //      return;
+    //    }
 
     if (matchingDataPointList.size() > 0) {
       DataPoint firstDataPoint = matchingDataPointList.get(0);
@@ -98,24 +113,28 @@ public class Cursor implements MouseMotionListener {
               firstDataPoint.xValue,
               styler.getCursorFont(),
               new FontRenderContext(null, true, false));
-      textHeigh = xValueTextLayout.getBounds().getHeight();
+      textHeight = xValueTextLayout.getBounds().getHeight();
 
       paintVerticalLine(g, firstDataPoint);
 
       paintBackGround(g, xValueTextLayout);
 
-      painDataPointInfo(g, xValueTextLayout);
+      paintDataPointInfo(g, xValueTextLayout);
     }
   }
 
   private void paintVerticalLine(Graphics2D g, DataPoint dataPoint) {
 
     BasicStroke stroke =
-        new BasicStroke(styler.getCursorSize(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
+        new BasicStroke(styler.getCursorLineWidth(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
     g.setStroke(stroke);
     g.setColor(styler.getCursorColor());
     Line2D.Double line = new Line2D.Double();
-    line.setLine(dataPoint.x, bounds.getY(), dataPoint.x, bounds.getY() + bounds.getHeight());
+    line.setLine(
+        dataPoint.x,
+        chart.plot.plotContent.getBounds().getY(),
+        dataPoint.x,
+        chart.plot.plotContent.getBounds().getY() + chart.plot.plotContent.getBounds().getHeight());
     g.draw(line);
   }
 
@@ -138,16 +157,20 @@ public class Cursor implements MouseMotionListener {
 
     double backgroundWidth = styler.getCursorFont().getSize() + maxLinewidth + 3 * LINE_SPACING;
     double backgroundHeight =
-        textHeigh * (1 + matchingDataPointList.size())
+        textHeight * (1 + matchingDataPointList.size())
             + (2 + matchingDataPointList.size()) * LINE_SPACING;
 
     startX = mouseX;
     startY = mouseY;
-    if (mouseX + MOUSE_SPACING + backgroundWidth > bounds.getX() + bounds.getWidth()) {
+    if (mouseX + MOUSE_SPACING + backgroundWidth
+        > chart.plot.plotContent.getBounds().getX()
+            + chart.plot.plotContent.getBounds().getWidth()) {
       startX = mouseX - backgroundWidth - MOUSE_SPACING;
     }
 
-    if (mouseY + MOUSE_SPACING + backgroundHeight > bounds.getY() + bounds.getHeight()) {
+    if (mouseY + MOUSE_SPACING + backgroundHeight
+        > chart.plot.plotContent.getBounds().getY()
+            + chart.plot.plotContent.getBounds().getHeight()) {
       startY = mouseY - backgroundHeight - MOUSE_SPACING;
     }
 
@@ -159,11 +182,12 @@ public class Cursor implements MouseMotionListener {
         (int) (backgroundHeight));
   }
 
-  private void painDataPointInfo(Graphics2D g, TextLayout xValueTextLayout) {
+  private void paintDataPointInfo(Graphics2D g, TextLayout xValueTextLayout) {
+
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();
     at.translate(
-        startX + MOUSE_SPACING + LINE_SPACING, startY + textHeigh + MOUSE_SPACING + LINE_SPACING);
+        startX + MOUSE_SPACING + LINE_SPACING, startY + textHeight + MOUSE_SPACING + LINE_SPACING);
     g.transform(at);
     g.setColor(styler.getCursorFontColor());
     g.fill(xValueTextLayout.getOutline(null));
@@ -173,18 +197,18 @@ public class Cursor implements MouseMotionListener {
     Shape circle = null;
     for (DataPoint dataPoint : matchingDataPointList) {
       at = new AffineTransform();
-      at.translate(0, textHeigh + LINE_SPACING);
+      at.translate(0, textHeight + LINE_SPACING);
       g.transform(at);
       series = (MarkerSeries) seriesMap.get(dataPoint.seriesName);
       if (series == null) {
         continue;
       }
       g.setColor(series.getMarkerColor());
-      circle = new Ellipse2D.Double(0, -textHeigh, textHeigh, textHeigh);
+      circle = new Ellipse2D.Double(0, -textHeight, textHeight, textHeight);
       g.fill(circle);
 
       at = new AffineTransform();
-      at.translate(textHeigh + LINE_SPACING, 0);
+      at.translate(textHeight + LINE_SPACING, 0);
       g.transform(at);
       g.setColor(styler.getCursorFontColor());
       dataPointTextLayout =
@@ -195,22 +219,10 @@ public class Cursor implements MouseMotionListener {
       g.fill(dataPointTextLayout.getOutline(null));
 
       at = new AffineTransform();
-      at.translate(-textHeigh - LINE_SPACING, 0);
+      at.translate(-textHeight - LINE_SPACING, 0);
       g.transform(at);
     }
     g.setTransform(orig);
-  }
-
-  void prepare(Rectangle2D bounds, Map<String, Series> seriesMap) {
-
-    if (!styler.isCursorEnabled()) {
-      return;
-    }
-    // clear lists
-    dataPointList.clear();
-
-    this.bounds = bounds;
-    this.seriesMap = seriesMap;
   }
 
   void addData(double xOffset, double yOffset, String xValue, String yValue, String seriesName) {
@@ -219,23 +231,16 @@ public class Cursor implements MouseMotionListener {
     dataPointList.add(dataPoint);
   }
 
-  private boolean isMouseOut() {
-
-    boolean isMouseOut = false;
-    if (!bounds.contains(mouseX, mouseY)) {
-      isMouseOut = true;
-    }
-    return isMouseOut;
-  }
-
   /** One DataPoint per series, keep the DataPoint closest to mouseX */
   private void calculateMatchingDataPoints() {
 
     List<DataPoint> dataPoints = new ArrayList<>();
     for (DataPoint dataPoint : dataPointList) {
       if (dataPoint.shape.contains(mouseX, dataPoint.shape.getBounds().getCenterY())
-          && bounds.getY() < mouseY
-          && bounds.getY() + bounds.getHeight() > mouseY) {
+          && chart.plot.plotContent.getBounds().getY() < mouseY
+          && chart.plot.plotContent.getBounds().getY()
+                  + chart.plot.plotContent.getBounds().getHeight()
+              > mouseY) {
         dataPoints.add(dataPoint);
       }
     }

@@ -28,17 +28,16 @@ public class DialSeries extends Series {
   private Color markerColor;
 
   private double value;
-  private String annotation;
+  private String label;
 
   /**
-   * @param annotation Adds custom annotation for series. If annotation is null, it is automatically
-   *     calculated.
+   * @param label Adds custom label for series. If label is null, it is automatically calculated.
    */
-  public DialSeries(String name, double value, String annotation) {
+  public DialSeries(String name, double value, String label) {
 
     super(name);
     this.value = value;
-    this.annotation = annotation;
+    this.label = label;
   }
 
   public double getValue() {
@@ -51,9 +50,9 @@ public class DialSeries extends Series {
     this.value = value;
   }
 
-  public String getAnnotation() {
+  public String getLabel() {
 
-    return annotation;
+    return label;
   }
 
   public BasicStroke getLineStyle() {

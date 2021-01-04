@@ -1,6 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.text.Format;
@@ -8,14 +8,15 @@ import java.util.Map;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.XYStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 /** @author timmolter */
-public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
-    extends PlotContent_<ST, S> {
+public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends PlotContent_<ST, S> {
 
   private final ST xyStyler;
+
+  Cursor cursor;
 
   /**
    * Constructor
@@ -81,9 +82,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       // smooth curve
       Path2D.Double smoothPath = null;
 
-      boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
-      String[] toolTips = series.getToolTips();
-
+      // for area charts
       double yZeroTransform =
           getBounds().getHeight() - (yTopMargin + (0 - yMin) / (yMax - yMin) * yTickSpace);
       double yZeroOffset = yZeroTransform + getBounds().getY();
@@ -263,7 +262,7 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           } else {
             g.setColor(xyStyler.getErrorBarsColor());
           }
-          g.setStroke(errorBarStroke);
+          g.setStroke(ERROR_BAR_STROKE);
 
           // Top value
           double topValue;
@@ -301,22 +300,13 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           g.draw(line);
         }
 
-        // add data labels
-        if (toolTipsEnabled) {
-          if (series.isCustomToolTips()) {
-            if (toolTips != null) {
-              String tt = toolTips[i];
-              if (tt != null && !"".equals(tt)) {
-                chart.toolTips.addData(xOffset, yOffset, tt);
-              }
-            }
-          } else {
-            chart.toolTips.addData(
-                xOffset,
-                yOffset,
-                chart.getXAxisFormat().format(x),
-                chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
-          }
+        // add tooltips
+        if (chart.getStyler().isToolTipsEnabled()) {
+          toolTips.addData(
+              xOffset,
+              yOffset,
+              chart.getXAxisFormat().format(x),
+              chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
         }
 
         if (xyStyler.isCursorEnabled()) {
@@ -325,14 +315,14 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
           if (xyStyler.getCustomCursorXDataFormattingFunction() == null) {
             xFormat = chart.getXAxisFormat();
           } else {
-            xFormat = new CustomFormatter(xyStyler.getCustomCursorXDataFormattingFunction());
+            xFormat = new Formatter_Custom(xyStyler.getCustomCursorXDataFormattingFunction());
           }
           if (xyStyler.getCustomCursorYDataFormattingFunction() == null) {
             yFormat = chart.getYAxisFormat(series.getYAxisDecimalPattern());
           } else {
-            yFormat = new CustomFormatter(xyStyler.getCustomCursorYDataFormattingFunction());
+            yFormat = new Formatter_Custom(xyStyler.getCustomCursorYDataFormattingFunction());
           }
-          chart.cursor.addData(
+          cursor.addData(
               xOffset, yOffset, xFormat.format(x), yFormat.format(yOrig), series.getName());
         }
       }
@@ -345,6 +335,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       // close any open path for area charts
       g.setColor(series.getFillColor());
       closePathXY(g, path, previousX, yZeroOffset, polygonStartX, polygonStartY);
+    }
+    if (chart.getStyler().isCursorEnabled()) {
+      cursor.paint(g);
     }
   }
 
@@ -364,5 +357,9 @@ public class PlotContent_XY<ST extends AxesChartStyler, S extends XYSeries>
       path.closePath();
       g.fill(path);
     }
+  }
+
+  public void setCursor(Cursor cursor) {
+    this.cursor = cursor;
   }
 }

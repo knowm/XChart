@@ -7,13 +7,12 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -26,25 +25,28 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
-  protected final List<String> infoContent = new ArrayList<>();
-  final ToolTips toolTips; // ToolTip is here because AxisPair and Plot need access to it
-  final Cursor cursor;
+  protected ArrayList<ChartPart> annotations = new ArrayList<>();
+
   /** Chart Parts */
+  // TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't
+  // have an axis for example
   protected AxisPair axisPair;
 
   protected Plot_<ST, S> plot;
   protected Legend_<ST, S> legend;
-  protected InfoPanel infoPanel;
 
   /** Meta Data */
   private int width;
 
   private int height;
   private String title = "";
+  // TODO maybe move these to a secondary abstract class for inheritors with axes. Pie charts don't
+  // have an axis for example
   private String xAxisTitle = "";
   private String yAxisTitle = "";
-  private Map<Integer, String> yAxisGroupTitleMap = new HashMap<Integer, String>();
-  protected ArrayList<ChartPart> plotParts = new ArrayList<ChartPart>();
+
+  // TODO Does this belong here for all chart types?
+  private Map<Integer, String> yAxisGroupTitleMap = new HashMap<>();
 
   /**
    * Constructor
@@ -59,9 +61,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     this.height = height;
     this.styler = styler;
 
-    this.toolTips = new ToolTips(styler);
-    this.cursor = new Cursor(styler);
-
+    // TODO move this out??
     this.chartTitle = new ChartTitle<ST, S>(this);
   }
 
@@ -95,7 +95,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return seriesMap.remove(seriesName);
   }
 
-  /** Meta Data Getters and Setters */
+  /** Getters and Setters */
   public int getWidth() {
 
     return width;
@@ -115,7 +115,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     this.height = height;
   }
-
+  // TODO remove public
   public String getTitle() {
 
     return title;
@@ -138,6 +138,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   public String getYAxisTitle() {
 
+    // TODO just call the getYAxisGroupTitle method passing in the 0th index
     return yAxisTitle;
   }
 
@@ -145,7 +146,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     this.yAxisTitle = yAxisTitle;
   }
-
+  // TODO these related methods don't make sense for all chart types
   public String getYAxisGroupTitle(int yAxisGroup) {
 
     String title = yAxisGroupTitleMap.get(yAxisGroup);
@@ -160,23 +161,29 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     yAxisGroupTitleMap.put(yAxisGroup, yAxisTitle);
   }
 
-  public Map<String, S> getSeriesMap() {
+  public void addAnnotation(Annotation annotation) {
 
-    return seriesMap;
+    annotations.add(annotation);
+    annotation.init(this);
   }
 
-  public List<String> getInfoContent() {
-    return infoContent;
+  /**
+   * @Deprecated - use styler instead
+   *
+   * @param customFormattingFunction
+   */
+  public void setCustomXAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
+    AxesChartStyler axesChartStyler = (AxesChartStyler) (styler);
+    axesChartStyler.setxAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
-
-  public void setInfoContent(List<String> content) {
-    infoContent.clear();
-    infoContent.addAll(content);
-  }
-
-  public void addInfoContent(String content) {
-    List<String> lines = Arrays.asList(content.split("\\n"));
-    infoContent.addAll(lines);
+  /**
+   * @Deprecated - use styler instead
+   *
+   * @param customFormattingFunction
+   */
+  public void setCustomYAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
+    AxesChartStyler axesChartStyler = (AxesChartStyler) (styler);
+    axesChartStyler.setyAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
 
   /** Chart Parts Getters */
@@ -188,11 +195,6 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   Legend_<ST, S> getLegend() {
 
     return legend;
-  }
-
-  InfoPanel getInfoPanel() {
-
-    return infoPanel;
   }
 
   Plot_<ST, S> getPlot() {
@@ -228,6 +230,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
   }
 
+  // TODO investigate this
   Format getYAxisFormat(String yAxisDecimalPattern) {
     Format format = null;
     if (yAxisDecimalPattern != null) {
@@ -238,100 +241,21 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return format;
   }
 
-  public ArrayList<ChartPart> getPlotParts() {
+  //  ArrayList<ChartPart> getAnnotations() {
+  //
+  //    return annotations;
+  //  }
 
-    return plotParts;
-  }
-
-  public void addPlotPart(ChartPart chartPart) {
-
-    plotParts.add(chartPart);
-  }
-
-  public double getChartXFromCoordinate(int screenX) {
-
-    if (axisPair == null) {
-      return Double.NaN;
-    }
-    return axisPair.getXAxis().getChartValue(screenX);
-  }
-
-  public double getChartYFromCoordinate(int screenY) {
-
-    if (axisPair == null) {
-      return Double.NaN;
-    }
-    return axisPair.getYAxis().getChartValue(screenY);
-  }
-
-  public double getChartYFromCoordinate(int screenY, int yIndex) {
-
-    if (axisPair == null) {
-      return Double.NaN;
-    }
-    return axisPair.getYAxis(yIndex).getChartValue(screenY);
-  }
-
-  public double getScreenXFromChart(double xValue) {
-
-    if (axisPair == null) {
-      return Double.NaN;
-    }
-    return axisPair.getXAxis().getScreenValue(xValue);
-  }
-
-  public double getScreenYFromChart(double yValue) {
-
-    if (axisPair == null) {
-      return Double.NaN;
-    }
-    return axisPair.getYAxis().getScreenValue(yValue);
-  }
-
-  public double getScreenYFromChart(double yValue, int yIndex) {
-
-    if (axisPair == null) {
-      return Double.NaN;
-    }
-    return axisPair.getYAxis(yIndex).getScreenValue(yValue);
-  }
-
+  // TODO remove public
   public double getYAxisLeftWidth() {
 
     java.awt.geom.Rectangle2D.Double bounds = getAxisPair().getLeftYAxisBounds();
     return bounds.width + bounds.x;
   }
 
-  public void setCustomXAxisTickLabelsMap(Map<Object, Object> overrideMap) {
+  // TODO remove this?
+  public Map<String, S> getSeriesMap() {
 
-    axisPair.addCustomTickLabelMap("X0", overrideMap);
-  }
-
-  public void setCustomYAxisTickLabelsMap(Map<Object, Object> overrideMap) {
-
-    axisPair.addCustomTickLabelMap("Y0", overrideMap);
-  }
-
-  public void setCustomYAxisTickLabelsMap(Map<Double, Object> overrideMap, int yAxisGroup) {
-
-    axisPair.addCustomTickLabelMap(("Y" + yAxisGroup), overrideMap);
-  }
-
-  public void setCustomXAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
-    getAxisPair().getXAxis().setCustomFormattingFunction(customFormattingFunction);
-  }
-
-  public void setCustomYAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
-    getAxisPair().getYAxis().setCustomFormattingFunction(customFormattingFunction);
-  }
-
-  public ToolTips getToolTips() {
-
-    return toolTips;
-  }
-
-  public Cursor getCursor() {
-
-    return cursor;
+    return seriesMap;
   }
 }

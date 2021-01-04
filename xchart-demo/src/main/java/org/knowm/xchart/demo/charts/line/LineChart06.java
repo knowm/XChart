@@ -26,14 +26,15 @@ public class LineChart06 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new LineChart06();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
   public XYChart getChart() {
 
     // Create Chart
-    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+    XYChart chart =
+        new XYChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
     // Customize Chart
     chart.getStyler().setYAxisLogarithmic(true);

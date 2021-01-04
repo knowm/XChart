@@ -1,15 +1,14 @@
 package org.knowm.xchart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.chartpart.InfoPanel;
 import org.knowm.xchart.internal.chartpart.Legend_Pie;
 import org.knowm.xchart.internal.chartpart.Plot_Dial;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.DialStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Theme;
+import org.knowm.xchart.style.theme.Theme;
 
 public class DialChart extends Chart<DialStyler, DialSeries> {
 
@@ -24,7 +23,6 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     super(width, height, new DialStyler());
     plot = new Plot_Dial<DialStyler, DialSeries>(this);
     legend = new Legend_Pie<DialStyler, DialSeries>(this);
-    infoPanel = new InfoPanel<DialStyler, DialSeries>(this);
   }
 
   /**
@@ -80,15 +78,15 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
    *
    * @param seriesName
    * @param value
-   * @param annotation
+   * @param label
    * @return
    */
-  public DialSeries addSeries(String seriesName, double value, String annotation) {
+  public DialSeries addSeries(String seriesName, double value, String label) {
 
     // Sanity checks
     sanityCheck(seriesName, value);
 
-    DialSeries series = new DialSeries(seriesName, value, annotation);
+    DialSeries series = new DialSeries(seriesName, value, label);
 
     seriesMap.put(seriesName, series);
 
@@ -121,7 +119,7 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    infoPanel.paint(g);
+    annotations.forEach(x -> x.paint(g));
   }
 
   /** set the series color based on theme */

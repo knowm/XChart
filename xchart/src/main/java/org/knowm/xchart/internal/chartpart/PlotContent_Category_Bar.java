@@ -37,61 +37,6 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     this.stylerCategory = chart.getStyler();
   }
 
-  private void drawStepBarLine(Graphics2D g, S series, Path2D.Double path) {
-
-    if (series.getLineColor() != null) {
-      g.setColor(series.getLineColor());
-      g.setStroke(series.getLineStyle());
-      g.draw(path);
-    }
-  }
-
-  private void drawStepBarFill(Graphics2D g, S series, Path2D.Double path) {
-
-    if (series.getFillColor() != null) {
-      g.setColor(series.getFillColor());
-      g.fill(path);
-    }
-  }
-
-  private void drawStepBar(
-      Graphics2D g,
-      S series,
-      ArrayList<Point2D.Double> path,
-      ArrayList<Point2D.Double> returnPath) {
-
-    Collections.reverse(returnPath);
-
-    // The last point will be a duplicate of the first.
-    // Pop it before adding all to the main path
-    returnPath.remove(returnPath.size() - 1);
-    path.addAll(returnPath);
-
-    Path2D.Double drawPath = new Path2D.Double();
-
-    // Start draw path from first point, which can then be discarded
-    Point2D.Double startPoint = path.remove(0);
-    drawPath.moveTo(startPoint.getX(), startPoint.getY());
-
-    // Prepare complete fill path
-    for (Point2D.Double currentPoint : path) {
-
-      drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
-    }
-    drawStepBarFill(g, series, drawPath);
-
-    // Remove the bottom portion and draw only the upper outline
-    drawPath.reset();
-    drawPath.moveTo(startPoint.getX(), startPoint.getY());
-    List<Point2D.Double> linePath = path.subList(0, path.size() - returnPath.size() + 1);
-    for (Point2D.Double currentPoint : linePath) {
-
-      drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
-    }
-
-    drawStepBarLine(g, series, drawPath);
-  }
-
   @Override
   public void doPaint(Graphics2D g) {
 
@@ -132,14 +77,11 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     double[] accumulatedStackOffsetNeg = new double[numCategories];
     double[] accumulatedStackOffsetTotalYOffset = new double[numCategories];
 
-    boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
-
     for (S series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
         continue;
       }
-      String[] toolTips = series.getToolTips();
 
       yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
@@ -384,18 +326,36 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           // g.draw(path);
           // }
 
-          if (stylerCategory.hasAnnotations() && next != null) {
-            drawAnnotations(g, next, xOffset, yOffset, zeroOffset, barWidth, false, series.getFillColor());
+          if (stylerCategory.isLabelsVisible() && next != null) {
+            drawLabels(
+                g,
+                next,
+                xOffset,
+                yOffset,
+                zeroOffset,
+                barWidth,
+                false,
+                false,
+                series.getFillColor());
           }
-          if (stylerCategory.hasAnnotations()
-              && stylerCategory.isShowTotalAnnotations()
+          if (stylerCategory.isLabelsVisible()
+              && stylerCategory.isShowStackSum()
               && stylerCategory.isStacked()
               && seriesCounter == (seriesMap.size() - 1)) {
             Number totalNext =
                 accumulatedStackOffsetPos[categoryCounter - 1]
                     - accumulatedStackOffsetNeg[categoryCounter - 1];
             double totalYOffset = accumulatedStackOffsetTotalYOffset[categoryCounter - 1];
-            drawAnnotations(g, totalNext, xOffset, totalYOffset, zeroOffset, barWidth, true, series.getFillColor());
+            drawLabels(
+                g,
+                totalNext,
+                xOffset,
+                totalYOffset,
+                zeroOffset,
+                barWidth,
+                true,
+                true,
+                series.getFillColor());
           }
         } else if (CategorySeriesRenderStyle.Stick.equals(
             series.getChartCategorySeriesRenderStyle())) {
@@ -464,7 +424,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           } else {
             g.setColor(stylerCategory.getErrorBarsColor());
           }
-          g.setStroke(errorBarStroke);
+          g.setStroke(ERROR_BAR_STROKE);
 
           // Top value
           if (stylerCategory.isYAxisLogarithmic()) {
@@ -500,7 +460,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           g.draw(line);
         }
         // add data labels
-        if (toolTipsEnabled) {
+        if (chart.getStyler().isToolTipsEnabled()) {
           Rectangle2D.Double rect =
               new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
           double yPoint;
@@ -510,22 +470,13 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             yPoint = yOffset;
           }
 
-          if (series.isCustomToolTips()) {
-            if (toolTips != null) {
-              String tt = toolTips[categoryCounter - 1];
-              if (tt != null && !"".equals(tt)) {
-                chart.toolTips.addData(rect, xOffset, yPoint, barWidth, tt);
-              }
-            }
-          } else {
-            chart.toolTips.addData(
-                rect,
-                xOffset,
-                yPoint,
-                barWidth,
-                chart.getXAxisFormat().format(nextCat),
-                chart.getYAxisFormat().format(yOrig));
-          }
+          toolTips.addData(
+              rect,
+              xOffset,
+              yPoint,
+              barWidth,
+              chart.getXAxisFormat().format(nextCat),
+              chart.getYAxisFormat().format(yOrig));
         }
       }
 
@@ -539,60 +490,116 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     }
   }
 
-  private void drawAnnotations(
+  private void drawStepBarLine(Graphics2D g, S series, Path2D.Double path) {
+
+    if (series.getLineColor() != null) {
+      g.setColor(series.getLineColor());
+      g.setStroke(series.getLineStyle());
+      g.draw(path);
+    }
+  }
+
+  private void drawStepBarFill(Graphics2D g, S series, Path2D.Double path) {
+
+    if (series.getFillColor() != null) {
+      g.setColor(series.getFillColor());
+      g.fill(path);
+    }
+  }
+
+  private void drawStepBar(
+      Graphics2D g,
+      S series,
+      ArrayList<Point2D.Double> path,
+      ArrayList<Point2D.Double> returnPath) {
+
+    Collections.reverse(returnPath);
+
+    // The last point will be a duplicate of the first.
+    // Pop it before adding all to the main path
+    returnPath.remove(returnPath.size() - 1);
+    path.addAll(returnPath);
+
+    Path2D.Double drawPath = new Path2D.Double();
+
+    // Start draw path from first point, which can then be discarded
+    Point2D.Double startPoint = path.remove(0);
+    drawPath.moveTo(startPoint.getX(), startPoint.getY());
+
+    // Prepare complete fill path
+    for (Point2D.Double currentPoint : path) {
+
+      drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
+    }
+    drawStepBarFill(g, series, drawPath);
+
+    // Remove the bottom portion and draw only the upper outline
+    drawPath.reset();
+    drawPath.moveTo(startPoint.getX(), startPoint.getY());
+    List<Point2D.Double> linePath = path.subList(0, path.size() - returnPath.size() + 1);
+    for (Point2D.Double currentPoint : linePath) {
+
+      drawPath.lineTo(currentPoint.getX(), currentPoint.getY());
+    }
+
+    drawStepBarLine(g, series, drawPath);
+  }
+
+  private void drawLabels(
       Graphics2D g,
       Number next,
       double xOffset,
       double yOffset,
       double zeroOffset,
       double barWidth,
+      boolean showStackSum,
       boolean isTotalAnnotations,
       Color seriesColor) {
+
     String numberAsString = chart.getYAxisFormat().format(next);
 
     TextLayout textLayout =
         new TextLayout(
             numberAsString,
-            stylerCategory.getAnnotationsFont(),
+            stylerCategory.getLabelsFont(),
             new FontRenderContext(null, true, false));
 
     AffineTransform rot =
         AffineTransform.getRotateInstance(
-            -1 * Math.toRadians(stylerCategory.getAnnotationsRotation()), 0, 0);
+            -1 * Math.toRadians(stylerCategory.getLabelsRotation()), 0, 0);
     Shape shape = textLayout.getOutline(rot);
-    Rectangle2D annotationRectangle = textLayout.getBounds();
+    Rectangle2D labelRectangle = textLayout.getBounds();
 
-    double annotationX;
-    if (stylerCategory.getAnnotationsRotation() > 0) {
-      double annotationXDelta =
-          annotationRectangle.getHeight() / 2 + annotationRectangle.getWidth() / 2;
-      double rotationOffset = annotationXDelta * stylerCategory.getAnnotationsRotation() / 90;
-      annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2 + rotationOffset;
+    double labelX;
+    if (stylerCategory.getLabelsRotation() > 0) {
+      double labelXDelta = labelRectangle.getHeight() / 2 + labelRectangle.getWidth() / 2;
+      double rotationOffset = labelXDelta * stylerCategory.getLabelsRotation() / 90;
+      labelX = xOffset + barWidth / 2 - labelRectangle.getWidth() / 2 + rotationOffset - 1;
     } else {
-      annotationX = xOffset + barWidth / 2 - annotationRectangle.getWidth() / 2;
+      labelX = xOffset + barWidth / 2 - labelRectangle.getWidth() / 2 - 1;
     }
-    double annotationY;
-    if (isTotalAnnotations) {
-      annotationY = yOffset - 4;
+    double labelY;
+    if (showStackSum) {
+      labelY = yOffset - 4;
     } else {
       if (next.doubleValue() >= 0.0) {
-        annotationY =
+        labelY =
             yOffset
-                + (zeroOffset - yOffset) * (1 - stylerCategory.getAnnotationsPosition())
-                + annotationRectangle.getHeight() * stylerCategory.getAnnotationsPosition();
+                + (zeroOffset - yOffset) * (1 - stylerCategory.getLabelsPosition())
+                + labelRectangle.getHeight() * stylerCategory.getLabelsPosition();
       } else {
-        annotationY =
+        labelY =
             zeroOffset
-                - (zeroOffset - yOffset) * (1 - stylerCategory.getAnnotationsPosition())
-                + annotationRectangle.getHeight() * (1 - stylerCategory.getAnnotationsPosition());
+                - (zeroOffset - yOffset) * (1 - stylerCategory.getLabelsPosition())
+                + labelRectangle.getHeight() * (1 - stylerCategory.getLabelsPosition());
       }
     }
 
-    g.setColor(stylerCategory.getAnnotationsFontColor(seriesColor));
-    g.setFont(stylerCategory.getAnnotationsFont());
+    g.setColor(stylerCategory.getLabelsFontColor(seriesColor));
+    g.setFont(stylerCategory.getLabelsFont());
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();
-    at.translate(annotationX, annotationY);
+    at.translate(labelX, labelY);
     g.transform(at);
     g.fill(shape);
     g.setTransform(orig);

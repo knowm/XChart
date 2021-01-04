@@ -27,7 +27,7 @@ public class LineChart05 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new LineChart05();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -38,7 +38,7 @@ public class LineChart05 implements ExampleChart<XYChart> {
         new XYChartBuilder()
             .width(800)
             .height(600)
-            .title("LineChart05")
+            .title(getClass().getSimpleName())
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();
@@ -51,6 +51,12 @@ public class LineChart05 implements ExampleChart<XYChart> {
     chart.getStyler().setXAxisMin(2.0);
     chart.getStyler().setXAxisMax(7.0);
     chart.getStyler().setToolTipsEnabled(true);
+    //    chart.getStyler().setToolTipsAlwaysVisible(true);
+    //    chart.getStyler().setToolTipFont(new Font("Verdana", Font.BOLD, 12));
+    //    chart.getStyler().setToolTipHighlightColor(Color.CYAN);
+    //    chart.getStyler().setToolTipBorderColor(Color.BLACK);
+    //    chart.getStyler().setToolTipBackgroundColor(Color.LIGHT_GRAY);
+    //    chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
 
     // Series
     double[] xData = new double[] {0.0, 1.0, 2.0, 3.0, 4.0, 5, 6};
