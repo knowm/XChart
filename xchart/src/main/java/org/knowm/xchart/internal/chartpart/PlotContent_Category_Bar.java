@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.Graphics2D;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -328,7 +327,16 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           // }
 
           if (stylerCategory.isLabelsVisible() && next != null) {
-            drawLabels(g, next, xOffset, yOffset, zeroOffset, barWidth, false);
+            drawLabels(
+                g,
+                next,
+                xOffset,
+                yOffset,
+                zeroOffset,
+                barWidth,
+                false,
+                false,
+                series.getFillColor());
           }
           if (stylerCategory.isLabelsVisible()
               && stylerCategory.isShowStackSum()
@@ -338,7 +346,16 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 accumulatedStackOffsetPos[categoryCounter - 1]
                     - accumulatedStackOffsetNeg[categoryCounter - 1];
             double totalYOffset = accumulatedStackOffsetTotalYOffset[categoryCounter - 1];
-            drawLabels(g, totalNext, xOffset, totalYOffset, zeroOffset, barWidth, true);
+            drawLabels(
+                g,
+                totalNext,
+                xOffset,
+                totalYOffset,
+                zeroOffset,
+                barWidth,
+                true,
+                true,
+                series.getFillColor());
           }
         } else if (CategorySeriesRenderStyle.Stick.equals(
             series.getChartCategorySeriesRenderStyle())) {
@@ -535,7 +552,10 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
       double yOffset,
       double zeroOffset,
       double barWidth,
-      boolean showStackSum) {
+      boolean showStackSum,
+      boolean isTotalAnnotations,
+      Color seriesColor) {
+
     String numberAsString = chart.getYAxisFormat().format(next);
 
     TextLayout textLayout =
@@ -575,7 +595,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
       }
     }
 
-    g.setColor(stylerCategory.getLabelsFontColor());
+    g.setColor(stylerCategory.getLabelsFontColor(seriesColor));
     g.setFont(stylerCategory.getLabelsFont());
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();

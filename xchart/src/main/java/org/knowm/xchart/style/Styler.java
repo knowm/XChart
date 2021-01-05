@@ -85,6 +85,21 @@ public abstract class Styler {
   private Color toolTipBorderColor;
   private Font toolTipFont;
   private Color toolTipHighlightColor;
+  // Cursor ////////////////////////////////
+  private boolean isCursorEnabled;
+  private Color cursorColor;
+  private float cursorSize;
+  private Font cursorFont;
+  private Color cursorFontColor;
+  private Color cursorBackgroundColor;
+  // Annotations ///////////////////////////////
+  private Font annotationsFont;
+  private Color annotationsFontColor;
+  protected FontColorDetector annotationsFontColorDetector;
+  private boolean isAnnotationAutoColorDetectionEnabled;
+  private int annotationsRotation = 0;
+  private float annotationsPosition = 0.5f;
+  private boolean showTotalAnnotations = false;
 
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
@@ -176,6 +191,9 @@ public abstract class Styler {
 
     // Line, Scatter, Area, Radar Charts ///////////////////////////////
     this.markerSize = theme.getMarkerSize();
+
+    setAnnotationsAutodetectColors(theme.getAnnotationAutodetectDarkFontColor(), theme.getAnnotationAutodetectLightFontColor());
+    setAnnotationAutoColorDetectionEnabled(theme.isAnnotationAutoColorDetectionEnabled());
   }
 
   public Font getBaseFont() {
@@ -495,6 +513,14 @@ public abstract class Styler {
     return this;
   }
 
+  public boolean isAnnotationAutoColorDetectionEnabled() {
+    return isAnnotationAutoColorDetectionEnabled;
+  }
+
+  public void setAnnotationAutoColorDetectionEnabled(boolean annotationAutoColorDetectionEnabled) {
+    isAnnotationAutoColorDetectionEnabled = annotationAutoColorDetectionEnabled;
+  }
+
   public enum LegendPosition {
     OutsideE,
     InsideNW,
@@ -808,6 +834,33 @@ public abstract class Styler {
     return toolTipBorderColor;
   }
 
+  public Color getAnnotationsFontColor(Color backgroundColor) {
+    if (!isAnnotationAutoColorDetectionEnabled() || annotationsFontColorDetector == null || backgroundColor == null) {
+      return annotationsFontColor;
+    }
+    return annotationsFontColorDetector.getFontColor(backgroundColor);
+  }
+
+  /**
+   * Sets auto-detection colors for chart annotations. If the series background color is dark, the
+   * light annotation color is drawn. If the series background color is light, the dark annotation
+   * color is drawn.
+   *
+   * @param annotationsDarkFontColor the dark color to draw on series with a light background
+   * @param annotationsLightFontColor the light color to draw on series with a dark background
+   * @return this styler
+   */
+  public Styler setAnnotationsAutodetectColors(
+      Color annotationsDarkFontColor, Color annotationsLightFontColor) {
+    this.annotationsFontColorDetector =
+        new FontColorDetector(annotationsDarkFontColor, annotationsLightFontColor);
+    return this;
+  }
+
+  public int getAnnotationsRotation() {
+    return annotationsRotation;
+  }
+
   public Styler setToolTipBorderColor(Color toolTipBorderColor) {
 
     this.toolTipBorderColor = toolTipBorderColor;
@@ -996,5 +1049,32 @@ public abstract class Styler {
   public Theme getTheme() {
 
     return theme;
+  }
+
+  private static class FontColorDetector {
+
+    private static final int BRIGHTNESS_THRESHOLD = 130;
+    private static final double RED_FACTOR = .241;
+    private static final double GREEN_FACTOR = .587;
+    private static final double BLUE_FACTOR = .114;
+
+    private final Color darkForegroundColor;
+    private final Color lightForegroundColor;
+
+    private FontColorDetector(Color darkForegroundColor, Color lightForegroundColor) {
+      this.darkForegroundColor = darkForegroundColor;
+      this.lightForegroundColor = lightForegroundColor;
+    }
+
+    public Color getFontColor(Color backgroundColor) {
+      double backgroundColorPerceivedBrightness =
+          Math.sqrt(
+              Math.pow(backgroundColor.getRed(), 2) * RED_FACTOR
+                  + Math.pow(backgroundColor.getGreen(), 2) * GREEN_FACTOR
+                  + Math.pow(backgroundColor.getBlue(), 2) * BLUE_FACTOR);
+      return backgroundColorPerceivedBrightness < BRIGHTNESS_THRESHOLD
+          ? lightForegroundColor
+          : darkForegroundColor;
+    }
   }
 }

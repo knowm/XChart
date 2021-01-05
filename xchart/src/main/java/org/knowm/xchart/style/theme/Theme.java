@@ -268,4 +268,10 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   Color getErrorBarsColor();
 
   boolean isErrorBarsColorSeriesColor();
+
+  Color getAnnotationAutodetectDarkFontColor();
+
+  Color getAnnotationAutodetectLightFontColor();
+
+  boolean isAnnotationAutoColorDetectionEnabled();
 }
