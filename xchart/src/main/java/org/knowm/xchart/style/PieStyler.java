@@ -1,7 +1,9 @@
 package org.knowm.xchart.style;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
+import org.knowm.xchart.style.colors.FontColorDetector;
 import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
@@ -18,12 +20,16 @@ public class PieStyler extends Styler {
   private ClockwiseDirectionType clockwiseDirectionType = ClockwiseDirectionType.COUNTER_CLOCKWISE;
   private float sliceBorderWidth = 0;
 
+  // labels //////////////////////
   private boolean isLabelsVisible;
   private Font labelsFont;
   private Color labelsFontColor;
   private double labelsDistance;
   private LabelType labelType;
   private boolean isForceAllLabelsVisible;
+  private boolean isLabelsFontColorAutomaticEnabled;
+  private Color labelsFontColorAutomaticLight;
+  private Color labelsFontColorAutomaticDark;
 
   public PieStyler() {
 
@@ -50,6 +56,9 @@ public class PieStyler extends Styler {
     this.labelsDistance = theme.getLabelsDistance();
     this.labelType = theme.getLabelType();
     this.isForceAllLabelsVisible = theme.setForceAllLabelsVisible();
+    isLabelsFontColorAutomaticEnabled = theme.isLabelsFontColorAutomaticEnabled();
+    labelsFontColorAutomaticLight = theme.getLabelsFontColorAutomaticLight();
+    labelsFontColorAutomaticDark = theme.getLabelsFontColorAutomaticDark();
   }
 
   public PieSeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -275,6 +284,11 @@ public class PieStyler extends Styler {
     return labelsFontColor;
   }
 
+  public Color getLabelsFontColor(Color backgroundColor) {
+
+    return FontColorDetector.getAutomaticFontColor(
+        backgroundColor, labelsFontColorAutomaticDark, labelsFontColorAutomaticLight);
+  }
   /**
    * Sets the color of the Font used for chart annotations
    *
@@ -285,6 +299,32 @@ public class PieStyler extends Styler {
     return this;
   }
 
+  public boolean isLabelsFontColorAutomaticEnabled() {
+    return isLabelsFontColorAutomaticEnabled;
+  }
+
+  public PieStyler setLabelsFontColorAutomaticEnabled(boolean isLabelsFontColorAutomaticEnabled) {
+    this.isLabelsFontColorAutomaticEnabled = isLabelsFontColorAutomaticEnabled;
+    return this;
+  }
+
+  public Color getLabelsFontColorAutomaticLight() {
+    return labelsFontColorAutomaticLight;
+  }
+
+  public PieStyler setLabelsFontColorAutomaticLight(Color labelsFontColorAutomaticLight) {
+    this.labelsFontColorAutomaticLight = labelsFontColorAutomaticLight;
+    return this;
+  }
+
+  public Color getLabelsFontColorAutomaticDark() {
+    return labelsFontColorAutomaticDark;
+  }
+
+  public PieStyler setLabelsFontColorAutomaticDark(Color labelsFontColorAutomaticDark) {
+    this.labelsFontColorAutomaticDark = labelsFontColorAutomaticDark;
+    return this;
+  }
   /**
    * Set the theme the styler should use
    *

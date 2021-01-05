@@ -36,8 +36,8 @@ public class HeatMapChart02 implements ExampleChart<HeatMapChart> {
     HeatMapChart chart =
         new HeatMapChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
 
-    chart.getStyler().setPlotContentSize(0.999);
-    chart.getStyler().setXAxisMaxLabelCount(10);
+    //    chart.getStyler().setPlotContentSize(0.999);
+    //    chart.getStyler().setXAxisMaxLabelCount(10);
 
     Color[] rangeColors = {new Color(255, 182, 193), new Color(255, 20, 147), new Color(139, 0, 0)};
     chart.getStyler().setRangeColors(rangeColors);

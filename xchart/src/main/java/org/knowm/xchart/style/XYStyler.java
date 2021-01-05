@@ -19,6 +19,7 @@ public class XYStyler extends AxesChartStyler {
   private boolean zoomResetByButton;
 
   // Cursor ////////////////////////////////
+
   private boolean isCursorEnabled;
   private Color cursorColor;
   private float cursorLineWidth;

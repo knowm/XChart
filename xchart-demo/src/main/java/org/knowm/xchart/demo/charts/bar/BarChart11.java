@@ -68,6 +68,7 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
     chart.getStyler().setLabelsFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
     chart.getStyler().setLabelsFontColor(Color.WHITE);
     chart.getStyler().setLabelsPosition(.5);
+    chart.getStyler().setLabelsFontColorAutomaticEnabled(false);
     chart.getStyler().setLabelsRotation(45);
 
     // Series

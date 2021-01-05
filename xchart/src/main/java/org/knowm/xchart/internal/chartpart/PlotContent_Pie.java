@@ -360,7 +360,12 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         // draw label
         if (pieStyler.isForceAllLabelsVisible() || labelWillFit) {
 
-          g.setColor(pieStyler.getLabelsFontColor());
+          if (pieStyler.isLabelsFontColorAutomaticEnabled()) {
+            g.setColor(pieStyler.getLabelsFontColor(series.getFillColor()));
+          } else {
+            g.setColor(pieStyler.getLabelsFontColor());
+          }
+
           g.setFont(pieStyler.getLabelsFont());
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();

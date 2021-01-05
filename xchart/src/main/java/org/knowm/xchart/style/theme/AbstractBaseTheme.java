@@ -437,19 +437,4 @@ public abstract class AbstractBaseTheme implements Theme {
 
     return false;
   }
-
-  @Override
-  public Color getAnnotationAutodetectDarkFontColor() {
-    return Color.BLACK;
-  }
-
-  @Override
-  public Color getAnnotationAutodetectLightFontColor() {
-    return Color.WHITE;
-  }
-
-  @Override
-  public boolean isAnnotationAutoColorDetectionEnabled() {
-    return true;
-  }
 }

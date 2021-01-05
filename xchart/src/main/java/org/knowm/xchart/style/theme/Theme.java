@@ -269,9 +269,17 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   boolean isErrorBarsColorSeriesColor();
 
-  Color getAnnotationAutodetectDarkFontColor();
+  // Labels (pie charts, bar charts)
 
-  Color getAnnotationAutodetectLightFontColor();
+  default Color getLabelsFontColorAutomaticDark() {
+    return Color.BLACK;
+  }
 
-  boolean isAnnotationAutoColorDetectionEnabled();
+  default Color getLabelsFontColorAutomaticLight() {
+    return Color.WHITE;
+  }
+
+  default boolean isLabelsFontColorAutomaticEnabled() {
+    return true;
+  }
 }

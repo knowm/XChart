@@ -594,8 +594,12 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 + labelRectangle.getHeight() * (1 - stylerCategory.getLabelsPosition());
       }
     }
+    if (stylerCategory.isLabelsFontColorAutomaticEnabled()) {
+      g.setColor(stylerCategory.getLabelsFontColor(seriesColor));
+    } else {
+      g.setColor(stylerCategory.getLabelsFontColor());
+    }
 
-    g.setColor(stylerCategory.getLabelsFontColor(seriesColor));
     g.setFont(stylerCategory.getLabelsFont());
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();

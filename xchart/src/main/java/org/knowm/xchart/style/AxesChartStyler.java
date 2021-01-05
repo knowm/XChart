@@ -31,10 +31,8 @@ public abstract class AxesChartStyler extends Styler {
   private int yAxisTickMarkSpacingHint;
   private boolean isXAxisLogarithmic;
   private boolean isYAxisLogarithmic;
-  // TODO should this be in styler??
   private Double xAxisMin;
   private Double xAxisMax;
-  // TODO should this be in styler??
   private HashMap<Integer, Double> yAxisMinMap = new HashMap<>();
   private HashMap<Integer, Double> yAxisMaxMap = new HashMap<>();
 

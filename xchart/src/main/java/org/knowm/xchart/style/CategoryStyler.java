@@ -3,6 +3,7 @@ package org.knowm.xchart.style;
 import java.awt.Color;
 import java.awt.Font;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
+import org.knowm.xchart.style.colors.FontColorDetector;
 import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
@@ -14,13 +15,16 @@ public class CategoryStyler extends AxesChartStyler {
   private boolean isOverlapped;
   private boolean isStacked;
 
-  private boolean isLabelsVisible = false; // set by subclass
-  private boolean isLabelsAutoColorDetectionEnabled = true;
+  // labels //////////////////////
+  private boolean isLabelsVisible = false;
   private boolean showStackSum = false;
   private Font labelsFont;
   private Color labelsFontColor;
   private int labelsRotation;
   private double labelsPosition;
+  private boolean isLabelsFontColorAutomaticEnabled;
+  private Color labelsFontColorAutomaticLight;
+  private Color labelsFontColorAutomaticDark;
 
   /** Constructor */
   public CategoryStyler() {
@@ -42,6 +46,9 @@ public class CategoryStyler extends AxesChartStyler {
     labelsFontColor = theme.getChartFontColor();
     labelsRotation = 0;
     labelsPosition = 0.5;
+    isLabelsFontColorAutomaticEnabled = theme.isLabelsFontColorAutomaticEnabled();
+    labelsFontColorAutomaticLight = theme.getLabelsFontColorAutomaticLight();
+    labelsFontColorAutomaticDark = theme.getLabelsFontColorAutomaticDark();
   }
 
   public CategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -165,11 +172,14 @@ public class CategoryStyler extends AxesChartStyler {
     return this;
   }
 
+  public Color getLabelsFontColor() {
+    return labelsFontColor;
+  }
+
   public Color getLabelsFontColor(Color backgroundColor) {
-    if (!isLabelsAutoColorDetectionEnabled() || annotationsFontColorDetector == null || backgroundColor == null) {
-      return labelsFontColor;
-    }
-    return getAnnotationsFontColor(backgroundColor);
+
+    return FontColorDetector.getAutomaticFontColor(
+        backgroundColor, labelsFontColorAutomaticDark, labelsFontColorAutomaticLight);
   }
 
   /**
@@ -216,6 +226,35 @@ public class CategoryStyler extends AxesChartStyler {
     this.labelsPosition = labelsPosition;
     return this;
   }
+
+  public boolean isLabelsFontColorAutomaticEnabled() {
+    return isLabelsFontColorAutomaticEnabled;
+  }
+
+  public CategoryStyler setLabelsFontColorAutomaticEnabled(
+      boolean isLabelsFontColorAutomaticEnabled) {
+    this.isLabelsFontColorAutomaticEnabled = isLabelsFontColorAutomaticEnabled;
+    return this;
+  }
+
+  public Color getLabelsFontColorAutomaticLight() {
+    return labelsFontColorAutomaticLight;
+  }
+
+  public CategoryStyler setLabelsFontColorAutomaticLight(Color labelsFontColorAutomaticLight) {
+    this.labelsFontColorAutomaticLight = labelsFontColorAutomaticLight;
+    return this;
+  }
+
+  public Color getLabelsFontColorAutomaticDark() {
+    return labelsFontColorAutomaticDark;
+  }
+
+  public CategoryStyler setLabelsFontColorAutomaticDark(Color labelsFontColorAutomaticDark) {
+    this.labelsFontColorAutomaticDark = labelsFontColorAutomaticDark;
+    return this;
+  }
+
   /**
    * Set the theme the styler should use
    *
@@ -225,13 +264,5 @@ public class CategoryStyler extends AxesChartStyler {
 
     this.theme = theme;
     setAllStyles();
-  }
-
-  public boolean isLabelsAutoColorDetectionEnabled() {
-    return isLabelsAutoColorDetectionEnabled;
-  }
-
-  public void setLabelsAutoColorDetectionEnabled(boolean labelsAutoColorDetectionEnabled) {
-    isLabelsAutoColorDetectionEnabled = labelsAutoColorDetectionEnabled;
   }
 }
