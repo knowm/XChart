@@ -752,7 +752,7 @@ public abstract class Styler {
   }
 
   public Color getAnnotationsFontColor(Color backgroundColor) {
-    if (annotationsFontColorDetector == null || backgroundColor == null) {
+    if (!isAnnotationAutoColorDetectionEnabled() || annotationsFontColorDetector == null || backgroundColor == null) {
       return annotationsFontColor;
     }
     return annotationsFontColorDetector.getFontColor(backgroundColor);

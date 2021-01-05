@@ -42,7 +42,7 @@ public class BarChart13 implements ExampleChart<CategoryChart> {
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
     chart.getStyler().setStacked(true);
     chart.getStyler().setLabelsVisible(true);
-    chart.getStyler().setAnnotationsAutodetectColors(Color.BLACK, Color.WHITE);
+    chart.getStyler().setLabelsAutoColorDetectionEnabled(false);
 
     // Series
     chart.addSeries("males", new int[] {10, 20, 30, 40}, new int[] {40, -30, -20, -60});
@@ -54,6 +54,6 @@ public class BarChart13 implements ExampleChart<CategoryChart> {
   @Override
   public String getExampleChartName() {
 
-    return getClass().getSimpleName() + " - Stacked Bar Chart With Annotation Color Auto Detection";
+    return getClass().getSimpleName() + " - Stacked Bar Chart With Label Color Auto Detection Disabled";
   }
 }

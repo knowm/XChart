@@ -15,6 +15,7 @@ public class CategoryStyler extends AxesChartStyler {
   private boolean isStacked;
 
   private boolean isLabelsVisible = false; // set by subclass
+  private boolean isLabelsAutoColorDetectionEnabled = true;
   private boolean showStackSum = false;
   private Font labelsFont;
   private Color labelsFontColor;
@@ -165,7 +166,7 @@ public class CategoryStyler extends AxesChartStyler {
   }
 
   public Color getLabelsFontColor(Color backgroundColor) {
-    if (annotationsFontColorDetector == null || backgroundColor == null) {
+    if (!isLabelsAutoColorDetectionEnabled() || annotationsFontColorDetector == null || backgroundColor == null) {
       return labelsFontColor;
     }
     return getAnnotationsFontColor(backgroundColor);
@@ -224,5 +225,13 @@ public class CategoryStyler extends AxesChartStyler {
 
     this.theme = theme;
     setAllStyles();
+  }
+
+  public boolean isLabelsAutoColorDetectionEnabled() {
+    return isLabelsAutoColorDetectionEnabled;
+  }
+
+  public void setLabelsAutoColorDetectionEnabled(boolean labelsAutoColorDetectionEnabled) {
+    isLabelsAutoColorDetectionEnabled = labelsAutoColorDetectionEnabled;
   }
 }
