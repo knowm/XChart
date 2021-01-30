@@ -1,15 +1,16 @@
 package org.knowm.xchart.regressiontests;
 
-import java.io.ByteArrayOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.DigestOutputStream;
-import java.security.MessageDigest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XYChart;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.DigestOutputStream;
+import java.security.MessageDigest;
 
 public class SimplestExampleTest {
 
@@ -36,7 +37,7 @@ public class SimplestExampleTest {
       throws Exception {
     byte[] expectedBytes =
         Files.readAllBytes(Paths.get(getClass().getResource(expectedFileName).toURI()));
-    byte[] expectedDigest = MessageDigest.getInstance("MD5").digest(expectedBytes);
+    byte[] expectedDigest = MessageDigest.getInstance(digestType).digest(expectedBytes);
 
     Assert.assertArrayEquals(expectedDigest, actual.getMessageDigest().digest());
   }
