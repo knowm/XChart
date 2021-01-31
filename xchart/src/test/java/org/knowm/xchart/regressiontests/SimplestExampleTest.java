@@ -1,17 +1,16 @@
 package org.knowm.xchart.regressiontests;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.knowm.xchart.BitmapEncoder;
-import org.knowm.xchart.QuickChart;
-import org.knowm.xchart.XYChart;
-
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
+import org.junit.Assert;
+import org.junit.Test;
+import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.XYChart;
 
 public class SimplestExampleTest {
 
@@ -45,7 +44,10 @@ public class SimplestExampleTest {
   public void assertImagesEquals(String expectedFileName, DigestOutputStream actual)
       throws Exception {
     String path =
-        "/expectedChartRenderings/" + System.getProperty("os.name") + "/" + expectedFileName;
+        "/expectedChartRenderings/"
+            + System.getProperty("os.name").replaceAll(" ", "")
+            + "/"
+            + expectedFileName;
     byte[] expectedBytes = Files.readAllBytes(Paths.get(getClass().getResource(path).toURI()));
     byte[] expectedDigest = MessageDigest.getInstance(digestType).digest(expectedBytes);
 
