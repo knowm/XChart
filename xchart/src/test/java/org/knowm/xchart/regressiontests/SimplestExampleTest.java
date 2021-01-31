@@ -6,6 +6,7 @@ import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XYChart;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,6 +25,10 @@ public class SimplestExampleTest {
 
     // when
     XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+    chart.getStyler().setChartTitleFont(arial());
+    chart.getStyler().setAxisTickLabelsFont(arial());
+    chart.getStyler().setLegendFont(arial());
+    chart.getStyler().setAxisTitleFont(arial());
     DigestOutputStream output =
         new DigestOutputStream(new ByteArrayOutputStream(), MessageDigest.getInstance(digestType));
     BitmapEncoder.saveBitmap(chart, output, BitmapEncoder.BitmapFormat.PNG);
@@ -31,6 +36,10 @@ public class SimplestExampleTest {
 
     // test
     assertImagesEquals("/simplestExample.png", output);
+  }
+
+  private Font arial() {
+    return new Font("Arial", Font.PLAIN, 14);
   }
 
   public void assertImagesEquals(String expectedFileName, DigestOutputStream actual)
