@@ -35,7 +35,7 @@ public class SimplestExampleTest {
     output.close();
 
     // test
-    assertImagesEquals("/simplestExample.png", output);
+    assertImagesEquals("simplestExample.png", output);
   }
 
   private Font arial() {
@@ -44,8 +44,9 @@ public class SimplestExampleTest {
 
   public void assertImagesEquals(String expectedFileName, DigestOutputStream actual)
       throws Exception {
-    byte[] expectedBytes =
-        Files.readAllBytes(Paths.get(getClass().getResource(expectedFileName).toURI()));
+    String path =
+        "/expectedChartRenderings/" + System.getProperty("os.name") + "/" + expectedFileName;
+    byte[] expectedBytes = Files.readAllBytes(Paths.get(getClass().getResource(path).toURI()));
     byte[] expectedDigest = MessageDigest.getInstance(digestType).digest(expectedBytes);
 
     Assert.assertArrayEquals(expectedDigest, actual.getMessageDigest().digest());
