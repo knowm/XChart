@@ -683,6 +683,14 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     return tickLabelPosition;
   }
 
+  public double getScreenValueForMin() {
+    return getScreenValue(min);
+  }
+
+  public double getScreenValueForMax() {
+    return getScreenValue(max);
+  }
+
   /**
    * Converts a screen coordinate to chart coordinate value. Reverses the AxisTickCalculators
    * calculation.
