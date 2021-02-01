@@ -69,7 +69,7 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
   private void sanityCheck(String seriesName, List<? extends Number> yData) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name > "
               + seriesName

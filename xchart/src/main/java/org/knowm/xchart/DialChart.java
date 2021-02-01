@@ -95,7 +95,7 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
 
   private void sanityCheck(String seriesName, double value) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName

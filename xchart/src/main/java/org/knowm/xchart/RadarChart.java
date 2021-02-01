@@ -102,7 +102,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
       throw new IllegalArgumentException("Variable labels cannot be null!!!");
     }
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName

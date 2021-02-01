@@ -75,7 +75,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
 
     PieSeries series = new PieSeries(seriesName, value);
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName

@@ -508,7 +508,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       long[] volumeData,
       DataType dataType) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName
@@ -538,7 +538,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
   private OHLCSeries addSeries(
       String seriesName, double[] xData, double[] yData, DataType dataType) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName

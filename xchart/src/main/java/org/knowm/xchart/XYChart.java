@@ -374,7 +374,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
   private void sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName
