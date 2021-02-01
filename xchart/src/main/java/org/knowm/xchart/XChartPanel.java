@@ -376,7 +376,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
    *
    * @author Benedikt Bünz
    */
-  private class SuffixSaveFilter extends FileFilter {
+  private static class SuffixSaveFilter extends FileFilter {
 
     private final String suffix;
 

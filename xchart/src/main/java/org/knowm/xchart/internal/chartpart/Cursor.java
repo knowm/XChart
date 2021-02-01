@@ -263,7 +263,7 @@ public class Cursor extends MouseAdapter implements ChartPart {
     }
   }
 
-  private class DataPoint {
+  private static class DataPoint {
 
     // edge detection
     private static final int MARGIN = 5;
