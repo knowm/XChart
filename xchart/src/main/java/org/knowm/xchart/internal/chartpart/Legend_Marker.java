@@ -105,7 +105,7 @@ public class Legend_Marker<ST extends AxesChartStyler, S extends MarkerSeries>
           BasicStroke existingLineStyle = series.getLineStyle();
           BasicStroke newLineStyle =
               new BasicStroke(
-                      Math.min(existingLineStyle.getLineWidth(), BOX_OUTLINE_WIDTH * 0.5f),
+                  Math.min(existingLineStyle.getLineWidth(), BOX_OUTLINE_WIDTH * 0.5f),
                   existingLineStyle.getEndCap(),
                   existingLineStyle.getLineJoin(),
                   existingLineStyle.getMiterLimit(),

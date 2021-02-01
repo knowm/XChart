@@ -290,8 +290,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
         if (fileChooser.getSelectedFile().exists()) {
           theFileToSave = fileChooser.getSelectedFile();
         } else {
-          File parentFile = new File(fileChooser.getSelectedFile().getParent());
-          theFileToSave = parentFile;
+          theFileToSave = new File(fileChooser.getSelectedFile().getParent());
         }
       }
 

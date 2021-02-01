@@ -237,11 +237,9 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       // now we know the real bounds width after ticks and title are painted
-      double width =
+      bounds.width =
           (axesChartStyler.isYAxisTitleVisible() ? axisTitle.getBounds().getWidth() : 0)
               + axisTick.getBounds().getWidth();
-
-      bounds.width = width;
       // g.setColor(Color.yellow);
       // g.draw(bounds);
 
