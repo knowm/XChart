@@ -304,25 +304,25 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   }
 
   private void disableTextField(Component[] comp) {
-    for (int x = 0; x < comp.length; x++) {
-      //            System.out.println(comp[x].toString());
-      if (comp[x] instanceof JPanel) {
-        disableTextField(((JPanel) comp[x]).getComponents());
-      } else if (comp[x] instanceof JTextField) {
-        ((JTextField) comp[x]).setVisible(false);
+    for (Component component : comp) {
+      //            System.out.println(component.toString());
+      if (component instanceof JPanel) {
+        disableTextField(((JPanel) component).getComponents());
+      } else if (component instanceof JTextField) {
+        ((JTextField) component).setVisible(false);
         return;
       }
     }
   }
 
   private void disableLabel(Component[] comp) {
-    for (int x = 0; x < comp.length; x++) {
+    for (Component component : comp) {
       //      System.out.println(comp[x].toString());
-      if (comp[x] instanceof JPanel) {
-        disableLabel(((JPanel) comp[x]).getComponents());
-      } else if (comp[x] instanceof JLabel) {
+      if (component instanceof JPanel) {
+        disableLabel(((JPanel) component).getComponents());
+      } else if (component instanceof JLabel) {
         //        System.out.println(comp[x].toString());
-        ((JLabel) comp[x]).setVisible(false);
+        ((JLabel) component).setVisible(false);
         return;
       }
     }
