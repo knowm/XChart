@@ -61,9 +61,8 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
     // Sanity checks
     sanityCheck(seriesName, yData);
-    BoxSeries series = null;
     xData.add(seriesName);
-    series = new BoxSeries(seriesName, xData, yData, null, DataType.String);
+    BoxSeries series = new BoxSeries(seriesName, xData, yData, null, DataType.String);
     seriesMap.put(seriesName, series);
     return series;
   }

@@ -38,8 +38,7 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumericalNoErrorBar
     // System.out.println(xMax);
 
     // yData
-    double[] yMinMax = null;
-    yMinMax = findMinMax(yData);
+    double[] yMinMax = findMinMax(yData);
     yMin = yMinMax[0];
     yMax = yMinMax[1];
     // System.out.println(yMin);
