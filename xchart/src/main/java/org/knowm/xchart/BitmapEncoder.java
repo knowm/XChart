@@ -65,7 +65,7 @@ public final class BitmapEncoder {
   public static <T extends Chart<?, ?>> void saveBitmap(
       T chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
 
-    try (OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat)); ) {
+    try (OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat))) {
       saveBitmap(chart, out, bitmapFormat);
     }
   }
@@ -265,7 +265,7 @@ public final class BitmapEncoder {
 
     byte[] imageInBytes;
 
-    try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); ) {
+    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
       ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), baos);
       baos.flush();
       imageInBytes = baos.toByteArray();
