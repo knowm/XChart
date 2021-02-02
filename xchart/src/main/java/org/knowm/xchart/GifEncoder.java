@@ -37,8 +37,8 @@ public class GifEncoder {
     gif.setRepeat(repeat);
     gif.start(Utils.addFileExtension(filePath, GIF_FILE_EXTENSION));
     gif.setDelay(delay);
-    for (int i = 0; i < images.size(); i++) {
-      gif.addFrame(images.get(i));
+    for (BufferedImage image : images) {
+      gif.addFrame(image);
     }
     gif.finish();
   }

@@ -183,7 +183,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
   private void sanityCheck(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName

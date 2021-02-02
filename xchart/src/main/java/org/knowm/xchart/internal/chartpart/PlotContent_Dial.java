@@ -312,9 +312,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
     }
 
     height_r = r;
-    Rectangle2D pieBounds =
-        new Rectangle2D.Double(pieBounds_x, pieBounds_y, pieBounds_w, pieBounds_h);
 
-    return pieBounds;
+    return new Rectangle2D.Double(pieBounds_x, pieBounds_y, pieBounds_w, pieBounds_h);
   }
 }

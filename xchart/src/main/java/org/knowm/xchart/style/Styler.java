@@ -471,11 +471,7 @@ public abstract class Styler {
    */
   public Styler setLegendSeriesLineLength(int legendSeriesLineLength) {
 
-    if (legendSeriesLineLength < 0) {
-      this.legendSeriesLineLength = 0;
-    } else {
-      this.legendSeriesLineLength = legendSeriesLineLength;
-    }
+    this.legendSeriesLineLength = Math.max(legendSeriesLineLength, 0);
     return this;
   }
 

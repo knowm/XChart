@@ -204,11 +204,7 @@ public class HeatMapStyler extends AxesChartStyler {
 
   public HeatMapStyler setGradientColorColumnWeight(int gradientColorColumnWeight) {
 
-    if (gradientColorColumnWeight >= 10) {
-      this.gradientColorColumnWeight = gradientColorColumnWeight;
-    } else {
-      this.gradientColorColumnWeight = 10;
-    }
+    this.gradientColorColumnWeight = Math.max(gradientColorColumnWeight, 10);
     return this;
   }
 
@@ -219,11 +215,7 @@ public class HeatMapStyler extends AxesChartStyler {
 
   public HeatMapStyler setGradientColorColumnHeight(int gradientColorColumnHeight) {
 
-    if (gradientColorColumnHeight >= 100) {
-      this.gradientColorColumnHeight = gradientColorColumnHeight;
-    } else {
-      this.gradientColorColumnHeight = 100;
-    }
+    this.gradientColorColumnHeight = Math.max(gradientColorColumnHeight, 100);
     return this;
   }
 

@@ -170,8 +170,8 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
   private List<Integer> arrayToList(int[] data) {
 
     List<Integer> list = new ArrayList<>();
-    for (int i = 0; i < data.length; i++) {
-      list.add(data[i]);
+    for (int datum : data) {
+      list.add(datum);
     }
     return list;
   }
