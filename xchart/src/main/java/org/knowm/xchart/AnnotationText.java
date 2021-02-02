@@ -57,8 +57,8 @@ public class AnnotationText extends Annotation {
       xOffset = x - textBounds.getWidth() / 2;
       yOffset = chart.getHeight() - y + textBounds.getHeight() / 2;
     } else {
-      xOffset = getXAxisSreenValue(x) - textBounds.getWidth() / 2;
-      yOffset = getYAxisSreenValue(y) + textBounds.getHeight() / 2;
+      xOffset = getXAxisScreenValue(x) - textBounds.getWidth() / 2;
+      yOffset = getYAxisScreenValue(y) + textBounds.getHeight() / 2;
     }
 
     AffineTransform orig = g.getTransform();

@@ -48,8 +48,8 @@ public class AnnotationImage extends Annotation {
       xOffset = (int) x - image.getWidth() / 2;
       yOffset = chart.getHeight() - (int) y - image.getWidth() / 2;
     } else {
-      xOffset = (int) (getXAxisSreenValue(x) + 0.5) - image.getWidth() / 2;
-      yOffset = (int) (getYAxisSreenValue(y) + 0.5) - image.getHeight() / 2;
+      xOffset = (int) (getXAxisScreenValue(x) + 0.5) - image.getWidth() / 2;
+      yOffset = (int) (getYAxisScreenValue(y) + 0.5) - image.getHeight() / 2;
     }
     g.drawImage(image, xOffset, yOffset, null);
 

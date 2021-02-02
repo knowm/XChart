@@ -81,8 +81,8 @@ public class AnnotationTextPanel extends Annotation {
       xOffset = x;
       yOffset = chart.getHeight() - height - y - 1;
     } else {
-      xOffset = getXAxisSreenValue(x);
-      yOffset = getYAxisSreenValue(y) - height - 1;
+      xOffset = getXAxisScreenValue(x);
+      yOffset = getYAxisScreenValue(y) - height - 1;
     }
 
     xOffset = Math.min(xOffset, (chart.getWidth() - width - 1));
