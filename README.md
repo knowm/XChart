@@ -593,7 +593,18 @@ Download [`google-java-format-eclipse-plugin_*.jar`](https://github.com/google/g
 
 In the plugins section in IntelliJ search for `google-java-format` and install the plugin. Restart IntelliJ.
 
-## Running Demo
+## Running Demo - option 1 - using released version
+
+- Linux: execute command `java -cp xchart-demo-3.8.0.jar:xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo`.
+
+- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.8.0.jar;xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.8.0.jar;xchart-3.8.0.jar" org.knowm.xchart.demo.XChartDemo`.
+
+E.g:
+```sh
+cd /path/to/xchart-demo/jar/
+java -cp xchart-demo-3.8.0.jar:xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo
+
+## Running Demo - option 2 - building yourself
 
 ```
 mvn install
