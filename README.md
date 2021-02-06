@@ -595,6 +595,8 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 
 ## Running Demo - option 1 - using released version
 
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
+
 - Linux: execute command `java -cp xchart-demo-3.8.0.jar:xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo`.
 
 - Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.8.0.jar;xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo`; In the PowerShell command window, execute the command `java -cp "xchart-demo-3.8.0.jar;xchart-3.8.0.jar" org.knowm.xchart.demo.XChartDemo`.
@@ -603,15 +605,24 @@ E.g:
 ```sh
 cd /path/to/xchart-demo/jar/
 java -cp xchart-demo-3.8.0.jar:xchart-3.8.0.jar org.knowm.xchart.demo.XChartDemo
+```
 
 ## Running Demo - option 2 - building yourself
 
-```
+```sh
 mvn install
 mvn exec:java -Djava.awt.headless=false -pl xchart-demo -Dexec.mainClass=org.knowm.xchart.demo.XChartDemo
 ```
 
-![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
+## Running Demo - option 3 - with tweakable style properties
+
+```sh
+mvn install
+mvn exec:java -Djava.awt.headless=false -pl xchart-demo -Dexec.mainClass=org.knowm.xchart.demo.XChartStyleDemo
+```
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChartStyleDemo.png)
+
 
 ## Bugs
 
