@@ -1,16 +1,16 @@
 package org.knowm.xchart.regressiontests;
 
+import com.github.romankh3.image.comparison.ImageComparison;
+import com.github.romankh3.image.comparison.model.ImageComparisonState;
 import java.awt.*;
-import java.io.ByteArrayOutputStream;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.DigestOutputStream;
-import java.security.MessageDigest;
+import javax.imageio.ImageIO;
 import org.junit.Assert;
 import org.junit.Test;
 import org.knowm.xchart.*;
+import org.knowm.xchart.internal.chartpart.Chart;
 
 public class SimplestExampleTest {
 
@@ -43,26 +43,26 @@ public class SimplestExampleTest {
     chart.getStyler().setAxisTickLabelsFont(fontToBeUsed());
     chart.getStyler().setLegendFont(fontToBeUsed());
     chart.getStyler().setAxisTitleFont(fontToBeUsed());
-    DigestOutputStream output =
-        new DigestOutputStream(new ByteArrayOutputStream(), MessageDigest.getInstance(digestType));
-    BitmapEncoder.saveBitmap(chart, output, BitmapEncoder.BitmapFormat.PNG);
-    BitmapEncoder.saveBitmap(chart, "/tmp/simplestExample.png", BitmapEncoder.BitmapFormat.PNG);
-    output.close();
 
     // test
-    assertImagesEquals("simplestExample.png", output);
+    assertImagesEquals("simplestExample.png", chart);
   }
 
   private Font fontToBeUsed() {
     return new Font("Barlow", Font.PLAIN, 12);
   }
 
-  public void assertImagesEquals(String expectedFileName, DigestOutputStream actual)
-      throws Exception {
+  public void assertImagesEquals(String expectedFileName, Chart chart) throws Exception {
     String path = "/expectedChartRenderings/" + expectedFileName;
-    byte[] expectedBytes = Files.readAllBytes(Paths.get(getClass().getResource(path).toURI()));
-    byte[] expectedDigest = MessageDigest.getInstance(digestType).digest(expectedBytes);
+    File actualFile = new File(getClass().getResource(path).getFile());
+    BufferedImage expectedImage = ImageIO.read(actualFile);
 
-    Assert.assertArrayEquals(expectedDigest, actual.getMessageDigest().digest());
+    BufferedImage actualImage = BitmapEncoder.getBufferedImage(chart);
+    ImageComparison compare = new ImageComparison(expectedImage, actualImage);
+    compare.setPixelToleranceLevel(0);
+    compare.setThreshold(0);
+    if (compare.compareImages().getImageComparisonState() != ImageComparisonState.MATCH) {
+      Assert.fail("Rendered chart is different than expected");
+    }
   }
 }

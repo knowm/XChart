@@ -26,6 +26,12 @@
       <groupId>com.madgag</groupId>
       <artifactId>animated-gif-lib</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.github.romankh3</groupId>
+      <artifactId>image-comparison</artifactId>
+      <version>4.3.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 </project>
