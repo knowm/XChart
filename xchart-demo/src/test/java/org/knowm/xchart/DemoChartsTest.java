@@ -42,12 +42,8 @@ public class DemoChartsTest {
   @Test
   public void shouldNotFailWhenRenderingAsBitmap() throws IOException {
     // given
-    // the chart
     Chart chart = this.chart.getChart();
-    new ToolTips(chart);
-    if (chart instanceof XYChart && chart.getStyler() instanceof XYStyler) {
-      new Cursor(chart);
-    }
+    configureInteractiveFeatures(chart);
 
     // when
     BitmapEncoder.saveBitmap(chart, new ByteArrayOutputStream(), BitmapEncoder.BitmapFormat.PNG);
@@ -55,5 +51,12 @@ public class DemoChartsTest {
     // test
 
     // Don't fail
+  }
+
+  private void configureInteractiveFeatures(Chart chart) {
+    new ToolTips(chart);
+    if (chart instanceof XYChart && chart.getStyler() instanceof XYStyler) {
+      new Cursor(chart);
+    }
   }
 }
