@@ -309,7 +309,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
       if (component instanceof JPanel) {
         disableTextField(((JPanel) component).getComponents());
       } else if (component instanceof JTextField) {
-        ((JTextField) component).setVisible(false);
+        component.setVisible(false);
         return;
       }
     }
@@ -322,7 +322,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
         disableLabel(((JPanel) component).getComponents());
       } else if (component instanceof JLabel) {
         //        System.out.println(comp[x].toString());
-        ((JLabel) component).setVisible(false);
+        component.setVisible(false);
         return;
       }
     }

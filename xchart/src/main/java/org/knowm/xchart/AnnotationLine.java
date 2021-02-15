@@ -52,10 +52,10 @@ public class AnnotationLine extends Annotation {
       }
     } else {
       if (isVertical) {
-        x1 = (int) getXAxisScreenValue(value);
+        x1 = getXAxisScreenValue(value);
         x2 = x1;
       } else {
-        y1 = (int) getYAxisScreenValue(value);
+        y1 = getYAxisScreenValue(value);
         y2 = y1;
       }
     }
