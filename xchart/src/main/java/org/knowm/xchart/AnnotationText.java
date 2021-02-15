@@ -24,11 +24,10 @@ public class AnnotationText extends Annotation {
    * @param isValueInScreenSpace
    */
   public AnnotationText(String text, double x, double y, boolean isValueInScreenSpace) {
-
+    super(isValueInScreenSpace);
     this.text = text;
     this.x = x;
     this.y = y;
-    this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
   @Override

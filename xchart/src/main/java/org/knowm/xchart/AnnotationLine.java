@@ -17,10 +17,9 @@ public class AnnotationLine extends Annotation {
    * @param isValueInScreenSpace
    */
   public AnnotationLine(double value, boolean isVertical, boolean isValueInScreenSpace) {
-
+    super(isValueInScreenSpace);
     this.value = value;
     this.isVertical = isVertical;
-    this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
   @Override
