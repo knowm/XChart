@@ -232,7 +232,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   // TODO investigate this
   Format getYAxisFormat(String yAxisDecimalPattern) {
-    Format format = null;
+    final Format format;
     if (yAxisDecimalPattern != null) {
       format = new DecimalFormat(yAxisDecimalPattern);
     } else {
