@@ -35,7 +35,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   boolean visible = true;
 
   private ActionEvent action;
-  private EventListenerList listenerList = new EventListenerList();
+  private final EventListenerList listenerList = new EventListenerList();
 
   protected double xOffset = 0;
   protected double yOffset = 0;

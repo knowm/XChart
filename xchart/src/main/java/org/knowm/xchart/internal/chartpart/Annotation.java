@@ -12,6 +12,10 @@ public abstract class Annotation implements ChartPart {
   protected Styler styler;
   protected Rectangle2D bounds;
 
+  public Annotation(boolean isValueInScreenSpace) {
+    this.isValueInScreenSpace = isValueInScreenSpace;
+  }
+
   public void init(Chart chart) {
 
     this.chart = chart;

@@ -32,11 +32,10 @@ public class AnnotationTextPanel extends Annotation {
    * @param isValueInScreenSpace
    */
   public AnnotationTextPanel(String lines, double x, double y, boolean isValueInScreenSpace) {
-
+    super(isValueInScreenSpace);
     this.lines = Arrays.asList(lines.split("\\n"));
     this.x = x;
     this.y = y;
-    this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
   public void init(Chart chart) {

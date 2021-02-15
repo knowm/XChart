@@ -18,7 +18,7 @@ import org.knowm.xchart.style.theme.Theme;
 
 public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
-  private List<String> xData = new ArrayList<>();
+  private final List<String> xData = new ArrayList<>();
 
   protected BoxChart(int width, int height) {
 

@@ -22,11 +22,10 @@ public class AnnotationImage extends Annotation {
    * @param isValueInScreenSpace
    */
   public AnnotationImage(BufferedImage image, double x, double y, boolean isValueInScreenSpace) {
-
+    super(isValueInScreenSpace);
     this.image = image;
     this.x = x;
     this.y = y;
-    this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
   public void init(Chart chart) {

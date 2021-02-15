@@ -55,7 +55,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     double yMax = chart.getYAxis().getMax();
 
     // figure out the general form of the chart
-    int chartForm = 1; // 1=positive, -1=negative, 0=span
+    final int chartForm; // 1=positive, -1=negative, 0=span
     if (yMin > 0.0 && yMax > 0.0) {
       chartForm = 1; // positive chart
     } else if (yMin < 0.0 && yMax < 0.0) {

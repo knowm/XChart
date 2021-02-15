@@ -14,7 +14,7 @@ import org.knowm.xchart.XYChart;
 
 public class SimplestExampleTest {
 
-  static String digestType = "md5";
+  static final String digestType = "md5";
 
   @Test
   public void testSimplestExampleStaysTheSame() throws Exception {
