@@ -13,11 +13,11 @@ import org.knowm.xchart.XYSeries;
 
 public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener {
 
-  protected XChartPanel<XYChart> xChartPanel;
-  protected XYChart xyChart;
+  protected final XChartPanel<XYChart> xChartPanel;
+  protected final XYChart xyChart;
   protected Rectangle bounds;
 
-  protected ChartButton resetButton;
+  protected final ChartButton resetButton;
 
   protected int x1, x2;
   protected boolean filtered;

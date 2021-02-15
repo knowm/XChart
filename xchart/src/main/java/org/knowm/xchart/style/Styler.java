@@ -90,7 +90,7 @@ public abstract class Styler {
   private boolean antiAlias = true;
   private String decimalPattern;
   // TODO I don't think this should be in styler directly?
-  private HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<>();
+  private final HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<>();
   private int yAxisLeftWidthHint;
 
   // TODO move this to boxplot styler
@@ -100,7 +100,7 @@ public abstract class Styler {
   // Axis Title Font Color
   private Color xAxisTitleColor;
   private Color yAxisTitleColor;
-  private Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
+  private final Map<Integer, Color> yAxisGroupTitleColorMap = new HashMap<>();
 
   // Line, Scatter, Area , Radar Charts///////////////////////////////
   // TODO Move these to the respective stylers where it is needed
