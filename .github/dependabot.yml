@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "12:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.openjfx:javafx-controls
+    versions:
+    - 15.0.1
+  - dependency-name: org.openjfx:javafx-swing
+    versions:
+    - 15.0.1
