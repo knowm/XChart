@@ -46,6 +46,7 @@ public class PlotContent_Category_Line_Area_Scatter<
     int numCategories = seriesMap.values().iterator().next().getXData().size();
     double gridStep = xTickSpace / numCategories;
 
+    toolTips.clearData();
     for (S series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
