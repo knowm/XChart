@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -51,6 +53,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private String exportAsString = "Export To...";
   private String printString = "Print...";
   private String resetString = "Reset Zoom";
+  private ToolTips toolTips = null;
 
   /**
    * Constructor
@@ -98,9 +101,20 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     // Mouse motion listener for Tooltips
     if (chart.getStyler().isToolTipsEnabled()) {
-      ToolTips toolTips = new ToolTips(chart);
+      toolTips = new ToolTips(chart);
       this.addMouseMotionListener(toolTips); // for moving
     }
+    
+    // Recalculate Tooltips at component resize
+    this.addComponentListener(new ComponentAdapter( ) {
+		public void componentResized(ComponentEvent ev) {
+			if (chart.getStyler().isToolTipsEnabled()) {
+				XChartPanel.this.removeMouseListener(toolTips);
+				toolTips = new ToolTips(chart);
+				XChartPanel.this.addMouseMotionListener(toolTips);
+			}
+	    }
+	});
   }
 
   /**
