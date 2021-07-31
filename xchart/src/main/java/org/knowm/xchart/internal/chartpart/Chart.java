@@ -25,7 +25,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
-  protected ArrayList<ChartPart> annotations = new ArrayList<>();
+  protected final ArrayList<ChartPart> annotations = new ArrayList<>();
 
   /** Chart Parts */
   // TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't
@@ -46,7 +46,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   private String yAxisTitle = "";
 
   // TODO Does this belong here for all chart types?
-  private Map<Integer, String> yAxisGroupTitleMap = new HashMap<>();
+  private final Map<Integer, String> yAxisGroupTitleMap = new HashMap<>();
 
   /**
    * Constructor
@@ -232,7 +232,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
   // TODO investigate this
   Format getYAxisFormat(String yAxisDecimalPattern) {
-    Format format = null;
+    final Format format;
     if (yAxisDecimalPattern != null) {
       format = new DecimalFormat(yAxisDecimalPattern);
     } else {

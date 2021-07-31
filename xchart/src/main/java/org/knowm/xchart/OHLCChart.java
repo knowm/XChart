@@ -508,7 +508,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
       long[] volumeData,
       DataType dataType) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName
@@ -538,7 +538,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
   private OHLCSeries addSeries(
       String seriesName, double[] xData, double[] yData, DataType dataType) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName
@@ -859,10 +859,10 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
         series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
       if (series.getUpColor() == null) { // wasn't set manually
-        series.setUpColor(new Color(242, 39, 42));
+        series.setUpColor(new Color(19, 179, 70));
       }
       if (series.getDownColor() == null) { // wasn't set manually
-        series.setDownColor(new Color(19, 179, 70));
+        series.setDownColor(new Color(242, 39, 42));
       }
     }
   }

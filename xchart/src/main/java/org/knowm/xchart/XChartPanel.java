@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -51,6 +53,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private String exportAsString = "Export To...";
   private String printString = "Print...";
   private String resetString = "Reset Zoom";
+  private ToolTips toolTips = null;
 
   /**
    * Constructor
@@ -98,9 +101,20 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     // Mouse motion listener for Tooltips
     if (chart.getStyler().isToolTipsEnabled()) {
-      ToolTips toolTips = new ToolTips(chart);
+      toolTips = new ToolTips(chart);
       this.addMouseMotionListener(toolTips); // for moving
     }
+    
+    // Recalculate Tooltips at component resize
+    this.addComponentListener(new ComponentAdapter( ) {
+		public void componentResized(ComponentEvent ev) {
+			if (chart.getStyler().isToolTipsEnabled()) {
+				XChartPanel.this.removeMouseListener(toolTips);
+				toolTips = new ToolTips(chart);
+				XChartPanel.this.addMouseMotionListener(toolTips);
+			}
+	    }
+	});
   }
 
   /**
@@ -290,8 +304,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
         if (fileChooser.getSelectedFile().exists()) {
           theFileToSave = fileChooser.getSelectedFile();
         } else {
-          File parentFile = new File(fileChooser.getSelectedFile().getParent());
-          theFileToSave = parentFile;
+          theFileToSave = new File(fileChooser.getSelectedFile().getParent());
         }
       }
 
@@ -305,25 +318,25 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   }
 
   private void disableTextField(Component[] comp) {
-    for (int x = 0; x < comp.length; x++) {
-      //            System.out.println(comp[x].toString());
-      if (comp[x] instanceof JPanel) {
-        disableTextField(((JPanel) comp[x]).getComponents());
-      } else if (comp[x] instanceof JTextField) {
-        ((JTextField) comp[x]).setVisible(false);
+    for (Component component : comp) {
+      //            System.out.println(component.toString());
+      if (component instanceof JPanel) {
+        disableTextField(((JPanel) component).getComponents());
+      } else if (component instanceof JTextField) {
+        component.setVisible(false);
         return;
       }
     }
   }
 
   private void disableLabel(Component[] comp) {
-    for (int x = 0; x < comp.length; x++) {
+    for (Component component : comp) {
       //      System.out.println(comp[x].toString());
-      if (comp[x] instanceof JPanel) {
-        disableLabel(((JPanel) comp[x]).getComponents());
-      } else if (comp[x] instanceof JLabel) {
+      if (component instanceof JPanel) {
+        disableLabel(((JPanel) component).getComponents());
+      } else if (component instanceof JLabel) {
         //        System.out.println(comp[x].toString());
-        ((JLabel) comp[x]).setVisible(false);
+        component.setVisible(false);
         return;
       }
     }
@@ -377,7 +390,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
    *
    * @author Benedikt Bünz
    */
-  private class SuffixSaveFilter extends FileFilter {
+  private static class SuffixSaveFilter extends FileFilter {
 
     private final String suffix;
 
@@ -520,7 +533,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   }
 
   public static class Printer implements Printable {
-    private Component component;
+    private final Component component;
 
     Printer(Component c) {
       component = c;

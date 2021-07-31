@@ -104,11 +104,11 @@ public class BoxPlotDataCalculator<ST extends AxesChartStyler, S extends AxesCha
   private static double getQuartile(
       List<Double> data, double qiP, BoxplotCalCulationMethod boxplotCalCulationMethod) {
 
-    double qi = 0.0;
     int previousItem = (int) Math.floor(qiP);
     int previousItem_index = previousItem == 0 ? 0 : previousItem - 1;
     int nextItem = (int) Math.ceil(qiP);
     int nextItem_index = data.size() == 1 ? 0 : nextItem - 1;
+    final double qi;
     if (BoxplotCalCulationMethod.NP == boxplotCalCulationMethod) {
       if (previousItem == nextItem) {
         qi = (data.get(previousItem_index) + data.get(nextItem_index)) / 2;

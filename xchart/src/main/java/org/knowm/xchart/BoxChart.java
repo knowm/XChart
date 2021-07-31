@@ -18,7 +18,7 @@ import org.knowm.xchart.style.theme.Theme;
 
 public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
-  private List<String> xData = new ArrayList<>();
+  private final List<String> xData = new ArrayList<>();
 
   protected BoxChart(int width, int height) {
 
@@ -61,16 +61,15 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
     // Sanity checks
     sanityCheck(seriesName, yData);
-    BoxSeries series = null;
     xData.add(seriesName);
-    series = new BoxSeries(seriesName, xData, yData, null, DataType.String);
+    BoxSeries series = new BoxSeries(seriesName, xData, yData, null, DataType.String);
     seriesMap.put(seriesName, series);
     return series;
   }
 
   private void sanityCheck(String seriesName, List<? extends Number> yData) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name > "
               + seriesName

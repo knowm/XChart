@@ -12,6 +12,10 @@ public abstract class Annotation implements ChartPart {
   protected Styler styler;
   protected Rectangle2D bounds;
 
+  public Annotation(boolean isValueInScreenSpace) {
+    this.isValueInScreenSpace = isValueInScreenSpace;
+  }
+
   public void init(Chart chart) {
 
     this.chart = chart;
@@ -28,11 +32,27 @@ public abstract class Annotation implements ChartPart {
     isVisible = visible;
   }
 
-  protected double getXAxisSreenValue(double chartSpaceValue) {
-    return chart.getXAxis().getScreenValue(chartSpaceValue);
+  protected int getXAxisScreenValue(double chartSpaceValue) {
+    return (int) chart.getXAxis().getScreenValue(chartSpaceValue);
   }
 
-  protected double getYAxisSreenValue(double chartSpaceValue) {
-    return chart.getYAxis().getScreenValue(chartSpaceValue);
+  protected int getYAxisScreenValue(double chartSpaceValue) {
+    return (int) chart.getYAxis().getScreenValue(chartSpaceValue);
+  }
+
+  protected int getXAxisScreenValueForMax() {
+    return (int) chart.getPlot().plotSurface.getBounds().getMaxX();
+  }
+
+  protected int getXAxisScreenValueForMin() {
+    return (int) chart.getPlot().plotSurface.getBounds().getMinX();
+  }
+
+  protected int getYAxisScreenValueForMax() {
+    return (int) chart.getPlot().plotSurface.getBounds().getMaxY();
+  }
+
+  protected int getYAxisScreenValueForMin() {
+    return (int) chart.getPlot().plotSurface.getBounds().getMinY();
   }
 }

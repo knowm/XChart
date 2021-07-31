@@ -246,7 +246,7 @@ public class OHLCSeries extends MarkerSeries {
     double[] xMinMax = findMinMax(xData, xData);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
-    double[] yMinMax = null;
+    final double[] yMinMax;
     if (yData == null) {
       yMinMax = findMinMax(lowData, highData);
     } else {

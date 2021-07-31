@@ -59,9 +59,13 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
 
     int xAxisMaxLabelCount = styler.getXAxisMaxLabelCount();
 
+    if (xAxisMaxLabelCount == 1) {
+      throw new IllegalArgumentException("Unsupported max label count equal to 1");
+    }
+
     if (0 < xAxisMaxLabelCount && xAxisMaxLabelCount < categories.size()) {
       List<Object> sparseCategories = new ArrayList<>();
-      double step = categories.size() / (double) xAxisMaxLabelCount;
+      double step = categories.size() / (double) (xAxisMaxLabelCount - 1);
       for (double stepIdx = 0; Math.round(stepIdx) < categories.size(); stepIdx += step) {
         int idx = (int) Math.round(stepIdx);
         Object label = categories.get(idx);

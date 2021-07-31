@@ -83,9 +83,10 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         }
       }
 
-      for (Double tickLocation : axisLabelTextLayouts.keySet()) {
+      for (Map.Entry<Double, TextLayout> tick : axisLabelTextLayouts.entrySet()) {
+        final Double tickLocation = tick.getKey();
+        final TextLayout axisLabelTextLayout = tick.getValue();
 
-        TextLayout axisLabelTextLayout = axisLabelTextLayouts.get(tickLocation);
         Shape shape = axisLabelTextLayout.getOutline(null);
         Rectangle2D tickLabelBounds = shape.getBounds();
 

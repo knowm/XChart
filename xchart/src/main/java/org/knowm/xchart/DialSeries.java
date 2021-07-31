@@ -11,7 +11,7 @@ import org.knowm.xchart.internal.series.Series;
 public class DialSeries extends Series {
 
   private double value;
-  private String label;
+  private final String label;
 
   /**
    * @param label Adds custom label for series. If label is null, it is automatically calculated.

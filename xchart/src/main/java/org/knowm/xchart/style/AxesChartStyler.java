@@ -33,8 +33,8 @@ public abstract class AxesChartStyler extends Styler {
   private boolean isYAxisLogarithmic;
   private Double xAxisMin;
   private Double xAxisMax;
-  private HashMap<Integer, Double> yAxisMinMap = new HashMap<>();
-  private HashMap<Integer, Double> yAxisMaxMap = new HashMap<>();
+  private final HashMap<Integer, Double> yAxisMinMap = new HashMap<>();
+  private final HashMap<Integer, Double> yAxisMaxMap = new HashMap<>();
 
   // By default, all available labels are displayed
   // TODO what's this for anyway??
@@ -69,8 +69,8 @@ public abstract class AxesChartStyler extends Styler {
   private Color xAxisTickMarksColor;
   private Color yAxisTickMarksColor;
   // TODO where's the axis title color map?? Add it here!
-  private Map<Integer, Color> yAxisGroupTickLabelsColorMap = new HashMap<>();
-  private Map<Integer, Color> yAxisGroupTickMarksColorMap = new HashMap<>();
+  private final Map<Integer, Color> yAxisGroupTickLabelsColorMap = new HashMap<>();
+  private final Map<Integer, Color> yAxisGroupTickMarksColorMap = new HashMap<>();
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
   private TextAlignment xAxisLabelAlignmentVertical = TextAlignment.Centre;
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;

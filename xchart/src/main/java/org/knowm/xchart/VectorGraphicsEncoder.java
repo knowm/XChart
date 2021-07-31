@@ -37,7 +37,7 @@ public final class VectorGraphicsEncoder {
   /** Write a chart to an OutputStream. */
   public static void saveVectorGraphic(
       Chart chart, OutputStream os, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
-    Processor p = null;
+    final Processor p;
 
     switch (vectorGraphicsFormat) {
       case EPS:
@@ -51,7 +51,8 @@ public final class VectorGraphicsEncoder {
         break;
 
       default:
-        break;
+        throw new UnsupportedOperationException(
+            "Unsupported vector graphics format: " + vectorGraphicsFormat);
     }
 
     if (VectorGraphicsFormat.PDF != vectorGraphicsFormat) {

@@ -32,11 +32,10 @@ public class AnnotationTextPanel extends Annotation {
    * @param isValueInScreenSpace
    */
   public AnnotationTextPanel(String lines, double x, double y, boolean isValueInScreenSpace) {
-
+    super(isValueInScreenSpace);
     this.lines = Arrays.asList(lines.split("\\n"));
     this.x = x;
     this.y = y;
-    this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
   public void init(Chart chart) {
@@ -81,8 +80,8 @@ public class AnnotationTextPanel extends Annotation {
       xOffset = x;
       yOffset = chart.getHeight() - height - y - 1;
     } else {
-      xOffset = getXAxisSreenValue(x);
-      yOffset = getYAxisSreenValue(y) - height - 1;
+      xOffset = getXAxisScreenValue(x);
+      yOffset = getYAxisScreenValue(y) - height - 1;
     }
 
     xOffset = Math.min(xOffset, (chart.getWidth() - width - 1));

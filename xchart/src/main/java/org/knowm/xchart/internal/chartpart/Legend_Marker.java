@@ -103,9 +103,7 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
           BasicStroke existingLineStyle = series.getLineStyle();
           BasicStroke newLineStyle =
               new BasicStroke(
-                  existingLineStyle.getLineWidth() > BOX_OUTLINE_WIDTH * 0.5f
-                      ? BOX_OUTLINE_WIDTH * 0.5f
-                      : existingLineStyle.getLineWidth(),
+                  Math.min(existingLineStyle.getLineWidth(), BOX_OUTLINE_WIDTH * 0.5f),
                   existingLineStyle.getEndCap(),
                   existingLineStyle.getLineJoin(),
                   existingLineStyle.getMiterLimit(),

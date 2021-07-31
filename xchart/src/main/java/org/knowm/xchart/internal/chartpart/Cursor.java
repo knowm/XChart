@@ -36,7 +36,7 @@ public class Cursor extends MouseAdapter implements ChartPart {
   private final Chart chart;
   private final XYStyler styler;
 
-  private Map<String, Series> seriesMap;
+  private final Map<String, Series> seriesMap;
 
   private double mouseX;
   private double mouseY;
@@ -263,7 +263,7 @@ public class Cursor extends MouseAdapter implements ChartPart {
     }
   }
 
-  private class DataPoint {
+  private static class DataPoint {
 
     // edge detection
     private static final int MARGIN = 5;

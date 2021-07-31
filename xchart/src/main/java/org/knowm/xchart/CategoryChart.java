@@ -268,7 +268,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       List<? extends Number> yData,
       List<? extends Number> errorBars) {
 
-    if (seriesMap.keySet().contains(seriesName)) {
+    if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName

@@ -17,10 +17,9 @@ public class AnnotationLine extends Annotation {
    * @param isValueInScreenSpace
    */
   public AnnotationLine(double value, boolean isVertical, boolean isValueInScreenSpace) {
-
+    super(isValueInScreenSpace);
     this.value = value;
     this.isVertical = isVertical;
-    this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
   @Override
@@ -30,14 +29,16 @@ public class AnnotationLine extends Annotation {
       return;
     }
 
+    int lineWidth = (int) styler.getAnnotationLineStroke().getLineWidth();
+
     int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
 
     if (isVertical) {
-      y1 = 0;
-      y2 = chart.getHeight();
+      y1 = getYAxisScreenValueForMax() + lineWidth / 2;
+      y2 = getYAxisScreenValueForMin() - lineWidth / 2;
     } else {
-      x1 = 0;
-      x2 = chart.getWidth();
+      x1 = getXAxisScreenValueForMin() + lineWidth / 2;
+      x2 = getXAxisScreenValueForMax() - lineWidth / 2;
     }
 
     if (isValueInScreenSpace) {
@@ -50,10 +51,10 @@ public class AnnotationLine extends Annotation {
       }
     } else {
       if (isVertical) {
-        x1 = (int) getXAxisSreenValue(value);
+        x1 = getXAxisScreenValue(value);
         x2 = x1;
       } else {
-        y1 = (int) getYAxisSreenValue(value);
+        y1 = getYAxisScreenValue(value);
         y2 = y1;
       }
     }
@@ -63,11 +64,7 @@ public class AnnotationLine extends Annotation {
     g.drawLine(x1, y1, x2, y2);
 
     bounds =
-        new Rectangle2D.Double(
-            x1,
-            y1,
-            Math.max(x2 - x1, styler.getAnnotationLineStroke().getLineWidth()),
-            Math.max(y2 - y1, styler.getAnnotationLineStroke().getLineWidth()));
+        new Rectangle2D.Double(x1, y1, Math.max(x2 - x1, lineWidth), Math.max(y2 - y1, lineWidth));
   }
 
   public void setValue(double value) {
