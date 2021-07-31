@@ -613,6 +613,6 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 
 ## Continuous Integration
 
-[![Build Status](https://travis-ci.org/knowm/XChart.png?branch=develop)](https://travis-ci.org/timmolter/XChart.png)  
-[Build History](https://travis-ci.org/knowm/XChart/builds)  
+[![Build Status](https://www.travis-ci.com/knowm/XChart.svg?branch=develop)](https://www.travis-ci.com/knowm/XChart)  
+[Build History](https://travis-ci.com/knowm/XChart/builds)  
 
