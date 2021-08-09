@@ -104,17 +104,18 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
       toolTips = new ToolTips(chart);
       this.addMouseMotionListener(toolTips); // for moving
     }
-    
+
     // Recalculate Tooltips at component resize
-    this.addComponentListener(new ComponentAdapter( ) {
-		public void componentResized(ComponentEvent ev) {
-			if (chart.getStyler().isToolTipsEnabled()) {
-				XChartPanel.this.removeMouseListener(toolTips);
-				toolTips = new ToolTips(chart);
-				XChartPanel.this.addMouseMotionListener(toolTips);
-			}
-	    }
-	});
+    this.addComponentListener(
+        new ComponentAdapter() {
+          public void componentResized(ComponentEvent ev) {
+            if (chart.getStyler().isToolTipsEnabled()) {
+              XChartPanel.this.removeMouseListener(toolTips);
+              toolTips = new ToolTips(chart);
+              XChartPanel.this.addMouseMotionListener(toolTips);
+            }
+          }
+        });
   }
 
   /**

@@ -57,7 +57,6 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
     Map<String, S> map = chart.getSeriesMap();
 
-    toolTips.clearData();
     for (S series : map.values()) {
 
       if (!series.isEnabled()) {

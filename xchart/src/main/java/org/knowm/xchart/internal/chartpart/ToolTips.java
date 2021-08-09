@@ -318,9 +318,9 @@ public class ToolTips extends MouseAdapter implements ChartPart {
     }
     return "";
   }
-  
+
   public void clearData() {
-      toolTipList.clear();
+    toolTipList.clear();
   }
 
   static class ToolTip {
