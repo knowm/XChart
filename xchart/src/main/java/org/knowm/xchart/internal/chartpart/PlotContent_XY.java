@@ -53,6 +53,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
 
     Map<String, S> map = chart.getSeriesMap();
 
+    toolTips.clearData();
     for (S series : map.values()) {
 
       if (!series.isEnabled()) {
