@@ -630,6 +630,6 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 
 ## Continuous Integration
 
-[![Build Status](https://www.travis-ci.com/knowm/XChart.svg?branch=develop)](https://www.travis-ci.com/knowm/XChart)  
-[Build History](https://travis-ci.com/knowm/XChart/builds)  
+[![Java CI with Maven on Push](https://github.com/knowm/XChart/actions/workflows/maven_on_push.yml/badge.svg)](https://github.com/knowm/XChart/actions/workflows/maven_on_push.yml)
+[Build History](https://github.com/knowm/XChart/actions)  
 
