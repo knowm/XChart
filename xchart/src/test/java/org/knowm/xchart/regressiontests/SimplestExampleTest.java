@@ -8,7 +8,7 @@ import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.Ignore;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XYChart;
@@ -17,7 +17,8 @@ public class SimplestExampleTest {
 
   static final String digestType = "md5";
 
-  @Test
+//  @Test
+  @Ignore
   public void testSimplestExampleStaysTheSame() throws Exception {
     // given
     double[] xData = new double[] {0.0, 1.0, 2.0};
