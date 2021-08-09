@@ -225,6 +225,12 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
       // it exists on the classpath
       fileChooser.addChoosableFileFilter(new SuffixSaveFilter("svg"));
       fileChooser.addChoosableFileFilter(new SuffixSaveFilter("eps"));
+    } catch (ClassNotFoundException e) {
+      // it does not exist on the classpath
+    }
+    try {
+      Class.forName("de.rototor.pdfbox.graphics2d.PdfBoxGraphics2D");
+      // it exists on the classpath
       fileChooser.addChoosableFileFilter(new SuffixSaveFilter("pdf"));
     } catch (ClassNotFoundException e) {
       // it does not exist on the classpath
