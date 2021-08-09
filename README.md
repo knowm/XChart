@@ -540,7 +540,7 @@ Add the XChart library as a dependency to your pom.xml file:
     <dependency>
         <groupId>org.knowm.xchart</groupId>
         <artifactId>xchart</artifactId>
-        <version>3.8.0</version>
+        <version>3.8.1</version>
     </dependency>
 ```
 
@@ -556,7 +556,7 @@ For snapshots, add the following to your pom.xml file:
     <dependency>
       <groupId>org.knowm.xchart</groupId>
       <artifactId>xchart</artifactId>
-      <version>3.8.1-SNAPSHOT</version>
+      <version>3.8.2-SNAPSHOT</version>
     </dependency>
 ```
 
@@ -630,6 +630,7 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 
 ## Continuous Integration
 
-[![Java CI with Maven on Push](https://github.com/knowm/XChart/actions/workflows/maven_on_push.yml/badge.svg)](https://github.com/knowm/XChart/actions/workflows/maven_on_push.yml)
-[Build History](https://github.com/knowm/XChart/actions)  
+* [![Java CI with Maven on Push](https://github.com/knowm/XChart/actions/workflows/maven_on_push.yml/badge.svg)](https://github.
+com/knowm/XChart/actions/workflows/maven_on_push.yml)
+* [Build History](https://github.com/knowm/XChart/actions)  
 
