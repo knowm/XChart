@@ -35,7 +35,7 @@
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.6</version>
+        <version>0.0.7</version>
         <configuration>
           <mainClass>org.knowm.xchart.standalone.JavaFXDemo</mainClass>
         </configuration>
