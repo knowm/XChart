@@ -63,36 +63,38 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
       throw new IllegalArgumentException("Unsupported max label count equal to 1");
     }
 
-    if (0 < xAxisMaxLabelCount && xAxisMaxLabelCount < categories.size()) {
-      List<Object> sparseCategories = new ArrayList<>();
-      double step = categories.size() / (double) (xAxisMaxLabelCount - 1);
-      for (double stepIdx = 0; Math.round(stepIdx) < categories.size(); stepIdx += step) {
-        int idx = (int) Math.round(stepIdx);
-        Object label = categories.get(idx);
-        sparseCategories.add(label);
+    if (this.axisDirection == Direction.X) {
+      if (0 < xAxisMaxLabelCount && xAxisMaxLabelCount < categories.size()) {
+        List<Object> sparseCategories = new ArrayList<>();
+        double step = categories.size() / (double) (xAxisMaxLabelCount - 1);
+        for (double stepIdx = 0; Math.round(stepIdx) < categories.size(); stepIdx += step) {
+          int idx = (int) Math.round(stepIdx);
+          Object label = categories.get(idx);
+          sparseCategories.add(label);
+        }
+
+        Object lastLabel = categories.get(categories.size() - 1);
+        sparseCategories.add(lastLabel);
+        categories = sparseCategories;
+
+        gridStep = (tickSpace / (categories.size() - 1));
+        firstPosition = 0;
       }
 
-      Object lastLabel = categories.get(categories.size() - 1);
-      sparseCategories.add(lastLabel);
-      categories = sparseCategories;
-
-      gridStep = (tickSpace / (categories.size() - 1));
-      firstPosition = 0;
-    }
-
-    // set up String formatters that may be encountered
-    if (axisType == Series.DataType.String) {
-      axisFormat = new Formatter_String();
-    } else if (axisType == Series.DataType.Number) {
-      axisFormat = new Formatter_Number(styler, axisDirection, minValue, maxValue);
-    } else if (axisType == Series.DataType.Date) {
-      if (styler.getDatePattern() == null) {
-        throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
+      // set up String formatters that may be encountered
+      if (axisType == Series.DataType.String) {
+        axisFormat = new Formatter_String();
+      } else if (axisType == Series.DataType.Number) {
+        axisFormat = new Formatter_Number(styler, axisDirection, minValue, maxValue);
+      } else if (axisType == Series.DataType.Date) {
+        if (styler.getDatePattern() == null) {
+          throw new RuntimeException("You need to set the Date Formatting Pattern!!!");
+        }
+        SimpleDateFormat simpleDateformat =
+            new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
+        simpleDateformat.setTimeZone(styler.getTimezone());
+        axisFormat = simpleDateformat;
       }
-      SimpleDateFormat simpleDateformat =
-          new SimpleDateFormat(styler.getDatePattern(), styler.getLocale());
-      simpleDateformat.setTimeZone(styler.getTimezone());
-      axisFormat = simpleDateformat;
     }
 
     int counter = 0;
