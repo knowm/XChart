@@ -20,7 +20,10 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Maven
+      run: mvn clean install --settings etc/settings.xml -Dfmt.skip=true
+    - name: Deploy with Maven
       run: mvn clean deploy --no-transfer-progress --batch-mode --settings etc/settings.xml -Dfmt.skip=true;
+      if: github.repository_owner == 'knowm'
       env:
         CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
         CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}
