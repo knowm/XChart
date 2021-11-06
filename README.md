@@ -630,7 +630,6 @@ Please report any bugs or submit feature requests to [XChart's Github issue trac
 
 ## Continuous Integration
 
-* [![Java CI with Maven on Push](https://github.com/knowm/XChart/actions/workflows/maven_on_push.yml/badge.svg)](https://github.
-com/knowm/XChart/actions/workflows/maven_on_push.yml)
+* [![Java CI with Maven on Push](https://github.com/knowm/XChart/actions/workflows/maven_on_push.yml/badge.svg)](https://github.com/knowm/XChart/actions/workflows/maven_on_push.yml)
 * [Build History](https://github.com/knowm/XChart/actions)  
 
