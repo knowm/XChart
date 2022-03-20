@@ -241,7 +241,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     fileChooser.setFileFilter(pngFileFilter);
 
-    if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+    if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 
       if (fileChooser.getSelectedFile() != null) {
         File theFileToSave = fileChooser.getSelectedFile();
@@ -304,7 +304,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     fileChooser.setAcceptAllFileFilterUsed(false);
     fileChooser.setDialogTitle("Export");
 
-    if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+    if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 
       File theFileToSave = null;
       if (fileChooser.getSelectedFile() != null) {
