@@ -82,7 +82,44 @@ public abstract class AxesChartStyler extends Styler {
     super.setAllStyles();
 
     // axes
-    this.xAxisTitleVisible = theme.isXAxisTitleVisible();
+    setAxisStyles();
+
+    // Chart Plot Area ///////////////////////////////
+    setPlotStyles();
+
+    // Error Bars ///////////////////////////////
+    setErrorBars();
+
+    // Formatting ////////////////////////////////
+    setFormatting();
+  }
+
+private void setFormatting() {
+	this.locale = Locale.getDefault();
+    this.timezone = TimeZone.getDefault();
+    this.datePattern = null; // if not null, this override pattern will be used
+    this.xAxisDecimalPattern = null;
+    this.yAxisDecimalPattern = null;
+    this.yAxisGroupDecimalPatternMap = new HashMap<>();
+    this.xAxisLogarithmicDecadeOnly = true;
+    this.yAxisLogarithmicDecadeOnly = true;
+}
+
+private void setErrorBars() {
+	this.errorBarsColor = theme.getErrorBarsColor();
+    this.isErrorBarsColorSeriesColor = theme.isErrorBarsColorSeriesColor();
+}
+
+private void setPlotStyles() {
+	this.isPlotGridVerticalLinesVisible = theme.isPlotGridVerticalLinesVisible();
+    this.isPlotGridHorizontalLinesVisible = theme.isPlotGridHorizontalLinesVisible();
+    this.isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
+    this.plotGridLinesColor = theme.getPlotGridLinesColor();
+    this.plotGridLinesStroke = theme.getPlotGridLinesStroke();
+}
+
+private void setAxisStyles() {
+	this.xAxisTitleVisible = theme.isXAxisTitleVisible();
     this.yAxisTitleVisible = theme.isYAxisTitleVisible();
     this.axisTitleFont = theme.getAxisTitleFont();
     this.xAxisTicksVisible = theme.isXAxisTicksVisible();
@@ -105,28 +142,7 @@ public abstract class AxesChartStyler extends Styler {
     this.xAxisMax = null;
     this.yAxisMinMap.clear();
     this.yAxisMaxMap.clear();
-
-    // Chart Plot Area ///////////////////////////////
-    this.isPlotGridVerticalLinesVisible = theme.isPlotGridVerticalLinesVisible();
-    this.isPlotGridHorizontalLinesVisible = theme.isPlotGridHorizontalLinesVisible();
-    this.isPlotTicksMarksVisible = theme.isPlotTicksMarksVisible();
-    this.plotGridLinesColor = theme.getPlotGridLinesColor();
-    this.plotGridLinesStroke = theme.getPlotGridLinesStroke();
-
-    // Error Bars ///////////////////////////////
-    this.errorBarsColor = theme.getErrorBarsColor();
-    this.isErrorBarsColorSeriesColor = theme.isErrorBarsColorSeriesColor();
-
-    // Formatting ////////////////////////////////
-    this.locale = Locale.getDefault();
-    this.timezone = TimeZone.getDefault();
-    this.datePattern = null; // if not null, this override pattern will be used
-    this.xAxisDecimalPattern = null;
-    this.yAxisDecimalPattern = null;
-    this.yAxisGroupDecimalPatternMap = new HashMap<>();
-    this.xAxisLogarithmicDecadeOnly = true;
-    this.yAxisLogarithmicDecadeOnly = true;
-  }
+}
 
   // Chart Axes ///////////////////////////////
 
