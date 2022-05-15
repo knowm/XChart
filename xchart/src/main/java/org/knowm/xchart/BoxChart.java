@@ -111,18 +111,18 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
     return series;
   }
 
-private void checkSeriesValidity(String seriesName, List<? extends Number> newYData, BoxSeries series) {
+  private void checkSeriesValidity(String seriesName, List<? extends Number> newYData, BoxSeries series) {
 	if (series == null) {
       throw new IllegalArgumentException("Series name > " + seriesName + " < not found !!!");
     }
     sanityCheckYData(newYData);
-}
+  }
 
-private BoxSeries getSeriesFromSeriesMap(String seriesName) {
+  private BoxSeries getSeriesFromSeriesMap(String seriesName) {
 	Map<String, BoxSeries> seriesMap = getSeriesMap();
     BoxSeries series = seriesMap.get(seriesName);
 	return series;
-}
+  }
 
   private void setSeriesStyles() {
 
@@ -132,7 +132,7 @@ private BoxSeries getSeriesFromSeriesMap(String seriesName) {
     }
   }
 
-private SeriesColorMarkerLineStyle getSeriesColorMarkerLineStyle() {
+  private SeriesColorMarkerLineStyle getSeriesColorMarkerLineStyle() {
 	SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
         new SeriesColorMarkerLineStyleCycler(
             getStyler().getSeriesColors(),
@@ -141,9 +141,9 @@ private SeriesColorMarkerLineStyle getSeriesColorMarkerLineStyle() {
     SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
         seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 	return seriesColorMarkerLineStyle;
-}
+  }
 
-private void setSeriesDefaultForNullPart(SeriesColorMarkerLineStyle seriesColorMarkerLineStyle, BoxSeries series) {
+  private void setSeriesDefaultForNullPart(SeriesColorMarkerLineStyle seriesColorMarkerLineStyle, BoxSeries series) {
 	  if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
       }
@@ -159,7 +159,7 @@ private void setSeriesDefaultForNullPart(SeriesColorMarkerLineStyle seriesColorM
       if (series.getMarkerColor() == null) { // wasn't set manually
         series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
-}
+  }
 
   @Override
   public void paint(Graphics2D graphics, int width, int height) {
@@ -168,18 +168,18 @@ private void setSeriesDefaultForNullPart(SeriesColorMarkerLineStyle seriesColorM
     doPaint(graphics);
   }
 
-private void doPaint(Graphics2D graphics) {
+  private void doPaint(Graphics2D graphics) {
 	paintBackground(graphics);
 
     axisPair.paint(graphics);
     plot.paint(graphics);
     chartTitle.paint(graphics);
     annotations.forEach(x -> x.paint(graphics));
-}
+  }
 
-private void settingPaint(int width, int height) {
+  private void settingPaint(int width, int height) {
 	setWidth(width);
     setHeight(height);
     setSeriesStyles();
-}
+  }
 }

@@ -60,20 +60,20 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     calculateMinMax();
   }
 
-private void updateData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
+  private void updateData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
 	xData = newXData;
     yData = newYData;
     extraValues = newExtraValues;
-}
+  }
 
-private void dataSanityCheck(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
+  private void dataSanityCheck(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
 	if (newExtraValues != null && newExtraValues.size() != newYData.size()) {
       throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
     }
     if (newXData.size() != newYData.size()) {
       throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
     }
-}
+  }
 
   /**
    * For box plot, replace yData
@@ -100,7 +100,7 @@ private void dataSanityCheck(List<?> newXData, List<? extends Number> newYData, 
     // System.out.println(yMax);
   }
 
-private void calculateYMinMax() {
+  private void calculateYMinMax() {
 	double[] yMinMax;
     if (extraValues == null) {
       yMinMax = findMinMax(yData, yAxisType);
@@ -109,13 +109,13 @@ private void calculateYMinMax() {
     }
     yMin = yMinMax[0];
     yMax = yMinMax[1];
-}
+  }
 
-private void calculateXMinMax() {
+  private void calculateXMinMax() {
 	double[] xMinMax = findMinMax(xData, xAxisDataType);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
-}
+  }
 
   /**
    * Finds the min and max of a dataset accounting for error bars
@@ -176,12 +176,12 @@ private void calculateXMinMax() {
     return new double[] {min, max};
   }
 
-private double dataValue(DataType dataType, Object dataPoint) {
+  private double dataValue(DataType dataType, Object dataPoint) {
 	if (dataType == DataType.Number) {
         return ((Number) dataPoint).doubleValue();
     }
     return ((Date)dataPoint).getTime();
-}
+  }
 
   public Collection<?> getXData() {
 
