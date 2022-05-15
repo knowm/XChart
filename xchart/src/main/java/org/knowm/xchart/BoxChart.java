@@ -126,21 +126,25 @@ private BoxSeries getSeriesFromSeriesMap(String seriesName) {
 
   private void setSeriesStyles() {
 
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+    for (BoxSeries series : getSeriesMap().values()) {
+
+      setSeriesDefaultForNullPart(getSeriesColorMarkerLineStyle(), series);
+    }
+  }
+
+private SeriesColorMarkerLineStyle getSeriesColorMarkerLineStyle() {
+	SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
         new SeriesColorMarkerLineStyleCycler(
             getStyler().getSeriesColors(),
             getStyler().getSeriesMarkers(),
             getStyler().getSeriesLines());
     SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
         seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
-    for (BoxSeries series : getSeriesMap().values()) {
-
-      setSeriesDefaultForNullPart(seriesColorMarkerLineStyle, series);
-    }
-  }
+	return seriesColorMarkerLineStyle;
+}
 
 private void setSeriesDefaultForNullPart(SeriesColorMarkerLineStyle seriesColorMarkerLineStyle, BoxSeries series) {
-	if (series.getLineStyle() == null) { // wasn't set manually
+	  if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
       }
       if (series.getLineColor() == null) { // wasn't set manually
