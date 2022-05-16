@@ -631,11 +631,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     if (min > max) {
       if (getDirection() == Direction.X) {
         if (axesChartStyler instanceof CategoryStyler) {
-          AxesChartSeriesCategory axesChartSeries =
-              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
-          int count = axesChartSeries.getXData().size();
           minVal = 0;
-          maxVal = count;
+          maxVal = getMaxValueWithNotSet();
         }
       }
     }
@@ -710,11 +707,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     if (min > max) {
       if (getDirection() == Direction.X) {
         if (axesChartStyler instanceof CategoryStyler) {
-          AxesChartSeriesCategory axesChartSeries =
-              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
-          int count = axesChartSeries.getXData().size();
           minVal = 0;
-          maxVal = count;
+          maxVal = getMaxValueWithNotSet();
         }
       }
     }
@@ -753,6 +747,14 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     double value = ((screenPoint - margin - startOffset) * (maxVal - minVal) / tickSpace) + minVal;
     value = isLog ? Math.pow(10, value) : value;
     return value;
+  }
+  
+  public double getMaxValueWithNotSet(){
+	  AxesChartSeriesCategory axesChartSeries =
+              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+	  
+      int count = axesChartSeries.getXData().size();
+      return count;
   }
 
   /** An axis direction */
