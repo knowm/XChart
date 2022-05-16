@@ -31,7 +31,7 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
     return (T) this;
   }
 
-  public T title(String title) {
+  public T title() {
 
     this.title = "";
     return (T) this;
