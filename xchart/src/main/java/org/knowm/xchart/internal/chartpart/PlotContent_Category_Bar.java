@@ -131,6 +131,11 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
 
         double yTop = 0.0;
         double yBottom = 0.0;
+        
+        final boolean isBarStyle = (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar);
+        final boolean isStickStyle = (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick);
+        final boolean isSteppedBarStyle =(series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar);
+        
         switch (chartForm) {
           case 1: // positive chart
             // check for points off the chart draw area due to a custom yMin
@@ -163,10 +168,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           case 0: // span chart
             if (y >= 0.0) { // positive
               yTop = y;
-              if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar
-                  || series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick
-                  || series.getChartCategorySeriesRenderStyle()
-                      == CategorySeriesRenderStyle.SteppedBar) {
+              if (isBarStyle || isStickStyle || isSteppedBarStyle) {
                 yBottom = 0.0;
               } else {
                 yBottom = y;
@@ -177,10 +179,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
               }
             } else {
-              if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar
-                  || series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick
-                  || series.getChartCategorySeriesRenderStyle()
-                      == CategorySeriesRenderStyle.SteppedBar) {
+              if (isBarStyle || isStickStyle || isSteppedBarStyle) {
                 yTop = 0.0;
               } else {
                 yTop = y; // yTransform uses yTop, and for non-bars and stick, it's the same as
@@ -239,7 +238,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         }
 
         // SteppedBar. Partially drawn in loop, partially after loop.
-        if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar) {
+        if (isSteppedBarStyle) {
 
           double yCenter = zeroOffset;
           double yTip = yOffset;
@@ -293,7 +292,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           previousY = y;
         }
         // paint series
-        else if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+        else if (isBarStyle) {
 
           // paint bar
           Path2D.Double path = new Path2D.Double();
