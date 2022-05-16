@@ -130,16 +130,16 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     double min = Double.MAX_VALUE;
     double max = -Double.MAX_VALUE;
 
-    Iterator<? extends Number> itrator = data.iterator();
-    Iterator<? extends Number> ebItr = errorBars.iterator();
-    while (itrator.hasNext()) {
-      double bigDecimal = itrator.next().doubleValue();
-      double eb = ebItr.next().doubleValue();
-      if (bigDecimal - eb < min) {
-        min = bigDecimal - eb;
+    Iterator<? extends Number> iterator = data.iterator();
+    Iterator<? extends Number> errorBarItr = errorBars.iterator();
+    while (iterator.hasNext()) {
+      double bigDecimal = iterator.next().doubleValue();
+      double errorBar = errorBarItr.next().doubleValue();
+      if (bigDecimal - errorBar < min) {
+        min = bigDecimal - errorBar;
       }
-      if (bigDecimal + eb > max) {
-        max = bigDecimal + eb;
+      if (bigDecimal + errorBar > max) {
+        max = bigDecimal + errorBar;
       }
     }
     return new double[] {min, max};
