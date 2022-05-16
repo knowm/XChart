@@ -31,14 +31,14 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     ST styler = chart.getStyler();
-    g.setStroke(styler.getAxisTickMarksStroke());
+    graphic.setStroke(styler.getAxisTickMarksStroke());
 
     if (direction == Axis.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
 
-      g.setColor(styler.getYAxisGroupTickMarksColorMap(yAxis.getYIndex()));
+      graphic.setColor(styler.getYAxisGroupTickMarksColorMap(yAxis.getYIndex()));
       int axisTickMarkLength = styler.getAxisTickMarkLength();
 
       boolean onRight = styler.getYAxisGroupPosistion(yAxis.getYIndex()) == YAxisPosition.Right;
@@ -77,8 +77,8 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
 
           double tickLocation = yAxis.getAxisTickCalculator().getTickLocations().get(i);
           double flippedTickLocation = yOffset + yAxisBounds.getHeight() - tickLocation;
-          if (flippedTickLocation > bounds.getY()
-              && flippedTickLocation < bounds.getY() + bounds.getHeight()) {
+          final boolean isInBound = (flippedTickLocation > bounds.getY() && flippedTickLocation < bounds.getY() + bounds.getHeight());
+          if (isInBound) {
 
             Shape line =
                 new Line2D.Double(
@@ -86,7 +86,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
                     flippedTickLocation,
                     xOffset + axisTickMarkLength,
                     flippedTickLocation);
-            g.draw(line);
+            graphic.draw(line);
           }
         }
       }
@@ -96,13 +96,13 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
 
         Shape line =
             new Line2D.Double(lineXOffset, yOffset, lineXOffset, yOffset + yAxisBounds.getHeight());
-        g.draw(line);
+        graphic.draw(line);
       }
     }
     // X-Axis
     else if (direction == Axis.Direction.X && styler.isXAxisTicksVisible()) {
 
-      g.setColor(styler.getXAxisTickMarksColor());
+      graphic.setColor(styler.getXAxisTickMarksColor());
       int axisTickMarkLength = styler.getAxisTickMarkLength();
       double xOffset = chart.getXAxis().getBounds().getX();
       double yOffset =
@@ -116,8 +116,8 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
               yOffset - axisTickMarkLength,
               chart.getXAxis().getBounds().getWidth(),
               axisTickMarkLength);
-      // g.setColor(Color.yellow);
-      // g.draw(bounds);
+      // graphic.setColor(Color.yellow);
+      // graphic.draw(bounds);
 
       // tick marks
       if (styler.isAxisTicksMarksVisible()) {
@@ -136,7 +136,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
                     yOffset,
                     xOffset + tickLocation,
                     yOffset - axisTickMarkLength);
-            g.draw(line);
+            graphic.draw(line);
           }
         }
       }
@@ -144,8 +144,8 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
       // Line
       if (styler.isAxisTicksLineVisible()) {
 
-        g.setStroke(styler.getAxisTickMarksStroke());
-        g.drawLine(
+    	graphic.setStroke(styler.getAxisTickMarksStroke());
+    	graphic.drawLine(
             (int) xOffset,
             (int) (yOffset - axisTickMarkLength),
             (int) (xOffset + chart.getXAxis().getBounds().getWidth()),

@@ -25,17 +25,17 @@ public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     // g.setColor(Color.red);
     // g.draw(bounds);
 
-    plotSurface.paint(g);
+    plotSurface.paint(graphic);
     // TODO is this necessary>??
     if (chart.getSeriesMap().isEmpty()) {
       return;
     }
-    plotContent.paint(g);
+    plotContent.paint(graphic);
   }
 
   @Override

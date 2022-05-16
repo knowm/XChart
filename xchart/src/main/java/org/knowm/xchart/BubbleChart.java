@@ -2,7 +2,7 @@ package org.knowm.xchart;
 
 import java.awt.Graphics2D;
 import java.util.List;
-import java.util.Map;
+
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -63,8 +63,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    */
   public BubbleChart(BubbleChartBuilder chartBuilder) {
 
-    this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
-    setTitle(chartBuilder.title);
+    this(chartBuilder.getWidth(), chartBuilder.getHeight(), chartBuilder.getChartTheme());
+    setTitle(chartBuilder.getTitle());
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
   }
@@ -106,24 +106,23 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     // Sanity checks
     sanityCheck(seriesName, xData, yData, bubbleData);
 
-    BubbleSeries series;
+    BubbleSeries series = generateBubbleSeries(seriesName, xData, yData, bubbleData);
+
+    seriesMap.put(seriesName, series);
+
+    return series;
+  }
+
+  private BubbleSeries generateBubbleSeries(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
+	BubbleSeries series;
     if (xData != null) {
-
-      // Sanity check
-      if (xData.length != yData.length) {
-        throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-      }
-
       series = new BubbleSeries(seriesName, xData, yData, bubbleData);
     } else { // generate xData
       series =
           new BubbleSeries(
               seriesName, Utils.getGeneratedDataAsArray(yData.length), yData, bubbleData);
     }
-
-    seriesMap.put(seriesName, series);
-
-    return series;
+	return series;
   }
 
   /**
@@ -162,18 +161,15 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
   public BubbleSeries updateBubbleSeries(
       String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
 
-    Map<String, BubbleSeries> seriesMap = getSeriesMap();
-    BubbleSeries series = seriesMap.get(seriesName);
+    BubbleSeries series = getSeriesMap().get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
     }
+    double[] xData = newXData;
     if (newXData == null) {
-      double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
-      series.replaceData(generatedXData, newYData, newBubbleData);
-    } else {
-      series.replaceData(newXData, newYData, newBubbleData);
+      xData = Utils.getGeneratedDataAsArray(newYData.length);
     }
-
+    series.replaceData(xData, newYData, newBubbleData);
     return series;
   }
 
@@ -201,8 +197,13 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     if (bubbleData.length == 0) {
       throw new IllegalArgumentException("Bubble data cannot be empty!!! >" + seriesName);
     }
-    if (xData != null && xData.length == 0) {
-      throw new IllegalArgumentException("X-Axis data cannot be empty!!! >" + seriesName);
+    if (xData != null) {
+      if (xData.length == 0) {
+    	  throw new IllegalArgumentException("X-Axis data cannot be empty!!! >" + seriesName);
+      }
+      if (xData.length != yData.length) {
+          throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+      }
     }
     if (bubbleData.length != yData.length) {
       throw new IllegalArgumentException(
@@ -211,28 +212,35 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
   }
 
   @Override
-  public void paint(Graphics2D g, int width, int height) {
+  public void paint(Graphics2D graphics, int width, int height) {
 
-    setWidth(width);
+    settingPaint(width, height);
+
+    doPaint(graphics);
+  }
+
+  private void doPaint(Graphics2D graphics) {
+	paintBackground(graphics);
+
+    axisPair.paint(graphics);
+    plot.paint(graphics);
+    chartTitle.paint(graphics);
+    legend.paint(graphics);
+    annotations.forEach(x -> x.paint(graphics));
+  }
+
+  private void settingPaint(int width, int height) {
+	setWidth(width);
     setHeight(height);
 
     // set the series types if they are not set. Legend and Plot need it.
     for (BubbleSeries bubbleSeries : getSeriesMap().values()) {
-      BubbleSeries.BubbleSeriesRenderStyle seriesType =
-          bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
-      if (seriesType == null) { // wasn't overridden, use default from Style Manager
+      final boolean isBubbleSeriesRenderStyleSet = (bubbleSeries.getBubbleSeriesRenderStyle() == null);// would be directly set
+      if (isBubbleSeriesRenderStyleSet) { // wasn't overridden, use default from Style Manager
         bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }
     setSeriesStyles();
-
-    paintBackground(g);
-
-    axisPair.paint(g);
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
-    annotations.forEach(x -> x.paint(g));
   }
 
   /** set the series color based on theme */
@@ -245,10 +253,12 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
             getStyler().getSeriesLines());
     for (BubbleSeries series : getSeriesMap().values()) {
 
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
-          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+      setSeriesDefaultForNullPart(series, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
+    }
+  }
 
-      if (series.getLineStyle() == null) { // wasn't set manually
+  private void setSeriesDefaultForNullPart(BubbleSeries series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+	if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
       }
       if (series.getLineColor() == null) { // wasn't set manually
@@ -257,6 +267,5 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
       if (series.getFillColor() == null) { // wasn't set manually
         series.setFillColor(seriesColorMarkerLineStyle.getColor());
       }
-    }
   }
 }

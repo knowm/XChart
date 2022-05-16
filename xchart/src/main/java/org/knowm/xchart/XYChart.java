@@ -66,8 +66,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    */
   public XYChart(XYChartBuilder chartBuilder) {
 
-    this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
-    setTitle(chartBuilder.title);
+    this(chartBuilder.getWidth(), chartBuilder.getHeight(), chartBuilder.getChartTheme());
+    setTitle(chartBuilder.getTitle());
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
   }
