@@ -167,30 +167,32 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     // Sanity checks
     sanityCheck(seriesName, xData, yData, errorBars);
 
-    CategorySeries series;
-    if (xData != null) {
-
-      // Sanity check
-      if (xData.size() != yData.size()) {
-        throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-      }
-
-    } else { // generate xData
-      xData = Utils.getGeneratedDataAsList(yData.size());
-    }
-    series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
+    xData = generateXDataIfNullForSeries(xData, yData);
+    
+    CategorySeries series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
 
     seriesMap.put(seriesName, series);
 
     return series;
   }
 
-  private DataType getDataType(List<?> data) {
+  private List<?> generateXDataIfNullForSeries(List<?> xData, List<? extends Number> yData) {
+	if (xData == null) {
+    	xData = Utils.getGeneratedDataAsList(yData.size());
+    }
+	return xData;
+  }
 
+  private DataType getDataType(List<?> data) {
     DataType axisType;
 
     Iterator<?> itr = data.iterator();
+    if (!itr.hasNext()) {
+        throw new IllegalArgumentException(
+                "List of data should contain next Iteration to get data type!!!");
+    }
     Object dataPoint = itr.next();
+    
     if (dataPoint instanceof Number) {
       axisType = DataType.Number;
     } else if (dataPoint instanceof Date) {
@@ -220,23 +222,29 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       List<? extends Number> newYData,
       List<? extends Number> newErrorBarData) {
 
-    Map<String, CategorySeries> seriesMap = getSeriesMap();
-    CategorySeries series = seriesMap.get(seriesName);
+    CategorySeries series = getSeriesMap().get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
     }
-    if (newXData == null) {
+    
+    series.replaceData(generateXDataIfNullForReplace(newXData, newYData), newYData, newErrorBarData);
+    return series;
+  }
+
+  private List<?> generateXDataIfNullForReplace(List<?> newXData, List<? extends Number> newYData) {
+	List<?> xData;
+    
+	if (newXData == null) {
       // generate X-Data
       List<Integer> generatedXData = new ArrayList<Integer>();
       for (int i = 1; i <= newYData.size(); i++) {
         generatedXData.add(i);
       }
-      series.replaceData(generatedXData, newYData, newErrorBarData);
+      xData = generatedXData;
     } else {
-      series.replaceData(newXData, newYData, newErrorBarData);
+      xData = newXData;
     }
-
-    return series;
+	return xData;
   }
 
   /**
@@ -280,8 +288,13 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     if (yData.size() == 0) {
       throw new IllegalArgumentException("Y-Axis data cannot be empty!!!");
     }
-    if (xData != null && xData.size() == 0) {
-      throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
+    if (xData != null) {
+      if (xData.size() == 0) {
+    	  throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
+      }
+      if (xData.size() != yData.size()) {
+    	  throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+      }
     }
     if (errorBars != null && errorBars.size() != yData.size()) {
       throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!!");
@@ -289,28 +302,35 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
   }
 
   @Override
-  public void paint(Graphics2D g, int width, int height) {
+  public void paint(Graphics2D graphics, int width, int height) {
 
-    setWidth(width);
+    settingPaint(width, height);
+
+    doPaint(graphics);
+  }
+
+  private void doPaint(Graphics2D graphics) {
+	paintBackground(graphics);
+
+    axisPair.paint(graphics);
+    plot.paint(graphics);
+    chartTitle.paint(graphics);
+    legend.paint(graphics);
+    annotations.forEach(x -> x.paint(graphics));
+  }
+
+  private void settingPaint(int width, int height) {
+	setWidth(width);
     setHeight(height);
 
     // set the series render styles if they are not set. Legend and Plot need it.
     for (CategorySeries seriesCategory : getSeriesMap().values()) {
-      CategorySeries.CategorySeriesRenderStyle seriesType =
-          seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
-      if (seriesType == null) { // wasn't overridden, use default from Style Manager
+      // would be directly set
+      if (seriesCategory.getChartCategorySeriesRenderStyle() == null) { // wasn't overridden, use default from Style Manager
         seriesCategory.setChartCategorySeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }
     setSeriesStyles();
-
-    paintBackground(g);
-
-    axisPair.paint(g);
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
-    annotations.forEach(x -> x.paint(g));
   }
 
   /** set the series color, marker and line style based on theme */
@@ -323,10 +343,12 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
             getStyler().getSeriesLines());
     for (CategorySeries series : getSeriesMap().values()) {
 
-      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
-          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+      setSeriesDefaultForNullPart(series, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
+    }
+  }
 
-      if (series.getLineStyle() == null) { // wasn't set manually
+  private void setSeriesDefaultForNullPart(CategorySeries series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+	  if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
       }
       if (series.getLineColor() == null) { // wasn't set manually
@@ -341,6 +363,5 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       if (series.getMarkerColor() == null) { // wasn't set manually
         series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
       }
-    }
   }
 }
