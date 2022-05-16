@@ -64,8 +64,8 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
    */
   public HeatMapChart(HeatMapChartBuilder heatMapChartBuilder) {
 
-    this(heatMapChartBuilder.width, heatMapChartBuilder.height, heatMapChartBuilder.chartTheme);
-    setTitle(heatMapChartBuilder.title);
+    this(heatMapChartBuilder.getWidth(), heatMapChartBuilder.getHeight(), heatMapChartBuilder.getChartTheme());
+    setTitle(heatMapChartBuilder.getTitle());
     setXAxisTitle(heatMapChartBuilder.xAxisTitle);
     setYAxisTitle(heatMapChartBuilder.yAxisTitle);
   }

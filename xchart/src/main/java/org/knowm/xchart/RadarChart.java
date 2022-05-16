@@ -59,8 +59,8 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
    */
   public RadarChart(RadarChartBuilder radarChartBuilder) {
 
-    this(radarChartBuilder.width, radarChartBuilder.height, radarChartBuilder.chartTheme);
-    setTitle(radarChartBuilder.title);
+    this(radarChartBuilder.getWidth(), radarChartBuilder.getHeight(), radarChartBuilder.getChartTheme());
+    setTitle(radarChartBuilder.getTitle());
   }
 
   public String[] getRadiiLabels() {
