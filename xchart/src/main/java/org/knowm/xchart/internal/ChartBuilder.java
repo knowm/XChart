@@ -14,7 +14,7 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
   private int height;
   private String title;
 
-  public ChartTheme chartTheme = ChartTheme.XChart;
+  private ChartTheme chartTheme;
 
   /** Constructor */
   protected ChartBuilder() {}
@@ -37,9 +37,9 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
     return (T) this;
   }
 
-  public T theme(ChartTheme chartTheme) {
+  public T theme() {
 
-    this.chartTheme = chartTheme;
+    this.chartTheme = ChartTheme.XChart;
     return (T) this;
   }
 
