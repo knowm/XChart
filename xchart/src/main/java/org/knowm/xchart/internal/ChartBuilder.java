@@ -10,36 +10,36 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  */
 public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart> {
 
-  private int width;
-  private int height;
-  private String title;
+  public int width = 800;
+  public int height = 600;
+  public String title = "";
 
-  private ChartTheme chartTheme;
+  public ChartTheme chartTheme = ChartTheme.XChart;
 
   /** Constructor */
   protected ChartBuilder() {}
-  
-  public T width() {
 
-    this.width = 800;
+  public T width(int width) {
+
+    this.width = width;
     return (T) this;
   }
 
-  public T height() {
+  public T height(int height) {
 
-    this.height = 600;
+    this.height = height;
     return (T) this;
   }
 
-  public T title() {
+  public T title(String title) {
 
-    this.title = "";
+    this.title = title;
     return (T) this;
   }
 
-  public T theme() {
+  public T theme(ChartTheme chartTheme) {
 
-    this.chartTheme = ChartTheme.XChart;
+    this.chartTheme = chartTheme;
     return (T) this;
   }
 
