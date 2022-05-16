@@ -54,17 +54,25 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
       List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
 
     // Sanity check
-    if (newExtraValues != null && newExtraValues.size() != newYData.size()) {
+    dataSanityCheck(newXData, newYData, newExtraValues);
+
+    updateData(newXData, newYData, newExtraValues);
+    calculateMinMax();
+  }
+
+  private void updateData(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
+	xData = newXData;
+    yData = newYData;
+    extraValues = newExtraValues;
+  }
+
+  private void dataSanityCheck(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
+	if (newExtraValues != null && newExtraValues.size() != newYData.size()) {
       throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
     }
     if (newXData.size() != newYData.size()) {
       throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
     }
-
-    xData = newXData;
-    yData = newYData;
-    extraValues = newExtraValues;
-    calculateMinMax();
   }
 
   /**
@@ -82,14 +90,18 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
   protected void calculateMinMax() {
 
     // xData
-    double[] xMinMax = findMinMax(xData, xAxisDataType);
-    xMin = xMinMax[0];
-    xMax = xMinMax[1];
+    calculateXMinMax();
     // System.out.println(xMin);
     // System.out.println(xMax);
 
     // yData
-    double[] yMinMax;
+    calculateYMinMax();
+    // System.out.println(yMin);
+    // System.out.println(yMax);
+  }
+
+  private void calculateYMinMax() {
+	double[] yMinMax;
     if (extraValues == null) {
       yMinMax = findMinMax(yData, yAxisType);
     } else {
@@ -97,8 +109,12 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     }
     yMin = yMinMax[0];
     yMax = yMinMax[1];
-    // System.out.println(yMin);
-    // System.out.println(yMax);
+  }
+
+  private void calculateXMinMax() {
+	double[] xMinMax = findMinMax(xData, xAxisDataType);
+    xMin = xMinMax[0];
+    xMax = xMinMax[1];
   }
 
   /**
@@ -114,16 +130,16 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     double min = Double.MAX_VALUE;
     double max = -Double.MAX_VALUE;
 
-    Iterator<? extends Number> itr = data.iterator();
-    Iterator<? extends Number> ebItr = errorBars.iterator();
-    while (itr.hasNext()) {
-      double bigDecimal = itr.next().doubleValue();
-      double eb = ebItr.next().doubleValue();
-      if (bigDecimal - eb < min) {
-        min = bigDecimal - eb;
+    Iterator<? extends Number> iterator = data.iterator();
+    Iterator<? extends Number> errorBarItr = errorBars.iterator();
+    while (iterator.hasNext()) {
+      double bigDecimal = iterator.next().doubleValue();
+      double errorBar = errorBarItr.next().doubleValue();
+      if (bigDecimal - errorBar < min) {
+        min = bigDecimal - errorBar;
       }
-      if (bigDecimal + eb > max) {
-        max = bigDecimal + eb;
+      if (bigDecimal + errorBar > max) {
+        max = bigDecimal + errorBar;
       }
     }
     return new double[] {min, max};
@@ -145,26 +161,26 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
       if (dataPoint == null) {
         continue;
       }
-
-      double value = 0.0;
-
-      if (dataType == DataType.Number) {
-        value = ((Number) dataPoint).doubleValue();
-      } else if (dataType == DataType.Date) {
-        Date date = (Date) dataPoint;
-        value = date.getTime();
-      } else if (dataType == DataType.String) {
-        return new double[] {Double.NaN, Double.NaN};
+      if (dataType == DataType.String) {
+          return new double[] {Double.NaN, Double.NaN};
       }
-      if (value < min) {
-        min = value;
+      
+      if (dataValue(dataType, dataPoint) < min) {
+        min = dataValue(dataType, dataPoint);
       }
-      if (value > max) {
-        max = value;
+      if (dataValue(dataType, dataPoint) > max) {
+        max = dataValue(dataType, dataPoint);
       }
     }
 
     return new double[] {min, max};
+  }
+
+  private double dataValue(DataType dataType, Object dataPoint) {
+	if (dataType == DataType.Number) {
+        return ((Number) dataPoint).doubleValue();
+    }
+    return ((Date)dataPoint).getTime();
   }
 
   public Collection<?> getXData() {
