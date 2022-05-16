@@ -749,6 +749,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     return value;
   }
   
+
   public double getMaxValueWithNotSet() {
 	  AxesChartSeriesCategory axesChartSeries =
               (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
