@@ -60,8 +60,8 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
    */
   public PieChart(PieChartBuilder chartBuilder) {
 
-    this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
-    setTitle(chartBuilder.title);
+    this(chartBuilder.getWidth(), chartBuilder.getHeight(), chartBuilder.getChartTheme());
+    setTitle(chartBuilder.getTitle());
   }
 
   /**
