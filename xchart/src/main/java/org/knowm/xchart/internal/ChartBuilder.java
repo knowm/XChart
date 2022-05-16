@@ -45,19 +45,18 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
 
   public abstract C build();
 
+  public ChartTheme getChartTheme() {
+    return chartTheme;
+  }
+
+  public String getTitle() {
+    return title;
+
   public int getWidth() {
     return width;
   }
 
   public int getHeight() {
     return height;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public ChartTheme getChartTheme() {
-    return chartTheme;
   }
 }

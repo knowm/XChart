@@ -6,12 +6,10 @@ import java.awt.image.BufferedImage;
 import org.knowm.xchart.internal.chartpart.Annotation;
 import org.knowm.xchart.internal.chartpart.Chart;
 
-public class AnnotationImage extends Annotation {
+public class AnnotationImage extends AnnotationWithXY {
 
   // internal
   private BufferedImage image;
-  protected double x;
-  protected double y;
 
   /**
    * Constructor
@@ -57,13 +55,5 @@ public class AnnotationImage extends Annotation {
 
   public void setImage(BufferedImage image) {
     this.image = image;
-  }
-
-  public void setX(double x) {
-    this.x = x;
-  }
-
-  public void setY(double y) {
-    this.y = y;
   }
 }
