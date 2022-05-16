@@ -109,39 +109,55 @@ public abstract class Styler {
   void setAllStyles() {
 
     // Chart Style ///////////////////////////////
-    baseFont = theme.getBaseFont();
-    chartBackgroundColor = theme.getChartBackgroundColor();
-    chartFontColor = theme.getChartFontColor();
-    chartPadding = theme.getChartPadding();
-    seriesColors = theme.getSeriesColors();
-    seriesLines = theme.getSeriesLines();
-    seriesMarkers = theme.getSeriesMarkers();
+    setChartStyle();
 
     // Chart Title ///////////////////////////////
-    chartTitleFont = theme.getChartTitleFont();
-    isChartTitleVisible = theme.isChartTitleVisible();
-    isChartTitleBoxVisible = theme.isChartTitleBoxVisible();
-    chartTitleBoxBackgroundColor = theme.getChartTitleBoxBackgroundColor();
-    chartTitleBoxBorderColor = theme.getChartTitleBoxBorderColor();
-    chartTitlePadding = theme.getChartTitlePadding();
+    setChartTitle();
 
     // Legend
-    isLegendVisible = theme.isLegendVisible();
-    legendBackgroundColor = theme.getLegendBackgroundColor();
-    legendBorderColor = theme.getLegendBorderColor();
-    legendFont = theme.getLegendFont();
-    legendPadding = theme.getLegendPadding();
-    legendSeriesLineLength = theme.getLegendSeriesLineLength();
-    legendPosition = theme.getLegendPosition();
+    setLegend();
 
     // Chart Plot Area ///////////////////////////////
-    plotBackgroundColor = theme.getPlotBackgroundColor();
-    plotBorderColor = theme.getPlotBorderColor();
-    isPlotBorderVisible = theme.isPlotBorderVisible();
-    plotContentSize = theme.getPlotContentSize();
+    setChartPlotArea();
 
     // Chart Annotations
-    annotationTextPanelBackgroundColor = theme.getAnnotationTextPanelBackgroundColor();
+    setChartAnnotations();
+
+    // Chart Button
+    // TODO move these to theme
+    setChartButton();
+
+    // Tool Tips ///////////////////////////////
+
+    setToolTips();
+
+    // Formatting
+    decimalPattern = null;
+
+    // Line, Scatter, Area, Radar Charts ///////////////////////////////
+    this.markerSize = theme.getMarkerSize();
+  }
+
+  private void setToolTips() {
+	isToolTipsEnabled = theme.isToolTipsEnabled();
+    toolTipType = theme.getToolTipType();
+    toolTipBackgroundColor = theme.getToolTipBackgroundColor();
+    toolTipBorderColor = theme.getToolTipBorderColor();
+    toolTipFont = theme.getToolTipFont();
+    toolTipHighlightColor = theme.getToolTipHighlightColor();
+  }
+
+  private void setChartButton() {
+	chartButtonBackgroundColor = ChartColor.LIGHT_GREY.getColor();
+    chartButtonBorderColor = ChartColor.DARK_GREY.getColor();
+    chartButtonFontColor = getChartFontColor();
+    chartButtonFont = getBaseFont().deriveFont(11f);
+    chartButtonMargin = 6;
+    chartButtonPosition = ChartButtonPosition.InsideN;
+  }
+
+  private void setChartAnnotations() {
+	annotationTextPanelBackgroundColor = theme.getAnnotationTextPanelBackgroundColor();
     annotationTextPanelBorderColor = theme.getAnnotationTextPanelBorderColor();
     annotationTextPanelFont = theme.getAnnotationTextPanelFont();
     annotationTextPanelFontColor = theme.getAnnotationTextPanelFontColor();
@@ -152,30 +168,42 @@ public abstract class Styler {
 
     annotationLineStroke = theme.getAnnotationLineStroke();
     annotationLineColor = theme.getAnnotationLineColor();
+  }
 
-    // Chart Button
-    // TODO move these to theme
-    chartButtonBackgroundColor = ChartColor.LIGHT_GREY.getColor();
-    chartButtonBorderColor = ChartColor.DARK_GREY.getColor();
-    chartButtonFontColor = getChartFontColor();
-    chartButtonFont = getBaseFont().deriveFont(11f);
-    chartButtonMargin = 6;
-    chartButtonPosition = ChartButtonPosition.InsideN;
+  private void setChartPlotArea() {
+	plotBackgroundColor = theme.getPlotBackgroundColor();
+    plotBorderColor = theme.getPlotBorderColor();
+    isPlotBorderVisible = theme.isPlotBorderVisible();
+    plotContentSize = theme.getPlotContentSize();
+  }
 
-    // Tool Tips ///////////////////////////////
+  private void setLegend() {
+	isLegendVisible = theme.isLegendVisible();
+    legendBackgroundColor = theme.getLegendBackgroundColor();
+    legendBorderColor = theme.getLegendBorderColor();
+    legendFont = theme.getLegendFont();
+    legendPadding = theme.getLegendPadding();
+    legendSeriesLineLength = theme.getLegendSeriesLineLength();
+    legendPosition = theme.getLegendPosition();
+  }
 
-    isToolTipsEnabled = theme.isToolTipsEnabled();
-    toolTipType = theme.getToolTipType();
-    toolTipBackgroundColor = theme.getToolTipBackgroundColor();
-    toolTipBorderColor = theme.getToolTipBorderColor();
-    toolTipFont = theme.getToolTipFont();
-    toolTipHighlightColor = theme.getToolTipHighlightColor();
+  private void setChartTitle() {
+	chartTitleFont = theme.getChartTitleFont();
+    isChartTitleVisible = theme.isChartTitleVisible();
+    isChartTitleBoxVisible = theme.isChartTitleBoxVisible();
+    chartTitleBoxBackgroundColor = theme.getChartTitleBoxBackgroundColor();
+    chartTitleBoxBorderColor = theme.getChartTitleBoxBorderColor();
+    chartTitlePadding = theme.getChartTitlePadding();
+  }
 
-    // Formatting
-    decimalPattern = null;
-
-    // Line, Scatter, Area, Radar Charts ///////////////////////////////
-    this.markerSize = theme.getMarkerSize();
+  private void setChartStyle() {
+	baseFont = theme.getBaseFont();
+    chartBackgroundColor = theme.getChartBackgroundColor();
+    chartFontColor = theme.getChartFontColor();
+    chartPadding = theme.getChartPadding();
+    seriesColors = theme.getSeriesColors();
+    seriesLines = theme.getSeriesLines();
+    seriesMarkers = theme.getSeriesMarkers();
   }
 
   public Font getBaseFont() {

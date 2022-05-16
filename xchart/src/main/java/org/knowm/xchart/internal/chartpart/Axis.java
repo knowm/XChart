@@ -749,14 +749,16 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     return value;
   }
   
-  public double getMaxValueWithNotSet(){
+
+  public double getMaxValueWithNotSet() {
 	  AxesChartSeriesCategory axesChartSeries =
               (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
 	  
       int count = axesChartSeries.getXData().size();
+      
       return count;
   }
-
+  
   /** An axis direction */
   public enum Direction {
 
