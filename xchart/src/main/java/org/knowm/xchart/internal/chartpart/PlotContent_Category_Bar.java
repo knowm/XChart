@@ -25,7 +25,9 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     extends PlotContent_<ST, S> {
 
   private final ST stylerCategory;
-
+  private final int CHART_FORM_SPAN = 0;
+  private final int CHART_FORM_POSITIVE = 1;
+  private final int CHART_FORM_NEGATIVE = -1;
   /**
    * Constructor
    *
@@ -57,11 +59,11 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     // figure out the general form of the chart
     final int chartForm; // 1=positive, -1=negative, 0=span
     if (yMin > 0.0 && yMax > 0.0) {
-      chartForm = 1; // positive chart
+      chartForm = CHART_FORM_POSITIVE; // positive chart
     } else if (yMin < 0.0 && yMax < 0.0) {
-      chartForm = -1; // negative chart
+      chartForm = CHART_FORM_NEGATIVE; // negative chart
     } else {
-      chartForm = 0; // span chart
+      chartForm = CHART_FORM_SPAN; // span chart
     }
     // System.out.println(yMin);
     // System.out.println(yMax);
@@ -137,7 +139,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         final boolean isSteppedBarStyle =(series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar);
         
         switch (chartForm) {
-          case 1: // positive chart
+          case CHART_FORM_POSITIVE: // positive chart
             // check for points off the chart draw area due to a custom yMin
             if (y < yMin) {
               categoryCounter++;
@@ -151,7 +153,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
             }
             break;
-          case -1: // negative chart
+          case CHART_FORM_NEGATIVE: // negative chart
             // check for points off the chart draw area due to a custom yMin
             if (y > yMax) {
               categoryCounter++;
@@ -165,7 +167,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               accumulatedStackOffsetNeg[categoryCounter] += (yTop - yBottom);
             }
             break;
-          case 0: // span chart
+          case CHART_FORM_SPAN: // span chart
             if (y >= 0.0) { // positive
               yTop = y;
               if (isBarStyle || isStickStyle || isSteppedBarStyle) {
