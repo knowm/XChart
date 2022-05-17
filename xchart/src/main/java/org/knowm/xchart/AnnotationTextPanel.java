@@ -42,7 +42,7 @@ public class AnnotationTextPanel extends AnnotationWithXY {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     if (!isVisible) {
       return;
@@ -89,18 +89,18 @@ public class AnnotationTextPanel extends AnnotationWithXY {
 
     // Draw info panel box background and border
     Shape rect = new Rectangle2D.Double(xOffset, yOffset, width, height);
-    g.setColor(styler.getAnnotationTextPanelBackgroundColor());
-    g.fill(rect);
-    g.setStroke(SOLID_STROKE);
-    g.setColor(styler.getAnnotationTextPanelBorderColor());
-    g.draw(rect);
+    graphic.setColor(styler.getAnnotationTextPanelBackgroundColor());
+    graphic.fill(rect);
+    graphic.setStroke(SOLID_STROKE);
+    graphic.setColor(styler.getAnnotationTextPanelBorderColor());
+    graphic.draw(rect);
 
     // Draw text onto panel box
-    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    Object oldHint = graphic.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    g.setColor(styler.getAnnotationTextPanelFontColor());
-    g.setFont(styler.getAnnotationTextPanelFont());
+    graphic.setColor(styler.getAnnotationTextPanelFontColor());
+    graphic.setFont(styler.getAnnotationTextPanelFont());
 
     xOffset = xOffset + styler.getAnnotationTextPanelPadding();
     yOffset = yOffset + styler.getAnnotationTextPanelPadding();
@@ -111,20 +111,20 @@ public class AnnotationTextPanel extends AnnotationWithXY {
 
       double lineHeight = entry.getValue().getHeight();
 
-      FontRenderContext frc = g.getFontRenderContext();
+      FontRenderContext frc = graphic.getFontRenderContext();
       TextLayout tl = new TextLayout(entry.getKey(), styler.getAnnotationTextPanelFont(), frc);
       Shape shape = tl.getOutline(null);
-      AffineTransform orig = g.getTransform();
+      AffineTransform orig = graphic.getTransform();
       AffineTransform at = new AffineTransform();
       at.translate(xOffset, yOffset + lineHeight + multiLineOffset);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
+      graphic.transform(at);
+      graphic.fill(shape);
+      graphic.setTransform(orig);
 
       multiLineOffset += lineHeight + MULTI_LINE_SPACE;
     }
     //    System.out.println("bounds = " + bounds);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
+    graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   private Map<String, Rectangle2D> getTextBounds(List<String> lines) {

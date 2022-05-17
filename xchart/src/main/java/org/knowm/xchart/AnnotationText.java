@@ -29,19 +29,19 @@ public class AnnotationText extends AnnotationWithXY {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     if (!isVisible) {
       return;
     }
 
-    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    Object oldHint = graphic.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    g.setColor(styler.getAnnotationTextFontColor());
-    g.setFont(styler.getAnnotationTextFont());
+    graphic.setColor(styler.getAnnotationTextFontColor());
+    graphic.setFont(styler.getAnnotationTextFont());
 
-    FontRenderContext frc = g.getFontRenderContext();
+    FontRenderContext frc = graphic.getFontRenderContext();
     TextLayout tl = new TextLayout(text, styler.getAnnotationTextFont(), frc);
     Shape shape = tl.getOutline(null);
 
@@ -58,14 +58,14 @@ public class AnnotationText extends AnnotationWithXY {
       yOffset = getYAxisScreenValue(y) + textBounds.getHeight() / 2;
     }
 
-    AffineTransform orig = g.getTransform();
+    AffineTransform orig = graphic.getTransform();
     AffineTransform at = new AffineTransform();
     at.translate(xOffset, yOffset);
-    g.transform(at);
-    g.fill(shape);
-    g.setTransform(orig);
+    graphic.transform(at);
+    graphic.fill(shape);
+    graphic.setTransform(orig);
 
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
+    graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
 
     bounds =
         new Rectangle2D.Double(xOffset, yOffset, textBounds.getWidth(), textBounds.getHeight());
