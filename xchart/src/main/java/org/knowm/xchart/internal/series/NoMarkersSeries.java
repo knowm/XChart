@@ -44,14 +44,12 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumericalNoErrorBar
   }
 
 private void setYMinMax() {
-	double[] yMinMax = Utils.findMinMax(yData);
-    yMin = yMinMax[0];
-    yMax = yMinMax[1];
+    yMin = Utils.findMin(yData);
+    yMax = Utils.findMax(yData);
 }
 
 private void setXMinMax() {
-	double[] xMinMax = Utils.findMinMax(xData);
-    xMin = xMinMax[0];
-    xMax = xMinMax[1];
+    xMin = Utils.findMin(xData);
+    xMax = Utils.findMax(xData);
 }
 }

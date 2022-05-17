@@ -207,9 +207,12 @@ public class Utils {
    * @param data
    * @return
    */
-  public static double[] findMinMax(double[] data) {
-    double min = Arrays.stream(data).filter((x)->!Double.isNaN(x)).min().getAsDouble();
+  public static double findMax(double[] data) {
     double max = Arrays.stream(data).filter((x)->!Double.isNaN(x)).max().getAsDouble();
-    return new double[] {min, max};
+    return max;
+  }
+  public static double findMin(double[] data) {
+    double min = Arrays.stream(data).filter((x)->!Double.isNaN(x)).min().getAsDouble();
+    return min;
   }
 }

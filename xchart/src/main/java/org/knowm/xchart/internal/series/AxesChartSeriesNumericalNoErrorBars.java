@@ -147,19 +147,18 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
   protected void calculateMinMax() {
 
     // xData
-    double[] xMinMax = Utils.findMinMax(xData);
-    xMin = xMinMax[0];
-    xMax = xMinMax[1];
+    xMin = Utils.findMin(xData);
+    xMax = Utils.findMax(xData);
 
     // yData
-    double[] yMinMax;
     if (extraValues == null) {
-      yMinMax = Utils.findMinMax(yData);
+      yMin = Utils.findMin(yData);
+      yMax = Utils.findMax(yData);
     } else {
-      yMinMax = findMinMaxWithErrorBars(yData, extraValues);
+      double[] yMinMax = findMinMaxWithErrorBars(yData, extraValues);
+      yMin = yMinMax[0];
+      yMax = yMinMax[1];
     }
-    yMin = yMinMax[0];
-    yMax = yMinMax[1];
   }
 
   /**
