@@ -22,10 +22,8 @@ public class AnnotationText extends AnnotationWithXY {
    * @param isValueInScreenSpace
    */
   public AnnotationText(String text, double x, double y, boolean isValueInScreenSpace) {
-    super(isValueInScreenSpace);
+	super(x, y, isValueInScreenSpace);
     this.text = text;
-    this.x = x;
-    this.y = y;
   }
 
   @Override

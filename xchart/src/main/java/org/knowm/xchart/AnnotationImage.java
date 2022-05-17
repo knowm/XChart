@@ -20,10 +20,8 @@ public class AnnotationImage extends AnnotationWithXY {
    * @param isValueInScreenSpace
    */
   public AnnotationImage(BufferedImage image, double x, double y, boolean isValueInScreenSpace) {
-    super(isValueInScreenSpace);
+    super(x, y, isValueInScreenSpace);
     this.image = image;
-    this.x = x;
-    this.y = y;
   }
 
   public void init(Chart chart) {

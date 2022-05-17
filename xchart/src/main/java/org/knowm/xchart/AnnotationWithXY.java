@@ -9,8 +9,11 @@ import org.knowm.xchart.internal.chartpart.Chart;
 public abstract class AnnotationWithXY extends Annotation {
     protected double x;
     protected double y;
-    public AnnotationWithXY(boolean isValueInScreenSpace) {
+    
+    public AnnotationWithXY(double x, double y, boolean isValueInScreenSpace) {
         super(isValueInScreenSpace);
+        this.x = x;
+        this.y = y;
     }
 
     public void setX(double x) {
