@@ -104,61 +104,66 @@ public class ChartButton extends MouseAdapter implements ChartPart {
       ((ActionListener) listeners[i + 1]).actionPerformed(action);
     }
   }
+  
+  private static final int BOUND_LIMIT = 30;
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     if (!visible) {
       return;
     }
 
-    bounds = g.getClipBounds();
+    bounds = graphic.getClipBounds();
 
     double boundsWidth = bounds.getWidth();
-    if (boundsWidth < 30) {
+    if (boundsWidth < BOUND_LIMIT) {
       return;
     }
 
-    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    Object oldHint = graphic.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+    graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    g.setColor(styler.getChartButtonFontColor());
-    g.setFont(styler.getChartButtonFont());
+    graphic.setColor(styler.getChartButtonFontColor());
+    graphic.setFont(styler.getChartButtonFont());
 
-    FontRenderContext frc = g.getFontRenderContext();
-    TextLayout tl = new TextLayout(text, styler.getChartButtonFont(), frc);
-    Shape shape = tl.getOutline(null);
+    FontRenderContext fontRenderContext = graphic.getFontRenderContext();
+    TextLayout textLayout = new TextLayout(text, styler.getChartButtonFont(), fontRenderContext);
+    Shape shape = textLayout.getOutline(null);
 
     Rectangle2D textBounds = shape.getBounds2D();
     calculatePosition(textBounds);
     double textHeight = textBounds.getHeight();
     double textWidth = textBounds.getWidth();
-
+    
+    double finalTextWidth = textWidth + styler.getChartButtonMargin() * 2;
+    double finalTextHeight = textHeight + styler.getChartButtonMargin() * 2;
+    
     buttonRect =
         new Rectangle2D.Double(
             xOffset,
             yOffset,
-            textWidth + styler.getChartButtonMargin() * 2,
-            textHeight + styler.getChartButtonMargin() * 2);
-    g.setColor(styler.getChartButtonBackgroundColor());
-    g.fill(buttonRect);
-    g.setStroke(SOLID_STROKE);
-    g.setColor(styler.getChartButtonBorderColor());
-    g.draw(buttonRect);
+            finalTextWidth,
+            finalTextHeight);
+    graphic.setColor(styler.getChartButtonBackgroundColor());
+    graphic.fill(buttonRect);
+    graphic.setStroke(SOLID_STROKE);
+    graphic.setColor(styler.getChartButtonBorderColor());
+    graphic.draw(buttonRect);
 
     double startx = xOffset + styler.getChartButtonMargin();
     double starty = yOffset + styler.getChartButtonMargin();
 
-    g.setColor(styler.getChartButtonFontColor());
+    graphic.setColor(styler.getChartButtonFontColor());
 
-    AffineTransform orig = g.getTransform();
+    AffineTransform orig = graphic.getTransform();
     AffineTransform at = new AffineTransform();
     at.translate(startx, starty + textHeight);
-    g.transform(at);
-    g.fill(shape);
-    g.setTransform(orig);
+    graphic.transform(at);
+    graphic.fill(shape);
+    graphic.setTransform(orig);
 
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
+    graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   private void calculatePosition(Rectangle2D textBounds) {
@@ -170,23 +175,26 @@ public class ChartButton extends MouseAdapter implements ChartPart {
 
     double boundsWidth = bounds.getWidth();
     double boundsHeight = bounds.getHeight();
-
+    
+    double adjustmentedWidth = boundsWidth - widthAdjustment;
+    double adjustmentedHeight = boundsHeight - heightAdjustment;
+    
     switch (styler.getChartButtonPosition()) {
       case InsideNW:
         xOffset = bounds.getX() + styler.getChartButtonMargin();
         yOffset = bounds.getY() + styler.getChartButtonMargin();
         break;
       case InsideNE:
-        xOffset = bounds.getX() + boundsWidth - widthAdjustment;
+        xOffset = bounds.getX() + adjustmentedWidth;
         yOffset = bounds.getY() + styler.getChartButtonMargin();
         break;
       case InsideSE:
-        xOffset = bounds.getX() + boundsWidth - widthAdjustment;
-        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+        xOffset = bounds.getX() + adjustmentedWidth;
+        yOffset = bounds.getY() + adjustmentedHeight;
         break;
       case InsideSW:
         xOffset = bounds.getX() + styler.getChartButtonMargin();
-        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+        yOffset = bounds.getY() + adjustmentedHeight;
         break;
       case InsideN:
         xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - styler.getChartButtonMargin();
@@ -194,7 +202,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
         break;
       case InsideS:
         xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - styler.getChartButtonMargin();
-        yOffset = bounds.getY() + boundsHeight - heightAdjustment;
+        yOffset = bounds.getY() + adjustmentedHeight;
         break;
       default:
         break;
