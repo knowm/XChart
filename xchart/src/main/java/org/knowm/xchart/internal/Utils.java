@@ -1,6 +1,7 @@
 package org.knowm.xchart.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -207,24 +208,8 @@ public class Utils {
    * @return
    */
   public static double[] findMinMax(double[] data) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (double dataPoint : data) {
-
-      if (Double.isNaN(dataPoint)) {
-        continue;
-      } else {
-        if (dataPoint < min) {
-          min = dataPoint;
-        }
-        if (dataPoint > max) {
-          max = dataPoint;
-        }
-      }
-    }
-
+    double min = Arrays.stream(data).filter((x)->!Double.isNaN(x)).min().getAsDouble();
+    double max = Arrays.stream(data).filter((x)->!Double.isNaN(x)).max().getAsDouble();
     return new double[] {min, max};
   }
 }
