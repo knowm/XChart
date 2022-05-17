@@ -66,22 +66,23 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     //    here either 1. the mouse was released and the chart was zoomed so we need the reset button
     // or 2. nothing should be drawn or 3. the zoom area
     //    should be drawn
-
-    if (resetButton.visible && (x1 == -1 || x2 == -1)) { //
-      resetButton.paint(g);
-    } else if (x1 == -1 || x2 == -1) {
+	boolean isResetX1X2 = (x1 == -1 || x2 == -1);
+	
+    if (resetButton.visible && isResetX1X2) { //
+      resetButton.paint(graphic);
+    } else if (isResetX1X2) {
       return;
     } else {
-      g.setColor(xyChart.getStyler().getZoomSelectionColor());
+      graphic.setColor(xyChart.getStyler().getZoomSelectionColor());
       int xStart = Math.min(x1, x2);
       int width = Math.abs(x1 - x2);
-      bounds = g.getClipBounds();
-      g.fillRect(xStart, 0, width, (int) (bounds.height + bounds.getY()));
+      bounds = graphic.getClipBounds();
+      graphic.fillRect(xStart, 0, width, (int) (bounds.height + bounds.getY()));
     }
   }
 
@@ -134,8 +135,8 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     boolean filtered = false;
     if (isOnePointSeleted(minValue, maxValue)) {
       for (XYSeries series : xyChart.getSeriesMap().values()) {
-        boolean f = series.filterXByValue(minValue, maxValue);
-        if (f) {
+        boolean isfiltered = series.filterXByValue(minValue, maxValue);
+        if (isfiltered) {
           filtered = true;
         }
       }
@@ -233,8 +234,10 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
       end = x1;
     }
     // If the two intervals overlap, then largest beginning must be smaller than the smallest ending
-    if (Math.max(start, xyChart.plot.bounds.getX())
-        < Math.min(end, xyChart.plot.bounds.getX() + xyChart.plot.bounds.getWidth())) {
+    double largestBeginning = Math.max(start, xyChart.plot.bounds.getX());
+    double smallestEnding = Math.min(end, xyChart.plot.bounds.getX() + xyChart.plot.bounds.getWidth());
+    
+    if (largestBeginning < smallestEnding) {
       isOverlapping = true;
     }
     return isOverlapping;
