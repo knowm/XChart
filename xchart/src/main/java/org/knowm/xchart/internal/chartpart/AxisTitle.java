@@ -34,24 +34,26 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     bounds = new Rectangle2D.Double();
 
-    g.setColor(chart.getStyler().getChartFontColor());
-    g.setFont(chart.getStyler().getAxisTitleFont());
+    graphic.setColor(chart.getStyler().getChartFontColor());
+    graphic.setFont(chart.getStyler().getAxisTitleFont());
 
     if (direction == Axis.Direction.Y) {
 
       String yAxisTitle = chart.getYAxisGroupTitle(yIndex);
-      if (yAxisTitle != null
-          && !yAxisTitle.trim().equalsIgnoreCase("")
-          && chart.getStyler().isYAxisTitleVisible()) {
+      
+      final boolean isYAxisNullTitle = (yAxisTitle == null);
+      final boolean isYAxisEmptyTitle = (yAxisTitle.trim().equalsIgnoreCase(""));
+      
+      if (isYAxisNullTitle && !isYAxisEmptyTitle && chart.getStyler().isYAxisTitleVisible()) {
 
         if (chart.getStyler().getYAxisGroupTitleColor(yIndex) != null) {
-          g.setColor(chart.getStyler().getYAxisGroupTitleColor(yIndex));
+        	graphic.setColor(chart.getStyler().getYAxisGroupTitleColor(yIndex));
         }
-        FontRenderContext frc = g.getFontRenderContext();
+        FontRenderContext frc = graphic.getFontRenderContext();
         TextLayout nonRotatedTextLayout =
             new TextLayout(yAxisTitle, chart.getStyler().getAxisTitleFont(), frc);
         Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
@@ -75,17 +77,19 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
             (int)
                 ((yAxis.getBounds().getHeight() + nonRotatedRectangle.getWidth()) / 2.0
                     + yAxis.getBounds().getY());
+        
+        final double minus90InRadian = -1 * Math.PI / 2;
+        
+        AffineTransform rotateInstance = AffineTransform.getRotateInstance(minus90InRadian, 0, 0);
+        Shape shape = nonRotatedTextLayout.getOutline(rotateInstance);
 
-        AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.PI / 2, 0, 0);
-        Shape shape = nonRotatedTextLayout.getOutline(rot);
-
-        AffineTransform orig = g.getTransform();
+        AffineTransform origin = graphic.getTransform();
         AffineTransform at = new AffineTransform();
 
         at.translate(xOffset, yOffset);
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
+        graphic.transform(at);
+        graphic.fill(shape);
+        graphic.setTransform(origin);
 
         // ///////////////////////////////////////////////
         // System.out.println(nonRotatedRectangle.getHeight());
@@ -108,15 +112,15 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
                 yAxis.getBounds().getHeight());
       }
     } else {
-
-      if (chart.getXAxisTitle() != null
-          && !chart.getXAxisTitle().trim().equalsIgnoreCase("")
-          && chart.getStyler().isXAxisTitleVisible()) {
+      final boolean isXAxisNullTitle = (chart.getXAxisTitle() == null);
+      final boolean isXAxisEmptyTitle = (chart.getXAxisTitle().trim().equalsIgnoreCase(""));
+      
+      if (!isXAxisNullTitle && !isXAxisEmptyTitle && chart.getStyler().isXAxisTitleVisible()) {
 
         if (chart.getStyler().getXAxisTitleColor() != null) {
-          g.setColor(chart.getStyler().getXAxisTitleColor());
+        	graphic.setColor(chart.getStyler().getXAxisTitleColor());
         }
-        FontRenderContext frc = g.getFontRenderContext();
+        FontRenderContext frc = graphic.getFontRenderContext();
         TextLayout textLayout =
             new TextLayout(chart.getXAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
         Rectangle2D rectangle = textLayout.getBounds();
@@ -132,12 +136,12 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
         // textLayout.draw(g, (float) xOffset, (float) (yOffset - rectangle.getY()));
         Shape shape = textLayout.getOutline(null);
-        AffineTransform orig = g.getTransform();
+        AffineTransform origin = graphic.getTransform();
         AffineTransform at = new AffineTransform();
         at.translate((float) xOffset, (float) (yOffset - rectangle.getY()));
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
+        graphic.transform(at);
+        graphic.fill(shape);
+        graphic.setTransform(origin);
 
         bounds =
             new Rectangle2D.Double(

@@ -15,13 +15,11 @@ import java.util.Map;
 import org.knowm.xchart.internal.chartpart.Annotation;
 import org.knowm.xchart.internal.chartpart.Chart;
 
-public class AnnotationTextPanel extends Annotation {
+public class AnnotationTextPanel extends AnnotationWithXY {
 
   private static final int MULTI_LINE_SPACE = 3;
 
   private List<String> lines;
-  protected double x;
-  protected double y;
 
   /**
    * Constructor
@@ -145,13 +143,5 @@ public class AnnotationTextPanel extends Annotation {
 
   public void setLines(List<String> lines) {
     this.lines = lines;
-  }
-
-  public void setX(double x) {
-    this.x = x;
-  }
-
-  public void setY(double y) {
-    this.y = y;
   }
 }

@@ -2,7 +2,7 @@ package org.knowm.xchart;
 
 import java.awt.Graphics2D;
 import java.util.List;
-import java.util.Map;
+
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
@@ -63,8 +63,8 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    */
   public BubbleChart(BubbleChartBuilder chartBuilder) {
 
-    this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
-    setTitle(chartBuilder.title);
+    this(chartBuilder.getWidth(), chartBuilder.getHeight(), chartBuilder.getChartTheme());
+    setTitle(chartBuilder.getTitle());
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
   }

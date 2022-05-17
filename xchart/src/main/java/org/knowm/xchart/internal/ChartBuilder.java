@@ -10,11 +10,11 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  */
 public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart> {
 
-  public int width = 800;
-  public int height = 600;
-  public String title = "";
+  private int width = 800;
+  private int height = 600;
+  private String title = "";
 
-  public ChartTheme chartTheme = ChartTheme.XChart;
+  private ChartTheme chartTheme = ChartTheme.XChart;
 
   /** Constructor */
   protected ChartBuilder() {}
@@ -44,4 +44,19 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
   }
 
   public abstract C build();
+
+  public ChartTheme getChartTheme() {
+    return chartTheme;
+  }
+
+  public String getTitle() {
+    return title;
+
+  public int getWidth() {
+    return width;
+  }
+
+  public int getHeight() {
+    return height;
+  }
 }

@@ -35,10 +35,10 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
   protected abstract double getSeriesLegendRenderGraphicHeight(S series);
 
-  protected abstract void doPaint(Graphics2D g);
+  protected abstract void doPaint(Graphics2D graphic);
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     if (!chart.getStyler().isLegendVisible()) {
       return;
@@ -141,14 +141,14 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     }
 
     // draw legend box background and border
-    Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
-    g.setColor(chart.getStyler().getLegendBackgroundColor());
-    g.fill(rect);
-    g.setStroke(SOLID_STROKE);
-    g.setColor(chart.getStyler().getLegendBorderColor());
-    g.draw(rect);
+    Shape rectangle = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
+    graphic.setColor(chart.getStyler().getLegendBackgroundColor());
+    graphic.fill(rectangle);
+    graphic.setStroke(SOLID_STROKE);
+    graphic.setColor(chart.getStyler().getLegendBorderColor());
+    graphic.draw(rectangle);
 
-    doPaint(g);
+    doPaint(graphic);
 
     // bounds
     // bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
@@ -336,14 +336,14 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   }
 
   void paintSeriesText(
-      Graphics2D g,
+      Graphics2D graphic,
       Map<String, Rectangle2D> seriesTextBounds,
       int markerSize,
       double x,
       double starty) {
 
-    g.setColor(chart.getStyler().getChartFontColor());
-    g.setFont(chart.getStyler().getLegendFont());
+    graphic.setColor(chart.getStyler().getChartFontColor());
+    graphic.setFont(chart.getStyler().getLegendFont());
 
     double multiLineOffset = 0.0;
 
@@ -352,15 +352,15 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       double height = entry.getValue().getHeight();
       double centerOffsetY = (Math.max(markerSize, height) - height) / 2.0;
 
-      FontRenderContext frc = g.getFontRenderContext();
-      TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
-      Shape shape = tl.getOutline(null);
-      AffineTransform orig = g.getTransform();
-      AffineTransform at = new AffineTransform();
-      at.translate(x, starty + height + centerOffsetY + multiLineOffset);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
+      FontRenderContext fontRenderContext = graphic.getFontRenderContext();
+      TextLayout textLayout = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), fontRenderContext);
+      Shape shape = textLayout.getOutline(null);
+      AffineTransform origin = graphic.getTransform();
+      AffineTransform affineTransform = new AffineTransform();
+      affineTransform.translate(x, starty + height + centerOffsetY + multiLineOffset);
+      graphic.transform(affineTransform);
+      graphic.fill(shape);
+      graphic.setTransform(origin);
 
       // // debug box
       // Rectangle2D boundsTemp = new Rectangle2D.Double(x, starty + centerOffsetY,
