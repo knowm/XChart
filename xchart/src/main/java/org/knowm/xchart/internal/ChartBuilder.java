@@ -51,13 +51,12 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
 
   public String getTitle() {
     return title;
+
+  public int getWidth() {
+    return width;
   }
 
   public int getHeight() {
     return height;
-  }
-
-  public int getWidth() {
-    return width;
   }
 }

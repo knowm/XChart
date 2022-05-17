@@ -115,7 +115,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
       final boolean isXAxisNullTitle = (chart.getXAxisTitle() == null);
       final boolean isXAxisEmptyTitle = (chart.getXAxisTitle().trim().equalsIgnoreCase(""));
       
-      if (!isNullTitle && !isEmptyTitle && chart.getStyler().isXAxisTitleVisible()) {
+      if (!isXAxisNullTitle && !isXAxisEmptyTitle && chart.getStyler().isXAxisTitleVisible()) {
 
         if (chart.getStyler().getXAxisTitleColor() != null) {
         	graphic.setColor(chart.getStyler().getXAxisTitleColor());
