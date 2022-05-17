@@ -20,10 +20,8 @@ public class AnnotationImage extends AnnotationWithXY {
    * @param isValueInScreenSpace
    */
   public AnnotationImage(BufferedImage image, double x, double y, boolean isValueInScreenSpace) {
-    super(isValueInScreenSpace);
+    super(x, y, isValueInScreenSpace);
     this.image = image;
-    this.x = x;
-    this.y = y;
   }
 
   public void init(Chart chart) {
@@ -32,7 +30,7 @@ public class AnnotationImage extends AnnotationWithXY {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     if (!isVisible) {
       return;
@@ -48,7 +46,7 @@ public class AnnotationImage extends AnnotationWithXY {
       xOffset = (int) (getXAxisScreenValue(x) + 0.5) - image.getWidth() / 2;
       yOffset = (int) (getYAxisScreenValue(y) + 0.5) - image.getHeight() / 2;
     }
-    g.drawImage(image, xOffset, yOffset, null);
+    graphic.drawImage(image, xOffset, yOffset, null);
 
     bounds = new Rectangle2D.Double(xOffset, yOffset, image.getWidth(), image.getHeight());
   }
