@@ -23,7 +23,7 @@ public class AnnotationLine extends Annotation {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     if (!isVisible) {
       return;
@@ -59,9 +59,9 @@ public class AnnotationLine extends Annotation {
       }
     }
 
-    g.setStroke(styler.getAnnotationLineStroke());
-    g.setColor(styler.getAnnotationLineColor());
-    g.drawLine(x1, y1, x2, y2);
+    graphic.setStroke(styler.getAnnotationLineStroke());
+    graphic.setColor(styler.getAnnotationLineColor());
+    graphic.drawLine(x1, y1, x2, y2);
 
     bounds =
         new Rectangle2D.Double(x1, y1, Math.max(x2 - x1, lineWidth), Math.max(y2 - y1, lineWidth));
