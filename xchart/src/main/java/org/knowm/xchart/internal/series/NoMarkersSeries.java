@@ -1,5 +1,7 @@
 package org.knowm.xchart.internal.series;
 
+import org.knowm.xchart.internal.Utils;
+
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes, values associated
  * with each X-Y point, could be used for bubble sizes for example, but no error bars, as the min
@@ -42,13 +44,13 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumericalNoErrorBar
   }
 
 private void setYMinMax() {
-	double[] yMinMax = findMinMax(yData);
+	double[] yMinMax = Utils.findMinMax(yData);
     yMin = yMinMax[0];
     yMax = yMinMax[1];
 }
 
 private void setXMinMax() {
-	double[] xMinMax = findMinMax(xData);
+	double[] xMinMax = Utils.findMinMax(xData);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
 }

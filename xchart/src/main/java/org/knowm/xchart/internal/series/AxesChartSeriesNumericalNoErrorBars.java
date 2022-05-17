@@ -1,5 +1,7 @@
 package org.knowm.xchart.internal.series;
 
+import org.knowm.xchart.internal.Utils;
+
 import java.util.Arrays;
 
 /**
@@ -141,55 +143,23 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     calculateMinMax();
   }
 
-  /**
-   * Finds the min and max of a dataset
-   *
-   * @param data
-   * @return
-   */
-  double[] findMinMax(double[] data) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (double dataPoint : data) {
-
-      if (Double.isNaN(dataPoint)) {
-        continue;
-      } else {
-        if (dataPoint < min) {
-          min = dataPoint;
-        }
-        if (dataPoint > max) {
-          max = dataPoint;
-        }
-      }
-    }
-
-    return new double[] {min, max};
-  }
-
   @Override
   protected void calculateMinMax() {
 
     // xData
-    double[] xMinMax = findMinMax(xData);
+    double[] xMinMax = Utils.findMinMax(xData);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
-    // System.out.println(xMin);
-    // System.out.println(xMax);
 
     // yData
     double[] yMinMax;
     if (extraValues == null) {
-      yMinMax = findMinMax(yData);
+      yMinMax = Utils.findMinMax(yData);
     } else {
       yMinMax = findMinMaxWithErrorBars(yData, extraValues);
     }
     yMin = yMinMax[0];
     yMax = yMinMax[1];
-    // System.out.println(yMin);
-    // System.out.println(yMax);
   }
 
   /**

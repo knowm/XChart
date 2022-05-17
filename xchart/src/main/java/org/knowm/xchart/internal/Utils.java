@@ -199,4 +199,32 @@ public class Utils {
     }
     return fileNameWithFileExtension;
   }
+
+  /**
+   * Finds the min and max of a dataset
+   *
+   * @param data
+   * @return
+   */
+  public static double[] findMinMax(double[] data) {
+
+    double min = Double.MAX_VALUE;
+    double max = -Double.MAX_VALUE;
+
+    for (double dataPoint : data) {
+
+      if (Double.isNaN(dataPoint)) {
+        continue;
+      } else {
+        if (dataPoint < min) {
+          min = dataPoint;
+        }
+        if (dataPoint > max) {
+          max = dataPoint;
+        }
+      }
+    }
+
+    return new double[] {min, max};
+  }
 }
