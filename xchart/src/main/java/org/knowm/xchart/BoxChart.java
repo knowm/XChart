@@ -9,6 +9,7 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Box;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -16,7 +17,7 @@ import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-public class BoxChart extends Chart<BoxStyler, BoxSeries> {
+public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
 
   private final List<String> xData = new ArrayList<>();
 
@@ -79,18 +80,6 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
     sanityCheckYData(yData);
   }
 
-  private void sanityCheckYData(List<? extends Number> yData) {
-
-    if (yData == null) {
-      throw new IllegalArgumentException("Y-Axis data connot be null !!!");
-    }
-    if (yData.size() == 0) {
-      throw new IllegalArgumentException("Y-Axis data connot be empyt !!!");
-    }
-    if (yData.contains(null)) {
-      throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
-    }
-  }
 
   public BoxSeries updateBoxSeries(String seriesName, int[] newYData) {
 
@@ -104,61 +93,16 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
   public BoxSeries updateBoxSeries(String seriesName, List<? extends Number> newYData) {
 
-    BoxSeries series = getSeriesFromSeriesMap(seriesName);
+    BoxSeries series = getSeriesMap().get(seriesName);
 
-    checkSeriesValidity(seriesName, newYData, series);
+    updateSanityCheck(seriesName, newYData, series);
     series.replaceData(newYData);
     return series;
   }
 
-  private void checkSeriesValidity(String seriesName, List<? extends Number> newYData, BoxSeries series) {
-	if (series == null) {
-      throw new IllegalArgumentException("Series name > " + seriesName + " < not found !!!");
-    }
+  private void updateSanityCheck(String seriesName, List<? extends Number> newYData, BoxSeries series) {
+	checkSeriesValidity(seriesName, series);
     sanityCheckYData(newYData);
-  }
-
-  private BoxSeries getSeriesFromSeriesMap(String seriesName) {
-	Map<String, BoxSeries> seriesMap = getSeriesMap();
-    BoxSeries series = seriesMap.get(seriesName);
-	return series;
-  }
-
-  private void setSeriesStyles() {
-
-    for (BoxSeries series : getSeriesMap().values()) {
-
-      setSeriesDefaultForNullPart(getSeriesColorMarkerLineStyle(), series);
-    }
-  }
-
-  private SeriesColorMarkerLineStyle getSeriesColorMarkerLineStyle() {
-	SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
-        new SeriesColorMarkerLineStyleCycler(
-            getStyler().getSeriesColors(),
-            getStyler().getSeriesMarkers(),
-            getStyler().getSeriesLines());
-    SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
-        seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
-	return seriesColorMarkerLineStyle;
-  }
-
-  private void setSeriesDefaultForNullPart(SeriesColorMarkerLineStyle seriesColorMarkerLineStyle, BoxSeries series) {
-	  if (series.getLineStyle() == null) { // wasn't set manually
-        series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
-      }
-      if (series.getLineColor() == null) { // wasn't set manually
-        series.setLineColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getFillColor() == null) { // wasn't set manually
-        series.setFillColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getMarker() == null) { // wasn't set manually
-        series.setMarker(seriesColorMarkerLineStyle.getMarker());
-      }
-      if (series.getMarkerColor() == null) { // wasn't set manually
-        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
-      }
   }
 
   @Override
@@ -168,18 +112,28 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
     doPaint(graphics);
   }
 
-  private void doPaint(Graphics2D graphics) {
-	paintBackground(graphics);
-
-    axisPair.paint(graphics);
-    plot.paint(graphics);
-    chartTitle.paint(graphics);
-    annotations.forEach(x -> x.paint(graphics));
+  @Override
+  protected void specificSetting() {
+	  setSeriesStyles();
   }
 
-  private void settingPaint(int width, int height) {
-	setWidth(width);
-    setHeight(height);
-    setSeriesStyles();
+  @Override
+  protected void setSeriesDefaultForNullPart(Series series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+	  BoxSeries boxSeries = (BoxSeries) series;
+	  if (boxSeries.getLineStyle() == null) { // wasn't set manually
+		  boxSeries.setLineStyle(seriesColorMarkerLineStyle.getStroke());
+	  }
+	  if (boxSeries.getLineColor() == null) { // wasn't set manually
+		  boxSeries.setLineColor(seriesColorMarkerLineStyle.getColor());
+	  }
+	  if (boxSeries.getFillColor() == null) { // wasn't set manually
+		  boxSeries.setFillColor(seriesColorMarkerLineStyle.getColor());
+	  }
+	  if (boxSeries.getMarker() == null) { // wasn't set manually
+		  boxSeries.setMarker(seriesColorMarkerLineStyle.getMarker());
+	  }
+	  if (boxSeries.getMarkerColor() == null) { // wasn't set manually
+		  boxSeries.setMarkerColor(seriesColorMarkerLineStyle.getColor());
+	  }
   }
 }
