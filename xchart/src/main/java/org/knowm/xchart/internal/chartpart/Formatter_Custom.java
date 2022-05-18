@@ -21,7 +21,7 @@ public class Formatter_Custom extends Format {
     return stringBuffer;
   }
 
-  @Override
+  @Override 
   public Object parseObject(String string, ParsePosition parsePosition) {
     return null;
   }
