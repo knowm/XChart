@@ -15,14 +15,14 @@ public class Formatter_Custom extends Format {
   }
 
   @Override
-  public StringBuffer format(Object o, StringBuffer stringBuffer, FieldPosition fieldPosition) {
-    Number number = (Number) o;
+  public StringBuffer format(Object numberObject, StringBuffer stringBuffer, FieldPosition fieldPosition) {
+    Number number = (Number) numberObject;
     stringBuffer.append(customFormattingFunction.apply(number.doubleValue()));
     return stringBuffer;
   }
 
   @Override
-  public Object parseObject(String s, ParsePosition parsePosition) {
+  public Object parseObject(String string, ParsePosition parsePosition) {
     return null;
   }
 }

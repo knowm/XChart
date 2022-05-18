@@ -35,33 +35,13 @@ class Formatter_LogNumber extends Format {
   }
 
   @Override
-  public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
+  public StringBuffer format(Object numberObject, StringBuffer toAppendTo, FieldPosition pos) {
 
-    double number = (Double) obj;
+    double number = (Double) numberObject;
 
     String decimalPattern;
-
-    if (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() != null) {
-
-      decimalPattern = styler.getXAxisDecimalPattern();
-    } else if (axisDirection == Axis.Direction.Y
-        && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
-            || styler.getYAxisDecimalPattern() != null)) {
-      if (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null) {
-        decimalPattern = styler.getYAxisGroupDecimalPatternMap().get(yIndex);
-      } else {
-        decimalPattern = styler.getYAxisDecimalPattern();
-      }
-    } else if (styler.getDecimalPattern() != null) {
-
-      decimalPattern = styler.getDecimalPattern();
-    } else {
-      if (Math.abs(number) > 1000.0 || Math.abs(number) < 0.001) {
-        decimalPattern = "0E0";
-      } else {
-        decimalPattern = "0.###";
-      }
-    }
+    
+    decimalPattern = setDecimalPattern(decimalPattern, number);
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
     normalFormat.applyPattern(decimalPattern);
@@ -69,9 +49,43 @@ class Formatter_LogNumber extends Format {
 
     return toAppendTo;
   }
+  
+  public String setDecimalPattern(String decimalPattern, double number) {
+	private final double NUMBER_LOW_LIMIT = 0.001;
+	private final double NULBER_HIGH_LIMIT = 1000.0;
+	boolean isNotEmptyXaxis = ((axisDirection == Axis.Direction.X) && (styler.getXAxisDecimalPattern() != null));
+	boolean isNotEmptyYaxis = (axisDirection == Axis.Direction.Y && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
+            || styler.getYAxisDecimalPattern() != null));
+	boolean isNotEmpty = (styler.getDecimalPattern() != null); 
+	
+    if (isNotEmptyXaxis) {
+      decimalPattern = styler.getXAxisDecimalPattern();
+    } 
+    
+    else if (isNotEmptyYaxis) {
+    	if (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null) {
+    		decimalPattern = styler.getYAxisGroupDecimalPatternMap().get(yIndex);
+    	} else {
+        decimalPattern = styler.getYAxisDecimalPattern();
+    	}
+    } 
+    
+    else if (isNotEmpty) {
+    	decimalPattern = styler.getDecimalPattern();
+    } 
+    
+    else {
+    	if (Math.abs(number) > NULBER_HIGH_LIMIT || Math.abs(number) < NUMBER_LOW_LIMIT) {
+    		decimalPattern = "0E0";
+	    } else {
+	        decimalPattern = "0.###";
+	    }
+    }
+    return decimalPattern;
+}
 
   @Override
-  public Object parseObject(String source, ParsePosition pos) {
+  public Object parseObject(String source, ParsePosition position) {
 
     return null;
   }
