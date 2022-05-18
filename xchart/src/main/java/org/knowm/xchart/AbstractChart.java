@@ -63,6 +63,15 @@ public abstract class AbstractChart<ST extends Styler, S extends Series> extends
 		 }
 	}
 	
+	protected void sanityCheckYData(double[] yData) {
+		 if (yData == null) {
+		   throw new IllegalArgumentException("Y-Axis data connot be null !!!");
+		 }
+		 if (yData.length == 0) {
+		   throw new IllegalArgumentException("Y-Axis data connot be empyt !!!");
+		 }
+	}
+	
 	protected void setSeriesStyles() {
 
 		 for (Series series : getSeriesMap().values()) {

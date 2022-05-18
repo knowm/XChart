@@ -119,7 +119,7 @@ public class Cursor extends MouseAdapter implements ChartPart {
 
       paintBackGround(graphic, xValueTextLayout);
 
-      paintDataPointInfo(graphic xValueTextLayout);
+      paintDataPointInfo(graphic, xValueTextLayout);
     }
   }
 
@@ -169,7 +169,7 @@ public class Cursor extends MouseAdapter implements ChartPart {
     double mouseXBounde = chart.plot.plotContent.getBounds().getX() + chart.plot.plotContent.getBounds().getWidth();
     double mouseYBounde = chart.plot.plotContent.getBounds().getY() + chart.plot.plotContent.getBounds().getHeight();
     
-    double width
+    double width;
     if (mouseXPoint > mouseXBounde) {
       startX = mouseX - backgroundWidth - MOUSE_SPACING;
     }

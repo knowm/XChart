@@ -8,13 +8,11 @@ import java.util.List;
 
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
-import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
@@ -181,16 +179,18 @@ public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries>
   }
 
   private DataType getDataType(List<?> data) {
-    DataType axisType;
-
     Iterator<?> itr = data.iterator();
     if (!itr.hasNext()) {
         throw new IllegalArgumentException(
                 "List of data should contain next Iteration to get data type!!!");
     }
-    Object dataPoint = itr.next();
-    
-    if (dataPoint instanceof Number) {
+ 
+    return getAxisType(itr.next());
+  }
+
+private DataType getAxisType(Object dataPoint) {
+    DataType axisType;
+	if (dataPoint instanceof Number) {
       axisType = DataType.Number;
     } else if (dataPoint instanceof Date) {
       axisType = DataType.Date;
@@ -200,8 +200,8 @@ public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries>
       throw new IllegalArgumentException(
           "Series data must be either Number, Date or String type!!!");
     }
-    return axisType;
-  }
+	return axisType;
+}
 
   /**
    * Update a series by updating the X-Axis, Y-Axis and error bar data
