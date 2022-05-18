@@ -139,9 +139,6 @@ public class ToolTips extends MouseAdapter implements ChartPart {
     double w = annotationRectangle.getWidth() + 2 * MARGIN;
     double h = annotationRectangle.getHeight() + 2 * MARGIN;
     double halfHeight = h / 2;
-    //    System.out.println("w = " + w);
-    //    System.out.println("h = " + h);
-    //    System.out.println("halfHeight = " + halfHeight);
 
     // TODO is this needed??
     if (tooltip == this.tooltip) {
@@ -163,25 +160,15 @@ public class ToolTips extends MouseAdapter implements ChartPart {
         (int)
             (chart.plot.plotContent.getBounds().getY()
                 + chart.plot.plotContent.getBounds().getHeight());
-    //    System.out.println("leftEdge = " + leftEdge);
-    //    System.out.println("rightEdge = " + rightEdge);
-    //    System.out.println("topEdge = " + topEdge);
-    //    System.out.println("bottomEdge = " + bottomEdge);
 
     double x = tooltip.x + tooltip.w / 2 - annotationRectangle.getWidth() / 2 - MARGIN;
     double y = tooltip.y - 3 * MARGIN - annotationRectangle.getHeight();
-    //    System.out.println("x = " + x);
-    //    System.out.println("y = " + y);
-    //    x = Math.min(x, -w);
-    //    System.out.println("x = " + x);
 
     // the label in a box
     x = Math.max(x, leftEdge);
     x = Math.min(x, rightEdge - w);
     y = Math.max(y, topEdge);
     y = Math.min(y, bottomEdge - h);
-    //    System.out.println("x = " + x);
-    //    System.out.println("y = " + y);
 
     Rectangle2D rectangle = new Rectangle2D.Double(x, y, w, h);
 

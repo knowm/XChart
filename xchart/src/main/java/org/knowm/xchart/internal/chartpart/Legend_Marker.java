@@ -47,21 +47,23 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
       }
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
+      boolean isBoxType = !(series.getLegendRenderType() == LegendRenderType.Line
+              || series.getLegendRenderType() == LegendRenderType.Scatter);
+
       float legendEntryHeight =
           getLegendEntryHeight(
               seriesTextBounds,
-              ((series.getLegendRenderType() == LegendRenderType.Line
-                      || series.getLegendRenderType() == LegendRenderType.Scatter)
+              (!isBoxType
                   ? axesChartStyler.getMarkerSize()
                   : BOX_SIZE));
 
       // paint line and marker
-      if (series.getLegendRenderType() == LegendRenderType.Line
-          || series.getLegendRenderType() == LegendRenderType.Scatter) {
+      if (!isBoxType) {
 
         // paint line
-        if (series.getLegendRenderType() == LegendRenderType.Line
-            && series.getLineStyle() != SeriesLines.NONE) {
+        boolean hasLine = series.getLegendRenderType() == LegendRenderType.Line
+                && series.getLineStyle() != SeriesLines.NONE;
+        if (hasLine) {
           paintLine(g, startx, starty, series, legendEntryHeight);
         }
 
@@ -75,14 +77,14 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
         paintInnerBox(g, startx, starty, series);
 
         // Draw outline
-        if (series.getLegendRenderType() != LegendRenderType.BoxNoOutline) {
+        boolean hasOutline = series.getLegendRenderType() != LegendRenderType.BoxNoOutline;
+        if (hasOutline) {
           drawOutline(g, startx, starty, series);
         }
       }
 
       // paint series text
-      if (series.getLegendRenderType() == LegendRenderType.Line
-          || series.getLegendRenderType() == LegendRenderType.Scatter) {
+      if (!isBoxType) {
 
         double x =
             startx

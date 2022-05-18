@@ -83,10 +83,9 @@ public final class VectorGraphicsEncoder {
 
     String fileNameWithFileExtension = fileName;
     final String newFileExtension = "." + vectorGraphicsFormat.toString().toLowerCase();
-    if (fileName.length() <= newFileExtension.length()
-        || !fileName
-            .substring(fileName.length() - newFileExtension.length(), fileName.length())
-            .equalsIgnoreCase(newFileExtension)) {
+    final boolean isFileExist = fileName.length() <= newFileExtension.length();
+    final boolean isFileValid = fileName.substring(fileName.length() - newFileExtension.length(), fileName.length()).equalsIgnoreCase(newFileExtension);
+    if (isFileExist || !isFileValid) {
       fileNameWithFileExtension = fileName + newFileExtension;
     }
     return fileNameWithFileExtension;
