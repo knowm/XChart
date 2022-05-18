@@ -53,7 +53,7 @@ class Formatter_LogNumber extends Format {
   public String setDecimalPattern(String decimalPattern, double number) {
 	private final double NUMBER_LOW_LIMIT = 0.001;
 	private final double NULBER_HIGH_LIMIT = 1000.0;
-	
+	 
 	boolean isNotEmptyXaxis = ((axisDirection == Axis.Direction.X) && (styler.getXAxisDecimalPattern() != null));
 	boolean isNotEmptyYaxis = (axisDirection == Axis.Direction.Y && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
             || styler.getYAxisDecimalPattern() != null));
