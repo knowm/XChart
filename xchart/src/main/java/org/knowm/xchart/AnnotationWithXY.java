@@ -6,16 +6,20 @@ import java.awt.image.BufferedImage;
 import org.knowm.xchart.internal.chartpart.Annotation;
 import org.knowm.xchart.internal.chartpart.Chart;
 
-public class AnnotationWithXY extends Annotation {
+public abstract class AnnotationWithXY extends Annotation {
+    protected double x;
+    protected double y;
+    
+    public AnnotationWithXY(double x, double y, boolean isValueInScreenSpace) {
+        super(isValueInScreenSpace);
+        this.x = x;
+        this.y = y;
+    }
 
-	 protected double x;
-	 protected double y;
-
-  public void setX(double x) {
+    public void setX(double x) {
     this.x = x;
   }
-
-  public void setY(double y) {
+    public void setY(double y) {
     this.y = y;
   }
 }

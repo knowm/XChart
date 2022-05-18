@@ -63,25 +63,25 @@ public class Cursor extends MouseAdapter implements ChartPart {
   }
 
   @Override
-  public void mouseMoved(MouseEvent e) {
+  public void mouseMoved(MouseEvent mouseEvent) {
 
     //    // don't draw anything
     //    if (!styler.isCursorEnabled() || seriesMap == null) {
     //      return;
     //    }
 
-    mouseX = e.getX();
-    mouseY = e.getY();
+    mouseX = mouseEvent.getX();
+    mouseY = mouseEvent.getY();
     if (isMouseOutOfPlotContent()) {
 
       if (matchingDataPointList.size() > 0) {
         matchingDataPointList.clear();
-        e.getComponent().repaint();
+        mouseEvent.getComponent().repaint();
       }
       return;
     }
     calculateMatchingDataPoints();
-    e.getComponent().repaint();
+    mouseEvent.getComponent().repaint();
   }
 
   private boolean isMouseOutOfPlotContent() {
@@ -99,7 +99,7 @@ public class Cursor extends MouseAdapter implements ChartPart {
   }
 
   @Override
-  public void paint(Graphics2D g) {
+  public void paint(Graphics2D graphic) {
 
     //    if (!styler.isCursorEnabled()) {
     //      return;
@@ -115,30 +115,30 @@ public class Cursor extends MouseAdapter implements ChartPart {
               new FontRenderContext(null, true, false));
       textHeight = xValueTextLayout.getBounds().getHeight();
 
-      paintVerticalLine(g, firstDataPoint);
+      paintVerticalLine(graphic, firstDataPoint);
 
-      paintBackGround(g, xValueTextLayout);
+      paintBackGround(graphic, xValueTextLayout);
 
-      paintDataPointInfo(g, xValueTextLayout);
+      paintDataPointInfo(graphic xValueTextLayout);
     }
   }
 
-  private void paintVerticalLine(Graphics2D g, DataPoint dataPoint) {
+  private void paintVerticalLine(Graphics2D graphic, DataPoint dataPoint) {
 
     BasicStroke stroke =
         new BasicStroke(styler.getCursorLineWidth(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
-    g.setStroke(stroke);
-    g.setColor(styler.getCursorColor());
+    graphic.setStroke(stroke);
+    graphic.setColor(styler.getCursorColor());
     Line2D.Double line = new Line2D.Double();
     line.setLine(
         dataPoint.x,
         chart.plot.plotContent.getBounds().getY(),
         dataPoint.x,
         chart.plot.plotContent.getBounds().getY() + chart.plot.plotContent.getBounds().getHeight());
-    g.draw(line);
+    graphic.draw(line);
   }
 
-  private void paintBackGround(Graphics2D g, TextLayout xValueTextLayout) {
+  private void paintBackGround(Graphics2D graphic, TextLayout xValueTextLayout) {
 
     double maxLinewidth = xValueTextLayout.getBounds().getWidth();
     TextLayout dataPointTextLayout = null;
@@ -162,35 +162,39 @@ public class Cursor extends MouseAdapter implements ChartPart {
 
     startX = mouseX;
     startY = mouseY;
-    if (mouseX + MOUSE_SPACING + backgroundWidth
-        > chart.plot.plotContent.getBounds().getX()
-            + chart.plot.plotContent.getBounds().getWidth()) {
+    
+    double mouseXPoint = mouseX + MOUSE_SPACING + backgroundWidth;
+    double mouseYPoint = mouseY + MOUSE_SPACING + backgroundHeight;
+    
+    double mouseXBounde = chart.plot.plotContent.getBounds().getX() + chart.plot.plotContent.getBounds().getWidth();
+    double mouseYBounde = chart.plot.plotContent.getBounds().getY() + chart.plot.plotContent.getBounds().getHeight();
+    
+    double width
+    if (mouseXPoint > mouseXBounde) {
       startX = mouseX - backgroundWidth - MOUSE_SPACING;
     }
 
-    if (mouseY + MOUSE_SPACING + backgroundHeight
-        > chart.plot.plotContent.getBounds().getY()
-            + chart.plot.plotContent.getBounds().getHeight()) {
+    if (mouseYPoint > mouseYBounde) {
       startY = mouseY - backgroundHeight - MOUSE_SPACING;
     }
 
-    g.setColor(styler.getCursorBackgroundColor());
-    g.fillRect(
+    graphic.setColor(styler.getCursorBackgroundColor());
+    graphic.fillRect(
         (int) startX + MOUSE_SPACING,
         (int) startY + MOUSE_SPACING,
         (int) (backgroundWidth),
         (int) (backgroundHeight));
   }
 
-  private void paintDataPointInfo(Graphics2D g, TextLayout xValueTextLayout) {
+  private void paintDataPointInfo(Graphics2D graphic, TextLayout xValueTextLayout) {
 
-    AffineTransform orig = g.getTransform();
+    AffineTransform orig = graphic.getTransform();
     AffineTransform at = new AffineTransform();
     at.translate(
         startX + MOUSE_SPACING + LINE_SPACING, startY + textHeight + MOUSE_SPACING + LINE_SPACING);
-    g.transform(at);
-    g.setColor(styler.getCursorFontColor());
-    g.fill(xValueTextLayout.getOutline(null));
+    graphic.transform(at);
+    graphic.setColor(styler.getCursorFontColor());
+    graphic.fill(xValueTextLayout.getOutline(null));
 
     MarkerSeries series = null;
     TextLayout dataPointTextLayout = null;
@@ -198,31 +202,31 @@ public class Cursor extends MouseAdapter implements ChartPart {
     for (DataPoint dataPoint : matchingDataPointList) {
       at = new AffineTransform();
       at.translate(0, textHeight + LINE_SPACING);
-      g.transform(at);
+      graphic.transform(at);
       series = (MarkerSeries) seriesMap.get(dataPoint.seriesName);
       if (series == null) {
         continue;
       }
-      g.setColor(series.getMarkerColor());
+      graphic.setColor(series.getMarkerColor());
       circle = new Ellipse2D.Double(0, -textHeight, textHeight, textHeight);
-      g.fill(circle);
+      graphic.fill(circle);
 
       at = new AffineTransform();
       at.translate(textHeight + LINE_SPACING, 0);
-      g.transform(at);
-      g.setColor(styler.getCursorFontColor());
+      graphic.transform(at);
+      graphic.setColor(styler.getCursorFontColor());
       dataPointTextLayout =
           new TextLayout(
               dataPoint.seriesName + ": " + dataPoint.yValue,
               styler.getCursorFont(),
               new FontRenderContext(null, true, false));
-      g.fill(dataPointTextLayout.getOutline(null));
+      graphic.fill(dataPointTextLayout.getOutline(null));
 
       at = new AffineTransform();
       at.translate(-textHeight - LINE_SPACING, 0);
-      g.transform(at);
+      graphic.transform(at);
     }
-    g.setTransform(orig);
+    graphic.setTransform(orig);
   }
 
   void addData(double xOffset, double yOffset, String xValue, String yValue, String seriesName) {
@@ -236,11 +240,12 @@ public class Cursor extends MouseAdapter implements ChartPart {
 
     List<DataPoint> dataPoints = new ArrayList<>();
     for (DataPoint dataPoint : dataPointList) {
-      if (dataPoint.shape.contains(mouseX, dataPoint.shape.getBounds().getCenterY())
-          && chart.plot.plotContent.getBounds().getY() < mouseY
-          && chart.plot.plotContent.getBounds().getY()
-                  + chart.plot.plotContent.getBounds().getHeight()
-              > mouseY) {
+    	
+      boolean isDatapointColseX = dataPoint.shape.contains(mouseX, dataPoint.shape.getBounds().getCenterY());
+      boolean isYOverLowBound = chart.plot.plotContent.getBounds().getY() < mouseY;
+      boolean isYUnderHighBound = chart.plot.plotContent.getBounds().getY() + chart.plot.plotContent.getBounds().getHeight() > mouseY;
+      
+      if (isDatapointColseX && isYOverLowBound && isYUnderHighBound) {
         dataPoints.add(dataPoint);
       }
     }

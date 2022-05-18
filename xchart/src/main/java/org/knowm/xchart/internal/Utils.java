@@ -1,6 +1,7 @@
 package org.knowm.xchart.internal;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -198,5 +199,20 @@ public class Utils {
       fileNameWithFileExtension = fileName + fileExtension;
     }
     return fileNameWithFileExtension;
+  }
+
+  /**
+   * Finds the min and max of a dataset
+   *
+   * @param data
+   * @return
+   */
+  public static double findMax(double[] data) {
+    double max = Arrays.stream(data).filter((x)->!Double.isNaN(x)).max().getAsDouble();
+    return max;
+  }
+  public static double findMin(double[] data) {
+    double min = Arrays.stream(data).filter((x)->!Double.isNaN(x)).min().getAsDouble();
+    return min;
   }
 }

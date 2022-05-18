@@ -16,12 +16,14 @@ public class Plot_Category<ST extends CategoryStyler, S extends CategorySeries>
   public Plot_Category(Chart<ST, S> chart) {
 
     super(chart);
-
+    
     ST stylerCategory = chart.getStyler();
-    if (CategorySeriesRenderStyle.Bar.equals(stylerCategory.getDefaultSeriesRenderStyle())
-        || CategorySeriesRenderStyle.Stick.equals(stylerCategory.getDefaultSeriesRenderStyle())
-        || CategorySeriesRenderStyle.SteppedBar.equals(
-            stylerCategory.getDefaultSeriesRenderStyle())) {
+    
+    final boolean isBar = CategorySeriesRenderStyle.Bar.equals(stylerCategory.getDefaultSeriesRenderStyle());
+    final boolean isStick = CategorySeriesRenderStyle.Stick.equals(stylerCategory.getDefaultSeriesRenderStyle());
+    final boolean isSteppedBar = CategorySeriesRenderStyle.SteppedBar.equals(stylerCategory.getDefaultSeriesRenderStyle());
+    
+    if (isBar || isStick || isSteppedBar) {
       this.plotContent = new PlotContent_Category_Bar<ST, S>(chart);
     } else {
       this.plotContent = new PlotContent_Category_Line_Area_Scatter<ST, S>(chart);
