@@ -30,7 +30,9 @@ import org.knowm.xchart.internal.chartpart.Chart;
  */
 public final class BitmapEncoder {
 
-  /** Constructor - Private constructor to prevent instantiation */
+  private static final double DEFAULT_DPI = 72.0;
+
+/** Constructor - Private constructor to prevent instantiation */
   private BitmapEncoder() {}
 
   /**
@@ -45,10 +47,9 @@ public final class BitmapEncoder {
 
     String fileNameWithFileExtension = fileName;
     final String newFileExtension = "." + bitmapFormat.toString().toLowerCase();
-    if (fileName.length() <= newFileExtension.length()
-        || !fileName
-            .substring(fileName.length() - newFileExtension.length(), fileName.length())
-            .equalsIgnoreCase(newFileExtension)) {
+    final boolean isFileExist = fileName.length() <= newFileExtension.length();
+    final boolean isFileValid = fileName.substring(fileName.length() - newFileExtension.length(), fileName.length()).equalsIgnoreCase(newFileExtension);
+    if (isFileExist || !isFileValid) {
       fileNameWithFileExtension = fileName + newFileExtension;
     }
     return fileNameWithFileExtension;
@@ -149,7 +150,7 @@ public final class BitmapEncoder {
   public static <T extends Chart<?, ?>> void saveBitmapWithDPI(
       T chart, String fileName, BitmapFormat bitmapFormat, int DPI) throws IOException {
 
-    double scaleFactor = DPI / 72.0;
+    double scaleFactor = DPI / DEFAULT_DPI;
 
     BufferedImage bufferedImage =
         new BufferedImage(
