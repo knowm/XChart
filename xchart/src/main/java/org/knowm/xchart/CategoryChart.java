@@ -11,6 +11,7 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -19,7 +20,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
-public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
+public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -166,13 +167,9 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
     // Sanity checks
     sanityCheck(seriesName, xData, yData, errorBars);
-
     xData = generateXDataIfNullForSeries(xData, yData);
-    
     CategorySeries series = new CategorySeries(seriesName, xData, yData, errorBars, getDataType(xData));
-
     seriesMap.put(seriesName, series);
-
     return series;
   }
 
@@ -223,9 +220,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       List<? extends Number> newErrorBarData) {
 
     CategorySeries series = getSeriesMap().get(seriesName);
-    if (series == null) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
-    }
+    checkSeriesValidity(seriesName, series);
     
     series.replaceData(generateXDataIfNullForReplace(newXData, newYData), newYData, newErrorBarData);
     return series;
@@ -282,22 +277,21 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
               + seriesName
               + "< has already been used. Use unique names for each series!!!");
     }
-    if (yData == null) {
-      throw new IllegalArgumentException("Y-Axis data cannot be null!!!");
+    sanityCheckYData(yData);
+    sanityCheckXData(xData, yData);
+    if (errorBars != null && errorBars.size() != yData.size()) {
+      throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!!");
     }
-    if (yData.size() == 0) {
-      throw new IllegalArgumentException("Y-Axis data cannot be empty!!!");
-    }
-    if (xData != null) {
+  }
+
+  private void sanityCheckXData(List<?> xData, List<? extends Number> yData) {
+	if (xData != null) {
       if (xData.size() == 0) {
     	  throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
       }
       if (xData.size() != yData.size()) {
     	  throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
       }
-    }
-    if (errorBars != null && errorBars.size() != yData.size()) {
-      throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!!");
     }
   }
 
@@ -309,59 +303,37 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     doPaint(graphics);
   }
 
-  private void doPaint(Graphics2D graphics) {
-	paintBackground(graphics);
-
-    axisPair.paint(graphics);
-    plot.paint(graphics);
-    chartTitle.paint(graphics);
-    legend.paint(graphics);
-    annotations.forEach(x -> x.paint(graphics));
+  @Override
+  protected void specificSetting() {
+	 // set the series render styles if they are not set. Legend and Plot need it.
+	 for (CategorySeries seriesCategory : getSeriesMap().values()) {
+	   // would be directly set
+	   if (seriesCategory.getChartCategorySeriesRenderStyle() == null) { // wasn't overridden, use default from Style Manager
+	     seriesCategory.setChartCategorySeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
+	   }
+	 }
+	 setSeriesStyles();
   }
 
-  private void settingPaint(int width, int height) {
-	setWidth(width);
-    setHeight(height);
-
-    // set the series render styles if they are not set. Legend and Plot need it.
-    for (CategorySeries seriesCategory : getSeriesMap().values()) {
-      // would be directly set
-      if (seriesCategory.getChartCategorySeriesRenderStyle() == null) { // wasn't overridden, use default from Style Manager
-        seriesCategory.setChartCategorySeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
-      }
-    }
-    setSeriesStyles();
-  }
 
   /** set the series color, marker and line style based on theme */
-  private void setSeriesStyles() {
-
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
-        new SeriesColorMarkerLineStyleCycler(
-            getStyler().getSeriesColors(),
-            getStyler().getSeriesMarkers(),
-            getStyler().getSeriesLines());
-    for (CategorySeries series : getSeriesMap().values()) {
-
-      setSeriesDefaultForNullPart(series, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
-    }
-  }
-
-  private void setSeriesDefaultForNullPart(CategorySeries series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
-	  if (series.getLineStyle() == null) { // wasn't set manually
-        series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
-      }
-      if (series.getLineColor() == null) { // wasn't set manually
-        series.setLineColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getFillColor() == null) { // wasn't set manually
-        series.setFillColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getMarker() == null) { // wasn't set manually
-        series.setMarker(seriesColorMarkerLineStyle.getMarker());
-      }
-      if (series.getMarkerColor() == null) { // wasn't set manually
-        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
-      }
+  @Override
+  protected void setSeriesDefaultForNullPart(Series series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+	  CategorySeries categorySeries = (CategorySeries) series;
+	  if (categorySeries.getLineStyle() == null) { // wasn't set manually
+		  categorySeries.setLineStyle(seriesColorMarkerLineStyle.getStroke());
+	  }
+	  if (categorySeries.getLineColor() == null) { // wasn't set manually
+		  categorySeries.setLineColor(seriesColorMarkerLineStyle.getColor());
+	  }
+	  if (categorySeries.getFillColor() == null) { // wasn't set manually
+		  categorySeries.setFillColor(seriesColorMarkerLineStyle.getColor());
+	  }
+	  if (categorySeries.getMarker() == null) { // wasn't set manually
+		  categorySeries.setMarker(seriesColorMarkerLineStyle.getMarker());
+	  }
+	  if (categorySeries.getMarkerColor() == null) { // wasn't set manually
+		  categorySeries.setMarkerColor(seriesColorMarkerLineStyle.getColor());
+	  }
   }
 }
