@@ -18,6 +18,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   static final int BOX_OUTLINE_WIDTH = 5;
   private static final int LEGEND_MARGIN = 6;
   private static final int MULTI_LINE_SPACE = 3;
+  static final int WIDTH_MINIMUM_BOUND = 30;
   final Chart<ST, S> chart;
   double xOffset = 0;
   double yOffset = 0;
@@ -49,7 +50,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     }
 
     // if the area to draw a chart on is so small, don't even bother
-    if (chart.getPlot().getBounds().getWidth() < 30) {
+    if (chart.getPlot().getBounds().getWidth() < WIDTH_MINIMUM_BOUND) {
       return;
     }
 
@@ -72,73 +73,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // legend draw position
     double height = bounds.getHeight();
 
-    switch (chart.getStyler().getLegendPosition()) {
-      case OutsideE:
-        xOffset = chart.getWidth() - bounds.getWidth() - LEGEND_MARGIN;
-        yOffset =
-            chart.getPlot().getBounds().getY()
-                + (chart.getPlot().getBounds().getHeight() - bounds.getHeight()) / 2.0;
-        break;
-      case InsideNW:
-        xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
-        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-        break;
-      case InsideNE:
-        xOffset =
-            chart.getPlot().getBounds().getX()
-                + chart.getPlot().getBounds().getWidth()
-                - bounds.getWidth()
-                - LEGEND_MARGIN;
-        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-        break;
-      case InsideSE:
-        xOffset =
-            chart.getPlot().getBounds().getX()
-                + chart.getPlot().getBounds().getWidth()
-                - bounds.getWidth()
-                - LEGEND_MARGIN;
-        yOffset =
-            chart.getPlot().getBounds().getY()
-                + chart.getPlot().getBounds().getHeight()
-                - bounds.getHeight()
-                - LEGEND_MARGIN;
-        break;
-      case InsideSW:
-        xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
-        yOffset =
-            chart.getPlot().getBounds().getY()
-                + chart.getPlot().getBounds().getHeight()
-                - bounds.getHeight()
-                - LEGEND_MARGIN;
-        break;
-      case InsideN:
-        xOffset =
-            chart.getPlot().getBounds().getX()
-                + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2
-                + LEGEND_MARGIN;
-        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
-        break;
-      case InsideS:
-        xOffset =
-            chart.getPlot().getBounds().getX()
-                + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2
-                + LEGEND_MARGIN;
-        yOffset =
-            chart.getPlot().getBounds().getY()
-                + chart.getPlot().getBounds().getHeight()
-                - bounds.getHeight()
-                - LEGEND_MARGIN;
-        break;
-      case OutsideS:
-        xOffset =
-            chart.getPlot().getBounds().getX()
-                + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2.0;
-        yOffset = chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN;
-        break;
-
-      default:
-        break;
-    }
+    calculateXYOffset();
 
     // draw legend box background and border
     Shape rectangle = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
@@ -154,6 +89,77 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // bounds = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), bounds.getHeight());
     // g.setColor(Color.blue);
     // g.draw(bounds);
+  }
+  
+  private void calculateXYOffset() {
+	  
+	    switch (chart.getStyler().getLegendPosition()) {
+	      case OutsideE:
+	        xOffset = chart.getWidth() - bounds.getWidth() - LEGEND_MARGIN;
+	        yOffset =
+	            chart.getPlot().getBounds().getY()
+	                + (chart.getPlot().getBounds().getHeight() - bounds.getHeight()) / 2.0;
+	        break;
+	      case InsideNW:
+	        xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
+	        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+	        break;
+	      case InsideNE:
+	        xOffset =
+	            chart.getPlot().getBounds().getX()
+	                + chart.getPlot().getBounds().getWidth()
+	                - bounds.getWidth()
+	                - LEGEND_MARGIN;
+	        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+	        break;
+	      case InsideSE:
+	        xOffset =
+	            chart.getPlot().getBounds().getX()
+	                + chart.getPlot().getBounds().getWidth()
+	                - bounds.getWidth()
+	                - LEGEND_MARGIN;
+	        yOffset =
+	            chart.getPlot().getBounds().getY()
+	                + chart.getPlot().getBounds().getHeight()
+	                - bounds.getHeight()
+	                - LEGEND_MARGIN;
+	        break;
+	      case InsideSW:
+	        xOffset = chart.getPlot().getBounds().getX() + LEGEND_MARGIN;
+	        yOffset =
+	            chart.getPlot().getBounds().getY()
+	                + chart.getPlot().getBounds().getHeight()
+	                - bounds.getHeight()
+	                - LEGEND_MARGIN;
+	        break;
+	      case InsideN:
+	        xOffset =
+	            chart.getPlot().getBounds().getX()
+	                + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2
+	                + LEGEND_MARGIN;
+	        yOffset = chart.getPlot().getBounds().getY() + LEGEND_MARGIN;
+	        break;
+	      case InsideS:
+	        xOffset =
+	            chart.getPlot().getBounds().getX()
+	                + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2
+	                + LEGEND_MARGIN;
+	        yOffset =
+	            chart.getPlot().getBounds().getY()
+	                + chart.getPlot().getBounds().getHeight()
+	                - bounds.getHeight()
+	                - LEGEND_MARGIN;
+	        break;
+	      case OutsideS:
+	        xOffset =
+	            chart.getPlot().getBounds().getX()
+	                + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2.0;
+	        yOffset = chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+	        break;
+
+	      default:
+	        break;
+	    }
   }
 
   /** determine the width and height of the chart legend */
