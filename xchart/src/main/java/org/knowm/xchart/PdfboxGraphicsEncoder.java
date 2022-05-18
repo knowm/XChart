@@ -135,10 +135,9 @@ public class PdfboxGraphicsEncoder {
   private static String addFileExtension(String fileName) {
 
     String fileNameWithFileExtension = fileName;
-    if (fileName.length() <= PDF_FILE_EXTENSION.length()
-        || !fileName
-            .substring(fileName.length() - PDF_FILE_EXTENSION.length(), fileName.length())
-            .equalsIgnoreCase(PDF_FILE_EXTENSION)) {
+    final boolean isFileExist = fileName.length() <= PDF_FILE_EXTENSION.length();
+    final boolean isFileValid = fileName.substring(fileName.length() - PDF_FILE_EXTENSION.length(), fileName.length()).equalsIgnoreCase(PDF_FILE_EXTENSION);
+    if (isFileExist || !isFileValid) {
       fileNameWithFileExtension = fileName + PDF_FILE_EXTENSION;
     }
     return fileNameWithFileExtension;
