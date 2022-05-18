@@ -173,14 +173,13 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
     double min = Double.MAX_VALUE;
     double max = -Double.MAX_VALUE;
     for (int i = 0; i < data.length; i++) {
-
-      double d = data[i];
-      double eb = errorBars[i];
-      if (d - eb < min) {
-        min = d - eb;
+      double datum = data[i];
+      double errorBar = errorBars[i];
+      if (datum - errorBar < min) {
+        min = datum - errorBar;
       }
-      if (d + eb > max) {
-        max = d + eb;
+      if (datum + errorBar > max) {
+        max = datum + errorBar;
       }
     }
     return new double[] {min, max};
