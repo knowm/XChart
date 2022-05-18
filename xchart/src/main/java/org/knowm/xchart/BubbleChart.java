@@ -5,17 +5,16 @@ import java.util.List;
 
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
-import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Bubble;
 import org.knowm.xchart.internal.chartpart.Plot_Bubble;
+import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
-import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.BubbleStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
 /** @author timmolter */
-public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
+public class BubbleChart extends AbstractChart<BubbleStyler, BubbleSeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -162,15 +161,19 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
       String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
 
     BubbleSeries series = getSeriesMap().get(seriesName);
-    if (series == null) {
-      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
-    }
+    checkSeriesValidity(seriesName, series);
     double[] xData = newXData;
     if (newXData == null) {
       xData = Utils.getGeneratedDataAsArray(newYData.length);
     }
     series.replaceData(xData, newYData, newBubbleData);
     return series;
+  }
+
+  private void checkSeriesValidity(String seriesName, BubbleSeries series) {
+	if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
   }
 
   ///////////////////////////////////////////////////
@@ -185,12 +188,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
               + seriesName
               + "< has already been used. Use unique names for each series!!!");
     }
-    if (yData == null) {
-      throw new IllegalArgumentException("Y-Axis data cannot be null!!! >" + seriesName);
-    }
-    if (yData.length == 0) {
-      throw new IllegalArgumentException("Y-Axis data cannot be empty!!! >" + seriesName);
-    }
+    sanityCheckYData(yData);
     if (bubbleData == null) {
       throw new IllegalArgumentException("Bubble data cannot be null!!! >" + seriesName);
     }
@@ -219,53 +217,30 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     doPaint(graphics);
   }
 
-  private void doPaint(Graphics2D graphics) {
-	paintBackground(graphics);
-
-    axisPair.paint(graphics);
-    plot.paint(graphics);
-    chartTitle.paint(graphics);
-    legend.paint(graphics);
-    annotations.forEach(x -> x.paint(graphics));
-  }
-
-  private void settingPaint(int width, int height) {
-	setWidth(width);
-    setHeight(height);
-
-    // set the series types if they are not set. Legend and Plot need it.
+  @Override
+  protected void specificSetting() {
     for (BubbleSeries bubbleSeries : getSeriesMap().values()) {
-      final boolean isBubbleSeriesRenderStyleSet = (bubbleSeries.getBubbleSeriesRenderStyle() == null);// would be directly set
-      if (isBubbleSeriesRenderStyleSet) { // wasn't overridden, use default from Style Manager
-        bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
+        final boolean isBubbleSeriesRenderStyleSet = (bubbleSeries.getBubbleSeriesRenderStyle() == null);// would be directly set
+        if (isBubbleSeriesRenderStyleSet) { // wasn't overridden, use default from Style Manager
+          bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
+        }
       }
-    }
+    // set the series types if they are not set. Legend and Plot need it.
     setSeriesStyles();
   }
 
   /** set the series color based on theme */
-  private void setSeriesStyles() {
-
-    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
-        new SeriesColorMarkerLineStyleCycler(
-            getStyler().getSeriesColors(),
-            getStyler().getSeriesMarkers(),
-            getStyler().getSeriesLines());
-    for (BubbleSeries series : getSeriesMap().values()) {
-
-      setSeriesDefaultForNullPart(series, seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle());
-    }
-  }
-
-  private void setSeriesDefaultForNullPart(BubbleSeries series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
-	if (series.getLineStyle() == null) { // wasn't set manually
-        series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
-      }
-      if (series.getLineColor() == null) { // wasn't set manually
-        series.setLineColor(seriesColorMarkerLineStyle.getColor());
-      }
-      if (series.getFillColor() == null) { // wasn't set manually
-        series.setFillColor(seriesColorMarkerLineStyle.getColor());
-      }
+  @Override
+  protected void setSeriesDefaultForNullPart(Series series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
+	  BubbleSeries bubbleSeries = (BubbleSeries) series;
+	  if (bubbleSeries.getLineStyle() == null) { // wasn't set manually
+		  bubbleSeries.setLineStyle(seriesColorMarkerLineStyle.getStroke());
+	  }
+	  if (bubbleSeries.getLineColor() == null) { // wasn't set manually
+		  bubbleSeries.setLineColor(seriesColorMarkerLineStyle.getColor());
+	  }
+	  if (bubbleSeries.getFillColor() == null) { // wasn't set manually
+		  bubbleSeries.setFillColor(seriesColorMarkerLineStyle.getColor());
+	  }
   }
 }
