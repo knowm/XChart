@@ -67,13 +67,16 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
   }
 
   private void dataSanityCheck(List<?> newXData, List<? extends Number> newYData, List<? extends Number> newExtraValues) {
-	if (newExtraValues != null && newExtraValues.size() != newYData.size()) {
-      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
-    }
-    if (newXData.size() != newYData.size()) {
-      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-    }
-  }
+		boolean notSameErrorBarsAndY_Axis = newExtraValues != null && newExtraValues.size() != newYData.size();
+		boolean notSameXAndY_Axis = newXData.size() != newYData.size();
+		
+		if (notSameErrorBarsAndY_Axis) {
+	      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
+	    }    
+		if (notSameXAndY_Axis) {
+	      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+	    }
+	  }
 
   /**
    * For box plot, replace yData

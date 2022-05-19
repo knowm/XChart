@@ -56,9 +56,23 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
    * @param newExtraValues
    */
   public void replaceData(double[] newXData, double[] newYData, double[] newExtraValues) {
+	dataSanityCheck(newXData, newYData, newExtraValues);
+
+    this.xDataAll = newXData;
+    this.yDataAll = newYData;
+    this.extraValuesAll = newExtraValues;
+
+    xData = newXData;
+    yData = newYData;
+    extraValues = newExtraValues;
+
+    calculateMinMax();
+  }
+
+	public void dataSanityCheck(double[] newXData, double[] newYData, double[] newExtraValues) {
 		boolean notSameErrorBarsAndY_Axis = newExtraValues != null && newExtraValues.length != newYData.length;
 		boolean notSameXAndY_Axis = newXData.length != newYData.length;
-
+	
 	    // Sanity check
 		if (notSameErrorBarsAndY_Axis) {
 	      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
@@ -66,17 +80,7 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 		if (notSameXAndY_Axis) {
 	      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
 	    }
-
-	    this.xDataAll = newXData;
-	    this.yDataAll = newYData;
-	    this.extraValuesAll = newExtraValues;
-
-	    xData = newXData;
-	    yData = newYData;
-	    extraValues = newExtraValues;
-
-	    calculateMinMax();
-  }
+	}
 
   public void filterXByIndex(int startIndex, int endIndex) {
 
