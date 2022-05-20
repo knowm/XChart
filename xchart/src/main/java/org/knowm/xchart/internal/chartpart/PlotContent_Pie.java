@@ -43,9 +43,9 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     double y = pieBounds.getY();
     double width = pieBounds.getWidth();
     double height = pieBounds.getHeight();
-    Shape outer = new Arc2D.Double(x, y, width, height, start, extent, Arc2D.OPEN);
-    double wt = width * thickness;
-    double ht = height * thickness;
+    Shape outer = new Arc2pD.Double(x, y, width, height, start, extent, Arc2D.OPEN);
+    double multiplicationWidthByThickness = width * thickness;
+    double multiplicationHeightByThickness = height * thickness;
     Shape inner =
         new Arc2D.Double(
             x + wt, y + ht, width - 2 * wt, height - 2 * ht, start + extent, -extent, Arc2D.OPEN);
