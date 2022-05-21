@@ -30,8 +30,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
    */
   public ChartZoom(XYChart xyChart, XChartPanel<XYChart> xChartPanel, String resetString) {
 
-    x1 = -1;
-    x2 = -1;
+    resetXY();
 
     this.xChartPanel = xChartPanel;
     this.xyChart = xyChart;
@@ -48,11 +47,15 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     filtered = false;
     resetButton.setVisible(false);
 
-    x1 = -1;
-    x2 = -1;
+    resetXY();
     repaint();
   }
 
+  public void resetXY() {
+		x1 = -1;
+	    x2 = -1;
+  }
+  
   private void repaint() {
 
     xChartPanel.invalidate();
@@ -72,8 +75,9 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     // or 2. nothing should be drawn or 3. the zoom area
     //    should be drawn
 	boolean isResetX1X2 = (x1 == -1 || x2 == -1);
-	
-    if (resetButton.visible && isResetX1X2) { //
+    boolean needResetButton = resetButton.visible && isResetX1X2;
+    
+	if (needResetButton) { //
       resetButton.paint(graphic);
     } else if (isResetX1X2) {
       return;
@@ -86,31 +90,33 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     }
   }
 
-  public void mousePressed(MouseEvent e) {
+  public void mousePressed(MouseEvent event) {
 
-    x1 = e.getX();
+    x1 = event.getX();
     repaint();
   }
 
-  public void mouseDragged(MouseEvent e) {
+  public void mouseDragged(MouseEvent event) {
 
-    x2 = e.getX();
+    x2 = event.getX();
     repaint();
   }
 
-  public void mouseReleased(MouseEvent e) {
+  public void mouseReleased(MouseEvent event) {
 
     //    System.out.println("Mouse released");
     if (!isOverlapping()) {
-      x1 = -1;
-      x2 = -1;
+      resetXY();
       return;
     }
 
-    if (bounds != null && x2 != -1) {
+    boolean isDragged = bounds != null && x2 != -1;
+    
+	if (isDragged) {
       int smallPoint;
       int bigPoint;
-      if (x2 < x1) {
+      boolean x1isBigpoint = x2 < x1;
+	if (x1isBigpoint) {
         smallPoint = x2;
         bigPoint = x1;
       } else {
@@ -122,8 +128,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
       resetButton.setVisible(filtered && xyChart.getStyler().isZoomResetByButton());
     }
 
-    x1 = -1;
-    x2 = -1;
+    resetXY();
     repaint();
   }
 
@@ -161,7 +166,8 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     for (XYSeries series : xyChart.getSeriesMap().values()) {
       xData = series.getXData();
       for (double x : xData) {
-        if (x >= minValue && x <= maxValue) {
+        boolean betweenMinAndMax = x >= minValue && x <= maxValue;
+		if (betweenMinAndMax) {
           isOnePointSeleted = true;
           break;
         }
@@ -202,19 +208,19 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   }
 
   @Override
-  public void mouseClicked(MouseEvent e) {
+  public void mouseClicked(MouseEvent event) {
 
     if (!filtered) {
       return;
     }
-    if (xyChart.getStyler().isZoomResetByDoubleClick() && e.getClickCount() == 2) {
+    if (xyChart.getStyler().isZoomResetByDoubleClick() && event.getClickCount() == 2) {
       resetZoom();
       return;
     }
   }
 
   @Override
-  public void actionPerformed(ActionEvent e) {
+  public void actionPerformed(ActionEvent event) {
 
     // reset button pressed
     resetZoom();

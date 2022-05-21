@@ -44,16 +44,16 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     double width = pieBounds.getWidth();
     double height = pieBounds.getHeight();
     Shape outer = new Arc2D.Double(x, y, width, height, start, extent, Arc2D.OPEN);
-    double wt = width * thickness;
-    double ht = height * thickness;
+    double multiplicationWidthByThickness = width * thickness;
+    double multiplicationHeightByThickness = height * thickness;
     Shape inner =
         new Arc2D.Double(
-            x + wt, y + ht, width - 2 * wt, height - 2 * ht, start + extent, -extent, Arc2D.OPEN);
+            x + multiplicationWidthByThickness, y + multiplicationHeightByThickness, width - 2 * multiplicationWidthByThickness, height - 2 * multiplicationHeightByThickness, start + extent, -extent, Arc2D.OPEN);
     generalPath.append(outer, false);
 
     dummy.append(
         new Arc2D.Double(
-            x + wt, y + ht, width - 2 * wt, height - 2 * ht, start, extent, Arc2D.OPEN),
+            x + multiplicationWidthByThickness, y + multiplicationHeightByThickness, width - 2 * multiplicationWidthByThickness, height - 2 * multiplicationHeightByThickness, start, extent, Arc2D.OPEN),
         false);
 
     Point2D point = dummy.getCurrentPoint();
@@ -75,7 +75,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
   }
 
   @Override
-  public void doPaint(Graphics2D g) {
+  public void doPaint(Graphics2D graphic) {
 
     // Apply the given pattern to decimalPattern if decimalPattern is not null
     if (pieStyler.getDecimalPattern() != null) {
@@ -86,27 +86,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     double pieFillPercentage = pieStyler.getPlotContentSize();
 
     double halfBorderPercentage = (1 - pieFillPercentage) / 2.0;
-    double width =
-        pieStyler.isCircular()
-            ? Math.min(getBounds().getWidth(), getBounds().getHeight())
-            : getBounds().getWidth();
-    double height =
-        pieStyler.isCircular()
-            ? Math.min(getBounds().getWidth(), getBounds().getHeight())
-            : getBounds().getHeight();
+    double width = getWidth();
+    double height = getHeight();
 
-    Rectangle2D pieBounds =
-        new Rectangle2D.Double(
-            getBounds().getX()
-                + getBounds().getWidth() / 2
-                - width / 2
-                + halfBorderPercentage * width,
-            getBounds().getY()
-                + getBounds().getHeight() / 2
-                - height / 2
-                + halfBorderPercentage * height,
-            width * pieFillPercentage,
-            height * pieFillPercentage);
+    Rectangle2D pieBounds = getPieBounds(pieFillPercentage, halfBorderPercentage, width, height);
 
     //    g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     //    g.setColor(Color.black);
@@ -116,24 +99,61 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     //    g.setColor(Color.red);
     //    g.draw(getBounds());
 
-    // get total
-    double total = 0.0;
-
-    Map<String, S> map = chart.getSeriesMap();
-    for (S series : map.values()) {
-
-      if (!series.isEnabled() || series.getValue() == null) {
-        continue;
-      }
-      total += series.getValue().doubleValue();
-    }
+    double total = getTotal();
 
     // draw pie slices
     double startAngle = pieStyler.getStartAngleInDegrees() + 90;
-    paintSlices(g, pieBounds, total, startAngle);
-    paintLabels(g, pieBounds, total, startAngle);
-    paintSum(g, pieBounds, total);
+    DrawPie(graphic, pieBounds, total, startAngle);
   }
+  
+	public void DrawPie(Graphics2D graphic, Rectangle2D pieBounds, double total, double startAngle) {
+		paintSlices(graphic, pieBounds, total, startAngle);
+	    paintLabels(graphic, pieBounds, total, startAngle);
+	    paintSum(graphic, pieBounds, total);
+	}
+	public double getTotal() {
+		// get total
+	    double total = 0.0;
+	
+	    Map<String, S> map = chart.getSeriesMap();
+	    for (S series : map.values()) {
+	
+	      if (!series.isEnabled() || series.getValue() == null) {
+	        continue;
+	      }
+	      total += series.getValue().doubleValue();
+	    }
+		return total;
+	}
+	public Rectangle2D getPieBounds(double pieFillPercentage, double halfBorderPercentage, double width, double height) {
+		Rectangle2D pieBounds =
+	        new Rectangle2D.Double(
+	            getBounds().getX()
+	                + getBounds().getWidth() / 2
+	                - width / 2
+	                + halfBorderPercentage * width,
+	            getBounds().getY()
+	                + getBounds().getHeight() / 2
+	                - height / 2
+	                + halfBorderPercentage * height,
+	            width * pieFillPercentage,
+	            height * pieFillPercentage);
+		return pieBounds;
+	}
+	public double getHeight() {
+		double height =
+	        pieStyler.isCircular()
+	            ? Math.min(getBounds().getWidth(), getBounds().getHeight())
+	            : getBounds().getHeight();
+		return height;
+	}
+	public double getWidth() {
+		double width =
+	        pieStyler.isCircular()
+	            ? Math.min(getBounds().getWidth(), getBounds().getHeight())
+	            : getBounds().getWidth();
+		return width;
+	}
 
   private void paintSlices(Graphics2D g, Rectangle2D pieBounds, double total, double startAngle) {
 
