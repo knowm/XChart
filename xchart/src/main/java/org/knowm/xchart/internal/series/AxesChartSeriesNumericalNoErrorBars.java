@@ -27,22 +27,21 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
    * Constructor
    *
    * @param name
-   * @param xData
-   * @param yData
+   * @param seriesDataValues
    * @param xAxisDataType
    */
   public AxesChartSeriesNumericalNoErrorBars(
-      String name, double[] xData, double[] yData, double[] extraValues, DataType xAxisDataType) {
+      String name, SeriesDataValues seriesDataValues, DataType xAxisDataType) {
 
     super(name, xAxisDataType);
 
-    this.xDataAll = xData;
-    this.yDataAll = yData;
-    this.extraValuesAll = extraValues;
+    this.xDataAll = seriesDataValues.getXData();
+    this.yDataAll = seriesDataValues.getYData();
+    this.extraValuesAll = seriesDataValues.getXData();
 
-    this.xData = xData;
-    this.yData = yData;
-    this.extraValues = extraValues;
+    this.xData = seriesDataValues.getXData();
+    this.yData = seriesDataValues.getYData();
+    this.extraValues = seriesDataValues.getXData();
 
     calculateMinMax();
   }
@@ -51,27 +50,25 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
    * This is an internal method which shouldn't be called from client code. Use
    * XYChart.updateXYSeries or CategoryChart.updateXYSeries instead!
    *
-   * @param newXData
-   * @param newYData
-   * @param newExtraValues
+   * @param seriesDataValues
    */
-  public void replaceData(double[] newXData, double[] newYData, double[] newExtraValues) {
-	dataSanityCheck(newXData, newYData, newExtraValues);
+  public void replaceData(SeriesDataValues seriesDataValues) {
+	dataSanityCheck(seriesDataValues);
 
-    this.xDataAll = newXData;
-    this.yDataAll = newYData;
-    this.extraValuesAll = newExtraValues;
+    this.xDataAll = seriesDataValues.getXData();
+    this.yDataAll = seriesDataValues.getYData();
+    this.extraValuesAll = seriesDataValues.getExtraValues();
 
-    xData = newXData;
-    yData = newYData;
-    extraValues = newExtraValues;
+    xData = seriesDataValues.getXData();
+    yData = seriesDataValues.getYData();
+    extraValues = seriesDataValues.getExtraValues();
 
     calculateMinMax();
   }
 
-	public void dataSanityCheck(double[] newXData, double[] newYData, double[] newExtraValues) {
-		boolean notSameErrorBarsAndY_Axis = newExtraValues != null && newExtraValues.length != newYData.length;
-		boolean notSameXAndY_Axis = newXData.length != newYData.length;
+	public void dataSanityCheck(SeriesDataValues seriesDataValues) {
+		boolean notSameErrorBarsAndY_Axis = seriesDataValues.getExtraValues() != null && seriesDataValues.getExtraValues().length != seriesDataValues.getYData().length;
+		boolean notSameXAndY_Axis = seriesDataValues.getXData().length != seriesDataValues.getYData().length;
 	
 	    // Sanity check
 		if (notSameErrorBarsAndY_Axis) {

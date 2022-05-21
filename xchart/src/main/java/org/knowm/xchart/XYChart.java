@@ -11,6 +11,7 @@ import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_XY;
 import org.knowm.xchart.internal.series.Series.DataType;
+import org.knowm.xchart.internal.series.SeriesDataValues;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -360,9 +361,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     }
     if (newXData == null) {
       double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
-      series.replaceData(generatedXData, newYData, newErrorBarData);
+      series.replaceData(new SeriesDataValues(generatedXData, newYData, newErrorBarData));
     } else {
-      series.replaceData(newXData, newYData, newErrorBarData);
+      series.replaceData(new SeriesDataValues(newXData, newYData, newErrorBarData));
     }
 
     return series;
