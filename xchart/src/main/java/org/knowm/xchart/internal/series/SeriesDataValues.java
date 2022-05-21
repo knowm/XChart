@@ -27,4 +27,18 @@ public class SeriesDataValues {
     public double[] getExtraValues() {
         return ExtraValues;
     }
+
+    public void dataSanityCheck() {
+
+        boolean notSameErrorBarsAndY_Axis = getExtraValues() != null && getExtraValues().length != getYData().length;
+        boolean notSameXAndY_Axis = getXData().length != getYData().length;
+        // Sanity check
+        if (notSameErrorBarsAndY_Axis) {
+            throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
+        }
+        if (notSameXAndY_Axis) {
+            throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+        }
+        dataSanityCheck();
+    }
 }

@@ -67,16 +67,7 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
   }
 
 	public void dataSanityCheck(SeriesDataValues seriesDataValues) {
-		boolean notSameErrorBarsAndY_Axis = seriesDataValues.getExtraValues() != null && seriesDataValues.getExtraValues().length != seriesDataValues.getYData().length;
-		boolean notSameXAndY_Axis = seriesDataValues.getXData().length != seriesDataValues.getYData().length;
-	
-	    // Sanity check
-		if (notSameErrorBarsAndY_Axis) {
-	      throw new IllegalArgumentException("error bars and Y-Axis sizes are not the same!!!");
-	    }
-		if (notSameXAndY_Axis) {
-	      throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-	    }
+        seriesDataValues.dataSanityCheck();
 	}
 
   public void filterXByIndex(int startIndex, int endIndex) {
