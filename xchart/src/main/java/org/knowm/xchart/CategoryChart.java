@@ -32,6 +32,10 @@ public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries>
     axisPair = new AxisPair<CategoryStyler, CategorySeries>(this);
     plot = new Plot_Category<CategoryStyler, CategorySeries>(this);
     legend = new Legend_Marker<CategoryStyler, CategorySeries>(this);
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**

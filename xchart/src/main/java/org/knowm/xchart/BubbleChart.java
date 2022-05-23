@@ -29,6 +29,10 @@ public class BubbleChart extends AbstractChart<BubbleStyler, BubbleSeries> {
     axisPair = new AxisPair<BubbleStyler, BubbleSeries>(this);
     plot = new Plot_Bubble<BubbleStyler, BubbleSeries>(this);
     legend = new Legend_Bubble<BubbleStyler, BubbleSeries>(this);
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**

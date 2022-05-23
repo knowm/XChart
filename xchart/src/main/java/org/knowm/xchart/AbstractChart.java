@@ -26,11 +26,7 @@ public abstract class AbstractChart<ST extends Styler, S extends Series> extends
 	
 	protected void doPaint(Graphics2D graphics) {
 	    paintBackground(graphics);
-
-		axisPair.paint(graphics);
-		plot.paint(graphics);
-		chartTitle.paint(graphics);
-		legend.paint(graphics);
+	    paintTarget.paint(graphics);
 		annotations.paint(graphics);
 	}
 	

@@ -24,6 +24,10 @@ public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
     axisPair = new AxisPair<BoxStyler, BoxSeries>(this);
     plot = new Plot_Box<BoxStyler, BoxSeries>(this);
     legend = new Legend_Marker<BoxStyler, BoxSeries>(this);
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   public BoxChart(int width, int height, Theme theme) {
