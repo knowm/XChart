@@ -13,7 +13,6 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_OHLC;
 import org.knowm.xchart.internal.chartpart.Plot_OHLC;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
@@ -22,7 +21,7 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
 /** @author arthurmcgibbon */
-public class OHLCChart extends AbstractChart<OHLCStyler, OHLCSeries> {
+public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)
@@ -37,6 +36,11 @@ public class OHLCChart extends AbstractChart<OHLCStyler, OHLCSeries> {
     axisPair = new AxisPair<OHLCStyler, OHLCSeries>(this);
     plot = new Plot_OHLC<OHLCStyler, OHLCSeries>(this);
     legend = new Legend_OHLC<OHLCStyler, OHLCSeries>(this);
+
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -545,7 +549,12 @@ private DataType getAxisType(Object dataPoint) {
   private OHLCSeries addSeries(
       String seriesName, double[] xData, double[] yData, DataType dataType) {
 
-	seriesNameDuplicateCheck(seriesName);
+    if (seriesMap.containsKey(seriesName)) {
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
+    }
 
     final double[] xDataToUse;
     if (xData != null) {
@@ -809,48 +818,60 @@ private DataType getAxisType(Object dataPoint) {
   @Override
   public void paint(Graphics2D g, int width, int height) {
 
-    settingPaint(width, height);
-    doPaint(g);
-  }
+    setWidth(width);
+    setHeight(height);
 
-  @Override
-  protected void specificSetting() {
-
+    // set the series render styles if they are not set. Legend and Plot need it.
     for (OHLCSeries series : getSeriesMap().values()) {
-         // would be directly set
-        if (series.getOhlcSeriesRenderStyle() == null) { // wasn't overridden, use default from Style Manager
-        	series.setOhlcSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
-        }
+      OHLCSeries.OHLCSeriesRenderStyle renderStyle =
+          series.getOhlcSeriesRenderStyle(); // would be directly set
+      if (renderStyle == null) { // wasn't overridden, use default from Style Manager
+        series.setOhlcSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
+      }
     }
     setSeriesStyles();
+
+    paintBackground(g);
+
+    paintTarget.paint(g);
+    annotations.paint(g);
   }
 
-  @Override
-  protected void setSeriesDefaultForNullPart(Series series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
-	  OHLCSeries ohlcSeries = (OHLCSeries) series;
-	if (ohlcSeries.getLineStyle() == null) { // wasn't set manually
-		ohlcSeries.setLineStyle(seriesColorMarkerLineStyle.getStroke());
-	}
-	if (ohlcSeries.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line
-	    && ohlcSeries.getLineColor() == null) { // wasn't set manually
-		ohlcSeries.setLineColor(seriesColorMarkerLineStyle.getColor());
-	}
-	if (ohlcSeries.getFillColor() == null) { // wasn't set manually
-		ohlcSeries.setFillColor(seriesColorMarkerLineStyle.getColor());
-	}
-	if (ohlcSeries.getMarker() == null) { // wasn't set manually
-		ohlcSeries.setMarker(seriesColorMarkerLineStyle.getMarker());
-	}
-	if (ohlcSeries.getMarkerColor() == null) { // wasn't set manually
-		ohlcSeries.setMarkerColor(seriesColorMarkerLineStyle.getColor());
-	}
-	if (ohlcSeries.getUpColor() == null) { // wasn't set manually
-		ohlcSeries.setUpColor(new Color(19, 179, 70));
-	}
-	if (ohlcSeries.getDownColor() == null) { // wasn't set manually
-		ohlcSeries.setDownColor(new Color(242, 39, 42));
-	}
-		
-  }
+  /** set the series color, marker and line style based on theme */
+  private void setSeriesStyles() {
 
+    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+        new SeriesColorMarkerLineStyleCycler(
+            getStyler().getSeriesColors(),
+            getStyler().getSeriesMarkers(),
+            getStyler().getSeriesLines());
+    for (OHLCSeries series : getSeriesMap().values()) {
+
+      SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+          seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+
+      if (series.getLineStyle() == null) { // wasn't set manually
+        series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
+      }
+      if (series.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line
+          && series.getLineColor() == null) { // wasn't set manually
+        series.setLineColor(seriesColorMarkerLineStyle.getColor());
+      }
+      if (series.getFillColor() == null) { // wasn't set manually
+        series.setFillColor(seriesColorMarkerLineStyle.getColor());
+      }
+      if (series.getMarker() == null) { // wasn't set manually
+        series.setMarker(seriesColorMarkerLineStyle.getMarker());
+      }
+      if (series.getMarkerColor() == null) { // wasn't set manually
+        series.setMarkerColor(seriesColorMarkerLineStyle.getColor());
+      }
+      if (series.getUpColor() == null) { // wasn't set manually
+        series.setUpColor(new Color(19, 179, 70));
+      }
+      if (series.getDownColor() == null) { // wasn't set manually
+        series.setDownColor(new Color(242, 39, 42));
+      }
+    }
+  }
 }
