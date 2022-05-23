@@ -8,6 +8,6 @@ public class CalculaterOutsideS implements OffsetCalculater{
 	                + (chart.getPlot().getBounds().getWidth() - bounds.getWidth()) / 2.0;
 	}
 	public double getYOffset(Chart<ST, S> chart, Rectangle2D bounds, int LEGEND_MARGIN) {
-	    return = chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN;
+	    return chart.getHeight() - bounds.getHeight() - LEGEND_MARGIN;
 	}
 }
