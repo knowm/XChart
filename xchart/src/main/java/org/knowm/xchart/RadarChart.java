@@ -151,7 +151,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    annotations.forEach(x -> x.paint(g));
+    annotations.paint(g);
   }
 
   /** set the series color based on theme */

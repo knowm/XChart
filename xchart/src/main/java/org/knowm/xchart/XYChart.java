@@ -418,7 +418,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    annotations.forEach(x -> x.paint(g));
+    annotations.paint(g);
   }
 
   /** set the series color, marker and line style based on theme */

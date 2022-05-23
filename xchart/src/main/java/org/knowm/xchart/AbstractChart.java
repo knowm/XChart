@@ -32,7 +32,7 @@ public abstract class AbstractChart<ST extends Styler, S extends Series> extends
 		plot.paint(graphics);
 		chartTitle.paint(graphics);
 		legend.paint(graphics);
-		annotations.forEach(x -> x.paint(graphics));
+		annotations.paint(graphics);
 	}
 	
 	protected void settingPaint(int width, int height) {

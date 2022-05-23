@@ -26,6 +26,8 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     super(width, height, new PieStyler());
     plot = new Plot_Pie<PieStyler, PieSeries>(this);
     legend = new Legend_Pie<PieStyler, PieSeries>(this);
+
+
   }
 
   /**
@@ -126,7 +128,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
-    annotations.forEach(x -> x.paint(g));
+    annotations.paint(g);
   }
 
   /** set the series color based on theme */

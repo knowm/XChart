@@ -25,7 +25,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
-  protected final ArrayList<ChartPart> annotations = new ArrayList<>();
+  protected final ChartPartComposite annotations = new ChartPartComposite();
 
   /** Chart Parts */
   // TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't
@@ -166,7 +166,7 @@ private Object getAntiAliasStatus() {
 
   public void addAnnotation(Annotation annotation) {
 
-    annotations.add(annotation);
+    annotations.addChartPart(annotation);
     annotation.init(this);
   }
 
