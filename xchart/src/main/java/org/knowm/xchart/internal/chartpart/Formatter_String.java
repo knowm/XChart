@@ -1,5 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
+import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
@@ -9,24 +10,28 @@ import java.text.ParsePosition;
  *
  * @author timmolter
  */
-class Formatter_String extends Format {
+class Formatter_String extends Formatter_Abstract {
 
   /** Constructor */
   public Formatter_String() {}
-
+  
   @Override
-  public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-
-    String string = obj.toString();
-
-    toAppendTo.append(string);
-
-    return toAppendTo;
+  protected void toAppend(StringBuffer toAppendTo, DecimalFormat normalFormat) {
+	  toAppendTo.append(this.string);
   }
-
+  
   @Override
-  public Object parseObject(String source, ParsePosition pos) {
-
-    return null;
+  protected DecimalFormat applyPattern(String decimalPattern) {
+	  return null;
+  }
+  
+  @Override
+  protected void ObjectTransformation(Object object) {
+	  this.string = object.toString();
+  }
+  
+  @Override
+  protected String decideDecimalPattern() {
+	  return null;
   }
 }
