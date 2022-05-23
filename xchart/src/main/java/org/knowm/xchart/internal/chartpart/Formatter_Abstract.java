@@ -8,8 +8,6 @@ import java.util.function.Function;
 
 /** @author Marc Jakobi */
 public abstract class Formatter_Abstract extends Format {
-
-  private final Function<Double, String> customFormattingFunction;
   
   protected Number number;
   protected double number_double;
