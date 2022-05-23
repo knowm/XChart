@@ -23,6 +23,9 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   double xOffset = 0;
   double yOffset = 0;
   private Rectangle2D bounds;
+  
+  private OffsetCalculater calculater;
+  
 
   /**
    * Constructor
@@ -90,10 +93,44 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // g.setColor(Color.blue);
     // g.draw(bounds);
   }
-  
-  private void calculateXYOffset() {
+  private getCalculater(Styler styler) {
+	  switch(styler) {
+	  	case OutsideE:
+	  		calculater = new CalculateOutsideE();
+	        break;
+	    case InsideNW:
+	    	calculater = new CalculateInsideNW();
+	        break;
+	    case InsideNE:
+	    	calculater = new CalculateInsideNE();
+	        break;
+	      case InsideSE:
+	    	calculater = new CalculaterInsideSE();
+	        break;
+	      case InsideSW:
+	    	calculater = new CalculaterInsideSW();
+	        break;
+	      case InsideN:
+	    	calculater = new CalculaterInsideN();
+	        break;
+	      case InsideS:
+	    	calculater = new CalculaterInsideS();
+	        break;
+	      case OutsideS:
+	    	calculater = new CalculaterOutsideS();
+	        break;
+
+	      default:
+	    	break;
+	  }
 	  
-	    switch (chart.getStyler().getLegendPosition()) {
+  }
+  private void calculateXYOffset() {
+	  	getCalculater(chart.getStyler().getLegendPosition())
+	  	xOffset = calculater.getXOffset(chart, bound, LEGEND_MARGIN);
+	   	yOffset = calculater.getYOffset(chart, bound, LEGEND_MARGIN);
+	  
+	 /* switch (chart.getStyler().getLegendPosition()) {
 	      case OutsideE:
 	        xOffset = chart.getWidth() - bounds.getWidth() - LEGEND_MARGIN;
 	        yOffset =
@@ -159,7 +196,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
 	      default:
 	        break;
-	    }
+	    }*/
   }
 
   /** determine the width and height of the chart legend */
