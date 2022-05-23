@@ -26,6 +26,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   protected final ChartTitle<ST, S> chartTitle;
   protected final Map<String, S> seriesMap = new LinkedHashMap<>();
   protected final ChartPartComposite annotations = new ChartPartComposite();
+  protected final ChartPartComposite paintTarget = new ChartPartComposite();
 
   /** Chart Parts */
   // TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't

@@ -36,6 +36,11 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     axisPair = new AxisPair<OHLCStyler, OHLCSeries>(this);
     plot = new Plot_OHLC<OHLCStyler, OHLCSeries>(this);
     legend = new Legend_OHLC<OHLCStyler, OHLCSeries>(this);
+
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -828,10 +833,7 @@ private DataType getAxisType(Object dataPoint) {
 
     paintBackground(g);
 
-    axisPair.paint(g);
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
+    paintTarget.paint(g);
     annotations.paint(g);
   }
 

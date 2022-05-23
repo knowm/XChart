@@ -28,6 +28,9 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     legend = new Legend_Pie<PieStyler, PieSeries>(this);
 
 
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -125,9 +128,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
 
     paintBackground(g);
 
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
+    paintTarget.paint(g);
     annotations.paint(g);
   }
 

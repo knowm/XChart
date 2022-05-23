@@ -33,6 +33,11 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     axisPair = new AxisPair<XYStyler, XYSeries>(this);
     plot = new Plot_XY<XYStyler, XYSeries>(this);
     legend = new Legend_Marker<XYStyler, XYSeries>(this);
+
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -414,10 +419,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
     paintBackground(g);
 
-    axisPair.paint(g);
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
+    paintTarget.paint(g);
     annotations.paint(g);
   }
 

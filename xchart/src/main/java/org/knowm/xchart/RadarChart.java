@@ -25,6 +25,10 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
     super(width, height, new RadarStyler());
     plot = new Plot_Radar<>(this);
     legend = new Legend_Marker<RadarStyler, RadarSeries>(this);
+
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -148,9 +152,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 
     paintBackground(g);
 
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
+    paintTarget.paint(g);
     annotations.paint(g);
   }
 
