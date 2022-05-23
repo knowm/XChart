@@ -5,7 +5,7 @@ import java.text.*;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /** @author timmolter */
-class Formatter_Number extends Format {
+class Formatter_Number extends Formatter_Abstract {
 
   private final AxesChartStyler styler;
   private final Axis.Direction axisDirection;
@@ -107,43 +107,45 @@ class Formatter_Number extends Format {
     // System.out.println(sb.toString());
     return sb.toString();
   }
-
+  
   @Override
-  public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-
-    // BigDecimal number = (BigDecimal) obj;
-    Number number = (Number) obj;
-
-    String decimalPattern;
-
-    if (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() != null) {
-
-      decimalPattern = styler.getXAxisDecimalPattern();
-    } else if (axisDirection == Axis.Direction.Y
-        && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
-            || styler.getYAxisDecimalPattern() != null)) {
-      if (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null) {
-        decimalPattern = styler.getYAxisGroupDecimalPatternMap().get(yIndex);
-      } else {
-        decimalPattern = styler.getYAxisDecimalPattern();
-      }
-    } else if (styler.getDecimalPattern() != null) {
-      decimalPattern = styler.getDecimalPattern();
-    } else {
-      decimalPattern = getFormatPattern(number.doubleValue());
-    }
-    // System.out.println(decimalPattern);
-
-    DecimalFormat normalFormat = (DecimalFormat) numberFormat;
-    normalFormat.applyPattern(decimalPattern);
-    toAppendTo.append(normalFormat.format(number));
-
-    return toAppendTo;
+  protected void toAppend(StringBuffer toAppendTo, DecimalFormat normalFormat) {
+	  toAppendTo.append(normalFormat.format(number));
   }
-
+  
   @Override
-  public Object parseObject(String source, ParsePosition pos) {
+  protected DecimalFormat applyPattern(String decimalPattern) {
+	  DecimalFormat normalFormat = (DecimalFormat) numberFormat;
+	  normalFormat.applyPattern(decimalPattern);
+	  return normalFormat;
+  }
+  
+  @Override
+  protected String decideDecimalPattern() {
+	  String decimalPattern;
 
-    return null;
+	    if (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() != null) {
+
+	      decimalPattern = styler.getXAxisDecimalPattern();
+	    } else if (axisDirection == Axis.Direction.Y
+	        && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
+	            || styler.getYAxisDecimalPattern() != null)) {
+	      if (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null) {
+	        decimalPattern = styler.getYAxisGroupDecimalPatternMap().get(yIndex);
+	      } else {
+	        decimalPattern = styler.getYAxisDecimalPattern();
+	      }
+	    } else if (styler.getDecimalPattern() != null) {
+	      decimalPattern = styler.getDecimalPattern();
+	    } else {
+	      decimalPattern = getFormatPattern(number.doubleValue());
+	    }
+	    
+	    return decimalPattern;
+  }
+  
+  @Override
+  protected void ObjectTransformation(Object object) {
+	  this.number = (Number) object;
   }
 }
