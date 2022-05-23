@@ -813,11 +813,6 @@ private DataType getAxisType(Object dataPoint) {
     doPaint(g);
   }
 
-
-  protected void setSeriesDefaultForNullPart(OHLCSeries series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
-
-  }
-
   @Override
   protected void specificSetting() {
 
