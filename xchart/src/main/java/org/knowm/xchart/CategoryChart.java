@@ -271,12 +271,7 @@ private DataType getAxisType(Object dataPoint) {
       List<? extends Number> yData,
       List<? extends Number> errorBars) {
 
-    if (seriesMap.containsKey(seriesName)) {
-      throw new IllegalArgumentException(
-          "Series name >"
-              + seriesName
-              + "< has already been used. Use unique names for each series!!!");
-    }
+    seriesNameDuplicateCheck(seriesName);
     sanityCheckYData(yData);
     sanityCheckXData(xData, yData);
     if (errorBars != null && errorBars.size() != yData.size()) {
@@ -336,4 +331,24 @@ private DataType getAxisType(Object dataPoint) {
 		  categorySeries.setMarkerColor(seriesColorMarkerLineStyle.getColor());
 	  }
   }
+
+  private void sanityCheckYData(List<? extends Number> yData) {
+
+	 if (yData == null) {
+	   throw new IllegalArgumentException("Y-Axis data connot be null !!!");
+	 }
+	 if (yData.size() == 0) {
+	   throw new IllegalArgumentException("Y-Axis data connot be empyt !!!");
+	 }
+	 if (yData.contains(null)) {
+	   throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
+	 }
+  }
+
+  private void checkSeriesValidity(String seriesName, Series series) {
+	if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+  }
+
 }

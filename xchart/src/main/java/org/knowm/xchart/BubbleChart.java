@@ -182,12 +182,7 @@ public class BubbleChart extends AbstractChart<BubbleStyler, BubbleSeries> {
 
   private void sanityCheck(String seriesName, double[] xData, double[] yData, double[] bubbleData) {
 
-    if (seriesMap.containsKey(seriesName)) {
-      throw new IllegalArgumentException(
-          "Series name >"
-              + seriesName
-              + "< has already been used. Use unique names for each series!!!");
-    }
+    seriesNameDuplicateCheck(seriesName);
     sanityCheckYData(yData);
     if (bubbleData == null) {
       throw new IllegalArgumentException("Bubble data cannot be null!!! >" + seriesName);
@@ -225,11 +220,10 @@ public class BubbleChart extends AbstractChart<BubbleStyler, BubbleSeries> {
           bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
         }
       }
-    // set the series types if they are not set. Legend and Plot need it.
-    setSeriesStyles();
   }
 
   /** set the series color based on theme */
+  // set the series types if they are not set. Legend and Plot need it.
   @Override
   protected void setSeriesDefaultForNullPart(Series series, SeriesColorMarkerLineStyle seriesColorMarkerLineStyle) {
 	  BubbleSeries bubbleSeries = (BubbleSeries) series;
@@ -242,5 +236,14 @@ public class BubbleChart extends AbstractChart<BubbleStyler, BubbleSeries> {
 	  if (bubbleSeries.getFillColor() == null) { // wasn't set manually
 		  bubbleSeries.setFillColor(seriesColorMarkerLineStyle.getColor());
 	  }
+  }
+
+  private void sanityCheckYData(double[] yData) {
+	 if (yData == null) {
+	   throw new IllegalArgumentException("Y-Axis data connot be null !!!");
+	 }
+	 if (yData.length == 0) {
+	   throw new IllegalArgumentException("Y-Axis data connot be empyt !!!");
+	 }
   }
 }
