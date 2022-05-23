@@ -30,6 +30,11 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
     axisPair = new AxisPair<HeatMapStyler, HeatMapSeries>(this);
     plot = new Plot_HeatMap<HeatMapStyler, HeatMapSeries>(this);
     legend = new Legend_HeatMap<HeatMapStyler, HeatMapSeries>(this);
+
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -160,11 +165,8 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
 
     paintBackground(g);
 
-    axisPair.paint(g);
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
-    annotations.forEach(x -> x.paint(g));
+    paintTarget.paint(g);
+    annotations.paint(g);
   }
 
   private List<Integer> arrayToList(int[] data) {

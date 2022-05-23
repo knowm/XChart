@@ -26,6 +26,11 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     super(width, height, new PieStyler());
     plot = new Plot_Pie<PieStyler, PieSeries>(this);
     legend = new Legend_Pie<PieStyler, PieSeries>(this);
+
+
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -123,10 +128,8 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
 
     paintBackground(g);
 
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
-    annotations.forEach(x -> x.paint(g));
+    paintTarget.paint(g);
+    annotations.paint(g);
   }
 
   /** set the series color based on theme */

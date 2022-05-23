@@ -11,6 +11,7 @@ import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_XY;
 import org.knowm.xchart.internal.series.Series.DataType;
+import org.knowm.xchart.internal.series.SeriesDataValues;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyleCycler;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -32,6 +33,11 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     axisPair = new AxisPair<XYStyler, XYSeries>(this);
     plot = new Plot_XY<XYStyler, XYSeries>(this);
     legend = new Legend_Marker<XYStyler, XYSeries>(this);
+
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -360,9 +366,9 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     }
     if (newXData == null) {
       double[] generatedXData = Utils.getGeneratedDataAsArray(newYData.length);
-      series.replaceData(generatedXData, newYData, newErrorBarData);
+      series.replaceData(new SeriesDataValues(generatedXData, newYData, newErrorBarData));
     } else {
-      series.replaceData(newXData, newYData, newErrorBarData);
+      series.replaceData(new SeriesDataValues(newXData, newYData, newErrorBarData));
     }
 
     return series;
@@ -413,11 +419,8 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
 
     paintBackground(g);
 
-    axisPair.paint(g);
-    plot.paint(g);
-    chartTitle.paint(g);
-    legend.paint(g);
-    annotations.forEach(x -> x.paint(g));
+    paintTarget.paint(g);
+    annotations.paint(g);
   }
 
   /** set the series color, marker and line style based on theme */

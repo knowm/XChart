@@ -74,7 +74,7 @@ class Formatter_Number extends Format {
     // System.out.println("placeOfDifference: " + placeOfDifference);
     // System.out.println("placeOfValue: " + placeOfValue);
     
-    final boolean maxDifference = placeOfDifference <= 4 && placeOfDifference >= -4;
+    final boolean maxDifference = Math.abs(placeOfValue) <= 4;
     if (maxDifference) {
       // System.out.println("getNormalDecimalPattern");
       return getNormalDecimalPatternPositive(placeOfValue, placeOfDifference);

@@ -22,7 +22,7 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumericalNoErrorBar
   protected NoMarkersSeries(
       String name, double[] xData, double[] yData, double[] extraValues, Series.DataType axisType) {
 
-    super(name, xData, yData, extraValues, axisType);
+    super(name, new SeriesDataValues(xData, yData, extraValues), axisType);
 
     // TODO why do we need this here?
     this.extraValues = extraValues;
