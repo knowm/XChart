@@ -56,9 +56,8 @@ public abstract class Chart<ST extends Styler, S extends Series> {
    * @param styler
    */
   protected Chart(int width, int height, ST styler) {
-
-    this.width = width;
-    this.height = height;
+    setWidth(width);
+    setHeight(height);
     this.styler = styler;
 
     // TODO move this out??
@@ -73,13 +72,13 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     graphics.setRenderingHint(
         RenderingHints.KEY_ANTIALIASING,
         getAntiAliasStatus()); // global rendering hint
-    graphics.setColor(styler.getChartBackgroundColor());
+    graphics.setColor(getStyler().getChartBackgroundColor());
     Shape rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
     graphics.fill(rect);
   }
 
 private Object getAntiAliasStatus() {
-	return styler.getAntiAlias()
+	return getStyler().getAntiAlias()
 	    ? RenderingHints.VALUE_ANTIALIAS_ON
 	    : RenderingHints.VALUE_ANTIALIAS_OFF;
 }

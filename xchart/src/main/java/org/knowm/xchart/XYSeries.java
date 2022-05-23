@@ -3,6 +3,7 @@ package org.knowm.xchart;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
+import org.knowm.xchart.internal.series.SeriesDataValues;
 
 /**
  * A Series containing X and Y data to be plotted on a Chart
@@ -26,7 +27,7 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
   public XYSeries(
       String name, double[] xData, double[] yData, double[] errorBars, DataType axisType) {
 
-    super(name, xData, yData, errorBars, axisType);
+    super(name, new SeriesDataValues(xData, yData, errorBars), axisType);
   }
 
   public XYSeriesRenderStyle getXYSeriesRenderStyle() {

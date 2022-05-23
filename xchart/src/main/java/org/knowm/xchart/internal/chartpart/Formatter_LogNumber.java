@@ -39,9 +39,8 @@ class Formatter_LogNumber extends Format {
 
     double number = (Double) numberObject;
 
-    String decimalPattern;
-    
-    decimalPattern = setDecimalPattern(decimalPattern, number);
+
+    String decimalPattern = setDecimalPattern(number);
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
     normalFormat.applyPattern(decimalPattern);
@@ -50,11 +49,12 @@ class Formatter_LogNumber extends Format {
     return toAppendTo;
   }
   
-  public String setDecimalPattern(String decimalPattern, double number) {
-	private final double NUMBER_LOW_LIMIT = 0.001;
-	private final double NULBER_HIGH_LIMIT = 1000.0;
-	 
-	boolean isNotEmptyXaxis = ((axisDirection == Axis.Direction.X) && (styler.getXAxisDecimalPattern() != null));
+  public String setDecimalPattern(double number) {
+	final double NUMBER_LOW_LIMIT = 0.001;
+	final double NUMBER_HIGH_LIMIT = 1000.0;
+    String decimalPattern;
+
+    boolean isNotEmptyXaxis = ((axisDirection == Axis.Direction.X) && (styler.getXAxisDecimalPattern() != null));
 	boolean isNotEmptyYaxis = (axisDirection == Axis.Direction.Y && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
             || styler.getYAxisDecimalPattern() != null));
 	boolean isNotEmpty = (styler.getDecimalPattern() != null); 
@@ -76,7 +76,7 @@ class Formatter_LogNumber extends Format {
     } 
     
     else {
-    	if (Math.abs(number) > NULBER_HIGH_LIMIT || Math.abs(number) < NUMBER_LOW_LIMIT) {
+    	if (Math.abs(number) > NUMBER_HIGH_LIMIT || Math.abs(number) < NUMBER_LOW_LIMIT) {
     		decimalPattern = "0E0";
 	    } else {
 	        decimalPattern = "0.###";

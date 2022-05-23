@@ -8,6 +8,7 @@ import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Legend_Bubble;
 import org.knowm.xchart.internal.chartpart.Plot_Bubble;
 import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.SeriesDataValues;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.style.BubbleStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -166,7 +167,7 @@ public class BubbleChart extends AbstractChart<BubbleStyler, BubbleSeries> {
     if (newXData == null) {
       xData = Utils.getGeneratedDataAsArray(newYData.length);
     }
-    series.replaceData(xData, newYData, newBubbleData);
+    series.replaceData(new SeriesDataValues(xData, newYData, newBubbleData));
     return series;
   }
 

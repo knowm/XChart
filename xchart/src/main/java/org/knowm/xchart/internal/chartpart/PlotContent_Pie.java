@@ -69,7 +69,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
     if (point != null) {
       generalPath.lineTo(point.getX(), point.getY());
-    }d
+    }
 
     return generalPath;
   }
