@@ -126,7 +126,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 	  
   }
   private void calculateXYOffset() {
-	  	getCalculater(chart.getStyler().getLegendPosition())
+	  	getCalculater(chart.getStyler().getLegendPosition();
 	  	xOffset = calculater.getXOffset(chart, bound, LEGEND_MARGIN);
 	   	yOffset = calculater.getYOffset(chart, bound, LEGEND_MARGIN);
 	  
