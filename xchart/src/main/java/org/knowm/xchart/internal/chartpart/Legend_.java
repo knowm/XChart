@@ -22,7 +22,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   final Chart<ST, S> chart;
   double xOffset = 0;
   double yOffset = 0;
-  private Rectangle2D bounds;
+  protected Rectangle2D bounds;
   
   private OffsetCalculater calculater;
   
@@ -93,7 +93,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // g.setColor(Color.blue);
     // g.draw(bounds);
   }
-  private void getCalculater(Styler styler) {
+  private void getCalculater(Styler.LegendPosition styler) {
 	  switch(styler) {
 	  	case OutsideE:
 	  		calculater = new CalculateOutsideE();
