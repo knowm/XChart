@@ -24,7 +24,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   double yOffset = 0;
   protected Rectangle2D bounds;
   
-  private OffsetCalculater calculater;
+  private OffsetCalculater calculator;
   
 
   /**
@@ -93,31 +93,31 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // g.setColor(Color.blue);
     // g.draw(bounds);
   }
-  private void getCalculater(Styler.LegendPosition styler) {
+  private void getCalculator(Styler.LegendPosition styler) {
 	  switch(styler) {
 	  	case OutsideE:
-	  		calculater = new CalculateOutsideE();
+	  		calculator = new CalculateOutsideE();
 	        break;
 	    case InsideNW:
-	    	calculater = new CalculateInsideNW();
+	    	calculator = new CalculateInsideNW();
 	        break;
 	    case InsideNE:
-	    	calculater = new CalculateInsideNE();
+	    	calculator = new CalculateInsideNE();
 	        break;
 	      case InsideSE:
-	    	calculater = new CalculaterInsideSE();
+	    	calculator = new CalculaterInsideSE();
 	        break;
 	      case InsideSW:
-	    	calculater = new CalculaterInsideSW();
+	    	calculator = new CalculaterInsideSW();
 	        break;
 	      case InsideN:
-	    	calculater = new CalculaterInsideN();
+	    	calculator = new CalculaterInsideN();
 	        break;
 	      case InsideS:
-	    	calculater = new CalculaterInsideS();
+	    	calculator = new CalculaterInsideS();
 	        break;
 	      case OutsideS:
-	    	calculater = new CalculaterOutsideS();
+	    	calculator = new CalculaterOutsideS();
 	        break;
 
 	      default:
@@ -126,9 +126,9 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 	  
   }
   private void calculateXYOffset() {
-	  	getCalculater(chart.getStyler().getLegendPosition());
-	  	xOffset = calculater.getXOffset(chart, bounds, LEGEND_MARGIN);
-	   	yOffset = calculater.getYOffset(chart, bounds, LEGEND_MARGIN);
+	  	getCalculator(chart.getStyler().getLegendPosition());
+	  	xOffset = calculator.getXOffset(chart, bounds, LEGEND_MARGIN);
+	   	yOffset = calculator.getYOffset(chart, bounds, LEGEND_MARGIN);
 	  
 	 /* switch (chart.getStyler().getLegendPosition()) {
 	      case OutsideE:

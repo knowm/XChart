@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public interface OffsetCalculater  {
+public interface OffsetCalculater {
 	public double getXOffset(Chart chart, Rectangle2D bounds, int LEGEND_MARGIN);
 	public double getYOffset(Chart chart, Rectangle2D bounds, int LEGEND_MARGIN);
 	
