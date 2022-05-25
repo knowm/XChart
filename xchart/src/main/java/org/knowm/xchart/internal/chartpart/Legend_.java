@@ -93,7 +93,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // g.setColor(Color.blue);
     // g.draw(bounds);
   }
-  private getCalculater(Styler styler) {
+  private void getCalculater(Styler styler) {
 	  switch(styler) {
 	  	case OutsideE:
 	  		calculater = new CalculateOutsideE();
@@ -126,7 +126,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 	  
   }
   private void calculateXYOffset() {
-	  	getCalculater(chart.getStyler().getLegendPosition();
+	  	getCalculater(chart.getStyler().getLegendPosition());
 	  	xOffset = calculater.getXOffset(chart, bound, LEGEND_MARGIN);
 	   	yOffset = calculater.getYOffset(chart, bound, LEGEND_MARGIN);
 	  
