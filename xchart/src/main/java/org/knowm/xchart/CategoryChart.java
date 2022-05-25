@@ -16,6 +16,7 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
+import org.knowm.xchart.DataTypeFactory;
 
 /** @author timmolter */
 public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries> {
@@ -194,16 +195,10 @@ public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries>
 
 private DataType getAxisType(Object dataPoint) {
     DataType axisType;
-	if (dataPoint instanceof Number) {
-      axisType = DataType.Number;
-    } else if (dataPoint instanceof Date) {
-      axisType = DataType.Date;
-    } else if (dataPoint instanceof String) {
-      axisType = DataType.String;
-    } else {
-      throw new IllegalArgumentException(
-          "Series data must be either Number, Date or String type!!!");
-    }
+
+    DataTypeFactory dataTypeFactory = new DataTypeFactory();
+    axisType = dataTypeFactory.getType(dataPoint);
+    
 	return axisType;
 }
 
