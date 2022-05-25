@@ -109,16 +109,10 @@ public class HeatMapSeries extends AxesChartSeries {
 
     Iterator<?> itr = data.iterator();
     Object dataPoint = itr.next();
-    if (dataPoint instanceof Number) {
-      axisType = DataType.Number;
-    } else if (dataPoint instanceof Date) {
-      axisType = DataType.Date;
-    } else if (dataPoint instanceof String) {
-      axisType = DataType.String;
-    } else {
-      throw new IllegalArgumentException(
-          "Series data must be either Number, Date or String type!!!");
-    }
+
+    DataTypeFactory dataTypeFactory = new DataTypeFactory();
+    axisType = dataTypeFactory.getType(dataPoint);
+
     return axisType;
   }
 
