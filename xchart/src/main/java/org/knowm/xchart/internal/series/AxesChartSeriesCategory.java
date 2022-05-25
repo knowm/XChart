@@ -18,6 +18,7 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
   List<? extends Number> yData;
 
   List<? extends Number> extraValues;
+  
 
   /**
    * Constructor
@@ -91,99 +92,20 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
 
   @Override
   protected void calculateMinMax() {
-
+	double[] minMaxs = MinMaxFactory
+			.getMinMaxCalculator(extraValues, xAxisDataType, yAxisType)
+			.calculateMinMax(xData, yData);
+	xMin = minMaxs[XMIN];
+	xMax = minMaxs[XMAX];
+	yMin = minMaxs[YMIN];
+	yMax = minMaxs[YMAX];
     // xData
-    calculateXMinMax();
     // System.out.println(xMin);
     // System.out.println(xMax);
 
     // yData
-    calculateYMinMax();
     // System.out.println(yMin);
     // System.out.println(yMax);
-  }
-
-  private void calculateYMinMax() {
-	double[] yMinMax;
-    if (extraValues == null) {
-      yMinMax = findMinMax(yData, yAxisType);
-    } else {
-      yMinMax = findMinMaxWithErrorBars(yData, extraValues);
-    }
-    yMin = yMinMax[0];
-    yMax = yMinMax[1];
-  }
-
-  private void calculateXMinMax() {
-	double[] xMinMax = findMinMax(xData, xAxisDataType);
-    xMin = xMinMax[0];
-    xMax = xMinMax[1];
-  }
-
-  /**
-   * Finds the min and max of a dataset accounting for error bars
-   *
-   * @param data
-   * @param errorBars
-   * @return
-   */
-  private double[] findMinMaxWithErrorBars(
-      Collection<? extends Number> data, Collection<? extends Number> errorBars) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    Iterator<? extends Number> iterator = data.iterator();
-    Iterator<? extends Number> errorBarItr = errorBars.iterator();
-    while (iterator.hasNext()) {
-      double bigDecimal = iterator.next().doubleValue();
-      double errorBar = errorBarItr.next().doubleValue();
-      if (bigDecimal - errorBar < min) {
-        min = bigDecimal - errorBar;
-      }
-      if (bigDecimal + errorBar > max) {
-        max = bigDecimal + errorBar;
-      }
-    }
-    return new double[] {min, max};
-  }
-
-  /**
-   * Finds the min and max of a dataset
-   *
-   * @param data
-   * @return
-   */
-  double[] findMinMax(Collection<?> data, DataType dataType) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (Object dataPoint : data) {
-
-      if (dataPoint == null) {
-        continue;
-      }
-      if (dataType == DataType.String) {
-          return new double[] {Double.NaN, Double.NaN};
-      }
-      
-      if (dataValue(dataType, dataPoint) < min) {
-        min = dataValue(dataType, dataPoint);
-      }
-      if (dataValue(dataType, dataPoint) > max) {
-        max = dataValue(dataType, dataPoint);
-      }
-    }
-
-    return new double[] {min, max};
-  }
-
-  private double dataValue(DataType dataType, Object dataPoint) {
-	if (dataType == DataType.Number) {
-        return ((Number) dataPoint).doubleValue();
-    }
-    return ((Date)dataPoint).getTime();
   }
 
   public Collection<?> getXData() {

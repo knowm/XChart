@@ -26,6 +26,10 @@ public abstract class AxesChartSeries extends Series {
   /** Line Width */
   private float lineWidth = -1.0f;
 
+  protected final int XMIN = 0;
+  protected final int XMAX = 1;
+  protected final int YMIN = 2;
+  protected final int YMAX = 3;
   /**
    * Constructor
    *

@@ -1,7 +1,5 @@
 package org.knowm.xchart.internal.series;
 
-import org.knowm.xchart.internal.Utils;
-
 import java.util.Arrays;
 
 /**
@@ -140,43 +138,13 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
   @Override
   protected void calculateMinMax() {
 
-    // xData
-    xMin = Utils.findMin(xData);
-    xMax = Utils.findMax(xData);
-
-    // yData
-    if (extraValues == null) {
-      yMin = Utils.findMin(yData);
-      yMax = Utils.findMax(yData);
-    } else {
-      double[] yMinMax = findMinMaxWithErrorBars(yData, extraValues);
-      yMin = yMinMax[0];
-      yMax = yMinMax[1];
-    }
-  }
-
-  /**
-   * Finds the min and max of a dataset accounting for error bars
-   *
-   * @param data
-   * @param errorBars
-   * @return
-   */
-  private double[] findMinMaxWithErrorBars(double[] data, double[] errorBars) {
-    assert data.length == errorBars.length;
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-    for (int i = 0; i < data.length; i++) {
-      double datum = data[i];
-      double errorBar = errorBars[i];
-      if (datum - errorBar < min) {
-        min = datum - errorBar;
-      }
-      if (datum + errorBar > max) {
-        max = datum + errorBar;
-      }
-    }
-    return new double[] {min, max};
+	double[] minMaxs = MinMaxFactory
+			.getMinMaxCalculator(getExtraValues())
+			.calcualteMinMax(getXData(), getYData());
+	xMin = minMaxs[XMIN];
+	xMax = minMaxs[XMAX];
+	yMin = minMaxs[YMIN];
+	yMax = minMaxs[YMAX];	  
   }
 
   /**
