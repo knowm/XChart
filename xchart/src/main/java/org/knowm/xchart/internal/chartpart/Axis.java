@@ -416,8 +416,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
-        if (!xData.isEmpty()) { // TODO why would this be empty?
           return new AxisTickCalculator_Callback(
+              xData.isEmpty(),
               axesChartStyler.getxAxisTickLabelsFormattingFunction(),
               getDirection(),
               workingSpace,
@@ -425,14 +425,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               max,
               xData,
               axesChartStyler);
-        }
-        return new AxisTickCalculator_Callback(
-            axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-            getDirection(),
-            workingSpace,
-            min,
-            max,
-            axesChartStyler);
 
       } else if (axesChartStyler instanceof CategoryStyler
           || axesChartStyler instanceof BoxStyler) {
@@ -507,8 +499,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
-        if (!yData.isEmpty()) {
           return new AxisTickCalculator_Callback(
+              yData.isEmpty(),
               axesChartStyler.getyAxisTickLabelsFormattingFunction(),
               getDirection(),
               workingSpace,
@@ -516,14 +508,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               max,
               yData,
               axesChartStyler);
-        }
-        return new AxisTickCalculator_Callback(
-            axesChartStyler.getyAxisTickLabelsFormattingFunction(),
-            getDirection(),
-            workingSpace,
-            min,
-            max,
-            axesChartStyler);
 
       } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 

@@ -2,6 +2,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.knowm.xchart.internal.Utils;
@@ -26,7 +27,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
   private static final long YEAR_SCALE = TimeUnit.DAYS.toMillis(1L) * 365;
 
   private static final List<TimeSpan> timeSpans = new ArrayList<>();
-
+  private static List<Double> nullList = Collections.emptyList();
   static {
     timeSpans.add(new TimeSpan(MILLIS_SCALE, 1, "ss.SSS"));
     timeSpans.add(new TimeSpan(MILLIS_SCALE, 2, "ss.SSS"));
@@ -98,7 +99,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
       double maxValue,
       AxesChartStyler styler) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
 
     calculate();
   }

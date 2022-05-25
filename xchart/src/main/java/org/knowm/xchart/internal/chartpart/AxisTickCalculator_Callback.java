@@ -12,7 +12,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  * @author Marc Jakobi
  */
 class AxisTickCalculator_Callback extends AxisTickCalculator_ {
-
+  boolean isDataEmpty = false;
   /**
    * Constructor
    *
@@ -22,20 +22,9 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
-  public AxisTickCalculator_Callback(
-      Function<Double, String> formattingCallback,
-      Direction axisDirection,
-      double workingSpace,
-      double minValue,
-      double maxValue,
-      AxesChartStyler styler) {
-
-    super(axisDirection, workingSpace, minValue, maxValue, styler);
-    axisFormat = new Formatter_Custom(formattingCallback);
-    calculate();
-  }
 
   AxisTickCalculator_Callback(
+	  boolean isDataEmpty,
       Function<Double, String> formattingCallback,
       Direction axisDirection,
       double workingSpace,

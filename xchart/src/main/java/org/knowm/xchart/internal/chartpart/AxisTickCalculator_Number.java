@@ -1,5 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
+import java.util.Collections;
 import java.util.List;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -11,7 +12,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  * @author timmolter
  */
 class AxisTickCalculator_Number extends AxisTickCalculator_ {
-
+  private static List<Double> nullList = Collections.emptyList();
   private final Formatter_Number formatterNumber;
 
   /**
@@ -30,7 +31,7 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       double maxValue,
       AxesChartStyler styler) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
     formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue);
     axisFormat = formatterNumber;
     calculate();
@@ -67,7 +68,7 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       AxesChartStyler styler,
       int yIndex) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
     formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue, yIndex);
     axisFormat = formatterNumber;
     calculate();
