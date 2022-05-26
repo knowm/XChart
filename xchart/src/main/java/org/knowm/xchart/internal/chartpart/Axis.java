@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -54,7 +55,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
-
+  
+  private static List<Double> nullList = Collections.emptyList();
   /**
    * Constructor
    *
@@ -416,8 +418,17 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
+    	  if (!xData.isEmpty()) {
+    		  return new AxisTickCalculator_Callback(
+    	              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+    	              getDirection(),
+    	              workingSpace,
+    	              min,
+    	              max,
+    	              nullList,
+    	              axesChartStyler);
+    	  }
           return new AxisTickCalculator_Callback(
-              xData.isEmpty(),
               axesChartStyler.getxAxisTickLabelsFormattingFunction(),
               getDirection(),
               workingSpace,
@@ -499,9 +510,18 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
+    	  if (!yData.isEmpty()) {
+    		  return new AxisTickCalculator_Callback(
+    	              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+    	              getDirection(),
+    	              workingSpace,
+    	              min,
+    	              max,
+    	              nullList,
+    	              axesChartStyler);
+    	  }
           return new AxisTickCalculator_Callback(
-              yData.isEmpty(),
-              axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
               getDirection(),
               workingSpace,
               min,
