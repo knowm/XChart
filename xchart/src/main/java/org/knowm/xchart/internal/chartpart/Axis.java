@@ -544,7 +544,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, yData, axesChartStyler, index);
+              getDirection(), workingSpace, min, max, yData, axesChartStyler, zeroIndex);
         }
         return new AxisTickCalculator_Number(
             getDirection(), workingSpace, min, max, nullList, axesChartStyler, getYIndex());
