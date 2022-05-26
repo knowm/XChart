@@ -57,6 +57,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   private double max;
   
   private static List<Double> nullList = Collections.emptyList();
+  private static int zeroIndex = 0;
   /**
    * Constructor
    *
@@ -469,10 +470,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, xData, axesChartStyler);
+              getDirection(), workingSpace, min, max, xData, axesChartStyler, zeroIndex);
         }
         return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, axesChartStyler);
+            getDirection(), workingSpace, min, max, nullList, axesChartStyler, zeroIndex);
       }
     }
 
@@ -543,10 +544,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, yData, axesChartStyler);
+              getDirection(), workingSpace, min, max, yData, axesChartStyler, index);
         }
         return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
+            getDirection(), workingSpace, min, max, nullList, axesChartStyler, getYIndex());
       }
     }
   }
