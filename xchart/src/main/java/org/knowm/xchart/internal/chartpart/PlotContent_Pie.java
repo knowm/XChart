@@ -18,8 +18,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     extends PlotContent_<ST, S> {
 
   private final ST pieStyler;
-  private final DecimalFormat df = new DecimalFormat("#.0");
-
   /**
    * Constructor
    *
@@ -290,25 +288,28 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         // draw label
         String label = "";
         if (pieStyler.getLabelType() == LabelType.Value) {
-
           if (pieStyler.getDecimalPattern() != null) {
             label = df.format(y);
           } else {
             label = y.toString();
           }
-        } else if (pieStyler.getLabelType() == LabelType.Name) {
-          label = series.getName();
-        } else if (pieStyler.getLabelType() == LabelType.NameAndPercentage) {
-          double percentage = y.doubleValue() / total * 100;
-          label = series.getName() + " (" + df.format(percentage) + "%)";
-        } else if (pieStyler.getLabelType() == LabelType.Percentage) {
-          double percentage = y.doubleValue() / total * 100;
-          label = df.format(percentage) + "%";
-        } else if (pieStyler.getLabelType() == LabelType.NameAndValue) {
-          if (pieStyler.getDecimalPattern() != null) {
-            label = series.getName() + " (" + df.format(y) + ")";
-          } else {
-            label = series.getName() + " (" + y.toString() + ")";
+        } else {
+          String name = series.getName();
+          label = pieStyler.getLabelType().getLabel(series.getName(),y);
+          if (pieStyler.getLabelType() == LabelType.Name) {
+            label = name;
+          } else if (pieStyler.getLabelType() == LabelType.NameAndPercentage) {
+            double percentage = y.doubleValue() / total * 100;
+            label = name + " (" + df.format(percentage) + "%)";
+          } else if (pieStyler.getLabelType() == LabelType.Percentage) {
+            double percentage = y.doubleValue() / total * 100;
+            label = df.format(percentage) + "%";
+          } else if (pieStyler.getLabelType() == LabelType.NameAndValue) {
+            if (pieStyler.getDecimalPattern() != null) {
+              label = name + " (" + df.format(y) + ")";
+            } else {
+              label = name + " (" + y.toString() + ")";
+            }
           }
         }
 

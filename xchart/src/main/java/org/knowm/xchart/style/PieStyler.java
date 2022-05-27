@@ -3,6 +3,7 @@ package org.knowm.xchart.style;
 import java.awt.Color;
 import java.awt.Font;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
+import org.knowm.xchart.internal.chartpart.LabelType;
 import org.knowm.xchart.style.colors.FontColorDetector;
 import org.knowm.xchart.style.theme.Theme;
 
@@ -356,13 +357,6 @@ public class PieStyler extends Styler {
     return sliceBorderWidth;
   }
 
-  public enum LabelType {
-    Value,
-    Percentage,
-    Name,
-    NameAndPercentage,
-    NameAndValue
-  }
 
   public enum ClockwiseDirectionType {
     CLOCKWISE,
