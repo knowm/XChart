@@ -25,6 +25,11 @@ public class AnnotationText extends AnnotationWithXY {
 	super(x, y, isValueInScreenSpace);
     this.text = text;
   }
+  
+  public AnnotationText(AnnotationTextBuilder annotationTextBuilder) {
+	  super(annotationTextBuilder.getX(), annotationTextBuilder.getY(), annotationTextBuilder.getIsValueInScreenSpace());
+	    this.text = annotationTextBuilder.getText();
+  }
 
   @Override
   public void paint(Graphics2D graphic) {

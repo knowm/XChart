@@ -9,14 +9,15 @@ import org.knowm.xchart.internal.chartpart.Chart;
 public abstract class AnnotationWithXY extends Annotation {
     protected double x;
     protected double y;
-    
-    public AnnotationWithXY(double x, double y, boolean isValueInScreenSpace) {
-        super(isValueInScreenSpace);
+
+	public AnnotationWithXY(double x, double y, boolean isValueInScreenSpace) {
+		// TODO Auto-generated constructor stub
+		super(isValueInScreenSpace);
         this.x = x;
         this.y = y;
-    }
+	}
 
-    public void setX(double x) {
+	public void setX(double x) {
     this.x = x;
   }
     public void setY(double y) {
