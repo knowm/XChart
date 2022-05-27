@@ -1,4 +1,4 @@
-package org.knowm.xchart;
+package org.knowm.xchart.internal.chartpart;
 
 import java.util.Arrays;
 import java.util.List;
