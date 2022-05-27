@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 
-import org.knowm.xchart.internal.chartpart.LabelType;
+import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.ChartColor;
@@ -250,7 +250,7 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   double getLabelsDistance();
 
-  LabelType getLabelType();
+  PieStyler.LabelType getLabelType();
 
   boolean setForceAllLabelsVisible();
 

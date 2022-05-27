@@ -78,11 +78,11 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     graphics.fill(rect);
   }
 
-private Object getAntiAliasStatus() {
-	return getStyler().getAntiAlias()
-	    ? RenderingHints.VALUE_ANTIALIAS_ON
-	    : RenderingHints.VALUE_ANTIALIAS_OFF;
-}
+  private Object getAntiAliasStatus() {
+      return getStyler().getAntiAlias()
+          ? RenderingHints.VALUE_ANTIALIAS_ON
+          : RenderingHints.VALUE_ANTIALIAS_OFF;
+  }
 
   /**
    * Gets the Chart's styler, which can be used to customize the Chart's appearance
@@ -262,4 +262,5 @@ private Object getAntiAliasStatus() {
 
     return seriesMap;
   }
+
 }

@@ -4,8 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 
-import org.knowm.xchart.internal.chartpart.LabelType;
-import org.knowm.xchart.internal.chartpart.LabelTypePercentage;
+import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.BaseSeriesColors;
 import org.knowm.xchart.style.colors.ChartColor;
@@ -389,9 +388,8 @@ public abstract class AbstractBaseTheme implements Theme {
   }
 
   @Override
-  public LabelType getLabelType() {
-
-    return new LabelTypePercentage();
+  public PieStyler.LabelType getLabelType() {
+    return PieStyler.LabelType.Percentage;
   }
 
   @Override

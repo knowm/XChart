@@ -131,6 +131,20 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     paintTarget.paint(g);
     annotations.paint(g);
   }
+  public double getTotal() {
+    // get total
+    double total = 0.0;
+
+    Map<String,PieSeries> map = getSeriesMap();
+    for (PieSeries series : map.values()) {
+
+      if (!series.isEnabled() || series.getValue() == null) {
+        continue;
+      }
+      total += series.getValue().doubleValue();
+    }
+    return total;
+  }
 
   /** set the series color based on theme */
   private void setSeriesStyles() {
