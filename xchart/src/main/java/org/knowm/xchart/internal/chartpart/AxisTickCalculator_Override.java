@@ -1,8 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.knowm.xchart.internal.Utils;
@@ -15,7 +13,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  * rendering the axis ticks for given values & labels
  */
 class AxisTickCalculator_Override extends AxisTickCalculator_ {
-  private static List<Double> nullList = Collections.emptyList();
+
   /**
    * Constructor for Numerical axis
    *
@@ -34,7 +32,7 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
       AxesChartStyler styler,
       Map<Double, Object> labelOverrideMap) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
+    super(axisDirection, workingSpace, minValue, maxValue, styler);
     axisFormat = new Formatter_Number(styler, axisDirection, minValue, maxValue);
     calculate(labelOverrideMap);
   }
@@ -52,14 +50,12 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
   public AxisTickCalculator_Override(
       Direction axisDirection,
       double workingSpace,
-      double minValue,
-      double maxValue,
       AxesChartStyler styler,
       Map<Double, Object> markMap,
       Series.DataType axisType,
       int categoryCount) {
 
-    super(axisDirection, workingSpace, Double.NaN, Double.NaN, nullList, styler);
+    super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
 
     // set up String formatters that may be encountered
     if (axisType == Series.DataType.String) {
