@@ -70,13 +70,9 @@ public class HeatMapSeries extends AxesChartSeries {
       }
     }
 
-    double[] minMaxs = MinMaxFactory
+    setXYMinMax(MinMaxFactory
     		.getMinMaxCalculator(xMin, xMax, yMin, yMax)
-    		.calculateMinMax(xData, yData);
-	xMin = minMaxs[XMIN];
-	xMax = minMaxs[XMAX];
-	yMin = minMaxs[YMIN];
-	yMax = minMaxs[YMAX];
+    		.calculateMinMax(xData, yData));
   }
 
   @Override

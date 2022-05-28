@@ -29,11 +29,9 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumericalNoErrorBar
 
   @Override
   protected void calculateMinMax() {
-	double[] minMaxs = MinMaxFactory.getMinMaxCalculator().calcualteMinMax(getXData(), getYData());
-	xMin = minMaxs[XMIN];
-	xMax = minMaxs[XMAX];
-	yMin = minMaxs[YMIN];
-	yMax = minMaxs[YMAX];
+	  setXYMinMax(MinMaxFactory
+			  .getMinMaxCalculator()
+			  .calcualteMinMax(getXData(), getYData()));
     // xData
     // System.out.println(xMin);
     // System.out.println(xMax);
