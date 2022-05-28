@@ -9,7 +9,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -55,7 +54,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
-  private static List<Double> nullList = Collections.emptyList();
+
   /**
    * Constructor
    *
@@ -433,7 +432,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
             workingSpace,
             min,
             max,
-            nullList,
             axesChartStyler);
 
       } else if (axesChartStyler instanceof CategoryStyler
@@ -456,7 +454,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else if (axesChartStyler.isXAxisLogarithmic()) {
 
         return new AxisTickCalculator_Logarithmic(
-            getDirection(), workingSpace, min, max, axesChartStyler, 0);
+            getDirection(), workingSpace, min, max, axesChartStyler);
 
       } else if (axesChartStyler instanceof HeatMapStyler) {
 
@@ -468,10 +466,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, xData, axesChartStyler, 0);
+              getDirection(), workingSpace, min, max, xData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, nullList, axesChartStyler, 0);
+            getDirection(), workingSpace, min, max, axesChartStyler);
       }
     }
 
@@ -525,7 +523,6 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
             workingSpace,
             min,
             max,
-            nullList,
             axesChartStyler);
 
       } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
@@ -542,10 +539,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, yData, axesChartStyler, 0);
+              getDirection(), workingSpace, min, max, yData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, nullList, axesChartStyler, getYIndex());
+            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
       }
     }
   }
