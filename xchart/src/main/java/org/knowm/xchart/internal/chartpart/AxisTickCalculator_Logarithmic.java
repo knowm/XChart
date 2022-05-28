@@ -15,30 +15,9 @@ import org.knowm.xchart.style.AxesChartStyler;
  * @author timmolter
  */
 class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
-  private static List<Double> nullList = Collections.emptyList();
+
   private final Formatter_LogNumber formatterLogNumber;
-
-  /**
-   * Constructor
-   *
-   * @param axisDirection
-   * @param workingSpace
-   * @param minValue
-   * @param maxValue
-   * @param styler
-   */
-  public AxisTickCalculator_Logarithmic(
-      Direction axisDirection,
-      double workingSpace,
-      double minValue,
-      double maxValue,
-      AxesChartStyler styler) {
-
-    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
-    formatterLogNumber = new Formatter_LogNumber(styler, axisDirection);
-    axisFormat = formatterLogNumber;
-    calculate();
-  }
+  private static List<Double> nullList = Collections.emptyList();
 
   /**
    * Constructor

@@ -55,10 +55,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
-  
   private static List<Double> nullList = Collections.emptyList();
-  private static int zeroIndex = 0;
-  AxisTickFactory axisTickFactory = new AxisTickCalculatorFactory();
   /**
    * Constructor
    *
@@ -256,7 +253,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       // g.draw(bounds);
 
       // now paint the X-Axis given the above paint zone
-      getAxisTickCalculator(bounds.getWidth());
+      this.axisTickCalculator = getAxisTickCalculator(bounds.getWidth());
       axisTitle.paint(g);
       axisTick.paint(g);
     }
@@ -288,7 +285,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       titleHeight = rectangle.getHeight() + axesChartStyler.getAxisTitlePadding();
     }
 
-    getAxisTickCalculator(workingSpace);
+    this.axisTickCalculator = getAxisTickCalculator(workingSpace);
 
     // Axis tick labels
     double axisTickLabelsHeight = 0.0;
@@ -348,7 +345,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       titleHeight = rectangle.getHeight() + axesChartStyler.getAxisTitlePadding();
     }
 
-    getAxisTickCalculator(workingSpace);
+    this.axisTickCalculator = getAxisTickCalculator(workingSpace);
 
     // Axis tick labels
     double axisTickLabelsHeight = 0.0;
@@ -383,7 +380,8 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     return titleHeight + axisTickLabelsHeight;
   }
 
-  private void getAxisTickCalculator(double workingSpace) {
+  private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
+
     // X-Axis
     if (getDirection() == Direction.X) {
       List<Double> xData = new ArrayList<>();
@@ -419,30 +417,24 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
-    	  if (!xData.isEmpty()) {
-    		  this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Callback,
-    	              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-    	              getDirection(),
-    	              workingSpace,
-    	              min,
-    	              max,
-    	              nullList,
-    	              axesChartStyler,
-    	              nullList,
-    	              null,
-    	              zeroIndex);
-    	  }
-		  this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Callback,
-	              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-	              getDirection(),
-	              workingSpace,
-	              min,
-	              max,
-	              xData,
-	              axesChartStyler,
-	              nullList,
-	              null,
-	              zeroIndex);
+        if (!xData.isEmpty()) { // TODO why would this be empty?
+          return new AxisTickCalculator_Callback(
+              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+              getDirection(),
+              workingSpace,
+              min,
+              max,
+              xData,
+              axesChartStyler);
+        }
+        return new AxisTickCalculator_Callback(
+            axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            nullList,
+            axesChartStyler);
 
       } else if (axesChartStyler instanceof CategoryStyler
           || axesChartStyler instanceof BoxStyler) {
@@ -452,85 +444,34 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
             (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
         List<?> categories = (List<?>) axesChartSeries.getXData();
         DataType axisType = chart.getAxisPair().getXAxis().getDataType();
-        this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Category,
-	              null,
-	              getDirection(),
-	              workingSpace,
-	              Double.NaN,
-	              Double.NaN,
-	              nullList,
-	              axesChartStyler,
-	              categories,
-	              axisType,
-	              zeroIndex);
+
+        return new AxisTickCalculator_Category(
+            getDirection(), workingSpace, categories, axisType, axesChartStyler);
 
       } else if (getDataType() == Series.DataType.Date
           && !(axesChartStyler instanceof HeatMapStyler)) {
-    	  this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Date,
-	              null,
-	              getDirection(),
-	              workingSpace,
-	              min,
-	              max,
-	              nullList,
-	              axesChartStyler,
-	              nullList,
-	              null,
-	              zeroIndex);
+
+        return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, axesChartStyler);
 
       } else if (axesChartStyler.isXAxisLogarithmic()) {
-    	  this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Logarithmic,
-	              null,
-	              getDirection(),
-	              workingSpace,
-	              min,
-	              max,
-	              nullList,
-	              axesChartStyler,
-	              nullList,
-	              null,
-	              zeroIndex);
+
+        return new AxisTickCalculator_Logarithmic(
+            getDirection(), workingSpace, min, max, axesChartStyler, 0);
 
       } else if (axesChartStyler instanceof HeatMapStyler) {
 
         List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getXData();
         DataType axisType = chart.getAxisPair().getXAxis().getDataType();
-        this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Category,
-	              null,
-	              getDirection(),
-	              workingSpace,
-	              Double.NaN,
-	              Double.NaN,
-	              nullList,
-	              axesChartStyler,
-	              categories,
-	              axisType,
-	              zeroIndex);
+
+        return new AxisTickCalculator_Category(
+            getDirection(), workingSpace, categories, axisType, axesChartStyler);
       } else {
         if (!xData.isEmpty()) {
-        	this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Number,
-  	              null,
-  	              getDirection(),
-  	              workingSpace,
-  	              min,
-  	              max,
-  	              xData,
-  	              axesChartStyler,
-  	              nullList,
-  	              null,
-  	              zeroIndex);
+          return new AxisTickCalculator_Number(
+              getDirection(), workingSpace, min, max, xData, axesChartStyler, 0);
         }
-        this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Number,
-	              null,
-	              getDirection(),
-	              workingSpace,
-	              min,
-	              max,
-	              nullList,
-	              axesChartStyler,
-	              nullList,
-	              null,
-	              zeroIndex);
+        return new AxisTickCalculator_Number(
+            getDirection(), workingSpace, min, max, nullList, axesChartStyler, 0);
       }
     }
 
@@ -568,84 +509,43 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
-    	  if (!yData.isEmpty()) {
-    		  this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Callback,
-    	              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-    	              getDirection(),
-    	              workingSpace,
-    	              min,
-    	              max,
-    	              nullList,
-    	              axesChartStyler,
-    	              nullList,
-    	              null,
-    	              zeroIndex);
-    	  }
-    	  this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Callback,
-	              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-	              getDirection(),
-	              workingSpace,
-	              min,
-	              max,
-	              yData,
-	              axesChartStyler,
-	              nullList,
-	              null,
-	              zeroIndex);
+        if (!yData.isEmpty()) {
+          return new AxisTickCalculator_Callback(
+              axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+              getDirection(),
+              workingSpace,
+              min,
+              max,
+              yData,
+              axesChartStyler);
+        }
+        return new AxisTickCalculator_Callback(
+            axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            nullList,
+            axesChartStyler);
 
       } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 
-    	  this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Logarithmic,
-	              null,
-	              getDirection(),
-	              workingSpace,
-	              min,
-	              max,
-	              nullList,
-	              axesChartStyler,
-	              nullList,
-	              null,
-	              zeroIndex);
+        return new AxisTickCalculator_Logarithmic(
+            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
       } else if (axesChartStyler instanceof HeatMapStyler) {
 
         List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getYData();
         DataType axisType = chart.getAxisPair().getYAxis().getDataType();
-        this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Category,
-	              null,
-	              getDirection(),
-	              workingSpace,
-	              Double.NaN,
-	              Double.NaN,
-	              nullList,
-	              axesChartStyler,
-	              categories,
-	              axisType,
-	              zeroIndex);
+
+        return new AxisTickCalculator_Category(
+            getDirection(), workingSpace, categories, axisType, axesChartStyler);
       } else {
         if (!yData.isEmpty()) {
-        	this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Number,
-  	              null,
-  	              getDirection(),
-  	              workingSpace,
-  	              min,
-  	              max,
-  	              yData,
-  	              axesChartStyler,
-  	              nullList,
-  	              null,
-  	              zeroIndex);
+          return new AxisTickCalculator_Number(
+              getDirection(), workingSpace, min, max, yData, axesChartStyler, 0);
         }
-        this.axisTickCalculator = axisTickFactory.calculator(AxisTickCalculatorType.AxisTickCalculator_Number,
-	              null,
-	              getDirection(),
-	              workingSpace,
-	              min,
-	              max,
-	              nullList,
-	              axesChartStyler,
-	              nullList,
-	              null,
-	              getYIndex());
+        return new AxisTickCalculator_Number(
+            getDirection(), workingSpace, min, max, nullList, axesChartStyler, getYIndex());
       }
     }
   }
@@ -734,8 +634,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     if (min > max) {
       if (getDirection() == Direction.X) {
         if (axesChartStyler instanceof CategoryStyler) {
+          AxesChartSeriesCategory axesChartSeries =
+              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+          int count = axesChartSeries.getXData().size();
           minVal = 0;
-          maxVal = getMaxValueWithNotSet();
+          maxVal = count;
         }
       }
     }
@@ -810,8 +713,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     if (min > max) {
       if (getDirection() == Direction.X) {
         if (axesChartStyler instanceof CategoryStyler) {
+          AxesChartSeriesCategory axesChartSeries =
+              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+          int count = axesChartSeries.getXData().size();
           minVal = 0;
-          maxVal = getMaxValueWithNotSet();
+          maxVal = count;
         }
       }
     }
@@ -851,17 +757,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     value = isLog ? Math.pow(10, value) : value;
     return value;
   }
-  
 
-  public double getMaxValueWithNotSet() {
-	  AxesChartSeriesCategory axesChartSeries =
-              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
-	  
-      int count = axesChartSeries.getXData().size();
-      
-      return count;
-  }
-  
   /** An axis direction */
   public enum Direction {
 
