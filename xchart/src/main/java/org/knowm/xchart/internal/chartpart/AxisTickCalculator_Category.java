@@ -3,7 +3,6 @@ package org.knowm.xchart.internal.chartpart;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.knowm.xchart.internal.Utils;
@@ -18,7 +17,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  * @author timmolter
  */
 class AxisTickCalculator_Category extends AxisTickCalculator_ {
-  private static List<Double> nullList = Collections.emptyList();
+
   /**
    * Constructor
    *
@@ -35,7 +34,7 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
       Series.DataType axisType,
       AxesChartStyler styler) {
 
-    super(axisDirection, workingSpace, Double.NaN, Double.NaN, nullList, styler);
+    super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
 
     calculate(categories, axisType);
   }

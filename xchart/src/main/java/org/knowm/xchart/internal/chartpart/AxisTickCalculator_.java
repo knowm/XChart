@@ -51,8 +51,21 @@ public abstract class AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    */
+  AxisTickCalculator_(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler) {
 
-  public AxisTickCalculator_(
+    this.axisDirection = axisDirection;
+    this.workingSpace = workingSpace;
+    this.minValue = getAxisMinValue(styler, axisDirection, minValue);
+    this.maxValue = getAxisMaxValue(styler, axisDirection, maxValue);
+    this.styler = styler;
+  }
+
+  AxisTickCalculator_(
       Direction axisDirection,
       double workingSpace,
       double minValue,

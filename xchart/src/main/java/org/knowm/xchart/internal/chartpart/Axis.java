@@ -9,7 +9,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -55,9 +54,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private double min;
   private double max;
-  
-  private static List<Double> nullList = Collections.emptyList();
-  private static int zeroIndex = 0;
+
   /**
    * Constructor
    *
@@ -419,16 +416,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
-    	  if (!xData.isEmpty()) {
-    		  return new AxisTickCalculator_Callback(
-    	              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-    	              getDirection(),
-    	              workingSpace,
-    	              min,
-    	              max,
-    	              nullList,
-    	              axesChartStyler);
-    	  }
+        if (!xData.isEmpty()) { // TODO why would this be empty?
           return new AxisTickCalculator_Callback(
               axesChartStyler.getxAxisTickLabelsFormattingFunction(),
               getDirection(),
@@ -437,6 +425,14 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
               max,
               xData,
               axesChartStyler);
+        }
+        return new AxisTickCalculator_Callback(
+            axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            axesChartStyler);
 
       } else if (axesChartStyler instanceof CategoryStyler
           || axesChartStyler instanceof BoxStyler) {
@@ -470,10 +466,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!xData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, xData, axesChartStyler, zeroIndex);
+              getDirection(), workingSpace, min, max, xData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, nullList, axesChartStyler, zeroIndex);
+            getDirection(), workingSpace, min, max, axesChartStyler);
       }
     }
 
@@ -511,24 +507,23 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       }
 
       if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
-    	  if (!yData.isEmpty()) {
-    		  return new AxisTickCalculator_Callback(
-    	              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-    	              getDirection(),
-    	              workingSpace,
-    	              min,
-    	              max,
-    	              nullList,
-    	              axesChartStyler);
-    	  }
+        if (!yData.isEmpty()) {
           return new AxisTickCalculator_Callback(
-              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+              axesChartStyler.getyAxisTickLabelsFormattingFunction(),
               getDirection(),
               workingSpace,
               min,
               max,
               yData,
               axesChartStyler);
+        }
+        return new AxisTickCalculator_Callback(
+            axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            axesChartStyler);
 
       } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
 
@@ -544,10 +539,10 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
       } else {
         if (!yData.isEmpty()) {
           return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, yData, axesChartStyler, zeroIndex);
+              getDirection(), workingSpace, min, max, yData, axesChartStyler);
         }
         return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, nullList, axesChartStyler, getYIndex());
+            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
       }
     }
   }
@@ -636,8 +631,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     if (min > max) {
       if (getDirection() == Direction.X) {
         if (axesChartStyler instanceof CategoryStyler) {
+          AxesChartSeriesCategory axesChartSeries =
+              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+          int count = axesChartSeries.getXData().size();
           minVal = 0;
-          maxVal = getMaxValueWithNotSet();
+          maxVal = count;
         }
       }
     }
@@ -712,8 +710,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     if (min > max) {
       if (getDirection() == Direction.X) {
         if (axesChartStyler instanceof CategoryStyler) {
+          AxesChartSeriesCategory axesChartSeries =
+              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+          int count = axesChartSeries.getXData().size();
           minVal = 0;
-          maxVal = getMaxValueWithNotSet();
+          maxVal = count;
         }
       }
     }
@@ -753,17 +754,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     value = isLog ? Math.pow(10, value) : value;
     return value;
   }
-  
 
-  public double getMaxValueWithNotSet() {
-	  AxesChartSeriesCategory axesChartSeries =
-              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
-	  
-      int count = axesChartSeries.getXData().size();
-      
-      return count;
-  }
-  
   /** An axis direction */
   public enum Direction {
 
