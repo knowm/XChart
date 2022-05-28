@@ -58,6 +58,13 @@ public abstract class AxesChartSeries extends Series {
   }
 
   protected abstract void calculateMinMax();
+  
+  protected void setXYMinMax(double[] minMaxs) {
+		xMin = minMaxs[XMIN];
+		xMax = minMaxs[XMAX];
+		yMin = minMaxs[YMIN];
+		yMax = minMaxs[YMAX];
+  }
 
   public double getXMin() {
 

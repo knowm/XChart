@@ -138,13 +138,9 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
   @Override
   protected void calculateMinMax() {
 
-	double[] minMaxs = MinMaxFactory
+	  setXYMinMax(MinMaxFactory
 			.getMinMaxCalculator(getExtraValues())
-			.calcualteMinMax(getXData(), getYData());
-	xMin = minMaxs[XMIN];
-	xMax = minMaxs[XMAX];
-	yMin = minMaxs[YMIN];
-	yMax = minMaxs[YMAX];	  
+			.calcualteMinMax(getXData(), getYData()));  
   }
 
   /**

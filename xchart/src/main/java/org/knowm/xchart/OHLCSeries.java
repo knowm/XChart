@@ -218,13 +218,9 @@ public class OHLCSeries extends MarkerSeries {
 
   @Override
   protected void calculateMinMax() {
-	double[] minMaxs = MinMaxFactory
+	  setXYMinMax(MinMaxFactory
 			.getMinMaxCalculator(lowData, highData)
-			.calcualteMinMax(xData, yData);
-	xMin = minMaxs[XMIN];
-	xMax = minMaxs[XMAX];
-	yMin = minMaxs[YMIN];
-	yMax = minMaxs[YMAX];
+			.calcualteMinMax(xData, yData));
   }
 
   public double[] getXData() {

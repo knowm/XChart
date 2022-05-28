@@ -1,8 +1,6 @@
 package org.knowm.xchart.internal.series;
 
 import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -92,13 +90,9 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
 
   @Override
   protected void calculateMinMax() {
-	double[] minMaxs = MinMaxFactory
+	  setXYMinMax(MinMaxFactory
 			.getMinMaxCalculator(extraValues, xAxisDataType, yAxisType)
-			.calculateMinMax(xData, yData);
-	xMin = minMaxs[XMIN];
-	xMax = minMaxs[XMAX];
-	yMin = minMaxs[YMIN];
-	yMax = minMaxs[YMAX];
+			.calculateMinMax(xData, yData));
     // xData
     // System.out.println(xMin);
     // System.out.println(xMax);
