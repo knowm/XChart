@@ -3,13 +3,11 @@ package org.knowm.xchart.internal.chartpart;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.internal.series.Series.DataType;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**
@@ -19,10 +17,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  * @author timmolter
  */
 class AxisTickCalculator_Category extends AxisTickCalculator_ {
-  private static List<Double> nullList = Collections.emptyList();
-  private List<?> categories;
-  private Series.DataType getAxisType;
-  private DataType axisType;
+
   /**
    * Constructor
    *
@@ -39,14 +34,13 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
       Series.DataType axisType,
       AxesChartStyler styler) {
 
-    super(axisDirection, workingSpace, Double.NaN, Double.NaN, nullList, styler);
-    this.categories = categories;
-    this.getAxisType = axisType;
-    calculate();
+    super(axisDirection, workingSpace, Double.NaN, Double.NaN, styler);
+
+    calculate(categories, axisType);
   }
 
-  @Override
-  protected void calculate() {
+  private void calculate(List<?> categories, Series.DataType axisType) {
+
     // tick space - a percentage of the working space available for ticks
     double tickSpace = styler.getPlotContentSize() * workingSpace; // in plot space
     // System.out.println("workingSpace: " + workingSpace);
