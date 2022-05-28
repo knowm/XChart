@@ -1,14 +1,12 @@
 package org.knowm.xchart;
 
-import java.util.Arrays;
-
-import org.knowm.xchart.internal.ChartBuilder;
+import org.knowm.xchart.internal.chartpart.AnnotationBuilder;
 
 /** @author timmolter */
 public class AnnotationLineBuilder extends AnnotationBuilder<AnnotationLine> {
 
 	//optional
-	private final boolean isVertical;
+	private boolean isVertical;
 	private double value;
 
   public AnnotationLineBuilder(boolean isValueInScreenSpace){

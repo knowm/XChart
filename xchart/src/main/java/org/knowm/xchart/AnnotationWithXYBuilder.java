@@ -2,6 +2,9 @@ package org.knowm.xchart;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.knowm.xchart.internal.chartpart.AnnotationBuilder;
+
 import java.awt.image.BufferedImage;
 public abstract class AnnotationWithXYBuilder extends AnnotationBuilder<AnnotationWithXY> {
 	
@@ -31,7 +34,7 @@ public abstract class AnnotationWithXYBuilder extends AnnotationBuilder<Annotati
   }
   
   public AnnotationWithXYBuilder setImage(BufferedImage image) {
-      this.image = image
+      this.image = image;
       return this;
   }
   
