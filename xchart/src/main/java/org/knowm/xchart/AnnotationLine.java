@@ -21,8 +21,14 @@ public class AnnotationLine extends Annotation {
     this.value = value;
     this.isVertical = isVertical;
   }
+  
+  public AnnotationLine(AnnotationLineBuilder annotationLineBuilder) {
+	  super(annotationLineBuilder.getIsValueInScreenSpace());
+	  this.value = annotationLineBuilder.getValue();
+	  this.isVertical = annotationLineBuilder.getIsVertical();
+  }
 
-  @Override
+@Override
   public void paint(Graphics2D graphic) {
 
     if (!isVisible) {

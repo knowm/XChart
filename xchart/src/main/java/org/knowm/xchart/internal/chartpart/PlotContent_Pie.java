@@ -7,6 +7,8 @@ import java.awt.geom.*;
 import java.awt.geom.Arc2D.Double;
 import java.text.DecimalFormat;
 import java.util.Map;
+
+import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.style.PieStyler;
@@ -17,9 +19,8 @@ import org.knowm.xchart.style.PieStyler.LabelType;
 public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     extends PlotContent_<ST, S> {
 
-  private final ST pieStyler;
   private final DecimalFormat df = new DecimalFormat("#.0");
-
+  private final ST pieStyler;
   /**
    * Constructor
    *
@@ -99,31 +100,18 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     //    g.setColor(Color.red);
     //    g.draw(getBounds());
 
-    double total = getTotal();
+    double total = ((PieChart)chart).getTotal();
 
     // draw pie slices
     double startAngle = pieStyler.getStartAngleInDegrees() + 90;
     DrawPie(graphic, pieBounds, total, startAngle);
   }
-  
+
+
 	public void DrawPie(Graphics2D graphic, Rectangle2D pieBounds, double total, double startAngle) {
 		paintSlices(graphic, pieBounds, total, startAngle);
 	    paintLabels(graphic, pieBounds, total, startAngle);
 	    paintSum(graphic, pieBounds, total);
-	}
-	public double getTotal() {
-		// get total
-	    double total = 0.0;
-	
-	    Map<String, S> map = chart.getSeriesMap();
-	    for (S series : map.values()) {
-	
-	      if (!series.isEnabled() || series.getValue() == null) {
-	        continue;
-	      }
-	      total += series.getValue().doubleValue();
-	    }
-		return total;
 	}
 	public Rectangle2D getPieBounds(double pieFillPercentage, double halfBorderPercentage, double width, double height) {
 		Rectangle2D pieBounds =
@@ -289,29 +277,9 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
         // draw label
         String label = "";
-        if (pieStyler.getLabelType() == LabelType.Value) {
+        String name = series.getName();
 
-          if (pieStyler.getDecimalPattern() != null) {
-            label = df.format(y);
-          } else {
-            label = y.toString();
-          }
-        } else if (pieStyler.getLabelType() == LabelType.Name) {
-          label = series.getName();
-        } else if (pieStyler.getLabelType() == LabelType.NameAndPercentage) {
-          double percentage = y.doubleValue() / total * 100;
-          label = series.getName() + " (" + df.format(percentage) + "%)";
-        } else if (pieStyler.getLabelType() == LabelType.Percentage) {
-          double percentage = y.doubleValue() / total * 100;
-          label = df.format(percentage) + "%";
-        } else if (pieStyler.getLabelType() == LabelType.NameAndValue) {
-          if (pieStyler.getDecimalPattern() != null) {
-            label = series.getName() + " (" + df.format(y) + ")";
-          } else {
-            label = series.getName() + " (" + y.toString() + ")";
-          }
-        }
-
+        label = IPieLabelType.create((PieChart) chart).getLabel(series.getName(),y);
         TextLayout textLayout =
             new TextLayout(
                 label, pieStyler.getLabelsFont(), new FontRenderContext(null, true, false));

@@ -34,7 +34,12 @@ public class AnnotationTextPanel extends AnnotationWithXY {
     this.lines = Arrays.asList(lines.split("\\n"));
   }
 
-  public void init(Chart chart) {
+  public AnnotationTextPanel(AnnotationTextPanelBuilder annotationTextPanelBuilder) {
+	  super(annotationTextPanelBuilder.getX(), annotationTextPanelBuilder.getY(), annotationTextPanelBuilder.getIsValueInScreenSpace());
+	    this.lines = annotationTextPanelBuilder.getLines();
+  }
+
+public void init(Chart chart) {
 
     super.init(chart);
   }
