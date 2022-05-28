@@ -16,6 +16,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 class AxisTickCalculator_Override extends AxisTickCalculator_ {
   private static List<Double> nullList = Collections.emptyList();
+  private Map<Double, Object> labelOverrideMap;
   /**
    * Constructor for Numerical axis
    *
@@ -25,26 +26,6 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
    * @param maxValue
    * @param styler
    * @param labelOverrideMap
-   */
-  public AxisTickCalculator_Override(
-      Direction axisDirection,
-      double workingSpace,
-      double minValue,
-      double maxValue,
-      AxesChartStyler styler,
-      Map<Double, Object> labelOverrideMap) {
-
-    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
-    axisFormat = new Formatter_Number(styler, axisDirection, minValue, maxValue);
-    calculate(labelOverrideMap);
-  }
-
-  /**
-   * Constructor for category axis
-   *
-   * @param axisDirection
-   * @param workingSpace
-   * @param styler
    * @param markMap
    * @param axisType
    * @param categoryCount
@@ -52,13 +33,19 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
   public AxisTickCalculator_Override(
       Direction axisDirection,
       double workingSpace,
+      double minValue,
+      double maxValue,
       AxesChartStyler styler,
+      Map<Double, Object> labelOverrideMap,
       Map<Double, Object> markMap,
       Series.DataType axisType,
       int categoryCount) {
 
-    super(axisDirection, workingSpace, Double.NaN, Double.NaN, nullList, styler);
-
+    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
+    this.labelOverrideMap = labelOverrideMap;
+    axisFormat = new Formatter_Number(styler, axisDirection, minValue, maxValue);
+    calculate();
+    
     // set up String formatters that may be encountered
     if (axisType == Series.DataType.String) {
       axisFormat = new Formatter_String();
@@ -73,11 +60,12 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
       simpleDateformat.setTimeZone(styler.getTimezone());
       axisFormat = simpleDateformat;
     }
-
+    
     calculateForCategory(markMap, categoryCount);
   }
-
-  private void calculate(Map<Double, Object> labelOverrideMap) {
+  
+  @Override
+  protected void calculate() {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
