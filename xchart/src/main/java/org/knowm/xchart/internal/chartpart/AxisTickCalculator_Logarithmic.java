@@ -1,6 +1,9 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
+
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -12,7 +15,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  * @author timmolter
  */
 class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
-
+  private static List<Double> nullList = Collections.emptyList();
   private final Formatter_LogNumber formatterLogNumber;
 
   /**
@@ -31,7 +34,7 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
       double maxValue,
       AxesChartStyler styler) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
     formatterLogNumber = new Formatter_LogNumber(styler, axisDirection);
     axisFormat = formatterLogNumber;
     calculate();
@@ -55,7 +58,7 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
       AxesChartStyler styler,
       int yIndex) {
 
-    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    super(axisDirection, workingSpace, minValue, maxValue, nullList, styler);
     formatterLogNumber = new Formatter_LogNumber(styler, axisDirection, yIndex);
     axisFormat = formatterLogNumber;
     calculate();
