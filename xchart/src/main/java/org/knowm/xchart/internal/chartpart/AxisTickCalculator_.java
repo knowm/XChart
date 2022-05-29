@@ -344,7 +344,7 @@ public abstract class AxisTickCalculator_ {
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
   }
 
-  private boolean areValuesEquallySpaced(List<Double> values) {
+  protected boolean areValuesEquallySpaced(List<Double> values) {
     if (values.size() < 2) {
       return false;
     }
@@ -364,7 +364,7 @@ public abstract class AxisTickCalculator_ {
    * @param tickSpace a percentage of the working space available for ticks
    * @param margin where the tick should begin in the working space in pixels
    */
-  private void calculateForEquallySpacedAxisValues(double tickSpace, double margin) {
+  protected void calculateForEquallySpacedAxisValues(double tickSpace, double margin) {
     if (axisValues == null) {
       throw new IllegalStateException("No axis values.");
     }

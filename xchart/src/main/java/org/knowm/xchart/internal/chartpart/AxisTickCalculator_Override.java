@@ -13,7 +13,7 @@ import org.knowm.xchart.style.AxesChartStyler;
  * rendering the axis ticks for given values & labels
  */
 class AxisTickCalculator_Override extends AxisTickCalculator_ {
-
+  private Map<Double, Object> labelOverrideMap;
   /**
    * Constructor for Numerical axis
    *
@@ -34,7 +34,8 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
     axisFormat = new Formatter_Number(styler, axisDirection, minValue, maxValue);
-    calculate(labelOverrideMap);
+    this.labelOverrideMap = labelOverrideMap;
+    calculate();
   }
 
   /**
@@ -74,8 +75,8 @@ class AxisTickCalculator_Override extends AxisTickCalculator_ {
 
     calculateForCategory(markMap, categoryCount);
   }
-
-  private void calculate(Map<Double, Object> labelOverrideMap) {
+  @Override
+  protected void calculate() {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
