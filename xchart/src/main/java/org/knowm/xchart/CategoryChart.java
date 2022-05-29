@@ -2,7 +2,6 @@ package org.knowm.xchart;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
-import org.knowm.xchart.DataTypeFactory;
 
 /** @author timmolter */
 public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries> {

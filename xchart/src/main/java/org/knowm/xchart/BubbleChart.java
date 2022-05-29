@@ -225,6 +225,7 @@ public class BubbleChart extends AbstractChart<BubbleStyler, BubbleSeries> {
           bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
         }
       }
+    setSeriesStyles();
   }
 
   /** set the series color based on theme */
