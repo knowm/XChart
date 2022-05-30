@@ -72,8 +72,7 @@ public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
   private void sanityCheck(String seriesName, List<? extends Number> yData) {
 
     seriesNameDuplicateCheck(seriesName);
-
-    sanityCheckYData(yData);
+    new SanityYChecker(yData).checkSanity();
   }
 
   public BoxSeries updateBoxSeries(String seriesName, int[] newYData) {
@@ -97,7 +96,7 @@ public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
 
   private void updateSanityCheck(String seriesName, List<? extends Number> newYData, BoxSeries series) {
 	checkSeriesValidity(seriesName, series);
-    sanityCheckYData(newYData);
+	new SanityYChecker(newYData).checkSanity();
   }
 
   @Override
@@ -130,19 +129,6 @@ public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
 	  if (boxSeries.getMarkerColor() == null) { // wasn't set manually
 		  boxSeries.setMarkerColor(seriesColorMarkerLineStyle.getColor());
 	  }
-  }
-
-  private void sanityCheckYData(List<? extends Number> yData) {
-
-	 if (yData == null) {
-	   throw new IllegalArgumentException("Y-Axis data connot be null !!!");
-	 }
-	 if (yData.size() == 0) {
-	   throw new IllegalArgumentException("Y-Axis data connot be empyt !!!");
-	 }
-	 if (yData.contains(null)) {
-	   throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
-	 }
   }
 
   private void checkSeriesValidity(String seriesName, Series series) {
