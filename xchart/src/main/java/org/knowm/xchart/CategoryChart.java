@@ -269,21 +269,12 @@ private DataType getAxisType(Object dataPoint) {
       List<? extends Number> errorBars) {
 
     seriesNameDuplicateCheck(seriesName);
-    sanityCheckYData(yData);
-    sanityCheckXData(xData, yData);
+    new SanityXChecker(new SanityYChecker(yData), xData).checkSanity();
+    if (xData.size() != yData.size()) {
+  	  throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+    }
     if (errorBars != null && errorBars.size() != yData.size()) {
       throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!!");
-    }
-  }
-
-  private void sanityCheckXData(List<?> xData, List<? extends Number> yData) {
-	if (xData != null) {
-      if (xData.size() == 0) {
-    	  throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
-      }
-      if (xData.size() != yData.size()) {
-    	  throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-      }
     }
   }
 
@@ -327,19 +318,6 @@ private DataType getAxisType(Object dataPoint) {
 	  if (categorySeries.getMarkerColor() == null) { // wasn't set manually
 		  categorySeries.setMarkerColor(seriesColorMarkerLineStyle.getColor());
 	  }
-  }
-
-  private void sanityCheckYData(List<? extends Number> yData) {
-
-	 if (yData == null) {
-	   throw new IllegalArgumentException("Y-Axis data connot be null !!!");
-	 }
-	 if (yData.size() == 0) {
-	   throw new IllegalArgumentException("Y-Axis data connot be empyt !!!");
-	 }
-	 if (yData.contains(null)) {
-	   throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
-	 }
   }
 
   private void checkSeriesValidity(String seriesName, Series series) {

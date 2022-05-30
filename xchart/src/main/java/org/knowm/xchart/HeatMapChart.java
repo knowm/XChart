@@ -197,19 +197,7 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
   }
 
   private void sanityCheck(List<?> xData, List<?> yData, List<Number[]> heatData) {
-
-    if (xData == null) {
-      throw new IllegalArgumentException("X-Axis data cannot be null!!!");
-    }
-    if (xData.size() == 0) {
-      throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
-    }
-    if (yData == null) {
-      throw new IllegalArgumentException("Y-Axis data cannot be null!!!");
-    }
-    if (yData.size() == 0) {
-      throw new IllegalArgumentException("Y-Axis data cannot be empty!!!");
-    }
+	new SanityXChecker(new SanityYChecker(yData), xData).checkSanity();
     if (heatData == null) {
       throw new IllegalArgumentException("Heat data cannot be null!!!");
     }
