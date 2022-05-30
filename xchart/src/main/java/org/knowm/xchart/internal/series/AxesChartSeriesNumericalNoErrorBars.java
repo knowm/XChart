@@ -35,11 +35,11 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
     this.xDataAll = seriesDataValues.getXData();
     this.yDataAll = seriesDataValues.getYData();
-    this.extraValuesAll = seriesDataValues.getXData();
+    this.extraValuesAll = seriesDataValues.getExtraValues();
 
     this.xData = seriesDataValues.getXData();
     this.yData = seriesDataValues.getYData();
-    this.extraValues = seriesDataValues.getXData();
+    this.extraValues = seriesDataValues.getExtraValues();
 
     calculateMinMax();
   }
