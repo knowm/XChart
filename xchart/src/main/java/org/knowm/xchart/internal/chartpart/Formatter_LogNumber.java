@@ -36,7 +36,7 @@ class Formatter_LogNumber extends Formatter_Abstract {
   
   @Override
   protected void toAppend(StringBuffer toAppendTo, DecimalFormat normalFormat) {
-	  toAppendTo.append(normalFormat.format(number));
+	  toAppendTo.append(normalFormat.format(this.number_double));
   }
   
   @Override
