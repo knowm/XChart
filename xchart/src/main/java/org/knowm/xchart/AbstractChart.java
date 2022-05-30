@@ -15,13 +15,11 @@ public abstract class AbstractChart<ST extends Styler, S extends Series> extends
 		super(width, height, styler);
 	}
 
-	protected SeriesColorMarkerLineStyle getSeriesColorMarkerLineStyle() {
-		SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
-	        new SeriesColorMarkerLineStyleCycler(
+	protected SeriesColorMarkerLineStyleCycler getSeriesColorMarkerLineStyleCycler() {
+		return new SeriesColorMarkerLineStyleCycler(
 	            getStyler().getSeriesColors(),
 	            getStyler().getSeriesMarkers(),
 	            getStyler().getSeriesLines());
-		return seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
 	}
 	
 	protected void doPaint(Graphics2D graphics) {
@@ -40,10 +38,10 @@ public abstract class AbstractChart<ST extends Styler, S extends Series> extends
 	
 	
 	protected void setSeriesStyles() {
-
+		SeriesColorMarkerLineStyleCycler seriesColorLineStyleCycler = getSeriesColorMarkerLineStyleCycler();
 		 for (Series series : getSeriesMap().values()) {
 
-		   setSeriesDefaultForNullPart(series, getSeriesColorMarkerLineStyle());
+		   setSeriesDefaultForNullPart(series, seriesColorLineStyleCycler.getNextSeriesColorMarkerLineStyle());
 		 }
 	}
 	
