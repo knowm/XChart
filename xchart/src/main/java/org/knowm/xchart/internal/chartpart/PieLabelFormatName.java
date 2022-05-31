@@ -4,11 +4,11 @@ import org.knowm.xchart.style.PieStyler;
 
 import java.text.DecimalFormat;
 
-public class PieLabelTypeName implements IPieLabelType {
+public class PieLabelFormatName implements PieLabelFormat {
     private final DecimalFormat df = new DecimalFormat("#.0");
 
     @Override
-    public String getLabel(String name, Number y) {
+    public String format(String name, Number y) {
         return name;
     }
 

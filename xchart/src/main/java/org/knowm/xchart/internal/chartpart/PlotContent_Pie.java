@@ -13,7 +13,6 @@ import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.ClockwiseDirectionType;
-import org.knowm.xchart.style.PieStyler.LabelType;
 
 /** @author timmolter */
 public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
@@ -279,7 +278,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         String label = "";
         String name = series.getName();
 
-        label = IPieLabelType.create((PieChart) chart).getLabel(series.getName(),y);
+        label = PieLabelFormat.create((PieChart) chart).format(series.getName(),y);
         TextLayout textLayout =
             new TextLayout(
                 label, pieStyler.getLabelsFont(), new FontRenderContext(null, true, false));

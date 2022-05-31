@@ -5,23 +5,20 @@ import org.knowm.xchart.style.PieStyler;
 
 import java.text.DecimalFormat;
 
-public class PieLabelTypeValue implements IPieLabelType {
+public class PieLabelFormatDefault implements PieLabelFormat {
     private final DecimalFormat df = new DecimalFormat("#.0");
     private PieChart chart;
-    public PieLabelTypeValue(PieChart chart){
+    public PieLabelFormatDefault(PieChart chart){
         this.chart =chart;
     }
     @Override
-    public String getLabel(String name,Number y) {
-        if (chart.getStyler().getDecimalPattern() != null) {
-            return df.format(y);
-        } else {
-            return y.toString();
-        }
+    public String format(String name, Number y) {
+        double percentage = y.doubleValue() / chart.getTotal() * 100;
+        return name + " (" + df.format(percentage) + "%)";
     }
 
     @Override
     public PieStyler.LabelType getType() {
-        return PieStyler.LabelType.Value;
+        return null;
     }
 }
