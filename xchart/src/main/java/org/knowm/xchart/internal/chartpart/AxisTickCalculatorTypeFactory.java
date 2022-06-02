@@ -30,17 +30,17 @@ public class AxisTickCalculatorTypeFactory extends AxisTickCalculatorFactory{
 	  case Category:
 		  return new AxisTickCalculator_Category(axisDirection, workingSpace, categories, axisType, styler);
 	  case Date:
-		  return new AxisTickCalculator_Date(axisDirection, maxValue, maxValue, maxValue, styler);
+		  return new AxisTickCalculator_Date(axisDirection, workingSpace, minValue, maxValue, styler);
 	  case LogarithmicWithIndex:
-		  return new AxisTickCalculator_Logarithmic(axisDirection, maxValue, maxValue, maxValue, styler, yIndex);
+		  return new AxisTickCalculator_Logarithmic(axisDirection, workingSpace, minValue, maxValue, styler, yIndex);
 	  case LogarithmicWithoutIndex:
-		  return new AxisTickCalculator_Logarithmic(axisDirection, maxValue, maxValue, maxValue, styler);
+		  return new AxisTickCalculator_Logarithmic(axisDirection, workingSpace, minValue, maxValue, styler);
 	  case Number:
-		  return new AxisTickCalculator_Number(axisDirection, maxValue, maxValue, maxValue, styler);
+		  return new AxisTickCalculator_Number(axisDirection, workingSpace, minValue, maxValue, styler);
 	  case NumberWithAxis:
-		  return new AxisTickCalculator_Number(axisDirection, maxValue, maxValue, maxValue, axisValues, styler);
+		  return new AxisTickCalculator_Number(axisDirection, workingSpace, minValue, maxValue, axisValues, styler);
 	  case NumberWithIndex:
-		  return new AxisTickCalculator_Number(axisDirection, maxValue, maxValue, maxValue, styler, yIndex);
+		  return new AxisTickCalculator_Number(axisDirection, workingSpace, minValue, maxValue, styler, yIndex);
 	  default:
 		  throw new RuntimeException(calculatorType.toString() + " is not existed");
 	  }
