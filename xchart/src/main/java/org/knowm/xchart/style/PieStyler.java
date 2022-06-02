@@ -3,7 +3,6 @@ package org.knowm.xchart.style;
 import java.awt.Color;
 import java.awt.Font;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
-import org.knowm.xchart.internal.chartpart.IPieLabelType;
 import org.knowm.xchart.style.colors.FontColorDetector;
 import org.knowm.xchart.style.theme.Theme;
 
