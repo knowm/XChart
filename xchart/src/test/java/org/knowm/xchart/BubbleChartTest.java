@@ -120,4 +120,18 @@ public class BubbleChartTest {
 		assertNotNull(bubbleChart.updateBubbleSeries("test", null, 
 				Arrays.asList(10, 40, 80, 120, 350), Arrays.asList(10, 40, 80, 120, 350)));
 	}
+	
+	/**
+	* Purpose: Use different series name when updating series data.
+	* Input: checkSeriesValidity String "test" String "test3"
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void checkSeriesValidityTest() {
+		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 120, 350}, 
+				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}));
+		assertNotNull(bubbleChart.updateBubbleSeries("test3", Arrays.asList(10, 40, 80, 120, 350), 
+				Arrays.asList(10, 40, 80, 120, 350), Arrays.asList(10, 40, 80, 120, 350)));
+	}
 }
