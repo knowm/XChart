@@ -143,4 +143,17 @@ public class BoxChartTest {
 	    boxChart.paint(graphics2d, 500, 500);
 	    graphics2d.dispose();
 	}
+	
+	/**
+	* Purpose: To test whether calculated min max are accurate.
+	* Input: calculateMinMax yMin==0.8 yMax==3.6
+	* Expected:
+	* End without any exceptions.
+	*/ 
+	@Test
+	public void minMaxCalcualtorTest() {
+		BoxSeries series = boxChart.addSeries("test", new double[] {1, 0.9, 0.8, 3.5, 3.6});
+		assertEquals(series.getYMin(), 0.8, 0.01);
+		assertEquals(series.getYMax(), 3.6, 0.01);
+	}
 }
