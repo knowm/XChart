@@ -71,4 +71,16 @@ public class BoxChartTest {
 		assertNotNull(boxChart.updateBoxSeries("test", new int[] {5, 5, 5, 5, 5}));
 		assertNotNull(boxChart.updateBoxSeries("test", new double[] {1.2, 1.5, 0.7}));
 	}
+	
+	/**
+	* Purpose: Update data with invalid series name.
+	* Input: checkSeriesValidity getSeriesMap().get(seriesName)
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void checkSeriesValidityTest() {
+		assertNotNull(boxChart.addSeries("test", new int[] {1, 2, 3, 4, 5}));
+		assertNotNull(boxChart.updateBoxSeries("test2", new int[] {5, 5, 5, 5, 5}));
+	}
 }
