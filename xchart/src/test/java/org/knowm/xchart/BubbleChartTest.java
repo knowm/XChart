@@ -1,5 +1,6 @@
 package org.knowm.xchart;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import java.awt.Graphics2D;
 import java.util.Arrays;
@@ -214,5 +215,21 @@ public class BubbleChartTest {
 		Graphics2D graphics2d = (Graphics2D) chartPanel.getGraphics();
 		bubbleChart.paint(graphics2d, 500, 500);
 		graphics2d.dispose();
+	}
+	
+	/**
+	* Purpose: To test whether calculated min max are accurate.
+	* Input: calculateMinMax xMin==1.25 xMax==120.1 yMin==0.8 yMax==50.1
+	* Expected:
+	* End without any exceptions.
+	*/ 
+	@Test
+	public void minMaxCalcualtorTest() {
+		BubbleSeries series = bubbleChart.addSeries("test", new double[] {1.25, 1.5, 2, 120, 120.1}, 
+				new double[] {1.1, 0.8, 50, 42, 50.1}, new double[] {10, 40, 80, 120, 350});
+		assertEquals(series.getXMin(), 1.25, 0.01);
+		assertEquals(series.getXMax(), 120.1, 0.01);
+		assertEquals(series.getYMin(), 0.8, 0.01);
+		assertEquals(series.getYMax(), 50.1, 0.01);
 	}
 }
