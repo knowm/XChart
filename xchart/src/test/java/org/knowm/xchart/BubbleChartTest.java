@@ -94,4 +94,16 @@ public class BubbleChartTest {
 		assertNotNull(bubbleChart.addSeries("test", zeorLengthArr, 
 				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}));
 	}
+	
+	/**
+	* Purpose: Add null xData to generate xData.
+	* Input: generateBubbleSeries xData==null
+	* Expected:
+	* return BubbleSeries
+	*/ 
+	@Test()
+	public void generateBubbleSeriesTest() {
+		assertNotNull(bubbleChart.addSeries("test", null, 
+				Arrays.asList(10, 40, 80, 120, 350), Arrays.asList(10, 40, 80, 120, 350)));
+	}
 }
