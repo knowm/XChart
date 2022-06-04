@@ -1,9 +1,11 @@
 package org.knowm.xchart;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JFrame;
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
@@ -42,7 +44,7 @@ public class BoxChartTest {
 		assertNotNull(boxChart.addSeries("testInt", new int[] {1, 2, 3, 4, 5}));
 		assertNotNull(boxChart.addSeries("testDouble", new double[] {1.1, 2.2, 3.3
 				, 4.4, 5.5}));
-		assertNotNull(boxChart.addSeries("test", Arrays.asList(10, 40, 80, 120, 350)));
+		assertNull(boxChart.addSeries("test", Arrays.asList(10, 40, 80, 120, 350)).getLegendRenderType());
 	}
 	
 	/**
@@ -120,5 +122,23 @@ public class BoxChartTest {
 		List<Integer> data = new ArrayList<>();
 		data.add(null);
 		assertNotNull(boxChart.addSeries("test", data));
+	}
+	
+	/**
+	* Purpose: Do paint BoxChart with Graphics2D object
+	* Input: paint Graphics2D width height
+	* Expected:
+	* End without any exceptions.
+	*/ 
+	@Test
+	public void paintTest() {
+		assertNotNull(boxChart.addSeries("test", new int[] {1, 2, 3, 4, 5}));
+		JFrame frame = new JFrame("title");
+		XChartPanel<BoxChart> chartPanel = new XChartPanel<BoxChart>(boxChart);
+		frame.add(chartPanel);
+		frame.pack();
+		Graphics2D g2d = (Graphics2D) chartPanel.getGraphics();
+	    boxChart.paint(g2d, 500, 500);
+	    g2d.dispose();
 	}
 }
