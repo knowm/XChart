@@ -26,6 +26,8 @@ public class BoxChartTest {
 	                .yAxisTitle("Y")
 	                .theme(ChartTheme.XChart)
 	                .build();
+	    boxChart.getStyler().setToolTipsEnabled(true);
+	    boxChart.getStyler().setYAxisLogarithmic(true);
 	}
 
 	@After
