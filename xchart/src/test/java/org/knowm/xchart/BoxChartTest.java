@@ -46,7 +46,7 @@ public class BoxChartTest {
 	
 	/**
 	* Purpose: Test name duplicate sanity checker inside addSeries method.
-	* Input: addSeries seriesMap.containsKey("test"), seriesMap.containsKey("test")
+	* Input: seriesNameDuplicateCheck seriesMap.containsKey("test"), seriesMap.containsKey("test")
 	* Expected:
 	* throw IllegalArgumentException
 	* First add. return BoxSeries
@@ -59,4 +59,16 @@ public class BoxChartTest {
 				, 4.4, 5.5}));
 	}
 	
+	/**
+	* Purpose: Update with valid series data.
+	* Input: updateBoxSeries series.replaceData(int array), series.replaceData(double array)
+	* Expected:
+	* return BoxSeries
+	*/ 
+	@Test
+	public void updateBoxSeriesTest() {
+		assertNotNull(boxChart.addSeries("test", new int[] {1, 2, 3, 4, 5}));
+		assertNotNull(boxChart.updateBoxSeries("test", new int[] {5, 5, 5, 5, 5}));
+		assertNotNull(boxChart.updateBoxSeries("test", new double[] {1.2, 1.5, 0.7}));
+	}
 }
