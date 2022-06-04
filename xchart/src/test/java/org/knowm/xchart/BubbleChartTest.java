@@ -1,8 +1,6 @@
 package org.knowm.xchart;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import java.awt.Graphics2D;
 import java.util.Arrays;
 
@@ -11,6 +9,7 @@ import javax.swing.JFrame;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.knowm.xchart.BubbleSeries.BubbleSeriesRenderStyle;
 import org.knowm.xchart.style.Styler;
 
 public class BubbleChartTest {
@@ -189,6 +188,25 @@ public class BubbleChartTest {
 	public void paintTest() {
 		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 120, 350}, 
 				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}));
+		JFrame frame = new JFrame("title");
+		XChartPanel<BubbleChart> chartPanel = new XChartPanel<BubbleChart>(bubbleChart);
+		frame.add(chartPanel);
+		frame.pack();
+		Graphics2D graphics2d = (Graphics2D) chartPanel.getGraphics();
+		bubbleChart.paint(graphics2d, 500, 500);
+		graphics2d.dispose();
+	}
+	
+	/**
+	* Purpose: To test when bubbleSeriesRenderStyle is already set not as by default behavior
+	* Input: bubbleSeriesRenderStyle BubbleSeriesRenderStyle.Round
+	* Expected:
+	* End without any exceptions.
+	*/ 
+	@Test
+	public void bubbleSeriesRenderStyleNotNullTest() {
+		bubbleChart.addSeries("test", new double[] {10, 40, 80, 120, 350}, 
+				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}).setBubbleSeriesRenderStyle(BubbleSeriesRenderStyle.Round);
 		JFrame frame = new JFrame("title");
 		XChartPanel<BubbleChart> chartPanel = new XChartPanel<BubbleChart>(bubbleChart);
 		frame.add(chartPanel);
