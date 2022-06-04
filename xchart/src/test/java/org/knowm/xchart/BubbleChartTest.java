@@ -106,4 +106,18 @@ public class BubbleChartTest {
 		assertNotNull(bubbleChart.addSeries("test", null, 
 				Arrays.asList(10, 40, 80, 120, 350), Arrays.asList(10, 40, 80, 120, 350)));
 	}
+	
+	/**
+	* Purpose: Use null xData when updating series data.
+	* Input: updateBubbleSeries xData==null, List<double>, List<double>
+	* Expected:
+	* return BubbleSeries
+	*/ 
+	@Test()
+	public void updateBubbleSeriesWithNullXData() {
+		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 120, 350}, 
+				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}));
+		assertNotNull(bubbleChart.updateBubbleSeries("test", null, 
+				Arrays.asList(10, 40, 80, 120, 350), Arrays.asList(10, 40, 80, 120, 350)));
+	}
 }
