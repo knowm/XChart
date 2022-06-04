@@ -40,8 +40,20 @@ public class BubbleChartTest {
 	* throw IllegalArgumentException
 	*/ 
 	@Test(expected = IllegalArgumentException.class)
-	public void addSeriesTest() {
+	public void sanityCheckDifferentLengthYBubbleTest() {
 		assertNotNull(bubbleChart.addSeries("test", Arrays.asList(10, 40, 80, 120, 350), 
 				Arrays.asList(10, 40, 80, 120, 350), Arrays.asList(10, 40, 80, 350)));
+	}
+	
+	/**
+	* Purpose: Add different length of data for xData and yData
+	* Input: sanityCheck xData.length==4 yData.length==5 BubbleData.length==5
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void sanityCheckDifferentLengthXYTest() {
+		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 350}, 
+				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}));
 	}
 }
