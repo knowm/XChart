@@ -1,5 +1,6 @@
 package org.knowm.xchart;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -94,5 +95,30 @@ public class BoxChartTest {
 	public void checkSeriesYDataNullArrayTest() {
 		int[] nullArr = null;
 		assertNotNull(boxChart.addSeries("test", nullArr));
+	}
+	
+	/**
+	* Purpose: Add empty list series data.
+	* Input: checkSanity (data.size() == 0)
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void checkSeriesYDataZeroSizeListTest() {
+		List<Integer> data = new ArrayList<>();
+		assertNotNull(boxChart.addSeries("test", data));
+	}
+	
+	/**
+	* Purpose: Add null containing series data.
+	* Input: checkSanity (data.get(0) == null)
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void checkSeriesYDataNullContainListTest() {
+		List<Integer> data = new ArrayList<>();
+		data.add(null);
+		assertNotNull(boxChart.addSeries("test", data));
 	}
 }
