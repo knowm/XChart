@@ -56,4 +56,16 @@ public class BubbleChartTest {
 		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 350}, 
 				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}));
 	}
+	
+	/**
+	* Purpose: Add null BubbleData
+	* Input: sanityCheck xData.length==5 yData.length==5 BubbleData==null
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void sanityCheckNullBubbleData() {
+		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 350}, 
+				new double[] {10, 40, 80, 120, 350}, null));
+	}
 }
