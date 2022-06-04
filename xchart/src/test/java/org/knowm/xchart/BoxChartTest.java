@@ -83,4 +83,16 @@ public class BoxChartTest {
 		assertNotNull(boxChart.addSeries("test", new int[] {1, 2, 3, 4, 5}));
 		assertNotNull(boxChart.updateBoxSeries("test2", new int[] {5, 5, 5, 5, 5}));
 	}
+	
+	/**
+	* Purpose: Add invalid null series data.
+	* Input: checkSanity null
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void checkSeriesYDataNullArrayTest() {
+		int[] nullArr = null;
+		assertNotNull(boxChart.addSeries("test", nullArr));
+	}
 }
