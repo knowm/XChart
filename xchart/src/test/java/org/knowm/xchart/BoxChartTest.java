@@ -139,8 +139,8 @@ public class BoxChartTest {
 		XChartPanel<BoxChart> chartPanel = new XChartPanel<BoxChart>(boxChart);
 		frame.add(chartPanel);
 		frame.pack();
-		Graphics2D g2d = (Graphics2D) chartPanel.getGraphics();
-	    boxChart.paint(g2d, 500, 500);
-	    g2d.dispose();
+		Graphics2D graphics2d = (Graphics2D) chartPanel.getGraphics();
+	    boxChart.paint(graphics2d, 500, 500);
+	    graphics2d.dispose();
 	}
 }
