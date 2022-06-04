@@ -99,6 +99,47 @@ public class BubbleChartTest {
 	}
 	
 	/**
+	* Purpose: Add zero length double array for yData
+	* Input: sanityCheck xData.length==5 yData.length==0 BubbleData.length==5
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void sanityCheckZeroLengthYDataTest() {
+		double[] zeorLengthArr = new double[0];
+		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 120, 350}, 
+				zeorLengthArr, new double[] {10, 40, 80, 120, 350}));
+	}
+	
+	/**
+	* Purpose: Add null for yData
+	* Input: sanityCheck xData.length==5 yData.length==null BubbleData.length==5
+	* Expected:
+	* throw IllegalArgumentException
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void sanityCheckNullYDataTest() {
+		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 120, 350}, 
+				null, new double[] {10, 40, 80, 120, 350}));
+	}
+	
+	/**
+	* Purpose: Test name duplicate sanity checker inside addSeries method.
+	* Input: seriesNameDuplicateCheck seriesMap.containsKey("test"), seriesMap.containsKey("test")
+	* Expected:
+	* throw IllegalArgumentException
+	* First add. return BubbleSeries
+	* Second add. throw exception
+	*/ 
+	@Test(expected = IllegalArgumentException.class)
+	public void seriesNameDuplicateTest() {
+		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 120, 350}, 
+				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}));
+		assertNotNull(bubbleChart.addSeries("test", new double[] {10, 40, 80, 120, 350}, 
+				new double[] {10, 40, 80, 120, 350}, new double[] {10, 40, 80, 120, 350}));
+	}
+	
+	/**
 	* Purpose: Add null xData to generate xData.
 	* Input: generateBubbleSeries xData==null
 	* Expected:
