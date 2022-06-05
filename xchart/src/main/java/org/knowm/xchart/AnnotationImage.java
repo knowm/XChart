@@ -23,6 +23,11 @@ public class AnnotationImage extends AnnotationWithXY {
     super(x, y, isValueInScreenSpace);
     this.image = image;
   }
+  
+  public AnnotationImage(AnnotationImageBuilder annotationImageBuilder) {
+	  super(annotationImageBuilder.getX(), annotationImageBuilder.getY(), annotationImageBuilder.getIsValueInScreenSpace());
+	  this.image = annotationImageBuilder.getImage();
+  }
 
   public void init(Chart chart) {
 

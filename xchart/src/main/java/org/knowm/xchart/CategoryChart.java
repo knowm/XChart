@@ -2,7 +2,6 @@ package org.knowm.xchart;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
-import org.knowm.xchart.DataTypeFactory;
 
 /** @author timmolter */
 public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries> {
@@ -33,6 +31,10 @@ public class CategoryChart extends AbstractChart<CategoryStyler, CategorySeries>
     axisPair = new AxisPair<CategoryStyler, CategorySeries>(this);
     plot = new Plot_Category<CategoryStyler, CategorySeries>(this);
     legend = new Legend_Marker<CategoryStyler, CategorySeries>(this);
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   /**
@@ -266,27 +268,13 @@ private DataType getAxisType(Object dataPoint) {
       List<? extends Number> yData,
       List<? extends Number> errorBars) {
 
-    if (seriesMap.containsKey(seriesName)) {
-      throw new IllegalArgumentException(
-          "Series name >"
-              + seriesName
-              + "< has already been used. Use unique names for each series!!!");
+    seriesNameDuplicateCheck(seriesName);
+    new SanityXChecker(new SanityYChecker(yData), xData).checkSanity();
+    if (xData.size() != yData.size()) {
+  	  throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
     }
-    sanityCheckYData(yData);
-    sanityCheckXData(xData, yData);
     if (errorBars != null && errorBars.size() != yData.size()) {
       throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!!");
-    }
-  }
-
-  private void sanityCheckXData(List<?> xData, List<? extends Number> yData) {
-	if (xData != null) {
-      if (xData.size() == 0) {
-    	  throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
-      }
-      if (xData.size() != yData.size()) {
-    	  throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
-      }
     }
   }
 
@@ -331,4 +319,11 @@ private DataType getAxisType(Object dataPoint) {
 		  categorySeries.setMarkerColor(seriesColorMarkerLineStyle.getColor());
 	  }
   }
+
+  private void checkSeriesValidity(String seriesName, Series series) {
+	if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+  }
+
 }

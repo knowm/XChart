@@ -4,7 +4,7 @@ import java.text.*;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /** @author timmolter */
-class Formatter_LogNumber extends Format {
+class Formatter_LogNumber extends Formatter_Abstract {
 
   private final AxesChartStyler styler;
   private final Axis.Direction axisDirection;
@@ -33,20 +33,28 @@ class Formatter_LogNumber extends Format {
     this.yIndex = yIndex;
     numberFormat = NumberFormat.getNumberInstance(styler.getLocale());
   }
-
+  
   @Override
-  public StringBuffer format(Object numberObject, StringBuffer toAppendTo, FieldPosition pos) {
-
-    double number = (Double) numberObject;
-
-
-    String decimalPattern = setDecimalPattern(number);
-
-    DecimalFormat normalFormat = (DecimalFormat) numberFormat;
-    normalFormat.applyPattern(decimalPattern);
-    toAppendTo.append(normalFormat.format(number));
-
-    return toAppendTo;
+  protected void toAppend(StringBuffer toAppendTo, DecimalFormat normalFormat) {
+	  toAppendTo.append(normalFormat.format(this.number_double));
+  }
+  
+  @Override
+  protected DecimalFormat applyPattern(String decimalPattern) {
+	  DecimalFormat normalFormat = (DecimalFormat) numberFormat;
+	  normalFormat.applyPattern(decimalPattern);
+	  
+	  return normalFormat;
+  }
+  
+  @Override
+  protected String decideDecimalPattern() {
+	  return setDecimalPattern(this.number_double);
+  }
+  
+  @Override
+  protected void ObjectTransformation(Object object) {
+	  this.number_double = (Double) object;
   }
   
   public String setDecimalPattern(double number) {
@@ -84,10 +92,4 @@ class Formatter_LogNumber extends Format {
     }
     return decimalPattern;
 }
-
-  @Override
-  public Object parseObject(String source, ParsePosition position) {
-
-    return null;
-  }
 }

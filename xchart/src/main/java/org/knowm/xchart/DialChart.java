@@ -21,6 +21,11 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     super(width, height, new DialStyler());
     plot = new Plot_Dial<DialStyler, DialSeries>(this);
     legend = new Legend_Pie<DialStyler, DialSeries>(this);
+
+    annotations.addChartPart(axisPair);
+    annotations.addChartPart(plot);
+    annotations.addChartPart(chartTitle);
+    annotations.addChartPart(legend);
   }
 
   /**
@@ -116,6 +121,6 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     plot.paint(g);
     chartTitle.paint(g);
     //    legend.paint(g); // no legend for dial charts
-    annotations.forEach(x -> x.paint(g));
+    annotations.paint(g);
   }
 }

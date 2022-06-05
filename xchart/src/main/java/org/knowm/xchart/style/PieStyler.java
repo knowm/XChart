@@ -128,7 +128,6 @@ public class PieStyler extends Styler {
   }
 
   public LabelType getLabelType() {
-
     return labelType;
   }
 
@@ -138,7 +137,6 @@ public class PieStyler extends Styler {
    * @param labelType
    */
   public PieStyler setLabelType(LabelType labelType) {
-
     this.labelType = labelType;
     return this;
   }
@@ -355,6 +353,7 @@ public class PieStyler extends Styler {
   public float getSliceBorderWidth() {
     return sliceBorderWidth;
   }
+
 
   public enum LabelType {
     Value,

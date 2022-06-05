@@ -49,20 +49,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
 
     double dountStartAngle = (arcAngle) / 2 + 90;
     // draw shape
-    for (int i = 0; i < donutColorArr.length; i++) {
-      double from = fromArr[i];
-      double to = toArr[i];
-      if (to <= from || to < 0 || from < 0) {
-        continue;
-      }
-      double totalAngle = (to - from) * arcAngle;
-      double startAngle = dountStartAngle - from * arcAngle - totalAngle;
-      Shape donutSlice =
-          PlotContent_Pie.getDonutSliceShape(pieBounds, donutThickness, startAngle, totalAngle);
-      g.setColor(donutColorArr[i]);
-      g.fill(donutSlice);
-      g.draw(donutSlice);
-    }
+    drawShape(g, pieBounds, arcAngle, donutThickness, fromArr, toArr, donutColorArr, dountStartAngle);
 
     double xDiameter = pieBounds.getWidth() / 2;
     double yDiameter = pieBounds.getHeight() / 2;
@@ -70,12 +57,75 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
     double xCenter = pieBounds.getX() + xDiameter;
     double yCenter = pieBounds.getY() + yDiameter;
 
+    drawMarks(g, axisTickLabelsVisible, arcAngle, donutThickness, axisTitlePadding, axisTickValues, markCount, axisTickLabels, xDiameter, yDiameter, xCenter, yCenter);
+
+    Map<String, S> map = chart.getSeriesMap();
+    for (S series : map.values()) {
+      if (!series.isEnabled()) {
+        continue;
+      }
+
+      // draw title
+      drawTitle(g, yDiameter, xCenter, yCenter, series);
+
+      double value = series.getValue();
+      DrawLabels(g, yDiameter, xCenter, yCenter, series, value);
+
+      // draw arrow
+      DrawArrow(g, arcAngle, xDiameter, yDiameter, xCenter, yCenter, series, value);
+    }
+  }
+
+  private void DrawLabels(Graphics2D g, double yDiameter, double xCenter, double yCenter, S series, double value) {
+    if (styler.isLabelsVisible()) {
+      String label = series.getLabel();
+      if (label == null) {
+        if (styler.getDecimalPattern() != null) {
+          DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
+          label = df.format(value);
+        } else {
+          label = df.format(value);
+        }
+      }
+      if (!label.isEmpty()) {
+        TextLayout textLayout =
+            new TextLayout(
+                label, styler.getLabelsFont(), new FontRenderContext(null, true, false));
+        Shape shape = textLayout.getOutline(null);
+
+        Rectangle2D labelBounds = shape.getBounds2D();
+        double labelnWidth = labelBounds.getWidth();
+        double labelHeight = labelBounds.getHeight();
+
+        double tx = xCenter - labelnWidth / 2;
+        double ty = yCenter + labelHeight / 2;
+        if (styler.getArcAngle() > 180) {
+          ty += height_r * Math.cos(Math.toRadians((360 - styler.getArcAngle()) / 2)) / 2;
+        } else {
+          ty -= yDiameter / 4;
+        }
+
+        g.setColor(styler.getChartFontColor());
+        g.setFont(styler.getAxisTitleFont());
+        AffineTransform orig = g.getTransform();
+        AffineTransform at = new AffineTransform();
+
+        at.translate(tx, ty);
+
+        g.transform(at);
+        g.fill(shape);
+        g.setTransform(orig);
+      }
+    }
+  }
+
+  private void drawMarks(Graphics2D g, boolean axisTickLabelsVisible, double arcAngle, double donutThickness, int axisTitlePadding, double[] axisTickValues, int markCount, String[] axisTickLabels, double xDiameter, double yDiameter, double xCenter, double yCenter) {
     if (markCount > 0 && styler.isAxisTicksMarksVisible()) {
       g.setColor(styler.getAxisTickMarksColor());
       g.setStroke(styler.getAxisTickMarksStroke());
 
       for (int i = 0; i < markCount; i++) {
-        double angle = -axisTickValues[i] * arcAngle + (arcAngle) / 2 + 90;
+        double angle = -axisTickValues[i] * arcAngle + arcAngle / 2 + 90;
         double radians = Math.toRadians(angle);
         double cos = Math.cos(radians);
         double sin = Math.sin(radians);
@@ -133,128 +183,97 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
         g.setTransform(orig);
       }
     }
+  }
 
-    Map<String, S> map = chart.getSeriesMap();
-    for (S series : map.values()) {
-      if (!series.isEnabled()) {
+  private void drawShape(Graphics2D g, Rectangle2D pieBounds, double arcAngle, double donutThickness, double[] fromArr, double[] toArr, Color[] donutColorArr, double dountStartAngle) {
+    for (int i = 0; i < donutColorArr.length; i++) {
+      double from = fromArr[i];
+      double to = toArr[i];
+      if (to <= from || to < 0 || from < 0) {
         continue;
       }
-
-      // draw title
-      if (styler.isAxisTitleVisible()) {
-        TextLayout textLayout =
-            new TextLayout(
-                series.getName(),
-                styler.getAxisTitleFont(),
-                new FontRenderContext(null, true, false));
-        Shape shape = textLayout.getOutline(null);
-
-        Rectangle2D labelBounds = shape.getBounds2D();
-        double labelWidth = labelBounds.getWidth();
-        double labelHeight = labelBounds.getHeight();
-
-        // calculate corrections
-        double tx = xCenter - labelWidth / 2;
-        double ty = yCenter - yDiameter / 2 + labelHeight / 2;
-
-        g.setColor(styler.getChartFontColor());
-        g.setFont(styler.getAxisTitleFont());
-        AffineTransform orig = g.getTransform();
-        AffineTransform at = new AffineTransform();
-
-        at.translate(tx, ty);
-
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
-      }
-
-      double value = series.getValue();
-      // draw title
-      if (styler.isLabelsVisible()) {
-        String label = series.getLabel();
-        if (label == null) {
-          if (styler.getDecimalPattern() != null) {
-            DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
-            label = df.format(value);
-          } else {
-            label = df.format(value);
-          }
-        }
-        if (!label.isEmpty()) {
-          TextLayout textLayout =
-              new TextLayout(
-                  label, styler.getLabelsFont(), new FontRenderContext(null, true, false));
-          Shape shape = textLayout.getOutline(null);
-
-          Rectangle2D labelBounds = shape.getBounds2D();
-          double labelnWidth = labelBounds.getWidth();
-          double labelHeight = labelBounds.getHeight();
-
-          double tx = xCenter - labelnWidth / 2;
-          double ty = yCenter + labelHeight / 2;
-          if (styler.getArcAngle() > 180) {
-            ty += height_r * Math.cos(Math.toRadians((360 - styler.getArcAngle()) / 2)) / 2;
-          } else {
-            ty -= yDiameter / 4;
-          }
-
-          g.setColor(styler.getChartFontColor());
-          g.setFont(styler.getAxisTitleFont());
-          AffineTransform orig = g.getTransform();
-          AffineTransform at = new AffineTransform();
-
-          at.translate(tx, ty);
-
-          g.transform(at);
-          g.fill(shape);
-          g.setTransform(orig);
-        }
-      }
-
-      // draw arrow
-      double angle = -value * arcAngle + (arcAngle) / 2 + 90;
-
-      double radians = Math.toRadians(angle);
-      double arrowLengthPercentage = styler.getArrowLengthPercentage();
-      double arrowArcAngle = styler.getArrowArcAngle();
-      double arrowArcPercentage = styler.getArrowArcPercentage();
-      double xOffset = xCenter + Math.cos(radians) * (xDiameter * arrowLengthPercentage);
-      double yOffset = yCenter - Math.sin(radians) * (yDiameter * arrowLengthPercentage);
-
-      Path2D.Double path = new Path2D.Double();
-      if (styler.isToolTipsEnabled()) {
-        String label = series.getLabel();
-        if (label == null) {
-          if (styler.getDecimalPattern() != null) {
-            DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
-            label = df.format(value);
-          } else {
-            label = df.format(value);
-          }
-        }
-        toolTips.addData(path, xOffset, yOffset + 10, 0, label);
-      }
-      path.moveTo(xCenter, yCenter);
-
-      double[][] angleValues = {
-        {-arrowArcAngle, arrowArcPercentage}, {0, 1}, {arrowArcAngle, arrowArcPercentage}
-      };
-      for (double[] ds : angleValues) {
-        radians = Math.toRadians(angle - ds[0]);
-
-        double diameterPerct = arrowLengthPercentage * ds[1];
-        xOffset = xCenter + Math.cos(radians) * (xDiameter * diameterPerct);
-        yOffset = yCenter - Math.sin(radians) * (yDiameter * diameterPerct);
-        path.lineTo(xOffset, yOffset);
-      }
-
-      path.closePath();
-      g.setColor(styler.getArrowColor());
-      g.fill(path);
-      g.setColor(styler.getArrowColor());
-      g.draw(path);
+      double totalAngle = (to - from) * arcAngle;
+      double startAngle = dountStartAngle - from * arcAngle - totalAngle;
+      Shape donutSlice =
+          PlotContent_Pie.getDonutSliceShape(pieBounds, donutThickness, startAngle, totalAngle);
+      g.setColor(donutColorArr[i]);
+      g.fill(donutSlice);
+      g.draw(donutSlice);
     }
+  }
+
+  private void drawTitle(Graphics2D g, double yDiameter, double xCenter, double yCenter, S series) {
+    if (styler.isAxisTitleVisible()) {
+      TextLayout textLayout =
+          new TextLayout(
+              series.getName(),
+              styler.getAxisTitleFont(),
+              new FontRenderContext(null, true, false));
+      Shape shape = textLayout.getOutline(null);
+
+      Rectangle2D labelBounds = shape.getBounds2D();
+      double labelWidth = labelBounds.getWidth();
+      double labelHeight = labelBounds.getHeight();
+
+      // calculate corrections
+      double tx = xCenter - labelWidth / 2;
+      double ty = yCenter - yDiameter / 2 + labelHeight / 2;
+
+      g.setColor(styler.getChartFontColor());
+      g.setFont(styler.getAxisTitleFont());
+      AffineTransform orig = g.getTransform();
+      AffineTransform at = new AffineTransform();
+
+      at.translate(tx, ty);
+
+      g.transform(at);
+      g.fill(shape);
+      g.setTransform(orig);
+    }
+  }
+
+  private void DrawArrow(Graphics2D g, double arcAngle, double xDiameter, double yDiameter, double xCenter, double yCenter, S series, double value) {
+    double angle = -value * arcAngle + arcAngle / 2 + 90;
+
+    double radians = Math.toRadians(angle);
+    double arrowLengthPercentage = styler.getArrowLengthPercentage();
+    double arrowArcAngle = styler.getArrowArcAngle();
+    double arrowArcPercentage = styler.getArrowArcPercentage();
+    double xOffset = xCenter + Math.cos(radians) * (xDiameter * arrowLengthPercentage);
+    double yOffset = yCenter - Math.sin(radians) * (yDiameter * arrowLengthPercentage);
+
+    Path2D.Double path = new Path2D.Double();
+    if (styler.isToolTipsEnabled()) {
+      String label = series.getLabel();
+      if (label == null) {
+        if (styler.getDecimalPattern() != null) {
+          DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
+          label = df.format(value);
+        } else {
+          label = df.format(value);
+        }
+      }
+      toolTips.addData(path, xOffset, yOffset + 10, 0, label);
+    }
+    path.moveTo(xCenter, yCenter);
+
+    double[][] angleValues = {
+      {-arrowArcAngle, arrowArcPercentage}, {0, 1}, {arrowArcAngle, arrowArcPercentage}
+    };
+    for (double[] ds : angleValues) {
+      radians = Math.toRadians(angle - ds[0]);
+
+      double diameterPerct = arrowLengthPercentage * ds[1];
+      xOffset = xCenter + Math.cos(radians) * (xDiameter * diameterPerct);
+      yOffset = yCenter - Math.sin(radians) * (yDiameter * diameterPerct);
+      path.lineTo(xOffset, yOffset);
+    }
+
+    path.closePath();
+    g.setColor(styler.getArrowColor());
+    g.fill(path);
+    g.setColor(styler.getArrowColor());
+    g.draw(path);
   }
 
   private Rectangle2D getPieBounds() {

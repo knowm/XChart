@@ -39,6 +39,5 @@ public class SeriesDataValues {
         if (notSameXAndY_Axis) {
             throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
         }
-        dataSanityCheck();
     }
 }

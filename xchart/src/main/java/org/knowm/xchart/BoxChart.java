@@ -24,6 +24,10 @@ public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
     axisPair = new AxisPair<BoxStyler, BoxSeries>(this);
     plot = new Plot_Box<BoxStyler, BoxSeries>(this);
     legend = new Legend_Marker<BoxStyler, BoxSeries>(this);
+    paintTarget.addChartPart(axisPair);
+    paintTarget.addChartPart(plot);
+    paintTarget.addChartPart(chartTitle);
+    paintTarget.addChartPart(legend);
   }
 
   public BoxChart(int width, int height, Theme theme) {
@@ -67,16 +71,9 @@ public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
 
   private void sanityCheck(String seriesName, List<? extends Number> yData) {
 
-    if (seriesMap.containsKey(seriesName)) {
-      throw new IllegalArgumentException(
-          "Series name > "
-              + seriesName
-              + " < has already been used. Use unique names for each series!!!");
-    }
-
-    sanityCheckYData(yData);
+    seriesNameDuplicateCheck(seriesName);
+    new SanityYChecker(yData).checkSanity();
   }
-
 
   public BoxSeries updateBoxSeries(String seriesName, int[] newYData) {
 
@@ -99,7 +96,7 @@ public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
 
   private void updateSanityCheck(String seriesName, List<? extends Number> newYData, BoxSeries series) {
 	checkSeriesValidity(seriesName, series);
-    sanityCheckYData(newYData);
+	new SanityYChecker(newYData).checkSanity();
   }
 
   @Override
@@ -132,5 +129,11 @@ public class BoxChart extends AbstractChart<BoxStyler, BoxSeries> {
 	  if (boxSeries.getMarkerColor() == null) { // wasn't set manually
 		  boxSeries.setMarkerColor(seriesColorMarkerLineStyle.getColor());
 	  }
+  }
+
+  private void checkSeriesValidity(String seriesName, Series series) {
+	if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
   }
 }

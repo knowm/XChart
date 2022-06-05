@@ -4,6 +4,7 @@ import java.awt.Color;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.MarkerSeries;
+import org.knowm.xchart.internal.series.MinMaxFactory;
 
 /** @author arthurmcgibbon */
 public class OHLCSeries extends MarkerSeries {
@@ -215,45 +216,11 @@ public class OHLCSeries extends MarkerSeries {
     calculateMinMax();
   }
 
-  /**
-   * Finds the min and max of a dataset
-   *
-   * @param lows
-   * @param highs
-   * @return
-   */
-  private double[] findMinMax(double[] lows, double[] highs) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (int i = 0; i < highs.length; i++) {
-
-      if (!Double.isNaN(highs[i]) && highs[i] > max) {
-        max = highs[i];
-      }
-      if (!Double.isNaN(lows[i]) && lows[i] < min) {
-        min = lows[i];
-      }
-    }
-
-    return new double[] {min, max};
-  }
-
   @Override
   protected void calculateMinMax() {
-
-    double[] xMinMax = findMinMax(xData, xData);
-    xMin = xMinMax[0];
-    xMax = xMinMax[1];
-    final double[] yMinMax;
-    if (yData == null) {
-      yMinMax = findMinMax(lowData, highData);
-    } else {
-      yMinMax = findMinMax(yData, yData);
-    }
-    yMin = yMinMax[0];
-    yMax = yMinMax[1];
+	  setXYMinMax(MinMaxFactory
+			.getMinMaxCalculator(lowData, highData)
+			.calcualteMinMax(xData, yData));
   }
 
   public double[] getXData() {

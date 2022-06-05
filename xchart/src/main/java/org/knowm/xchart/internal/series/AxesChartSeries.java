@@ -26,6 +26,10 @@ public abstract class AxesChartSeries extends Series {
   /** Line Width */
   private float lineWidth = -1.0f;
 
+  protected final int XMIN = 0;
+  protected final int XMAX = 1;
+  protected final int YMIN = 2;
+  protected final int YMAX = 3;
   /**
    * Constructor
    *
@@ -54,6 +58,13 @@ public abstract class AxesChartSeries extends Series {
   }
 
   protected abstract void calculateMinMax();
+  
+  protected void setXYMinMax(double[] minMaxs) {
+		xMin = minMaxs[XMIN];
+		xMax = minMaxs[XMAX];
+		yMin = minMaxs[YMIN];
+		yMax = minMaxs[YMAX];
+  }
 
   public double getXMin() {
 
