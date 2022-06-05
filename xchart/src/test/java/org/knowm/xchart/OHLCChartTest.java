@@ -67,7 +67,7 @@ public class OHLCChartTest extends TestCase {
      *Input : addSeries
      * Expected : not fail
      */
-    @Test
+    @Test 
     public void testCreatListChart() {
 
         OHLCChart testchart = new OHLCChart(800, 600);
