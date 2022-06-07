@@ -11,7 +11,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 public class HeatMapTest {
-    public static final double EBSILON = 0.00001;
+    public static final double EPSILON = 0.00001;
     /*
     *Purpose : Check for Width, Height, Title
     * Input: build() with width(1000), height(600), title("Bound Test")
@@ -223,8 +223,8 @@ public class HeatMapTest {
             }
         }
         chart.addSeries("test",xData,yData,heatData);
-        assertEquals(0,chart.getHeatMapSeries().getMin(),EBSILON);
-        assertEquals(6,chart.getHeatMapSeries().getMax(),EBSILON);
+        assertEquals(0,chart.getHeatMapSeries().getMin(), EPSILON);
+        assertEquals(6,chart.getHeatMapSeries().getMax(), EPSILON);
     }
     /*
      *Purpose : Check for Exception when you call addSeries twice
@@ -277,8 +277,8 @@ public class HeatMapTest {
         chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
         chart.updateSeries("test",xData,yData,heatData);
         assertEquals(4,chart.getHeatMapSeries().heatData.size());
-        assertEquals(5,chart.getHeatMapSeries().getMin(),EBSILON);
-        assertEquals(8,chart.getHeatMapSeries().getMax(),EBSILON);
+        assertEquals(5,chart.getHeatMapSeries().getMin(), EPSILON);
+        assertEquals(8,chart.getHeatMapSeries().getMax(), EPSILON);
     }
     /*
      *Purpose : Check for AxisMinMax
@@ -290,10 +290,10 @@ public class HeatMapTest {
         HeatMapChart chart = new HeatMapChartBuilder().build();
         chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
 //        assertEquals(null, chart.getHeatMapSeries().getLegendRenderType());
-        assertEquals(1, chart.getHeatMapSeries().getYMin(), EBSILON);
-        assertEquals(3, chart.getHeatMapSeries().getYMax(), EBSILON);
-        assertEquals(1, chart.getHeatMapSeries().getXMin(), EBSILON);
-        assertEquals(4, chart.getHeatMapSeries().getXMax(), EBSILON);
+        assertEquals(1, chart.getHeatMapSeries().getYMin(), EPSILON);
+        assertEquals(3, chart.getHeatMapSeries().getYMax(), EPSILON);
+        assertEquals(1, chart.getHeatMapSeries().getXMin(), EPSILON);
+        assertEquals(4, chart.getHeatMapSeries().getXMax(), EPSILON);
     }
     /*
      *Purpose : Check for Getters in HeatmapSeries
@@ -308,4 +308,19 @@ public class HeatMapTest {
         assertEquals(3,series.getYData().size());
         assertEquals(12,series.getHeatData().size());
     }
+    /*
+     *Purpose : Check for Setters in HeatmapSeries
+     * Input: defaultXData, defaultYData, defaultHeatData, setMin(-1), setMax(1)
+     * Expected: getMin()-> -1 , getMax() -> 1
+     */
+    @Test
+    public void HeatmapSeriesSetMinMax(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        HeatMapSeries series = chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
+        series.setMin(-1);
+        series.setMax(1);
+        assertEquals(1,series.getMax(), EPSILON);
+        assertEquals(-1,series.getMin(), EPSILON);
+    }
+
 }
