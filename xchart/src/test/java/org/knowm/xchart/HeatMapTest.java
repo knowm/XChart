@@ -113,4 +113,17 @@ public class HeatMapTest {
         int[][] heatData = new int[0][3];
         chart.addSeries("Basic HeatMap", xData, yData, heatData);
     }
+    /*
+     *Purpose : Check for sanityCheck in HeatMapChart
+     * Input: xData = {1,2,3}, yData = {1,2,3} heatData = new int[2][0]
+     * Expected: IllegalArgumentException
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void SanityCheckHeatDataTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        int[] xData = {1,2,3};
+        int[] yData = {1,2,3};
+        int[][] heatData = new int[2][0];
+        chart.addSeries("Basic HeatMap", xData, yData, heatData);
+    }
 }
