@@ -9,6 +9,7 @@ import java.util.Random;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class HeatMapTest {
     public static final double EPSILON = 0.00001;
@@ -322,5 +323,17 @@ public class HeatMapTest {
         assertEquals(1,series.getMax(), EPSILON);
         assertEquals(-1,series.getMin(), EPSILON);
     }
-
+    /*
+     *Purpose : Check for Setters in HeatmapSeries
+     * Input: defaultXData, defaultYData, defaultHeatData, setMin(1), setMax(-1)
+     * Expected: getMin()<getMax()
+     */
+    @Test
+    public void WrongMinMaxTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        HeatMapSeries series = chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
+        series.setMin(1);
+        series.setMax(-1);
+        assertTrue(series.getMax()>series.getMin());
+    }
 }
