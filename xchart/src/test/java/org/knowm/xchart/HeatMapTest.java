@@ -352,4 +352,15 @@ public class HeatMapTest {
         }
 
     }
+    /*
+     *Purpose : Check for getLegendRenderType
+     * Input: defaultXData, defaultYData, defaultHeatData
+     * Expected: null
+     */
+    @Test
+    public void LegendRenderTypeTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        HeatMapSeries series = chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
+        assertEquals(null,series.getLegendRenderType());
+    }
 }
