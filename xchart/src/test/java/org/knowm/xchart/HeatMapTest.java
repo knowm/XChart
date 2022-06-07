@@ -18,7 +18,7 @@ public class HeatMapTest {
 
         HeatMapChart chart = new HeatMapChartBuilder().width(1000).height(600).title("Bound Test").build();
         assertEquals(1000,chart.getWidth());
-        assertEquals(600, chart.getWidth());
+        assertEquals(600, chart.getHeight());
         assertEquals("Bound Test",chart.getTitle());
     }
     /*
@@ -47,16 +47,16 @@ public class HeatMapTest {
     }
     /*
      *Purpose : Check for large heat data
-     * Input: addSeries(xData,yData,heatData) // these are 100000000 random heatMap data by x in [1,10000] and y in [1,10000]
+     * Input: addSeries(xData,yData,heatData) // these are 1000000 random heatMap data by x in [1,10000] and y in [1,10000]
      * Expected:
      * getSeriesMap().size() -> 1
-     * getSeriesMap().get("Basic HeatMap").heatData.size() == 100000000
+     * getSeriesMap().get("Basic HeatMap").heatData.size() == 1000000
      */
     @Test
     public void BigHeatdataTest(){
         HeatMapChart chart = new HeatMapChartBuilder().width(1000).height(600).title("Bound Test").build();
-        int[] xData = new int[10000];
-        int[] yData = new int[10000];
+        int[] xData = new int[1000];
+        int[] yData = new int[1000];
         int[][] heatData = new int[xData.length][yData.length];
         Random random = new Random();
         for (int i = 0; i < xData.length; i++){
@@ -71,6 +71,6 @@ public class HeatMapTest {
         chart.addSeries("Basic HeatMap", xData, yData, heatData);
 
         assertEquals(1, chart.getSeriesMap().size());
-        assertEquals(100000000,chart.getSeriesMap().get("Basic HeatMap").heatData.size());
+        assertEquals(1000000,chart.getSeriesMap().get("Basic HeatMap").heatData.size());
     }
 }
