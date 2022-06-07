@@ -11,6 +11,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 public class HeatMapTest {
+    public static final double EBSILON = 0.00001;
     /*
     *Purpose : Check for Width, Height, Title
     * Input: build() with width(1000), height(600), title("Bound Test")
@@ -222,8 +223,8 @@ public class HeatMapTest {
             }
         }
         chart.addSeries("test",xData,yData,heatData);
-        assertEquals(0,chart.getHeatMapSeries().getMin(),0.000001);
-        assertEquals(6,chart.getHeatMapSeries().getMax(),0.000001);
+        assertEquals(0,chart.getHeatMapSeries().getMin(),EBSILON);
+        assertEquals(6,chart.getHeatMapSeries().getMax(),EBSILON);
     }
     /*
      *Purpose : Check for Exception when you call addSeries twice
@@ -276,7 +277,23 @@ public class HeatMapTest {
         chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
         chart.updateSeries("test",xData,yData,heatData);
         assertEquals(4,chart.getHeatMapSeries().heatData.size());
-        assertEquals(5,chart.getHeatMapSeries().getMin(),0.00001);
-        assertEquals(8,chart.getHeatMapSeries().getMax(),0.00001);
+        assertEquals(5,chart.getHeatMapSeries().getMin(),EBSILON);
+        assertEquals(8,chart.getHeatMapSeries().getMax(),EBSILON);
     }
+    /*
+     *Purpose : Check for AxisMinMax
+     * Input: defaultXData, defaultYData, defaultHeatData
+     * Expected: getXMin -> 1,getXMax -> 4,getYMin ->1, getXMax -> 3
+     */
+    @Test
+    public void HeatmapSeriesAxisMinMaxTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
+//        assertEquals(null, chart.getHeatMapSeries().getLegendRenderType());
+        assertEquals(1, chart.getHeatMapSeries().getYMin(), EBSILON);
+        assertEquals(3, chart.getHeatMapSeries().getYMax(), EBSILON);
+        assertEquals(1, chart.getHeatMapSeries().getXMin(), EBSILON);
+        assertEquals(4, chart.getHeatMapSeries().getXMax(), EBSILON);
+    }
+
 }
