@@ -1,8 +1,8 @@
 package org.knowm.xchart;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.awt.Graphics2D;
 
