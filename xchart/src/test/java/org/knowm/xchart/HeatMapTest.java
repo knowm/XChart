@@ -336,4 +336,20 @@ public class HeatMapTest {
         series.setMax(-1);
         assertTrue(series.getMax()>series.getMin());
     }
+    /*
+     *Purpose : Check for HeatData
+     * Input: defaultXData, defaultYData, defaultHeatData, setMin(0), setMax(10)
+     * Expected: getMin()< (element in heatData) <getMax()
+     */
+    @Test
+    public void HeatDataRangeTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        HeatMapSeries series = chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
+        series.setMin(0);
+        series.setMax(10);
+        for(Number[] i:series.getHeatData()){
+            assertTrue(series.getMin()<=i[2].doubleValue() && i[2].doubleValue()<=series.getMax());
+        }
+
+    }
 }
