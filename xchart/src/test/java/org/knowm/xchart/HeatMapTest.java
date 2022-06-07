@@ -295,5 +295,17 @@ public class HeatMapTest {
         assertEquals(1, chart.getHeatMapSeries().getXMin(), EBSILON);
         assertEquals(4, chart.getHeatMapSeries().getXMax(), EBSILON);
     }
-
+    /*
+     *Purpose : Check for Getters in HeatmapSeries
+     * Input: defaultXData, defaultYData, defaultHeatData
+     * Expected: getXData().size -> 4, getYData().size  -> 3, getHeatData().size  -> 12
+     */
+    @Test
+    public void HeatmapSeriesGetDataTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        HeatMapSeries series = chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
+        assertEquals(4,series.getXData().size());
+        assertEquals(3,series.getYData().size());
+        assertEquals(12,series.getHeatData().size());
+    }
 }
