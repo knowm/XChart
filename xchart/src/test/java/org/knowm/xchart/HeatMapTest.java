@@ -261,4 +261,21 @@ public class HeatMapTest {
         HeatMapChart chart = new HeatMapChartBuilder().xAxisTitle("test x").yAxisTitle("test y").build();
         chart.updateSeries("test",defaultXData,defaultYData,defaultHeatData);
     }
+    /*
+     *Purpose : Check for updateSeries with initialization
+     * Input: defaultXData, defaultYData, defaultHeatData -> {1,2} , {1,2}, {{5,6},{7,8}}
+     * Expected: size -> 4, min -> 5, max ->8
+     */
+    @Test
+    public void UpdateSeriesTest1(){
+        HeatMapChart chart = new HeatMapChartBuilder().xAxisTitle("test x").yAxisTitle("test y").build();
+        int[] xData = {1, 2};
+        int[] yData = {1, 2};
+        int[][] heatData = {{5, 6},{7,8}};
+        chart.addSeries("test",defaultXData,defaultYData,defaultHeatData);
+        chart.updateSeries("test",xData,yData,heatData);
+        assertEquals(4,chart.getHeatMapSeries().heatData.size());
+        assertEquals(5,chart.getHeatMapSeries().getMin(),0.00001);
+        assertEquals(8,chart.getHeatMapSeries().getMax(),0.00001);
+    }
 }
