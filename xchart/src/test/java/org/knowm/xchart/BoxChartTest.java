@@ -65,6 +65,21 @@ public class BoxChartTest {
 	}
 	
 	/**
+	* Purpose: Remove existing series name.
+	* Input: removeSeries String "test"
+	* Expected:
+	* return seriesMap
+	* End without exception by seriesNameDuplicateCheck
+	*/ 
+	@Test
+	public void seriesNameRemoveTest() {
+		assertNotNull(boxChart.addSeries("test", new int[] {1, 2, 3, 4, 5}));
+		assertNotNull(boxChart.removeSeries("test"));
+		assertNotNull(boxChart.addSeries("test", new double[] {1.1, 2.2, 3.3
+				, 4.4, 5.5}));
+	}
+	
+	/**
 	* Purpose: Update with valid series data.
 	* Input: updateBoxSeries series.replaceData(int array), series.replaceData(double array)
 	* Expected:
