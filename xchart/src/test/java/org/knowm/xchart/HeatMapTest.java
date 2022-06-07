@@ -170,5 +170,27 @@ public class HeatMapTest {
         heatData.add(new Number[]{1,5,3});
         chart.addSeries("Basic HeatMap", xData, yData, heatData);
     }
+    /*
+     *Purpose : Check for sanityCheck in HeatMapChart, Exception for minus entry
+     * Input: xData = [1,2,3], yData = [1,2,3] heatData = [{1,1,2},{1,-1,1},{1,5,3}]
+     * Expected: IllegalArgumentException
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void SanityCheckHeatDataMinusTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        List<Number> xData = new ArrayList<>();
+        xData.add(1);
+        xData.add(2);
+        xData.add(3);
+        List<Number> yData = new ArrayList<>();
+        yData.add(1);
+        yData.add(2);
+        yData.add(3);
+        List<Number[]> heatData = new ArrayList<>();
+        heatData.add(new Number[]{1,1,2});
+        heatData.add(new Number[]{1,-1,1});
+        heatData.add(new Number[]{1,5,3});
+        chart.addSeries("Basic HeatMap", xData, yData, heatData);
+    }
 
 }
