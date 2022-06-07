@@ -198,12 +198,11 @@ public class HeatMapTest {
      * Expected: min = 0, max = 6
      */
     @Test
-    public void HeatMapSeriesMethodTest(){
+    public void HeatMapSeriesMinMaxTest(){
         HeatMapChart chart = new HeatMapChartBuilder().width(1000).height(600).title("Bound Test").build();
         int[] xData = {1, 2, 3, 4};
         int[] yData = {1, 2, 3};
         int[][] heatData = new int[xData.length][yData.length];
-        Random random = new Random();
         for (int i = 0; i < xData.length; i++) {
             for (int j = 0; j < yData.length; j++) {
                 heatData[i][j] = i*j;
@@ -212,6 +211,20 @@ public class HeatMapTest {
         chart.addSeries("test",xData,yData,heatData);
         assertEquals(0,chart.getHeatMapSeries().min,0.000001);
         assertEquals(6,chart.getHeatMapSeries().max,0.000001);
-
+    }
+    /*
+     *Purpose : Check for Exception when you call addSeries twice
+     * Input: xData = [1,2,3,4], yData = [1,2,3] heatData = [[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+     * then, Call addSeries() twice with these parameters.
+     * Expected: RuntimeException
+     */
+    @Test(expected = RuntimeException.class)
+    public void HeatMapSeriesSingletonTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().width(1000).height(600).title("Bound Test").build();
+        int[] xData = {1, 2, 3, 4};
+        int[] yData = {1, 2, 3};
+        int[][] heatData = new int[xData.length][yData.length]; // zeros array
+        chart.addSeries("test",xData,yData,heatData);
+        chart.addSeries("test2",xData,yData,heatData);
     }
 }
