@@ -239,6 +239,7 @@ public class HeatMapTest {
         int[][] heatData = new int[xData.length][yData.length]; // zeros array
         chart.addSeries("test",xData,yData,heatData);
         chart.addSeries("test2",xData,yData,heatData);
+
     }
     /*
      *Purpose : Check for setting xAxisTitle and yAxisTitle
@@ -258,7 +259,7 @@ public class HeatMapTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void UpdateSeriesTest2(){
-        HeatMapChart chart = new HeatMapChartBuilder().xAxisTitle("test x").yAxisTitle("test y").build();
+        HeatMapChart chart = new HeatMapChartBuilder().build();
         chart.updateSeries("test",defaultXData,defaultYData,defaultHeatData);
     }
     /*
@@ -268,7 +269,7 @@ public class HeatMapTest {
      */
     @Test
     public void UpdateSeriesTest1(){
-        HeatMapChart chart = new HeatMapChartBuilder().xAxisTitle("test x").yAxisTitle("test y").build();
+        HeatMapChart chart = new HeatMapChartBuilder().build();
         int[] xData = {1, 2};
         int[] yData = {1, 2};
         int[][] heatData = {{5, 6},{7,8}};

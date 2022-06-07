@@ -19,10 +19,10 @@ public class HeatMapSeries extends AxesChartSeries {
   List<? extends Number[]> heatData;
 
   // heatData value min
-  double min;
+  private double min;
 
   // heatData value max
-  double max;
+  private double max;
 
   /**
    * Constructor
