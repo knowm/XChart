@@ -222,8 +222,8 @@ public class HeatMapTest {
             }
         }
         chart.addSeries("test",xData,yData,heatData);
-        assertEquals(0,chart.getHeatMapSeries().min,0.000001);
-        assertEquals(6,chart.getHeatMapSeries().max,0.000001);
+        assertEquals(0,chart.getHeatMapSeries().getMin(),0.000001);
+        assertEquals(6,chart.getHeatMapSeries().getMax(),0.000001);
     }
     /*
      *Purpose : Check for Exception when you call addSeries twice
