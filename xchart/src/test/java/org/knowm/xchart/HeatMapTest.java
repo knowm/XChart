@@ -2,6 +2,8 @@ package org.knowm.xchart;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -84,6 +86,18 @@ public class HeatMapTest {
         assertEquals(800,chart.getWidth());
         assertEquals(600, chart.getHeight());
         assertEquals("",chart.getTitle());
-
+    }
+    /*
+     *Purpose : Check for sanityCheck in HeatMapChart
+     * Input: xData = {1,2,3}, yData = {} heatData = new int[0][3]
+     * Expected: IllegalArgumentException
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void SanityCheckYAxisTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        int[] xData = {1,2,3};
+        int[] yData = new int[0];
+        int[][] heatData = new int[0][3];
+        chart.addSeries("Basic HeatMap", xData, yData, heatData);
     }
 }
