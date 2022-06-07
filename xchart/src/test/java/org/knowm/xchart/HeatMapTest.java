@@ -227,4 +227,15 @@ public class HeatMapTest {
         chart.addSeries("test",xData,yData,heatData);
         chart.addSeries("test2",xData,yData,heatData);
     }
+    /*
+     *Purpose : Check for setting xAxisTitle and yAxisTitle
+     * Input: xAxisTitle("test x"), yAxisTitle("test y")
+     * Expected: getXAxisTitle() -> "test x" getYAxisTitle() -> "test y"
+     */
+    @Test
+    public void AxisTitleTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().xAxisTitle("test x").yAxisTitle("test y").build();
+        assertEquals("test x",chart.getXAxisTitle());
+        assertEquals("test y",chart.getYAxisTitle());
+    }
 }
