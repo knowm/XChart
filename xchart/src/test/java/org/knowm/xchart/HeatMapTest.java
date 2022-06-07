@@ -1,5 +1,6 @@
 package org.knowm.xchart;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,6 +16,24 @@ public class HeatMapTest {
     * Input: build() with width(1000), height(600), title("Bound Test")
     * Expected: getWidth() -> 1000, getHeight -> 600, getTitle -> "Bound Test"
      */
+    int[] defaultXData;
+    int[] defaultYData;
+    int[][] defaultHeatData;
+    @Before
+    public void setUp(){
+        int[] xData = {1, 2, 3, 4};
+        int[] yData = {1, 2, 3};
+        int[][] heatData = new int[xData.length][yData.length];
+        Random random = new Random();
+        for (int i = 0; i < xData.length; i++) {
+            for (int j = 0; j < yData.length; j++) {
+                heatData[i][j] = random.nextInt(1000);
+            }
+        }
+        defaultXData = xData;
+        defaultYData = yData;
+        defaultHeatData = heatData;
+    }
     @Test
     public void BoundTest() {
 
@@ -33,15 +52,9 @@ public class HeatMapTest {
     @Test
     public void AddSeriesTest() {
         HeatMapChart chart = new HeatMapChartBuilder().width(1000).height(600).title("Bound Test").build();
-        int[] xData = {1, 2, 3, 4};
-        int[] yData = {1, 2, 3};
-        int[][] heatData = new int[xData.length][yData.length];
-        Random random = new Random();
-        for (int i = 0; i < xData.length; i++) {
-            for (int j = 0; j < yData.length; j++) {
-                heatData[i][j] = random.nextInt(1000);
-            }
-        }
+        int[] xData = defaultXData;
+        int[] yData = defaultYData;
+        int[][] heatData = defaultHeatData;
         chart.addSeries("Basic HeatMap", xData, yData, heatData);
 
         assertEquals(1,chart.getSeriesMap().size());
@@ -237,5 +250,15 @@ public class HeatMapTest {
         HeatMapChart chart = new HeatMapChartBuilder().xAxisTitle("test x").yAxisTitle("test y").build();
         assertEquals("test x",chart.getXAxisTitle());
         assertEquals("test y",chart.getYAxisTitle());
+    }
+    /*
+     *Purpose : Check for updateSeries without initialization
+     * Input: defaultXData, defaultYData, defaultHeatData
+     * Expected: IllegalArgumentException
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void UpdateSeriesTest2(){
+        HeatMapChart chart = new HeatMapChartBuilder().xAxisTitle("test x").yAxisTitle("test y").build();
+        chart.updateSeries("test",defaultXData,defaultYData,defaultHeatData);
     }
 }
