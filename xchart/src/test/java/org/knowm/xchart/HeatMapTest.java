@@ -73,4 +73,17 @@ public class HeatMapTest {
         assertEquals(1, chart.getSeriesMap().size());
         assertEquals(1000000,chart.getSeriesMap().get("Basic HeatMap").heatData.size());
     }
+    /*
+     *Purpose : Check for Default HeatMapChartBuilder build()
+     * Input: chart build without call width(),height(),title() method
+     * Expected: getWidth() -> 800, getHeight -> 600, getTitle -> ""
+     */
+    @Test
+    public void DefaultBuildTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().build();
+        assertEquals(800,chart.getWidth());
+        assertEquals(600, chart.getHeight());
+        assertEquals("",chart.getTitle());
+
+    }
 }
