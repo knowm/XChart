@@ -192,5 +192,26 @@ public class HeatMapTest {
         heatData.add(new Number[]{1,5,3});
         chart.addSeries("Basic HeatMap", xData, yData, heatData);
     }
+    /*
+     *Purpose : Check for HeatMapSeries min, max
+     * Input: xData = [1,2,3,4], yData = [1,2,3] heatData = [[0,0,0,0],[0,1,2,3],[0,2,4,6]]
+     * Expected: min = 0, max = 6
+     */
+    @Test
+    public void HeatMapSeriesMethodTest(){
+        HeatMapChart chart = new HeatMapChartBuilder().width(1000).height(600).title("Bound Test").build();
+        int[] xData = {1, 2, 3, 4};
+        int[] yData = {1, 2, 3};
+        int[][] heatData = new int[xData.length][yData.length];
+        Random random = new Random();
+        for (int i = 0; i < xData.length; i++) {
+            for (int j = 0; j < yData.length; j++) {
+                heatData[i][j] = i*j;
+            }
+        }
+        chart.addSeries("test",xData,yData,heatData);
+        assertEquals(0,chart.getHeatMapSeries().min,0.000001);
+        assertEquals(6,chart.getHeatMapSeries().max,0.000001);
 
+    }
 }
