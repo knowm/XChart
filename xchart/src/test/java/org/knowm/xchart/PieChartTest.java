@@ -146,4 +146,20 @@ public class PieChartTest {
         String x = chart.getXAxisTitle();
         String y = chart.getYAxisTitle();
     }
+    /*
+     *Purpose : Check for updatePieSeries
+     * Input:  addSeries("a",1),addSeries("b",2),addSeries("c",3),updatePieSeries("a",4)
+     * Expected:  getValue-> 4
+     */
+    @Test
+    public void UpdateTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        PieSeries series = chart.addSeries("a",1);
+        chart.addSeries("b",2);
+        chart.addSeries("c",3);
+        chart.updatePieSeries("a",4);
+        assertEquals(4,chart.getSeriesMap().get("a").getValue());
+        assertEquals(4,series.getValue());
+    }
 }
