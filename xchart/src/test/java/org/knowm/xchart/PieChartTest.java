@@ -134,14 +134,16 @@ public class PieChartTest {
     }
     /*
      *Purpose : Check for AxisTitle
-     * Input:  build()
-     * Expected:  getXAxisTitle -> "" getYAxisTitle -> ""
+     * Input:  setXAxisTitle("x") setYAxisTitle("y")
+     * Expected:  RuntimeException
      */
-    @Test
+    @Test(expected = RuntimeException.class)
     public void AxisTitleTest(){
         PieChart chart =
                 new PieChartBuilder().build();
-        assertEquals("",chart.getXAxisTitle());
-        assertEquals("",chart.getYAxisTitle());
+        chart.setXAxisTitle("x");
+        chart.setYAxisTitle("y");
+        String x = chart.getXAxisTitle();
+        String y = chart.getYAxisTitle();
     }
 }
