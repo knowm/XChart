@@ -105,4 +105,16 @@ public class PieChartTest {
         chart.addSeries("test2",Integer.MAX_VALUE);
         assertEquals(Integer.MAX_VALUE*2.0,chart.getTotal(),EPSILON);
     }
+    /*
+     *Purpose : Check for addseries when it exist already
+     * Input:  addSeries("test",1) addSeries("test",2)
+     * Expected:  IllegalArgumentException
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void ReAddSeriesTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        chart.addSeries("test",1);
+        chart.addSeries("test",2);
+    }
 }
