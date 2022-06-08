@@ -585,5 +585,43 @@ public class XYChartTest {
 		// Series
 		chart.addSeries("test",xData, yData);	
 	}
+	
+	/**
+	* Purpose: test addSeries addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars)
+	* Input: addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars) put seriesName = "test", xData = [3.0, 4.0, 5.0], yData = [1.0, 2.0, 3.0], errorBars = [5.0, 6.0, 7.0]
+	* * Expected: seriesName = "test", xData = [3.0, 4.0, 5.0], yData = [1.0, 2.0, 3.0], errorBars = [5.0, 6.0, 7.0]
+	  * 
+	*/
+	@Test
+	public void testAddSeriesDoubleExtension2(){
+		//List<Integer> xData = new ArrayList<>();
+		double[] xData = {3.0, 4.0, 5.0};
+		double[] yData = {1.0, 2.0, 3.0};
+		double[] errorBarsData = {5.0, 6.0, 7.0};
+		
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test", xData, yData, errorBarsData);
+		assertThat(chart.getSeriesMap().get("test").getYData()).isEqualTo(yData);
+		assertThat(chart.getSeriesMap().get("test").getXData()).isEqualTo(xData);
+		assertThat(chart.getSeriesMap().get("test").getxAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(errorBarsData);
+	}
 
 }
