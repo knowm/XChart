@@ -623,5 +623,40 @@ public class XYChartTest {
 		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
 		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(errorBarsData);
 	}
+	
+	/**
+	* Purpose: test addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars, DataType dataType)
+	* Input: addSeries(String seriesName, double[] xData, double[] yData, double[] errorBars, DataType dataType) when X and Y-Axis sizes are not the same.
+	* * Expected: throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!")
+	  * 
+	*/
+	@Test
+	public void testAddSeriesDefault(){
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("X and Y-Axis sizes are not the same!!!");
+		
+		double[] xData = {1.0, 2.0, 3.0};
+	    double[] yData = {0.001, 0.01, 0.1, 1.0};
+	    double[] errorBarsData = {3.0, 4.0, 5.0, 6.0};
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test",xData, yData, errorBarsData);	
+	}
 
 }
