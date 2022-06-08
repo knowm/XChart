@@ -322,5 +322,44 @@ public class XYChartTest {
 		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
 		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(null);
 	}
+	
+	/**
+	* Purpose: test addSeries addSeries(String seriesName, int[] xData, int[] yData)
+	* Input: addSeries(String seriesName, int[] xData, int[] yData) put seriesName = "test", xData = [3, 4, 5], yData = [1, 2, 3]
+	* * Expected: seriesName = "test", xData = [3.0, 4.0, 5.0], yData = [1.0, 2.0, 3.0]
+	  * 
+	*/
+	@Test
+	public void testAddSeriesIntExtension2(){
+		//List<Integer> xData = new ArrayList<>();
+		int[] xData = {3, 4, 5};
+		double[] xDataDouble = {3.0, 4.0, 5.0};
+		int[] yData = {1, 2, 3};
+		double[] yDataDouble = {1.0, 2.0, 3.0};
+		
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test",xData, yData);
+		assertThat(chart.getSeriesMap().get("test").getYData()).isEqualTo(yDataDouble);//if yData == int, convert from int to double
+		assertThat(chart.getSeriesMap().get("test").getXData()).isEqualTo(xDataDouble);// if xData == int, convert from int to double
+		assertThat(chart.getSeriesMap().get("test").getxAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(null);
+	}
 
 }
