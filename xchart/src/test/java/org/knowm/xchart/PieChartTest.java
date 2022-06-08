@@ -220,6 +220,28 @@ public class PieChartTest {
                 new PieChartBuilder().build();
         PieSeries series = chart.addSeries("a",1);
         assertEquals(null,series.getLegendRenderType());
-
+    }
+    /*
+     *Purpose : Check for getLegendRenderType
+     * Input:  addSeries("a",1)
+     * Expected:  getLegendRenderType -> null
+     */
+    @Test
+    public void sex(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        PieSeries series = chart.addSeries("a",1);
+        assertEquals(null,series.getLegendRenderType());
+    }
+    /*
+     *Purpose : Check for construct PieSeries
+     * Input: "a",1
+     * Expected: getLabel ->"a", getValue -> 1
+     */
+    @Test
+    public void NewPieSeriesTest(){
+        PieSeries series =new PieSeries("a",1);
+        assertEquals(1,series.getValue());
+        assertEquals("a",series.getLabel());
     }
 }
