@@ -157,4 +157,31 @@ public class RadarChartTest {
 	    chart.addSeries("New System", new double[] {0.67, 0.73, 0.97, 0.95, 0.93, 0.73}, null);
 	    chart.addSeries("New System", new double[] {0.37, 0.93, 0.57, 0.55, 0.33, 0.73});
 	}
+	
+	/**
+	* Purpose: Check Condition (values == null) in SanityCheck
+	* Input: SanityCheck() RadarChart with (values == null)
+	* * Expected: IllegalArgumentException("Values data cannot be null!!!")
+	  * 
+	*/
+	@Test
+	public void testSanityCheck3() {
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Values data cannot be null!!!");
+		
+		RadarChart chart =
+		        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+	    chart.getStyler().setToolTipsEnabled(true);
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+	    chart.setRadiiLabels(
+	            new String[] {
+	              "Sales",
+	              "Marketing",
+	              "Development",
+	              "Customer Support",
+	              "Information Technology",
+	              "Administration"
+	            });
+	    chart.addSeries("New System", null, null);
+	}
 }
