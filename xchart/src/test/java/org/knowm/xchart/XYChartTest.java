@@ -543,5 +543,47 @@ public class XYChartTest {
 		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
 		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(null);
 	}
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+	
+	/**
+	* Purpose: test getDataType(List<?> data)
+	* Input: getDataType(List<?> data) when neither dataType is DataType.Date nor DataType.Number
+	* * Expected: throw new IllegalArgumentException("Series data must be either Number or Date type!!!");
+	  * 
+	*/
+	@Test
+	public void testGetDataType(){
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Series data must be either Number or Date type!!!");
+		
+		List<String> xData = new ArrayList<>();
+	    List<Double> yData = new ArrayList<>();
+	    for (int i = -3; i <= 0; i++) {
+	      xData.add(Integer.toString(i));
+	      yData.add(Math.pow(10, i));
+	    }
+	    double[] yDataDouble = {0.001, 0.01, 0.1, 1.0};
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test",xData, yData);	
+	}
 
 }
