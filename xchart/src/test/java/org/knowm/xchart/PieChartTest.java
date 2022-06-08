@@ -14,7 +14,7 @@ public class PieChartTest {
     /*
      *Purpose : Check for Width and Height and Title
      * Input: width(800), height(600), title("test title")
-     * Expected: getMin()<getMax()
+     * Expected: getWidth-> 800, getHeight-> 600, getTitle ->"test title"
      */
     @Test
     public void BuildTest(){
