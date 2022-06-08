@@ -132,4 +132,16 @@ public class PieChartTest {
         assertEquals(10000000,chart.getSeriesMap().size());
         assertEquals(0,chart.getTotal(),EPSILON);
     }
+    /*
+     *Purpose : Check for AxisTitle
+     * Input:  build()
+     * Expected:  getXAxisTitle -> "" getYAxisTitle -> ""
+     */
+    @Test
+    public void AxisTitleTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        assertEquals("",chart.getXAxisTitle());
+        assertEquals("",chart.getYAxisTitle());
+    }
 }
