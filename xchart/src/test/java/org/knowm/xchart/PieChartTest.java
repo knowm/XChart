@@ -2,6 +2,7 @@ package org.knowm.xchart;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.knowm.xchart.style.Styler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,5 +190,23 @@ public class PieChartTest {
         assertEquals(1,series.getValue());
         series.setValue(4);
         assertEquals(4,series.getValue());
+    }
+    /*
+     *Purpose : Check for Changing PieSeriesRenderStyle
+     * Input:  setChartPieSeriesRenderStyle(->Pie->Donut->Default)
+     * Expected:  setChartPieSeriesRenderStyle(null->Pie->Donut->Pie)
+     */
+    @Test
+    public void RenderStyleChangeTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        PieSeries series = chart.addSeries("a",1);
+        assertEquals(null,series.getChartPieSeriesRenderStyle());
+        series.setChartPieSeriesRenderStyle(PieSeries.PieSeriesRenderStyle.Pie);
+        assertEquals(PieSeries.PieSeriesRenderStyle.Pie,series.getChartPieSeriesRenderStyle());
+        series.setChartPieSeriesRenderStyle(PieSeries.PieSeriesRenderStyle.Donut);
+        assertEquals(PieSeries.PieSeriesRenderStyle.Donut,series.getChartPieSeriesRenderStyle());
+        series.setChartPieSeriesRenderStyle(chart.getStyler().getDefaultSeriesRenderStyle());
+        assertEquals(PieSeries.PieSeriesRenderStyle.Pie,series.getChartPieSeriesRenderStyle());
     }
 }
