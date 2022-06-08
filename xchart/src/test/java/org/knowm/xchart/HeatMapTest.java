@@ -353,4 +353,18 @@ public class HeatMapTest {
 
     }
 
+    /*
+     *Purpose : Check for YAxisGroupTitle
+     * Input: setYAxisGroupTitle (0,"Y1") (1, "Y2")
+     * Expected: RuntimeException
+     */
+    @Test
+    public void AxisGroupTitleTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        chart.setYAxisGroupTitle(0,"Y1");
+        chart.setYAxisGroupTitle(1,"Y2");
+        assertEquals("Y1",chart.getYAxisGroupTitle(0));
+        assertEquals("Y2",chart.getYAxisGroupTitle(1));
+    }
 }

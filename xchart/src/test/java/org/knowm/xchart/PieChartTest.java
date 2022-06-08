@@ -295,5 +295,7 @@ public class PieChartTest {
                 new PieChartBuilder().build();
         chart.setYAxisGroupTitle(0,"Y1");
         chart.setYAxisGroupTitle(1,"Y2");
+        chart.getYAxisGroupTitle(0);
+        chart.getYAxisGroupTitle(1);
     }
 }
