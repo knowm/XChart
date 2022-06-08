@@ -209,4 +209,17 @@ public class PieChartTest {
         series.setChartPieSeriesRenderStyle(chart.getStyler().getDefaultSeriesRenderStyle());
         assertEquals(PieSeries.PieSeriesRenderStyle.Pie,series.getChartPieSeriesRenderStyle());
     }
+    /*
+     *Purpose : Check for getLegendRenderType
+     * Input:  addSeries("a",1)
+     * Expected:  getLegendRenderType -> null
+     */
+    @Test
+    public void LegendRenderTypeTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        PieSeries series = chart.addSeries("a",1);
+        assertEquals(null,series.getLegendRenderType());
+
+    }
 }
