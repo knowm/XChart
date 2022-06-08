@@ -966,4 +966,68 @@ public class XYChartTest {
 		chart.updateXYSeries("test", xData, yData, errorBarsData);	
 	}
 
+	/**
+	* Purpose: test updateXYSeries(String seriesName,
+							      List<?> newXData,
+							      List<? extends Number> newYData,
+							      List<? extends Number> newErrorBarData)
+	* Input: updateXYSeries(String seriesName,
+						      List<?> newXData,
+						      List<? extends Number> newYData,
+						      List<? extends Number> newErrorBarData)
+	*  xData : {1.0, 2.0} -> {2.0, 4.0}, yData : {3.0, 6.0} -> {6.0, 9.0}, errorBarsData : {4.0, 4.5} -> {8.0, 9.0}
+	* * Expected: xData : {1.0, 2.0}, yData : {6.0, 9.0}, errorBarsData : {8.0, 9.0}
+	  * 
+	*/
+	@Test
+	public void testUpdateXYSeriesListDefaultCase(){
+		double[] xData = {1.0, 2.0};
+		double[] yData = {3.0 , 6.0};
+		double[] errorBarsData = {4.0, 4.5};
+		
+		List<Integer> newXData = new ArrayList<>();
+	    List<Double> newYData = new ArrayList<>();
+	    List<Double> newErrorBarData = new ArrayList<>();
+	    
+	    for (int i = -3; i <= -2; i++) {
+	    	newXData.add(i);
+	    	newYData.add((double)i*2);
+	    	newErrorBarData.add((double)i*3);
+	    }
+		
+		double[] updatedXData = {-3.0, -2.0};
+		double[] updatedYData = {-6.0, -4.0};
+		double[] updatedErrorBarsData = {-9.0, -6.0};
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test", xData, yData, errorBarsData);	
+		assertThat(chart.getSeriesMap().get("test").getYData()).isEqualTo(yData);
+		assertThat(chart.getSeriesMap().get("test").getXData()).isEqualTo(xData);
+		assertThat(chart.getSeriesMap().get("test").getxAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(errorBarsData);
+		
+		chart.updateXYSeries("test", newXData, newYData, newErrorBarData);
+		assertThat(chart.getSeriesMap().get("test").getYData()).isEqualTo(updatedYData);
+		assertThat(chart.getSeriesMap().get("test").getXData()).isEqualTo(updatedXData);
+		assertThat(chart.getSeriesMap().get("test").getxAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(updatedErrorBarsData);
+	}
 }
