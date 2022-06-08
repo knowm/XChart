@@ -445,5 +445,62 @@ public class XYChartTest {
 		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
 		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(null);
 	}
+	
+	/**
+	* Purpose: test XYSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) when xData type is Date
+	* Input: addSeries(String seriesName, List<?> xData, List<? extends Number> yData, List<? extends Number> errorBars) put seriesName = "test", xData = [1 + ".10.2008", 2 + ".10.2008", 3 + ".10.2008"], yData = [1.0, 2.0, 3.0]
+	* * Expected: seriesName = "test", xAxisDataType = DataType.Date, yData = [1.0, 2.0, 3.0]
+	  * 
+	*/
+	@Test
+	public void testAddSeriesListDateCase(){
+		List<Date> xData = new ArrayList<Date>();
+	    List<Double> yData = new ArrayList<Double>();
+
+	    DateFormat simpleDataFormat = new SimpleDateFormat("dd.MM.yyyy");
+	    Date date = null;
+	    for (int i = 1; i <= 3; i++) {
+
+	      try {
+	        date = simpleDataFormat.parse(i + ".10.2008");
+	      } catch (ParseException e) {
+	        e.printStackTrace();
+	      }
+	      xData.add(date);
+	      yData.add((double)i);
+	    }
+	    
+	    double[] yDataDouble = {1.0, 2.0, 3.0};
+	    try {
+	    	double[] xDataDouble = {((Date)simpleDataFormat.parse(1 + ".10.2008")).getTime(),((Date)simpleDataFormat.parse(2 + ".10.2008")).getTime(),((Date)simpleDataFormat.parse(3 + ".10.2008")).getTime()};
+	     
+	    	// Create Chart
+			XYChart chart =
+			    new XYChartBuilder()
+			        .width(800)
+			        .height(600)
+			        .title(getClass().getSimpleName())
+			        .xAxisTitle("Power")
+			        .yAxisTitle("Value")
+			        .build();
+			
+			// Customize Chart
+			chart.getStyler().setChartTitleVisible(true);
+			chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+			chart.getStyler().setYAxisLogarithmic(true);
+			chart.getStyler().setXAxisLabelRotation(45);
+			
+			// Series
+			chart.addSeries("test",xData, yData);
+			assertThat(chart.getSeriesMap().get("test").getYData()).isEqualTo(yDataDouble);
+			assertThat(chart.getSeriesMap().get("test").getXData()).isEqualTo(xDataDouble);
+			assertThat(chart.getSeriesMap().get("test").getxAxisDataType()).isEqualTo(DataType.Date);
+			assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
+			assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(null);
+	    
+	    } catch (ParseException e) {
+	        e.printStackTrace();
+	      }
+	}
 
 }
