@@ -176,4 +176,18 @@ public class PieChartTest {
         assertEquals(4,chart.getSeriesMap().get("a").getValue());
         assertEquals(4,series.getValue());
     }
+    /*
+     *Purpose : Check for setter and getter of value
+     * Input:  addSeries("a",1),setValue(4)
+     * Expected:  getValue-> (1 -> 4)
+     */
+    @Test
+    public void ValueGetSetTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        PieSeries series = chart.addSeries("a",1);
+        assertEquals(1,series.getValue());
+        series.setValue(4);
+        assertEquals(4,series.getValue());
+    }
 }
