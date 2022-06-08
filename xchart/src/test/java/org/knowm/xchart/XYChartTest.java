@@ -95,5 +95,41 @@ public class XYChartTest {
 		assertThat(xyChart.getYAxisTitle()).isEqualTo("y-test");
 		assertEquals((new GGPlot2Theme().getClass()), xyChart.getStyler().getTheme().getClass());
 	}
+	
+	/**
+	* Purpose: test addSeries addSeries(String seriesName, double[] yData)
+	* Input: addSeries(String seriesName, double[] yData) put seriesName = "test", yData = [1.0, 2.0, 3.0]
+	* * Expected: seriesName = "test", yData = [1.0, 2.0, 3.0]
+	  * 
+	*/
+	@Test
+	public void testAddSeriesDoubleExtension(){
+		//List<Integer> xData = new ArrayList<>();
+		double[] yData = {1.0, 2.0, 3.0};
+		
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test", yData);
+		assertThat(chart.getSeriesMap().get("test").getYData()).isEqualTo(yData);
+		assertThat(chart.getSeriesMap().get("test").getXData()).isEqualTo(new double[] {1.0, 2.0, 3.0});// if Xdata == null, Utils.getGeneratedDataAsArray(newYData.length);
+		assertThat(chart.getSeriesMap().get("test").getxAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(null);
+	}
 
 }
