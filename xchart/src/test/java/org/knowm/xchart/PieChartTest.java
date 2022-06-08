@@ -117,4 +117,19 @@ public class PieChartTest {
         chart.addSeries("test",1);
         chart.addSeries("test",2);
     }
+    /*
+     *Purpose : Check for addseries when it exist already
+     * Input:  addSeries("test"+i,0) * 10000000 times
+     * Expected:  size -> 10000000, getTotal -> 0
+     */
+    @Test
+    public void ManyDataTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        for(int i=0;i<10000000;i++){
+            chart.addSeries("test"+i,0);
+        }
+        assertEquals(10000000,chart.getSeriesMap().size());
+        assertEquals(0,chart.getTotal(),EPSILON);
+    }
 }
