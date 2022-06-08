@@ -72,4 +72,20 @@ public class RadarChartTest {
 		assertThat(radarChart.getHeight()).isEqualTo(5);
 		assertEquals((new GGPlot2Theme().getClass()), radarChart.getStyler().getTheme().getClass());
 	}
+	
+	/**
+	* Purpose: test constructor RadarChart(RadarChartBuilder radarChartBuilder)
+	* Input: RadarChart(RadarChartBuilder radarChartBuilder) put width = 3, height = 5, charttheme = GGPlot2, title = "test" through RadarChartBuilder
+	* * Expected: Width = 3, Height = 5, Theme = GGPlot2Theme, Title = "test"
+	  * 
+	*/
+	@Test
+	public void testConstructor4(){
+		RadarChart radarChart = new RadarChartBuilder().width(3).height(5).title("test").theme(ChartTheme.GGPlot2).build();
+		
+		assertThat(radarChart.getWidth()).isEqualTo(3);
+		assertThat(radarChart.getHeight()).isEqualTo(5);
+		assertThat(radarChart.getTitle()).isEqualTo("test");
+		assertEquals((new GGPlot2Theme().getClass()), radarChart.getStyler().getTheme().getClass());
+	}
 }
