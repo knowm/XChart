@@ -14,14 +14,27 @@ public class PieChartTest {
     /*
      *Purpose : Check for Width and Height and Title
      * Input: width(800), height(600), title("test title")
-     * Expected: getWidth-> 800, getHeight-> 600, getTitle ->"test title"
+     * Expected: getWidth-> 1000, getHeight-> 500, getTitle ->"test title"
      */
     @Test
     public void BuildTest(){
         PieChart chart =
-                new PieChartBuilder().width(800).height(600).title("test title").build();
+                new PieChartBuilder().width(1000).height(500).title("test title").build();
+        assertEquals(1000,chart.getWidth());
+        assertEquals(500,chart.getHeight());
+        assertEquals("test title",chart.getTitle());
+    }
+    /*
+     *Purpose : Check for default build without additional parameters
+     * Input: build
+     * Expected:  getWidth-> 800, getHeight-> 600, getTitle ->""
+     */
+    @Test
+    public void DefaultBuildTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
         assertEquals(800,chart.getWidth());
         assertEquals(600,chart.getHeight());
-        assertEquals("test title",chart.getTitle());
+        assertEquals("",chart.getTitle());
     }
 }
