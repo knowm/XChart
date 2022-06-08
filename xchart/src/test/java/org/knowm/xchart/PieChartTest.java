@@ -12,11 +12,16 @@ import static org.junit.Assert.assertTrue;
 
 public class PieChartTest {
     /*
-     *Purpose : Check for Setters in HeatmapSeries
-     * Input: defaultXData, defaultYData, defaultHeatData, setMin(1), setMax(-1)
+     *Purpose : Check for Width and Height and Title
+     * Input: width(800), height(600), title("test title")
      * Expected: getMin()<getMax()
      */
     @Test
-    public void Test(){
+    public void BuildTest(){
+        PieChart chart =
+                new PieChartBuilder().width(800).height(600).title("test title").build();
+        assertEquals(800,chart.getWidth());
+        assertEquals(600,chart.getHeight());
+        assertEquals("test title",chart.getTitle());
     }
 }
