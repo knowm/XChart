@@ -62,5 +62,20 @@ public class XYChartTest {
 		assertThat(xyChart.getHeight()).isEqualTo(5);
 		assertEquals((new GGPlot2Theme().getClass()), xyChart.getStyler().getTheme().getClass());
 	}
+	
+	/**
+	* Purpose: test constructor XYChart(int width, int height, ChartTheme chartTheme)
+	* Input: XYChart(int width, int height, ChartTheme chartTheme) put Width = 3, Height = 5, ChartTheme = GGPlot2
+	* * Expected: Width = 3, Height = 5, Theme = GGPlot2Theme
+	  * 
+	*/
+	@Test
+	public void testConstructor3(){
+		XYChart xyChart = new XYChart(3, 5, ChartTheme.GGPlot2);
+		
+		assertThat(xyChart.getWidth()).isEqualTo(3);
+		assertThat(xyChart.getHeight()).isEqualTo(5);
+		assertEquals((new GGPlot2Theme().getClass()), xyChart.getStyler().getTheme().getClass());
+	}
 
 }
