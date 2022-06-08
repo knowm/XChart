@@ -356,7 +356,7 @@ public class HeatMapTest {
     /*
      *Purpose : Check for YAxisGroupTitle
      * Input: setYAxisGroupTitle (0,"Y1") (1, "Y2")
-     * Expected: RuntimeException
+     * Expected: getYAxisGroupTitle(0)->"Y1" , getYAxisGroupTitle(1)->"Y2"
      */
     @Test
     public void AxisGroupTitleTest(){
@@ -367,4 +367,5 @@ public class HeatMapTest {
         assertEquals("Y1",chart.getYAxisGroupTitle(0));
         assertEquals("Y2",chart.getYAxisGroupTitle(1));
     }
+
 }
