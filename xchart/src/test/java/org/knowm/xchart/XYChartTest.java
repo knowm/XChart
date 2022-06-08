@@ -764,5 +764,39 @@ public class XYChartTest {
 		// Series
 		chart.addSeries("test", yData);	
 	}
+	
+	/**
+	* Purpose: test sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars)
+	* Input: sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars) input X-Axis data whose length is 0 and series name = "test".
+	* * Expected: throw new IllegalArgumentException("X-Axis data cannot be empty!!! >" + seriesName);
+	  * 
+	*/
+	@Test
+	public void testSanityCheck4(){
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("X-Axis data cannot be empty!!! >" + "test");
+		
+		double[] xData = {};
+		double[] yData = {1.0, 2.0, 3.0};
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test", xData, yData);	
+	}
 
 }
