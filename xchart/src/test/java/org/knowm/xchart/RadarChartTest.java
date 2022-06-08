@@ -102,4 +102,26 @@ public class RadarChartTest {
 		radarChart.setRadiiLabels(testString);
 		assertThat(radarChart.getRadiiLabels()).isEqualTo(testString);
 	}
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+	
+	/**
+	* Purpose: Check Condition (radiiLabels == null) in SanityCheck
+	* Input: SanityCheck() RadarChart with radiiLabels == null
+	* * Expected: throw IllegalArgumentException("Variable labels cannot be null!!!")
+	  * 
+	*/
+	@Test
+	public void testSanityCheck1() {
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Variable labels cannot be null!!!");
+		
+		RadarChart chart =
+		        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+	    chart.getStyler().setToolTipsEnabled(true);
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+	    chart.setRadiiLabels(null);
+	    chart.addSeries("New System", new double[] {0.67, 0.73, 0.97, 0.95, 0.93, 0.73}, null);
+	}
 }
