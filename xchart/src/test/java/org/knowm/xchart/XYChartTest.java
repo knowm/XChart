@@ -698,5 +698,38 @@ public class XYChartTest {
 		chart.addSeries("test",xData, yData);	
 		chart.addSeries("test",xData, yData);	
 	}
+	
+	/**
+	* Purpose: test sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars)
+	* Input: sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars) input Y-Axis data that is null and series name = "test".
+	* * Expected: throw new IllegalArgumentException("Y-Axis data cannot be null!!! >" + seriesName);
+	  * 
+	*/
+	@Test
+	public void testSanityCheck2(){
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Y-Axis data cannot be null!!! >" + "test");
+		
+		double[] yData = null;
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test", yData);	
+	}
 
 }
