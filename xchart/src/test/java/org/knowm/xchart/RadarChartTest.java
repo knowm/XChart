@@ -124,4 +124,37 @@ public class RadarChartTest {
 	    chart.setRadiiLabels(null);
 	    chart.addSeries("New System", new double[] {0.67, 0.73, 0.97, 0.95, 0.93, 0.73}, null);
 	}
+	
+	/**
+	* Purpose: Check Condition (seriesMap.containsKey(seriesName)) in SanityCheck
+	* Input: SanityCheck() RadarChart with (seriesMap.containsKey(seriesName))
+	* * Expected: throw new IllegalArgumentException(
+		          "Series name >"
+		              + seriesName
+		              + "< has already been used. Use unique names for each series!!!")
+	  * 
+	*/
+	@Test
+	public void testSanityCheck2() {
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Series name >"
+	              + "New System"
+	              + "< has already been used. Use unique names for each series!!!");
+		
+		RadarChart chart =
+		        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+	    chart.getStyler().setToolTipsEnabled(true);
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+	    chart.setRadiiLabels(
+	            new String[] {
+	              "Sales",
+	              "Marketing",
+	              "Development",
+	              "Customer Support",
+	              "Information Technology",
+	              "Administration"
+	            });
+	    chart.addSeries("New System", new double[] {0.67, 0.73, 0.97, 0.95, 0.93, 0.73}, null);
+	    chart.addSeries("New System", new double[] {0.37, 0.93, 0.57, 0.55, 0.33, 0.73});
+	}
 }
