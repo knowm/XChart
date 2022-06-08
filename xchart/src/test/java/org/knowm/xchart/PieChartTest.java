@@ -53,4 +53,19 @@ public class PieChartTest {
         assertEquals(3,chart.getSeriesMap().size());
         assertEquals(18,chart.getTotal(),EPSILON);
     }
+    /*
+     *Purpose : Check for removeSeries of pieseries
+     * Input: addSeries ("hello",3), addSeries ("hello2",6),removeSeries("hello")
+     * Expected:  size -> 1, getTotal -> 6
+     */
+    @Test
+    public void removeSeriesTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        chart.addSeries("hello",3);
+        chart.addSeries("hello2",6);
+        chart.removeSeries("hello");
+        assertEquals(1,chart.getSeriesMap().size());
+        assertEquals(6,chart.getTotal(),EPSILON);
+    }
 }
