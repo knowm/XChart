@@ -3,6 +3,9 @@ package org.knowm.xchart;
 import org.junit.Before;
 import org.junit.Test;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.theme.GGPlot2Theme;
+import org.knowm.xchart.style.theme.MatlabTheme;
+import org.knowm.xchart.style.theme.XChartTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -243,5 +246,26 @@ public class PieChartTest {
         PieSeries series =new PieSeries("a",1);
         assertEquals(1,series.getValue());
         assertEquals("a",series.getLabel());
+    }
+    /*
+     *Purpose : Check for Theme Chart
+     * Input: XChart, GGPlot2, Matlab
+     * Expected: XChartTheme, GGPlot2Theme, MatlabTheme
+     */
+    @Test
+    public void ThemeChartTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        assertEquals(XChartTheme.class,chart.getStyler().getTheme().getClass());
+
+        chart = new PieChartBuilder().theme(Styler.ChartTheme.XChart).build();
+        assertEquals(XChartTheme.class,chart.getStyler().getTheme().getClass());
+
+        chart = new PieChartBuilder().theme(Styler.ChartTheme.GGPlot2).build();
+        assertEquals(GGPlot2Theme.class,chart.getStyler().getTheme().getClass());
+
+        chart = new PieChartBuilder().theme(Styler.ChartTheme.Matlab).build();
+        assertEquals(MatlabTheme.class,chart.getStyler().getTheme().getClass());
+
     }
 }
