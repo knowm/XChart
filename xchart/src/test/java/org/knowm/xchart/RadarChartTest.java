@@ -211,4 +211,31 @@ public class RadarChartTest {
 	            });
 	    chart.addSeries("New System", new double[] {0.67, 0.73, 0.97, 0.95, 0.93}, null);
 	}
+	
+	/**
+	* Purpose: Check Condition (d < 0 || d > 1) in SanityCheck
+	* Input: SanityCheck() RadarChart with values in invalid range
+	* * Expected: IllegalArgumentException("Values must be in [0, 1] range!!!")
+	  * 
+	*/
+	@Test
+	public void testSanityCheck5() {
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Values must be in [0, 1] range!!!");
+		
+		RadarChart chart =
+		        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+	    chart.getStyler().setToolTipsEnabled(true);
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+	    chart.setRadiiLabels(
+	            new String[] {
+	              "Sales",
+	              "Marketing",
+	              "Development",
+	              "Customer Support",
+	              "Information Technology",
+	              "Administration"
+	            });
+	    chart.addSeries("New System", new double[] {0.67, 0.73, 0.97, 0.95, 0.93, 1.73}, null);
+	}
 }
