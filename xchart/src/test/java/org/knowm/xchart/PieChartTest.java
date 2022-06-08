@@ -162,4 +162,18 @@ public class PieChartTest {
         assertEquals(4,chart.getSeriesMap().get("a").getValue());
         assertEquals(4,series.getValue());
     }
+    /*
+     *Purpose : Check for updatePieSeries
+     * Input:  addSeries("a",1),replaceData(4)
+     * Expected:  getValue-> 4
+     */
+    @Test
+    public void ReplaceTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        PieSeries series = chart.addSeries("a",1);
+        series.replaceData(4);
+        assertEquals(4,chart.getSeriesMap().get("a").getValue());
+        assertEquals(4,series.getValue());
+    }
 }
