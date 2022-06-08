@@ -798,5 +798,40 @@ public class XYChartTest {
 		// Series
 		chart.addSeries("test", xData, yData);	
 	}
+	
+	/**
+	* Purpose: test sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars)
+	* Input: sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars) input Y-Axis Data whose length is not same with Error bars' length and Error bars and series name = "test".
+	* * Expected: throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!! >" + seriesName);
+	  * 
+	*/
+	@Test
+	public void testSanityCheck5(){
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Error bars and Y-Axis sizes are not the same!!! >" + "test");
+		
+		double[] xData = {3.0, 4.0, 5.0};
+		double[] yData = {1.0, 2.0, 3.0};
+		double[] errorBarsData = {5.0, 6.0};
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test", xData, yData, errorBarsData);	
+	}
 
 }
