@@ -325,4 +325,52 @@ public class RadarChartTest {
 	    assertEquals(chart.getSeriesMap().get("Old System").getValues(), values);
 	    assertEquals(chart.getSeriesMap().get("Old System").getTooltipOverrides(), new String[] {"Lowest varible 78%", "85%", null, null, null, null});
 	}
+	
+	/**
+	* Purpose: Check setSeriesStyles()
+	* Input: setSeriesStyles() input series with series.getLineStyle() == null, series.getLineColor() == null, 
+		* 										series.getFillColor() == null, series.getMarker() == null
+		* 										series.getMarkerColor() == null and paint that series
+	* * Expected: each null value convert to default values
+	  * 
+	*/
+	@Test
+	public void testSetSeriesStyles() {
+		RadarChart chart =
+		        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+	    chart.getStyler().setToolTipsEnabled(true);
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+	    chart.setRadiiLabels(
+	            new String[] {
+	              "Sales",
+	              "Marketing",
+	              "Development",
+	              "Customer Support",
+	              "Information Technology",
+	              "Administration"
+	            });
+	    chart.addSeries(
+	            "Old System",
+	            new double[] {0.78, 0.85, 0.80, 0.82, 0.93, 0.92},
+	            new String[] {"Lowest varible 78%", "85%", "80%", "82%", "93%", "92%"});
+	    JFrame jFrame = new SwingWrapper<>(chart).displayChart();
+	    Graphics graphics = jFrame.getGraphics();
+	    chart.paint((Graphics2D)graphics, 800, 600);
+	    
+	    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+	            new SeriesColorMarkerLineStyleCycler(
+	            	chart.getStyler().getSeriesColors(),
+	            	chart.getStyler().getSeriesMarkers(),
+	            	chart.getStyler().getSeriesLines());
+	    
+		  SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+		      seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+		
+		  assertEquals(chart.getSeriesMap().get("Old System").getLineStyle(), seriesColorMarkerLineStyle.getStroke());
+		  assertEquals(chart.getSeriesMap().get("Old System").getLineColor(), seriesColorMarkerLineStyle.getColor());
+		  assertEquals(chart.getSeriesMap().get("Old System").getFillColor(), seriesColorMarkerLineStyle.getColor());
+		  assertEquals(chart.getSeriesMap().get("Old System").getMarker(), seriesColorMarkerLineStyle.getMarker());
+		  assertEquals(chart.getSeriesMap().get("Old System").getMarkerColor(), seriesColorMarkerLineStyle.getColor());
+		    
+	}
 }
