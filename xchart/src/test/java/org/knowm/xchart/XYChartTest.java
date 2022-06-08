@@ -402,5 +402,48 @@ public class XYChartTest {
 		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
 		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(errorBarsDataDouble);// if errorBarsData == int, convert from int to double
 	}
+	
+	/**
+	* Purpose: test addSeries(String seriesName, List<?> xData, List<? extends Number> yData)
+	* Input: addSeries(String seriesName, List<?> xData, List<? extends Number> yData) put seriesName = "test", xData = [-3, -2, -1, 0], yData = [0.001, 0.01, 0.1, 1.0]
+	* * Expected: seriesName = "test", xData = [-3.0, -2.0, -1.0, 0.0], yData = [0.001, 0.01, 0.1, 1.0]
+	  * 
+	*/
+	@Test
+	public void testAddSeriesListNumberCase(){
+		List<Integer> xData = new ArrayList<>();
+	    List<Double> yData = new ArrayList<>();
+	    for (int i = -3; i <= 0; i++) {
+	      xData.add(i);
+	      yData.add(Math.pow(10, i));
+	    }
+	    double[] xDataDouble = {-3.0, -2.0, -1.0, 0.0};
+	    double[] yDataDouble = {0.001, 0.01, 0.1, 1.0};
+	    
+		
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test",xData, yData);
+		assertThat(chart.getSeriesMap().get("test").getYData()).isEqualTo(yDataDouble);//if yData == NumberList, convert from NumberList to double[]
+		assertThat(chart.getSeriesMap().get("test").getXData()).isEqualTo(xDataDouble);// if xData == NumberList, convert from int to double[]
+		assertThat(chart.getSeriesMap().get("test").getxAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
+		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(null);
+	}
 
 }
