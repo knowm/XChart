@@ -367,5 +367,4 @@ public class HeatMapTest {
         assertEquals("Y1",chart.getYAxisGroupTitle(0));
         assertEquals("Y2",chart.getYAxisGroupTitle(1));
     }
-
 }
