@@ -68,4 +68,16 @@ public class PieChartTest {
         assertEquals(1,chart.getSeriesMap().size());
         assertEquals(6,chart.getTotal(),EPSILON);
     }
+    /*
+     *Purpose : Check for removeSeries of pieseries when the element doesn't exist.
+     * Input: removeSeries("hello")
+     * Expected:  size->0
+     */
+    @Test
+    public void EmptyRemoveSeriesTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        chart.removeSeries("hello");
+        assertEquals(0,chart.getSeriesMap().size());
+    }
 }
