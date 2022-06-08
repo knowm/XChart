@@ -77,5 +77,23 @@ public class XYChartTest {
 		assertThat(xyChart.getHeight()).isEqualTo(5);
 		assertEquals((new GGPlot2Theme().getClass()), xyChart.getStyler().getTheme().getClass());
 	}
+	
+	/**
+	* Purpose: test constructor XYChart(XYChartBuilder chartBuilder)
+	* Input: XYChart(XYChartBuilder chartBuilder) put width = 3, height = 5, charttheme = GGPlot2, title = "test", XAxisTitle = "x-test", YAxisTitle = "y-test" through XYChartBuilder
+	* * Expected: Width = 3, Height = 5, Theme = GGPlot2Theme, Title = "test", XAxisTitle = "x-test", YAxisTitle = "y-test"
+	  * 
+	*/
+	@Test
+	public void testConstructor4(){
+		XYChart xyChart = new XYChartBuilder().width(3).height(5).title("test").theme(ChartTheme.GGPlot2).xAxisTitle("x-test").yAxisTitle("y-test").build();
+		
+		assertThat(xyChart.getWidth()).isEqualTo(3);
+		assertThat(xyChart.getHeight()).isEqualTo(5);
+		assertThat(xyChart.getTitle()).isEqualTo("test");
+		assertThat(xyChart.getXAxisTitle()).isEqualTo("x-test");
+		assertThat(xyChart.getYAxisTitle()).isEqualTo("y-test");
+		assertEquals((new GGPlot2Theme().getClass()), xyChart.getStyler().getTheme().getClass());
+	}
 
 }
