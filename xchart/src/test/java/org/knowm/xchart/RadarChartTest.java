@@ -88,4 +88,18 @@ public class RadarChartTest {
 		assertThat(radarChart.getTitle()).isEqualTo("test");
 		assertEquals((new GGPlot2Theme().getClass()), radarChart.getStyler().getTheme().getClass());
 	}
+	
+	/**
+	* Purpose: Check getter/setter of RaddiLabels
+	* Input: setRadiiLabels(), getRadiiLabels() {"t", "e", "s", "t"}
+	* * Expected: {"t", "e", "s", "t"}
+	  * 
+	*/
+	@Test
+	public void testGetAndsetRadiiLabels(){
+		RadarChart radarChart = new RadarChart(3, 5, new GGPlot2Theme());
+		String[] testString = {"t", "e", "s", "t"};
+		radarChart.setRadiiLabels(testString);
+		assertThat(radarChart.getRadiiLabels()).isEqualTo(testString);
+	}
 }
