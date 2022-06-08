@@ -80,4 +80,17 @@ public class PieChartTest {
         chart.removeSeries("hello");
         assertEquals(0,chart.getSeriesMap().size());
     }
+    /*
+     *Purpose : Check for getTotal of pieseries when the element doesn't exist.
+     * Input: removeSeries("hello")
+     * Expected:  size->0
+     */
+    @Test
+    public void EmptyGetTotalTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        double total = chart.getTotal();
+        assertEquals(0,total,EPSILON);
+    }
+
 }
