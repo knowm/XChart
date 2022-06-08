@@ -266,6 +266,22 @@ public class PieChartTest {
 
         chart = new PieChartBuilder().theme(Styler.ChartTheme.Matlab).build();
         assertEquals(MatlabTheme.class,chart.getStyler().getTheme().getClass());
-
+    }
+    /*
+     *Purpose : Check for setTheme
+     * Input: XChartTheme, GGPlot2Theme, MatlabTheme
+     * Expected: XChartTheme, GGPlot2Theme, MatlabTheme
+     */
+    @Test
+    public void ThemeChangeTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        assertEquals(XChartTheme.class,chart.getStyler().getTheme().getClass());
+        chart.getStyler().setTheme(new XChartTheme());
+        assertEquals(XChartTheme.class,chart.getStyler().getTheme().getClass());
+        chart.getStyler().setTheme(new GGPlot2Theme());
+        assertEquals(GGPlot2Theme.class,chart.getStyler().getTheme().getClass());
+        chart.getStyler().setTheme(new MatlabTheme());
+        assertEquals(MatlabTheme.class,chart.getStyler().getTheme().getClass());
     }
 }
