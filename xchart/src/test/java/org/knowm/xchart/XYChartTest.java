@@ -658,5 +658,45 @@ public class XYChartTest {
 		// Series
 		chart.addSeries("test",xData, yData, errorBarsData);	
 	}
+	
+	/**
+	* Purpose: test sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars)
+	* Input: sanityCheck(String seriesName, double[] xData, double[] yData, double[] errorBars) when Series Name("test") that we will add already exist.
+	* * Expected: throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
+	  * 
+	*/
+	@Test
+	public void testSanityCheck1(){
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Series name >"
+	              + "test"
+	              + "< has already been used. Use unique names for each series!!!");
+		
+		double[] xData = {1.0, 2.0, 3.0};
+	    double[] yData = {0.001, 0.01, 0.1};
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test",xData, yData);	
+		chart.addSeries("test",xData, yData);	
+	}
 
 }
