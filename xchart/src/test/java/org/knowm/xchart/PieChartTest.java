@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class PieChartTest {
+    public static final double EPSILON = 0.00001;
     /*
      *Purpose : Check for Width and Height and Title
      * Input: width(800), height(600), title("test title")
@@ -36,5 +37,20 @@ public class PieChartTest {
         assertEquals(800,chart.getWidth());
         assertEquals(600,chart.getHeight());
         assertEquals("",chart.getTitle());
+    }
+    /*
+     *Purpose : Check for addSeries of pieseries
+     * Input: addSeries ("hello",3), addSeries ("hello2",6),addSeries ("hello2",9)
+     * Expected:  size -> 3, getTotal -> 18
+     */
+    @Test
+    public void addSeriesTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        chart.addSeries("hello",3);
+        chart.addSeries("hello2",6);
+        chart.addSeries("hello3",9);
+        assertEquals(3,chart.getSeriesMap().size());
+        assertEquals(18,chart.getTotal(),EPSILON);
     }
 }
