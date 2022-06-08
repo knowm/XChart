@@ -930,5 +930,40 @@ public class XYChartTest {
 		assertThat(chart.getSeriesMap().get("test").getyAxisDataType()).isEqualTo(DataType.Number);
 		assertThat(chart.getSeriesMap().get("test").getExtraValues()).isEqualTo(updatedErrorBarsData);
 	}
+	
+	/**
+	* Purpose: test updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData)
+	* Input: updateXYSeries(String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) update non-existent series(name = "test")
+	* * Expected: throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+	  * 
+	*/
+	@Test
+	public void testUpdateXYSeriesException(){
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Series name >" + "test" + "< not found!!!");
+		
+		double[] xData = {3.0, 4.0, 5.0};
+		double[] yData = {1.0, 2.0, 3.0};
+		double[] errorBarsData = {5.0, 6.0};
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.updateXYSeries("test", xData, yData, errorBarsData);	
+	}
 
 }
