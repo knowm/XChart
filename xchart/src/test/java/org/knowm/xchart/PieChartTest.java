@@ -284,4 +284,16 @@ public class PieChartTest {
         chart.getStyler().setTheme(new MatlabTheme());
         assertEquals(MatlabTheme.class,chart.getStyler().getTheme().getClass());
     }
+    /*
+     *Purpose : Check for YAxisGroupTitle
+     * Input: setYAxisGroupTitle (0,"Y1") (1, "Y2")
+     * Expected: RuntimeException
+     */
+    @Test (expected = RuntimeException.class)
+    public void AxisGroupTitleTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        chart.setYAxisGroupTitle(0,"Y1");
+        chart.setYAxisGroupTitle(1,"Y2");
+    }
 }
