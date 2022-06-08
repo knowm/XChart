@@ -1108,4 +1108,60 @@ public class XYChartTest {
 	        e.printStackTrace();
 	      }
 	}
+	
+	/**
+	* Purpose: Check setSeriesStyles()
+	* Input: setSeriesStyles() input series with series.getLineStyle() == null, series.getLineColor() == null, 
+		* 										series.getFillColor() == null, series.getMarker() == null
+		* 										series.getMarkerColor() == null and paint that series
+	* * Expected: each null value convert to default values
+	  * 
+	*/
+	@Test
+	public void testSetSeriesStyles(){
+		double[] xData = {1.0, 2.0};
+		double[] yData = {3.0 , 6.0};
+	    
+		// Create Chart
+		XYChart chart =
+		    new XYChartBuilder()
+		        .width(800)
+		        .height(600)
+		        .title(getClass().getSimpleName())
+		        .xAxisTitle("Power")
+		        .yAxisTitle("Value")
+		        .build();
+		
+		// Customize Chart
+		chart.getStyler().setChartTitleVisible(true);
+		chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+		chart.getStyler().setYAxisLogarithmic(true);
+		chart.getStyler().setXAxisLabelRotation(45);
+		
+		// Series
+		chart.addSeries("test", null, yData);
+		chart.addSeries("test2", xData, yData);
+		chart.addSeries("test3", yData, yData);//Series data cannot be less or equal to zero for a logarithmic Y-Axis.
+															  // So, add three series
+		
+		JFrame jFrame = new SwingWrapper<>(chart).displayChart();
+	    Graphics graphics = jFrame.getGraphics();
+	    chart.paint((Graphics2D)graphics, 500, 600);
+	    
+	    SeriesColorMarkerLineStyleCycler seriesColorMarkerLineStyleCycler =
+	            new SeriesColorMarkerLineStyleCycler(
+	                chart.getStyler().getSeriesColors(),
+	                chart.getStyler().getSeriesMarkers(),
+	                chart.getStyler().getSeriesLines());
+	    
+	    SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
+	            seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
+		
+		  assertEquals(chart.getSeriesMap().get("test").getLineStyle(), seriesColorMarkerLineStyle.getStroke());
+		  assertEquals(chart.getSeriesMap().get("test").getLineColor(), seriesColorMarkerLineStyle.getColor());
+		  assertEquals(chart.getSeriesMap().get("test").getFillColor(), seriesColorMarkerLineStyle.getColor());
+		  assertEquals(chart.getSeriesMap().get("test").getMarker(), seriesColorMarkerLineStyle.getMarker());
+		  assertEquals(chart.getSeriesMap().get("test").getMarkerColor(), seriesColorMarkerLineStyle.getColor());
+		
+	}
 }
