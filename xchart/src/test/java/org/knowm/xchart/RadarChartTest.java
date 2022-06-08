@@ -184,4 +184,31 @@ public class RadarChartTest {
 	            });
 	    chart.addSeries("New System", null, null);
 	}
+	
+	/**
+	* Purpose: Check Condition (values.length < radiiLabels.length) in SanityCheck
+	* Input: SanityCheck() RadarChart with (values.length < radiiLabels.length)
+	* * Expected: IllegalArgumentException("Too few values!!!")
+	  * 
+	*/
+	@Test
+	public void testSanityCheck4() {
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Too few values!!!");
+		
+		RadarChart chart =
+		        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+	    chart.getStyler().setToolTipsEnabled(true);
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+	    chart.setRadiiLabels(
+	            new String[] {
+	              "Sales",
+	              "Marketing",
+	              "Development",
+	              "Customer Support",
+	              "Information Technology",
+	              "Administration"
+	            });
+	    chart.addSeries("New System", new double[] {0.67, 0.73, 0.97, 0.95, 0.93}, null);
+	}
 }
