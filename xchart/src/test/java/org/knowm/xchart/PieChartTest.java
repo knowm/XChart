@@ -92,5 +92,17 @@ public class PieChartTest {
         double total = chart.getTotal();
         assertEquals(0,total,EPSILON);
     }
-
+    /*
+     *Purpose : Check for Integer overflow on getTotal implementation
+     * Input:  addSeries("test",Integer.MAX_VALUE) addSeries("test2",Integer.MAX_VALUE)
+     * Expected:  getTotal -> Integer.MAX_VALUE*2.0
+     */
+    @Test
+    public void IntegerOverflowTest(){
+        PieChart chart =
+                new PieChartBuilder().build();
+        chart.addSeries("test",Integer.MAX_VALUE);
+        chart.addSeries("test2",Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE*2.0,chart.getTotal(),EPSILON);
+    }
 }
