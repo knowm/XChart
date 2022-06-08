@@ -238,4 +238,34 @@ public class RadarChartTest {
 	            });
 	    chart.addSeries("New System", new double[] {0.67, 0.73, 0.97, 0.95, 0.93, 1.73}, null);
 	}
+	
+	/**
+	* Purpose: Check Condition (annotations != null && annotations.length < radiiLabels.length) in SanityCheck
+	* Input: SanityCheck() RadarChart - we should have more tool tips.
+	* * Expected: IllegalArgumentException("Too few tool tips!!!")
+	  * 
+	*/
+	@Test
+	public void testSanityCheck6() {
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("Too few tool tips!!!");
+		
+		RadarChart chart =
+		        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+	    chart.getStyler().setToolTipsEnabled(true);
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+	    chart.setRadiiLabels(
+	            new String[] {
+	              "Sales",
+	              "Marketing",
+	              "Development",
+	              "Customer Support",
+	              "Information Technology",
+	              "Administration"
+	            });
+	    chart.addSeries(
+	            "Old System",
+	            new double[] {0.78, 0.85, 0.80, 0.82, 0.93, 0.92},
+	            new String[] {"Lowest varible 78%", "85%", null, null, null});
+	}
 }
