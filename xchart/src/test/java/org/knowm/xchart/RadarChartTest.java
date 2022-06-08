@@ -295,4 +295,34 @@ public class RadarChartTest {
 	    assertEquals(chart.getSeriesMap().get("Old System").getValues(), values);
 	    assertEquals(chart.getSeriesMap().get("Old System").getTooltipOverrides(), null);
 	}
+	
+	/**
+	* Purpose: Check addSeries(String seriesName, double[] values, String[] tooltipOverrides)
+	* Input: addSeries(String seriesName, double[] values, String[] tooltipOverrides)
+	* * Expected: tooltipOverrides value of SeriesMap member with (Series name == "Old System") is null
+	  * 
+	*/
+	@Test
+	public void testAddSeriesDefault() {
+		RadarChart chart =
+		        new RadarChartBuilder().width(800).height(600).title(getClass().getSimpleName()).build();
+	    chart.getStyler().setToolTipsEnabled(true);
+	    chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+	    chart.setRadiiLabels(
+	            new String[] {
+	              "Sales",
+	              "Marketing",
+	              "Development",
+	              "Customer Support",
+	              "Information Technology",
+	              "Administration"
+	            });
+	    double[] values = new double[] {0.78, 0.85, 0.80, 0.82, 0.93, 0.92};
+	    chart.addSeries(
+	            "Old System",
+	            values,
+	            new String[] {"Lowest varible 78%", "85%", null, null, null, null});
+	    assertEquals(chart.getSeriesMap().get("Old System").getValues(), values);
+	    assertEquals(chart.getSeriesMap().get("Old System").getTooltipOverrides(), new String[] {"Lowest varible 78%", "85%", null, null, null, null});
+	}
 }
