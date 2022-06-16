@@ -225,18 +225,6 @@ public class PieChartTest {
         assertEquals(null,series.getLegendRenderType());
     }
     /*
-     *Purpose : Check for getLegendRenderType
-     * Input:  addSeries("a",1)
-     * Expected:  getLegendRenderType -> null
-     */
-    @Test
-    public void sex(){
-        PieChart chart =
-                new PieChartBuilder().build();
-        PieSeries series = chart.addSeries("a",1);
-        assertEquals(null,series.getLegendRenderType());
-    }
-    /*
      *Purpose : Check for construct PieSeries
      * Input: "a",1
      * Expected: getLabel ->"a", getValue -> 1
