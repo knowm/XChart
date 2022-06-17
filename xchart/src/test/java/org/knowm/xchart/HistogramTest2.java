@@ -133,4 +133,15 @@ public class HistogramTest2 {
 	public void testNumBinLessThanZero() {
 	  assertNotNull(testItem = new Histogram(Arrays.asList(1, 2, 3, 4, 5, 6), 0, 0, 4));
 	}
+	/**
+	 * Purpose: Coverage all branches
+	 * Input: value, min, max
+	 * Expected:
+	 */
+	@Test
+	public void test2() {
+		for (int i=0; i<=4; i++) {
+			testItem = new Histogram(Arrays.asList(1, 2, 3), 2, i, i+1);	
+		}
+	}
 }
