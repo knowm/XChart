@@ -69,7 +69,7 @@ public class HistogramTest2 {
 	 */
 	@Test
 	public void testDataSmallerThanMin() {
-	  assertNotNull(testItem = new Histogram(Arrays.asList(1, 6), 1, 2, 6));
+	  assertNotNull(testItem = new Histogram(Arrays.asList(2, 6), 1, 1, 6));
 	}
 	/**
 	 * Purpose: Data values are smaller than min
