@@ -131,6 +131,6 @@ public class HistogramTest2 {
 	 */
 	@Test
 	public void testNumBinLessThanZero() {
-	  assertNotNull(testItem = new Histogram(Arrays.asList(1, 2, 3, 4, 5, 6), 0, 4, 0));
+	  assertNotNull(testItem = new Histogram(Arrays.asList(1, 2, 3, 4, 5, 6), 0, 0, 4));
 	}
 }
