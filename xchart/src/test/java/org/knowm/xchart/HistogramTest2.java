@@ -139,7 +139,7 @@ public class HistogramTest2 {
 	 * Expected:
 	 */
 	@Test
-	public void test2() {
+	public void testCoverageAllBranches() {
 		for (int i=0; i<=4; i++) {
 			testItem = new Histogram(Arrays.asList(1, 2, 3), 2, i, i+1);	
 		}
