@@ -85,7 +85,12 @@ public class DialChartTest {
 	 */
 	@Test
 	public void testValueOutOfRange() {
-		for (double i = 0; i <= 2; i+=0.1) {
+		assertNotNull(testItem.addSeries("R1", -0.5));
+		assertNotNull(testItem.addSeries("R2", 50.0));
+	}
+	@Test
+	public void testCoverageBranches() {
+		for (float i = 0; i <= 1.1; i+=0.1) {
 			testItem.addSeries("test"+i, i);
 		}
 	}
