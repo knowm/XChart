@@ -85,7 +85,7 @@ public class DialChartTest {
 	 */
 	@Test
 	public void testValueOutOfRange() {
-		for (double i = 0; i <= 1; i+=0.1) {
+		for (double i = 0; i <= 2; i+=0.1) {
 			testItem.addSeries("test"+i, i);
 		}
 	}
