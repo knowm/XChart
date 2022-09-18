@@ -119,7 +119,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
   }
 
   /**
-   * Add a series for a Category type chart using using int arrays with error bars
+   * Add a series for a Category type chart using int arrays with error bars
    *
    * @param seriesName
    * @param xData the X-Axis data

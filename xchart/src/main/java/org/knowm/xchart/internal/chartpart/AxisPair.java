@@ -397,7 +397,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     if (chart.getStyler() instanceof CategoryStyler) {
 
       CategoryStyler categoryStyler = (CategoryStyler) chart.getStyler();
-      if (categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+      if (categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar
+      || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Stick) {
 
         // if stacked, we need to completely re-calculate min and max.
         if (categoryStyler.isStacked()) {
@@ -460,7 +461,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
         // override min/max value for bar charts' Y-Axis
         // There is a special case where it's desired to anchor the axis min or max to zero, like in
-        // the case of bar charts. This flag enables that feature.
+        // the case of bar and stick charts.
         if (yAxis.getMin() > 0.0) {
           overrideYAxisMinValue = 0.0;
         }

@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -422,8 +424,15 @@ public abstract class AxisTickCalculator_ {
    */
   private static double getAxisMinValue(
       Styler styler, Direction axisDirection, double dataMinValue) {
-    if (Direction.Y.equals(axisDirection) && styler instanceof CategoryStyler && dataMinValue > 0)
-      return 0;
+
+    // special case for category charts
+    if(styler instanceof CategoryStyler){
+      CategoryStyler categoryStyler = (CategoryStyler) styler;
+      if ((categoryStyler.getDefaultSeriesRenderStyle() == CategorySeries.CategorySeriesRenderStyle.Bar
+          || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeries.CategorySeriesRenderStyle.Stick) && dataMinValue > 0) {
+        return 0;
+      }
+    }
     return dataMinValue;
   }
 
