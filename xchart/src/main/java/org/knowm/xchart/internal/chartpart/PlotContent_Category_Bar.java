@@ -106,13 +106,17 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
       // rather than for each inidivdual bar
       ArrayList<Point2D.Double> steppedPath = null;
       ArrayList<Point2D.Double> steppedReturnPath = null;
-
+      Path2D.Double path = null;
       int categoryCounter = 0;
       while (yItr.hasNext()) {
 
         Number next = yItr.next();
         // skip when a value is null
         if (next == null) {
+
+//          // for area charts
+//          closePath(g, path, previousX, getBounds(), yTopMargin);
+//          path = null;
 
           previousX = -Double.MAX_VALUE;
           previousY = -Double.MAX_VALUE;
@@ -296,7 +300,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         else if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
 
           // paint bar
-          Path2D.Double path = new Path2D.Double();
+          path = new Path2D.Double();
           path.moveTo(xOffset, yOffset);
           path.lineTo(xOffset + barWidth, yOffset);
           path.lineTo(xOffset + barWidth, zeroOffset);
@@ -402,7 +406,29 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             }
           }
 
+          // paint area
+          if (CategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
+
+            if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
+
+              g.setColor(series.getFillColor());
+              double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
+
+              if (path == null) {
+                path = new Path2D.Double();
+                path.moveTo(previousX, yBottomOfArea);
+                path.lineTo(previousX, previousY);
+              }
+              path.lineTo(xOffset + barWidth / 2, yOffset);
+            }
+            if (xOffset < previousX) {
+              throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
+            }
+          }
+
+
           previousX = xOffset + barWidth / 2;
+//          previousX = xOffset ;
           previousY = yOffset;
 
           // paint marker
@@ -479,6 +505,10 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               chart.getYAxisFormat().format(yOrig));
         }
       }
+
+      // close any open path for area charts
+      g.setColor(series.getFillColor());
+      closePath(g, path, previousX, getBounds(), yTopMargin);
 
       // Final drawing of a steppedBar is done after the main loop,
       // as it continues on null and we may end up missing the final iteration.
