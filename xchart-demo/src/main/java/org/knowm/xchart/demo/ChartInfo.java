@@ -6,7 +6,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 public final class ChartInfo {
 
   private final String exampleChartName;
-  private final ExampleChart exampleChart;;
+  private final ExampleChart exampleChart;
 
   /**
    * Constructor

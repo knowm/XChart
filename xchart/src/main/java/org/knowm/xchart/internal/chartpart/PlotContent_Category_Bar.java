@@ -114,9 +114,9 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         // skip when a value is null
         if (next == null) {
 
-//          // for area charts
-//          closePath(g, path, previousX, getBounds(), yTopMargin);
-//          path = null;
+          //          // for area charts
+          //          closePath(g, path, previousX, getBounds(), yTopMargin);
+          //          path = null;
 
           previousX = -Double.MAX_VALUE;
           previousY = -Double.MAX_VALUE;
@@ -426,9 +426,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             }
           }
 
-
           previousX = xOffset + barWidth / 2;
-//          previousX = xOffset ;
+          //          previousX = xOffset ;
           previousY = yOffset;
 
           // paint marker

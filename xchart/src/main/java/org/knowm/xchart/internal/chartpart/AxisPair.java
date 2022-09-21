@@ -398,7 +398,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
       CategoryStyler categoryStyler = (CategoryStyler) chart.getStyler();
       if (categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar
-      || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Stick) {
+          || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Stick) {
 
         // if stacked, we need to completely re-calculate min and max.
         if (categoryStyler.isStacked()) {
