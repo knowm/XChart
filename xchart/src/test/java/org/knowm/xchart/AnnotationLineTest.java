@@ -3,8 +3,10 @@ package org.knowm.xchart;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AnnotationLineTest {
 
@@ -22,7 +24,8 @@ public class AnnotationLineTest {
     BitmapEncoder.saveBitmap(chart, output, BitmapEncoder.BitmapFormat.PNG);
 
     // test
-    Assert.assertTrue(annotation.getBounds().getX() > 50);
-    Assert.assertTrue(annotation.getBounds().getWidth() < 500);
+    assertTrue(annotation.getBounds().getX() > 50);
+    assertTrue(annotation.getBounds().getX() > 50);
+    assertTrue(annotation.getBounds().getWidth() < 500);
   }
 }

@@ -5,7 +5,7 @@ import static java.lang.Double.NaN;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
@@ -21,7 +21,7 @@ public class RegressionTestIssue536 {
 
     List<? extends Number> times = Arrays.asList(1L, 2L, 3L);
     List<? extends Number> values =
-        times.stream().mapToDouble(x -> NaN).boxed().collect(Collectors.toList());
+            times.stream().mapToDouble(x -> NaN).boxed().collect(Collectors.toList());
     XYSeries series = chart.addSeries("Series", times, values);
     series.setMarker(SeriesMarkers.NONE);
 

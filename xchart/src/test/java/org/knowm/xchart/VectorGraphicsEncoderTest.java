@@ -1,8 +1,9 @@
 package org.knowm.xchart;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
+
+import static org.assertj.core.api.Assertions.*;
 
 /** @author ekleinod */
 public class VectorGraphicsEncoderTest {
@@ -13,32 +14,27 @@ public class VectorGraphicsEncoderTest {
     for (VectorGraphicsFormat format : VectorGraphicsFormat.values()) {
 
       // test -> test.svg
-      Assert.assertEquals(
-          String.format("test.%s", format.toString().toLowerCase()),
-          VectorGraphicsEncoder.addFileExtension("test", format));
+      assertThat(VectorGraphicsEncoder.addFileExtension("test", format))
+              .isEqualTo(String.format("test.%s", format.toString().toLowerCase()));
 
       // test.svg -> test.svg
-      Assert.assertEquals(
-          String.format("test.%s", format.toString().toLowerCase()),
-          VectorGraphicsEncoder.addFileExtension(
-              String.format("test.%s", format.toString().toLowerCase()), format));
+      assertThat(VectorGraphicsEncoder.addFileExtension(
+              String.format("test.%s", format.toString().toLowerCase()), format))
+              .isEqualTo(String.format("test.%s", format.toString().toLowerCase()));
 
       // test.svgsvg -> test.svgsvg.svg
-      Assert.assertEquals(
-          String.format("test.%1$s%1$s.%1$s", format.toString().toLowerCase()),
-          VectorGraphicsEncoder.addFileExtension(
-              String.format("test.%1$s%1$s", format.toString().toLowerCase()), format));
+      assertThat(VectorGraphicsEncoder.addFileExtension(
+              String.format("test.%1$s%1$s", format.toString().toLowerCase()), format))
+              .isEqualTo(String.format("test.%1$s%1$s.%1$s", format.toString().toLowerCase()));
 
       // test.svg.svg -> test.svg.svg
-      Assert.assertEquals(
-          String.format("test.%1$s.%1$s", format.toString().toLowerCase()),
-          VectorGraphicsEncoder.addFileExtension(
-              String.format("test.%1$s.%1$s", format.toString().toLowerCase()), format));
+      assertThat(VectorGraphicsEncoder.addFileExtension(
+              String.format("test.%1$s.%1$s", format.toString().toLowerCase()), format))
+              .isEqualTo(String.format("test.%1$s.%1$s", format.toString().toLowerCase()));
 
       // test.txt -> test.txt.svg
-      Assert.assertEquals(
-          String.format("test.txt.%1$s", format.toString().toLowerCase()),
-          VectorGraphicsEncoder.addFileExtension("test.txt", format));
+      assertThat(VectorGraphicsEncoder.addFileExtension("test.txt", format))
+              .isEqualTo(String.format("test.txt.%1$s", format.toString().toLowerCase()));
     }
   }
 }
