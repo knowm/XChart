@@ -6,18 +6,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
-import org.junit.Assert;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XYChart;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SimplestExampleTest {
 
   static final String digestType = "md5";
 
-  //  @Test
-  @Ignore
+  // @Test
+  @Disabled
   public void testSimplestExampleStaysTheSame() throws Exception {
     // given
     double[] xData = new double[] {0.0, 1.0, 2.0};
@@ -30,7 +31,7 @@ public class SimplestExampleTest {
     chart.getStyler().setLegendFont(arial());
     chart.getStyler().setAxisTitleFont(arial());
     DigestOutputStream output =
-        new DigestOutputStream(new ByteArrayOutputStream(), MessageDigest.getInstance(digestType));
+            new DigestOutputStream(new ByteArrayOutputStream(), MessageDigest.getInstance(digestType));
     BitmapEncoder.saveBitmap(chart, output, BitmapEncoder.BitmapFormat.PNG);
     output.close();
 
@@ -43,16 +44,16 @@ public class SimplestExampleTest {
   }
 
   public void assertImagesEquals(String expectedFileName, DigestOutputStream actual)
-      throws Exception {
+          throws Exception {
     String path =
-        "/expectedChartRenderings/"
-            + System.getProperty("os.name").replaceAll(" ", "")
-            + "/"
-            + expectedFileName;
+            "/expectedChartRenderings/"
+                    + System.getProperty("os.name").replaceAll(" ", "")
+                    + "/"
+                    + expectedFileName;
     byte[] expectedBytes = Files.readAllBytes(Paths.get(getClass().getResource(path).toURI()));
     byte[] expectedDigest = MessageDigest.getInstance(digestType).digest(expectedBytes);
     byte[] actualDigest = actual.getMessageDigest().digest();
 
-    Assert.assertArrayEquals(expectedDigest, actualDigest);
+    assertArrayEquals(expectedDigest, actualDigest);
   }
 }
