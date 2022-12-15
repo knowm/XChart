@@ -1,15 +1,15 @@
 package org.knowm.xchart.internal.chartpart;
 
-import static org.junit.Assert.assertThrows;
-
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.CategoryStyler;
 
-public class AxisTickCalculator_CategoryTest {
+import static org.assertj.core.api.Assertions.*;
+
+public class AxisTickCalculatorCategoryTest {
 
   @Test
   public void shouldHonorMaxAxisLabelCount() {
@@ -20,11 +20,11 @@ public class AxisTickCalculator_CategoryTest {
 
     // when
     AxisTickCalculator_Category calculator =
-        new AxisTickCalculator_Category(
-            Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+            new AxisTickCalculator_Category(
+                    Axis.Direction.X, 900, categories, Series.DataType.String, styler);
 
     // test
-    Assert.assertEquals(3, calculator.tickLabels.size());
+    assertThat(calculator.tickLabels.size()).isEqualTo(3);
   }
 
   @Test
@@ -35,12 +35,12 @@ public class AxisTickCalculator_CategoryTest {
     styler.setXAxisMaxLabelCount(1);
 
     // when & test
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> {
-          new AxisTickCalculator_Category(
-              Axis.Direction.X, 900, categories, Series.DataType.String, styler);
-        });
+    Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+              new AxisTickCalculator_Category(
+                      Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+            });
   }
 
   @Test
@@ -51,12 +51,11 @@ public class AxisTickCalculator_CategoryTest {
 
     // when
     AxisTickCalculator_Category calculator =
-        new AxisTickCalculator_Category(
-            Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+            new AxisTickCalculator_Category(
+                    Axis.Direction.X, 900, categories, Series.DataType.String, styler);
 
     // test
-    Assert.assertEquals(6, calculator.tickLabels.size());
-    Assert.assertEquals(
-        Arrays.asList(105.0, 243.0, 381.0, 519.0, 657.0, 795.0), calculator.tickLocations);
+    assertThat(calculator.tickLabels.size()).isEqualTo(6);
+    assertThat(calculator.tickLocations).isEqualTo(Arrays.asList(105.0, 243.0, 381.0, 519.0, 657.0, 795.0));
   }
 }
