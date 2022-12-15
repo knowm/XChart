@@ -62,7 +62,7 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
           // g.setStroke(axesChartStyler.getPlotGridLinesStroke());
           // Shape line = new Line2D.Double(bounds.getX(), yOffset, bounds.getX() +
           // bounds.getWidth(), yOffset);
-          g.draw(line);
+          g.fill(line);
           // g.drawLine((int) bounds.getX(), (int) yOffset, (int) (bounds.getX() +
           // bounds.getWidth()), (int) yOffset);
         }
@@ -143,7 +143,7 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
                             xOffset, bounds.getY(), xOffset, bounds.getY() + bounds.getHeight()));
             // Shape line = new Line2D.Double(xOffset, bounds.getY(), xOffset, bounds.getY() +
             // bounds.getHeight());
-            g.draw(line);
+            g.fill(line);
           }
           // tick marks
           if (stylerAxesChart.isPlotTicksMarksVisible()) {
