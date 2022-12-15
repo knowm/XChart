@@ -43,7 +43,7 @@
   </scm>
 
   <ciManagement>
-    <url>https://travis-ci.org/timmolter/XChart</url>
+    <url>https://github.com/knowm/XChart/actions</url>
   </ciManagement>
 
   <modules>
