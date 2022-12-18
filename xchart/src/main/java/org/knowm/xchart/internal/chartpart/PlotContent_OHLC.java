@@ -11,7 +11,9 @@ import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
-/** @author arthurmcgibbon */
+/**
+ * @author arthurmcgibbon
+ */
 public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
     extends PlotContent_<ST, S> {
 

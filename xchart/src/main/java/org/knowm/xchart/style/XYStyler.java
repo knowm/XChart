@@ -7,7 +7,9 @@ import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.theme.Theme;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class XYStyler extends AxesChartStyler {
 
   private XYSeriesRenderStyle xySeriesRenderStyle;

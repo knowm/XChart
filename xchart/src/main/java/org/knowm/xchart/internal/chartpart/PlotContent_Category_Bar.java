@@ -20,7 +20,9 @@ import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends CategorySeries>
     extends PlotContent_<ST, S> {
 

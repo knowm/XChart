@@ -12,7 +12,9 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class AdvancedExample {
 
   public static void main(String[] args) {

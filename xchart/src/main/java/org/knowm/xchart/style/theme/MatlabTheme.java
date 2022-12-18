@@ -8,7 +8,9 @@ import org.knowm.xchart.style.lines.MatlabSeriesLines;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.MatlabSeriesMarkers;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class MatlabTheme extends AbstractBaseTheme {
 
   // Chart Style ///////////////////////////////

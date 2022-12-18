@@ -4,7 +4,9 @@ import org.knowm.xchart.OHLCSeries;
 import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.style.theme.Theme;
 
-/** @author arthurmcgibbon */
+/**
+ * @author arthurmcgibbon
+ */
 public class OHLCStyler extends AxesChartStyler {
 
   private OHLCSeriesRenderStyle ohlcSeriesRenderStyle;

@@ -8,7 +8,9 @@ import org.knowm.xchart.style.lines.GGPlot2SeriesLines;
 import org.knowm.xchart.style.markers.GGPlot2SeriesMarkers;
 import org.knowm.xchart.style.markers.Marker;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class GGPlot2Theme extends AbstractBaseTheme {
 
   // Chart Style ///////////////////////////////

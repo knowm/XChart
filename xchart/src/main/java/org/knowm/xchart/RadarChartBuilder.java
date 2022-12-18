@@ -2,7 +2,9 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.ChartBuilder;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class RadarChartBuilder extends ChartBuilder<RadarChartBuilder, RadarChart> {
 
   public RadarChartBuilder() {}

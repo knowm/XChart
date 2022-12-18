@@ -2,7 +2,9 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.*;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class PrinterFriendlySeriesColors implements SeriesColors {
 
   // printer-friendly colors from http://colorbrewer2.org/

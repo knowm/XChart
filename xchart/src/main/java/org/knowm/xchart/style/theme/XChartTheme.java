@@ -8,7 +8,9 @@ import org.knowm.xchart.style.lines.XChartSeriesLines;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.XChartSeriesMarkers;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class XChartTheme extends AbstractBaseTheme {
 
   // Chart Style ///////////////////////////////

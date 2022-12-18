@@ -1,13 +1,13 @@
 package org.knowm.xchart.internal.chartpart;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.CategoryStyler;
-
-import static org.assertj.core.api.Assertions.*;
 
 public class AxisTickCalculatorCategoryTest {
 
@@ -20,8 +20,8 @@ public class AxisTickCalculatorCategoryTest {
 
     // when
     AxisTickCalculator_Category calculator =
-            new AxisTickCalculator_Category(
-                    Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+        new AxisTickCalculator_Category(
+            Axis.Direction.X, 900, categories, Series.DataType.String, styler);
 
     // test
     assertThat(calculator.tickLabels.size()).isEqualTo(3);
@@ -36,11 +36,11 @@ public class AxisTickCalculatorCategoryTest {
 
     // when & test
     Assertions.assertThrows(
-            IllegalArgumentException.class,
-            () -> {
-              new AxisTickCalculator_Category(
-                      Axis.Direction.X, 900, categories, Series.DataType.String, styler);
-            });
+        IllegalArgumentException.class,
+        () -> {
+          new AxisTickCalculator_Category(
+              Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+        });
   }
 
   @Test
@@ -51,11 +51,12 @@ public class AxisTickCalculatorCategoryTest {
 
     // when
     AxisTickCalculator_Category calculator =
-            new AxisTickCalculator_Category(
-                    Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+        new AxisTickCalculator_Category(
+            Axis.Direction.X, 900, categories, Series.DataType.String, styler);
 
     // test
     assertThat(calculator.tickLabels.size()).isEqualTo(6);
-    assertThat(calculator.tickLocations).isEqualTo(Arrays.asList(105.0, 243.0, 381.0, 519.0, 657.0, 795.0));
+    assertThat(calculator.tickLocations)
+        .isEqualTo(Arrays.asList(105.0, 243.0, 381.0, 519.0, 657.0, 795.0));
   }
 }

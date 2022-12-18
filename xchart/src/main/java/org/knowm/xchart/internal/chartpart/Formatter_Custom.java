@@ -5,7 +5,9 @@ import java.text.Format;
 import java.text.ParsePosition;
 import java.util.function.Function;
 
-/** @author Marc Jakobi */
+/**
+ * @author Marc Jakobi
+ */
 public class Formatter_Custom extends Format {
 
   private final Function<Double, String> customFormattingFunction;

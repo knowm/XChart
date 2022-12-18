@@ -15,7 +15,9 @@ import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
   private final Chart<ST, S> chart;

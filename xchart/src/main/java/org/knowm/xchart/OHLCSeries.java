@@ -5,7 +5,9 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.MarkerSeries;
 
-/** @author arthurmcgibbon */
+/**
+ * @author arthurmcgibbon
+ */
 public class OHLCSeries extends MarkerSeries {
 
   private double[] xData; // can be Number or Date(epochtime)

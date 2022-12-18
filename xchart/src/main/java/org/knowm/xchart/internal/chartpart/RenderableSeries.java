@@ -1,6 +1,8 @@
 package org.knowm.xchart.internal.chartpart;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public interface RenderableSeries {
 
   LegendRenderType getLegendRenderType();

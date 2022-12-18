@@ -18,7 +18,9 @@ import org.knowm.xchart.HeatMapSeries;
 import org.knowm.xchart.style.HeatMapStyler;
 import org.knowm.xchart.style.Styler;
 
-/** @author Mr14huashao */
+/**
+ * @author Mr14huashao
+ */
 public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     extends Legend_<ST, S> {
 

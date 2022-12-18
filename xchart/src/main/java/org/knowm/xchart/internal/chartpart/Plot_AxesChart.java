@@ -5,7 +5,9 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class Plot_AxesChart<ST extends AxesChartStyler, S extends Series> extends Plot_<ST, S> {
 
   /**

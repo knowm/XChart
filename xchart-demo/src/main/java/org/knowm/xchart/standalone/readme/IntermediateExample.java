@@ -11,7 +11,9 @@ import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class IntermediateExample {
 
   static final Random random = new Random();

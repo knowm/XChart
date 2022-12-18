@@ -3,7 +3,9 @@ package org.knowm.xchart.demo.charts.theme;
 import java.awt.Color;
 import org.knowm.xchart.style.colors.SeriesColors;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class MyCustomSeriesColors implements SeriesColors {
 
   public static final Color GREEN = new Color(0, 205, 0, 180);

@@ -14,7 +14,9 @@ import org.knowm.xchart.style.BubbleStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
   /**

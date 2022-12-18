@@ -8,7 +8,9 @@ import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class TestForIssue167 implements ExampleChart<CategoryChart> {
 
   public static void main(String[] args) {

@@ -7,7 +7,9 @@ import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class SimplestExample {
 
   public static void main(String[] args) throws IOException {

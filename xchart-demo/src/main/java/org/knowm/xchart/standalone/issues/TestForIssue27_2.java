@@ -8,7 +8,9 @@ import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class TestForIssue27_2 {
 
   public static void main(String[] args) throws Exception {

@@ -11,7 +11,9 @@ import org.knowm.xchart.style.colors.SeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   Font BASE_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 10);

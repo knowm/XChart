@@ -6,7 +6,9 @@ import java.util.Map;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class Legend_Pie<ST extends Styler, S extends Series> extends Legend_<ST, S> {
 
   /**

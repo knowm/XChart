@@ -21,7 +21,7 @@ public class RegressionTestIssue536 {
 
     List<? extends Number> times = Arrays.asList(1L, 2L, 3L);
     List<? extends Number> values =
-            times.stream().mapToDouble(x -> NaN).boxed().collect(Collectors.toList());
+        times.stream().mapToDouble(x -> NaN).boxed().collect(Collectors.toList());
     XYSeries series = chart.addSeries("Series", times, values);
     series.setMarker(SeriesMarkers.NONE);
 

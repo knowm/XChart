@@ -2,7 +2,9 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.*;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class XChartSeriesColors implements SeriesColors {
 
   // original XChart colors

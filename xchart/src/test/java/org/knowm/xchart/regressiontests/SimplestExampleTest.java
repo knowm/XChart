@@ -1,5 +1,7 @@
 package org.knowm.xchart.regressiontests;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 import java.awt.Font;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
@@ -11,13 +13,10 @@ import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XYChart;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+// Disabled because I don't have example chart pngs from all OSes
+@Disabled
 public class SimplestExampleTest {
 
-  static final String digestType = "md5";
-
-  // @Test
   @Disabled
   public void testSimplestExampleStaysTheSame() throws Exception {
     // given
@@ -31,7 +30,7 @@ public class SimplestExampleTest {
     chart.getStyler().setLegendFont(arial());
     chart.getStyler().setAxisTitleFont(arial());
     DigestOutputStream output =
-            new DigestOutputStream(new ByteArrayOutputStream(), MessageDigest.getInstance(digestType));
+        new DigestOutputStream(new ByteArrayOutputStream(), MessageDigest.getInstance(digestType));
     BitmapEncoder.saveBitmap(chart, output, BitmapEncoder.BitmapFormat.PNG);
     output.close();
 
@@ -39,17 +38,19 @@ public class SimplestExampleTest {
     assertImagesEquals("simplestExample.png", output);
   }
 
+  static final String digestType = "md5";
+
   private Font arial() {
     return new Font("Arial", Font.PLAIN, 14);
   }
 
   public void assertImagesEquals(String expectedFileName, DigestOutputStream actual)
-          throws Exception {
+      throws Exception {
     String path =
-            "/expectedChartRenderings/"
-                    + System.getProperty("os.name").replaceAll(" ", "")
-                    + "/"
-                    + expectedFileName;
+        "/expectedChartRenderings/"
+            + System.getProperty("os.name").replaceAll(" ", "")
+            + "/"
+            + expectedFileName;
     byte[] expectedBytes = Files.readAllBytes(Paths.get(getClass().getResource(path).toURI()));
     byte[] expectedDigest = MessageDigest.getInstance(digestType).digest(expectedBytes);
     byte[] actualDigest = actual.getMessageDigest().digest();

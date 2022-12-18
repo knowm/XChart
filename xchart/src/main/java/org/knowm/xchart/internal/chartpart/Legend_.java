@@ -11,7 +11,9 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public abstract class Legend_<ST extends Styler, S extends Series> implements ChartPart {
 
   static final int BOX_SIZE = 20;

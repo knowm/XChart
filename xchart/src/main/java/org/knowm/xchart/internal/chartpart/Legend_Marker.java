@@ -10,7 +10,9 @@ import org.knowm.xchart.internal.series.MarkerSeries;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Legend_<ST, S> {
 
   private final ST axesChartStyler;

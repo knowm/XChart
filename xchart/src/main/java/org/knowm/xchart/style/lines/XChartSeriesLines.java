@@ -2,7 +2,9 @@ package org.knowm.xchart.style.lines;
 
 import java.awt.*;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class XChartSeriesLines implements SeriesLines {
 
   private final BasicStroke[] seriesLines;

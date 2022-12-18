@@ -8,7 +8,9 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.XYStyler;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class TestForIssue98 {
 
   public static void main(String[] args) throws IOException {

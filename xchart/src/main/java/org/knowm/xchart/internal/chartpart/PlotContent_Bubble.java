@@ -7,7 +7,9 @@ import org.knowm.xchart.BubbleSeries;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.BubbleStyler;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
     extends PlotContent_<ST, S> {
 

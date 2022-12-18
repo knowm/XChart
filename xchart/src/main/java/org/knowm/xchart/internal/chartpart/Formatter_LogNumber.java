@@ -3,7 +3,9 @@ package org.knowm.xchart.internal.chartpart;
 import java.text.*;
 import org.knowm.xchart.style.AxesChartStyler;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 class Formatter_LogNumber extends Format {
 
   private final AxesChartStyler styler;

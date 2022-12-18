@@ -4,22 +4,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.stream.Collectors;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.knowm.xchart.demo.DemoChartsUtil;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.date.DateChart01;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.Cursor;
 import org.knowm.xchart.internal.chartpart.ToolTips;
+import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.XYStyler;
 
-@RunWith(Parameterized.class)
 public class DemoChartsTest {
-
-  private final ExampleChart chart;
 
   private static final Collection<Class<?>> SKIPPED_EXAMPLE_CHARTS =
       Arrays.asList(
@@ -27,22 +25,17 @@ public class DemoChartsTest {
           // environment
           DateChart01.class);
 
-  @Parameterized.Parameters(name = "{1}")
-  public static Collection<Object[]> chartDemos() {
+  public static Stream<ExampleChart<Chart<Styler, Series>>> chartDemos() {
     return DemoChartsUtil.getAllDemoCharts().stream()
-        .filter(chart -> !SKIPPED_EXAMPLE_CHARTS.contains(chart.getClass()))
-        .map(chart -> new Object[] {chart, chart.getExampleChartName()})
-        .collect(Collectors.toList());
+        .filter(chart -> !SKIPPED_EXAMPLE_CHARTS.contains(chart.getClass()));
   }
 
-  public DemoChartsTest(ExampleChart chart, String chartName) {
-    this.chart = chart;
-  }
-
-  @Test
-  public void shouldNotFailWhenRenderingAsBitmap() throws IOException {
+  @ParameterizedTest
+  @MethodSource("chartDemos")
+  public void shouldNotFailWhenRenderingAsBitmap(ExampleChart<Chart<Styler, Series>> exampleChart)
+      throws IOException {
     // given
-    Chart chart = this.chart.getChart();
+    Chart chart = exampleChart.getChart();
     configureInteractiveFeatures(chart);
 
     // when

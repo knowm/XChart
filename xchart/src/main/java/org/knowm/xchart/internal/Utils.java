@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class Utils {
 
   /** Private Constructor */

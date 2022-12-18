@@ -2,7 +2,9 @@ package org.knowm.xchart.style.markers;
 
 import java.awt.*;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class None extends Marker {
 
   @Override

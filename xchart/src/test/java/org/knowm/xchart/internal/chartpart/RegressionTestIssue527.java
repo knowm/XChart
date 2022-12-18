@@ -1,11 +1,12 @@
 package org.knowm.xchart.internal.chartpart;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
 import org.junit.jupiter.api.Test;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
@@ -13,8 +14,6 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /** Regression test for <a href="https://github.com/knowm/XChart/issues/536">issue 536</a>. */
 public class RegressionTestIssue527 {
@@ -28,14 +27,14 @@ public class RegressionTestIssue527 {
     List<Double> y = new ArrayList<>();
 
     XYChart chart =
-            new XYChartBuilder()
-                    .width(800)
-                    .height(720)
-                    .theme(Styler.ChartTheme.XChart)
-                    .title("XChart")
-                    .xAxisTitle("Date")
-                    .yAxisTitle("%Diff ")
-                    .build();
+        new XYChartBuilder()
+            .width(800)
+            .height(720)
+            .theme(Styler.ChartTheme.XChart)
+            .title("XChart")
+            .xAxisTitle("Date")
+            .yAxisTitle("%Diff ")
+            .build();
     //    chart.getStyler().setPlotBackgroundColor(java.awt.Color.BLACK);
     chart.getStyler().setPlotMargin(0);
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
@@ -81,7 +80,7 @@ public class RegressionTestIssue527 {
     assertThat(tickLabels.size()).isEqualTo(13);
     assertThat(tickLabels.get(0)).isEqualTo("10-18");
     boolean areAllLabelsUnique =
-            chart.axisPair.getXAxis().getAxisTickCalculator().areAllTickLabelsUnique(tickLabels);
+        chart.axisPair.getXAxis().getAxisTickCalculator().areAllTickLabelsUnique(tickLabels);
     assertThat(areAllLabelsUnique).isEqualTo(true);
   }
 }

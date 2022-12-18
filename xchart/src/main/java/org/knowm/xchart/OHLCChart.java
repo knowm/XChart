@@ -20,7 +20,9 @@ import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-/** @author arthurmcgibbon */
+/**
+ * @author arthurmcgibbon
+ */
 public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
 
   /**

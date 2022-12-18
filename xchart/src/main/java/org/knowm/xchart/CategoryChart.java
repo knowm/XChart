@@ -18,7 +18,9 @@ import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
 
   /**

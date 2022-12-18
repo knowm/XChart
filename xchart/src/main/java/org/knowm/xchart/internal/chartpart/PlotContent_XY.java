@@ -11,7 +11,9 @@ import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.XYStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
-/** @author timmolter */
+/**
+ * @author timmolter
+ */
 public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends PlotContent_<ST, S> {
 
   private final ST xyStyler;

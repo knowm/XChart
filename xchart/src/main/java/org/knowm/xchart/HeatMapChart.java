@@ -12,7 +12,9 @@ import org.knowm.xchart.style.HeatMapStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-/** @author Mr14huashao */
+/**
+ * @author Mr14huashao
+ */
 public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
 
   private HeatMapSeries heatMapSeries;
