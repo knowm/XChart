@@ -1,263 +1,265 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.knowm.xchart</groupId>
-  <artifactId>xchart-parent</artifactId>
-  <version>3.8.3-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <name>XChart Parent</name>
-  <description>XChart is a light weight Java library for plotting data.</description>
-  <url>http://knowm.org/open-source/xchart</url>
-  <inceptionYear>2011</inceptionYear>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.knowm.xchart</groupId>
+    <artifactId>xchart-parent</artifactId>
+    <version>3.8.3-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>XChart Parent</name>
+    <description>XChart is a light weight Java library for plotting data.</description>
+    <url>http://knowm.org/open-source/xchart</url>
+    <inceptionYear>2011</inceptionYear>
 
-  <organization>
-    <name>Knowm Inc.</name>
-    <url>http://knowm.org/open-source/</url>
-  </organization>
+    <organization>
+        <name>Knowm Inc.</name>
+        <url>http://knowm.org/open-source/</url>
+    </organization>
 
-  <developers>
-    <developer>
-      <name>Tim Molter</name>
-    </developer>
-  </developers>
+    <developers>
+        <developer>
+            <name>Tim Molter</name>
+        </developer>
+    </developers>
 
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-      <comments>A business-friendly OSS license</comments>
-    </license>
-  </licenses>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/knowm/XChart/issues</url>
-  </issueManagement>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/knowm/XChart/issues</url>
+    </issueManagement>
 
-  <scm>
-    <connection>scm:git:git@github.com:knowm/XChart.git</connection>
-    <developerConnection>scm:git:git@github.com:knowm/XChart.git</developerConnection>
-    <url>git@github.com:knowm/XChart.git</url>
-    <tag>HEAD</tag>
-  </scm>
+    <scm>
+        <connection>scm:git:git@github.com:knowm/XChart.git</connection>
+        <developerConnection>scm:git:git@github.com:knowm/XChart.git</developerConnection>
+        <url>git@github.com:knowm/XChart.git</url>
+        <tag>HEAD</tag>
+    </scm>
 
-  <ciManagement>
-    <url>https://github.com/knowm/XChart/actions</url>
-  </ciManagement>
+    <ciManagement>
+        <url>https://github.com/knowm/XChart/actions</url>
+    </ciManagement>
 
-  <modules>
-    <module>xchart</module>
-    <module>xchart-demo</module>
-  </modules>
+    <modules>
+        <module>xchart</module>
+        <module>xchart-demo</module>
+    </modules>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype Nexus Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Nexus Release Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    <downloadUrl>https://oss.sonatype.org/content/groups/public/org/knowm/xchart</downloadUrl>
-  </distributionManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <downloadUrl>https://oss.sonatype.org/content/groups/public/org/knowm/xchart</downloadUrl>
+    </distributionManagement>
 
-  <dependencyManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>de.erichseifert.vectorgraphics2d</groupId>
+                <artifactId>VectorGraphics2D</artifactId>
+                <version>0.13</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>de.rototor.pdfbox</groupId>
+                <artifactId>graphics2d</artifactId>
+                <version>0.41</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.madgag</groupId>
+                <artifactId>animated-gif-lib</artifactId>
+                <version>1.4</version>
+                <optional>true</optional>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
-      <dependency>
-        <groupId>de.erichseifert.vectorgraphics2d</groupId>
-        <artifactId>VectorGraphics2D</artifactId>
-        <version>0.13</version>
-        <optional>true</optional>
-      </dependency>
-      <dependency>
-        <groupId>de.rototor.pdfbox</groupId>
-        <artifactId>graphics2d</artifactId>
-        <version>0.41</version>
-        <optional>true</optional>
-      </dependency>
-      <dependency>
-        <groupId>com.madgag</groupId>
-        <artifactId>animated-gif-lib</artifactId>
-        <version>1.4</version>
-        <optional>true</optional>
-      </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.23.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-  </dependencyManagement>
 
-  <dependencies>
-      <dependency>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter-engine</artifactId>
-          <version>5.9.0</version>
-          <scope>test</scope>
-      </dependency>    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>5.9.0</version>
-      <scope>test</scope>
-  </dependency>
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>3.23.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- This is necessary for gpg to not try to use the pinentry programs -->
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-  <profiles>
-    <profile>
-      <id>release-sign-artifacts</id>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <build>
+    </profiles>
+
+    <build>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-                  <configuration>
-                      <!-- This is necessary for gpg to not try to use the pinentry programs -->
-                      <gpgArguments>
-                          <arg>--pinentry-mode</arg>
-                          <arg>loopback</arg>
-                      </gpgArguments>
-                  </configuration>
-              </execution>
-            </executions>
-          </plugin>
+            <!-- Add Automatic Module Name to MANIFEST for compatibility with modular applications -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Automatic-Module-Name>org.knowm.xchart</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- Need at least 2.22.0 to support JUnit 5 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M7</version>
+            </plugin>
+
+            <!-- Ensure compilation is done under Java 8 in all environments -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+            <!-- Generates a source code JAR during package -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Generates JavaDocs during package -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <doclint>none</doclint>
+                    <excludePackageNames>org.knowm.xchart.internal.*</excludePackageNames>
+                    <quiet>true</quiet>
+                    <skip>false</skip>
+                    <doclint>none</doclint>
+                    <source>1.8</source>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- for deploying to Maven Central -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.0-M7</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify.fmt</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>2.19</version>
+                <configuration>
+                    <filesNamePattern>.*\.java</filesNamePattern>
+                    <skip>false</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.13</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
         </plugins>
-      </build>
-    </profile>
+    </build>
 
-  </profiles>
-
-  <build>
-    <plugins>
-      <!-- Add Automatic Module Name to MANIFEST for compatibility with modular applications -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Automatic-Module-Name>org.knowm.xchart</Automatic-Module-Name>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-        <!-- Need at least 2.22.0 to support JUnit 5 -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M7</version>
-        </plugin>
-
-        <!-- Ensure compilation is done under Java 8 in all environments -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <showDeprecation>true</showDeprecation>
-          <showWarnings>true</showWarnings>
-        </configuration>
-      </plugin>
-      <!-- Generates a source code JAR during package -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- Generates JavaDocs during package -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.4.1</version>
-        <configuration>
-          <doclint>none</doclint>
-          <excludePackageNames>org.knowm.xchart.internal.*</excludePackageNames>
-          <quiet>true</quiet>
-          <skip>false</skip>
-          <doclint>none</doclint>
-          <source>1.8</source>
-        </configuration>
-          <executions>
-              <execution>
-                  <id>attach-javadocs</id>
-                  <goals>
-                      <goal>jar</goal>
-                  </goals>
-              </execution>
-          </executions>
-      </plugin>
-      <!-- for deploying to Maven Central -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>3.0.0-M7</version>
-        <configuration>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.spotify.fmt</groupId>
-        <artifactId>fmt-maven-plugin</artifactId>
-        <version>2.19</version>
-        <configuration>
-          <filesNamePattern>.*\.java</filesNamePattern>
-          <skip>false</skip>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>format</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-        <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.13</version>
-            <extensions>true</extensions>
-            <configuration>
-                <serverId>ossrh</serverId>
-                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
-        </plugin>
-    </plugins>
-  </build>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
 </project>
