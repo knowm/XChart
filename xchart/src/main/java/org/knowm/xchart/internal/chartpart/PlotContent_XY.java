@@ -84,6 +84,9 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
       // smooth curve
       Path2D.Double smoothPath = null;
 
+      boolean toolTipsEnabled = chart.getStyler().isToolTipsEnabled();
+      String[] seriesToolTips = series.getToolTips();
+
       // for area charts
       double yZeroTransform =
           getBounds().getHeight() - (yTopMargin + (0 - yMin) / (yMax - yMin) * yTickSpace);
@@ -303,12 +306,21 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
         }
 
         // add tooltips
-        if (chart.getStyler().isToolTipsEnabled()) {
-          toolTips.addData(
-              xOffset,
-              yOffset,
-              chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
+        if (toolTipsEnabled) {
+          if (series.isCustomToolTips()) {
+            if (seriesToolTips != null) {
+              String tt = seriesToolTips[i];
+              if (tt != null && !"".equals(tt)) {
+                toolTips.addData(xOffset, yOffset, tt);
+              }
+            }
+          } else if (chart.getStyler().isToolTipsEnabled()) {
+            toolTips.addData(
+                    xOffset,
+                    yOffset,
+                    chart.getXAxisFormat().format(x),
+                    chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
+          }
         }
 
         if (xyStyler.isCursorEnabled()) {

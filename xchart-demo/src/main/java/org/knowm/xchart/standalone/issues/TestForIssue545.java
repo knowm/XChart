@@ -2,10 +2,8 @@ package org.knowm.xchart.standalone.issues;
 
 import java.awt.Font;
 import java.text.ParseException;
-import org.knowm.xchart.BubbleChart;
-import org.knowm.xchart.BubbleChartBuilder;
-import org.knowm.xchart.BubbleSeries;
-import org.knowm.xchart.SwingWrapper;
+
+import org.knowm.xchart.*;
 import org.knowm.xchart.style.BubbleStyler;
 import org.knowm.xchart.style.Styler;
 
@@ -15,6 +13,9 @@ public class TestForIssue545 {
 
     BubbleChart chart = getBubbleChart();
     new SwingWrapper(chart).displayChart();
+
+    XYChart xyChart = getXYChart();
+    new SwingWrapper(xyChart).displayChart();
   }
 
   public static BubbleChart getBubbleChart() {
@@ -53,5 +54,34 @@ public class TestForIssue545 {
     styler.setToolTipsEnabled(true);
     styler.setToolTipsAlwaysVisible(true);
     styler.setToolTipFont(new Font("SansSerif", Font.PLAIN, 14));
+  }
+  public static XYChart getXYChart() {
+
+    // Create Chart
+    XYChart chart =
+            new XYChartBuilder()
+                    .width(800)
+                    .height(600)
+                    .title("TestForIssue545")
+                    .xAxisTitle("X")
+                    .yAxisTitle("y")
+                    .build();
+
+    // Customize Chart
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+    chart.getStyler().setToolTipsEnabled(true);
+    chart.getStyler().setToolTipsAlwaysVisible(true);
+
+    // Series
+    XYSeries one = chart.addSeries("a", new double[] {1, 2, 3, 4, 5}, new double[] {-1, 6, 9, 6, 5});
+    one.setCustomToolTips(true);
+    one.setToolTips(new String[] {"test", "test1", "test2", "test3", "test4"});
+
+
+    XYSeries two = chart.addSeries("b", new double[] {1, 2, 3, 4, 5}, new double[] {9, 7, 3, -3, 8});
+    two.setToolTips(new String[] {"this", "is", "different", "data!", "wow!"});
+    two.setCustomToolTips(true);
+
+    return chart;
   }
 }
