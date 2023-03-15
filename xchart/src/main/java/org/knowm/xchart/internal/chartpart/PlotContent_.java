@@ -57,14 +57,14 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
       g.setClip(bounds);
     }
 
-    if (chart.getStyler().isToolTipsEnabled()) {
+    if (chart.getStyler().isToolTipsEnabled() && toolTips != null) {
       toolTips.clearData();
     }
 
     doPaint(g);
 
     // after painting the plot content, paint the tooltip(s) if necessary
-    if (chart.getStyler().isToolTipsEnabled()) {
+    if (chart.getStyler().isToolTipsEnabled() && toolTips != null) {
       toolTips.paint(g);
     }
 
