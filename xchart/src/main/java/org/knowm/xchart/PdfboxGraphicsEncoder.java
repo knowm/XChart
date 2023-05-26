@@ -68,7 +68,7 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to a file
    *
-   * @param charts List<? extends Chart>
+   * @param charts List&lt;? extends Chart&gt;
    * @param fileName file name path
    * @throws IOException
    */
@@ -81,7 +81,7 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to a file
    *
-   * @param charts List<? extends Chart>
+   * @param charts List&lt;? extends Chart&gt;
    * @param file File
    * @throws IOException
    */
@@ -94,7 +94,7 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to an OutputStream
    *
-   * @param charts List<? extends Chart>
+   * @param charts List&lt;? extends Chart&gt;
    * @param os OutputStream
    * @throws IOException
    */
