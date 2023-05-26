@@ -11,7 +11,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
- * Combination Line & Area Chart
+ * Combination of Line and Area Chart
  *
  * <p>Demonstrates the following:
  *

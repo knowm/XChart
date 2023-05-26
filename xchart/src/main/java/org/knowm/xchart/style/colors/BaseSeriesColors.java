@@ -3,7 +3,7 @@ package org.knowm.xchart.style.colors;
 import java.awt.*;
 
 /**
- * Colors are taken from http://colorbrewer2.org/#type=qualitative&scheme=Set3&n=12.
+ * Colors are taken from <a href="http://colorbrewer2.org/#type=qualitative&scheme=Set3&n=12">colorbrewer2.org</a>.
  *
  * @author timmolter
  * @author ekleinod
