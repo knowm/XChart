@@ -242,9 +242,9 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
         // }
       }
       //      System.out.println("************");
-      if(index >= timeSpans.size() - 1)
+      if (index >= timeSpans.size() - 1)
         break; // We reached the end, even though we might not yet have the result we want,
-               // continuing will lead to an Exception!
+      // continuing will lead to an Exception!
     } while (skip
         || !areAllTickLabelsUnique(tickLabels)
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
