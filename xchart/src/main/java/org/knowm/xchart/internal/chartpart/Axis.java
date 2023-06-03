@@ -50,7 +50,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   /** the dataType */
   private Series.DataType dataType;
   /** the axis tick calculator */
-  private AxisTickCalculator_ axisTickCalculator;
+  private AxisTickCalculator axisTickCalculator;
 
   private double min;
   private double max;
@@ -379,171 +379,168 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     return titleHeight + axisTickLabelsHeight;
   }
 
-  private AxisTickCalculator_ getAxisTickCalculator(double workingSpace) {
-
-    // X-Axis
+  private AxisTickCalculator getAxisTickCalculator(double workingSpace) {
     if (getDirection() == Direction.X) {
-      List<Double> xData = new ArrayList<>();
-      if (axesChartStyler instanceof HeatMapStyler) {
-        List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getXData();
-        xData =
-            categories.stream()
+      return getAxisTickCalculatorForX(workingSpace);
+    } else {
+      return getAxisTickCalculatorForY(workingSpace);
+    }
+  }
+
+  private AxisTickCalculator getAxisTickCalculatorForY(double workingSpace) {
+    List<Double> yData = new ArrayList<>();
+    if (axesChartStyler instanceof HeatMapStyler) {
+      List<?> categories = ((HeatMapChart) chart).getHeatMapSeries().getYData();
+      yData =
+          categories.stream()
+              .filter(Objects::nonNull)
+              .filter(it -> it instanceof Number)
+              .mapToDouble(it -> ((Number) it).doubleValue())
+              .boxed()
+              .collect(Collectors.toList());
+    } else if (axesChartStyler instanceof CategoryStyler) {
+      Set<Double> uniqueYData = new LinkedHashSet<>();
+      for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
+        uniqueYData.addAll(
+            categorySeries.getYData().stream()
                 .filter(Objects::nonNull)
-                .filter(it -> it instanceof Number)
-                .mapToDouble(it -> ((Number) it).doubleValue())
+                .mapToDouble(Number::doubleValue)
                 .boxed()
-                .collect(Collectors.toList());
-      } else if (axesChartStyler instanceof CategoryStyler) {
-        Set<Double> uniqueXData = new LinkedHashSet<>();
-        for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
-          List<Double> numericCategoryXData =
-              categorySeries.getXData().stream()
-                  .filter(Objects::nonNull)
-                  .filter(x -> x instanceof Number)
-                  .mapToDouble(x -> ((Number) x).doubleValue())
-                  .boxed()
-                  .collect(Collectors.toList());
-          uniqueXData.addAll(numericCategoryXData);
-        }
-        xData.addAll(uniqueXData);
-      } else if (axesChartStyler instanceof XYStyler) {
-        Set<Double> uniqueXData = new LinkedHashSet<>();
-        for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
-          uniqueXData.addAll(
-              Arrays.stream(xySeries.getXData()).boxed().collect(Collectors.toList()));
-        }
-        xData.addAll(uniqueXData);
+                .collect(Collectors.toList()));
       }
-
-      if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
-        if (!xData.isEmpty()) { // TODO why would this be empty?
-          return new AxisTickCalculator_Callback(
-              axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-              getDirection(),
-              workingSpace,
-              min,
-              max,
-              xData,
-              axesChartStyler);
-        }
-        return new AxisTickCalculator_Callback(
-            axesChartStyler.getxAxisTickLabelsFormattingFunction(),
-            getDirection(),
-            workingSpace,
-            min,
-            max,
-            axesChartStyler);
-
-      } else if (axesChartStyler instanceof CategoryStyler
-          || axesChartStyler instanceof BoxStyler) {
-
-        // TODO Cleanup? More elegant way?
-        AxesChartSeriesCategory axesChartSeries =
-            (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
-        List<?> categories = (List<?>) axesChartSeries.getXData();
-        DataType axisType = chart.getAxisPair().getXAxis().getDataType();
-
-        return new AxisTickCalculator_Category(
-            getDirection(), workingSpace, categories, axisType, axesChartStyler);
-
-      } else if (getDataType() == Series.DataType.Date
-          && !(axesChartStyler instanceof HeatMapStyler)) {
-
-        return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, axesChartStyler);
-
-      } else if (axesChartStyler.isXAxisLogarithmic()) {
-
-        return new AxisTickCalculator_Logarithmic(
-            getDirection(), workingSpace, min, max, axesChartStyler);
-
-      } else if (axesChartStyler instanceof HeatMapStyler) {
-
-        List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getXData();
-        DataType axisType = chart.getAxisPair().getXAxis().getDataType();
-
-        return new AxisTickCalculator_Category(
-            getDirection(), workingSpace, categories, axisType, axesChartStyler);
-      } else {
-        if (!xData.isEmpty()) {
-          return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, xData, axesChartStyler);
-        }
-        return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, axesChartStyler);
+      yData.addAll(uniqueYData);
+    } else if (axesChartStyler instanceof XYStyler) {
+      Set<Double> uniqueYData = new LinkedHashSet<>();
+      for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
+        uniqueYData.addAll(Arrays.stream(xySeries.getYData()).boxed().collect(Collectors.toList()));
       }
+      yData.addAll(uniqueYData);
     }
 
-    // Y-Axis
-    else {
-
-      List<Double> yData = new ArrayList<>();
-      if (axesChartStyler instanceof HeatMapStyler) {
-        List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getYData();
-        yData =
-            categories.stream()
-                .filter(Objects::nonNull)
-                .filter(it -> it instanceof Number)
-                .mapToDouble(it -> ((Number) it).doubleValue())
-                .boxed()
-                .collect(Collectors.toList());
-      } else if (axesChartStyler instanceof CategoryStyler) {
-        Set<Double> uniqueYData = new LinkedHashSet<>();
-        for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
-          uniqueYData.addAll(
-              categorySeries.getYData().stream()
-                  .filter(Objects::nonNull)
-                  .mapToDouble(Number::doubleValue)
-                  .boxed()
-                  .collect(Collectors.toList()));
-        }
-        yData.addAll(uniqueYData);
-      } else if (axesChartStyler instanceof XYStyler) {
-        Set<Double> uniqueYData = new LinkedHashSet<>();
-        for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
-          uniqueYData.addAll(
-              Arrays.stream(xySeries.getYData()).boxed().collect(Collectors.toList()));
-        }
-        yData.addAll(uniqueYData);
-      }
-
-      if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
-        if (!yData.isEmpty()) {
-          return new AxisTickCalculator_Callback(
-              axesChartStyler.getyAxisTickLabelsFormattingFunction(),
-              getDirection(),
-              workingSpace,
-              min,
-              max,
-              yData,
-              axesChartStyler);
-        }
+    if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
+      if (!yData.isEmpty()) {
         return new AxisTickCalculator_Callback(
             axesChartStyler.getyAxisTickLabelsFormattingFunction(),
             getDirection(),
             workingSpace,
             min,
             max,
+            yData,
             axesChartStyler);
-
-      } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != Series.DataType.Date) {
-
-        return new AxisTickCalculator_Logarithmic(
-            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
-      } else if (axesChartStyler instanceof HeatMapStyler) {
-
-        List<?> categories = (List<?>) ((HeatMapChart) chart).getHeatMapSeries().getYData();
-        DataType axisType = chart.getAxisPair().getYAxis().getDataType();
-
-        return new AxisTickCalculator_Category(
-            getDirection(), workingSpace, categories, axisType, axesChartStyler);
-      } else {
-        if (!yData.isEmpty()) {
-          return new AxisTickCalculator_Number(
-              getDirection(), workingSpace, min, max, yData, axesChartStyler);
-        }
-        return new AxisTickCalculator_Number(
-            getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
       }
+      return new AxisTickCalculator_Callback(
+          axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+          getDirection(),
+          workingSpace,
+          min,
+          max,
+          axesChartStyler);
+
+    } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != DataType.Date) {
+
+      return new AxisTickCalculator_Logarithmic(
+          getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
+    } else if (axesChartStyler instanceof HeatMapStyler) {
+
+      List<?> categories = ((HeatMapChart) chart).getHeatMapSeries().getYData();
+      DataType axisType = chart.getAxisPair().getYAxis().getDataType();
+
+      return new AxisTickCalculator_Category(
+          getDirection(), workingSpace, categories, axisType, axesChartStyler);
+    } else {
+      if (!yData.isEmpty()) {
+        return new AxisTickCalculator_Number(
+            getDirection(), workingSpace, min, max, yData, axesChartStyler);
+      }
+      return new AxisTickCalculator_Number(
+          getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
+    }
+  }
+
+  private AxisTickCalculator_ getAxisTickCalculatorForX(double workingSpace) {
+    List<Double> xData = new ArrayList<>();
+    if (axesChartStyler instanceof HeatMapStyler) {
+      List<?> categories = ((HeatMapChart) chart).getHeatMapSeries().getXData();
+      xData =
+          categories.stream()
+              .filter(Objects::nonNull)
+              .filter(it -> it instanceof Number)
+              .mapToDouble(it -> ((Number) it).doubleValue())
+              .boxed()
+              .collect(Collectors.toList());
+    } else if (axesChartStyler instanceof CategoryStyler) {
+      Set<Double> uniqueXData = new LinkedHashSet<>();
+      for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
+        List<Double> numericCategoryXData =
+            categorySeries.getXData().stream()
+                .filter(Objects::nonNull)
+                .filter(x -> x instanceof Number)
+                .mapToDouble(x -> ((Number) x).doubleValue())
+                .boxed()
+                .collect(Collectors.toList());
+        uniqueXData.addAll(numericCategoryXData);
+      }
+      xData.addAll(uniqueXData);
+    } else if (axesChartStyler instanceof XYStyler) {
+      Set<Double> uniqueXData = new LinkedHashSet<>();
+      for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
+        uniqueXData.addAll(Arrays.stream(xySeries.getXData()).boxed().collect(Collectors.toList()));
+      }
+      xData.addAll(uniqueXData);
+    }
+
+    if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
+      if (!xData.isEmpty()) { // TODO why would this be empty?
+        return new AxisTickCalculator_Callback(
+            axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+            getDirection(),
+            workingSpace,
+            min,
+            max,
+            xData,
+            axesChartStyler);
+      }
+      return new AxisTickCalculator_Callback(
+          axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+          getDirection(),
+          workingSpace,
+          min,
+          max,
+          axesChartStyler);
+
+    } else if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxStyler) {
+
+      // TODO Cleanup? More elegant way?
+      AxesChartSeriesCategory axesChartSeries =
+          (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+      List<?> categories = (List<?>) axesChartSeries.getXData();
+      DataType axisType = chart.getAxisPair().getXAxis().getDataType();
+
+      return new AxisTickCalculator_Category(
+          getDirection(), workingSpace, categories, axisType, axesChartStyler);
+
+    } else if (getDataType() == DataType.Date && !(axesChartStyler instanceof HeatMapStyler)) {
+
+      return new AxisTickCalculator_Date(getDirection(), workingSpace, min, max, axesChartStyler);
+
+    } else if (axesChartStyler.isXAxisLogarithmic()) {
+
+      return new AxisTickCalculator_Logarithmic(
+          getDirection(), workingSpace, min, max, axesChartStyler);
+
+    } else if (axesChartStyler instanceof HeatMapStyler) {
+
+      List<?> categories = ((HeatMapChart) chart).getHeatMapSeries().getXData();
+      DataType axisType = chart.getAxisPair().getXAxis().getDataType();
+
+      return new AxisTickCalculator_Category(
+          getDirection(), workingSpace, categories, axisType, axesChartStyler);
+    } else {
+      if (!xData.isEmpty()) {
+        return new AxisTickCalculator_Number(
+            getDirection(), workingSpace, min, max, xData, axesChartStyler);
+      }
+      return new AxisTickCalculator_Number(getDirection(), workingSpace, min, max, axesChartStyler);
     }
   }
 
@@ -598,7 +595,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
     return axisTitle;
   }
 
-  public AxisTickCalculator_ getAxisTickCalculator() {
+  public AxisTickCalculator getAxisTickCalculator() {
 
     return this.axisTickCalculator;
   }

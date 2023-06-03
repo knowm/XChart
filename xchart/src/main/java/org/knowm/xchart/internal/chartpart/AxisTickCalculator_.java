@@ -23,7 +23,7 @@ import org.knowm.xchart.style.Styler;
 /**
  * @author timmolter
  */
-public abstract class AxisTickCalculator_ {
+public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
   /** the List of tick label position in pixels */
   final List<Double> tickLocations = new LinkedList<>();
