@@ -16,10 +16,10 @@ import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /** Regression test for <a href="https://github.com/knowm/XChart/issues/536">issue 536</a>. */
-public class RegressionTestIssue527 {
+public class RegressionIssue536Test {
 
   @Test
-  public void issue546RegressionTest() throws Exception {
+  public void issue536RegressionTest() throws Exception {
 
     String series = "ABC";
 
