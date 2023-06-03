@@ -80,7 +80,8 @@ public class RegressionIssue536Test {
     assertThat(tickLabels.size()).isEqualTo(13);
     assertThat(tickLabels.get(0)).isEqualTo("10-18");
     boolean areAllLabelsUnique =
-        chart.axisPair.getXAxis().getAxisTickCalculator().areAllTickLabelsUnique(tickLabels);
+        ((AxisTickCalculator_Date) chart.axisPair.getXAxis().getAxisTickCalculator())
+            .areAllTickLabelsUnique(tickLabels);
     assertThat(areAllLabelsUnique).isEqualTo(true);
   }
 }

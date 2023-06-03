@@ -58,9 +58,9 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
     int x = 0;
     int y = 0;
     Number value = 0.0;
-    List<? extends Number[]> list = (List<? extends Number[]>) series.getHeatData();
-    List<?> xData = (List<?>) series.getXData();
-    List<?> yData = (List<?>) series.getYData();
+    List<? extends Number[]> list = series.getHeatData();
+    List<?> xData = series.getXData();
+    List<?> yData = series.getYData();
     double plotContentBoundsWidth = plotContentBounds.getWidth();
     double plotContentBoundsHeight = plotContentBounds.getHeight();
     double rectWidth = (plotContentBoundsWidth - 2 * xLeftMargin) / xData.size();
