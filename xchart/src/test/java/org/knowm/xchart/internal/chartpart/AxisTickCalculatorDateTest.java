@@ -31,6 +31,8 @@ public class AxisTickCalculatorDateTest {
     // test
     assertThat(calculator.tickLabels)
         .isEqualTo(
+            // NOTE: I don't fully understand why would it take dates before June 1 and after June
+            // 2, but hey, this is how it works currently.
             Arrays.asList("2023-05-31", "2023-06-01", "2023-06-02", "2023-06-03", "2023-06-04"));
   }
 }
