@@ -353,7 +353,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public OHLCSeries addSeries(String seriesName, int[] xData, int[] yData) {
@@ -370,7 +370,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public OHLCSeries addSeries(String seriesName, float[] xData, float[] yData) {
@@ -387,7 +387,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public OHLCSeries addSeries(String seriesName, double[] xData, double[] yData) {
@@ -400,7 +400,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
    *
    * @param seriesName
    * @param xData the X-Axis data
-   * @param xData the Y-Axis data
+   * @param yData the Y-Axis data
    * @return A Series object that you can set properties on
    */
   public OHLCSeries addSeries(String seriesName, List<?> xData, List<? extends Number> yData) {

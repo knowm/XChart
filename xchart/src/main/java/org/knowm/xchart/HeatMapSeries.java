@@ -122,17 +122,17 @@ public class HeatMapSeries extends AxesChartSeries {
     return axisType;
   }
 
-  public Collection<?> getXData() {
+  public List<?> getXData() {
 
     return xData;
   }
 
-  public Collection<?> getYData() {
+  public List<?> getYData() {
 
     return yData;
   }
 
-  public Collection<? extends Number[]> getHeatData() {
+  public List<? extends Number[]> getHeatData() {
 
     return heatData;
   }
