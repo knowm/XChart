@@ -191,11 +191,10 @@ public class Utils {
    * @return filename (if extension already exists), otherwise;: filename + fileExtension
    */
   public static String addFileExtension(String fileName, String fileExtension) {
-
     String fileNameWithFileExtension = fileName;
     if (fileName.length() <= fileExtension.length()
         || !fileName
-            .substring(fileName.length() - fileExtension.length(), fileName.length())
+            .substring(fileName.length() - fileExtension.length())
             .equalsIgnoreCase(fileExtension)) {
       fileNameWithFileExtension = fileName + fileExtension;
     }
