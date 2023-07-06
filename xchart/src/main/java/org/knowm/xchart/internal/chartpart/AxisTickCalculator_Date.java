@@ -190,7 +190,8 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
     // now increase the timespan until one is found where all the labels fit nicely. It will often
     // be the first one.
     index--;
-    boolean skip;
+    int fallbackindex = index;
+    boolean skip, force = false;
     do {
       skip = false;
 
@@ -242,9 +243,14 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
         // }
       }
       //      System.out.println("************");
-      if (index >= timeSpans.size() - 1)
-        break; // We reached the end, even though we might not yet have the result we want,
-      // continuing will lead to an Exception!
+      if (index >= timeSpans.size() - 1) {
+        // Nothing matches, as mentioned above, first one is usually the best fit, force it!
+        force = true;
+        index = fallbackindex;
+        continue; // We can't exit just yet, we need to do the calculations above again
+      }
+      if (force)
+        break; // We don't care anymore if it's a match or not, just use it
     } while (skip
         || !areAllTickLabelsUnique(tickLabels)
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
