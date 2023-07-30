@@ -9,9 +9,6 @@ import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.XYStyler;
 
-/**
- * @author timmolter
- */
 public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;

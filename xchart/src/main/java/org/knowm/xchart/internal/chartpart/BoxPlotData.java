@@ -3,8 +3,6 @@ package org.knowm.xchart.internal.chartpart;
 /**
  * Box plot data information(Upper whisker, Upper quartile, Middle quartile, Lower quartile, Lower
  * whisker)
- *
- * @author Mr14huashao
  */
 // TODO remove these BoxPlot DTOs
 public class BoxPlotData {

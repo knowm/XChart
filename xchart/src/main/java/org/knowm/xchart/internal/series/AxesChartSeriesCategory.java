@@ -8,8 +8,6 @@ import java.util.List;
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number
  * or Date or String, hence a List<?>
- *
- * @author timmolter
  */
 public abstract class AxesChartSeriesCategory extends MarkerSeries {
 

@@ -1,9 +1,6 @@
 package org.knowm.xchart.style.markers;
 
-/**
- * @author timmolter
- * @author ekleinod
- */
+/** */
 public class BaseSeriesMarkers implements SeriesMarkers {
 
   private final Marker[] seriesMarkers;

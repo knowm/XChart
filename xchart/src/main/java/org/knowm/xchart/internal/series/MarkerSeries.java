@@ -6,8 +6,6 @@ import org.knowm.xchart.style.markers.Marker;
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes, contains series
  * markers and error bars.
- *
- * @author timmolter
  */
 public abstract class MarkerSeries extends AxesChartSeries {
 

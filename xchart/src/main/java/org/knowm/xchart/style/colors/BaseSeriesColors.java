@@ -5,9 +5,6 @@ import java.awt.*;
 /**
  * Colors are taken from <a
  * href="http://colorbrewer2.org/#type=qualitative&scheme=Set3&n=12">colorbrewer2.org</a>.
- *
- * @author timmolter
- * @author ekleinod
  */
 public class BaseSeriesColors implements SeriesColors {
 

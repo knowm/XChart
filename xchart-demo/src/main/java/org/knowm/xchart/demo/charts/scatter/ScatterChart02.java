@@ -20,8 +20,6 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  *   <li>Logarithmic X-Axis
  *   <li>Place legend at Inside-NW position
  *   <li>Formatting of number with large magnitude but small differences
- *
- * @author timmolter
  */
 public class ScatterChart02 implements ExampleChart<XYChart> {
 

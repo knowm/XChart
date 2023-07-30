@@ -5,11 +5,7 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
-/**
- * Draws the plot background and the plot border
- *
- * @author timmolter
- */
+/** Draws the plot background and the plot border */
 public class PlotSurface_Pie<ST extends Styler, S extends Series> extends PlotSurface_<ST, S> {
 
   private final ST styler;

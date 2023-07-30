@@ -3,9 +3,6 @@ package org.knowm.xchart.style;
 import org.knowm.xchart.BubbleSeries.BubbleSeriesRenderStyle;
 import org.knowm.xchart.style.theme.Theme;
 
-/**
- * @author timmolter
- */
 public class BubbleStyler extends AxesChartStyler {
 
   private BubbleSeriesRenderStyle bubbleChartSeriesRenderStyle;

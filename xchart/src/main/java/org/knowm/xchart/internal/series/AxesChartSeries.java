@@ -2,11 +2,7 @@ package org.knowm.xchart.internal.series;
 
 import java.awt.*;
 
-/**
- * A Series containing X and Y data to be plotted on a Chart with X and Y Axes.
- *
- * @author timmolter
- */
+/** A Series containing X and Y data to be plotted on a Chart with X and Y Axes. */
 public abstract class AxesChartSeries extends Series {
 
   final DataType xAxisDataType;

@@ -3,11 +3,7 @@ package org.knowm.xchart;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.Series;
 
-/**
- * A Series containing Radar data to be plotted on a Chart
- *
- * @author timmolter
- */
+/** A Series containing Radar data to be plotted on a Chart */
 public class DialSeries extends Series {
 
   private double value;

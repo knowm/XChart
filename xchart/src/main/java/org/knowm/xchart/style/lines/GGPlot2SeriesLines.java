@@ -2,9 +2,6 @@ package org.knowm.xchart.style.lines;
 
 import java.awt.*;
 
-/**
- * @author timmolter
- */
 public class GGPlot2SeriesLines implements SeriesLines {
 
   private final BasicStroke[] seriesLines;

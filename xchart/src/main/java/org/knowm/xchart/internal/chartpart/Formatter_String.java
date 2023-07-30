@@ -4,11 +4,7 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
 
-/**
- * Dummy Format class for labels
- *
- * @author timmolter
- */
+/** Dummy Format class for labels */
 class Formatter_String extends Format {
 
   /** Constructor */

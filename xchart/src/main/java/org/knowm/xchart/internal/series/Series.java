@@ -3,11 +3,7 @@ package org.knowm.xchart.internal.series;
 import java.awt.*;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 
-/**
- * A Series to be plotted on a Chart
- *
- * @author timmolter
- */
+/** A Series to be plotted on a Chart */
 public abstract class Series {
 
   private final String name;

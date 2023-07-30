@@ -9,11 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import org.knowm.xchart.internal.chartpart.Chart;
 
-/**
- * A convenience class used to display a Chart in a barebones Swing application
- *
- * @author timmolter
- */
+/** A convenience class used to display a Chart in a barebones Swing application */
 public class SwingWrapper<T extends Chart<?, ?>> {
 
   private final List<XChartPanel<T>> chartPanels = new ArrayList<XChartPanel<T>>();

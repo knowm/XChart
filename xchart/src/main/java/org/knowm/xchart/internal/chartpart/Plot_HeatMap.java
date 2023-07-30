@@ -3,9 +3,6 @@ package org.knowm.xchart.internal.chartpart;
 import org.knowm.xchart.HeatMapSeries;
 import org.knowm.xchart.style.HeatMapStyler;
 
-/**
- * @author Mr14huashao
- */
 public class Plot_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     extends Plot_AxesChart<ST, S> {
 

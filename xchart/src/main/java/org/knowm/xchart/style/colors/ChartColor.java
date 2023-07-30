@@ -2,11 +2,7 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.*;
 
-/**
- * Pre-defined Colors used for various Chart Elements
- *
- * @author timmolter
- */
+/** Pre-defined Colors used for various Chart Elements */
 public enum ChartColor {
 
   /** BLACK */

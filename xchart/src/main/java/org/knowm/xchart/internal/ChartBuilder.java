@@ -3,11 +3,7 @@ package org.knowm.xchart.internal;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
-/**
- * A "Builder" to make creating charts easier
- *
- * @author timmolter
- */
+/** A "Builder" to make creating charts easier */
 public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart> {
 
   public int width = 800;

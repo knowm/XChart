@@ -4,11 +4,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
 
-/**
- * A Series containing X and Y data to be plotted on a Chart
- *
- * @author timmolter
- */
+/** A Series containing X and Y data to be plotted on a Chart */
 public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
 
   private XYSeriesRenderStyle xySeriesRenderStyle = null;

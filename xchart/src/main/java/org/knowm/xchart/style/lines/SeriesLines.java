@@ -2,11 +2,7 @@ package org.knowm.xchart.style.lines;
 
 import java.awt.*;
 
-/**
- * Pre-defined Line Styles used for Series Lines
- *
- * @author timmolter
- */
+/** Pre-defined Line Styles used for Series Lines */
 public interface SeriesLines {
 
   BasicStroke NONE = new NoneStroke();

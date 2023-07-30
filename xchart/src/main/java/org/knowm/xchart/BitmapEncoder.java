@@ -23,11 +23,7 @@ import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.FileImageOutputStream;
 import org.knowm.xchart.internal.chartpart.Chart;
 
-/**
- * A helper class with static methods for saving Charts as bitmaps
- *
- * @author timmolter
- */
+/** A helper class with static methods for saving Charts as bitmaps */
 public final class BitmapEncoder {
 
   /** Constructor - Private constructor to prevent instantiation */

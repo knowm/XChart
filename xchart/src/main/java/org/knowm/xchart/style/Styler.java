@@ -14,8 +14,6 @@ import org.knowm.xchart.style.theme.XChartTheme;
 
 /**
  * The styler is used to manage all things related to styling of the vast number of Chart components
- *
- * @author timmolter
  */
 public abstract class Styler {
 

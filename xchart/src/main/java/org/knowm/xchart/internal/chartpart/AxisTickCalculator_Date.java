@@ -11,8 +11,6 @@ import org.knowm.xchart.style.AxesChartStyler;
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
  * rendering the axis ticks for date axes
- *
- * @author timmolter
  */
 class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
@@ -249,8 +247,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
         index = fallbackindex;
         continue; // We can't exit just yet, we need to do the calculations above again
       }
-      if (force)
-        break; // We don't care anymore if it's a match or not, just use it
+      if (force) break; // We don't care anymore if it's a match or not, just use it
     } while (skip
         || !areAllTickLabelsUnique(tickLabels)
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));

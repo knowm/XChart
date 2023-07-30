@@ -2,9 +2,6 @@ package org.knowm.xchart.style.lines;
 
 import java.awt.*;
 
-/**
- * @author timmolter
- */
 public class MatlabSeriesLines implements SeriesLines {
 
   private final BasicStroke[] seriesLines;

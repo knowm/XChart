@@ -5,9 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 
-/**
- * @author ekleinod
- */
 public class VectorGraphicsEncoderTest {
 
   @Test

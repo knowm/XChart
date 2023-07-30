@@ -3,11 +3,7 @@ package org.knowm.xchart;
 import java.util.List;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/**
- * A convenience class for making Charts with one line of code
- *
- * @author timmolter
- */
+/** A convenience class for making Charts with one line of code */
 public final class QuickChart {
 
   private static final int WIDTH = 600;

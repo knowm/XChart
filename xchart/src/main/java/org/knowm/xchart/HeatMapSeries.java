@@ -4,11 +4,7 @@ import java.util.*;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 
-/**
- * A Series containing X, Y and heatData data to be plotted on a Chart
- *
- * @author Mr14huashao
- */
+/** A Series containing X, Y and heatData data to be plotted on a Chart */
 public class HeatMapSeries extends AxesChartSeries {
 
   List<?> xData;

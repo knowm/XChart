@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 import java.text.*;
 import org.knowm.xchart.style.AxesChartStyler;
 
-/**
- * @author timmolter
- */
 class Formatter_Number extends Format {
 
   private final AxesChartStyler styler;

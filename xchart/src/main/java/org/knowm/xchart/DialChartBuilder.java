@@ -2,9 +2,6 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.ChartBuilder;
 
-/**
- * @author timmolter
- */
 public class DialChartBuilder extends ChartBuilder<DialChartBuilder, DialChart> {
 
   public DialChartBuilder() {}

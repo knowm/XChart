@@ -10,9 +10,6 @@ import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
-/**
- * @author timmolter
- */
 public class TestForIssue291 {
 
   static final int WIDTH = 465;

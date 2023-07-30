@@ -12,11 +12,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import org.knowm.xchart.internal.chartpart.Chart;
 
-/**
- * A helper class with static methods for saving Charts as vectors
- *
- * @author timmolter
- */
+/** A helper class with static methods for saving Charts as vectors */
 public final class VectorGraphicsEncoder {
 
   /** Constructor - Private constructor to prevent instantiation */

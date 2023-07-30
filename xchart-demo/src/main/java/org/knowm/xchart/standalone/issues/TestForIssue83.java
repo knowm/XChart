@@ -7,9 +7,6 @@ import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.lines.SeriesLines;
 
-/**
- * @author timmolter
- */
 public class TestForIssue83 {
 
   public static void main(String[] args) throws IOException {

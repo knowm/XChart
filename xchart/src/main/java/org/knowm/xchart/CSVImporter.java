@@ -12,8 +12,6 @@ import org.knowm.xchart.style.Styler.ChartTheme;
  * This class is used to create a Chart object from a folder containing one or more CSV files. The
  * parent folder's name becomes the title of the chart. Each CSV file in the folder becomes a series
  * on the chart. the CSV file's name becomes the series' name.
- *
- * @author timmolter
  */
 public class CSVImporter {
 

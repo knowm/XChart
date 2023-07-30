@@ -13,9 +13,6 @@ import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.PieStyler.ClockwiseDirectionType;
 import org.knowm.xchart.style.PieStyler.LabelType;
 
-/**
- * @author timmolter
- */
 public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     extends PlotContent_<ST, S> {
 

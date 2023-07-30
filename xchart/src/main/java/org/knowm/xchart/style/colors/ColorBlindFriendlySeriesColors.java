@@ -2,9 +2,6 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.*;
 
-/**
- * @author timmolter
- */
 public class ColorBlindFriendlySeriesColors implements SeriesColors {
 
   // The color blind friendly palette

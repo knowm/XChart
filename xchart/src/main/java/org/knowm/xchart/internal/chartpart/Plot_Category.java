@@ -3,9 +3,6 @@ package org.knowm.xchart.internal.chartpart;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.style.CategoryStyler;
 
-/**
- * @author timmolter
- */
 public class Plot_Category<ST extends CategoryStyler, S extends CategorySeries>
     extends Plot_AxesChart<ST, S> {
 

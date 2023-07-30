@@ -20,11 +20,7 @@ import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
-/**
- * Create a Chart matrix
- *
- * @author timmolter
- */
+/** Create a Chart matrix */
 public class TestForIssue54_1 {
 
   static final int WIDTH = 465;

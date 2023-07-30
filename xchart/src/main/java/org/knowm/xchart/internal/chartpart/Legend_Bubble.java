@@ -9,9 +9,6 @@ import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
-/**
- * @author timmolter
- */
 public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries>
     extends Legend_<ST, S> {
 

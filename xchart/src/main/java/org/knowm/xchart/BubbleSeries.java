@@ -4,11 +4,7 @@ import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.NoMarkersSeries;
 
-/**
- * A Series containing X, Y and bubble size data to be plotted on a Chart
- *
- * @author timmolter
- */
+/** A Series containing X, Y and bubble size data to be plotted on a Chart */
 public class BubbleSeries extends NoMarkersSeries {
 
   private BubbleSeriesRenderStyle bubbleSeriesRenderStyle = null;

@@ -5,9 +5,6 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
-/**
- * @author timmolter
- */
 public class Plot_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;

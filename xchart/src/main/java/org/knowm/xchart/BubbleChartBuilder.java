@@ -2,9 +2,6 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.ChartBuilder;
 
-/**
- * @author timmolter
- */
 public class BubbleChartBuilder extends ChartBuilder<BubbleChartBuilder, BubbleChart> {
 
   String xAxisTitle = "";

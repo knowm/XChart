@@ -5,11 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import org.knowm.xchart.internal.Utils;
 
-/**
- * A helper class with static methods for saving Charts as a GIF file
- *
- * @author Mr14huashao
- */
+/** A helper class with static methods for saving Charts as a GIF file */
 public class GifEncoder {
 
   private static final String GIF_FILE_EXTENSION = ".gif";

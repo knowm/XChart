@@ -2,9 +2,6 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.ChartBuilder;
 
-/**
- * @author timmolter
- */
 public class XYChartBuilder extends ChartBuilder<XYChartBuilder, XYChart> {
 
   String xAxisTitle = "";

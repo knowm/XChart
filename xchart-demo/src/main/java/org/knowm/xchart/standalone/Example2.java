@@ -6,11 +6,7 @@ import java.util.List;
 import org.knowm.xchart.*;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
-/**
- * Create a Chart matrix
- *
- * @author timmolter
- */
+/** Create a Chart matrix */
 public class Example2 {
 
   public static void main(String[] args) throws IOException {

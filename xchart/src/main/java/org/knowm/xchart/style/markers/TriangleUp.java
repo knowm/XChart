@@ -3,9 +3,6 @@ package org.knowm.xchart.style.markers;
 import java.awt.*;
 import java.awt.geom.Path2D;
 
-/**
- * @author timmolter
- */
 public class TriangleUp extends Marker {
 
   @Override

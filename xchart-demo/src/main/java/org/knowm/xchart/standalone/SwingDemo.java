@@ -6,11 +6,7 @@ import javax.swing.WindowConstants;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.area.AreaChart01;
 
-/**
- * Class showing how to integrate a chart into a Swing JFrame
- *
- * @author timmolter
- */
+/** Class showing how to integrate a chart into a Swing JFrame */
 public class SwingDemo {
 
   /**

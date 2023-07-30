@@ -10,9 +10,6 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
-/**
- * @author timmolter
- */
 public class TestForIssue127 {
 
   public static void main(String[] args) throws InterruptedException, ParseException {

@@ -5,8 +5,6 @@ import java.util.Arrays;
 /**
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number
  * or Date(epochtime), hence a double[]
- *
- * @author timmolter
  */
 // TODO weird name of class since it does contain extravalues for error bars!
 public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {

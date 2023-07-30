@@ -11,9 +11,6 @@ import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
-/**
- * @author timmolter
- */
 public class TestForIssue244 {
 
   static final int WIDTH = 465;

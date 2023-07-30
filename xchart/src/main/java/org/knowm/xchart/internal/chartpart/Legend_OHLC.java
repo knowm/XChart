@@ -11,9 +11,6 @@ import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
-/**
- * @author arthurmcgibbon
- */
 public class Legend_OHLC<ST extends OHLCStyler, S extends OHLCSeries> extends Legend_<ST, S> {
 
   private final ST axesChartStyler;

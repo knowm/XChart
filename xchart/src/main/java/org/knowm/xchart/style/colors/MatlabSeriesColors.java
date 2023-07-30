@@ -2,9 +2,6 @@ package org.knowm.xchart.style.colors;
 
 import java.awt.*;
 
-/**
- * @author timmolter
- */
 public class MatlabSeriesColors implements SeriesColors {
 
   public static final Color BLUE = new Color(0, 0, 255, 255);

@@ -5,9 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
-/**
- * @author timmolter
- */
 public class HistogramTest {
 
   @Test

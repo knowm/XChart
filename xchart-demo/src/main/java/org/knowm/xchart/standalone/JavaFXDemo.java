@@ -9,11 +9,7 @@ import javax.swing.JPanel;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.area.AreaChart01;
 
-/**
- * Class showing how to integrate a chart into a JavaFX Stage
- *
- * @author timmolter
- */
+/** Class showing how to integrate a chart into a JavaFX Stage */
 public class JavaFXDemo extends Application {
 
   public static void main(String[] args) {

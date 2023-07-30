@@ -13,9 +13,6 @@ import org.knowm.xchart.HeatMapSeries;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.style.HeatMapStyler;
 
-/**
- * @author Mr14huashao
- */
 public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     extends PlotContent_<ST, S> {
 

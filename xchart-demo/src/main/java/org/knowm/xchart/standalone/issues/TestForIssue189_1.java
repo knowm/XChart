@@ -8,11 +8,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.radar.RadarChart01;
 import org.knowm.xchart.style.RadarStyler;
 
-/**
- * Create a Chart matrix
- *
- * @author timmolter
- */
+/** Create a Chart matrix */
 public class TestForIssue189_1 {
 
   public static void main(String[] args) {

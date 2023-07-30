@@ -1,8 +1,5 @@
 package org.knowm.xchart.style.markers;
 
-/**
- * @author timmolter
- */
 public interface SeriesMarkers {
 
   Marker NONE = new None();

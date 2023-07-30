@@ -15,7 +15,6 @@ import org.knowm.xchart.style.BoxStyler.BoxplotCalCulationMethod;
 /**
  * Calculate box plot data information for all series of BoxChart.
  *
- * @author Mr14huashao
  * @param <ST> BoxPlotStyler
  * @param <S> BoxSeries
  */

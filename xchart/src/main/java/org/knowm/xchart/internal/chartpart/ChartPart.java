@@ -3,11 +3,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-/**
- * All components of a chart that need to be painted should implement this interface
- *
- * @author timmolter
- */
+/** All components of a chart that need to be painted should implement this interface */
 public interface ChartPart {
 
   BasicStroke SOLID_STROKE =

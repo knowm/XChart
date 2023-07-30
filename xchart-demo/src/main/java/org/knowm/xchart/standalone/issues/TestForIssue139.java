@@ -5,9 +5,6 @@ import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.SwingWrapper;
 
-/**
- * @author timmolter
- */
 public class TestForIssue139 {
 
   public static void main(String[] args) {

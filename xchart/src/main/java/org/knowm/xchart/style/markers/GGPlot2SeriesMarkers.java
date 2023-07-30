@@ -1,8 +1,5 @@
 package org.knowm.xchart.style.markers;
 
-/**
- * @author timmolter
- */
 public class GGPlot2SeriesMarkers implements SeriesMarkers {
 
   private final Marker[] seriesMarkers;

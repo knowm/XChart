@@ -9,9 +9,6 @@ import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.markers.XChartSeriesMarkers;
 import org.knowm.xchart.style.theme.AbstractBaseTheme;
 
-/**
- * @author timmolter
- */
 public class MyCustomTheme extends AbstractBaseTheme {
 
   // Chart Style ///////////////////////////////

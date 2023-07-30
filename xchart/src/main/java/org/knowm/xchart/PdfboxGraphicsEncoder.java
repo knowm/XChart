@@ -15,11 +15,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.knowm.xchart.internal.chartpart.Chart;
 
-/**
- * A helper class with static methods for saving Charts as a PDF file
- *
- * @author Mr14huashao
- */
+/** A helper class with static methods for saving Charts as a PDF file */
 public class PdfboxGraphicsEncoder {
 
   private static final String PDF_FILE_EXTENSION = ".pdf";

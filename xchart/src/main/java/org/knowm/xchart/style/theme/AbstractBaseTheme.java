@@ -11,10 +11,7 @@ import org.knowm.xchart.style.lines.BaseSeriesLines;
 import org.knowm.xchart.style.markers.BaseSeriesMarkers;
 import org.knowm.xchart.style.markers.Marker;
 
-/**
- * @author timmolter
- * @author ekleinod
- */
+/** */
 public abstract class AbstractBaseTheme implements Theme {
 
   // Chart Style ///////////////////////////////

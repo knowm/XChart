@@ -2,9 +2,6 @@ package org.knowm.xchart.demo;
 
 import org.knowm.xchart.demo.charts.ExampleChart;
 
-/**
- * @author timmolter
- */
 public final class ChartInfo {
 
   private final String exampleChartName;

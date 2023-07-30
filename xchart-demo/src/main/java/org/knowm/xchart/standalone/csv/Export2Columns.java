@@ -6,9 +6,6 @@ import org.knowm.xchart.CSVImporter.DataOrientation;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
-/**
- * @author timmolter
- */
 public class Export2Columns {
 
   public static void main(String[] args) throws Exception {

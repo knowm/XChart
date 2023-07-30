@@ -3,9 +3,6 @@ package org.knowm.xchart.style.markers;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-/**
- * @author timmolter
- */
 public class Square extends Marker {
 
   @Override

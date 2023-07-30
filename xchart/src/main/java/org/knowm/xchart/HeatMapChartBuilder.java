@@ -2,9 +2,6 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.ChartBuilder;
 
-/**
- * @author Mr14huashao
- */
 public class HeatMapChartBuilder extends ChartBuilder<HeatMapChartBuilder, HeatMapChart> {
 
   String xAxisTitle = "";

@@ -15,11 +15,7 @@ import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
-/**
- * An XChart Chart
- *
- * @author timmolter
- */
+/** An XChart Chart */
 public abstract class Chart<ST extends Styler, S extends Series> {
 
   protected final ST styler;

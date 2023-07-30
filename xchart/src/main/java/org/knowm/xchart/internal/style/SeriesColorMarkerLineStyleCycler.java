@@ -7,8 +7,6 @@ import org.knowm.xchart.style.markers.Marker;
  * Cycles through the different colors, markers, and strokes in a predetermined way
  *
  * <p>This is an internal class that should not be used be clients
- *
- * @author timmolter
  */
 public class SeriesColorMarkerLineStyleCycler {
 

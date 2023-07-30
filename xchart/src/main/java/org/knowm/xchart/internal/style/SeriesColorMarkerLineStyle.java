@@ -3,11 +3,7 @@ package org.knowm.xchart.internal.style;
 import java.awt.*;
 import org.knowm.xchart.style.markers.Marker;
 
-/**
- * A DTO to hold the Series' Color, Marker, and LineStyle
- *
- * @author timmolter
- */
+/** A DTO to hold the Series' Color, Marker, and LineStyle */
 public final class SeriesColorMarkerLineStyle {
 
   private final Color color;

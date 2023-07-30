@@ -7,11 +7,7 @@ import java.util.List;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 
-/**
- * Draws the plot background, the plot border and the horizontal and vertical grid lines
- *
- * @author timmolter
- */
+/** Draws the plot background, the plot border and the horizontal and vertical grid lines */
 public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
     extends PlotSurface_<ST, S> {
 

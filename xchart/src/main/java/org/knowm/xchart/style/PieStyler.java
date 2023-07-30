@@ -6,9 +6,6 @@ import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.style.colors.FontColorDetector;
 import org.knowm.xchart.style.theme.Theme;
 
-/**
- * @author timmolter
- */
 public class PieStyler extends Styler {
 
   private PieSeriesRenderStyle chartPieSeriesRenderStyle;

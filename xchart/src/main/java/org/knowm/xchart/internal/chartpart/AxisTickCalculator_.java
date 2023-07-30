@@ -20,9 +20,6 @@ import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler;
 
-/**
- * @author timmolter
- */
 public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
   /** the List of tick label position in pixels */

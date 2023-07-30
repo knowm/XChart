@@ -13,8 +13,6 @@ import org.knowm.xchart.style.AxesChartStyler;
 /**
  * This class encapsulates the logic to generate the axis tick mark and axis tick label data for
  * rendering the axis ticks for String axes
- *
- * @author timmolter
  */
 class AxisTickCalculator_Category extends AxisTickCalculator_ {
 

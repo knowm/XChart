@@ -42,8 +42,6 @@ import org.knowm.xchart.style.XYStyler;
  *
  * <p>Right-click + Save As... or ctrl+S pops up a Save As dialog box for saving the chart as PNG,
  * JPEG, etc. file.
- *
- * @author timmolter
  */
 public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
@@ -394,8 +392,6 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   /**
    * File filter based on the suffix of a file. This file filter accepts all files that end with
    * .suffix or the capitalized suffix.
-   *
-   * @author Benedikt Bünz
    */
   private static class SuffixSaveFilter extends FileFilter {
 

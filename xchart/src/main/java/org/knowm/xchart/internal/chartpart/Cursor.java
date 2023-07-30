@@ -19,11 +19,7 @@ import org.knowm.xchart.internal.series.MarkerSeries;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.XYStyler;
 
-/**
- * Cursor movement to display matching point data information.
- *
- * @author Mr14huashao
- */
+/** Cursor movement to display matching point data information. */
 public class Cursor extends MouseAdapter implements ChartPart {
 
   private static final int LINE_SPACING = 5;

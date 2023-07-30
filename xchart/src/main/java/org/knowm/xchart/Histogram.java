@@ -5,11 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * This class can be used to create histogram
- *
- * @author timmolter
- */
+/** This class can be used to create histogram */
 public class Histogram {
 
   private final Collection<? extends Number> originalData;

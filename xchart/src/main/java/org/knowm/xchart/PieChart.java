@@ -12,9 +12,6 @@ import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-/**
- * @author timmolter
- */
 public class PieChart extends Chart<PieStyler, PieSeries> {
 
   /**

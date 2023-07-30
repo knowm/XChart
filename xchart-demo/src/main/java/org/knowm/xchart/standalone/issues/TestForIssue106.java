@@ -10,9 +10,6 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.area.AreaChart03;
 import org.knowm.xchart.style.Styler;
 
-/**
- * @author timmolter
- */
 public class TestForIssue106 {
 
   public static void main(String[] args) {
