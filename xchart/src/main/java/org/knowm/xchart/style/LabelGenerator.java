@@ -1,7 +1,7 @@
 package org.knowm.xchart.style;
 
-import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.PieSeries;
 
 public interface LabelGenerator {
-    String generateSeriesLabel(Series series);
+    String generateSeriesLabel(PieSeries series);
 }
