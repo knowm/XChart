@@ -29,6 +29,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     super(chart);
     pieStyler = chart.getStyler();
   }
+
   // TODO get rid of this
   public static Shape getDonutSliceShape(
       Rectangle2D pieBounds, double thickness, double start, double extent) {

@@ -257,6 +257,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
         Utils.getNumberListFromDoubleArray(newYData),
         Utils.getNumberListFromDoubleArray(newErrorBarData));
   }
+
   ///////////////////////////////////////////////////
   // Internal Members and Methods ///////////////////
   ///////////////////////////////////////////////////

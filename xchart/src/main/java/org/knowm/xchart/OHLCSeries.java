@@ -15,8 +15,10 @@ public class OHLCSeries extends MarkerSeries {
   private long[] volumeData;
   private double[] yData;
   private OHLCSeriesRenderStyle ohlcSeriesRenderStyle;
+
   /** Up Color */
   private Color upColor;
+
   /** Down Color */
   private Color downColor;
 

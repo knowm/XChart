@@ -146,6 +146,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     }
     return filtered;
   }
+
   /**
    * Is there a point selected in all series.
    *
@@ -218,6 +219,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     // reset button pressed
     resetZoom();
   }
+
   /**
    * Whether the selectZoom overlaps with the chart.plot
    *

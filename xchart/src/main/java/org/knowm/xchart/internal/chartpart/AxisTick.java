@@ -11,8 +11,10 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
   private final Chart<ST, S> chart;
   private final Direction direction;
+
   /** the axisticklabels */
   private final AxisTickLabels<ST, S> axisTickLabels;
+
   /** the axistickmarks */
   private final AxisTickMarks<ST, S> axisTickMarks;
 

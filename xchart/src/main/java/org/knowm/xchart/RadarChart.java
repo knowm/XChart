@@ -77,6 +77,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
 
     this.radiiLabels = radiiLabels;
   }
+
   /**
    * Add a series for a Radar type chart
    *

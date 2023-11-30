@@ -7,18 +7,25 @@ public abstract class AxesChartSeries extends Series {
 
   final DataType xAxisDataType;
   final DataType yAxisType;
+
   /** the minimum value of axis range */
   protected double xMin;
+
   /** the maximum value of axis range */
   protected double xMax;
+
   /** the minimum value of axis range */
   protected double yMin;
+
   /** the maximum value of axis range */
   protected double yMax;
+
   /** Line Style */
   private BasicStroke stroke;
+
   /** Line Color */
   private Color lineColor;
+
   /** Line Width */
   private float lineWidth = -1.0f;
 

@@ -397,6 +397,7 @@ public abstract class Styler {
 
     return legendBackgroundColor;
   }
+
   /**
    * Set the chart legend background color
    *
@@ -499,6 +500,7 @@ public abstract class Styler {
     InsideS,
     OutsideS
   }
+
   /**
    * Set the legend layout
    *
@@ -680,6 +682,7 @@ public abstract class Styler {
     this.annotationLineColor = annotationLineColor;
     return this;
   }
+
   // Chart Button ///////////////////////////////
 
   public Color getChartButtonBackgroundColor() {
@@ -876,6 +879,7 @@ public abstract class Styler {
 
     return antiAlias;
   }
+
   // TODO add javadocs to all setters that are not yet documented.
   public Styler setAntiAlias(boolean newVal) {
 
@@ -948,6 +952,7 @@ public abstract class Styler {
     yAxisGroupTitleColorMap.put(yAxisGroup, yAxisColor);
     return this;
   }
+
   // Line, Scatter, Area Charts ///////////////////////////////
 
   public int getMarkerSize() {

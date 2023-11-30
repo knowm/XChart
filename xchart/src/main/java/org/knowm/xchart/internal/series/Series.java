@@ -16,6 +16,7 @@ public abstract class Series {
   // TODO there is not always a y-axis group (pie chart for example) move this to an axis series
   // tyoe??
   private int yAxisGroup = 0;
+
   /** the yAxis decimalPattern */
   private String yAxisDecimalPattern;
 

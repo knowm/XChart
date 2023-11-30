@@ -39,16 +39,22 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   private final Rectangle2D.Double bounds;
 
   private final ST axesChartStyler;
+
   /** the axis title */
   private final AxisTitle<ST, S> axisTitle;
+
   /** the axis tick */
   private final AxisTick<ST, S> axisTick;
+
   /** the axis direction */
   private final Direction direction;
+
   /** the axis group index * */
   private final int index;
+
   /** the dataType */
   private Series.DataType dataType;
+
   /** the axis tick calculator */
   private AxisTickCalculator axisTickCalculator;
 

@@ -288,6 +288,7 @@ public class PieStyler extends Styler {
     return FontColorDetector.getAutomaticFontColor(
         backgroundColor, labelsFontColorAutomaticDark, labelsFontColorAutomaticLight);
   }
+
   /**
    * Sets the color of the Font used for chart annotations
    *
@@ -324,6 +325,7 @@ public class PieStyler extends Styler {
     this.labelsFontColorAutomaticDark = labelsFontColorAutomaticDark;
     return this;
   }
+
   /**
    * Set the theme the styler should use
    *

@@ -111,6 +111,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     this.height = height;
   }
+
   // TODO remove public
   public String getTitle() {
 
@@ -142,6 +143,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     this.yAxisTitle = yAxisTitle;
   }
+
   // TODO these related methods don't make sense for all chart types
   public String getYAxisGroupTitle(int yAxisGroup) {
 
@@ -172,6 +174,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     AxesChartStyler axesChartStyler = (AxesChartStyler) (styler);
     axesChartStyler.setxAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
+
   /**
    * @Deprecated - use styler instead
    *

@@ -55,6 +55,7 @@ public class XYStyler extends AxesChartStyler {
     this.cursorFontColor = theme.getCursorFontColor();
     this.cursorBackgroundColor = theme.getCursorBackgroundColor();
   }
+
   /**
    * Set the theme the styler should use
    *
@@ -82,6 +83,7 @@ public class XYStyler extends AxesChartStyler {
     this.xySeriesRenderStyle = xySeriesRenderStyle;
     return this;
   }
+
   // Zoom ///////////////////////////////
 
   public boolean isZoomEnabled() {
@@ -207,6 +209,7 @@ public class XYStyler extends AxesChartStyler {
   public Function<Double, String> getCustomCursorYDataFormattingFunction() {
     return customCursorYDataFormattingFunction;
   }
+
   /**
    * Set the custom function for formatting the cursor tooltip based on the series Y-Axis data
    *
