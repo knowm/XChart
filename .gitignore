@@ -24,10 +24,10 @@ log/
 *.bak
 
 # Sample images
-xchart-demo/*.png
 *.jpg
 *.bmp
-xchart-demo/*.gif
 *.svg
 *.pdf
 *.eps
+*.png
+*.gif
