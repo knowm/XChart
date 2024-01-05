@@ -572,14 +572,17 @@ libraryDependencies += "org.knowm.xchart" % "xchart" % "3.8.6" exclude("de.erich
 
 ## Building with Maven
 
-#### general
+Instruction                 | Command
+--------------------------------- | ------------------------ 
+run unit tests                    | `mvn clean test`
+package jar                       | `mvn clean package`    
+install in local Maven repo       | `mvn clean install`
+create project javadocs           | `mvn javadoc:aggregate`
+generate dependency tree          | `mvn dependency:tree`
+check for dependency updates      | `mvn versions:display-dependency-updates`
+check for plugin updates          | `mvn versions:display-plugin-updates`
+code format                       | `mvn com.spotify.fmt:fmt-maven-plugin:format`
 
-    mvn clean package  
-    mvn javadoc:aggregate  
-
-#### Formatting
-
-    mvn com.spotify.fmt:fmt-maven-plugin:format
     
 Formats your code using [google-java-format](https://github.com/google/google-java-format) which follows [Google's code styleguide](https://google.github.io/styleguide/javaguide.html).
 
