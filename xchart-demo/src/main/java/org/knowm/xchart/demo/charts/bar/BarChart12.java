@@ -34,6 +34,11 @@ public class BarChart12 implements ExampleChart<CategoryChart> {
     new SwingWrapper<>(chart).displayChart();
   }
 
+  private static List<String> getMonths() {
+    return Arrays.asList(
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+  }
+
   private static List<Double> getRandomValues(int count) {
 
     List<Double> values = new ArrayList<>(count);
@@ -53,8 +58,8 @@ public class BarChart12 implements ExampleChart<CategoryChart> {
             .width(800)
             .height(600)
             .title(getClass().getSimpleName())
-            .xAxisTitle("Quarter")
-            .yAxisTitle("Sales")
+            .xAxisTitle("Month")
+            .yAxisTitle("Consumption")
             .build();
 
     // Customize Chart
@@ -63,29 +68,28 @@ public class BarChart12 implements ExampleChart<CategoryChart> {
     chart.getStyler().setStacked(true);
     chart
         .getStyler()
-        .setSeriesColors(new Color[] {Color.RED, Color.ORANGE, Color.YELLOW, Color.DARK_GRAY});
+        .setSeriesColors(
+            new Color[] {
+              Color.decode("#2133D0"),
+              Color.decode("#FF3B47"),
+              Color.decode("#FFBD00"),
+              Color.DARK_GRAY
+            });
 
-    List<Double> applesValues = getRandomValues(4);
-    List<Double> orangesValues = getRandomValues(4);
-    List<Double> lemonsValues = getRandomValues(4);
+    List<String> months = getMonths();
+    List<Double> period1Values = getRandomValues(12);
+    List<Double> period2Values = getRandomValues(12);
+    List<Double> period3Values = getRandomValues(12);
     List<Double> averageValues = new ArrayList<>();
-    for (int i = 0; i < 4; i++) {
-      averageValues.add((applesValues.get(i) + orangesValues.get(i) + lemonsValues.get(i)) / 3);
+    for (int i = 0; i < 12; i++) {
+      averageValues.add((period1Values.get(i) + period2Values.get(i) + period3Values.get(i)) / 3);
     }
 
     // Series
-    CategorySeries staked1 =
-        chart.addSeries(
-            "Apples", Arrays.asList("1Q", "2Q", "3Q", "4Q"), applesValues);
-    CategorySeries staked2 =
-        chart.addSeries(
-            "Oranges", Arrays.asList("1Q", "2Q", "3Q", "4Q"), orangesValues);
-    CategorySeries staked3 =
-        chart.addSeries(
-            "Lemons", Arrays.asList("1Q", "2Q", "3Q", "4Q"), lemonsValues);
-    CategorySeries overlappedLine =
-        chart.addSeries(
-            "Average", Arrays.asList("1Q", "2Q", "3Q", "4Q"), averageValues);
+    CategorySeries staked1 = chart.addSeries("Period 1", months, period1Values);
+    CategorySeries staked2 = chart.addSeries("Period 2", months, period2Values);
+    CategorySeries staked3 = chart.addSeries("Period 3", months, period3Values);
+    CategorySeries overlappedLine = chart.addSeries("Average", months, averageValues);
     overlappedLine.setOverlapped(true);
     overlappedLine.setChartCategorySeriesRenderStyle(CategorySeries.CategorySeriesRenderStyle.Line);
 
