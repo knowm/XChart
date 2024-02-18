@@ -299,15 +299,15 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         else if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
 
           // paint bar
-          path = new Path2D.Double();
-          path.moveTo(xOffset, yOffset);
-          path.lineTo(xOffset + barWidth, yOffset);
-          path.lineTo(xOffset + barWidth, zeroOffset);
-          path.lineTo(xOffset, zeroOffset);
-          path.closePath();
+          Path2D.Double barPath = new Path2D.Double();
+          barPath.moveTo(xOffset, yOffset);
+          barPath.lineTo(xOffset + barWidth, yOffset);
+          barPath.lineTo(xOffset + barWidth, zeroOffset);
+          barPath.lineTo(xOffset, zeroOffset);
+          barPath.closePath();
 
           g.setColor(series.getFillColor());
-          g.fill(path);
+          g.fill(barPath);
 
           // TODO maybe we want outlines of the bars?
           // Legend markers now also draw the outline. It has been disabled for
