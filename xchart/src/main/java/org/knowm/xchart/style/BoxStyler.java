@@ -24,9 +24,10 @@ public class BoxStyler extends AxesChartStyler {
     return boxplotCalCulationMethod;
   }
 
-  public void setBoxplotCalCulationMethod(BoxplotCalCulationMethod boxplotCalCulationMethod) {
+  public BoxStyler setBoxplotCalCulationMethod(BoxplotCalCulationMethod boxplotCalCulationMethod) {
 
     this.boxplotCalCulationMethod = boxplotCalCulationMethod;
+    return this;
   }
 
   /** Box plot calculation method, method for determining the position of the quartile */

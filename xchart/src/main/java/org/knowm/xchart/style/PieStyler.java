@@ -121,9 +121,10 @@ public class PieStyler extends Styler {
    *
    * @param labelsDistance
    */
-  public void setLabelsDistance(double labelsDistance) {
+  public PieStyler setLabelsDistance(double labelsDistance) {
 
     this.labelsDistance = labelsDistance;
+    return this;
   }
 
   public LabelType getLabelType() {
