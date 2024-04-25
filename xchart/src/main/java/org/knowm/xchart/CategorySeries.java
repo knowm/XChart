@@ -9,6 +9,8 @@ import org.knowm.xchart.internal.series.Series;
 /** A Series containing category data to be plotted on a Chart */
 public class CategorySeries extends AxesChartSeriesCategory {
 
+  private boolean isOverlapped = false;
+
   private CategorySeriesRenderStyle chartCategorySeriesRenderStyle = null;
 
   /**
@@ -39,6 +41,15 @@ public class CategorySeries extends AxesChartSeriesCategory {
       CategorySeriesRenderStyle categorySeriesRenderStyle) {
 
     this.chartCategorySeriesRenderStyle = categorySeriesRenderStyle;
+    return this;
+  }
+
+  public boolean isOverlapped() {
+    return isOverlapped;
+  }
+
+  public CategorySeries setOverlapped(boolean overlapped) {
+    isOverlapped = overlapped;
     return this;
   }
 
