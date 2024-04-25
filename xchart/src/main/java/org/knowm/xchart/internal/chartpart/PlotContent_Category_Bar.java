@@ -174,7 +174,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               } else {
                 yBottom = y;
               }
-              if (stylerCategory.isStacked()) {
+              if (stylerCategory.isStacked() && !series.isOverlapped()) {
                 yTop += accumulatedStackOffsetPos[categoryCounter];
                 yBottom += accumulatedStackOffsetPos[categoryCounter];
                 accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
@@ -190,7 +190,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 // yBottom.
               }
               yBottom = y;
-              if (stylerCategory.isStacked()) {
+              if (stylerCategory.isStacked() && !series.isOverlapped()) {
                 yTop -= accumulatedStackOffsetNeg[categoryCounter];
                 yBottom -= accumulatedStackOffsetNeg[categoryCounter];
                 accumulatedStackOffsetNeg[categoryCounter] += (yTop - yBottom);
