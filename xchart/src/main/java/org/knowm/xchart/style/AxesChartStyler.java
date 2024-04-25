@@ -532,9 +532,10 @@ public abstract class AxesChartStyler extends Styler {
     return xAxisMaxLabelCount;
   }
 
-  public void setXAxisMaxLabelCount(int xAxisMaxLabelCount) {
+  public AxesChartStyler setXAxisMaxLabelCount(int xAxisMaxLabelCount) {
 
     this.xAxisMaxLabelCount = xAxisMaxLabelCount;
+    return this;
   }
 
   // Chart Plot Area ///////////////////////////////
@@ -795,18 +796,20 @@ public abstract class AxesChartStyler extends Styler {
     return xAxisTickLabelsFormattingFunction;
   }
 
-  public void setxAxisTickLabelsFormattingFunction(
+  public AxesChartStyler setxAxisTickLabelsFormattingFunction(
       Function<Double, String> xAxisTickLabelsFormattingFunction) {
     this.xAxisTickLabelsFormattingFunction = xAxisTickLabelsFormattingFunction;
+    return this;
   }
 
   public Function<Double, String> getyAxisTickLabelsFormattingFunction() {
     return yAxisTickLabelsFormattingFunction;
   }
 
-  public void setyAxisTickLabelsFormattingFunction(
+  public AxesChartStyler setyAxisTickLabelsFormattingFunction(
       Function<Double, String> yAxisTickLabelsFormattingFunction) {
     this.yAxisTickLabelsFormattingFunction = yAxisTickLabelsFormattingFunction;
+    return this;
   }
 
   // TickLabels and MarksColor colors for xAxis, yAxis, yAxisGroup ////////////////////////////////
@@ -903,9 +906,10 @@ public abstract class AxesChartStyler extends Styler {
     return xAxisLabelAlignment;
   }
 
-  public void setXAxisLabelAlignment(TextAlignment xAxisLabelAlignment) {
+  public AxesChartStyler setXAxisLabelAlignment(TextAlignment xAxisLabelAlignment) {
 
     this.xAxisLabelAlignment = xAxisLabelAlignment;
+    return this;
   }
 
   public TextAlignment getXAxisLabelAlignmentVertical() {
@@ -913,9 +917,10 @@ public abstract class AxesChartStyler extends Styler {
     return xAxisLabelAlignmentVertical;
   }
 
-  public void setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
+  public AxesChartStyler setXAxisLabelAlignmentVertical(TextAlignment xAxisLabelAlignmentVertical) {
 
     this.xAxisLabelAlignmentVertical = xAxisLabelAlignmentVertical;
+    return this;
   }
 
   public TextAlignment getYAxisLabelAlignment() {

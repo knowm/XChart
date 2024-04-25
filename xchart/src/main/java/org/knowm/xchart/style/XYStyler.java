@@ -90,7 +90,7 @@ public class XYStyler extends AxesChartStyler {
     return isZoomEnabled;
   }
 
-  public Styler setZoomEnabled(boolean isZoomEnabled) {
+  public XYStyler setZoomEnabled(boolean isZoomEnabled) {
 
     this.isZoomEnabled = isZoomEnabled;
     return this;
@@ -101,9 +101,10 @@ public class XYStyler extends AxesChartStyler {
     return zoomSelectionColor;
   }
 
-  public void setZoomSelectionColor(Color zoomSelectionColor) {
+  public XYStyler setZoomSelectionColor(Color zoomSelectionColor) {
 
     this.zoomSelectionColor = zoomSelectionColor;
+    return this;
   }
 
   public boolean isZoomResetByDoubleClick() {
@@ -111,9 +112,10 @@ public class XYStyler extends AxesChartStyler {
     return zoomResetByDoubleClick;
   }
 
-  public void setZoomResetByDoubleClick(boolean zoomResetByDoubleClick) {
+  public XYStyler setZoomResetByDoubleClick(boolean zoomResetByDoubleClick) {
 
     this.zoomResetByDoubleClick = zoomResetByDoubleClick;
+    return this;
   }
 
   public boolean isZoomResetByButton() {
@@ -121,9 +123,10 @@ public class XYStyler extends AxesChartStyler {
     return zoomResetByButton;
   }
 
-  public void setZoomResetByButton(boolean zoomResetByButton) {
+  public XYStyler setZoomResetByButton(boolean zoomResetByButton) {
 
     this.zoomResetByButton = zoomResetByButton;
+    return this;
   }
 
   // Cursor ///////////////////////////////
@@ -132,7 +135,7 @@ public class XYStyler extends AxesChartStyler {
     return isCursorEnabled;
   }
 
-  public Styler setCursorEnabled(boolean isCursorEnabled) {
+  public XYStyler setCursorEnabled(boolean isCursorEnabled) {
 
     this.isCursorEnabled = isCursorEnabled;
     return this;
@@ -142,7 +145,7 @@ public class XYStyler extends AxesChartStyler {
     return cursorColor;
   }
 
-  public Styler setCursorColor(Color cursorColor) {
+  public XYStyler setCursorColor(Color cursorColor) {
 
     this.cursorColor = cursorColor;
     return this;
@@ -153,7 +156,7 @@ public class XYStyler extends AxesChartStyler {
     return cursorLineWidth;
   }
 
-  public Styler setCursorLineWidth(float cursorLineWidth) {
+  public XYStyler setCursorLineWidth(float cursorLineWidth) {
 
     this.cursorLineWidth = cursorLineWidth;
     return this;
@@ -164,7 +167,7 @@ public class XYStyler extends AxesChartStyler {
     return cursorFont;
   }
 
-  public Styler setCursorFont(Font cursorFont) {
+  public XYStyler setCursorFont(Font cursorFont) {
 
     this.cursorFont = cursorFont;
     return this;
@@ -175,7 +178,7 @@ public class XYStyler extends AxesChartStyler {
     return cursorFontColor;
   }
 
-  public Styler setCursorFontColor(Color cursorFontColor) {
+  public XYStyler setCursorFontColor(Color cursorFontColor) {
 
     this.cursorFontColor = cursorFontColor;
     return this;
@@ -186,7 +189,7 @@ public class XYStyler extends AxesChartStyler {
     return cursorBackgroundColor;
   }
 
-  public Styler setCursorBackgroundColor(Color cursorBackgroundColor) {
+  public XYStyler setCursorBackgroundColor(Color cursorBackgroundColor) {
 
     this.cursorBackgroundColor = cursorBackgroundColor;
     return this;
@@ -201,9 +204,10 @@ public class XYStyler extends AxesChartStyler {
    *
    * @param customCursorXDataFormattingFunction
    */
-  public void setCustomCursorXDataFormattingFunction(
+  public XYStyler setCustomCursorXDataFormattingFunction(
       Function<Double, String> customCursorXDataFormattingFunction) {
     this.customCursorXDataFormattingFunction = customCursorXDataFormattingFunction;
+    return this;
   }
 
   public Function<Double, String> getCustomCursorYDataFormattingFunction() {
@@ -215,8 +219,9 @@ public class XYStyler extends AxesChartStyler {
    *
    * @param customCursorYDataFormattingFunction
    */
-  public void setCustomCursorYDataFormattingFunction(
+  public XYStyler setCustomCursorYDataFormattingFunction(
       Function<Double, String> customCursorYDataFormattingFunction) {
     this.customCursorYDataFormattingFunction = customCursorYDataFormattingFunction;
+    return this;
   }
 }

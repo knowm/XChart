@@ -29,7 +29,7 @@ public class HeatMapChart05 implements ExampleChart<HeatMapChart> {
 
     ExampleChart<HeatMapChart> exampleChart = new HeatMapChart05();
     HeatMapChart chart = exampleChart.getChart();
-    new SwingWrapper<HeatMapChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   @Override
@@ -45,18 +45,21 @@ public class HeatMapChart05 implements ExampleChart<HeatMapChart> {
             .yAxisTitle("Working day")
             .build();
 
-    chart.getStyler().setPlotContentSize(0.999);
-    chart.getStyler().setLegendFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-    chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setPiecewise(true);
-    chart.getStyler().setPiecewiseRanged(false);
-    chart.getStyler().setShowValue(true);
-    chart.getStyler().setHeatMapDecimalValueFormatter(x -> "\u2265 " + x);
+    chart.getStyler()
+            .setPlotContentSize(0.999)
+            .setLegendFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12))
+            .setToolTipsEnabled(true);
+    chart
+        .getStyler()
+        .setPiecewise(true)
+        .setPiecewiseRanged(false)
+        .setShowValue(true)
+        .setHeatMapDecimalValueFormatter(x -> "\u2265 " + x);
 
     Color[] rangeColors = {Color.YELLOW, Color.CYAN, Color.GREEN, Color.BLUE, Color.RED};
     chart.getStyler().setRangeColors(rangeColors);
 
-    List<String> xData = new ArrayList<String>();
+    List<String> xData = new ArrayList<>();
     xData.add("Tim");
     xData.add("Tom");
     xData.add("Lida");
@@ -65,10 +68,10 @@ public class HeatMapChart05 implements ExampleChart<HeatMapChart> {
     xData.add("Lukas");
     xData.add("Marie");
 
-    List<String> yData = new ArrayList<String>();
+    List<String> yData = new ArrayList<>();
     yData.add("Monday");
     yData.add("Tuesday");
-    yData.add("Wedesday");
+    yData.add("Wednesday");
     yData.add("Thursday");
     yData.add("Friday");
 
