@@ -22,6 +22,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  *   <li>HeatMapSeries setMin
  *   <li>HeatMapSeries setMax
  *   <li>ToolTipsEnabled
+ *   <li>Chain together styling methods
  */
 public class HeatMapChart05 implements ExampleChart<HeatMapChart> {
 
