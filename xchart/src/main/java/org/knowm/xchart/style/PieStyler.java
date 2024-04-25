@@ -25,7 +25,6 @@ public class PieStyler extends Styler {
   private Color labelsFontColor;
   private double labelsDistance;
   private LabelType labelType;
-  private LabelGenerator labelGenerator;
   private boolean isForceAllLabelsVisible;
   private boolean isLabelsFontColorAutomaticEnabled;
   private Color labelsFontColorAutomaticLight;
@@ -140,23 +139,6 @@ public class PieStyler extends Styler {
   public PieStyler setLabelType(LabelType labelType) {
 
     this.labelType = labelType;
-    return this;
-  }
-
-  public LabelGenerator getLabelGenerator() {
-
-    return labelGenerator;
-  }
-
-  /**
-   * Sets the Pie custom label generator
-   *
-   * @param labelGenerator
-   */
-  public PieStyler setLabelGenerator(LabelGenerator labelGenerator) {
-
-    this.labelType = LabelType.Custom;
-    this.labelGenerator = labelGenerator;
     return this;
   }
 
@@ -380,8 +362,7 @@ public class PieStyler extends Styler {
     Percentage,
     Name,
     NameAndPercentage,
-    NameAndValue,
-    Custom
+    NameAndValue
   }
 
   public enum ClockwiseDirectionType {
