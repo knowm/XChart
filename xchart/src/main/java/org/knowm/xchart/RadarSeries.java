@@ -27,7 +27,7 @@ public class RadarSeries extends MarkerSeries {
   private double[] values;
   private String[] tooltipOverrides;
 
-  // TODO refactor tooltips overrride
+  // TODO refactor tooltips override
   /**
    * @param tooltipOverrides Adds custom tooltipOverrides for series. If tooltipOverrides is null,
    *     they are automatically generated.

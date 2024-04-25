@@ -42,7 +42,6 @@ public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
     return xySeriesRenderStyle.getLegendRenderType();
   }
 
-  // TODO what is this again?
   public boolean isSmooth() {
     return smooth;
   }

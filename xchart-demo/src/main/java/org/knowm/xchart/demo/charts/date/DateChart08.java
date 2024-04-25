@@ -21,6 +21,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
  * <ul>
  *   <li>Rotated X-Axis labels
  *   <li>Setting a custom date formatter String
+ *   <li>Smooth series
  */
 public class DateChart08 implements ExampleChart<XYChart> {
 
@@ -62,7 +63,7 @@ public class DateChart08 implements ExampleChart<XYChart> {
       yData.add(Math.random() * i);
     }
 
-    chart.addSeries("blah", xData, yData);
+    chart.addSeries("blah", xData, yData).setSmooth(true);
 
     return chart;
   }
