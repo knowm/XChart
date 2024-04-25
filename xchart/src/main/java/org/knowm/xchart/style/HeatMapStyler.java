@@ -74,14 +74,15 @@ public class HeatMapStyler extends AxesChartStyler {
   }
 
   @Override
-  public Styler setLegendPosition(LegendPosition legendPosition) {
+  public HeatMapStyler setLegendPosition(LegendPosition legendPosition) {
 
     if (!LegendPosition.OutsideE.equals(legendPosition)
         && !LegendPosition.OutsideS.equals(legendPosition)) {
       throw new IllegalArgumentException(
           "HeatMapStyler LegendPosition must be OutsideE or OutsideS!!!");
     }
-    return super.setLegendPosition(legendPosition);
+    super.setLegendPosition(legendPosition);
+    return this;
   }
 
   public boolean isPiecewise() {
@@ -233,19 +234,21 @@ public class HeatMapStyler extends AxesChartStyler {
     return heatMapDecimalValueFormatter;
   }
 
-  public void setHeatMapDecimalValueFormatter(
+  public HeatMapStyler setHeatMapDecimalValueFormatter(
       Function<Double, String> heatMapDecimalValueFormatter) {
     this.heatMapDecimalValueFormatter = heatMapDecimalValueFormatter;
+    return this;
   }
 
   public boolean isPiecewiseRanged() {
     return isPiecewiseRanged;
   }
 
-  public void setPiecewiseRanged(boolean piecewiseRanged) {
+  public HeatMapStyler setPiecewiseRanged(boolean piecewiseRanged) {
     if (piecewiseRanged) {
       setPiecewise(true);
     }
     isPiecewiseRanged = piecewiseRanged;
+    return this;
   }
 }

@@ -117,9 +117,10 @@ public class RadarStyler extends Styler {
     return radiiTicksMarksVisible;
   }
 
-  public void setRadiiTicksMarksVisible(boolean radiiTicksMarksVisible) {
+  public RadarStyler setRadiiTicksMarksVisible(boolean radiiTicksMarksVisible) {
 
     this.radiiTicksMarksVisible = radiiTicksMarksVisible;
+    return this;
   }
 
   public Color getRadiiTickMarksColor() {
@@ -127,9 +128,10 @@ public class RadarStyler extends Styler {
     return radiiTickMarksColor;
   }
 
-  public void setRadiiTickMarksColor(Color radiiTickMarksColor) {
+  public RadarStyler setRadiiTickMarksColor(Color radiiTickMarksColor) {
 
     this.radiiTickMarksColor = radiiTickMarksColor;
+    return this;
   }
 
   public BasicStroke getRadiiTickMarksStroke() {
@@ -137,9 +139,10 @@ public class RadarStyler extends Styler {
     return radiiTickMarksStroke;
   }
 
-  public void setRadiiTickMarksStroke(BasicStroke radiiTickMarksStroke) {
+  public RadarStyler setRadiiTickMarksStroke(BasicStroke radiiTickMarksStroke) {
 
     this.radiiTickMarksStroke = radiiTickMarksStroke;
+    return this;
   }
 
   public boolean isRadiiTitleVisible() {
@@ -147,9 +150,10 @@ public class RadarStyler extends Styler {
     return isRadiiTitleVisible;
   }
 
-  public void setRadiiTitleVisible(boolean radiiTitleVisible) {
+  public RadarStyler setRadiiTitleVisible(boolean radiiTitleVisible) {
 
     this.isRadiiTitleVisible = radiiTitleVisible;
+    return this;
   }
 
   public Font getRadiiTitleFont() {
@@ -157,9 +161,10 @@ public class RadarStyler extends Styler {
     return radiiTitleFont;
   }
 
-  public void setRadiiTitleFont(Font radiiTitleFont) {
+  public RadarStyler setRadiiTitleFont(Font radiiTitleFont) {
 
     this.radiiTitleFont = radiiTitleFont;
+    return this;
   }
 
   public int getRadiiTitlePadding() {
@@ -167,9 +172,10 @@ public class RadarStyler extends Styler {
     return radiiTitlePadding;
   }
 
-  public void setRadiiTitlePadding(int radiiTitlePadding) {
+  public RadarStyler setRadiiTitlePadding(int radiiTitlePadding) {
 
     this.radiiTitlePadding = radiiTitlePadding;
+    return this;
   }
 
   public int getRadiiTickMarksCount() {
@@ -177,9 +183,10 @@ public class RadarStyler extends Styler {
     return radiiTickMarksCount;
   }
 
-  public void setRadiiTickMarksCount(int radiiTickMarksCount) {
+  public RadarStyler setRadiiTickMarksCount(int radiiTickMarksCount) {
 
     this.radiiTickMarksCount = radiiTickMarksCount;
+    return this;
   }
 
   public boolean isSeriesFilled() {
@@ -187,9 +194,10 @@ public class RadarStyler extends Styler {
     return isSeriesFilled;
   }
 
-  public void setSeriesFilled(boolean seriesFilled) {
+  public RadarStyler setSeriesFilled(boolean seriesFilled) {
 
     this.isSeriesFilled = seriesFilled;
+    return this;
   }
 
   public RadarRenderStyle getRadarRenderStyle() {
@@ -197,9 +205,10 @@ public class RadarStyler extends Styler {
     return radarRenderStyle;
   }
 
-  public void setRadarRenderStyle(RadarRenderStyle radarRenderStyle) {
+  public RadarStyler setRadarRenderStyle(RadarRenderStyle radarRenderStyle) {
 
     this.radarRenderStyle = radarRenderStyle;
+    return this;
   }
 
   public enum RadarRenderStyle {
