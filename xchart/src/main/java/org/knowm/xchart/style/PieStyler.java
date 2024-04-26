@@ -2,6 +2,9 @@ package org.knowm.xchart.style;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.function.Function;
+
+import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
 import org.knowm.xchart.style.colors.FontColorDetector;
 import org.knowm.xchart.style.theme.Theme;
@@ -25,6 +28,7 @@ public class PieStyler extends Styler {
   private Color labelsFontColor;
   private double labelsDistance;
   private LabelType labelType;
+  private Function<PieSeries, String> customSeriesLabelFunction;
   private boolean isForceAllLabelsVisible;
   private boolean isLabelsFontColorAutomaticEnabled;
   private Color labelsFontColorAutomaticLight;
@@ -140,6 +144,21 @@ public class PieStyler extends Styler {
   public PieStyler setLabelType(LabelType labelType) {
 
     this.labelType = labelType;
+    return this;
+  }
+
+  public Function<PieSeries, String> getCustomSeriesLabelFunction() {
+    return this.customSeriesLabelFunction;
+  }
+
+  /**
+   * Sets the Pie custom label generator
+   *
+   * @param customSeriesLabelFunction
+   */
+  public PieStyler setCustomSeriesLabelFunction(Function<PieSeries, String> customSeriesLabelFunction) {
+    this.customSeriesLabelFunction = customSeriesLabelFunction;
+    this.setLabelType(null);
     return this;
   }
 
