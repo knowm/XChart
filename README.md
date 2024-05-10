@@ -20,21 +20,13 @@ double[] yData = new double[]{2.0, 1.0, 0.0};
 XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
 
 // Show it
-new
-
-SwingWrapper(chart).
-
-displayChart();
+new SwingWrapper(chart).displayChart();
 
 // Save it
-BitmapEncoder.
-
-saveBitmap(chart, "./Sample_Chart",BitmapFormat.PNG);
+BitmapEncoder.saveBitmap(chart, "./Sample_Chart",BitmapFormat.PNG);
 
 // or save it in high-res
-BitmapEncoder.
-
-saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI",BitmapFormat.PNG, 300);
+BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI",BitmapFormat.PNG, 300);
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Simplest.png)
@@ -49,41 +41,17 @@ Create a `XYChart` via a `XYChartBuilder`, style chart, add a series to it, styl
 XYChart chart = new XYChartBuilder().width(600).height(500).title("Gaussian Blobs").xAxisTitle("X").yAxisTitle("Y").build();
 
 // Customize Chart
-chart.
-
-getStyler().
-
-setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
-chart.
-
-getStyler().
-
-setChartTitleVisible(false);
-chart.
-
-getStyler().
-
-setLegendPosition(LegendPosition.InsideSW);
-chart.
-
-getStyler().
-
-setMarkerSize(16);
+chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+chart.getStyler().setChartTitleVisible(false);
+chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
+chart.getStyler().setMarkerSize(16);
 
 // Series
-chart.
-
-addSeries("Gaussian Blob 1",getGaussian(1000, 1,10),getGaussian(1000,1,10));
+chart.addSeries("Gaussian Blob 1",getGaussian(1000, 1,10),getGaussian(1000,1,10));
 XYSeries series = chart.addSeries("Gaussian Blob 2", getGaussian(1000, 1, 10), getGaussian(1000, 0, 5));
-series.
+series.setMarker(SeriesMarkers.DIAMOND);
 
-setMarker(SeriesMarkers.DIAMOND);
-
-new
-
-SwingWrapper(chart).
-
-displayChart();
+new SwingWrapper(chart).displayChart();
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Intermediate.png)
@@ -98,33 +66,13 @@ Create a `XYChart` via a `XYChartBuilder`, style chart, add a series to it, add 
 final XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
 
 // Customize Chart
-chart.
-
-getStyler().
-
-setLegendPosition(LegendPosition.InsideNE);
-chart.
-
-getStyler().
-
-setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
+chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
+chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
 
 // Series
-chart.
-
-addSeries("a",new double[] {
-    0, 3, 5, 7, 9
-},new double[]{-3,5,9,6,5});
-        chart.
-
-addSeries("b",new double[] {
-    0, 2, 4, 6, 9
-},new double[]{-1,6,4,0,4});
-        chart.
-
-addSeries("c",new double[] {
-    0, 1, 3, 8, 9
-},new double[]{-2,-1,1,0,1});
+chart.addSeries("a",new double[] { 0, 3, 5, 7, 9},new double[]{-3,5,9,6,5});
+chart.addSeries("b",new double[] { 0, 2, 4, 6, 9},new double[]{-1,6,4,0,4});
+chart.addSeries("c",new double[] { 0, 1, 3, 8, 9},new double[]{-2,-1,1,0,1});
 
 // Schedule a job for the event-dispatching thread:
 // creating and showing this application's GUI.
@@ -287,24 +235,12 @@ BoxChart chart =
         new BoxChartBuilder().title("box plot demo").build();
 
 // Choose a calculation method
-chart.
-
-getStyler().
-
-setBoxplotCalCulationMethod(BoxplotCalCulationMethod.N_LESS_1_PLUS_1);
-chart.
-
-getStyler().
-
-setToolTipsEnabled(true);
+chart.getStyler().setBoxplotCalCulationMethod(BoxplotCalCulationMethod.N_LESS_1_PLUS_1);
+chart.getStyler().setToolTipsEnabled(true);
 
 // Series
-chart.
-
-addSeries("boxOne",Arrays.asList(1,2,3,4));
-        new SwingWrapper<BoxChart>(chart).
-
-displayChart();
+chart.addSeries("boxOne",Arrays.asList(1,2,3,4));
+new SwingWrapper<BoxChart>(chart).displayChart();
 ```
 
 Four calculation methods for boxplots:
@@ -429,19 +365,9 @@ Default axis tick placement can be altered with `chart.getStyler().setXAxisTickM
 Default axis label labels can be altered with one of:
 
 ```java
-chart.getStyler().
-
-setDatePattern(datePattern)
-chart.
-
-getStyler().
-
-setXAxisDecimalPattern(pattern);
-chart.
-
-getStyler().
-
-setYAxisDecimalPattern(pattern);
+chart.getStyler().setDatePattern(datePattern)
+chart.getStyler().setXAxisDecimalPattern(pattern);
+chart.getStyler().setYAxisDecimalPattern(pattern);
 ```
 
 You can also create custom axis tick labels with a callback function. In the following example taken
@@ -452,15 +378,7 @@ via a custom lambda function which takes the numerical (double) tick label value
 // set custom X-Axis tick labels
 LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
 DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
-chart.
-
-getStyler().
-
-setxAxisTickLabelsFormattingFunction(x ->startTime.
-
-plusDays(x.longValue()).
-
-format(xTickFormatter));
+chart.getStyler().setxAxisTickLabelsFormattingFunction(x ->startTime.plusDays(x.longValue()).format(xTickFormatter));
 ```
 
 In the following example taken from [DateChart06](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart06.java), the
@@ -468,11 +386,7 @@ Y-Axis tick labels are converted
 to the englich word reprentation of the numbers.
 
 ```java
-chart.getStyler().
-
-setyAxisTickLabelsFormattingFunction(x ->NumberWordConverter.
-
-convert(x.intValue()));
+chart.getStyler().setyAxisTickLabelsFormattingFunction(x ->NumberWordConverter.convert(x.intValue()));
 ```
 
 ### Multiple Axes
@@ -488,28 +402,20 @@ series.setYAxisGroup(axisGroup);
 To manually change max/min of axis group:
 
 ```java
-((AxesChartStyler)chart.
-
-getStyler()).
-
-setYAxisMax(axisGroup, 200.0);
+((AxesChartStyler)chart.getStyler()).setYAxisMax(axisGroup, 200.0);
 ```
 
 Axis can be drawn on the left (default) or on the right of the chart:
 
 ```java
-chart.getStyler().
-
-setYAxisGroupPosition(axisGroup, Styler.YAxisPosition.Right);
+chart.getStyler().setYAxisGroupPosition(axisGroup, Styler.YAxisPosition.Right);
 ```
 
 To set the Y axes titles:
 
 ```java
 chart.setYAxisGroupTitle(0,"A");
-chart.
-
-setYAxisGroupTitle(1,"B");
+chart.setYAxisGroupTitle(1,"B");
 ```
 
 ### Zooming In
@@ -522,29 +428,11 @@ double-clicking on the chart or by clicking on the "reset" button, which can be 
 The following example zoom style options show which are available:
 
 ```java
-chart.getStyler().
-
-setZoomEnabled(true);
-chart.
-
-getStyler().
-
-setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
-chart.
-
-getStyler().
-
-setZoomResetByDoubleClick(false);
-chart.
-
-getStyler().
-
-setZoomResetByButton(true);
-chart.
-
-getStyler().
-
-setZoomSelectionColor(new Color(0,0,192,128));
+chart.getStyler().setZoomEnabled(true);
+chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
+chart.getStyler().setZoomResetByDoubleClick(false);
+chart.getStyler().setZoomResetByButton(true);
+chart.getStyler().setZoomSelectionColor(new Color(0,0,192,128));
 ```
 
 A working example can be found at [DateChart01](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart01.java).
@@ -567,24 +455,10 @@ Positioning is relative to the bottom-left corner of the chart and to the center
 The following example `AnnotationLine` and `AnnotationText` styling parameters show which are available:
 
 ```java
-chart.getStyler().
-
-setAnnotationLineColor(Color.GREEN);
-chart.
-
-getStyler().
-
-setAnnotationLineStroke(new BasicStroke(3.0f));
-        chart.
-
-getStyler().
-
-setAnnotationTextFont(new Font(Font.MONOSPACED, Font.ITALIC, 8));
-        chart.
-
-getStyler().
-
-setAnnotationTextFontColor(Color.BLUE);
+chart.getStyler().setAnnotationLineColor(Color.GREEN);
+chart.getStyler().setAnnotationLineStroke(new BasicStroke(3.0f));
+chart.getStyler().setAnnotationTextFont(new Font(Font.MONOSPACED, Font.ITALIC, 8));
+chart.getStyler().setAnnotationTextFontColor(Color.BLUE);
 ```
 
 A working example can be found at [LineChart10](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart10.java).
@@ -598,29 +472,11 @@ Positioning is relative to the bottom-left corner of the chart and to the bottom
 The following example `AnnotationTextPanel` styling parameters show which are available:
 
 ```java
-chart.getStyler().
-
-setAnnotationTextPanelPadding(20);
-chart.
-
-getStyler().
-
-setAnnotationTextPanelFont(new Font("Verdana", Font.BOLD, 12));
-        chart.
-
-getStyler().
-
-setAnnotationTextPanelBackgroundColor(Color.RED);
-chart.
-
-getStyler().
-
-setAnnotationTextPanelBorderColor(Color.BLUE);
-chart.
-
-getStyler().
-
-setAnnotationTextPanelFontColor(Color.GREEN);
+chart.getStyler().setAnnotationTextPanelPadding(20);
+chart.getStyler().setAnnotationTextPanelFont(new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setAnnotationTextPanelBackgroundColor(Color.RED);
+chart.getStyler().setAnnotationTextPanelBorderColor(Color.BLUE);
+chart.getStyler().setAnnotationTextPanelFontColor(Color.GREEN);
 ```
 
 A working example can be found at [ScatterChart04](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/scatter/ScatterChart04.java).
@@ -630,9 +486,7 @@ A working example can be found at [ScatterChart04](https://github.com/knowm/XCha
 For all chart types, tool tips can be activated on an `XChartPanel` via
 
 ```java
-chart.getStyler().
-
-setToolTipsEnabled(true);
+chart.getStyler().setToolTipsEnabled(true);
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Tooltips.png)
@@ -640,39 +494,13 @@ setToolTipsEnabled(true);
 The following example tooltip options show which are available:
 
 ```java
-chart.getStyler().
-
-setToolTipsEnabled(true);
-chart.
-
-getStyler().
-
-setToolTipsAlwaysVisible(true);
-chart.
-
-getStyler().
-
-setToolTipFont( new Font("Verdana", Font.BOLD, 12));
-        chart.
-
-getStyler().
-
-setToolTipHighlightColor(Color.CYAN);
-chart.
-
-getStyler().
-
-setToolTipBorderColor(Color.BLACK);
-chart.
-
-getStyler().
-
-setToolTipBackgroundColor(Color.LIGHT_GRAY);
-chart.
-
-getStyler().
-
-setToolTipType(Styler.ToolTipType.xAndYLabels);
+chart.getStyler().setToolTipsEnabled(true);
+chart.getStyler().setToolTipsAlwaysVisible(true);
+chart.getStyler().setToolTipFont( new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setToolTipHighlightColor(Color.CYAN);
+chart.getStyler().setToolTipBorderColor(Color.BLACK);
+chart.getStyler().setToolTipBackgroundColor(Color.LIGHT_GRAY);
+chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
 ```
 
 A working example can be found at [LineChart05](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart05.java).
@@ -682,9 +510,7 @@ A working example can be found at [LineChart05](https://github.com/knowm/XChart/
 For the `XYChart` chart type, it is possible to add an interactive cursor on an `XChartPanel` via
 
 ```java
-chart.getStyler().
-
-setCursorEnabled(true);
+chart.getStyler().setCursorEnabled(true);
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Cursor.png)
@@ -692,44 +518,14 @@ setCursorEnabled(true);
 The following example cursor options show which are available:
 
 ```java
-chart.getStyler().
-
-setCursorEnabled(true);
-chart.
-
-getStyler().
-
-setCursorColor(Color.GREEN);
-chart.
-
-getStyler().
-
-setCursorLineWidth(30f);
-chart.
-
-getStyler().
-
-setCursorFont(new Font("Verdana", Font.BOLD, 12));
-        chart.
-
-getStyler().
-
-setCursorFontColor(Color.ORANGE);
-chart.
-
-getStyler().
-
-setCursorBackgroundColor(Color.BLUE);
-chart.
-
-getStyler().
-
-setCustomCursorXDataFormattingFunction(x ->"hello xvalue: "+x);
-        chart.
-
-getStyler().
-
-setCustomCursorYDataFormattingFunction(y ->"hello yvalue divided by 2: "+y /2);
+chart.getStyler().setCursorEnabled(true);
+chart.getStyler().setCursorColor(Color.GREEN);
+chart.getStyler().setCursorLineWidth(30f);
+chart.getStyler().setCursorFont(new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setCursorFontColor(Color.ORANGE);
+chart.getStyler().setCursorBackgroundColor(Color.BLUE);
+chart.getStyler().setCustomCursorXDataFormattingFunction(x ->"hello xvalue: "+x);
+chart.getStyler().setCustomCursorYDataFormattingFunction(y ->"hello yvalue divided by 2: "+y /2);
 ```
 
 A working example can be found at [LineChart09](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart09.java).
