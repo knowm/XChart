@@ -1,31 +1,37 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.knowm.xchart</groupId>
-    <artifactId>xchart-parent</artifactId>
-    <version>3.8.8-SNAPSHOT</version>
-  </parent>
+    <prerequisites>
+        <maven>3.9.0</maven>
+    </prerequisites>
 
-  <artifactId>xchart</artifactId>
+    <modelVersion>4.0.0</modelVersion>
 
-  <name>XChart</name>
-  <description>The core XChart library</description>
+    <parent>
+        <groupId>org.knowm.xchart</groupId>
+        <artifactId>xchart-parent</artifactId>
+        <version>3.8.8-SNAPSHOT</version>
+    </parent>
 
-  <dependencies>
-    <dependency>
-      <groupId>de.erichseifert.vectorgraphics2d</groupId>
-      <artifactId>VectorGraphics2D</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>de.rototor.pdfbox</groupId>
-      <artifactId>graphics2d</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.madgag</groupId>
-      <artifactId>animated-gif-lib</artifactId>
-    </dependency>
-  </dependencies>
+    <artifactId>xchart</artifactId>
+
+    <name>XChart</name>
+    <description>The core XChart library</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>de.erichseifert.vectorgraphics2d</groupId>
+            <artifactId>VectorGraphics2D</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.rototor.pdfbox</groupId>
+            <artifactId>graphics2d</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.madgag</groupId>
+            <artifactId>animated-gif-lib</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

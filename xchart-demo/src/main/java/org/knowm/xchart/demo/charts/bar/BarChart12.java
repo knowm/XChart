@@ -4,17 +4,16 @@
 
 package org.knowm.xchart.demo.charts.bar;
 
-import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategoryChartBuilder;
-import org.knowm.xchart.CategorySeries;
-import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.demo.charts.ExampleChart;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
  * Stacked Bars with Overlapped Line Chart

@@ -1,45 +1,50 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <prerequisites>
+        <maven>3.9.0</maven>
+    </prerequisites>
 
-  <parent>
-    <groupId>org.knowm.xchart</groupId>
-    <artifactId>xchart-parent</artifactId>
-    <version>3.8.8-SNAPSHOT</version>
-  </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>xchart-demo</artifactId>
+    <parent>
+        <groupId>org.knowm.xchart</groupId>
+        <artifactId>xchart-parent</artifactId>
+        <version>3.8.8-SNAPSHOT</version>
+    </parent>
 
-  <name>XChart Demo</name>
-  <description>A Swing App demonstration of various charts using XChart</description>
+    <artifactId>xchart-demo</artifactId>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.knowm.xchart</groupId>
-      <artifactId>xchart</artifactId>
-      <version>3.8.8-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-swing</artifactId>
-      <version>11.0.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>11.0.2</version>
-    </dependency>
-  </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <configuration>
-          <mainClass>org.knowm.xchart.standalone.JavaFXDemo</mainClass>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+    <name>XChart Demo</name>
+    <description>A Swing App demonstration of various charts using XChart</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.knowm.xchart</groupId>
+            <artifactId>xchart</artifactId>
+            <version>3.8.8-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>org.knowm.xchart.standalone.JavaFXDemo</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

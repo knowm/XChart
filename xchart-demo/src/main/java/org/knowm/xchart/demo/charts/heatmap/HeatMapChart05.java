@@ -46,10 +46,11 @@ public class HeatMapChart05 implements ExampleChart<HeatMapChart> {
             .yAxisTitle("Working day")
             .build();
 
-    chart.getStyler()
-            .setPlotContentSize(0.999)
-            .setLegendFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12))
-            .setToolTipsEnabled(true);
+    chart
+        .getStyler()
+        .setPlotContentSize(0.999)
+        .setLegendFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12))
+        .setToolTipsEnabled(true);
     chart
         .getStyler()
         .setPiecewise(true)
