@@ -39,7 +39,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
    *
    * @param width
    * @param height
-   * @param theme - pass in a instance of Theme class, probably a custom Theme.
+   * @param theme - pass in an instance of Theme class, probably a custom Theme.
    */
   public XYChart(int width, int height, Theme theme) {
 

@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.Format;
+import java.text.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -161,6 +161,8 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
   protected void calculate() {
 
+       // System.out.println("calculate");
+
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
       tickLabels.add(getAxisFormat().format(BigDecimal.valueOf(maxValue).doubleValue()));
@@ -186,7 +188,14 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       return;
     }
 
-    // where the tick should begin in the working space in pixels
+      // this prevents an infinite loop when the axis number formatter "rounds" all axis ticks to the same value i.e. "#0.00" for 0.0, 0.0001, 0.0002
+      // issue #582
+      if(isNumberFormatChoppingDecimals(maxValue, minValue)){
+          System.out.println("returning");
+          return;
+      }
+
+      // where the tick should begin in the working space in pixels
     double margin =
         Utils.getTickStartOffset(
             workingSpace,
@@ -216,7 +225,7 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
     do {
 
-      // System.out.println("calculating ticks...");
+//       System.out.println("calculating ticks...");
       tickLabels.clear();
       tickLocations.clear();
 
@@ -342,6 +351,7 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       }
     } while (!areAllTickLabelsUnique(tickLabels)
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+
   }
 
   private boolean areValuesEquallySpaced(List<Double> values) {
@@ -452,4 +462,19 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       return 0;
     return dataMaxValue;
   }
+
+    private boolean isNumberFormatChoppingDecimals(double axisMax, double axisMin){
+
+//        System.out.println("axisMax = " + axisMax);
+//        System.out.println("axisMin = " + axisMin);
+        String formattedMaxValue = getAxisFormat().format(axisMax);
+//        System.out.println("formattedMaxValue = " + formattedMaxValue);
+        String formattedMinValue = getAxisFormat().format(axisMin);
+//        System.out.println("formattedMinValue = " + formattedMinValue);
+        // if formatted number lost its decimals due to formatter
+        if(formattedMaxValue.equals(formattedMinValue)){
+            return true;
+        }
+            return false;
+    }
 }
