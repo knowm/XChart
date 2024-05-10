@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.knowm.xchart</groupId>
     <artifactId>xchart-parent</artifactId>
-    <version>3.8.8</version>
+    <version>3.8.9-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>XChart Parent</name>
     <description>XChart is a light-weight Java library for plotting data.</description>
@@ -43,7 +43,7 @@
         <connection>scm:git:git@github.com:knowm/XChart.git</connection>
         <developerConnection>scm:git:git@github.com:knowm/XChart.git</developerConnection>
         <url>git@github.com:knowm/XChart.git</url>
-        <tag>xchart-3.8.8</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <ciManagement>
