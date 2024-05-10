@@ -24,7 +24,7 @@ public class TestForIssue653 {
     builder.title("Sample Chart").xAxisTitle("X").yAxisTitle("Y").theme(Styler.ChartTheme.Matlab);
     CategoryChart chart = builder.build();
     chart.getStyler().setDefaultSeriesRenderStyle(CategorySeries.CategorySeriesRenderStyle.Line);
-    //        .setYAxisMin(0.0);
+    //            .setYAxisMin(0.0);
 
     chart.addSeries("y(x)", xData, yData);
 

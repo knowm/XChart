@@ -41,7 +41,7 @@ public class TestForIssue159 {
 
     styler.setAxisTickLabelsColor(Color.darkGray);
     styler.setDatePattern("MM-dd");
-    styler.setYAxisMin(1.0);
+    styler.setYAxisMin(2.0);
     styler.setYAxisMax(10.0);
     styler.setXAxisTickMarkSpacingHint(200);
 

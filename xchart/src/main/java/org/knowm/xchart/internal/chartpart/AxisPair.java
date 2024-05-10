@@ -471,20 +471,21 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
 
     // override min and maxValue if specified
-    if (chart.getStyler().getYAxisMin(yAxis.getYIndex()) != null
-        && !(chart.getStyler() instanceof BoxStyler)) {
-      overrideYAxisMinValue = chart.getStyler().getYAxisMin(yAxis.getYIndex());
-    } else if (chart.getStyler().getYAxisMin() != null
-        && !(chart.getStyler() instanceof BoxStyler)) {
-      overrideYAxisMinValue = chart.getStyler().getYAxisMin();
-    }
 
-    if (chart.getStyler().getYAxisMax(yAxis.getYIndex()) != null
-        && !(chart.getStyler() instanceof BoxStyler)) {
-      overrideYAxisMaxValue = chart.getStyler().getYAxisMax(yAxis.getYIndex());
-    } else if (chart.getStyler().getYAxisMax() != null
-        && !(chart.getStyler() instanceof BoxStyler)) {
-      overrideYAxisMaxValue = chart.getStyler().getYAxisMax();
+    if (!(chart.getStyler() instanceof BoxStyler)) {
+
+      // min
+      if (chart.getStyler().getYAxisMin(yAxis.getYIndex()) != null) {
+        overrideYAxisMinValue = chart.getStyler().getYAxisMin(yAxis.getYIndex());
+      } else if (chart.getStyler().getYAxisMin() != null) {
+        overrideYAxisMinValue = chart.getStyler().getYAxisMin();
+      }
+      // max
+      if (chart.getStyler().getYAxisMax(yAxis.getYIndex()) != null) {
+        overrideYAxisMaxValue = chart.getStyler().getYAxisMax(yAxis.getYIndex());
+      } else if (chart.getStyler().getYAxisMax() != null) {
+        overrideYAxisMaxValue = chart.getStyler().getYAxisMax();
+      }
     }
 
     yAxis.setMin(overrideYAxisMinValue);

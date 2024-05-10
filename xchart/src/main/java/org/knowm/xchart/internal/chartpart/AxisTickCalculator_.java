@@ -60,8 +60,8 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
     this.axisDirection = axisDirection;
     this.workingSpace = workingSpace;
-    this.minValue = getAxisMinValue(styler, axisDirection, minValue);
-    this.maxValue = getAxisMaxValue(styler, axisDirection, maxValue);
+    this.minValue = minValue;
+    this.maxValue = maxValue;
     this.styler = styler;
   }
 
@@ -79,8 +79,8 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
     axisValuesWithMinMax.addAll(axisValues);
     axisValuesWithMinMax.add(maxValue);
     this.axisValues = new ArrayList<>(axisValuesWithMinMax);
-    this.minValue = getAxisMinValue(styler, axisDirection, minValue);
-    this.maxValue = getAxisMaxValue(styler, axisDirection, maxValue);
+    this.minValue = minValue;
+    this.maxValue = maxValue;
     this.styler = styler;
   }
 
@@ -192,7 +192,7 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
     // same value i.e. "#0.00" for 0.0, 0.0001, 0.0002
     // issue #582
     if (isNumberFormatChoppingDecimals(maxValue, minValue)) {
-      System.out.println("returning");
+      //      System.out.println("returning");
       return;
     }
 
@@ -419,48 +419,6 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
   boolean areAllTickLabelsUnique(List<?> tickLabels) {
     return new LinkedHashSet<>(tickLabels).size() == tickLabels.size();
-  }
-
-  /**
-   * Determines the axis min value, which may differ from the min value of the respective data (e.g.
-   * for bar charts).
-   *
-   * @param styler the chart {@link Styler}
-   * @param axisDirection the axis {@link Direction}
-   * @param dataMinValue the minimum value of the data corresponding with the axis.
-   * @return the axis min value
-   */
-  private static double getAxisMinValue(
-      Styler styler, Direction axisDirection, double dataMinValue) {
-
-    // special case for category charts
-    if (styler instanceof CategoryStyler) {
-      CategoryStyler categoryStyler = (CategoryStyler) styler;
-      if ((categoryStyler.getDefaultSeriesRenderStyle()
-                  == CategorySeries.CategorySeriesRenderStyle.Bar
-              || categoryStyler.getDefaultSeriesRenderStyle()
-                  == CategorySeries.CategorySeriesRenderStyle.Stick)
-          && dataMinValue > 0) {
-        return 0;
-      }
-    }
-    return dataMinValue;
-  }
-
-  /**
-   * Determines the axis max value, which may differ from the max value of the respective data (e.g.
-   * for bar charts).
-   *
-   * @param styler the chart {@link Styler}
-   * @param axisDirection the axis {@link Direction}
-   * @param dataMaxValue the maximum value of the data corresponding with the axis.
-   * @return the axis max value
-   */
-  private static double getAxisMaxValue(
-      Styler styler, Direction axisDirection, double dataMaxValue) {
-    if (Direction.Y.equals(axisDirection) && styler instanceof CategoryStyler && dataMaxValue < 0)
-      return 0;
-    return dataMaxValue;
   }
 
   private boolean isNumberFormatChoppingDecimals(double axisMax, double axisMin) {
