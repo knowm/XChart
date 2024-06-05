@@ -39,13 +39,16 @@ public final class BitmapEncoder {
    */
   public static String addFileExtension(String fileName, BitmapFormat bitmapFormat) {
 
-    String fileNameWithFileExtension = fileName;
     final String newFileExtension = "." + bitmapFormat.toString().toLowerCase();
-    if (fileName.length() <= newFileExtension.length()
+    final String fileNameWithFileExtension;
+    if (fileName.length() < newFileExtension.length()
         || !fileName
-            .substring(fileName.length() - newFileExtension.length(), fileName.length())
+            .substring(fileName.length() - newFileExtension.length())
             .equalsIgnoreCase(newFileExtension)) {
       fileNameWithFileExtension = fileName + newFileExtension;
+    } else {
+      // This is to ensure the lower-case for the extension
+      fileNameWithFileExtension = fileName.substring(0, fileName.length() - newFileExtension.length()) + newFileExtension;
     }
     return fileNameWithFileExtension;
   }
