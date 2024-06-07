@@ -49,6 +49,7 @@ public class ToolTips extends MouseAdapter implements ChartPart {
   // MouseAdapter method /////////////////////
   ////////////////////////////////////////////
 
+
   @Override
   public void mouseMoved(MouseEvent e) {
 
@@ -79,6 +80,21 @@ public class ToolTips extends MouseAdapter implements ChartPart {
       //      xChartPanel.repaint();
       e.getComponent().repaint();
     }
+
+    /*This loop checks the X position of the mouse in the chart, and runs through
+    * the datapoints to determine if the user is hovering over anything. If so,
+    * a datapoints information can be displayed however a user sees fit.
+    * This could be built on in the future with a custom UI for the info
+    *
+    * chart.getStyler().setToolTipsEnabled(true); must be enabled in your chart. */
+    for (DataPoint dataPoint : dataPointList) {
+      Integer result = Integer.compare((int) dataPoint.x, e.getX());
+      if (result == 0) {
+        System.out.println(dataPoint.label);
+        //This is an execution point for when the mouse is over a datapoint.
+      }
+    }
+
   }
 
   private ToolTip getSelectedTooltip(int x, int y) {
