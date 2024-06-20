@@ -227,6 +227,10 @@ public class Cursor extends MouseAdapter implements ChartPart {
     dataPointList.add(dataPoint);
   }
 
+  void clearDataPoints() {
+	  dataPointList.clear();
+  }
+
   /** One DataPoint per series, keep the DataPoint closest to mouseX */
   private void calculateMatchingDataPoints() {
 
