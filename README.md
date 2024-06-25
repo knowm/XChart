@@ -119,6 +119,7 @@ repaint.
 * [x] Area charts
 * [x] Step Area charts
 * [x] Bar charts
+* [x] Horizontal bar charts
 * [x] Histogram charts
 * [x] Pie charts
 * [x] Donut charts
@@ -151,17 +152,18 @@ repaint.
 
 Currently, there are 5 major chart types. Each type has its corresponding `ChartBuilder`, `Styler` and `Series`.
 
-| Chart Type    | Builder              | Styler         | Series         | Allowed Data Types   | Default Series Render Style |
-|---------------|----------------------|----------------|----------------|----------------------|-----------------------------|
-| XYChart       | XYChartBuilder       | XYStyler       | XYSeries       | Number, Date         | Line                        |
-| CategoryChart | CategoryChartBuilder | CategoryStyler | CategorySeries | Number, Date, String | Bar                         |
-| PieChart      | PieChartBuilder      | PieStyler      | PieSeries      | String               | Pie                         |
-| BubbleChart   | BubbleChartBuilder   | BubbleStyler   | BubbleSeries   | Number, Date         | Round                       |
-| DialChart     | DialChartBuilder     | DialStyler     | DialSeries     | double               | Round                       |
-| RadarChart    | RadarChartBuilder    | RadarStyler    | RadarSeries    | double[]             | Round                       |
-| OHLCChart     | OHLCChartBuilder     | OHLCStyler     | OHLCSeries     | OHLC with Date       | Candle                      |
-| BoxChart      | BoxChartBuilder      | BoxStyler      | BoxSeries      | Number, Date, String | Box                         |
-| HeatMapChart  | HeatMapChartBuilder  | HeatMapStyler  | HeatMapSeries  | Number, Date, String | --                          |
+| Chart Type         | Builder                   | Styler              | Series              | Allowed Data Types   | Default Series Render Style |
+|--------------------|---------------------------|---------------------|---------------------|----------------------|-----------------------------|
+| XYChart            | XYChartBuilder            | XYStyler            | XYSeries            | Number, Date         | Line                        |
+| CategoryChart      | CategoryChartBuilder      | CategoryStyler      | CategorySeries      | Number, Date, String | Bar                         |
+| PieChart           | PieChartBuilder           | PieStyler           | PieSeries           | String               | Pie                         |
+| BubbleChart        | BubbleChartBuilder        | BubbleStyler        | BubbleSeries        | Number, Date         | Round                       |
+| DialChart          | DialChartBuilder          | DialStyler          | DialSeries          | double               | Round                       |
+| RadarChart         | RadarChartBuilder         | RadarStyler         | RadarSeries         | double[]             | Round                       |
+| OHLCChart          | OHLCChartBuilder          | OHLCStyler          | OHLCSeries          | OHLC with Date       | Candle                      |
+| BoxChart           | BoxChartBuilder           | BoxStyler           | BoxSeries           | Number, Date, String | Box                         |
+| HeatMapChart       | HeatMapChartBuilder       | HeatMapStyler       | HeatMapSeries       | Number, Date, String | --                          |
+| HorizontalBarChart | HorizontalBarChartBuilder | HorizontalBarStyler | HorizontalBarSeries | Number, Date, String | Bar                         |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
 
@@ -283,6 +285,16 @@ An example of a set of sequence numbers: 12, 15, 17, 19, 20, 23, 25, 28, 30, 33,
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_HeatMap.png)
 
 `HeatMapChart` take Date, Number or String data types for the X-Axis, Y-Axis.
+
+### HorizontalBarChart
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_HorizontalBarChart.png)
+
+`HorizontalBarChart` charts take Date, Number or String data types for the Y-Axis and Number data types for the X-Axis. For the Y-Axis, each category is given its own tick mark.
+
+It supports `labels` and `tooltips`, but more advanced features like `error bars` or `stacking` are not yet implemented.
+
+Series render style is `Bar`.
 
 ## Real-time Java Charts using XChart
 
