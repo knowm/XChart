@@ -39,6 +39,8 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
   Format axisFormat;
 
+  private static final int MAX_LABEL_LENGTH = 20;
+
   /**
    * Constructor
    *
@@ -118,35 +120,51 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
    */
   boolean willLabelsFitInTickSpaceHint(List<String> tickLabels, int tickSpacingHint) {
 
+    if (tickSpacingHint <= 0 || tickLabels.isEmpty()) {
+      return false;
+    }
+
+    int MAX_CHECK = 3;
+    for (int i = 0; i < Math.min(MAX_CHECK, tickLabels.size()); i++) {
+      String tickLabel = tickLabels.get(i);
+      if (tickLabel != null && tickLabel.length() > MAX_LABEL_LENGTH) {
+        return false;
+      }
+    }
+
     String sampleLabel = "Y";
     if (Direction.X.equals(this.axisDirection)) {
-      // find the longest String in all the labels
+
+      if (tickSpacingHint <= 0) {
+        return false;
+      }
+
       for (String tickLabel : tickLabels) {
-        if (tickLabel != null && tickLabel.length() > sampleLabel.length()) {
-          sampleLabel = tickLabel;
+        if (tickLabel != null) {
+          if (tickLabel.length() > MAX_LABEL_LENGTH) {
+            return false;
+          }
+          if (tickLabel.length() > sampleLabel.length()) {
+            sampleLabel = tickLabel;
+          }
         }
       }
     }
-    // System.out.println("longestLabel: " + sampleLabel);
 
-    TextLayout textLayout =
-        new TextLayout(
-            sampleLabel, styler.getAxisTickLabelsFont(), new FontRenderContext(null, true, false));
-    AffineTransform rot =
-        styler.getXAxisLabelRotation() == 0
-            ? null
-            : AffineTransform.getRotateInstance(
-                -1 * Math.toRadians(styler.getXAxisLabelRotation()));
+    Font font = styler.getAxisTickLabelsFont();
+    FontRenderContext frc = new FontRenderContext(null, true, false);
+    TextLayout textLayout = new TextLayout(sampleLabel, font, frc);
+
+    AffineTransform rot = null;
+    if (styler.getXAxisLabelRotation() != 0) {
+      rot = AffineTransform.getRotateInstance(
+              -1 * Math.toRadians(styler.getXAxisLabelRotation()));
+    }
+
     Shape shape = textLayout.getOutline(rot);
     Rectangle2D rectangle = shape.getBounds();
-    double largestLabelWidth =
-        Direction.X.equals(this.axisDirection) ? rectangle.getWidth() : rectangle.getHeight();
-    // System.out.println("largestLabelWidth: " + largestLabelWidth);
-    // System.out.println("tickSpacingHint: " + tickSpacingHint);
-
-    // if (largestLabelWidth * 1.1 >= tickSpacingHint) {
-    // System.out.println("WILL NOT FIT!!!");
-    // }
+    double largestLabelWidth = Direction.X.equals(this.axisDirection)
+            ? rectangle.getWidth() : rectangle.getHeight();
 
     return (largestLabelWidth * 1.1 < tickSpacingHint);
   }
@@ -380,6 +398,11 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
     List<Double> tickLabelValues;
     double tickLabelMaxValue;
     double tickLabelMinValue;
+    // 新增：跳过极小数值范围的标签生成
+    double range = maxValue - minValue;
+    if (range < 1e-10) { // TODO: 阈值根据实际场景调整
+      return;
+    }
     do {
       tickValuesHint++;
       tickLabels.clear();
