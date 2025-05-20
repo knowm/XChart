@@ -398,9 +398,8 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
     List<Double> tickLabelValues;
     double tickLabelMaxValue;
     double tickLabelMinValue;
-    // 新增：跳过极小数值范围的标签生成
     double range = maxValue - minValue;
-    if (range < 1e-10) { // TODO: 阈值根据实际场景调整
+    if (range < 1e-10) {
       return;
     }
     do {
