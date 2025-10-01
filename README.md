@@ -570,9 +570,15 @@ For snapshots, add the following to your pom.xml file:
 ```xml
 
 <repository>
-    <id>sonatype-oss-snapshot</id>
-    <snapshots/>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    <name>Central Portal Snapshots</name>
+    <id>central-portal-snapshots</id>
+    <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
 </repository>
 
 <dependency>
@@ -581,9 +587,6 @@ For snapshots, add the following to your pom.xml file:
 <version>3.8.9-SNAPSHOT</version>
 </dependency>
 ```
-
-Snapshots can be manually downloaded from
-Sonatype: [https://oss.sonatype.org/content/groups/public/org/knowm/xchart/xchart/](https://oss.sonatype.org/content/groups/public/org/knowm/xchart/xchart/)
 
 ### SBT
 
