@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.knowm.xchart.internal.FileUtils;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /**
@@ -39,7 +41,7 @@ public class CSVImporter {
     }
 
     // 2. get all the csv files in the dir
-    File[] csvFiles = getAllFiles(path2Directory, ".*.csv");
+    File[] csvFiles = FileUtils.getAllFiles(path2Directory, ".*.csv");
 
     // 3. create a series for each file, naming the series the file name
     for (File csvFile : csvFiles) {
@@ -53,14 +55,14 @@ public class CSVImporter {
       if (xAndYData[2] == null || xAndYData[2].trim().equalsIgnoreCase("")) {
         chart.addSeries(
             csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")),
-            getAxisData(xAndYData[0]),
-            getAxisData(xAndYData[1]));
+            DataConverter.getAxisData(xAndYData[0]),
+            DataConverter.getAxisData(xAndYData[1]));
       } else {
         chart.addSeries(
             csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")),
-            getAxisData(xAndYData[0]),
-            getAxisData(xAndYData[1]),
-            getAxisData(xAndYData[2]));
+            DataConverter.getAxisData(xAndYData[0]),
+            DataConverter.getAxisData(xAndYData[1]),
+            DataConverter.getAxisData(xAndYData[2]));
       }
     }
 
@@ -81,8 +83,8 @@ public class CSVImporter {
       xAndYData = getSeriesDataFromCSVColumns(csvFile);
     }
     return new SeriesData(
-        getAxisData(xAndYData[0]),
-        getAxisData(xAndYData[1]),
+        DataConverter.getAxisData(xAndYData[0]),
+        DataConverter.getAxisData(xAndYData[1]),
         csvFile.getName().substring(0, csvFile.getName().indexOf(".csv")));
   }
 
@@ -168,76 +170,7 @@ public class CSVImporter {
     return xAndYData;
   }
 
-  /**
-   * @param stringData
-   * @return
-   */
-  private static List<Number> getAxisData(String stringData) {
 
-    List<Number> axisData = new ArrayList<Number>();
-    String[] stringDataArray = stringData.split(",");
-    for (String dataPoint : stringDataArray) {
-      try {
-        Double value = Double.parseDouble(dataPoint);
-        axisData.add(value);
-      } catch (NumberFormatException e) {
-        System.out.println("Error parsing >" + dataPoint + "< !");
-        throw (e);
-      }
-    }
-    return axisData;
-  }
-
-  /**
-   * This method returns the files found in the given directory matching the given regular
-   * expression.
-   *
-   * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
-   * @param regex - ex. ".*.csv"
-   * @return File[] - an array of files
-   */
-  private static File[] getAllFiles(String dirName, String regex) {
-
-    File[] allFiles = getAllFiles(dirName);
-
-    List<File> matchingFiles = new ArrayList<File>();
-
-    for (File allFile : allFiles) {
-
-      if (allFile.getName().matches(regex)) {
-        matchingFiles.add(allFile);
-      }
-    }
-
-    return matchingFiles.toArray(new File[matchingFiles.size()]);
-  }
-
-  /**
-   * This method returns the Files found in the given directory
-   *
-   * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
-   * @return File[] - an array of files
-   */
-  private static File[] getAllFiles(String dirName) {
-
-    File dir = new File(dirName);
-
-    File[] files = dir.listFiles(); // returns files and folders
-
-    if (files != null) {
-      List<File> filteredFiles = new ArrayList<File>();
-      for (File file : files) {
-
-        if (file.isFile()) {
-          filteredFiles.add(file);
-        }
-      }
-      return filteredFiles.toArray(new File[filteredFiles.size()]);
-    } else {
-      System.out.println(dirName + " does not denote a valid directory!");
-      return new File[0];
-    }
-  }
 
   public enum DataOrientation {
     Rows,

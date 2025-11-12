@@ -3,7 +3,7 @@ package org.knowm.xchart;
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.FileUtils;
 
 /** A helper class with static methods for saving Charts as a GIF file */
 public class GifEncoder {
@@ -31,7 +31,7 @@ public class GifEncoder {
   public static void saveGif(String filePath, List<BufferedImage> images, int repeat, int delay) {
     AnimatedGifEncoder gif = new AnimatedGifEncoder();
     gif.setRepeat(repeat);
-    gif.start(Utils.addFileExtension(filePath, GIF_FILE_EXTENSION));
+    gif.start(FileUtils.addFileExtension(filePath, GIF_FILE_EXTENSION));
     gif.setDelay(delay);
     for (BufferedImage image : images) {
       gif.addFrame(image);

@@ -8,9 +8,9 @@ public class UtilsTest {
 
   @Test
   void addFileExtension() {
-    assertEquals(Utils.addFileExtension("yourchart.png", ".png"), "yourchart.png");
-    assertEquals(Utils.addFileExtension("yourchart.png", ".pn"), "yourchart.png.pn");
-    assertEquals(Utils.addFileExtension("a", ".png"), "a.png");
-    assertEquals(Utils.addFileExtension("a.PNG", ".png"), "a.PNG");
+    assertEquals(FileUtils.addFileExtension("yourchart.png", ".png"), "yourchart.png");
+    assertEquals(FileUtils.addFileExtension("yourchart.png", ".pn"), "yourchart.png.pn");
+    assertEquals(FileUtils.addFileExtension("a", ".png"), "a.png");
+    assertEquals(FileUtils.addFileExtension("a.PNG", ".png"), "a.PNG");
   }
 }
