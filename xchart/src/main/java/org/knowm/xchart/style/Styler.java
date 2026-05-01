@@ -91,6 +91,12 @@ public abstract class Styler {
   private final HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<>();
   private int yAxisLeftWidthHint;
 
+  /**
+   * Maps each logical Y-axis group index to a visual group ID (= the minimum index in the merged
+   * set). Only populated when {@link #mergeYAxisGroups(int...)} is called.
+   */
+  private final HashMap<Integer, Integer> yAxisGroupMergeMap = new HashMap<>();
+
   // TODO move this to boxplot styler
   // Box plot data ///////////////////////////////
   private boolean showWithinAreaPoint = false;
@@ -868,6 +874,61 @@ public abstract class Styler {
 
     yAxisAlignmentMap.put(yAxisGroup, yAxisPosition);
     return this;
+  }
+
+  /**
+   * Merge multiple Y-axis groups onto a single shared visual axis line per side. All specified
+   * logical group indices will share the axis line of the lowest-numbered index in the set.
+   *
+   * <p>Example: {@code styler.mergeYAxisGroups(0, 1)} causes group 1 to share group 0's axis line.
+   * Group 0 acts as master (drives gridline positions); group 1 is a slave (translates master tick
+   * pixels into its own value labels).
+   *
+   * <p>This is opt-in: charts that do not call this method behave exactly as before.
+   *
+   * @param groupIndices two or more logical Y-axis group indices to merge
+   */
+  public Styler mergeYAxisGroups(int... groupIndices) {
+    if (groupIndices == null || groupIndices.length < 2) {
+      throw new IllegalArgumentException("mergeYAxisGroups requires at least 2 group indices");
+    }
+    int visualGroupId = groupIndices[0];
+    for (int idx : groupIndices) {
+      if (idx < visualGroupId) {
+        visualGroupId = idx;
+      }
+    }
+    for (int idx : groupIndices) {
+      yAxisGroupMergeMap.put(idx, visualGroupId);
+    }
+    return this;
+  }
+
+  /**
+   * Returns the visual group ID for a logical Y-axis group. If the group is not part of a merge,
+   * the visual group ID equals the logical group index (identity).
+   *
+   * @param logicalGroup the logical Y-axis group index
+   * @return visual group ID (= lowest index in the merged set, or logicalGroup if not merged)
+   */
+  public int getYAxisVisualGroup(int logicalGroup) {
+    return yAxisGroupMergeMap.getOrDefault(logicalGroup, logicalGroup);
+  }
+
+  /**
+   * Returns {@code true} when the given logical group is part of a multi-axis merge and is not the
+   * master (i.e. it is not the lowest-index in its merge set).
+   *
+   * @param logicalGroup the logical Y-axis group index to test
+   */
+  public boolean isYAxisGroupSlave(int logicalGroup) {
+    Integer visualId = yAxisGroupMergeMap.get(logicalGroup);
+    return visualId != null && visualId != logicalGroup;
+  }
+
+  /** Returns the raw merge map (logical group index → visual group ID). */
+  public HashMap<Integer, Integer> getYAxisGroupMergeMap() {
+    return yAxisGroupMergeMap;
   }
 
   public enum YAxisPosition {

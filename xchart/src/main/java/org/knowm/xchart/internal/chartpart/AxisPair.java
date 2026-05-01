@@ -2,8 +2,10 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
@@ -26,6 +28,16 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   private final Rectangle2D.Double rightYAxisBounds;
   private Axis<ST, S> leftMainYAxis;
   private Axis<ST, S> rightMainYAxis;
+
+  /**
+   * The axis whose tick positions are used for horizontal gridlines and inner plot tick marks on
+   * the left side. Equals {@code leftMainYAxis} when no axes are merged, otherwise equals the
+   * master axis of the first left-side visual group.
+   */
+  private Axis<ST, S> leftGridlineMasterAxis;
+
+  /** Same as {@link #leftGridlineMasterAxis} for the right side. */
+  private Axis<ST, S> rightGridlineMasterAxis;
 
   /**
    * Constructor
@@ -52,6 +64,8 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     leftMainYAxis = null;
     rightMainYAxis = null;
+    leftGridlineMasterAxis = null;
+    rightGridlineMasterAxis = null;
 
     ST styler = chart.getStyler();
 
@@ -59,74 +73,141 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     final int paddingBetweenAxes = chartPadding;
 
     int tickMargin = (styler.isYAxisTicksVisible() ? (styler.getPlotMargin()) : 0);
+
+    // ------------------------------------------------------------------
+    // Step 1: Apply master/slave relationships for merged visual groups.
+    // The master is the axis with the lowest logical index in each group.
+    // Reset all axes to independent mode first, then wire up slaves.
+    // ------------------------------------------------------------------
+    Map<Integer, Integer> mergeMap = styler.getYAxisGroupMergeMap();
+    if (!mergeMap.isEmpty()) {
+      // Reset all axes
+      for (Axis<ST, S> ya : yAxisMap.values()) {
+        ya.setMasterAxis(null);
+        ya.setAxisLineOwner(true);
+      }
+      // Wire: slave → master, suppress slave's axis line
+      for (Entry<Integer, Integer> entry : mergeMap.entrySet()) {
+        int slaveIndex = entry.getKey();
+        int masterIndex = entry.getValue();
+        if (slaveIndex == masterIndex) {
+          continue; // this IS the master entry
+        }
+        Axis<ST, S> slaveAxis = yAxisMap.get(slaveIndex);
+        Axis<ST, S> masterAxis = yAxisMap.get(masterIndex);
+        if (slaveAxis != null && masterAxis != null) {
+          slaveAxis.setMasterAxis(masterAxis);
+          slaveAxis.setAxisLineOwner(false);
+        }
+      }
+    } else {
+      // No merging — ensure clean state
+      for (Axis<ST, S> ya : yAxisMap.values()) {
+        ya.setMasterAxis(null);
+        ya.setAxisLineOwner(true);
+      }
+    }
+
+    // ------------------------------------------------------------------
+    // Step 2: Build a visual-group → sorted-logical-indices mapping so
+    // that masters (lowest index) are painted before slaves.
+    //   visualGroupOrder: visual group ID → List<logical index> ascending
+    // ------------------------------------------------------------------
+    // For axes on the left side
+    TreeMap<Integer, List<Integer>> leftVisualGroups = new TreeMap<>();
+    TreeMap<Integer, List<Integer>> rightVisualGroups = new TreeMap<>();
+
+    for (Integer logicalIndex : yAxisMap.keySet()) {
+      YAxisPosition pos = styler.getYAxisGroupPosistion(logicalIndex);
+      boolean onRight = (pos == YAxisPosition.Right);
+
+      int visualId = styler.getYAxisVisualGroup(logicalIndex);
+      TreeMap<Integer, List<Integer>> target = onRight ? rightVisualGroups : leftVisualGroups;
+      target.computeIfAbsent(visualId, k -> new ArrayList<>()).add(logicalIndex);
+    }
+    // Sort each visual group's list ascending so masters come first
+    for (List<Integer> indices : leftVisualGroups.values()) {
+      java.util.Collections.sort(indices);
+    }
+    for (List<Integer> indices : rightVisualGroups.values()) {
+      java.util.Collections.sort(indices);
+    }
+
+    // ------------------------------------------------------------------
+    // Step 3: Paint left-side axes.
+    // For each visual group the master (indices[0]) is painted innermost
+    // (closest to the plot); slaves are painted further out.
+    // ------------------------------------------------------------------
     leftYAxisBounds.width = 0;
-    // draw left sided axises
     int leftCount = 0;
     double leftStart = chartPadding;
 
     int desiredLeftYAxisWidth = styler.getYAxisLeftWidthHint();
-    // calculate width first
     if (desiredLeftYAxisWidth > 0) {
       double widthEstimation = 0;
-      for (Entry<Integer, Axis<ST, S>> e : yAxisMap.entrySet()) {
-        Axis<ST, S> ya = e.getValue();
-        if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
-          continue;
+      // Must preparePaint masters before slaves (ordering already correct: ascending index)
+      for (List<Integer> groupIndices : leftVisualGroups.values()) {
+        for (int logIdx : groupIndices) {
+          Axis<ST, S> ya = yAxisMap.get(logIdx);
+          ya.preparePaint();
+          widthEstimation += ya.getBounds().getWidth();
+          leftCount++;
         }
-        ya.preparePaint();
-        Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) ya.getBounds();
-        // add padding before axis
-        double width = bounds.getWidth();
-        widthEstimation += width;
-        leftCount++;
       }
-
       if (leftCount > 1) {
         widthEstimation += (leftCount - 1) * paddingBetweenAxes;
       }
       widthEstimation += leftCount * tickMargin;
-
       if (widthEstimation < desiredLeftYAxisWidth) {
         leftStart = desiredLeftYAxisWidth - widthEstimation;
       }
-
       leftCount = 0;
     }
     double leftStartFirst = leftStart;
 
-    for (Entry<Integer, Axis<ST, S>> e : yAxisMap.entrySet()) {
-      Axis<ST, S> ya = e.getValue();
-      if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
-        continue;
-      }
-      if (e.getKey() == 0) {
+    for (Entry<Integer, List<Integer>> groupEntry : leftVisualGroups.entrySet()) {
+      List<Integer> groupIndices = groupEntry.getValue();
+      // Paint slaves (higher indices) outermost, master (index 0 of list) innermost.
+      // Order: slaves first (left to right = outermost to innermost), then master.
+      // groupIndices is sorted ascending: [masterIdx, slave1, slave2, ...]
+      // We paint slaves in descending order of index (outermost first), then master.
+      int masterLogIdx = groupIndices.get(0);
 
-        // draw main axis group rightmost
-        continue;
+      // Paint slaves from outermost (last in list) to innermost
+      for (int i = groupIndices.size() - 1; i >= 1; i--) {
+        int slaveLogIdx = groupIndices.get(i);
+        Axis<ST, S> slaveAxis = yAxisMap.get(slaveLogIdx);
+        // Master must have been preparePaint()-ed before slave for synchronized calc.
+        // Ensure master is ready:
+        Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
+        if (masterAxis.getAxisTickCalculator() == null) {
+          masterAxis.preparePaint();
+        }
+        slaveAxis.preparePaint(); // Now uses AxisTickCalculator_Synchronized
+        Rectangle2D.Double bounds = (Rectangle2D.Double) slaveAxis.getBounds();
+        bounds.x = leftStart;
+        slaveAxis.paint(g);
+        leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
+        leftYAxisBounds.width += bounds.getWidth();
+        leftCount++;
+        leftMainYAxis = slaveAxis;
       }
-      ya.preparePaint();
-      Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) ya.getBounds();
-      // add padding before axis
-      bounds.x = leftStart;
-      ya.paint(g);
-      double width = bounds.getWidth();
-      leftStart += paddingBetweenAxes + width + tickMargin;
-      leftYAxisBounds.width += width;
-      leftCount++;
-      leftMainYAxis = ya;
-    }
 
-    if (styler.getYAxisGroupPosistion(0) != YAxisPosition.Right) {
-      yAxis.preparePaint();
-      Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
-      // add padding before axis
+      // Paint master (innermost, closest to plot)
+      Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
+      masterAxis.preparePaint();
+      Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
       bounds.x = leftStart;
-      yAxis.paint(g);
-      double width = bounds.getWidth();
-      leftStart += paddingBetweenAxes + width + tickMargin;
-      leftYAxisBounds.width += width;
+      masterAxis.paint(g);
+      leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
+      leftYAxisBounds.width += bounds.getWidth();
       leftCount++;
-      leftMainYAxis = yAxis;
+      leftMainYAxis = masterAxis;
+
+      // The gridline master is always the master axis of the first left visual group
+      if (leftGridlineMasterAxis == null) {
+        leftGridlineMasterAxis = masterAxis;
+      }
     }
 
     if (leftCount > 1) {
@@ -134,6 +215,9 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
     leftYAxisBounds.width += leftCount * tickMargin;
 
+    // ------------------------------------------------------------------
+    // Step 4: Paint right-side axes (mirror of left, but reversed).
+    // ------------------------------------------------------------------
     rightYAxisBounds.width = 0;
 
     double legendWidth = 0;
@@ -146,54 +230,67 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     int rightCount = 0;
 
-    // traverse reverse
-    for (Entry<Integer, Axis<ST, S>> e : yAxisMap.descendingMap().entrySet()) {
-      Axis<ST, S> ya = e.getValue();
-      if (styler.getYAxisGroupPosistion(e.getKey()) != YAxisPosition.Right) {
-        continue;
-      }
-      if (e.getKey() == 0) {
+    // traverse visual groups in descending key order so that the lowest visual group ID
+    // ends up closest to the plot area on the right side
+    for (Entry<Integer, List<Integer>> groupEntry : rightVisualGroups.descendingMap().entrySet()) {
+      List<Integer> groupIndices = groupEntry.getValue();
+      int masterLogIdx = groupIndices.get(0); // lowest = master
 
-        // draw main axis group leftmost
-        continue;
+      // Paint slaves outermost (farthest from plot)
+      for (int i = groupIndices.size() - 1; i >= 1; i--) {
+        int slaveLogIdx = groupIndices.get(i);
+        Axis<ST, S> slaveAxis = yAxisMap.get(slaveLogIdx);
+        Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
+        if (masterAxis.getAxisTickCalculator() == null) {
+          masterAxis.preparePaint();
+        }
+        slaveAxis.preparePaint();
+        Rectangle2D.Double bounds = (Rectangle2D.Double) slaveAxis.getBounds();
+        double approxWidth = bounds.getWidth();
+        double xOffset = rightEnd - approxWidth;
+        bounds.x = xOffset;
+        rightYAxisBounds.x = xOffset;
+        slaveAxis.paint(g);
+        rightYAxisBounds.width += approxWidth;
+        rightEnd -= paddingBetweenAxes + approxWidth + tickMargin;
+        rightCount++;
+        rightMainYAxis = slaveAxis;
       }
-      ya.preparePaint();
-      Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) ya.getBounds();
-      double aproxWidth = bounds.getWidth();
-      double xOffset = rightEnd - aproxWidth;
+
+      // Paint master innermost (closest to plot)
+      Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
+      masterAxis.preparePaint();
+      Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
+      double approxWidth = bounds.getWidth();
+      double xOffset = rightEnd - approxWidth;
       bounds.x = xOffset;
       rightYAxisBounds.x = xOffset;
-      ya.paint(g);
-      // double width = bounds.getWidth();
-      // we already draw the axis, so actual width is not necessary
-      rightYAxisBounds.width += aproxWidth;
-
-      rightEnd -= paddingBetweenAxes + aproxWidth + tickMargin;
+      masterAxis.paint(g);
+      rightYAxisBounds.width += approxWidth;
+      rightEnd -= paddingBetweenAxes + approxWidth + tickMargin;
       rightCount++;
-      rightMainYAxis = ya;
+      rightMainYAxis = masterAxis;
+
+      if (rightGridlineMasterAxis == null) {
+        rightGridlineMasterAxis = masterAxis;
+      }
     }
 
-    if (styler.getYAxisGroupPosistion(0) == YAxisPosition.Right) {
-      yAxis.preparePaint();
-      Rectangle2D.Double bounds = (java.awt.geom.Rectangle2D.Double) yAxis.getBounds();
-      double aproxWidth = bounds.getWidth();
-      double xOffset = rightEnd - aproxWidth;
-      bounds.x = xOffset;
-      rightYAxisBounds.x = xOffset;
-      yAxis.paint(g);
-      // double width = bounds.getWidth();
-      // we already draw the axis, so actual width is not necessary
-      rightYAxisBounds.width += aproxWidth;
-
-      rightEnd -= paddingBetweenAxes + aproxWidth + tickMargin;
-      rightCount++;
-      rightMainYAxis = yAxis;
-    }
+    // ------------------------------------------------------------------
+    // Step 5: Fallback defaults (same semantics as before for single-axis
+    // charts and charts without any merging).
+    // ------------------------------------------------------------------
     if (leftMainYAxis == null) {
       leftMainYAxis = yAxis;
     }
     if (rightMainYAxis == null) {
       rightMainYAxis = yAxis;
+    }
+    if (leftGridlineMasterAxis == null) {
+      leftGridlineMasterAxis = leftMainYAxis;
+    }
+    if (rightGridlineMasterAxis == null) {
+      rightGridlineMasterAxis = rightMainYAxis;
     }
 
     if (rightCount > 1) {
@@ -207,28 +304,11 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     leftYAxisBounds.y = bounds.y;
     leftYAxisBounds.height = bounds.height;
 
-    // rightYAxisBounds.x -= (styler.isYAxisTicksVisible() ? (styler.getPlotMargin()) : 0);
-
     rightYAxisBounds.y = bounds.y;
     rightYAxisBounds.height = bounds.height;
 
     xAxis.preparePaint();
     xAxis.paint(g);
-    // Utils.printBounds("x axis", xAxis.getBounds());
-    // Utils.printBounds("left Y axis", leftYAxisBounds);
-    // for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
-    // Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
-    // if (styler.getYAxisGroupPosistion(e.getKey()) != YAxisPosition.Right) {
-    // Utils.printBounds(" y axis " + e.getKey(), ya.getBounds());
-    // }
-    // }
-    // Utils.printBounds("right Y axis", rightYAxisBounds);
-    // for (Entry<Integer, Axis<AxesChartStyler, AxesChartSeries>> e : yAxisMap.entrySet()) {
-    // Axis<AxesChartStyler, AxesChartSeries> ya = e.getValue();
-    // if (styler.getYAxisGroupPosistion(e.getKey()) == YAxisPosition.Right) {
-    // Utils.printBounds(" y axis " + e.getKey(), ya.getBounds());
-    // }
-    // }
   }
 
   private void prepareForPaint() {
@@ -528,5 +608,25 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   Axis<ST, S> getRightMainYAxis() {
 
     return rightMainYAxis;
+  }
+
+  /**
+   * Returns the axis whose tick positions should drive horizontal gridlines and left-side inner
+   * plot tick marks. When axes are merged this is the master of the lowest-index visual group on
+   * the left side; otherwise it equals {@link #getLeftMainYAxis()}.
+   */
+  Axis<ST, S> getGridlineMasterAxis() {
+
+    return leftGridlineMasterAxis;
+  }
+
+  /**
+   * Returns the axis whose tick positions should drive right-side inner plot tick marks. When axes
+   * are merged this is the master of the lowest-index visual group on the right side; otherwise it
+   * equals {@link #getRightMainYAxis()}.
+   */
+  Axis<ST, S> getRightGridlineMasterAxis() {
+
+    return rightGridlineMasterAxis;
   }
 }

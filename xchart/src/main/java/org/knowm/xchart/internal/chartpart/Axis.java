@@ -62,6 +62,18 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   private double max;
 
   /**
+   * When non-null this axis is a slave in a merged visual group. The master's tick pixel positions
+   * are borrowed; only label values differ.
+   */
+  private Axis masterAxis = null;
+
+  /**
+   * When {@code false} the axis line (the vertical line hugging the plot area) is suppressed
+   * because another axis in the same visual group already drew it. Defaults to {@code true}.
+   */
+  private boolean axisLineOwner = true;
+
+  /**
    * Constructor
    *
    * @param chart the Chart
@@ -394,6 +406,18 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   }
 
   private AxisTickCalculator getAxisTickCalculatorForY(double workingSpace) {
+
+    // Slave axis in a merged visual group: borrow master's pixel positions and translate labels.
+    if (masterAxis != null && masterAxis.getAxisTickCalculator() != null) {
+      return new AxisTickCalculator_Synchronized(
+          workingSpace,
+          min,
+          max,
+          masterAxis.getAxisTickCalculator().getTickLocations(),
+          axesChartStyler,
+          index);
+    }
+
     List<Double> yData = new ArrayList<>();
     if (axesChartStyler instanceof HeatMapStyler) {
       List<?> categories = ((HeatMapChart) chart).getHeatMapSeries().getYData();
@@ -615,6 +639,29 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   public int getYIndex() {
 
     return index;
+  }
+
+  // Merged-axis support ///////////////////////////////////////////
+
+  /** Sets the master axis for this slave. Pass {@code null} to reset to independent mode. */
+  public void setMasterAxis(Axis masterAxis) {
+    this.masterAxis = masterAxis;
+  }
+
+  public Axis getMasterAxis() {
+    return masterAxis;
+  }
+
+  /**
+   * Controls whether this axis draws the vertical axis line. Set to {@code false} for slave axes
+   * that share the master's line.
+   */
+  public void setAxisLineOwner(boolean axisLineOwner) {
+    this.axisLineOwner = axisLineOwner;
+  }
+
+  public boolean isAxisLineOwner() {
+    return axisLineOwner;
   }
 
   /**

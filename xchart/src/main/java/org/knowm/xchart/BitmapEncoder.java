@@ -48,7 +48,8 @@ public final class BitmapEncoder {
       fileNameWithFileExtension = fileName + newFileExtension;
     } else {
       // This is to ensure the lower-case for the extension
-      fileNameWithFileExtension = fileName.substring(0, fileName.length() - newFileExtension.length()) + newFileExtension;
+      fileNameWithFileExtension =
+          fileName.substring(0, fileName.length() - newFileExtension.length()) + newFileExtension;
     }
     return fileNameWithFileExtension;
   }

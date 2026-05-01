@@ -40,7 +40,8 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
 
     if (stylerAxesChart.isPlotGridHorizontalLinesVisible()) {
 
-      List<Double> yAxisTickLocations = chart.getYAxis().getAxisTickCalculator().getTickLocations();
+      List<Double> yAxisTickLocations =
+          chart.getAxisPair().getGridlineMasterAxis().getAxisTickCalculator().getTickLocations();
       for (Double yAxisTickLocation : yAxisTickLocations) {
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
 
@@ -70,7 +71,7 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
 
       // draw left side
       List<Double> yAxisTickLocations =
-          chart.getAxisPair().getLeftMainYAxis().getAxisTickCalculator().getTickLocations();
+          chart.getAxisPair().getGridlineMasterAxis().getAxisTickCalculator().getTickLocations();
       for (Double yAxisTickLocation : yAxisTickLocations) {
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
 
@@ -91,7 +92,11 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
 
       // draw right side
       yAxisTickLocations =
-          chart.getAxisPair().getRightMainYAxis().getAxisTickCalculator().getTickLocations();
+          chart
+              .getAxisPair()
+              .getRightGridlineMasterAxis()
+              .getAxisTickCalculator()
+              .getTickLocations();
       for (Double yAxisTickLocation : yAxisTickLocations) {
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
 

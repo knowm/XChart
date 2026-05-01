@@ -91,8 +91,8 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
         }
       }
 
-      // Line
-      if (styler.isAxisTicksLineVisible()) {
+      // Line — only drawn by the master axis in a merged visual group
+      if (styler.isAxisTicksLineVisible() && yAxis.isAxisLineOwner()) {
 
         Shape line =
             new Line2D.Double(lineXOffset, yOffset, lineXOffset, yOffset + yAxisBounds.getHeight());
