@@ -113,6 +113,7 @@ repaint.
 
 * [x] No *required* additional dependencies
 * [x] Multiple Y-Axis charts
+* [x] Merged / visually-grouped Y-Axis charts
 * [x] Line charts
 * [x] Step charts
 * [x] Scatter charts
@@ -417,6 +418,42 @@ To set the Y axes titles:
 chart.setYAxisGroupTitle(0,"A");
 chart.setYAxisGroupTitle(1,"B");
 ```
+
+#### Merged / Visually-Grouped Y-Axes
+
+Multiple logical Y-axis groups can share a single visible axis line per side. Each group retains its own independent scale and tick labels, but only one axis line is drawn — eliminating visual clutter in charts with many overlaid series.
+
+Call `mergeYAxisGroups` with the group indices that should share an axis line. The lowest index in the set becomes the **master** (it drives tick positions and gridlines); all others are **slaves** (they display their own value labels at the same pixel positions).
+
+```java
+// Two series on the left — different scales, one shared axis line
+XYSeries seriesA = chart.addSeries("Scale A", x, smallValues);
+seriesA.setYAxisGroup(0);
+
+XYSeries seriesB = chart.addSeries("Scale B", x, largeValues);
+seriesB.setYAxisGroup(1);
+
+// Merge groups 0 and 1: group 0 is master, group 1 is slave
+chart.getStyler().mergeYAxisGroups(0, 1);
+```
+
+The same pattern works for the right side:
+
+```java
+chart.getStyler().setYAxisGroupPosition(2, Styler.YAxisPosition.Right);
+chart.getStyler().setYAxisGroupPosition(3, Styler.YAxisPosition.Right);
+chart.getStyler().mergeYAxisGroups(2, 3);
+```
+
+Three or more groups can be merged at once:
+
+```java
+chart.getStyler().mergeYAxisGroups(0, 1, 2);
+```
+
+Charts that do not call `mergeYAxisGroups` behave exactly as before — the feature is entirely opt-in.
+
+A working example can be found at [MergedYAxisDemo](xchart-demo/src/main/java/org/knowm/xchart/standalone/issues/MergedYAxisDemo.java).
 
 ### Zooming In
 
