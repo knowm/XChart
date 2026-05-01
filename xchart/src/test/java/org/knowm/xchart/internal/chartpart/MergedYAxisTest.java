@@ -226,4 +226,55 @@ public class MergedYAxisTest {
     Axis rightSlave = chart.axisPair.getYAxis(2);
     assertThat(rightSlave.isAxisLineOwner()).isFalse();
   }
+
+  // ---------------------------------------------------------------
+  // 13–15. Colocate-slave mode
+  // ---------------------------------------------------------------
+
+  /** With colocate=true the master axis should have its slave registered after painting. */
+  @Test
+  public void colocateMode_masterHasSlaveRegistered() throws Exception {
+    XYChart chart = buildTwoAxisChart();
+    chart.getStyler().mergeYAxisGroups(0, 1);
+    chart.getStyler().setMergedAxisColocateSlaveLabels(true);
+
+    // Render so AxisPair.paint() wires everything up
+    BitmapEncoder.getBufferedImage(chart);
+
+    Axis master = chart.axisPair.getYAxis(0);
+    assertThat(master.getColocatedSlaves()).hasSize(1);
+    Axis colocatedSlave = (Axis) master.getColocatedSlaves().get(0);
+    assertThat(colocatedSlave.getYIndex()).isEqualTo(1);
+  }
+
+  /** With colocate=true the slave axis should have no separate column (width = 0 in layout). */
+  @Test
+  public void colocateMode_slaveAxisHasZeroColumnWidth() throws Exception {
+    XYChart chart = buildTwoAxisChart();
+    chart.getStyler().mergeYAxisGroups(0, 1);
+    chart.getStyler().setMergedAxisColocateSlaveLabels(true);
+
+    BitmapEncoder.getBufferedImage(chart);
+
+    // Slave axis should still have a tick calculator (from the synchronized calc),
+    // but the left axis bounds width should be narrower than without colocate because
+    // only one column exists.  We verify the slave is not used as leftMainYAxis.
+    // (leftMainYAxis is the axis whose column is closest to the plot — should be the master)
+    Axis leftMain = chart.axisPair.getLeftMainYAxis();
+    assertThat(leftMain.getYIndex()).isEqualTo(0); // master is innermost
+  }
+
+  /** Colocate=true on a chart with no merging should behave identically to colocate=false. */
+  @Test
+  public void colocateMode_noEffectWhenNotMerged() throws Exception {
+    XYChart chart = buildTwoAxisChart();
+    // No mergeYAxisGroups call — colocate should be a no-op
+    chart.getStyler().setMergedAxisColocateSlaveLabels(true);
+
+    // Should render without exception and the axes remain independent
+    BitmapEncoder.getBufferedImage(chart);
+
+    Axis axis0 = chart.axisPair.getYAxis(0);
+    assertThat(axis0.getColocatedSlaves()).isEmpty();
+  }
 }

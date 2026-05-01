@@ -74,6 +74,12 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   private boolean axisLineOwner = true;
 
   /**
+   * When colocate-slave mode is active, the master axis holds references to all slave axes whose
+   * labels will be rendered stacked below the master's labels on the same column.
+   */
+  private final List<Axis> colocatedSlaves = new ArrayList<>();
+
+  /**
    * Constructor
    *
    * @param chart the Chart
@@ -393,6 +399,41 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
           rectangle.getWidth()
               + axesChartStyler.getAxisTickPadding()
               + axesChartStyler.getAxisTickMarkLength();
+
+      // When colocate mode is on, factor in the widest slave label too.
+      if (axesChartStyler.isMergedAxisColocateSlaveLabels() && !colocatedSlaves.isEmpty()) {
+        for (Axis slave : colocatedSlaves) {
+          AxisTickCalculator slaveCalc =
+              new AxisTickCalculator_Synchronized(
+                  workingSpace,
+                  slave.min,
+                  slave.max,
+                  axisTickCalculator.getTickLocations(),
+                  axesChartStyler,
+                  slave.index);
+          String slaveSampleLabel = "";
+          for (int i = 0; i < slaveCalc.getTickLabels().size(); i++) {
+            String lbl = slaveCalc.getTickLabels().get(i);
+            if (lbl != null && lbl.length() > slaveSampleLabel.length()) {
+              slaveSampleLabel = lbl;
+            }
+          }
+          if (!slaveSampleLabel.isEmpty()) {
+            TextLayout slaveLayout =
+                new TextLayout(
+                    slaveSampleLabel,
+                    axesChartStyler.getAxisTickLabelsFont(),
+                    new FontRenderContext(null, true, false));
+            double slaveWidth =
+                slaveLayout.getBounds().getWidth()
+                    + axesChartStyler.getAxisTickPadding()
+                    + axesChartStyler.getAxisTickMarkLength();
+            if (slaveWidth > axisTickLabelsHeight) {
+              axisTickLabelsHeight = slaveWidth;
+            }
+          }
+        }
+      }
     }
     return titleHeight + axisTickLabelsHeight;
   }
@@ -662,6 +703,21 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   public boolean isAxisLineOwner() {
     return axisLineOwner;
+  }
+
+  /** Clears the list of slave axes whose labels will be colocated on this (master) axis. */
+  void clearColocatedSlaves() {
+    colocatedSlaves.clear();
+  }
+
+  /** Adds a slave axis whose labels will be rendered stacked below this master's labels. */
+  void addColocatedSlave(Axis slave) {
+    colocatedSlaves.add(slave);
+  }
+
+  /** Returns the (possibly empty) list of colocated slave axes registered on this master. */
+  List<Axis> getColocatedSlaves() {
+    return colocatedSlaves;
   }
 
   /**

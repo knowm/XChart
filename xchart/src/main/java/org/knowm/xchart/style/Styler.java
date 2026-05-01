@@ -97,6 +97,11 @@ public abstract class Styler {
    */
   private final HashMap<Integer, Integer> yAxisGroupMergeMap = new HashMap<>();
 
+  /**
+   * @see #setMergedAxisColocateSlaveLabels
+   */
+  private boolean mergedAxisColocateSlaveLabels = false;
+
   // TODO move this to boxplot styler
   // Box plot data ///////////////////////////////
   private boolean showWithinAreaPoint = false;
@@ -929,6 +934,20 @@ public abstract class Styler {
   /** Returns the raw merge map (logical group index → visual group ID). */
   public HashMap<Integer, Integer> getYAxisGroupMergeMap() {
     return yAxisGroupMergeMap;
+  }
+
+  /**
+   * When {@code true}, slave Y-axis tick labels are rendered stacked below the master's labels on
+   * the shared axis column instead of appearing as a separate axis column. Colors are controlled by
+   * {@link AxesChartStyler#setYAxisGroupTickLabelsColorMap}. Default: {@code false}.
+   */
+  public Styler setMergedAxisColocateSlaveLabels(boolean val) {
+    this.mergedAxisColocateSlaveLabels = val;
+    return this;
+  }
+
+  public boolean isMergedAxisColocateSlaveLabels() {
+    return mergedAxisColocateSlaveLabels;
   }
 
   public enum YAxisPosition {

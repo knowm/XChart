@@ -147,7 +147,10 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       double widthEstimation = 0;
       // Must preparePaint masters before slaves (ordering already correct: ascending index)
       for (List<Integer> groupIndices : leftVisualGroups.values()) {
-        for (int logIdx : groupIndices) {
+        for (int i = 0; i < groupIndices.size(); i++) {
+          // In colocate mode slaves have no column of their own
+          if (styler.isMergedAxisColocateSlaveLabels() && i > 0) continue;
+          int logIdx = groupIndices.get(i);
           Axis<ST, S> ya = yAxisMap.get(logIdx);
           ya.preparePaint();
           widthEstimation += ya.getBounds().getWidth();
@@ -172,37 +175,61 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       // groupIndices is sorted ascending: [masterIdx, slave1, slave2, ...]
       // We paint slaves in descending order of index (outermost first), then master.
       int masterLogIdx = groupIndices.get(0);
+      Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
+      masterAxis.clearColocatedSlaves();
 
-      // Paint slaves from outermost (last in list) to innermost
-      for (int i = groupIndices.size() - 1; i >= 1; i--) {
-        int slaveLogIdx = groupIndices.get(i);
-        Axis<ST, S> slaveAxis = yAxisMap.get(slaveLogIdx);
-        // Master must have been preparePaint()-ed before slave for synchronized calc.
-        // Ensure master is ready:
-        Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
+      boolean colocate = styler.isMergedAxisColocateSlaveLabels() && groupIndices.size() > 1;
+
+      if (colocate) {
+        // ---- Colocate mode: slaves render inline on the master column, no separate column ----
+        // Prime the master so slaves can build a synchronized calculator.
         if (masterAxis.getAxisTickCalculator() == null) {
           masterAxis.preparePaint();
         }
-        slaveAxis.preparePaint(); // Now uses AxisTickCalculator_Synchronized
-        Rectangle2D.Double bounds = (Rectangle2D.Double) slaveAxis.getBounds();
+        for (int i = 1; i < groupIndices.size(); i++) {
+          Axis<ST, S> slaveAxis = yAxisMap.get(groupIndices.get(i));
+          slaveAxis.preparePaint(); // builds AxisTickCalculator_Synchronized from master
+          masterAxis.addColocatedSlave(slaveAxis);
+        }
+        // Re-preparePaint master so its width hint picks up all slave label widths.
+        masterAxis.preparePaint();
+        Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
         bounds.x = leftStart;
-        slaveAxis.paint(g);
+        masterAxis.paint(g);
         leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
         leftYAxisBounds.width += bounds.getWidth();
         leftCount++;
-        leftMainYAxis = slaveAxis;
-      }
+        leftMainYAxis = masterAxis;
+      } else {
+        // ---- Normal mode: each slave gets its own column ----
+        // Paint slaves from outermost (last in list) to innermost
+        for (int i = groupIndices.size() - 1; i >= 1; i--) {
+          int slaveLogIdx = groupIndices.get(i);
+          Axis<ST, S> slaveAxis = yAxisMap.get(slaveLogIdx);
+          // Ensure master is ready:
+          if (masterAxis.getAxisTickCalculator() == null) {
+            masterAxis.preparePaint();
+          }
+          slaveAxis.preparePaint(); // Now uses AxisTickCalculator_Synchronized
+          Rectangle2D.Double bounds = (Rectangle2D.Double) slaveAxis.getBounds();
+          bounds.x = leftStart;
+          slaveAxis.paint(g);
+          leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
+          leftYAxisBounds.width += bounds.getWidth();
+          leftCount++;
+          leftMainYAxis = slaveAxis;
+        }
 
-      // Paint master (innermost, closest to plot)
-      Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
-      masterAxis.preparePaint();
-      Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
-      bounds.x = leftStart;
-      masterAxis.paint(g);
-      leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
-      leftYAxisBounds.width += bounds.getWidth();
-      leftCount++;
-      leftMainYAxis = masterAxis;
+        // Paint master (innermost, closest to plot)
+        masterAxis.preparePaint();
+        Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
+        bounds.x = leftStart;
+        masterAxis.paint(g);
+        leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
+        leftYAxisBounds.width += bounds.getWidth();
+        leftCount++;
+        leftMainYAxis = masterAxis;
+      }
 
       // The gridline master is always the master axis of the first left visual group
       if (leftGridlineMasterAxis == null) {
@@ -235,41 +262,67 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     for (Entry<Integer, List<Integer>> groupEntry : rightVisualGroups.descendingMap().entrySet()) {
       List<Integer> groupIndices = groupEntry.getValue();
       int masterLogIdx = groupIndices.get(0); // lowest = master
+      Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
+      masterAxis.clearColocatedSlaves();
 
-      // Paint slaves outermost (farthest from plot)
-      for (int i = groupIndices.size() - 1; i >= 1; i--) {
-        int slaveLogIdx = groupIndices.get(i);
-        Axis<ST, S> slaveAxis = yAxisMap.get(slaveLogIdx);
-        Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
+      boolean colocate = styler.isMergedAxisColocateSlaveLabels() && groupIndices.size() > 1;
+
+      if (colocate) {
+        // ---- Colocate mode ----
         if (masterAxis.getAxisTickCalculator() == null) {
           masterAxis.preparePaint();
         }
-        slaveAxis.preparePaint();
-        Rectangle2D.Double bounds = (Rectangle2D.Double) slaveAxis.getBounds();
+        for (int i = 1; i < groupIndices.size(); i++) {
+          Axis<ST, S> slaveAxis = yAxisMap.get(groupIndices.get(i));
+          slaveAxis.preparePaint();
+          masterAxis.addColocatedSlave(slaveAxis);
+        }
+        masterAxis.preparePaint(); // re-prep so width hint accounts for slave labels
+        Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
         double approxWidth = bounds.getWidth();
         double xOffset = rightEnd - approxWidth;
         bounds.x = xOffset;
         rightYAxisBounds.x = xOffset;
-        slaveAxis.paint(g);
+        masterAxis.paint(g);
         rightYAxisBounds.width += approxWidth;
         rightEnd -= paddingBetweenAxes + approxWidth + tickMargin;
         rightCount++;
-        rightMainYAxis = slaveAxis;
-      }
+        rightMainYAxis = masterAxis;
+      } else {
+        // ---- Normal mode: each slave gets its own column ----
+        // Paint slaves outermost (farthest from plot)
+        for (int i = groupIndices.size() - 1; i >= 1; i--) {
+          int slaveLogIdx = groupIndices.get(i);
+          Axis<ST, S> slaveAxis = yAxisMap.get(slaveLogIdx);
+          if (masterAxis.getAxisTickCalculator() == null) {
+            masterAxis.preparePaint();
+          }
+          slaveAxis.preparePaint();
+          Rectangle2D.Double bounds = (Rectangle2D.Double) slaveAxis.getBounds();
+          double approxWidth = bounds.getWidth();
+          double xOffset = rightEnd - approxWidth;
+          bounds.x = xOffset;
+          rightYAxisBounds.x = xOffset;
+          slaveAxis.paint(g);
+          rightYAxisBounds.width += approxWidth;
+          rightEnd -= paddingBetweenAxes + approxWidth + tickMargin;
+          rightCount++;
+          rightMainYAxis = slaveAxis;
+        }
 
-      // Paint master innermost (closest to plot)
-      Axis<ST, S> masterAxis = yAxisMap.get(masterLogIdx);
-      masterAxis.preparePaint();
-      Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
-      double approxWidth = bounds.getWidth();
-      double xOffset = rightEnd - approxWidth;
-      bounds.x = xOffset;
-      rightYAxisBounds.x = xOffset;
-      masterAxis.paint(g);
-      rightYAxisBounds.width += approxWidth;
-      rightEnd -= paddingBetweenAxes + approxWidth + tickMargin;
-      rightCount++;
-      rightMainYAxis = masterAxis;
+        // Paint master innermost (closest to plot)
+        masterAxis.preparePaint();
+        Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
+        double approxWidth = bounds.getWidth();
+        double xOffset = rightEnd - approxWidth;
+        bounds.x = xOffset;
+        rightYAxisBounds.x = xOffset;
+        masterAxis.paint(g);
+        rightYAxisBounds.width += approxWidth;
+        rightEnd -= paddingBetweenAxes + approxWidth + tickMargin;
+        rightCount++;
+        rightMainYAxis = masterAxis;
+      }
 
       if (rightGridlineMasterAxis == null) {
         rightGridlineMasterAxis = masterAxis;

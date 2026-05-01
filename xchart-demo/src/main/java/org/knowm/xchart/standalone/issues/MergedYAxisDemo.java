@@ -1,5 +1,6 @@
 package org.knowm.xchart.standalone.issues;
 
+import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 import org.knowm.xchart.SwingWrapper;
@@ -76,6 +77,14 @@ public class MergedYAxisDemo {
     // ---- KEY API: merge the axes ----
     chart.getStyler().mergeYAxisGroups(0, 1);  // groups 0 and 1 share one left axis line
     chart.getStyler().mergeYAxisGroups(2, 3);  // groups 2 and 3 share one right axis line
+
+    // ---- Colocate slave labels on the master axis column (opt-in) ----
+    // Slave labels (group 1 left, group 3 right) appear stacked below the master's labels
+    // for each tick, rather than in a separate column.
+    chart.getStyler().setMergedAxisColocateSlaveLabels(true);
+    // Give slave axes a distinct color so they are easy to distinguish
+    chart.getStyler().setYAxisGroupTickLabelsColorMap(1, new Color(200, 80, 0));   // left slave
+    chart.getStyler().setYAxisGroupTickLabelsColorMap(3, new Color(200, 80, 0));   // right slave
 
     chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideSE);
 
