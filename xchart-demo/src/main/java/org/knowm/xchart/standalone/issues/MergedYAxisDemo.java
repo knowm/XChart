@@ -82,6 +82,7 @@ public class MergedYAxisDemo {
     // Slave labels (group 1 left, group 3 right) appear stacked below the master's labels
     // for each tick, rather than in a separate column.
     chart.getStyler().setMergedAxisColocateSlaveLabels(true);
+    chart.getStyler().setMergedAxisColocatedSlaveLabelsGap(8.0);  // Increase gap to avoid overlap of slave labels with adjacent master labels
     // Give slave axes a distinct color so they are easy to distinguish
     chart.getStyler().setYAxisGroupTickLabelsColorMap(1, new Color(200, 80, 0));   // left slave
     chart.getStyler().setYAxisGroupTickLabelsColorMap(3, new Color(200, 80, 0));   // right slave

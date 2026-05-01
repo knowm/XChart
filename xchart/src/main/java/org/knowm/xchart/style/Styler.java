@@ -102,6 +102,15 @@ public abstract class Styler {
    */
   private boolean mergedAxisColocateSlaveLabels = false;
 
+  /**
+   * Vertical gap in pixels between a master tick label and the slave label stacked below it when
+   * colocate mode is active. Increase this value if slave labels overlap with the master labels of
+   * adjacent ticks. Default: {@code 6.0}.
+   *
+   * @see #setMergedAxisColocatedSlaveLabelsGap
+   */
+  private double mergedAxisColocatedSlaveLabelsGap = 6.0;
+
   // TODO move this to boxplot styler
   // Box plot data ///////////////////////////////
   private boolean showWithinAreaPoint = false;
@@ -948,6 +957,23 @@ public abstract class Styler {
 
   public boolean isMergedAxisColocateSlaveLabels() {
     return mergedAxisColocateSlaveLabels;
+  }
+
+  /**
+   * Sets the vertical gap in pixels between a master tick label and the slave label rendered below
+   * it when colocate mode is active ({@link #setMergedAxisColocateSlaveLabels(boolean)}). Increase
+   * this value when slave labels overlap with adjacent master labels. Default: {@code 2.0}.
+   *
+   * @param gap gap in pixels; must be &gt;= 0
+   */
+  public Styler setMergedAxisColocatedSlaveLabelsGap(double gap) {
+    if (gap < 0) throw new IllegalArgumentException("Gap must be >= 0");
+    this.mergedAxisColocatedSlaveLabelsGap = gap;
+    return this;
+  }
+
+  public double getMergedAxisColocatedSlaveLabelsGap() {
+    return mergedAxisColocatedSlaveLabelsGap;
   }
 
   public enum YAxisPosition {

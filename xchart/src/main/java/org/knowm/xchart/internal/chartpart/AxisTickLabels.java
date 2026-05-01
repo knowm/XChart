@@ -137,7 +137,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           double h = tl.getBounds().getHeight();
           if (h > masterLabelHeight) masterLabelHeight = h;
         }
-        final double GAP = 2.0;
+        double GAP = styler.getMergedAxisColocatedSlaveLabelsGap();
 
         FontRenderContext frc = g.getFontRenderContext();
         for (int s = 0; s < colocatedSlaves.size(); s++) {
