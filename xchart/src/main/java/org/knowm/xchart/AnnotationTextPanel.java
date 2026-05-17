@@ -99,7 +99,11 @@ public class AnnotationTextPanel extends Annotation {
 
     // Draw text onto panel box
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        styler.getAntiAlias()
+            ? RenderingHints.VALUE_ANTIALIAS_ON
+            : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     g.setColor(styler.getAnnotationTextPanelFontColor());
     g.setFont(styler.getAnnotationTextPanelFont());

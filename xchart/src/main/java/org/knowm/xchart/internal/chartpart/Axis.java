@@ -213,7 +213,11 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   public void paint(Graphics2D g) {
 
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        chart.getStyler().getAntiAlias()
+            ? RenderingHints.VALUE_ANTIALIAS_ON
+            : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     // determine Axis bounds
     if (direction == Direction.Y) { // Y-Axis - gets called first

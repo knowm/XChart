@@ -34,7 +34,11 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
     }
 
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        chart.getStyler().getAntiAlias()
+            ? RenderingHints.VALUE_ANTIALIAS_ON
+            : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     // create rectangle first for sizing
     FontRenderContext frc = g.getFontRenderContext();

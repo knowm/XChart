@@ -33,7 +33,11 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries
     double starty = yOffset + chart.getStyler().getLegendPadding();
 
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        chart.getStyler().getAntiAlias()
+            ? RenderingHints.VALUE_ANTIALIAS_ON
+            : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
