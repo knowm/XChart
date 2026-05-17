@@ -282,8 +282,8 @@ _Last updated: 2026-05-17_
 ### Dependabot — failing CI (do not merge yet)
 | PR | Bump | Reason |
 |----|------|--------|
-| #896 | JUnit Jupiter 5.10 → **6.0.0** | Breaking major version; test API changes |
-| #895 | fmt-maven-plugin 2.24 → 2.29 | Formatter upgrade may reformat all source |
+| #896 | JUnit Jupiter 5.10 → **6.0.0** | ❌ Closed — breaking major version; staying on JUnit 5.x |
+| #895 | fmt-maven-plugin 2.24 → 2.29 | Formatter upgrade may reformat all source — skip until a dedicated cleanup PR is planned |
 | #912 | javafx-swing 11 → 26-**ea**+13 | Early-access build; CI failure |
 
 ### Code PRs — review queue (priority order)
