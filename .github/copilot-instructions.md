@@ -292,7 +292,7 @@ _Last updated: 2026-05-17_
 | #847 | Custom pie chart label generator | MERGEABLE / CLEAN / APPROVED | ⏳ in review — demo: `TestForPR847.java` |
 | #864 | Fix #593 | MERGEABLE / CLEAN | ✅ merged — demo: `TestForIssue593.java` |
 | #866 | Horizontal bar chart (new type) | MERGEABLE / CLEAN | ✅ merged — demo: `TestForPR866.java` |
-| #888 | Fix chart-update freeze (#886) | **CONFLICTING** — needs rebase | ⏳ not started |
+| #888 | Fix chart-update freeze (#886) | **CONFLICTING** — needs rebase | ✅ merged — cherry-picked 2 Java files, excluded pom noise — demo: `TestForIssue886.java` |
 | #885 | Refactor code smells | MERGEABLE / CLEAN | ⏳ not started |
 | #913 | Decompose Utils + CSVImporter (SRP) | MERGEABLE / CLEAN | ⏳ not started |
 | #917 | Grouped/merged Y-axes | UNSTABLE | ⏳ not started |
