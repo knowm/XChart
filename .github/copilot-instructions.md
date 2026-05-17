@@ -290,7 +290,7 @@ _Last updated: 2026-05-17_
 | PR | Title | State | Analysis status |
 |----|-------|-------|----------------|
 | #847 | Custom pie chart label generator | MERGEABLE / CLEAN / APPROVED | ⏳ in review — demo: `TestForPR847.java` |
-| #864 | Fix #593 | MERGEABLE / CLEAN | ⏳ not started |
+| #864 | Fix #593 | MERGEABLE / CLEAN | ✅ merged — demo: `TestForIssue593.java` |
 | #866 | Horizontal bar chart (new type) | MERGEABLE / CLEAN | ⏳ not started |
 | #888 | Fix chart-update freeze (#886) | **CONFLICTING** — needs rebase | ⏳ not started |
 | #885 | Refactor code smells | MERGEABLE / CLEAN | ⏳ not started |
