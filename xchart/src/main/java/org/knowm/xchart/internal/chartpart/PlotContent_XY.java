@@ -50,6 +50,10 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
       xMax = Math.log10(xMax);
     }
 
+    if (cursor != null) {
+        cursor.clearDataPoints();
+    }
+
     Map<String, S> map = chart.getSeriesMap();
 
     for (S series : map.values()) {
