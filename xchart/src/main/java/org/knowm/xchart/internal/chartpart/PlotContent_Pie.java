@@ -290,6 +290,8 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           } else {
             label = series.getName() + " (" + y.toString() + ")";
           }
+        } else if (pieStyler.getCustomSeriesLabelFunction() != null) {
+          label = pieStyler.getCustomSeriesLabelFunction().apply(series);
         }
 
         TextLayout textLayout =
