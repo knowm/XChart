@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.knowm.xchart.style.BoxStyler;
+import org.knowm.xchart.style.HorizontalBarStyler;
 import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
 
@@ -169,8 +170,15 @@ public class ToolTips extends MouseAdapter implements ChartPart {
     //    System.out.println("topEdge = " + topEdge);
     //    System.out.println("bottomEdge = " + bottomEdge);
 
-    double x = tooltip.x + tooltip.w / 2 - annotationRectangle.getWidth() / 2 - MARGIN;
-    double y = tooltip.y - 3 * MARGIN - annotationRectangle.getHeight();
+    double x;
+    double y;
+    if (styler instanceof HorizontalBarStyler) {
+      x = tooltip.x < 0 ? -tooltip.x - w - MARGIN : tooltip.x + MARGIN;
+      y = tooltip.y + tooltip.w / 2 - h / 2;
+    } else {
+      x = tooltip.x + tooltip.w / 2 - annotationRectangle.getWidth() / 2 - MARGIN;
+      y = tooltip.y - 3 * MARGIN - annotationRectangle.getHeight();
+    }
     //    System.out.println("x = " + x);
     //    System.out.println("y = " + y);
     //    x = Math.min(x, -w);

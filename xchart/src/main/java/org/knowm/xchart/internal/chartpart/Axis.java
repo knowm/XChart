@@ -7,30 +7,18 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
-import org.knowm.xchart.CategoryChart;
-import org.knowm.xchart.CategorySeries;
-import org.knowm.xchart.HeatMapChart;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.*;
+import org.knowm.xchart.HorizontalBarSeries;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.internal.series.Series.DataType;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.BoxStyler;
-import org.knowm.xchart.style.CategoryStyler;
-import org.knowm.xchart.style.HeatMapStyler;
+import org.knowm.xchart.style.*;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
-import org.knowm.xchart.style.XYStyler;
 
 /** Axis */
 public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
@@ -395,7 +383,21 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private AxisTickCalculator getAxisTickCalculatorForY(double workingSpace) {
     List<Double> yData = new ArrayList<>();
-    if (axesChartStyler instanceof HeatMapStyler) {
+    if (axesChartStyler instanceof HorizontalBarStyler) {
+      Set<Double> uniqueYData = new LinkedHashSet<>();
+      for (HorizontalBarSeries categorySeries :
+          ((HorizontalBarChart) chart).getSeriesMap().values()) {
+        uniqueYData.addAll(
+            categorySeries.getYData().stream()
+                .filter(Objects::nonNull)
+                .filter(it -> it instanceof Number)
+                .mapToDouble(it -> ((Number) it).doubleValue())
+                .boxed()
+                .collect(Collectors.toList()));
+      }
+      yData.addAll(uniqueYData);
+      Collections.reverse(yData);
+    } else if (axesChartStyler instanceof HeatMapStyler) {
       List<?> categories = ((HeatMapChart) chart).getHeatMapSeries().getYData();
       yData =
           categories.stream()
@@ -446,6 +448,18 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
       return new AxisTickCalculator_Logarithmic(
           getDirection(), workingSpace, min, max, axesChartStyler, getYIndex());
+    } else if (axesChartStyler instanceof HorizontalBarStyler) {
+      List<?> categories =
+          ((HorizontalBarChart) chart)
+              .getSeriesMap().values().stream()
+                  .flatMap(it -> it.getYData().stream())
+                  .distinct()
+                  .collect(Collectors.toCollection(ArrayList::new));
+      Collections.reverse(categories);
+      DataType axisType = chart.getAxisPair().getYAxis().getDataType();
+
+      return new AxisTickCalculator_Category(
+          getDirection(), workingSpace, categories, axisType, axesChartStyler);
     } else if (axesChartStyler instanceof HeatMapStyler) {
 
       List<?> categories = ((HeatMapChart) chart).getHeatMapSeries().getYData();
@@ -465,7 +479,20 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
   private AxisTickCalculator_ getAxisTickCalculatorForX(double workingSpace) {
     List<Double> xData = new ArrayList<>();
-    if (axesChartStyler instanceof HeatMapStyler) {
+    if (axesChartStyler instanceof HorizontalBarStyler) {
+      Set<Double> uniqueXData = new LinkedHashSet<>();
+      for (HorizontalBarSeries categorySeries :
+          ((HorizontalBarChart) chart).getSeriesMap().values()) {
+        List<Double> numericCategoryXData =
+            categorySeries.getXData().stream()
+                .filter(Objects::nonNull)
+                .mapToDouble(Number::doubleValue)
+                .boxed()
+                .collect(Collectors.toList());
+        uniqueXData.addAll(numericCategoryXData);
+      }
+      xData.addAll(uniqueXData);
+    } else if (axesChartStyler instanceof HeatMapStyler) {
       List<?> categories = ((HeatMapChart) chart).getHeatMapSeries().getXData();
       xData =
           categories.stream()
@@ -514,6 +541,9 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
           max,
           axesChartStyler);
 
+    } else if (axesChartStyler instanceof HorizontalBarStyler) {
+      return new AxisTickCalculator_Number(
+          getDirection(), workingSpace, min, max, xData, axesChartStyler);
     } else if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxStyler) {
 
       // TODO Cleanup? More elegant way?
