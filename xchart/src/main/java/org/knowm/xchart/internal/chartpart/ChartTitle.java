@@ -1,10 +1,14 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
@@ -36,7 +40,7 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(
         RenderingHints.KEY_ANTIALIASING,
-        chart.getStyler().getAntiAlias()
+        chart.getStyler().getTextAntiAlias()
             ? RenderingHints.VALUE_ANTIALIAS_ON
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 

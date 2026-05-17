@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.theme.GGPlot2Theme;
@@ -86,6 +87,7 @@ public abstract class Styler {
 
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
+  private boolean textAntiAlias = true;
   private String decimalPattern;
   // TODO I don't think this should be in styler directly?
   private final HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<>();
@@ -884,6 +886,23 @@ public abstract class Styler {
   public Styler setAntiAlias(boolean newVal) {
 
     antiAlias = newVal;
+    return this;
+  }
+
+  public boolean getTextAntiAlias() {
+
+    return textAntiAlias;
+  }
+
+  /**
+   * Set anti-aliasing for text rendering (chart title, annotations, button labels). Separate from
+   * {@link #setAntiAlias(boolean)} which controls shape/graphics anti-aliasing.
+   *
+   * @param newVal true to enable text anti-aliasing (default), false to disable
+   */
+  public Styler setTextAntiAlias(boolean newVal) {
+
+    textAntiAlias = newVal;
     return this;
   }
 

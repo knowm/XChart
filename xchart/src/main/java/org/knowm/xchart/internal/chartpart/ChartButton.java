@@ -12,7 +12,9 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+
 import javax.swing.event.EventListenerList;
+
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.style.Styler;
@@ -122,7 +124,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(
         RenderingHints.KEY_ANTIALIASING,
-        styler.getAntiAlias()
+        styler.getTextAntiAlias()
             ? RenderingHints.VALUE_ANTIALIAS_ON
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 

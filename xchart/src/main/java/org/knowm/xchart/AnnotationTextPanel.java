@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.knowm.xchart.internal.chartpart.Annotation;
 import org.knowm.xchart.internal.chartpart.Chart;
 
@@ -101,7 +102,7 @@ public class AnnotationTextPanel extends Annotation {
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
     g.setRenderingHint(
         RenderingHints.KEY_ANTIALIASING,
-        styler.getAntiAlias()
+        styler.getTextAntiAlias()
             ? RenderingHints.VALUE_ANTIALIAS_ON
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 
