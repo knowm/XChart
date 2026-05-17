@@ -6,6 +6,8 @@
 *.ips
 .idea/
 
+# VS Code
+.vscode/
 
 # Eclipse
 .settings/
