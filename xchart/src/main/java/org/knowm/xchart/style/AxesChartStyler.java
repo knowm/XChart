@@ -71,6 +71,24 @@ public abstract class AxesChartStyler extends Styler {
   // TODO where's the axis title color map?? Add it here!
   private final Map<Integer, Color> yAxisGroupTickLabelsColorMap = new HashMap<>();
   private final Map<Integer, Color> yAxisGroupTickMarksColorMap = new HashMap<>();
+
+  // Merged Y-Axes ///////////////////////////////////////////////////////////////
+  /**
+   * Maps each logical Y-axis group index to a visual group ID (= the minimum index in the merged
+   * set). Only populated when {@link #mergeYAxisGroups(int...)} is called.
+   */
+  private final HashMap<Integer, Integer> yAxisGroupMergeMap = new HashMap<>();
+
+  /** @see #setMergedAxisColocateSlaveLabels */
+  private boolean mergedAxisColocateSlaveLabels = false;
+
+  /**
+   * Vertical gap in pixels between a master tick label and the slave label stacked below it when
+   * colocate mode is active. Default: {@code 6.0}.
+   *
+   * @see #setMergedAxisColocatedSlaveLabelsGap
+   */
+  private double mergedAxisColocatedSlaveLabelsGap = 6.0;
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
   private TextAlignment xAxisLabelAlignmentVertical = TextAlignment.Centre;
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
@@ -899,6 +917,94 @@ public abstract class AxesChartStyler extends Styler {
 
     yAxisGroupTickMarksColorMap.put(yAxisGroup, yAxisTickMarksColor);
     return this;
+  }
+
+  // Merged Y-Axes API ///////////////////////////////////////////////////////////
+
+  /**
+   * Merge multiple Y-axis groups onto a single shared visual axis line per side. All specified
+   * logical group indices will share the axis line of the lowest-numbered index in the set.
+   *
+   * <p>Example: {@code styler.mergeYAxisGroups(0, 1)} causes group 1 to share group 0's axis
+   * line. Group 0 acts as master (drives gridline positions); group 1 is a slave (translates
+   * master tick pixels into its own value labels).
+   *
+   * <p>This is opt-in: charts that do not call this method behave exactly as before.
+   *
+   * @param groupIndices two or more logical Y-axis group indices to merge
+   */
+  public AxesChartStyler mergeYAxisGroups(int... groupIndices) {
+    if (groupIndices == null || groupIndices.length < 2) {
+      throw new IllegalArgumentException("mergeYAxisGroups requires at least 2 group indices");
+    }
+    int visualGroupId = groupIndices[0];
+    for (int idx : groupIndices) {
+      if (idx < visualGroupId) {
+        visualGroupId = idx;
+      }
+    }
+    for (int idx : groupIndices) {
+      yAxisGroupMergeMap.put(idx, visualGroupId);
+    }
+    return this;
+  }
+
+  /**
+   * Returns the visual group ID for a logical Y-axis group. If the group is not part of a merge,
+   * the visual group ID equals the logical group index (identity).
+   *
+   * @param logicalGroup the logical Y-axis group index
+   * @return visual group ID (= lowest index in the merged set, or logicalGroup if not merged)
+   */
+  public int getYAxisVisualGroup(int logicalGroup) {
+    return yAxisGroupMergeMap.getOrDefault(logicalGroup, logicalGroup);
+  }
+
+  /**
+   * Returns {@code true} when the given logical group is part of a multi-axis merge and is not the
+   * master (i.e. it is not the lowest-index in its merge set).
+   *
+   * @param logicalGroup the logical Y-axis group index to test
+   */
+  public boolean isYAxisGroupSlave(int logicalGroup) {
+    Integer visualId = yAxisGroupMergeMap.get(logicalGroup);
+    return visualId != null && visualId != logicalGroup;
+  }
+
+  /** Returns the raw merge map (logical group index → visual group ID). */
+  public HashMap<Integer, Integer> getYAxisGroupMergeMap() {
+    return yAxisGroupMergeMap;
+  }
+
+  /**
+   * When {@code true}, slave Y-axis tick labels are rendered stacked below the master's labels on
+   * the shared axis column instead of appearing as a separate axis column. Colors are controlled
+   * by {@link AxesChartStyler#setYAxisGroupTickLabelsColorMap}. Default: {@code false}.
+   */
+  public AxesChartStyler setMergedAxisColocateSlaveLabels(boolean val) {
+    this.mergedAxisColocateSlaveLabels = val;
+    return this;
+  }
+
+  public boolean isMergedAxisColocateSlaveLabels() {
+    return mergedAxisColocateSlaveLabels;
+  }
+
+  /**
+   * Sets the vertical gap in pixels between a master tick label and the slave label rendered below
+   * it when colocate mode is active ({@link #setMergedAxisColocateSlaveLabels(boolean)}). Increase
+   * this value when slave labels overlap with adjacent master labels. Default: {@code 6.0}.
+   *
+   * @param gap gap in pixels; must be &gt;= 0
+   */
+  public AxesChartStyler setMergedAxisColocatedSlaveLabelsGap(double gap) {
+    if (gap < 0) throw new IllegalArgumentException("Gap must be >= 0");
+    this.mergedAxisColocatedSlaveLabelsGap = gap;
+    return this;
+  }
+
+  public double getMergedAxisColocatedSlaveLabelsGap() {
+    return mergedAxisColocatedSlaveLabelsGap;
   }
 
   public TextAlignment getXAxisLabelAlignment() {

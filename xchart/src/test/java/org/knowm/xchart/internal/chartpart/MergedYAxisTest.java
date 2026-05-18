@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.BubbleChart;
+import org.knowm.xchart.BubbleChartBuilder;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
@@ -276,5 +280,35 @@ public class MergedYAxisTest {
 
     Axis axis0 = chart.axisPair.getYAxis(0);
     assertThat(axis0.getColocatedSlaves()).isEmpty();
+  }
+
+  // ---------------------------------------------------------------
+  // 16–17. Multi-chart smoke tests — CategoryChart and BubbleChart
+  //        must not be broken by AxisPair / Styler / PlotSurface changes
+  // ---------------------------------------------------------------
+
+  @Test
+  public void categoryChartRendersWithoutMerge() throws Exception {
+    CategoryChart chart =
+        new CategoryChartBuilder().width(600).height(400).title("Cat smoke test").build();
+    chart.addSeries("s1", List.of("A", "B", "C"), List.of(1, 2, 3));
+    chart.addSeries("s2", List.of("A", "B", "C"), List.of(4, 5, 6));
+
+    byte[] png = BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+    assertThat(png).isNotEmpty();
+  }
+
+  @Test
+  public void bubbleChartRendersWithoutMerge() throws Exception {
+    BubbleChart chart =
+        new BubbleChartBuilder().width(600).height(400).title("Bubble smoke test").build();
+    chart.addSeries(
+        "b1",
+        List.of(1.0, 2.0, 3.0),
+        List.of(10.0, 20.0, 30.0),
+        List.of(5.0, 8.0, 4.0));
+
+    byte[] png = BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+    assertThat(png).isNotEmpty();
   }
 }

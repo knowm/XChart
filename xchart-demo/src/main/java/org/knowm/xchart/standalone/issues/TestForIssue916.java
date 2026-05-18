@@ -11,16 +11,14 @@ import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
- * Demonstrates merged Y-axes: two series with very different value ranges (1–5 on the left and
- * 100–500 on the left) share a single axis line. Two further series on the right side similarly
- * share one axis line.
- *
- * <p>Left axis: scale A (0–5) + scale B (100–500) — merged via {@code mergeYAxisGroups(0, 1)}.
- * Right axis: scale C (0–1000) + scale D (0.01–0.05) — merged via {@code mergeYAxisGroups(2, 3)}.
+ * Demonstrates merged Y-axes (issue #916): two series with very different value ranges share a
+ * single axis line per side. Left axis: scale A (0–5) + scale B (100–500) merged via {@code
+ * mergeYAxisGroups(0, 1)}. Right axis: scale C (0–1000) + scale D (0.005–0.05) merged via {@code
+ * mergeYAxisGroups(2, 3)}.
  */
-public class MergedYAxisDemo {
+public class TestForIssue916 {
 
-  public static void main(String[] args) {
+  public static XYChart getChart() {
 
     // ---- data ----
     List<Double> x = new LinkedList<>();
@@ -31,16 +29,16 @@ public class MergedYAxisDemo {
 
     for (int i = 1; i <= 10; i++) {
       x.add((double) i);
-      scaleA.add((double) i * 0.5);           // range ~0.5 – 5
-      scaleB.add((double) i * 50.0);          // range 50 – 500
-      scaleC.add((double) i * 100.0);         // range 100 – 1000
-      scaleD.add(i * 0.005);                   // range 0.005 – 0.05
+      scaleA.add((double) i * 0.5); // range ~0.5 – 5
+      scaleB.add((double) i * 50.0); // range 50 – 500
+      scaleC.add((double) i * 100.0); // range 100 – 1000
+      scaleD.add(i * 0.005); // range 0.005 – 0.05
     }
 
     // ---- chart ----
     XYChart chart =
         new XYChartBuilder()
-            .title("Merged Y-Axes Demo")
+            .title("Merged Y-Axes Demo (Issue #916)")
             .xAxisTitle("X")
             .width(800)
             .height(500)
@@ -75,20 +73,26 @@ public class MergedYAxisDemo {
     chart.setYAxisGroupTitle(3, "D");
 
     // ---- KEY API: merge the axes ----
-    chart.getStyler().mergeYAxisGroups(0, 1);  // groups 0 and 1 share one left axis line
-    chart.getStyler().mergeYAxisGroups(2, 3);  // groups 2 and 3 share one right axis line
+    chart.getStyler().mergeYAxisGroups(0, 1); // groups 0 and 1 share one left axis line
+    chart.getStyler().mergeYAxisGroups(2, 3); // groups 2 and 3 share one right axis line
 
     // ---- Colocate slave labels on the master axis column (opt-in) ----
     // Slave labels (group 1 left, group 3 right) appear stacked below the master's labels
     // for each tick, rather than in a separate column.
     chart.getStyler().setMergedAxisColocateSlaveLabels(true);
-    chart.getStyler().setMergedAxisColocatedSlaveLabelsGap(8.0);  // Increase gap to avoid overlap of slave labels with adjacent master labels
+    // Increase gap to avoid overlap of slave labels with adjacent master labels
+    chart.getStyler().setMergedAxisColocatedSlaveLabelsGap(8.0);
     // Give slave axes a distinct color so they are easy to distinguish
-    chart.getStyler().setYAxisGroupTickLabelsColorMap(1, new Color(200, 80, 0));   // left slave
-    chart.getStyler().setYAxisGroupTickLabelsColorMap(3, new Color(200, 80, 0));   // right slave
+    chart.getStyler().setYAxisGroupTickLabelsColorMap(1, new Color(200, 80, 0)); // left slave
+    chart.getStyler().setYAxisGroupTickLabelsColorMap(3, new Color(200, 80, 0)); // right slave
 
     chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideSE);
 
-    new SwingWrapper<>(chart).displayChart();
+    return chart;
+  }
+
+  public static void main(String[] args) {
+
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

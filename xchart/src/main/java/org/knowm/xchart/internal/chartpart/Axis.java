@@ -77,7 +77,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
    * When colocate-slave mode is active, the master axis holds references to all slave axes whose
    * labels will be rendered stacked below the master's labels on the same column.
    */
-  private final List<Axis> colocatedSlaves = new ArrayList<>();
+  private final List<Axis<?, ?>> colocatedSlaves = new ArrayList<>();
 
   /**
    * Constructor
@@ -402,7 +402,7 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
 
       // When colocate mode is on, factor in the widest slave label too.
       if (axesChartStyler.isMergedAxisColocateSlaveLabels() && !colocatedSlaves.isEmpty()) {
-        for (Axis slave : colocatedSlaves) {
+        for (Axis<?, ?> slave : colocatedSlaves) {
           AxisTickCalculator slaveCalc =
               new AxisTickCalculator_Synchronized(
                   workingSpace,
@@ -711,12 +711,12 @@ public class Axis<ST extends AxesChartStyler, S extends AxesChartSeries> impleme
   }
 
   /** Adds a slave axis whose labels will be rendered stacked below this master's labels. */
-  void addColocatedSlave(Axis slave) {
+  void addColocatedSlave(Axis<?, ?> slave) {
     colocatedSlaves.add(slave);
   }
 
   /** Returns the (possibly empty) list of colocated slave axes registered on this master. */
-  List<Axis> getColocatedSlaves() {
+  List<Axis<?, ?>> getColocatedSlaves() {
     return colocatedSlaves;
   }
 

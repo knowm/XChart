@@ -453,7 +453,7 @@ chart.getStyler().mergeYAxisGroups(0, 1, 2);
 
 Charts that do not call `mergeYAxisGroups` behave exactly as before — the feature is entirely opt-in.
 
-A working example can be found at [MergedYAxisDemo](xchart-demo/src/main/java/org/knowm/xchart/standalone/issues/MergedYAxisDemo.java).
+A working example can be found at [TestForIssue916](xchart-demo/src/main/java/org/knowm/xchart/standalone/issues/TestForIssue916.java).
 
 ### Zooming In
 

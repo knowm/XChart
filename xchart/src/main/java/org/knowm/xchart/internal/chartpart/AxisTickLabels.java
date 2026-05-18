@@ -86,7 +86,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
       // Also account for the widths of any colocated slave labels so the column is wide enough.
       for (Object slaveObj : yAxis.getColocatedSlaves()) {
-        Axis slave = (Axis) slaveObj;
+        Axis<?, ?> slave = (Axis<?, ?>) slaveObj;
         if (slave.getAxisTickCalculator() == null) continue;
         FontRenderContext frc = g.getFontRenderContext();
         for (String slaveLabel : slave.getAxisTickCalculator().getTickLabels()) {
@@ -129,7 +129,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       }
 
       // Render colocated slave labels stacked below each master label
-      List colocatedSlaves = yAxis.getColocatedSlaves();
+      List<?> colocatedSlaves = yAxis.getColocatedSlaves();
       if (!colocatedSlaves.isEmpty()) {
         // Measure master label height (max across all rendered labels)
         double masterLabelHeight = 0;
@@ -141,7 +141,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
         FontRenderContext frc = g.getFontRenderContext();
         for (int s = 0; s < colocatedSlaves.size(); s++) {
-          Axis slaveAxis = (Axis) colocatedSlaves.get(s);
+          Axis<?, ?> slaveAxis = (Axis<?, ?>) colocatedSlaves.get(s);
           if (slaveAxis.getAxisTickCalculator() == null) continue;
 
           g.setColor(styler.getYAxisGroupTickLabelsColorMap(slaveAxis.getYIndex()));

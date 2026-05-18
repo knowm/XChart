@@ -3,6 +3,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -127,10 +128,10 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
     // Sort each visual group's list ascending so masters come first
     for (List<Integer> indices : leftVisualGroups.values()) {
-      java.util.Collections.sort(indices);
+      Collections.sort(indices);
     }
     for (List<Integer> indices : rightVisualGroups.values()) {
-      java.util.Collections.sort(indices);
+      Collections.sort(indices);
     }
 
     // ------------------------------------------------------------------
