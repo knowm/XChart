@@ -15,6 +15,7 @@ import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.CategoryStyler;
+import org.knowm.xchart.style.HorizontalBarStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
@@ -509,6 +510,16 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     double overrideXAxisMinValue = xAxis.getMin();
     double overrideXAxisMaxValue = xAxis.getMax();
+
+    if (chart.getStyler() instanceof HorizontalBarStyler) {
+      if (xAxis.getMin() > 0.0) {
+        overrideXAxisMinValue = 0.0;
+      }
+      if (xAxis.getMax() < 0.0) {
+        overrideXAxisMaxValue = 0.0;
+      }
+    }
+
     // override min and maxValue if specified
     if (chart.getStyler().getXAxisMin() != null) {
 

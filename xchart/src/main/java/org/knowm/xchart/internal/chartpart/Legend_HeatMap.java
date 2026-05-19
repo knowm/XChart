@@ -87,7 +87,11 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     double starty = yOffset + chart.getStyler().getLegendPadding();
 
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        chart.getStyler().getAntiAlias()
+            ? RenderingHints.VALUE_ANTIALIAS_ON
+            : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     Color[] rangeColors = chart.getStyler().getRangeColors();
     HeatMapSeries heatMapSeries = ((HeatMapChart) chart).getHeatMapSeries();

@@ -12,7 +12,7 @@ import org.knowm.xchart.style.XYStyler;
 public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;
-  ToolTips toolTips; // tooltips are available for Category, OHLC and XY charts
+  ToolTips toolTips; // tooltips are available for Category, HorizontalBar, OHLC and XY charts
   ChartZoom chartZoom;
   //  Cursor cursor;
 

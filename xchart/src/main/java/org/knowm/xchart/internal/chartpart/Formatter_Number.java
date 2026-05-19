@@ -134,6 +134,18 @@ class Formatter_Number extends Format {
 
     DecimalFormat normalFormat = (DecimalFormat) numberFormat;
     normalFormat.applyPattern(decimalPattern);
+
+    if (styler.getDecimalPattern() == null
+            && (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() == null)
+            && (axisDirection != Axis.Direction.Y || styler.getYAxisGroupDecimalPatternMap().get(yIndex) == null)) {
+
+      double value = number.doubleValue();
+      int maxFractionDigits = 4;
+      if (Math.abs(value) < 0.0001 && Math.abs(value) > 1e-16) {
+        maxFractionDigits = 6;
+      }
+      normalFormat.setMaximumFractionDigits(maxFractionDigits);
+    }
     toAppendTo.append(normalFormat.format(number));
 
     return toAppendTo;

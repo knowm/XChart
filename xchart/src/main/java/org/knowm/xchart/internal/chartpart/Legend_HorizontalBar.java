@@ -1,15 +1,13 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
+import org.knowm.xchart.HorizontalBarSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.AxesChartSeries;
-import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
-public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries>
+public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeries>
     extends Legend_<ST, S> {
 
   private final ST axesChartStyler;
@@ -19,7 +17,7 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries
    *
    * @param chart
    */
-  public Legend_Bubble(Chart<ST, S> chart) {
+  public Legend_HorizontalBar(Chart<ST, S> chart) {
 
     super(chart);
     axesChartStyler = chart.getStyler();
@@ -52,16 +50,15 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);
 
-      // paint little circle
-      Shape rectSmall = new Ellipse2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+      // paint line and marker
+
+      // paint inner box
+      Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
       g.setColor(series.getFillColor());
       g.fill(rectSmall);
-      g.setStroke(series.getLineStyle());
-      g.setColor(series.getLineColor());
-      g.draw(rectSmall);
 
       // paint series text
-      final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
+      double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
       paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
 
       if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
@@ -81,8 +78,6 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries
   @Override
   public double getSeriesLegendRenderGraphicHeight(S series) {
 
-    return series.getLegendRenderType() == LegendRenderType.Box
-        ? BOX_SIZE
-        : axesChartStyler.getMarkerSize();
+    return BOX_SIZE;
   }
 }

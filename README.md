@@ -120,6 +120,7 @@ repaint.
 * [x] Area charts
 * [x] Step Area charts
 * [x] Bar charts
+* [x] Horizontal bar charts
 * [x] Histogram charts
 * [x] Pie charts
 * [x] Donut charts
@@ -152,17 +153,18 @@ repaint.
 
 Currently, there are 5 major chart types. Each type has its corresponding `ChartBuilder`, `Styler` and `Series`.
 
-| Chart Type    | Builder              | Styler         | Series         | Allowed Data Types   | Default Series Render Style |
-|---------------|----------------------|----------------|----------------|----------------------|-----------------------------|
-| XYChart       | XYChartBuilder       | XYStyler       | XYSeries       | Number, Date         | Line                        |
-| CategoryChart | CategoryChartBuilder | CategoryStyler | CategorySeries | Number, Date, String | Bar                         |
-| PieChart      | PieChartBuilder      | PieStyler      | PieSeries      | String               | Pie                         |
-| BubbleChart   | BubbleChartBuilder   | BubbleStyler   | BubbleSeries   | Number, Date         | Round                       |
-| DialChart     | DialChartBuilder     | DialStyler     | DialSeries     | double               | Round                       |
-| RadarChart    | RadarChartBuilder    | RadarStyler    | RadarSeries    | double[]             | Round                       |
-| OHLCChart     | OHLCChartBuilder     | OHLCStyler     | OHLCSeries     | OHLC with Date       | Candle                      |
-| BoxChart      | BoxChartBuilder      | BoxStyler      | BoxSeries      | Number, Date, String | Box                         |
-| HeatMapChart  | HeatMapChartBuilder  | HeatMapStyler  | HeatMapSeries  | Number, Date, String | --                          |
+| Chart Type         | Builder                   | Styler              | Series              | Allowed Data Types   | Default Series Render Style |
+|--------------------|---------------------------|---------------------|---------------------|----------------------|-----------------------------|
+| XYChart            | XYChartBuilder            | XYStyler            | XYSeries            | Number, Date         | Line                        |
+| CategoryChart      | CategoryChartBuilder      | CategoryStyler      | CategorySeries      | Number, Date, String | Bar                         |
+| PieChart           | PieChartBuilder           | PieStyler           | PieSeries           | String               | Pie                         |
+| BubbleChart        | BubbleChartBuilder        | BubbleStyler        | BubbleSeries        | Number, Date         | Round                       |
+| DialChart          | DialChartBuilder          | DialStyler          | DialSeries          | double               | Round                       |
+| RadarChart         | RadarChartBuilder         | RadarStyler         | RadarSeries         | double[]             | Round                       |
+| OHLCChart          | OHLCChartBuilder          | OHLCStyler          | OHLCSeries          | OHLC with Date       | Candle                      |
+| BoxChart           | BoxChartBuilder           | BoxStyler           | BoxSeries           | Number, Date, String | Box                         |
+| HeatMapChart       | HeatMapChartBuilder       | HeatMapStyler       | HeatMapSeries       | Number, Date, String | --                          |
+| HorizontalBarChart | HorizontalBarChartBuilder | HorizontalBarStyler | HorizontalBarSeries | Number, Date, String | Bar                         |
 
 The different Stylers contain chart styling methods specific to the corresponding chart type as well as common styling methods common across all chart types.
 
@@ -284,6 +286,16 @@ An example of a set of sequence numbers: 12, 15, 17, 19, 20, 23, 25, 28, 30, 33,
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_HeatMap.png)
 
 `HeatMapChart` take Date, Number or String data types for the X-Axis, Y-Axis.
+
+### HorizontalBarChart
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_HorizontalBarChart.png)
+
+`HorizontalBarChart` charts take Date, Number or String data types for the Y-Axis and Number data types for the X-Axis. For the Y-Axis, each category is given its own tick mark.
+
+It supports `labels` and `tooltips`, but more advanced features like `error bars` or `stacking` are not yet implemented.
+
+Series render style is `Bar`.
 
 ## Real-time Java Charts using XChart
 
@@ -598,7 +610,7 @@ Add the XChart library as a dependency to your pom.xml file:
 <dependency>
     <groupId>org.knowm.xchart</groupId>
     <artifactId>xchart</artifactId>
-    <version>3.8.8</version>
+    <version>3.9.0</version>
 </dependency>
 ```
 
@@ -621,7 +633,7 @@ For snapshots, add the following to your pom.xml file:
 <dependency>
 <groupId>org.knowm.xchart</groupId>
 <artifactId>xchart</artifactId>
-<version>3.8.9-SNAPSHOT</version>
+<version>3.9.1-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -630,7 +642,7 @@ For snapshots, add the following to your pom.xml file:
 To use XChart with the Scala Build Tool (SBT) add the following to your build.sbt
 
 ```scala
-libraryDependencies += "org.knowm.xchart" % "xchart" % "3.8.8" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
+libraryDependencies += "org.knowm.xchart" % "xchart" % "3.9.0" exclude("de.erichseifert.vectorgraphics2d", "VectorGraphics2D") withSources()
 ```
 
 ## Building with Maven
@@ -664,16 +676,16 @@ In the plugins section in IntelliJ search for `google-java-format` and install t
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
 
-- Linux: execute command `java -cp xchart-demo-3.8.8.jar:xchart-3.8.8.jar org.knowm.xchart.demo.XChartDemo`.
+- Linux: execute command `java -cp xchart-demo-3.9.0.jar:xchart-3.9.0.jar org.knowm.xchart.demo.XChartDemo`.
 
-- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.8.8.jar;xchart-3.8.8.jar org.knowm.xchart.demo.XChartDemo`; In
-  the PowerShell command window, execute the command `java -cp "xchart-demo-3.8.8.jar;xchart-3.8.8.jar" org.knowm.xchart.demo.XChartDemo`.
+- Windows: In the cmd command window, execute the command `java -cp xchart-demo-3.9.0.jar;xchart-3.9.0.jar org.knowm.xchart.demo.XChartDemo`; In
+  the PowerShell command window, execute the command `java -cp "xchart-demo-3.9.0.jar;xchart-3.9.0.jar" org.knowm.xchart.demo.XChartDemo`.
 
 E.g:
 
 ```sh
 cd /path/to/xchart-demo/jar/
-java -cp xchart-demo-3.8.8.jar:xchart-3.8.8.jar org.knowm.xchart.demo.XChartDemo
+java -cp xchart-demo-3.9.0.jar:xchart-3.9.0.jar org.knowm.xchart.demo.XChartDemo
 ```
 
 ## Running Demo - option 2 - building yourself

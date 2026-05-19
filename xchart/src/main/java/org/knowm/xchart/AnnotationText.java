@@ -7,6 +7,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+
 import org.knowm.xchart.internal.chartpart.Annotation;
 
 public class AnnotationText extends Annotation {
@@ -38,7 +39,11 @@ public class AnnotationText extends Annotation {
     }
 
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setRenderingHint(
+        RenderingHints.KEY_ANTIALIASING,
+        styler.getTextAntiAlias()
+            ? RenderingHints.VALUE_ANTIALIAS_ON
+            : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     g.setColor(styler.getAnnotationTextFontColor());
     g.setFont(styler.getAnnotationTextFont());
