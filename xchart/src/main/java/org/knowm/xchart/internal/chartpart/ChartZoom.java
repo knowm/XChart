@@ -7,14 +7,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+
+import org.knowm.xchart.OHLCSeries;
 import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYSeries;
+import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
+import org.knowm.xchart.style.AxesChartStyler;
 
 public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener {
 
-  protected final XChartPanel<XYChart> xChartPanel;
-  protected final XYChart xyChart;
+  protected final XChartPanel<?> xChartPanel;
+  protected final Chart<? extends AxesChartStyler, ?> chart;
   protected Rectangle bounds;
 
   protected final ChartButton resetButton;
@@ -25,24 +27,28 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   /**
    * Constructor
    *
+   * @param chart
    * @param xChartPanel
    * @param resetString
    */
-  public ChartZoom(XYChart xyChart, XChartPanel<XYChart> xChartPanel, String resetString) {
+  public ChartZoom(
+      Chart<? extends AxesChartStyler, ?> chart,
+      XChartPanel<?> xChartPanel,
+      String resetString) {
 
     x1 = -1;
     x2 = -1;
 
     this.xChartPanel = xChartPanel;
-    this.xyChart = xyChart;
-    xyChart.plot.plotContent.setChartZoom(this);
+    this.chart = chart;
+    chart.plot.plotContent.setChartZoom(this);
 
-    resetButton = new ChartButton(xyChart, xChartPanel, resetString);
+    resetButton = new ChartButton(chart, xChartPanel, resetString);
     resetButton.addActionListener(this);
     resetButton.setVisible(false);
   }
 
-  protected void resetZoom() {
+  public void resetZoom() {
 
     resetFilter();
     filtered = false;
@@ -77,7 +83,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     } else if (x1 == -1 || x2 == -1) {
       return;
     } else {
-      g.setColor(xyChart.getStyler().getZoomSelectionColor());
+      g.setColor(chart.getStyler().getZoomSelectionColor());
       int xStart = Math.min(x1, x2);
       int width = Math.abs(x1 - x2);
       bounds = g.getClipBounds();
@@ -118,7 +124,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
       }
 
       filtered = filterXByScreen(smallPoint, bigPoint);
-      resetButton.setVisible(filtered && xyChart.getStyler().isZoomResetByButton());
+      resetButton.setVisible(filtered && chart.getStyler().isZoomResetByButton());
     }
 
     x1 = -1;
@@ -129,12 +135,12 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   public boolean filterXByScreen(int screenXmin, int screenXmax) {
 
     // convert screen coordinates to axis values
-    double minValue = xyChart.axisPair.getXAxis().getChartValue(screenXmin);
-    double maxValue = xyChart.axisPair.getXAxis().getChartValue(screenXmax);
+    double minValue = chart.axisPair.getXAxis().getChartValue(screenXmin);
+    double maxValue = chart.axisPair.getXAxis().getChartValue(screenXmax);
     boolean filtered = false;
     if (isOnePointSeleted(minValue, maxValue)) {
-      for (XYSeries series : xyChart.getSeriesMap().values()) {
-        boolean f = series.filterXByValue(minValue, maxValue);
+      for (Object s : chart.getSeriesMap().values()) {
+        boolean f = filterSeriesByValue(s, minValue, maxValue);
         if (f) {
           filtered = true;
         }
@@ -147,6 +153,16 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     return filtered;
   }
 
+  private boolean filterSeriesByValue(Object series, double minValue, double maxValue) {
+
+    if (series instanceof AxesChartSeriesNumericalNoErrorBars) {
+      return ((AxesChartSeriesNumericalNoErrorBars) series).filterXByValue(minValue, maxValue);
+    } else if (series instanceof OHLCSeries) {
+      return ((OHLCSeries) series).filterXByValue(minValue, maxValue);
+    }
+    return false;
+  }
+
   /**
    * Is there a point selected in all series.
    *
@@ -157,9 +173,9 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   private boolean isOnePointSeleted(double minValue, double maxValue) {
 
     boolean isOnePointSeleted = false;
-    double[] xData = null;
-    for (XYSeries series : xyChart.getSeriesMap().values()) {
-      xData = series.getXData();
+    for (Object s : chart.getSeriesMap().values()) {
+      double[] xData = getXData(s);
+      if (xData == null) continue;
       for (double x : xData) {
         if (x >= minValue && x <= maxValue) {
           isOnePointSeleted = true;
@@ -170,17 +186,35 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     return isOnePointSeleted;
   }
 
+  private double[] getXData(Object series) {
+
+    if (series instanceof AxesChartSeriesNumericalNoErrorBars) {
+      return ((AxesChartSeriesNumericalNoErrorBars) series).getXData();
+    } else if (series instanceof OHLCSeries) {
+      return ((OHLCSeries) series).getXData();
+    }
+    return null;
+  }
+
   public void resetFilter() {
 
-    for (XYSeries series : xyChart.getSeriesMap().values()) {
-      series.resetFilter();
+    for (Object s : chart.getSeriesMap().values()) {
+      if (s instanceof AxesChartSeriesNumericalNoErrorBars) {
+        ((AxesChartSeriesNumericalNoErrorBars) s).resetFilter();
+      } else if (s instanceof OHLCSeries) {
+        ((OHLCSeries) s).resetFilter();
+      }
     }
   }
 
   public void filterXByIndex(int startIndex, int endIndex) {
 
-    for (XYSeries series : xyChart.getSeriesMap().values()) {
-      series.filterXByIndex(startIndex, endIndex);
+    for (Object s : chart.getSeriesMap().values()) {
+      if (s instanceof AxesChartSeriesNumericalNoErrorBars) {
+        ((AxesChartSeriesNumericalNoErrorBars) s).filterXByIndex(startIndex, endIndex);
+      } else if (s instanceof OHLCSeries) {
+        ((OHLCSeries) s).filterXByIndex(startIndex, endIndex);
+      }
     }
   }
 
@@ -192,8 +226,16 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   private boolean isAllPointsSelected() {
 
     boolean isAllPointsSelected = true;
-    for (XYSeries series : xyChart.getSeriesMap().values()) {
-      if (!series.isAllXData()) {
+    for (Object s : chart.getSeriesMap().values()) {
+      boolean allSelected;
+      if (s instanceof AxesChartSeriesNumericalNoErrorBars) {
+        allSelected = ((AxesChartSeriesNumericalNoErrorBars) s).isAllXData();
+      } else if (s instanceof OHLCSeries) {
+        allSelected = ((OHLCSeries) s).isAllXData();
+      } else {
+        continue;
+      }
+      if (!allSelected) {
         isAllPointsSelected = false;
         break;
       }
@@ -207,7 +249,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     if (!filtered) {
       return;
     }
-    if (xyChart.getStyler().isZoomResetByDoubleClick() && e.getClickCount() == 2) {
+    if (chart.getStyler().isZoomResetByDoubleClick() && e.getClickCount() == 2) {
       resetZoom();
       return;
     }
@@ -235,8 +277,8 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
       end = x1;
     }
     // If the two intervals overlap, then largest beginning must be smaller than the smallest ending
-    if (Math.max(start, xyChart.plot.bounds.getX())
-        < Math.min(end, xyChart.plot.bounds.getX() + xyChart.plot.bounds.getWidth())) {
+    if (Math.max(start, chart.plot.bounds.getX())
+        < Math.min(end, chart.plot.bounds.getX() + chart.plot.bounds.getWidth())) {
       isOverlapping = true;
     }
     return isOverlapping;
