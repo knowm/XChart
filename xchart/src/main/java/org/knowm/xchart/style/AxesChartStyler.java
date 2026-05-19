@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.function.Function;
 
+import org.knowm.xchart.style.colors.ChartColor;
+
 public abstract class AxesChartStyler extends Styler {
 
   // Chart Axes ///////////////////////////////
@@ -76,6 +78,12 @@ public abstract class AxesChartStyler extends Styler {
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
   private int xAxisLabelRotation = 0;
 
+  // Zoom ///////////////////////////
+  private boolean isZoomEnabled;
+  private Color zoomSelectionColor;
+  private boolean zoomResetByDoubleClick;
+  private boolean zoomResetByButton;
+
   @Override
   void setAllStyles() {
 
@@ -116,6 +124,12 @@ public abstract class AxesChartStyler extends Styler {
     // Error Bars ///////////////////////////////
     this.errorBarsColor = theme.getErrorBarsColor();
     this.isErrorBarsColorSeriesColor = theme.isErrorBarsColorSeriesColor();
+
+    // Zoom ///////////////////////////
+    this.isZoomEnabled = false;
+    this.zoomSelectionColor = ChartColor.LIGHT_GREY.getColorTranslucent();
+    this.zoomResetByDoubleClick = true;
+    this.zoomResetByButton = true;
 
     // Formatting ////////////////////////////////
     this.locale = Locale.getDefault();
@@ -948,6 +962,52 @@ public abstract class AxesChartStyler extends Styler {
   public AxesChartStyler setXAxisLabelRotation(int xAxisLabelRotation) {
 
     this.xAxisLabelRotation = xAxisLabelRotation;
+    return this;
+  }
+
+  // Zoom ///////////////////////////////
+
+  public boolean isZoomEnabled() {
+
+    return isZoomEnabled;
+  }
+
+  public AxesChartStyler setZoomEnabled(boolean isZoomEnabled) {
+
+    this.isZoomEnabled = isZoomEnabled;
+    return this;
+  }
+
+  public Color getZoomSelectionColor() {
+
+    return zoomSelectionColor;
+  }
+
+  public AxesChartStyler setZoomSelectionColor(Color zoomSelectionColor) {
+
+    this.zoomSelectionColor = zoomSelectionColor;
+    return this;
+  }
+
+  public boolean isZoomResetByDoubleClick() {
+
+    return zoomResetByDoubleClick;
+  }
+
+  public AxesChartStyler setZoomResetByDoubleClick(boolean zoomResetByDoubleClick) {
+
+    this.zoomResetByDoubleClick = zoomResetByDoubleClick;
+    return this;
+  }
+
+  public boolean isZoomResetByButton() {
+
+    return zoomResetByButton;
+  }
+
+  public AxesChartStyler setZoomResetByButton(boolean zoomResetByButton) {
+
+    this.zoomResetByButton = zoomResetByButton;
     return this;
   }
 }
