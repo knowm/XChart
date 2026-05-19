@@ -2,6 +2,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.util.List;
 import java.util.function.Function;
+
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
@@ -44,5 +45,13 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
     super(axisDirection, workingSpace, minValue, maxValue, axisValues, styler);
     axisFormat = new Formatter_Custom(formattingCallback);
     calculate();
+  }
+
+  @Override
+  boolean areAllTickLabelsUnique(List<?> tickLabels) {
+    // When a custom formatting function is in use, the caller controls the output intentionally
+    // (e.g. returning " " to hide a tick). Skip the uniqueness guard so the do-while loop in
+    // calculate() does not widen the grid step to eliminate those duplicates.
+    return true;
   }
 }
