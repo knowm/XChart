@@ -4,8 +4,10 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import org.knowm.xchart.OHLCChart;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.XYStyler;
 
@@ -66,7 +68,8 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     }
 
     // TODO put this in PlotContent_XY.
-    if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
+    if ((chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled())
+        || (chart instanceof OHLCChart && ((OHLCStyler) chart.getStyler()).isZoomEnabled())) {
       chartZoom.paint(g);
     }
 

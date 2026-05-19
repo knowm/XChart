@@ -9,12 +9,12 @@ import java.util.Arrays;
 // TODO weird name of class since it does contain extravalues for error bars!
 public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
 
-  // permanent data
+  // full unfiltered data — retained so zoom can be reset to the original range
   double[] xDataAll;
   double[] yDataAll;
   double[] extraValuesAll;
 
-  // temporary data different from permanent data if some is filter out for zooming
+  // active (possibly zoom-filtered) data — what the chart actually renders
   double[] xData; // can be Number or Date(epochtime)
   double[] yData;
   double[] extraValues;

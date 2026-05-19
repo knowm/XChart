@@ -1,12 +1,24 @@
 package org.knowm.xchart;
 
 import java.awt.Color;
+import java.util.Arrays;
+
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.MarkerSeries;
 
 public class OHLCSeries extends MarkerSeries {
 
+  // full unfiltered data — retained so zoom can be reset to the original range
+  private double[] xDataAll;
+  private double[] openDataAll;
+  private double[] highDataAll;
+  private double[] lowDataAll;
+  private double[] closeDataAll;
+  private long[] volumeDataAll;
+  private double[] yDataAll;
+
+  // active (possibly zoom-filtered) data — what the chart actually renders
   private double[] xData; // can be Number or Date(epochtime)
   private double[] openData;
   private double[] highData;
@@ -66,6 +78,12 @@ public class OHLCSeries extends MarkerSeries {
       DataType xAxisDataType) {
 
     super(name, xAxisDataType);
+    this.xDataAll = xData;
+    this.openDataAll = openData;
+    this.highDataAll = highData;
+    this.lowDataAll = lowData;
+    this.closeDataAll = closeData;
+    this.volumeDataAll = volumeData;
     this.xData = xData;
     this.openData = openData;
     this.highData = highData;
@@ -86,6 +104,8 @@ public class OHLCSeries extends MarkerSeries {
   public OHLCSeries(String name, double[] xData, double[] yData, DataType xAxisDataType) {
 
     super(name, xAxisDataType);
+    this.xDataAll = xData;
+    this.yDataAll = yData;
     this.xData = xData;
     this.yData = yData;
     this.ohlcSeriesRenderStyle = OHLCSeriesRenderStyle.Line;
@@ -260,6 +280,79 @@ public class OHLCSeries extends MarkerSeries {
   public double[] getXData() {
 
     return xData;
+  }
+
+  public boolean isAllXData() {
+
+    return xData.length == xDataAll.length;
+  }
+
+  public void filterXByIndex(int startIndex, int endIndex) {
+
+    startIndex = Math.max(0, startIndex);
+    int len = xDataAll.length;
+    endIndex = Math.min(len, endIndex);
+    xData = Arrays.copyOfRange(xDataAll, startIndex, endIndex);
+    if (openDataAll != null) openData = Arrays.copyOfRange(openDataAll, startIndex, endIndex);
+    if (highDataAll != null) highData = Arrays.copyOfRange(highDataAll, startIndex, endIndex);
+    if (lowDataAll != null) lowData = Arrays.copyOfRange(lowDataAll, startIndex, endIndex);
+    if (closeDataAll != null) closeData = Arrays.copyOfRange(closeDataAll, startIndex, endIndex);
+    if (volumeDataAll != null) volumeData = Arrays.copyOfRange(volumeDataAll, startIndex, endIndex);
+    if (yDataAll != null) yData = Arrays.copyOfRange(yDataAll, startIndex, endIndex);
+    calculateMinMax();
+  }
+
+  public boolean filterXByValue(double minValue, double maxValue) {
+
+    int length = xDataAll.length;
+    boolean[] keep = new boolean[length];
+    int count = 0;
+    for (int i = 0; i < length; i++) {
+      keep[i] = xDataAll[i] >= minValue && xDataAll[i] <= maxValue;
+      if (keep[i]) count++;
+    }
+    if (count == length) {
+      return false;
+    }
+    xData = new double[count];
+    double[] newOpen = openDataAll != null ? new double[count] : null;
+    double[] newHigh = highDataAll != null ? new double[count] : null;
+    double[] newLow = lowDataAll != null ? new double[count] : null;
+    double[] newClose = closeDataAll != null ? new double[count] : null;
+    long[] newVolume = volumeDataAll != null ? new long[count] : null;
+    double[] newY = yDataAll != null ? new double[count] : null;
+    int idx = 0;
+    for (int i = 0; i < length; i++) {
+      if (!keep[i]) continue;
+      xData[idx] = xDataAll[i];
+      if (newOpen != null) newOpen[idx] = openDataAll[i];
+      if (newHigh != null) newHigh[idx] = highDataAll[i];
+      if (newLow != null) newLow[idx] = lowDataAll[i];
+      if (newClose != null) newClose[idx] = closeDataAll[i];
+      if (newVolume != null) newVolume[idx] = volumeDataAll[i];
+      if (newY != null) newY[idx] = yDataAll[i];
+      idx++;
+    }
+    openData = newOpen;
+    highData = newHigh;
+    lowData = newLow;
+    closeData = newClose;
+    volumeData = newVolume;
+    yData = newY;
+    calculateMinMax();
+    return true;
+  }
+
+  public void resetFilter() {
+
+    xData = xDataAll;
+    openData = openDataAll;
+    highData = highDataAll;
+    lowData = lowDataAll;
+    closeData = closeDataAll;
+    volumeData = volumeDataAll;
+    yData = yDataAll;
+    calculateMinMax();
   }
 
   public double[] getOpenData() {

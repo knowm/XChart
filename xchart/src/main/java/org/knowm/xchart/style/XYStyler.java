@@ -4,18 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.function.Function;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
-import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.theme.Theme;
 
 public class XYStyler extends AxesChartStyler {
 
   private XYSeriesRenderStyle xySeriesRenderStyle;
-
-  // Zoom ///////////////////////////
-  private boolean isZoomEnabled;
-  private Color zoomSelectionColor;
-  private boolean zoomResetByDoubleClick;
-  private boolean zoomResetByButton;
 
   // Cursor ////////////////////////////////
 
@@ -42,10 +35,6 @@ public class XYStyler extends AxesChartStyler {
     // Zoom ///////////////////////////
     // TODO set this from the theme
     xySeriesRenderStyle = XYSeriesRenderStyle.Line; // set default to line
-    isZoomEnabled = false; // set default to false
-    zoomSelectionColor = ChartColor.LIGHT_GREY.getColorTranslucent();
-    zoomResetByDoubleClick = true;
-    zoomResetByButton = true;
 
     // Cursor ////////////////////////////////
     this.isCursorEnabled = theme.isCursorEnabled();
@@ -84,48 +73,33 @@ public class XYStyler extends AxesChartStyler {
     return this;
   }
 
-  // Zoom ///////////////////////////////
+  // Zoom — covariant overrides ///////////////////////////////
 
-  public boolean isZoomEnabled() {
-    return isZoomEnabled;
-  }
-
+  @Override
   public XYStyler setZoomEnabled(boolean isZoomEnabled) {
 
-    this.isZoomEnabled = isZoomEnabled;
+    super.setZoomEnabled(isZoomEnabled);
     return this;
   }
 
-  public Color getZoomSelectionColor() {
-
-    return zoomSelectionColor;
-  }
-
+  @Override
   public XYStyler setZoomSelectionColor(Color zoomSelectionColor) {
 
-    this.zoomSelectionColor = zoomSelectionColor;
+    super.setZoomSelectionColor(zoomSelectionColor);
     return this;
   }
 
-  public boolean isZoomResetByDoubleClick() {
-
-    return zoomResetByDoubleClick;
-  }
-
+  @Override
   public XYStyler setZoomResetByDoubleClick(boolean zoomResetByDoubleClick) {
 
-    this.zoomResetByDoubleClick = zoomResetByDoubleClick;
+    super.setZoomResetByDoubleClick(zoomResetByDoubleClick);
     return this;
   }
 
-  public boolean isZoomResetByButton() {
-
-    return zoomResetByButton;
-  }
-
+  @Override
   public XYStyler setZoomResetByButton(boolean zoomResetByButton) {
 
-    this.zoomResetByButton = zoomResetByButton;
+    super.setZoomResetByButton(zoomResetByButton);
     return this;
   }
 

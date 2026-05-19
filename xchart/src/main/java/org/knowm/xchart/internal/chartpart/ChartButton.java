@@ -17,6 +17,7 @@ import javax.swing.event.EventListenerList;
 
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
+import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -27,7 +28,6 @@ import org.knowm.xchart.style.Styler;
 // TODO tie this to the styler properties
 public class ChartButton extends MouseAdapter implements ChartPart {
 
-  private final Chart chart;
   private final Styler styler;
   private Rectangle bounds;
 
@@ -54,9 +54,21 @@ public class ChartButton extends MouseAdapter implements ChartPart {
    */
   public ChartButton(XYChart xyChart, XChartPanel<XYChart> xChartPanel, String text) {
 
+    this(xyChart, (XChartPanel<?>) xChartPanel, text);
+  }
+
+  /**
+   * Constructor
+   *
+   * @param chart
+   * @param xChartPanel
+   * @param text
+   */
+  public ChartButton(
+      Chart<? extends AxesChartStyler, ?> chart, XChartPanel<?> xChartPanel, String text) {
+
     this.text = text;
 
-    chart = xyChart;
     styler = chart.getStyler();
 
     xChartPanel.addMouseListener(this);
