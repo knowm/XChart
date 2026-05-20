@@ -26,7 +26,7 @@ public class AxisTickCalculatorDateTest {
 
     // when
     AxisTickCalculator_Date calculator =
-        new AxisTickCalculator_Date(Axis.Direction.X, 900, june1, june2, styler);
+        new AxisTickCalculator_Date(Axis_.Direction.X, 900, june1, june2, styler);
 
     // test
     assertThat(calculator.tickLabels)

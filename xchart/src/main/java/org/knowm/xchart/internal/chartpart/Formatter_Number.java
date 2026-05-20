@@ -7,7 +7,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 class Formatter_Number extends Format {
 
   private final AxesChartStyler styler;
-  private final Axis.Direction axisDirection;
+  private final Axis_.Direction axisDirection;
   private final double min;
   private final double max;
   private final NumberFormat numberFormat;
@@ -15,7 +15,7 @@ class Formatter_Number extends Format {
 
   /** Constructor */
   public Formatter_Number(
-      AxesChartStyler styler, Axis.Direction axisDirection, double min, double max) {
+      AxesChartStyler styler, Axis_.Direction axisDirection, double min, double max) {
 
     this.styler = styler;
     this.axisDirection = axisDirection;
@@ -34,7 +34,7 @@ class Formatter_Number extends Format {
    * @param yIndex
    */
   public Formatter_Number(
-      AxesChartStyler styler, Axis.Direction axisDirection, double min, double max, int yIndex) {
+      AxesChartStyler styler, Axis_.Direction axisDirection, double min, double max, int yIndex) {
 
     this.styler = styler;
     this.axisDirection = axisDirection;
@@ -114,10 +114,10 @@ class Formatter_Number extends Format {
 
     String decimalPattern;
 
-    if (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() != null) {
+    if (axisDirection == Axis_.Direction.X && styler.getXAxisDecimalPattern() != null) {
 
       decimalPattern = styler.getXAxisDecimalPattern();
-    } else if (axisDirection == Axis.Direction.Y
+    } else if (axisDirection == Axis_.Direction.Y
         && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
             || styler.getYAxisDecimalPattern() != null)) {
       if (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null) {
@@ -136,8 +136,8 @@ class Formatter_Number extends Format {
     normalFormat.applyPattern(decimalPattern);
 
     if (styler.getDecimalPattern() == null
-            && (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() == null)
-            && (axisDirection != Axis.Direction.Y || styler.getYAxisGroupDecimalPatternMap().get(yIndex) == null)) {
+            && (axisDirection == Axis_.Direction.X && styler.getXAxisDecimalPattern() == null)
+            && (axisDirection != Axis_.Direction.Y || styler.getYAxisGroupDecimalPatternMap().get(yIndex) == null)) {
 
       double value = number.doubleValue();
       int maxFractionDigits = 4;

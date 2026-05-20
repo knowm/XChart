@@ -2,7 +2,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**

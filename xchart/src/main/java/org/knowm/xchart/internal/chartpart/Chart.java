@@ -201,17 +201,17 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return plot;
   }
 
-  Axis getXAxis() {
+  Axis_X getXAxis() {
 
     return axisPair.getXAxis();
   }
 
-  Axis getYAxis() {
+  Axis_Y getYAxis() {
 
     return axisPair.getYAxis();
   }
 
-  Axis getYAxis(int yIndex) {
+  Axis_Y getYAxis(int yIndex) {
 
     return axisPair.getYAxis(yIndex);
   }
