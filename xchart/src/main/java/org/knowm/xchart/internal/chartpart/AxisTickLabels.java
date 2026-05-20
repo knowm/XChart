@@ -1,12 +1,14 @@
 package org.knowm.xchart.internal.chartpart;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -18,7 +20,8 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
   private final Chart<ST, S> chart;
   private final Direction direction;
-  private final Axis_ yAxis;
+  private final Axis_<?, ?> yAxis;
+  private final ColocatedSlaveLabels colocatedSlaveLabels;
   private Rectangle2D bounds;
 
   /**
@@ -27,11 +30,13 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
    * @param chart
    * @param direction
    */
-  AxisTickLabels(Chart<ST, S> chart, Direction direction, Axis_ yAxis) {
+  AxisTickLabels(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
 
     this.chart = chart;
     this.direction = direction;
     this.yAxis = yAxis;
+    this.colocatedSlaveLabels =
+        yAxis != null ? new ColocatedSlaveLabels(yAxis, chart.getStyler()) : null;
   }
 
   @Override
@@ -83,6 +88,12 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         }
       }
 
+      // Also account for the widths of any colocated slave labels so the column is wide enough.
+      double slaveMaxWidth = colocatedSlaveLabels.maxSlaveWidth(g);
+      if (slaveMaxWidth > maxTickLabelWidth) {
+        maxTickLabelWidth = slaveMaxWidth;
+      }
+
       for (Map.Entry<Double, TextLayout> tick : axisLabelTextLayouts.entrySet()) {
         final Double tickLocation = tick.getKey();
         final TextLayout axisLabelTextLayout = tick.getValue();
@@ -112,6 +123,10 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         g.fill(shape);
         g.setTransform(orig);
       }
+
+      // Render colocated slave labels stacked below each master label
+      colocatedSlaveLabels.paint(
+          g, xOffset, yOffset, height, maxTickLabelWidth, axisLabelTextLayouts);
 
       // bounds
       bounds = new Rectangle2D.Double(xOffset, yOffset, maxTickLabelWidth, height);

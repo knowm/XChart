@@ -2,6 +2,8 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
+
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series;
@@ -170,12 +172,30 @@ public abstract class Axis_<ST extends AxesChartStyler, S extends AxesChartSerie
     return index;
   }
 
+  /**
+   * Returns whether this axis owns (draws) the vertical axis line. Always {@code true} for X and
+   * non-merged Y axes; overridden to {@code false} for slave axes in a merged Y-axis group.
+   */
+  public boolean isAxisLineOwner() {
+
+    return true;
+  }
+
   public double getScreenValueForMin() {
     return getScreenValue(min);
   }
 
   public double getScreenValueForMax() {
     return getScreenValue(max);
+  }
+
+  /**
+   * Returns the (possibly empty) list of colocated slave axes registered on this master.
+   * Non-Y axes always return an empty list.
+   */
+  public List<? extends Axis_> getColocatedSlaves() {
+
+    return java.util.Collections.emptyList();
   }
 
   /** An axis direction */

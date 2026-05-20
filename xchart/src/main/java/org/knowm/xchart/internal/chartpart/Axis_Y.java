@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.HeatMapChart;
@@ -31,6 +32,26 @@ import org.knowm.xchart.style.XYStyler;
 
 /** Y-Axis. */
 public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> extends Axis_<ST, S> {
+
+  // Merged-axis support ///////////////////////////////////////////
+
+  /**
+   * When non-null this axis is a slave in a merged visual group. The master's tick pixel positions
+   * are borrowed; only label values differ.
+   */
+  private Axis_Y<?, ?> masterAxis = null;
+
+  /**
+   * When {@code false} the axis line is suppressed because another axis in the same visual group
+   * already drew it. Defaults to {@code true}.
+   */
+  private boolean axisLineOwner = true;
+
+  /**
+   * When colocate-slave mode is active, the master axis holds references to all slave axes whose
+   * labels will be rendered stacked below the master's labels on the same column.
+   */
+  private final List<Axis_Y<?, ?>> colocatedSlaves = new ArrayList<>();
 
   Axis_Y(Chart<ST, S> chart, int index) {
 
@@ -167,11 +188,58 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
           rectangle.getWidth()
               + axesChartStyler.getAxisTickPadding()
               + axesChartStyler.getAxisTickMarkLength();
+
+      // When colocate mode is on, factor in the widest slave label too.
+      if (axesChartStyler.isMergedAxisColocateSlaveLabels() && !colocatedSlaves.isEmpty()) {
+        for (Axis_Y<?, ?> slave : colocatedSlaves) {
+          AxisTickCalculator slaveCalc =
+              new AxisTickCalculator_Synchronized(
+                  workingSpace,
+                  slave.min,
+                  slave.max,
+                  axisTickCalculator.getTickLocations(),
+                  axesChartStyler,
+                  slave.index);
+          String slaveSampleLabel = "";
+          for (int i = 0; i < slaveCalc.getTickLabels().size(); i++) {
+            String lbl = slaveCalc.getTickLabels().get(i);
+            if (lbl != null && lbl.length() > slaveSampleLabel.length()) {
+              slaveSampleLabel = lbl;
+            }
+          }
+          if (!slaveSampleLabel.isEmpty()) {
+            TextLayout slaveLayout =
+                new TextLayout(
+                    slaveSampleLabel,
+                    axesChartStyler.getAxisTickLabelsFont(),
+                    new FontRenderContext(null, true, false));
+            double slaveWidth =
+                slaveLayout.getBounds().getWidth()
+                    + axesChartStyler.getAxisTickPadding()
+                    + axesChartStyler.getAxisTickMarkLength();
+            if (slaveWidth > axisTickLabelsHeight) {
+              axisTickLabelsHeight = slaveWidth;
+            }
+          }
+        }
+      }
     }
     return titleHeight + axisTickLabelsHeight;
   }
 
   private AxisTickCalculator getAxisTickCalculatorForY(double workingSpace) {
+
+    // Slave axis in a merged visual group: borrow master's pixel positions and translate labels.
+    if (masterAxis != null && masterAxis.getAxisTickCalculator() != null) {
+      return new AxisTickCalculator_Synchronized(
+          workingSpace,
+          min,
+          max,
+          masterAxis.getAxisTickCalculator().getTickLocations(),
+          axesChartStyler,
+          index);
+    }
+
     List<Double> yData = new ArrayList<>();
     if (axesChartStyler instanceof HorizontalBarStyler) {
       Set<Double> uniqueYData = new LinkedHashSet<>();
@@ -265,6 +333,46 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       return new AxisTickCalculator_Number(
           Axis_.Direction.Y, workingSpace, min, max, axesChartStyler, getYIndex());
     }
+  }
+
+  /** Sets the master axis for this slave. Pass {@code null} to reset to independent mode. */
+  public void setMasterAxis(Axis_Y<?, ?> masterAxis) {
+    this.masterAxis = masterAxis;
+  }
+
+  public Axis_Y<?, ?> getMasterAxis() {
+
+    return masterAxis;
+  }
+
+  /**
+   * Controls whether this axis draws the vertical axis line. Set to {@code false} for slave axes
+   * that share the master's line.
+   */
+  public void setAxisLineOwner(boolean axisLineOwner) {
+    this.axisLineOwner = axisLineOwner;
+  }
+
+  public boolean isAxisLineOwner() {
+
+    return axisLineOwner;
+  }
+
+  /** Clears the list of slave axes whose labels will be colocated on this (master) axis. */
+  void clearColocatedSlaves() {
+    colocatedSlaves.clear();
+  }
+
+  /** Adds a slave axis whose labels will be rendered stacked below this master's labels. */
+  void addColocatedSlave(Axis_Y<?, ?> slave) {
+    colocatedSlaves.add(slave);
+  }
+
+  /** Returns the (possibly empty) list of colocated slave axes registered on this master. */
+  @Override
+  public List<Axis_Y<?, ?>> getColocatedSlaves() {
+
+    return colocatedSlaves;
   }
 
   @Override

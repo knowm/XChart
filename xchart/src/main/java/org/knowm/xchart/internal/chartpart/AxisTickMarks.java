@@ -14,7 +14,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
 
   private final Chart<ST, S> chart;
   private final Direction direction;
-  private final Axis_ yAxis;
+  private final Axis_<?, ?> yAxis;
   private Rectangle2D bounds;
 
   /**
@@ -23,7 +23,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
    * @param chart
    * @param direction
    */
-  AxisTickMarks(Chart<ST, S> chart, Direction direction, Axis_ yAxis) {
+  AxisTickMarks(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
 
     this.chart = chart;
     this.direction = direction;
@@ -91,8 +91,8 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
         }
       }
 
-      // Line
-      if (styler.isAxisTicksLineVisible()) {
+      // Line — only drawn by the master axis in a merged visual group
+      if (styler.isAxisTicksLineVisible() && yAxis.isAxisLineOwner()) {
 
         Shape line =
             new Line2D.Double(lineXOffset, yOffset, lineXOffset, yOffset + yAxisBounds.getHeight());
