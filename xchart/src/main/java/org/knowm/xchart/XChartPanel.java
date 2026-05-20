@@ -19,6 +19,7 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -29,12 +30,15 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
+
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ChartZoom;
 import org.knowm.xchart.internal.chartpart.Cursor;
 import org.knowm.xchart.internal.chartpart.ToolTips;
+import org.knowm.xchart.style.AxesChartStyler;
+import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.XYStyler;
 
 /**
@@ -84,12 +88,27 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlP, "print");
     this.getActionMap().put("print", new PrintAction());
 
-    // Mouse Listener for Zoom. Only available for XYCharts
-    if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled()) {
+    // Mouse Listener for Zoom. Available for XYCharts and OHLCCharts
+    if ((chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled())
+        || (chart instanceof OHLCChart && ((OHLCStyler) chart.getStyler()).isZoomEnabled())) {
+      @SuppressWarnings("unchecked")
       ChartZoom chartZoom =
-          new ChartZoom((XYChart) chart, (XChartPanel<XYChart>) this, resetString);
+          new ChartZoom((Chart<? extends AxesChartStyler, ?>) chart, this, resetString);
       this.addMouseListener(chartZoom); // for clicking
       this.addMouseMotionListener(chartZoom); // for moving
+
+      // Escape key resets zoom (fix for issue #930)
+      KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+      this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(escape, "resetZoom");
+      this.getActionMap()
+          .put(
+              "resetZoom",
+              new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                  chartZoom.resetZoom();
+                }
+              });
     }
 
     // Mouse motion listener for Cursor
