@@ -13,6 +13,10 @@
     <name>XChart Demo</name>
     <description>A Swing App demonstration of various charts using XChart</description>
 
+    <properties>
+        <!-- skip test compilation during release:prepare's clean verify subprocess -->
+        <maven.test.skip>true</maven.test.skip>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.knowm.xchart</groupId>
@@ -35,9 +39,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
