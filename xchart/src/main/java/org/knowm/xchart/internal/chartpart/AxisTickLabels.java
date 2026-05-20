@@ -7,7 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.YAxisPosition;
@@ -18,7 +18,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
   private final Chart<ST, S> chart;
   private final Direction direction;
-  private final Axis yAxis;
+  private final Axis_ yAxis;
   private Rectangle2D bounds;
 
   /**
@@ -27,7 +27,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
    * @param chart
    * @param direction
    */
-  AxisTickLabels(Chart<ST, S> chart, Direction direction, Axis yAxis) {
+  AxisTickLabels(Chart<ST, S> chart, Direction direction, Axis_ yAxis) {
 
     this.chart = chart;
     this.direction = direction;
@@ -40,7 +40,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
     ST styler = chart.getStyler();
     g.setFont(styler.getAxisTickLabelsFont());
 
-    if (direction == Axis.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
+    if (direction == Axis_.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
 
       g.setColor(styler.getYAxisGroupTickLabelsColorMap(yAxis.getYIndex()));
       boolean onRight = styler.getYAxisGroupPosistion(yAxis.getYIndex()) == YAxisPosition.Right;
@@ -120,7 +120,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
     }
     // X-Axis
-    else if (direction == Axis.Direction.X && styler.isXAxisTicksVisible()) {
+    else if (direction == Axis_.Direction.X && styler.isXAxisTicksVisible()) {
 
       g.setColor(styler.getXAxisTickLabelsColor());
       double xOffset = chart.getXAxis().getBounds().getX();

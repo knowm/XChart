@@ -3,7 +3,7 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.YAxisPosition;
@@ -14,7 +14,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
 
   private final Chart<ST, S> chart;
   private final Direction direction;
-  private final Axis yAxis;
+  private final Axis_ yAxis;
   private Rectangle2D bounds;
 
   /**
@@ -23,7 +23,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
    * @param chart
    * @param direction
    */
-  AxisTickMarks(Chart<ST, S> chart, Direction direction, Axis yAxis) {
+  AxisTickMarks(Chart<ST, S> chart, Direction direction, Axis_ yAxis) {
 
     this.chart = chart;
     this.direction = direction;
@@ -36,7 +36,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
     ST styler = chart.getStyler();
     g.setStroke(styler.getAxisTickMarksStroke());
 
-    if (direction == Axis.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
+    if (direction == Axis_.Direction.Y && styler.isYAxisTicksVisible()) { // Y-Axis
 
       g.setColor(styler.getYAxisGroupTickMarksColorMap(yAxis.getYIndex()));
       int axisTickMarkLength = styler.getAxisTickMarkLength();
@@ -100,7 +100,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
       }
     }
     // X-Axis
-    else if (direction == Axis.Direction.X && styler.isXAxisTicksVisible()) {
+    else if (direction == Axis_.Direction.X && styler.isXAxisTicksVisible()) {
 
       g.setColor(styler.getXAxisTickMarksColor());
       int axisTickMarkLength = styler.getAxisTickMarkLength();

@@ -6,12 +6,12 @@ import org.knowm.xchart.style.AxesChartStyler;
 class Formatter_LogNumber extends Format {
 
   private final AxesChartStyler styler;
-  private final Axis.Direction axisDirection;
+  private final Axis_.Direction axisDirection;
   private final NumberFormat numberFormat;
   private int yIndex;
 
   /** Constructor */
-  public Formatter_LogNumber(AxesChartStyler styler, Axis.Direction axisDirection) {
+  public Formatter_LogNumber(AxesChartStyler styler, Axis_.Direction axisDirection) {
 
     this.styler = styler;
     this.axisDirection = axisDirection;
@@ -25,7 +25,7 @@ class Formatter_LogNumber extends Format {
    * @param axisDirection
    * @param yIndex
    */
-  public Formatter_LogNumber(AxesChartStyler styler, Axis.Direction axisDirection, int yIndex) {
+  public Formatter_LogNumber(AxesChartStyler styler, Axis_.Direction axisDirection, int yIndex) {
 
     this.styler = styler;
     this.axisDirection = axisDirection;
@@ -40,10 +40,10 @@ class Formatter_LogNumber extends Format {
 
     String decimalPattern;
 
-    if (axisDirection == Axis.Direction.X && styler.getXAxisDecimalPattern() != null) {
+    if (axisDirection == Axis_.Direction.X && styler.getXAxisDecimalPattern() != null) {
 
       decimalPattern = styler.getXAxisDecimalPattern();
-    } else if (axisDirection == Axis.Direction.Y
+    } else if (axisDirection == Axis_.Direction.Y
         && (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null
             || styler.getYAxisDecimalPattern() != null)) {
       if (styler.getYAxisGroupDecimalPatternMap().get(yIndex) != null) {

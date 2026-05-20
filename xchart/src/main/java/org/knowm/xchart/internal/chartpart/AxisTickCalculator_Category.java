@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 

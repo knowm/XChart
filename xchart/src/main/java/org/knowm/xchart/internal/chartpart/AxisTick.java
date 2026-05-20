@@ -2,7 +2,7 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 
@@ -27,7 +27,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    * @param direction
    * @param yAxis
    */
-  AxisTick(Chart<ST, S> chart, Direction direction, Axis yAxis) {
+  AxisTick(Chart<ST, S> chart, Direction direction, Axis_ yAxis) {
 
     this.chart = chart;
     this.direction = direction;
@@ -44,7 +44,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
   @Override
   public void paint(Graphics2D g) {
 
-    if (direction == Axis.Direction.Y && chart.getStyler().isYAxisTicksVisible()) {
+    if (direction == Axis_.Direction.Y && chart.getStyler().isYAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);
@@ -61,7 +61,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       // g.setColor(Color.red);
       // g.draw(bounds);
 
-    } else if (direction == Axis.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
+    } else if (direction == Axis_.Direction.X && chart.getStyler().isXAxisTicksVisible()) {
 
       axisTickLabels.paint(g);
       axisTickMarks.paint(g);

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
 public abstract class AxisTickCalculator_ implements AxisTickCalculator {
