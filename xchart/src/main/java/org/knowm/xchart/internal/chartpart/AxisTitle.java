@@ -15,7 +15,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
   private final Chart<ST, S> chart;
   private final Direction direction;
-  private final Axis_ yAxis;
+  private final Axis_<?, ?> yAxis;
   private final int yIndex;
   private Rectangle2D bounds;
 

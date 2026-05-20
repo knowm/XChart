@@ -14,7 +14,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
 
   private final Chart<ST, S> chart;
   private final Direction direction;
-  private final Axis_ yAxis;
+  private final Axis_<?, ?> yAxis;
   private Rectangle2D bounds;
 
   /**
@@ -23,7 +23,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
    * @param chart
    * @param direction
    */
-  AxisTickMarks(Chart<ST, S> chart, Direction direction, Axis_ yAxis) {
+  AxisTickMarks(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
 
     this.chart = chart;
     this.direction = direction;

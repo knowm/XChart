@@ -23,10 +23,10 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 class ColocatedSlaveLabels {
 
-  private final Axis_Y<?, ?> yAxis; // master axis (raw type matches existing AxisTickLabels field)
+  private final Axis_<?, ?> yAxis; // master axis
   private final AxesChartStyler styler;
 
-  ColocatedSlaveLabels(Axis_Y<?, ?> yAxis, AxesChartStyler styler) {
+  ColocatedSlaveLabels(Axis_<?, ?> yAxis, AxesChartStyler styler) {
 
     this.yAxis = yAxis;
     this.styler = styler;
@@ -40,7 +40,7 @@ class ColocatedSlaveLabels {
   double maxSlaveWidth(Graphics2D g) {
 
     double maxWidth = 0;
-    for (Axis_ slave : yAxis.getColocatedSlaves()) {
+    for (Axis_<?, ?> slave : yAxis.getColocatedSlaves()) {
       if (slave.getAxisTickCalculator() == null) {
         continue;
       }
@@ -95,7 +95,7 @@ class ColocatedSlaveLabels {
     FontRenderContext frc = g.getFontRenderContext();
 
     for (int s = 0; s < colocatedSlaves.size(); s++) {
-      Axis_ slaveAxis = colocatedSlaves.get(s);
+      Axis_<?, ?> slaveAxis = colocatedSlaves.get(s);
       if (slaveAxis.getAxisTickCalculator() == null) {
         continue;
       }

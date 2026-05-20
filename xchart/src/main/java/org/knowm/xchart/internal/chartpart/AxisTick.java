@@ -27,7 +27,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    * @param direction
    * @param yAxis
    */
-  AxisTick(Chart<ST, S> chart, Direction direction, Axis_ yAxis) {
+  AxisTick(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
 
     this.chart = chart;
     this.direction = direction;

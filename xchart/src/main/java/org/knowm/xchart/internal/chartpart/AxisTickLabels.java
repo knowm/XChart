@@ -20,7 +20,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
   private final Chart<ST, S> chart;
   private final Direction direction;
-  private final Axis_ yAxis;
+  private final Axis_<?, ?> yAxis;
   private Rectangle2D bounds;
 
   /**
@@ -29,7 +29,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
    * @param chart
    * @param direction
    */
-  AxisTickLabels(Chart<ST, S> chart, Direction direction, Axis_ yAxis) {
+  AxisTickLabels(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
 
     this.chart = chart;
     this.direction = direction;
