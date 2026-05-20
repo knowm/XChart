@@ -1,5 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.Format;
 import java.util.List;
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
@@ -70,6 +72,9 @@ class AxisTickCalculator_Synchronized extends AxisTickCalculator_ {
       } else {
         // invert: tickLocation = margin + ((value - minValue) / span) * tickSpace
         value = minValue + ((pixelLocation - margin) / tickSpace) * span;
+        // Round to 10 significant figures to eliminate floating-point round-trip noise
+        // (e.g. 399.9999999999994 → 400.0).
+        value = BigDecimal.valueOf(value).round(new MathContext(10)).doubleValue();
       }
 
       tickLocations.add(pixelLocation);
