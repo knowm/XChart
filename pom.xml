@@ -149,18 +149,10 @@
 
     <build>
         <plugins>
-            <!-- Add Automatic Module Name to MANIFEST for compatibility with modular applications -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.4.2</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Automatic-Module-Name>org.knowm.xchart</Automatic-Module-Name>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
             </plugin>
             <!-- Need at least 2.22.0 to support JUnit 5 -->
             <plugin>
