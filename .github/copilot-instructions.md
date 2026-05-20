@@ -8,7 +8,7 @@ Keep this file updated as new decisions are made.
 ## Project Overview
 
 XChart is a lightweight Java charting library (`org.knowm.xchart`).
-Current version: **3.9.1-SNAPSHOT** | Java target: **1.8** | Build: **Maven ≥ 3.9.0**
+Current version: **4.0.0-SNAPSHOT** | Java target: **11** | Build: **Maven ≥ 3.9.0**
 
 ---
 

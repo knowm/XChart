@@ -56,7 +56,7 @@ public class DemoChartsUtil {
         });
 
     for (Class<?> c : classes) {
-      demoCharts.add(((ExampleChart<Chart<Styler, Series>>) c.newInstance()));
+      demoCharts.add(((ExampleChart<Chart<Styler, Series>>) c.getDeclaredConstructor().newInstance()));
     }
     return demoCharts;
   }

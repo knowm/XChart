@@ -72,19 +72,19 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     // Control+S key listener for saving chart
     KeyStroke ctrlS =
-        KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlS, "save");
     this.getActionMap().put("save", new SaveAction());
 
     // Control+E key listener for saving chart
     KeyStroke ctrlE =
-        KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlE, "export");
     this.getActionMap().put("export", new ExportAction());
 
     // Control+P key listener for printing chart
     KeyStroke ctrlP =
-        KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx());
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlP, "print");
     this.getActionMap().put("print", new PrintAction());
 

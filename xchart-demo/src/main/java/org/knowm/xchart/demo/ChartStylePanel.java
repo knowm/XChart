@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
+
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -37,6 +38,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.series.Series;
@@ -174,7 +176,7 @@ public class ChartStylePanel extends JPanel {
               Locale.FRANCE,
               Locale.ITALIAN,
               Locale.GERMAN,
-              new Locale("tr", "tr")
+              Locale.forLanguageTag("tr-TR")
             };
         JComboBox comboBox = new JComboBox(values);
         editorMap.put(Locale.class, new DefaultCellEditor(comboBox));

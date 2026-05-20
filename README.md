@@ -633,7 +633,7 @@ For snapshots, add the following to your pom.xml file:
 <dependency>
 <groupId>org.knowm.xchart</groupId>
 <artifactId>xchart</artifactId>
-<version>3.9.1-SNAPSHOT</version>
+<version>4.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
