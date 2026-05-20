@@ -5,7 +5,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.YAxisPosition;
@@ -15,7 +15,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
 
   private final Chart<ST, S> chart;
   private final Direction direction;
-  private final Axis yAxis;
+  private final Axis_ yAxis;
   private final int yIndex;
   private Rectangle2D bounds;
 
@@ -25,7 +25,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
    * @param chart the Chart
    * @param direction the Direction
    */
-  AxisTitle(Chart<ST, S> chart, Direction direction, Axis yAxis, int yIndex) {
+  AxisTitle(Chart<ST, S> chart, Direction direction, Axis_ yAxis, int yIndex) {
 
     this.chart = chart;
     this.direction = direction;
@@ -41,7 +41,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
     g.setColor(chart.getStyler().getChartFontColor());
     g.setFont(chart.getStyler().getAxisTitleFont());
 
-    if (direction == Axis.Direction.Y) {
+    if (direction == Axis_.Direction.Y) {
 
       String yAxisTitle = chart.getYAxisGroupTitle(yIndex);
       if (yAxisTitle != null

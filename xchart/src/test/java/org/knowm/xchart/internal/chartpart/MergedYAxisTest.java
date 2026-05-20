@@ -99,8 +99,8 @@ public class MergedYAxisTest {
     // Render into a bitmap to trigger AxisPair.paint() / preparePaint()
     BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
 
-    Axis masterAxis = chart.axisPair.getYAxis(0);
-    Axis slaveAxis = chart.axisPair.getYAxis(1);
+    Axis_Y<?, ?> masterAxis = chart.axisPair.getYAxis(0);
+    Axis_Y<?, ?> slaveAxis = chart.axisPair.getYAxis(1);
 
     List<Double> masterLocs = masterAxis.getAxisTickCalculator().getTickLocations();
     List<Double> slaveLocs = slaveAxis.getAxisTickCalculator().getTickLocations();
@@ -116,8 +116,8 @@ public class MergedYAxisTest {
 
     BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
 
-    Axis masterAxis = chart.axisPair.getYAxis(0);
-    Axis slaveAxis = chart.axisPair.getYAxis(1);
+    Axis_Y<?, ?> masterAxis = chart.axisPair.getYAxis(0);
+    Axis_Y<?, ?> slaveAxis = chart.axisPair.getYAxis(1);
 
     assertThat(slaveAxis.getAxisTickCalculator().getTickLabels())
         .hasSameSizeAs(masterAxis.getAxisTickCalculator().getTickLabels());
@@ -134,8 +134,8 @@ public class MergedYAxisTest {
 
     BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
 
-    Axis masterAxis = chart.axisPair.getYAxis(0);
-    Axis slaveAxis = chart.axisPair.getYAxis(1);
+    Axis_Y<?, ?> masterAxis = chart.axisPair.getYAxis(0);
+    Axis_Y<?, ?> slaveAxis = chart.axisPair.getYAxis(1);
 
     assertThat(masterAxis.isAxisLineOwner()).isTrue();
     assertThat(slaveAxis.isAxisLineOwner()).isFalse();
@@ -152,7 +152,7 @@ public class MergedYAxisTest {
 
     BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
 
-    Axis gridlineMaster = chart.axisPair.getGridlineMasterAxis();
+    Axis_Y<?, ?> gridlineMaster = chart.axisPair.getGridlineMasterAxis();
     assertThat(gridlineMaster.getYIndex()).isEqualTo(0);
   }
 
@@ -163,7 +163,7 @@ public class MergedYAxisTest {
 
     BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
 
-    Axis gridlineMaster = chart.axisPair.getGridlineMasterAxis();
+    Axis_Y<?, ?> gridlineMaster = chart.axisPair.getGridlineMasterAxis();
     // The primary Y-axis (group 0) is the innermost on the left, so it drives gridlines.
     assertThat(gridlineMaster.getYIndex()).isEqualTo(0);
   }
@@ -223,11 +223,11 @@ public class MergedYAxisTest {
     assertThat(png).isNotEmpty();
 
     // Right-side gridline master should be axis 1 (lowest index in the right merge group)
-    Axis rightMaster = chart.axisPair.getRightGridlineMasterAxis();
+    Axis_Y<?, ?> rightMaster = chart.axisPair.getRightGridlineMasterAxis();
     assertThat(rightMaster.getYIndex()).isEqualTo(1);
     assertThat(rightMaster.isAxisLineOwner()).isTrue();
 
-    Axis rightSlave = chart.axisPair.getYAxis(2);
+    Axis_Y<?, ?> rightSlave = chart.axisPair.getYAxis(2);
     assertThat(rightSlave.isAxisLineOwner()).isFalse();
   }
 
@@ -245,9 +245,9 @@ public class MergedYAxisTest {
     // Render so AxisPair.paint() wires everything up
     BitmapEncoder.getBufferedImage(chart);
 
-    Axis master = chart.axisPair.getYAxis(0);
+    Axis_Y<?, ?> master = chart.axisPair.getYAxis(0);
     assertThat(master.getColocatedSlaves()).hasSize(1);
-    Axis colocatedSlave = (Axis) master.getColocatedSlaves().get(0);
+    Axis_Y<?, ?> colocatedSlave = master.getColocatedSlaves().get(0);
     assertThat(colocatedSlave.getYIndex()).isEqualTo(1);
   }
 
@@ -264,7 +264,7 @@ public class MergedYAxisTest {
     // but the left axis bounds width should be narrower than without colocate because
     // only one column exists.  We verify the slave is not used as leftMainYAxis.
     // (leftMainYAxis is the axis whose column is closest to the plot — should be the master)
-    Axis leftMain = chart.axisPair.getLeftMainYAxis();
+    Axis_Y<?, ?> leftMain = chart.axisPair.getLeftMainYAxis();
     assertThat(leftMain.getYIndex()).isEqualTo(0); // master is innermost
   }
 
@@ -278,7 +278,7 @@ public class MergedYAxisTest {
     // Should render without exception and the axes remain independent
     BitmapEncoder.getBufferedImage(chart);
 
-    Axis axis0 = chart.axisPair.getYAxis(0);
+    Axis_Y<?, ?> axis0 = chart.axisPair.getYAxis(0);
     assertThat(axis0.getColocatedSlaves()).isEmpty();
   }
 

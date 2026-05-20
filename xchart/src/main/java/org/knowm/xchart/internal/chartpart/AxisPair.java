@@ -19,23 +19,23 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
   private final Chart<ST, S> chart;
 
-  private final Axis<ST, S> xAxis;
-  private final Axis<ST, S> yAxis;
-  private final TreeMap<Integer, Axis<ST, S>> yAxisMap;
+  private final Axis_X<ST, S> xAxis;
+  private final Axis_Y<ST, S> yAxis;
+  private final TreeMap<Integer, Axis_Y<ST, S>> yAxisMap;
   private final Rectangle2D.Double leftYAxisBounds;
   private final Rectangle2D.Double rightYAxisBounds;
-  private Axis<ST, S> leftMainYAxis;
-  private Axis<ST, S> rightMainYAxis;
+  private Axis_Y<ST, S> leftMainYAxis;
+  private Axis_Y<ST, S> rightMainYAxis;
 
   /**
    * The axis whose tick positions are used for horizontal gridlines and inner plot tick marks on
    * the left side. Equals {@code leftMainYAxis} when no axes are merged, otherwise equals the
    * master axis of the first left-side visual group.
    */
-  private Axis<ST, S> leftGridlineMasterAxis;
+  private Axis_Y<ST, S> leftGridlineMasterAxis;
 
   /** Same as {@link #leftGridlineMasterAxis} for the right side. */
-  private Axis<ST, S> rightGridlineMasterAxis;
+  private Axis_Y<ST, S> rightGridlineMasterAxis;
 
   /**
    * Constructor
@@ -47,9 +47,9 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     this.chart = chart;
 
     // add axes
-    xAxis = new Axis<ST, S>(chart, Axis.Direction.X, 0);
-    yAxis = new Axis<ST, S>(chart, Axis.Direction.Y, 0);
-    yAxisMap = new TreeMap<Integer, Axis<ST, S>>();
+    xAxis = new Axis_X<>(chart);
+    yAxis = new Axis_Y<>(chart, 0);
+    yAxisMap = new TreeMap<>();
     yAxisMap.put(0, yAxis);
     leftYAxisBounds = new Rectangle2D.Double();
     rightYAxisBounds = new Rectangle2D.Double();
@@ -129,13 +129,13 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
         if (yAxisMap.containsKey(yIndex)) {
           continue;
         }
-        yAxisMap.put(yIndex, new Axis<ST, S>(chart, Axis.Direction.Y, yIndex));
+        yAxisMap.put(yIndex, new Axis_Y<>(chart, yIndex));
       }
     }
 
     // set the axis data types, making sure all are compatible
     xAxis.setDataType(null);
-    for (Axis<ST, S> ya : yAxisMap.values()) {
+    for (Axis_Y<ST, S> ya : yAxisMap.values()) {
       ya.setDataType(null);
     }
     for (S series : chart.getSeriesMap().values()) {
@@ -159,7 +159,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
     // calculate axis min and max
     xAxis.resetMinMax();
-    for (Axis<ST, S> ya : yAxisMap.values()) {
+    for (Axis_Y<ST, S> ya : yAxisMap.values()) {
       ya.resetMinMax();
     }
 
@@ -193,7 +193,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
 
     overrideMinMaxForXAxis();
-    for (Axis<ST, S> ya : yAxisMap.values()) {
+    for (Axis_Y<ST, S> ya : yAxisMap.values()) {
       overrideMinMaxForYAxis(ya);
     }
 
@@ -203,7 +203,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
           "Series data (accounting for error bars too) cannot be less or equal to zero for a logarithmic X-Axis!!!");
     }
     if (chart.getStyler().isYAxisLogarithmic()) {
-      for (Axis<ST, S> ya : yAxisMap.values()) {
+      for (Axis_Y<ST, S> ya : yAxisMap.values()) {
         if (ya.getMin() <= 0.0) {
           // System.out.println(getMin());
           throw new IllegalArgumentException(
@@ -216,7 +216,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       throw new IllegalArgumentException(
           "Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
     }
-    for (Axis<ST, S> ya : yAxisMap.values()) {
+    for (Axis_Y<ST, S> ya : yAxisMap.values()) {
       if (ya.getMin() == Double.POSITIVE_INFINITY || ya.getMax() == Double.POSITIVE_INFINITY) {
         throw new IllegalArgumentException(
             "Series data (accounting for error bars too) cannot be equal to Double.POSITIVE_INFINITY!!!");
@@ -241,12 +241,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     double xMin = chart.getStyler().isXAxisLogarithmic() ? 0.1 : -1.0;
     double yMin = chart.getStyler().isYAxisLogarithmic() ? 0.1 : -1.0;
     xAxis.addMinMax(xMin, 1);
-    for (Axis<ST, S> ya : yAxisMap.values()) {
+    for (Axis_Y<ST, S> ya : yAxisMap.values()) {
       ya.addMinMax(yMin, 1);
     }
   }
 
-  Axis<ST, S> getYAxis(int yIndex) {
+  Axis_Y<ST, S> getYAxis(int yIndex) {
 
     return yAxisMap.get(yIndex);
   }
@@ -279,7 +279,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     xAxis.setMax(overrideXAxisMaxValue);
   }
 
-  private void overrideMinMaxForYAxis(Axis yAxis) {
+  private void overrideMinMaxForYAxis(Axis_Y<ST, S> yAxis) {
 
     double overrideYAxisMinValue = yAxis.getMin();
     double overrideYAxisMaxValue = yAxis.getMax();
@@ -385,12 +385,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
   // Getters & Setters /////////////////////////////////////////////////
 
-  public Axis<ST, S> getXAxis() {
+  public Axis_X<ST, S> getXAxis() {
 
     return xAxis;
   }
 
-  Axis<ST, S> getYAxis() {
+  Axis_Y<ST, S> getYAxis() {
 
     return yAxis;
   }
@@ -411,12 +411,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     return rightYAxisBounds;
   }
 
-  Axis<ST, S> getLeftMainYAxis() {
+  Axis_Y<ST, S> getLeftMainYAxis() {
 
     return leftMainYAxis;
   }
 
-  Axis<ST, S> getRightMainYAxis() {
+  Axis_Y<ST, S> getRightMainYAxis() {
 
     return rightMainYAxis;
   }
@@ -426,7 +426,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    * plot tick marks. When axes are merged this is the master of the lowest-index visual group on
    * the left side; otherwise it equals {@link #getLeftMainYAxis()}.
    */
-  Axis<ST, S> getGridlineMasterAxis() {
+  Axis_Y<ST, S> getGridlineMasterAxis() {
 
     return leftGridlineMasterAxis;
   }
@@ -436,7 +436,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    * are merged this is the master of the lowest-index visual group on the right side; otherwise it
    * equals {@link #getRightMainYAxis()}.
    */
-  Axis<ST, S> getRightGridlineMasterAxis() {
+  Axis_Y<ST, S> getRightGridlineMasterAxis() {
 
     return rightGridlineMasterAxis;
   }

@@ -23,10 +23,10 @@ import org.knowm.xchart.style.AxesChartStyler;
  */
 class ColocatedSlaveLabels {
 
-  private final Axis yAxis; // master axis (raw type matches existing AxisTickLabels field)
+  private final Axis_Y<?, ?> yAxis; // master axis (raw type matches existing AxisTickLabels field)
   private final AxesChartStyler styler;
 
-  ColocatedSlaveLabels(Axis yAxis, AxesChartStyler styler) {
+  ColocatedSlaveLabels(Axis_Y<?, ?> yAxis, AxesChartStyler styler) {
 
     this.yAxis = yAxis;
     this.styler = styler;
@@ -40,8 +40,7 @@ class ColocatedSlaveLabels {
   double maxSlaveWidth(Graphics2D g) {
 
     double maxWidth = 0;
-    for (Object slaveObj : yAxis.getColocatedSlaves()) {
-      Axis<?, ?> slave = (Axis<?, ?>) slaveObj;
+    for (Axis_ slave : yAxis.getColocatedSlaves()) {
       if (slave.getAxisTickCalculator() == null) {
         continue;
       }
@@ -80,7 +79,7 @@ class ColocatedSlaveLabels {
       double maxTickLabelWidth,
       Map<Double, TextLayout> masterLayouts) {
 
-    List<?> colocatedSlaves = yAxis.getColocatedSlaves();
+    List<? extends Axis_> colocatedSlaves = yAxis.getColocatedSlaves();
     if (colocatedSlaves.isEmpty()) {
       return;
     }
@@ -96,7 +95,7 @@ class ColocatedSlaveLabels {
     FontRenderContext frc = g.getFontRenderContext();
 
     for (int s = 0; s < colocatedSlaves.size(); s++) {
-      Axis<?, ?> slaveAxis = (Axis<?, ?>) colocatedSlaves.get(s);
+      Axis_ slaveAxis = colocatedSlaves.get(s);
       if (slaveAxis.getAxisTickCalculator() == null) {
         continue;
       }

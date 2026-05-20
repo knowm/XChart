@@ -24,18 +24,18 @@ import org.knowm.xchart.style.Styler.YAxisPosition;
 class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
 
   private final Chart<ST, S> chart;
-  private final TreeMap<Integer, Axis<ST, S>> yAxisMap;
+  private final TreeMap<Integer, Axis_Y<ST, S>> yAxisMap;
 
   // Results populated by paintLeft() / paintRight()
-  private Axis<ST, S> leftGridlineMasterAxis;
-  private Axis<ST, S> rightGridlineMasterAxis;
-  private Axis<ST, S> leftMainYAxis;
-  private Axis<ST, S> rightMainYAxis;
+  private Axis_Y<ST, S> leftGridlineMasterAxis;
+  private Axis_Y<ST, S> rightGridlineMasterAxis;
+  private Axis_Y<ST, S> leftMainYAxis;
+  private Axis_Y<ST, S> rightMainYAxis;
 
   /** The adjusted x position used as the left origin; set during paintLeft(). */
   private double leftStartUsed;
 
-  YAxisGroupPainter(Chart<ST, S> chart, TreeMap<Integer, Axis<ST, S>> yAxisMap) {
+  YAxisGroupPainter(Chart<ST, S> chart, TreeMap<Integer, Axis_Y<ST, S>> yAxisMap) {
 
     this.chart = chart;
     this.yAxisMap = yAxisMap;
@@ -56,7 +56,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
     Map<Integer, Integer> mergeMap = styler.getYAxisGroupMergeMap();
 
     // Always reset to clean state first
-    for (Axis<ST, S> ya : yAxisMap.values()) {
+    for (Axis_Y<ST, S> ya : yAxisMap.values()) {
       ya.setMasterAxis(null);
       ya.setAxisLineOwner(true);
     }
@@ -67,8 +67,8 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
       if (slaveIndex == masterIndex) {
         continue; // this IS the master entry
       }
-      Axis<ST, S> slaveAxis = yAxisMap.get(slaveIndex);
-      Axis<ST, S> masterAxis = yAxisMap.get(masterIndex);
+      Axis_Y<ST, S> slaveAxis = yAxisMap.get(slaveIndex);
+      Axis_Y<ST, S> masterAxis = yAxisMap.get(masterIndex);
       if (slaveAxis != null && masterAxis != null) {
         slaveAxis.setMasterAxis(masterAxis);
         slaveAxis.setAxisLineOwner(false);
@@ -115,7 +115,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
           if (styler.isMergedAxisColocateSlaveLabels() && i > 0) {
             continue; // colocate slaves share the master column
           }
-          Axis<ST, S> ya = yAxisMap.get(groupIndices.get(i));
+          Axis_Y<ST, S> ya = yAxisMap.get(groupIndices.get(i));
           ya.preparePaint();
           widthEstimation += ya.getBounds().getWidth();
           leftCount++;
@@ -136,7 +136,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
 
     for (Entry<Integer, List<Integer>> groupEntry : leftVisualGroups.entrySet()) {
       List<Integer> groupIndices = groupEntry.getValue();
-      Axis<ST, S> masterAxis = yAxisMap.get(groupIndices.get(0));
+      Axis_Y<ST, S> masterAxis = yAxisMap.get(groupIndices.get(0));
       masterAxis.clearColocatedSlaves();
 
       boolean colocate = styler.isMergedAxisColocateSlaveLabels() && groupIndices.size() > 1;
@@ -147,7 +147,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
           masterAxis.preparePaint();
         }
         for (int i = 1; i < groupIndices.size(); i++) {
-          Axis<ST, S> slave = yAxisMap.get(groupIndices.get(i));
+          Axis_Y<ST, S> slave = yAxisMap.get(groupIndices.get(i));
           slave.preparePaint(); // builds AxisTickCalculator_Synchronized from master
           masterAxis.addColocatedSlave(slave);
         }
@@ -162,7 +162,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
       } else {
         // Each slave gets its own column; paint slaves outermost → innermost
         for (int i = groupIndices.size() - 1; i >= 1; i--) {
-          Axis<ST, S> slave = yAxisMap.get(groupIndices.get(i));
+          Axis_Y<ST, S> slave = yAxisMap.get(groupIndices.get(i));
           if (masterAxis.getAxisTickCalculator() == null) {
             masterAxis.preparePaint();
           }
@@ -234,7 +234,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
     for (Entry<Integer, List<Integer>> groupEntry :
         rightVisualGroups.descendingMap().entrySet()) {
       List<Integer> groupIndices = groupEntry.getValue();
-      Axis<ST, S> masterAxis = yAxisMap.get(groupIndices.get(0));
+      Axis_Y<ST, S> masterAxis = yAxisMap.get(groupIndices.get(0));
       masterAxis.clearColocatedSlaves();
 
       boolean colocate = styler.isMergedAxisColocateSlaveLabels() && groupIndices.size() > 1;
@@ -244,7 +244,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
           masterAxis.preparePaint();
         }
         for (int i = 1; i < groupIndices.size(); i++) {
-          Axis<ST, S> slave = yAxisMap.get(groupIndices.get(i));
+          Axis_Y<ST, S> slave = yAxisMap.get(groupIndices.get(i));
           slave.preparePaint();
           masterAxis.addColocatedSlave(slave);
         }
@@ -262,7 +262,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
       } else {
         // Slaves outermost first
         for (int i = groupIndices.size() - 1; i >= 1; i--) {
-          Axis<ST, S> slave = yAxisMap.get(groupIndices.get(i));
+          Axis_Y<ST, S> slave = yAxisMap.get(groupIndices.get(i));
           if (masterAxis.getAxisTickCalculator() == null) {
             masterAxis.preparePaint();
           }
@@ -339,22 +339,22 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
   // Result getters
   // ---------------------------------------------------------------------------
 
-  Axis<ST, S> getLeftMainYAxis() {
+  Axis_Y<ST, S> getLeftMainYAxis() {
 
     return leftMainYAxis;
   }
 
-  Axis<ST, S> getRightMainYAxis() {
+  Axis_Y<ST, S> getRightMainYAxis() {
 
     return rightMainYAxis;
   }
 
-  Axis<ST, S> getLeftGridlineMasterAxis() {
+  Axis_Y<ST, S> getLeftGridlineMasterAxis() {
 
     return leftGridlineMasterAxis;
   }
 
-  Axis<ST, S> getRightGridlineMasterAxis() {
+  Axis_Y<ST, S> getRightGridlineMasterAxis() {
 
     return rightGridlineMasterAxis;
   }

@@ -1,7 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.util.List;
-import org.knowm.xchart.internal.chartpart.Axis.Direction;
+import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /**

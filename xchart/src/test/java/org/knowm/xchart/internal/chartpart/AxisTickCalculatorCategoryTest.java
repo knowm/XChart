@@ -21,7 +21,7 @@ public class AxisTickCalculatorCategoryTest {
     // when
     AxisTickCalculator_Category calculator =
         new AxisTickCalculator_Category(
-            Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+            Axis_.Direction.X, 900, categories, Series.DataType.String, styler);
 
     // test
     assertThat(calculator.tickLabels.size()).isEqualTo(3);
@@ -39,7 +39,7 @@ public class AxisTickCalculatorCategoryTest {
         IllegalArgumentException.class,
         () -> {
           new AxisTickCalculator_Category(
-              Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+              Axis_.Direction.X, 900, categories, Series.DataType.String, styler);
         });
   }
 
@@ -52,7 +52,7 @@ public class AxisTickCalculatorCategoryTest {
     // when
     AxisTickCalculator_Category calculator =
         new AxisTickCalculator_Category(
-            Axis.Direction.X, 900, categories, Series.DataType.String, styler);
+            Axis_.Direction.X, 900, categories, Series.DataType.String, styler);
 
     // test
     assertThat(calculator.tickLabels.size()).isEqualTo(6);
