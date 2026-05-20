@@ -3,6 +3,8 @@ package org.knowm.xchart.style;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -951,12 +953,7 @@ public abstract class AxesChartStyler extends Styler {
     if (groupIndices == null || groupIndices.length < 2) {
       throw new IllegalArgumentException("mergeYAxisGroups requires at least 2 group indices");
     }
-    int visualGroupId = groupIndices[0];
-    for (int idx : groupIndices) {
-      if (idx < visualGroupId) {
-        visualGroupId = idx;
-      }
-    }
+    int visualGroupId = Arrays.stream(groupIndices).min().getAsInt();
     for (int idx : groupIndices) {
       yAxisGroupMergeMap.put(idx, visualGroupId);
     }
@@ -985,9 +982,9 @@ public abstract class AxesChartStyler extends Styler {
     return visualId != null && visualId != logicalGroup;
   }
 
-  /** Returns the raw merge map (logical group index → visual group ID). */
-  public HashMap<Integer, Integer> getYAxisGroupMergeMap() {
-    return yAxisGroupMergeMap;
+  /** Returns an unmodifiable view of the merge map (logical group index → visual group ID). */
+  public Map<Integer, Integer> getYAxisGroupMergeMap() {
+    return Collections.unmodifiableMap(yAxisGroupMergeMap);
   }
 
   /**

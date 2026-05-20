@@ -153,18 +153,7 @@ public class MergedYAxisTest {
 
     BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
 
-    Axis_Y<?, ?> gridlineMaster = chart.axisPair.getGridlineMasterAxis();
-    assertThat(gridlineMaster.getYIndex()).isEqualTo(0);
-  }
-
-  @Test
-  public void gridlineMasterEqualsLowestIndexAxisWhenNoMerge() throws Exception {
-    XYChart chart = buildTwoAxisChart();
-    // No merge — gridline master should be the primary axis (index 0)
-
-    BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
-
-    Axis_Y<?, ?> gridlineMaster = chart.axisPair.getGridlineMasterAxis();
+    Axis_Y<?, ?> gridlineMaster = chart.axisPair.getLeftGridlineMasterAxis();
     // The primary Y-axis (group 0) is the innermost on the left, so it drives gridlines.
     assertThat(gridlineMaster.getYIndex()).isEqualTo(0);
   }

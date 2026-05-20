@@ -142,23 +142,11 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
       boolean colocate = styler.isMergedAxisColocateSlaveLabels() && groupIndices.size() > 1;
 
       if (colocate) {
-        // Slaves render inline on the master column — no separate column per slave
-        if (masterAxis.getAxisTickCalculator() == null) {
-          masterAxis.preparePaint();
-        }
-        for (int i = 1; i < groupIndices.size(); i++) {
-          Axis_Y<ST, S> slave = yAxisMap.get(groupIndices.get(i));
-          slave.preparePaint(); // builds AxisTickCalculator_Synchronized from master
-          masterAxis.addColocatedSlave(slave);
-        }
-        masterAxis.preparePaint(); // re-prep so width hint accounts for all slave label widths
-        Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
-        bounds.x = leftStart;
-        masterAxis.paint(g);
-        leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
-        leftYAxisBounds.width += bounds.getWidth();
+        setupColocateGroup(masterAxis, groupIndices);
+        leftStart =
+            paintOneColumn(
+                g, masterAxis, false, leftStart, leftYAxisBounds, paddingBetweenAxes, tickMargin);
         leftCount++;
-        leftMainYAxis = masterAxis;
       } else {
         // Each slave gets its own column; paint slaves outermost → innermost
         for (int i = groupIndices.size() - 1; i >= 1; i--) {
@@ -167,24 +155,25 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
             masterAxis.preparePaint();
           }
           slave.preparePaint();
-          Rectangle2D.Double bounds = (Rectangle2D.Double) slave.getBounds();
-          bounds.x = leftStart;
-          slave.paint(g);
-          leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
-          leftYAxisBounds.width += bounds.getWidth();
+          leftStart =
+              paintOneColumn(
+                  g, slave, false, leftStart, leftYAxisBounds, paddingBetweenAxes, tickMargin);
           leftCount++;
-          leftMainYAxis = slave;
         }
         masterAxis.preparePaint();
-        Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
-        bounds.x = leftStart;
-        masterAxis.paint(g);
-        leftStart += paddingBetweenAxes + bounds.getWidth() + tickMargin;
-        leftYAxisBounds.width += bounds.getWidth();
+        leftStart =
+            paintOneColumn(
+                g,
+                masterAxis,
+                false,
+                leftStart,
+                leftYAxisBounds,
+                paddingBetweenAxes,
+                tickMargin);
         leftCount++;
-        leftMainYAxis = masterAxis;
       }
 
+      leftMainYAxis = masterAxis;
       if (leftGridlineMasterAxis == null) {
         leftGridlineMasterAxis = masterAxis;
       }
@@ -240,25 +229,11 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
       boolean colocate = styler.isMergedAxisColocateSlaveLabels() && groupIndices.size() > 1;
 
       if (colocate) {
-        if (masterAxis.getAxisTickCalculator() == null) {
-          masterAxis.preparePaint();
-        }
-        for (int i = 1; i < groupIndices.size(); i++) {
-          Axis_Y<ST, S> slave = yAxisMap.get(groupIndices.get(i));
-          slave.preparePaint();
-          masterAxis.addColocatedSlave(slave);
-        }
-        masterAxis.preparePaint();
-        Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
-        double w = bounds.getWidth();
-        double xOffset = rightEnd - w;
-        bounds.x = xOffset;
-        rightYAxisBounds.x = xOffset;
-        masterAxis.paint(g);
-        rightYAxisBounds.width += w;
-        rightEnd -= paddingBetweenAxes + w + tickMargin;
+        setupColocateGroup(masterAxis, groupIndices);
+        rightEnd =
+            paintOneColumn(
+                g, masterAxis, true, rightEnd, rightYAxisBounds, paddingBetweenAxes, tickMargin);
         rightCount++;
-        rightMainYAxis = masterAxis;
       } else {
         // Slaves outermost first
         for (int i = groupIndices.size() - 1; i >= 1; i--) {
@@ -267,30 +242,25 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
             masterAxis.preparePaint();
           }
           slave.preparePaint();
-          Rectangle2D.Double bounds = (Rectangle2D.Double) slave.getBounds();
-          double w = bounds.getWidth();
-          double xOffset = rightEnd - w;
-          bounds.x = xOffset;
-          rightYAxisBounds.x = xOffset;
-          slave.paint(g);
-          rightYAxisBounds.width += w;
-          rightEnd -= paddingBetweenAxes + w + tickMargin;
+          rightEnd =
+              paintOneColumn(
+                  g, slave, true, rightEnd, rightYAxisBounds, paddingBetweenAxes, tickMargin);
           rightCount++;
-          rightMainYAxis = slave;
         }
         masterAxis.preparePaint();
-        Rectangle2D.Double bounds = (Rectangle2D.Double) masterAxis.getBounds();
-        double w = bounds.getWidth();
-        double xOffset = rightEnd - w;
-        bounds.x = xOffset;
-        rightYAxisBounds.x = xOffset;
-        masterAxis.paint(g);
-        rightYAxisBounds.width += w;
-        rightEnd -= paddingBetweenAxes + w + tickMargin;
+        rightEnd =
+            paintOneColumn(
+                g,
+                masterAxis,
+                true,
+                rightEnd,
+                rightYAxisBounds,
+                paddingBetweenAxes,
+                tickMargin);
         rightCount++;
-        rightMainYAxis = masterAxis;
       }
 
+      rightMainYAxis = masterAxis;
       if (rightGridlineMasterAxis == null) {
         rightGridlineMasterAxis = masterAxis;
       }
@@ -307,6 +277,55 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
   // ---------------------------------------------------------------------------
   // Private helpers
   // ---------------------------------------------------------------------------
+
+  /**
+   * Sets up a colocate group: ensures the master has a tick calculator, prepares each slave
+   * (building a {@link AxisTickCalculator_Synchronized} from the master), registers each slave on
+   * the master, then re-prepares the master so its width hint accounts for all slave label widths.
+   */
+  private void setupColocateGroup(Axis_Y<ST, S> masterAxis, List<Integer> groupIndices) {
+
+    if (masterAxis.getAxisTickCalculator() == null) {
+      masterAxis.preparePaint();
+    }
+    for (int i = 1; i < groupIndices.size(); i++) {
+      Axis_Y<ST, S> slave = yAxisMap.get(groupIndices.get(i));
+      slave.preparePaint();
+      masterAxis.addColocatedSlave(slave);
+    }
+    masterAxis.preparePaint(); // re-prep so width hint accounts for all slave label widths
+  }
+
+  /**
+   * Positions and paints a single axis column, updates the accumulator bounds, and returns the new
+   * x-cursor position.
+   *
+   * <p>For the left side ({@code onRight=false}), {@code cursor} is the left edge of the column
+   * and advances rightward. For the right side ({@code onRight=true}), {@code cursor} is the right
+   * edge and retreats leftward.
+   */
+  private double paintOneColumn(
+      Graphics2D g,
+      Axis_Y<ST, S> axis,
+      boolean onRight,
+      double cursor,
+      Rectangle2D.Double accBounds,
+      int padding,
+      int tickMargin) {
+
+    Rectangle2D.Double bounds = (Rectangle2D.Double) axis.getBounds();
+    double w = bounds.getWidth();
+    if (onRight) {
+      double x = cursor - w;
+      bounds.x = x;
+      accBounds.x = x;
+    } else {
+      bounds.x = cursor;
+    }
+    axis.paint(g);
+    accBounds.width += w;
+    return onRight ? cursor - padding - w - tickMargin : cursor + padding + w + tickMargin;
+  }
 
   /**
    * Partitions all Y-axes into visual groups for one side.

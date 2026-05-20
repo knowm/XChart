@@ -426,7 +426,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    * plot tick marks. When axes are merged this is the master of the lowest-index visual group on
    * the left side; otherwise it equals {@link #getLeftMainYAxis()}.
    */
-  Axis_Y<ST, S> getGridlineMasterAxis() {
+  Axis_Y<ST, S> getLeftGridlineMasterAxis() {
 
     return leftGridlineMasterAxis;
   }

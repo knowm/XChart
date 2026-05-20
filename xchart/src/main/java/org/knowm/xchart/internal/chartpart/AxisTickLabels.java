@@ -21,6 +21,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
   private final Chart<ST, S> chart;
   private final Direction direction;
   private final Axis_<?, ?> yAxis;
+  private final ColocatedSlaveLabels colocatedSlaveLabels;
   private Rectangle2D bounds;
 
   /**
@@ -34,6 +35,8 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
     this.chart = chart;
     this.direction = direction;
     this.yAxis = yAxis;
+    this.colocatedSlaveLabels =
+        yAxis != null ? new ColocatedSlaveLabels(yAxis, chart.getStyler()) : null;
   }
 
   @Override
@@ -86,7 +89,6 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       }
 
       // Also account for the widths of any colocated slave labels so the column is wide enough.
-      ColocatedSlaveLabels colocatedSlaveLabels = new ColocatedSlaveLabels(yAxis, styler);
       double slaveMaxWidth = colocatedSlaveLabels.maxSlaveWidth(g);
       if (slaveMaxWidth > maxTickLabelWidth) {
         maxTickLabelWidth = slaveMaxWidth;
