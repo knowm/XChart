@@ -7,7 +7,6 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.knowm.xchart.internal.chartpart.Axis.Direction;
@@ -87,17 +86,10 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       }
 
       // Also account for the widths of any colocated slave labels so the column is wide enough.
-      for (Object slaveObj : yAxis.getColocatedSlaves()) {
-        Axis<?, ?> slave = (Axis<?, ?>) slaveObj;
-        if (slave.getAxisTickCalculator() == null) continue;
-        FontRenderContext frc = g.getFontRenderContext();
-        for (String slaveLabel : slave.getAxisTickCalculator().getTickLabels()) {
-          if (slaveLabel != null && !slaveLabel.isEmpty()) {
-            TextLayout tl = new TextLayout(slaveLabel, styler.getAxisTickLabelsFont(), frc);
-            double w = tl.getBounds().getWidth();
-            if (w > maxTickLabelWidth) maxTickLabelWidth = w;
-          }
-        }
+      ColocatedSlaveLabels colocatedSlaveLabels = new ColocatedSlaveLabels(yAxis, styler);
+      double slaveMaxWidth = colocatedSlaveLabels.maxSlaveWidth(g);
+      if (slaveMaxWidth > maxTickLabelWidth) {
+        maxTickLabelWidth = slaveMaxWidth;
       }
 
       for (Map.Entry<Double, TextLayout> tick : axisLabelTextLayouts.entrySet()) {
@@ -131,65 +123,8 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       }
 
       // Render colocated slave labels stacked below each master label
-      List<?> colocatedSlaves = yAxis.getColocatedSlaves();
-      if (!colocatedSlaves.isEmpty()) {
-        // Measure master label height (max across all rendered labels)
-        double masterLabelHeight = 0;
-        for (TextLayout tl : axisLabelTextLayouts.values()) {
-          double h = tl.getBounds().getHeight();
-          if (h > masterLabelHeight) masterLabelHeight = h;
-        }
-        double GAP = styler.getMergedAxisColocatedSlaveLabelsGap();
-
-        FontRenderContext frc = g.getFontRenderContext();
-        for (int s = 0; s < colocatedSlaves.size(); s++) {
-          Axis<?, ?> slaveAxis = (Axis<?, ?>) colocatedSlaves.get(s);
-          if (slaveAxis.getAxisTickCalculator() == null) continue;
-
-          g.setColor(styler.getYAxisGroupTickLabelsColorMap(slaveAxis.getYIndex()));
-          double slaveDepthOffset = masterLabelHeight / 2.0 + GAP + (s * (masterLabelHeight + GAP));
-
-          for (int i = 0; i < slaveAxis.getAxisTickCalculator().getTickLabels().size(); i++) {
-            String slaveLabel = slaveAxis.getAxisTickCalculator().getTickLabels().get(i);
-            double tickLocation = slaveAxis.getAxisTickCalculator().getTickLocations().get(i);
-            double flippedTickLocation = yOffset + height - tickLocation;
-
-            if (slaveLabel != null
-                && flippedTickLocation > yOffset
-                && flippedTickLocation < yOffset + height) {
-              TextLayout slaveLayout =
-                  new TextLayout(slaveLabel, styler.getAxisTickLabelsFont(), frc);
-              Shape slaveShape = slaveLayout.getOutline(null);
-              Rectangle2D slaveBounds = slaveShape.getBounds();
-              double slaveWidth = slaveBounds.getWidth();
-              double slaveHeight = slaveBounds.getHeight();
-
-              double xPos;
-              switch (styler.getYAxisLabelAlignment()) {
-                case Right:
-                  xPos = xOffset + maxTickLabelWidth - slaveWidth;
-                  break;
-                case Centre:
-                  xPos = xOffset + (maxTickLabelWidth - slaveWidth) / 2;
-                  break;
-                case Left:
-                default:
-                  xPos = xOffset;
-              }
-              double yPos = flippedTickLocation + slaveDepthOffset + slaveHeight / 2.0;
-
-              AffineTransform orig = g.getTransform();
-              AffineTransform at = new AffineTransform();
-              at.translate(xPos, yPos);
-              g.transform(at);
-              g.fill(slaveShape);
-              g.setTransform(orig);
-            }
-          }
-        }
-        // Restore master color
-        g.setColor(styler.getYAxisGroupTickLabelsColorMap(yAxis.getYIndex()));
-      }
+      colocatedSlaveLabels.paint(
+          g, xOffset, yOffset, height, maxTickLabelWidth, axisLabelTextLayouts);
 
       // bounds
       bounds = new Rectangle2D.Double(xOffset, yOffset, maxTickLabelWidth, height);
