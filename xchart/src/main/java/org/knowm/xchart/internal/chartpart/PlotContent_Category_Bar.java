@@ -484,7 +484,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           g.draw(line);
         }
         // add data labels
-        if (chart.getStyler().isToolTipsEnabled()) {
+        if (toolTips != null && chart.getStyler().isToolTipsEnabled()) {
           Rectangle2D.Double rect =
               new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
           double yPoint;

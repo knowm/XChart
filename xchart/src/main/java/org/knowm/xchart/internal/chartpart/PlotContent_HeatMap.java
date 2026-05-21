@@ -95,7 +95,7 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
         showValue(g, rect, df.format(numbers[2]));
       }
 
-      if (heatMapStyler.isToolTipsEnabled()) {
+      if (toolTips != null && heatMapStyler.isToolTipsEnabled()) {
         toolTips.addData(
             rect,
             rect.getCenterX(),

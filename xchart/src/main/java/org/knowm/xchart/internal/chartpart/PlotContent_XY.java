@@ -304,7 +304,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
         }
 
         // add tooltips
-        if (chart.getStyler().isToolTipsEnabled()) {
+        if (toolTips != null && chart.getStyler().isToolTipsEnabled()) {
           toolTips.addData(
               xOffset,
               yOffset,

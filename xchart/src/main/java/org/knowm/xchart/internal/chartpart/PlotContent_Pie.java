@@ -193,7 +193,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // TOOLTIPS ////////////////////////////////////////////////////
       // TOOLTIPS ////////////////////////////////////////////////////
 
-      if (pieStyler.isToolTipsEnabled()) {
+      if (toolTips != null && pieStyler.isToolTipsEnabled()) {
         // add data labels
         // maybe another option to construct this label
         // TODO use tool tip label type enum and customize this label

@@ -68,8 +68,10 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     }
 
     // TODO put this in PlotContent_XY.
-    if ((chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled())
-        || (chart instanceof OHLCChart && ((OHLCStyler) chart.getStyler()).isZoomEnabled())) {
+    if (chartZoom != null
+        && ((chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled())
+            || (chart instanceof OHLCChart
+                && ((OHLCStyler) chart.getStyler()).isZoomEnabled()))) {
       chartZoom.paint(g);
     }
 
