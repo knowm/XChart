@@ -8,7 +8,8 @@ import org.knowm.xchart.style.Styler.ChartTheme;
 
 public class TestForIssue410 {
 
-  public static void main(String[] args) {
+  public static BoxChart getChart() {
+
 
     // Create Chart
     BoxChart chart =
@@ -18,6 +19,10 @@ public class TestForIssue410 {
 
     // Series
     chart.addSeries("boxOne", Arrays.asList(1000, 5000, 60000));
-    new SwingWrapper<BoxChart>(chart).displayChart();
+    return chart;
+  }
+
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

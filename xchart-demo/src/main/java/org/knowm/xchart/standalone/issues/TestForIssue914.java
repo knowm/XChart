@@ -77,4 +77,9 @@ public class TestForIssue914 {
 
     return chart;
   }
+  public static XYChart getChart() {
+
+    return getChartAllOn();
+  }
+
 }

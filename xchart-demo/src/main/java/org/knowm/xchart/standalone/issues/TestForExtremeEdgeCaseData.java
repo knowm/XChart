@@ -7,7 +7,8 @@ import org.knowm.xchart.XYChartBuilder;
 
 public class TestForExtremeEdgeCaseData {
 
-  public static void main(String[] args) throws IOException {
+  public static XYChart getChart() {
+
 
     final XYChart chart = new XYChartBuilder().build();
 
@@ -19,6 +20,10 @@ public class TestForExtremeEdgeCaseData {
     final double[] y = {40.16064257028113, 40.16064257028115, -1 * Double.MAX_VALUE};
 
     chart.addSeries("Values", x, y);
-    new SwingWrapper(chart).displayChart();
+    return chart;
+  }
+
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

@@ -15,7 +15,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class TestForIssue181 {
 
-  public static void main(String[] args) {
+  public static XYChart getChart() {
+
 
     // Create Chart
     XYChart chart =
@@ -58,6 +59,10 @@ public class TestForIssue181 {
     chart.getStyler().setSeriesColors(colors);
     chart.getStyler().setPlotGridLinesVisible(false);
     chart.getStyler().setPlotContentSize(1.0);
-    new SwingWrapper<XYChart>(chart).displayChart();
+    return chart;
+  }
+
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

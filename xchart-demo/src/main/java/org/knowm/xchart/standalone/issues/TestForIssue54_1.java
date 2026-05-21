@@ -295,4 +295,9 @@ public class TestForIssue54_1 {
 
     return chart;
   }
+  public static XYChart getChart() {
+
+    return (XYChart) getLineChart();
+  }
+
 }

@@ -107,4 +107,9 @@ public class TestForIssue240 {
     series2.setSmooth(false);
     return chart;
   }
+  public static XYChart getChart() {
+
+    return getLineAndSmoothedAreaChart();
+  }
+
 }

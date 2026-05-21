@@ -12,22 +12,17 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class TestForIssue390 {
 
-  public static void main(String[] args) throws IOException {
+  public static XYChart getChart() {
 
     Random rand = new Random();
 
     double min = 0;
     double max = 20;
     int nbServices = 20;
-    // int nbExpress = 1;
     int nbInstances = 50;
 
     long s = 24;
     rand.setSeed(s);
-    /*double[][] coordinates = new double[nbServices][2];
-
-    for (int i = 0 ; i < coordinates.length; i++) {
-    }*/
 
     final XYChart chart =
         new XYChartBuilder()
@@ -42,10 +37,6 @@ public class TestForIssue390 {
     chart.getStyler().setLegendVisible(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideSW);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
-    // chart.getStyler().setYAxisMax(2.0);
-
-    /*XYDataset dataset = XYDataset.createDataset();
-    ChartFactory.createXYLineChart("Test", "X", "Y", dataset);*/
 
     double[] xData = new double[nbServices];
     for (int i = 0; i < xData.length; i++) {
@@ -55,22 +46,19 @@ public class TestForIssue390 {
     double[][] results = new double[3][nbServices];
 
     for (int t = 0; t < 3; t++) {
-      System.out.print("Simulations pour t=" + (t + 1) * 0.25 + "\n");
-
       for (int n = 1; n < nbServices + 1; n++) {
         results[t][n - 1] = 1.2;
-        // System.out.print(results[n-1] + "\n");
       }
-
       chart.addSeries(Double.toString(t), xData, results[t]);
-      /*System.out.print(xData.length + "\n");
-      System.out.print(results.length + "\n");*/
-      System.out.print(results[t][0] + " " + results[t][nbServices - 1] + "\n");
     }
 
-    // Show it
-    new SwingWrapper(chart).displayChart();
+    return chart;
+  }
 
+  public static void main(String[] args) throws IOException {
+
+    XYChart chart = getChart();
+    new SwingWrapper(chart).displayChart();
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
   }
 }

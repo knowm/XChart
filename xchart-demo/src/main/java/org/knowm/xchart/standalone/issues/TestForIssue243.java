@@ -7,7 +7,8 @@ import org.knowm.xchart.style.markers.Circle;
 
 public class TestForIssue243 {
 
-  public static void main(String[] args) throws Exception {
+  public static XYChart getChart() {
+
 
     double[] xData = new double[] {1.0, 2.0};
     double[] yData = new double[] {Double.NaN, 1.0};
@@ -18,6 +19,10 @@ public class TestForIssue243 {
     chart.getSeriesMap().get("1").setMarker(new Circle());
 
     // Show it
-    new SwingWrapper(chart).displayChart();
+    return chart;
+  }
+
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

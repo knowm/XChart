@@ -7,7 +7,8 @@ import org.knowm.xchart.SwingWrapper;
 
 public class TestForIssue139 {
 
-  public static void main(String[] args) {
+  public static CategoryChart getChart() {
+
 
     int[] x = new int[] {0, 1, 2, 3, 4};
     int[] a = new int[] {1, 3, 1, 2, 1};
@@ -24,7 +25,10 @@ public class TestForIssue139 {
     chart.addSeries("A", x, a);
     chart.addSeries("B", x, b);
     chart.addSeries("C", x, c);
+    return chart;
+  }
 
-    new SwingWrapper(chart).displayChart();
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

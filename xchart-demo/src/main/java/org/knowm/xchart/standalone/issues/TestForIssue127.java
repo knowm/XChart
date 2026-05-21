@@ -48,4 +48,16 @@ public class TestForIssue127 {
     new SwingWrapper(chart).displayChart();
     Thread.sleep(1000);
   }
+  public static XYChart getChart() {
+
+    int[] x = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+    int[] y = new int[] {1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1};
+    XYChart chart =
+        new XYChartBuilder().width(640).height(480).xAxisTitle("x").yAxisTitle("y").build();
+    chart.setTitle("TEst");
+    chart.getStyler().setLegendVisible(false);
+    chart.addSeries("test", x, y);
+    return chart;
+  }
+
 }

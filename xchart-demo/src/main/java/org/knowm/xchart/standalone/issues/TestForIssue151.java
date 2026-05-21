@@ -6,7 +6,8 @@ import org.knowm.xchart.XYChartBuilder;
 
 public class TestForIssue151 {
 
-  public static void main(String[] args) {
+  public static XYChart getChart() {
+
 
     // Create Chart
     XYChart chart = new XYChartBuilder().width(600).height(400).build();
@@ -21,7 +22,10 @@ public class TestForIssue151 {
 
     chart.addSeries("A", xData1, yData1);
     chart.addSeries("B", xData2, yData2);
+    return chart;
+  }
 
-    new SwingWrapper<XYChart>(chart).displayChart();
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

@@ -10,7 +10,8 @@ import org.knowm.xchart.style.XYStyler;
 
 public class TestForIssue98 {
 
-  public static void main(String[] args) throws IOException {
+  public static XYChart getChart() {
+
 
     final XYChart chart = new XYChart(1920, 1080);
     XYStyler manager = chart.getStyler();
@@ -1287,6 +1288,11 @@ public class TestForIssue98 {
     }
 
     chart.addSeries("Values", dates, values);
-    new SwingWrapper(chart).displayChart();
+    return chart;
+  }
+
+  public static void main(String[] args) {
+
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }
