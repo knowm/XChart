@@ -672,6 +672,10 @@ Restart Eclipse. Select the plugin in `Preferences > Java > Code Style > Formatt
 
 In the plugins section in IntelliJ search for `google-java-format` and install the plugin. Restart IntelliJ.
 
+## Chart Gallery
+
+Browse all charts online at **[knowm.github.io/XChart](https://knowm.github.io/XChart/)** — a searchable gallery with every chart type rendered from the demo app, organized by category.
+
 ## Running Demo - option 1 - using released version
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Demo.png)
