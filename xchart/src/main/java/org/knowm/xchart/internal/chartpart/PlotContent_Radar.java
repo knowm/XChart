@@ -233,7 +233,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
         }
 
         // add data labels
-        if (toolTips != null && chart.getStyler().isToolTipsEnabled()) {
+        if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
           String label = null;
           if (tooltipOverrides != null) {
             label = tooltipOverrides[i];
@@ -242,7 +242,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
             String ystr = decimalFormat.format(value);
             label = series.getName() + " (" + radiiLabels[i] + ": " + ystr + ")";
           }
-          this.toolTips.addData(xOffset, yOffset, label);
+          interactionData.addToolTip(xOffset, yOffset, label);
         }
       }
       path.closePath();

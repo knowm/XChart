@@ -305,4 +305,14 @@ public abstract class Chart<ST extends Styler, S extends Series> {
 
     return seriesMap;
   }
+
+  public void enableInteractionData() {
+
+    plot.plotContent.interactionData = new PlotInteractionData();
+  }
+
+  public PlotInteractionData getInteractionData() {
+
+    return plot.plotContent.getInteractionData();
+  }
 }

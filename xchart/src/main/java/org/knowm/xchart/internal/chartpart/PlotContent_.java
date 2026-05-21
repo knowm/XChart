@@ -4,19 +4,13 @@ import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import org.knowm.xchart.OHLCChart;
-import org.knowm.xchart.XYChart;
 import org.knowm.xchart.internal.series.Series;
-import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.XYStyler;
 
 public abstract class PlotContent_<ST extends Styler, S extends Series> implements ChartPart {
 
   final Chart<ST, S> chart;
-  ToolTips toolTips; // tooltips are available for Category, HorizontalBar, OHLC and XY charts
-  ChartZoom chartZoom;
-  //  Cursor cursor;
+  PlotInteractionData interactionData;
 
   // TODO create a PlotContent_Axes class to put this in.
   static final BasicStroke ERROR_BAR_STROKE =
@@ -56,24 +50,12 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
       g.setClip(bounds);
     }
 
-    if (chart.getStyler().isToolTipsEnabled() && toolTips != null) {
-      toolTips.clearData();
+    if (interactionData != null) {
+      interactionData.clear();
+      interactionData.plotBounds = getBounds();
     }
 
     doPaint(g);
-
-    // after painting the plot content, paint the tooltip(s) if necessary
-    if (chart.getStyler().isToolTipsEnabled() && toolTips != null) {
-      toolTips.paint(g);
-    }
-
-    // TODO put this in PlotContent_XY.
-    if (chartZoom != null
-        && ((chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled())
-            || (chart instanceof OHLCChart
-                && ((OHLCStyler) chart.getStyler()).isZoomEnabled()))) {
-      chartZoom.paint(g);
-    }
 
     g.setClip(saveClip);
   }
@@ -96,11 +78,8 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
     }
   }
 
-  public void setToolTips(ToolTips toolTips) {
-    this.toolTips = toolTips;
-  }
+  PlotInteractionData getInteractionData() {
 
-  public void setChartZoom(ChartZoom chartZoom) {
-    this.chartZoom = chartZoom;
+    return interactionData;
   }
 }

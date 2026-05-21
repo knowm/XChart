@@ -34,6 +34,8 @@ public class Cursor extends MouseAdapter implements ChartPart {
 
   private final Map<String, Series> seriesMap;
 
+  private Rectangle2D plotBounds = null;
+
   private double mouseX;
   private double mouseY;
   private double startX;
@@ -49,8 +51,6 @@ public class Cursor extends MouseAdapter implements ChartPart {
 
     this.chart = chart;
     this.styler = (XYStyler) chart.getStyler();
-    PlotContent_XY plotContent_xy = (PlotContent_XY) (chart.plot.plotContent);
-    plotContent_xy.setCursor(this);
 
     // clear lists
     dataPointList.clear();
@@ -82,11 +82,10 @@ public class Cursor extends MouseAdapter implements ChartPart {
 
   private boolean isMouseOutOfPlotContent() {
 
-    boolean isMouseOut = false;
-    if (!chart.plot.plotContent.getBounds().contains(mouseX, mouseY)) {
-      isMouseOut = true;
+    if (plotBounds == null) {
+      return true;
     }
-    return isMouseOut;
+    return !plotBounds.contains(mouseX, mouseY);
   }
 
   @Override
@@ -128,9 +127,9 @@ public class Cursor extends MouseAdapter implements ChartPart {
     Line2D.Double line = new Line2D.Double();
     line.setLine(
         dataPoint.x,
-        chart.plot.plotContent.getBounds().getY(),
+        plotBounds.getY(),
         dataPoint.x,
-        chart.plot.plotContent.getBounds().getY() + chart.plot.plotContent.getBounds().getHeight());
+        plotBounds.getY() + plotBounds.getHeight());
     g.draw(line);
   }
 
@@ -159,14 +158,12 @@ public class Cursor extends MouseAdapter implements ChartPart {
     startX = mouseX;
     startY = mouseY;
     if (mouseX + MOUSE_SPACING + backgroundWidth
-        > chart.plot.plotContent.getBounds().getX()
-            + chart.plot.plotContent.getBounds().getWidth()) {
+        > plotBounds.getX() + plotBounds.getWidth()) {
       startX = mouseX - backgroundWidth - MOUSE_SPACING;
     }
 
     if (mouseY + MOUSE_SPACING + backgroundHeight
-        > chart.plot.plotContent.getBounds().getY()
-            + chart.plot.plotContent.getBounds().getHeight()) {
+        > plotBounds.getY() + plotBounds.getHeight()) {
       startY = mouseY - backgroundHeight - MOUSE_SPACING;
     }
 
@@ -221,14 +218,17 @@ public class Cursor extends MouseAdapter implements ChartPart {
     g.setTransform(orig);
   }
 
-  void addData(double xOffset, double yOffset, String xValue, String yValue, String seriesName) {
+  public void setData(PlotInteractionData data) {
 
-    DataPoint dataPoint = new DataPoint(xOffset, yOffset, xValue, yValue, seriesName);
-    dataPointList.add(dataPoint);
-  }
-
-  void clearDataPoints() {
-	  dataPointList.clear();
+    dataPointList.clear();
+    if (data == null) {
+      plotBounds = null;
+      return;
+    }
+    plotBounds = data.getPlotBounds();
+    for (PlotInteractionData.CursorData cd : data.getCursorDataList()) {
+      dataPointList.add(new DataPoint(cd.x, cd.y, cd.xValue, cd.yValue, cd.seriesName));
+    }
   }
 
   /** One DataPoint per series, keep the DataPoint closest to mouseX */
@@ -237,10 +237,8 @@ public class Cursor extends MouseAdapter implements ChartPart {
     List<DataPoint> dataPoints = new ArrayList<>();
     for (DataPoint dataPoint : dataPointList) {
       if (dataPoint.shape.contains(mouseX, dataPoint.shape.getBounds().getCenterY())
-          && chart.plot.plotContent.getBounds().getY() < mouseY
-          && chart.plot.plotContent.getBounds().getY()
-                  + chart.plot.plotContent.getBounds().getHeight()
-              > mouseY) {
+          && plotBounds.getY() < mouseY
+          && plotBounds.getY() + plotBounds.getHeight() > mouseY) {
         dataPoints.add(dataPoint);
       }
     }

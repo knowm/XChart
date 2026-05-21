@@ -223,7 +223,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
       double yOffset = yCenter - Math.sin(radians) * (yDiameter * arrowLengthPercentage);
 
       Path2D.Double path = new Path2D.Double();
-      if (toolTips != null && styler.isToolTipsEnabled()) {
+      if (interactionData != null && styler.isToolTipsEnabled()) {
         String label = series.getLabel();
         if (label == null) {
           if (styler.getDecimalPattern() != null) {
@@ -233,7 +233,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
             label = df.format(value);
           }
         }
-        toolTips.addData(path, xOffset, yOffset + 10, 0, label);
+        interactionData.addToolTip(path, xOffset, yOffset + 10, 0, label);
       }
       path.moveTo(xCenter, yCenter);
 

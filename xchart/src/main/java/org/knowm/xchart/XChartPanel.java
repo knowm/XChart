@@ -36,6 +36,7 @@ import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ChartZoom;
 import org.knowm.xchart.internal.chartpart.Cursor;
+import org.knowm.xchart.internal.chartpart.PlotInteractionData;
 import org.knowm.xchart.internal.chartpart.ToolTips;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.OHLCStyler;
@@ -56,6 +57,8 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private String printString = "Print...";
   private String resetString = "Reset Zoom";
   private ToolTips toolTips = null;
+  private Cursor cursor = null;
+  private ChartZoom chartZoom = null;
 
   /**
    * Constructor
@@ -91,11 +94,13 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     // Mouse Listener for Zoom. Available for XYCharts and OHLCCharts
     if ((chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled())
         || (chart instanceof OHLCChart && ((OHLCStyler) chart.getStyler()).isZoomEnabled())) {
+      chart.enableInteractionData();
       @SuppressWarnings("unchecked")
-      ChartZoom chartZoom =
+      ChartZoom zoom =
           new ChartZoom((Chart<? extends AxesChartStyler, ?>) chart, this, resetString);
-      this.addMouseListener(chartZoom); // for clicking
-      this.addMouseMotionListener(chartZoom); // for moving
+      this.chartZoom = zoom;
+      this.addMouseListener(zoom); // for clicking
+      this.addMouseMotionListener(zoom); // for moving
 
       // Escape key resets zoom (fix for issue #930)
       KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
@@ -113,11 +118,14 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     // Mouse motion listener for Cursor
     if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isCursorEnabled()) {
-      this.addMouseMotionListener(new Cursor(chart));
+      chart.enableInteractionData();
+      cursor = new Cursor(chart);
+      this.addMouseMotionListener(cursor);
     }
 
     // Mouse motion listener for Tooltips
     if (chart.getStyler().isToolTipsEnabled()) {
+      chart.enableInteractionData();
       toolTips = new ToolTips(chart);
       this.addMouseMotionListener(toolTips); // for moving
     }
@@ -127,9 +135,14 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
         new ComponentAdapter() {
           public void componentResized(ComponentEvent ev) {
             if (chart.getStyler().isToolTipsEnabled()) {
-              XChartPanel.this.removeMouseListener(toolTips);
+              XChartPanel.this.removeMouseMotionListener(toolTips);
               toolTips = new ToolTips(chart);
               XChartPanel.this.addMouseMotionListener(toolTips);
+            }
+            if (cursor != null) {
+              XChartPanel.this.removeMouseMotionListener(cursor);
+              cursor = new Cursor(chart);
+              XChartPanel.this.addMouseMotionListener(cursor);
             }
           }
         });
@@ -183,6 +196,22 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     Graphics2D g2d = (Graphics2D) g.create();
     chart.paint(g2d, getWidth(), getHeight());
+
+    PlotInteractionData interactionData = chart.getInteractionData();
+    if (interactionData != null) {
+      if (toolTips != null) {
+        toolTips.setData(interactionData);
+        toolTips.paint(g2d);
+      }
+      if (cursor != null) {
+        cursor.setData(interactionData);
+        cursor.paint(g2d);
+      }
+      if (chartZoom != null) {
+        chartZoom.paint(g2d);
+      }
+    }
+
     g2d.dispose();
   }
 
