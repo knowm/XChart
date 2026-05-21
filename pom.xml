@@ -49,6 +49,7 @@
     <modules>
         <module>xchart</module>
         <module>xchart-demo</module>
+        <module>xchart-site</module>
     </modules>
 
     <repositories>
