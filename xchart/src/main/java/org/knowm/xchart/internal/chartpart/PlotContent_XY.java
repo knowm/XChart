@@ -304,7 +304,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
         }
 
         // add tooltips
-        if (chart.getStyler().isToolTipsEnabled()) {
+        if (toolTips != null && chart.getStyler().isToolTipsEnabled()) {
           toolTips.addData(
               xOffset,
               yOffset,
@@ -312,7 +312,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
               chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
         }
 
-        if (xyStyler.isCursorEnabled()) {
+        if (cursor != null && xyStyler.isCursorEnabled()) {
           Format xFormat;
           Format yFormat;
           if (xyStyler.getCustomCursorXDataFormattingFunction() == null) {
@@ -339,7 +339,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
       g.setColor(series.getFillColor());
       closePathXY(g, path, previousX, yZeroOffset, polygonStartX, polygonStartY);
     }
-    if (chart.getStyler().isCursorEnabled()) {
+    if (cursor != null && chart.getStyler().isCursorEnabled()) {
       cursor.paint(g);
     }
   }

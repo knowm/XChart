@@ -223,7 +223,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
       double yOffset = yCenter - Math.sin(radians) * (yDiameter * arrowLengthPercentage);
 
       Path2D.Double path = new Path2D.Double();
-      if (styler.isToolTipsEnabled()) {
+      if (toolTips != null && styler.isToolTipsEnabled()) {
         String label = series.getLabel();
         if (label == null) {
           if (styler.getDecimalPattern() != null) {

@@ -233,7 +233,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
         }
 
         // add data labels
-        if (chart.getStyler().isToolTipsEnabled()) {
+        if (toolTips != null && chart.getStyler().isToolTipsEnabled()) {
           String label = null;
           if (tooltipOverrides != null) {
             label = tooltipOverrides[i];
