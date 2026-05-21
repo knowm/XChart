@@ -262,15 +262,25 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
                 } else {
                   g.setPaint(series.getDownColor());
                 }
-                rect.setRect(
-                    xStart,
-                    Math.min(openOffset, closeOffset),
-                    xEnd - xStart,
-                    Math.abs(closeOffset - openOffset));
-                g.fill(rect);
-                // add data labels
-                if (chart.getStyler().isToolTipsEnabled()) {
-                  toolTipArea.add(new Area(rect));
+                if (openOffset == closeOffset) {
+                  // Doji: open == close, draw a horizontal line across the candle width
+                  line.setLine(xStart, openOffset, xEnd, openOffset);
+                  g.draw(line);
+                  if (chart.getStyler().isToolTipsEnabled()) {
+                    rect.setRect(xStart, openOffset - lineWidth / 2, xEnd - xStart, lineWidth);
+                    toolTipArea.add(new Area(rect));
+                  }
+                } else {
+                  rect.setRect(
+                      xStart,
+                      Math.min(openOffset, closeOffset),
+                      xEnd - xStart,
+                      Math.abs(closeOffset - openOffset));
+                  g.fill(rect);
+                  // add data labels
+                  if (chart.getStyler().isToolTipsEnabled()) {
+                    toolTipArea.add(new Area(rect));
+                  }
                 }
 
               } else { // HiLo style
