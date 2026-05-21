@@ -253,6 +253,38 @@ body {
   font-size: .95rem;
 }
 
+/* ── GitHub link (fixes page) ── */
+.gh-link {
+  display: inline-block;
+  margin-top: .25rem;
+  font-size: .78rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  transition: color .15s;
+}
+
+.gh-link:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+/* ── No-image placeholder (fixes page) ── */
+.chart-no-image {
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.no-image-label {
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+
+/* ── Active header nav link ── */
+.header-links a.active {
+  color: var(--accent);
+}
+
 /* ── Footer ── */
 .site-footer {
   border-top: 1px solid var(--border);
