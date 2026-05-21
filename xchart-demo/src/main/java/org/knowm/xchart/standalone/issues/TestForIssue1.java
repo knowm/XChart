@@ -34,4 +34,9 @@ public class TestForIssue1 {
     chart.addSeries("y(x)", null, yData);
     return chart;
   }
+  public static XYChart getChart() {
+
+    return createChart("chart1", new double[]{2.0, 1.0, 0.0});
+  }
+
 }

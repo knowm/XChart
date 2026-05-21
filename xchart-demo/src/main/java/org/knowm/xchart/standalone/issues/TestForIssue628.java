@@ -37,4 +37,9 @@ public class TestForIssue628 {
 
     return chart;
   }
+  public static XYChart getChart() {
+
+    return getCategoryChart();
+  }
+
 }

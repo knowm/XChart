@@ -107,4 +107,9 @@ public class TestForPR847 {
     chart.addSeries("Copper", 17);
     chart.addSeries("Zinc", 40);
   }
+  public static PieChart getChart() {
+
+    return getChartDefault();
+  }
+
 }

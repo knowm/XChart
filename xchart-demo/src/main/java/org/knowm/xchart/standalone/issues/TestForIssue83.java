@@ -9,7 +9,8 @@ import org.knowm.xchart.style.lines.SeriesLines;
 
 public class TestForIssue83 {
 
-  public static void main(String[] args) throws IOException {
+  public static XYChart getChart() {
+
 
     final XYChart chart = new XYChart(500, 580);
     final Styler styleManager = chart.getStyler();
@@ -119,8 +120,10 @@ public class TestForIssue83 {
       40.5, 40.35, 40.43, 40.38, 40.58, 40.52, 40.59, 40.49, 40.55, 40.56, 40.53, 40.47, 40.41
     };
     chart.addSeries("Results", keys, values).setLineStyle(SeriesLines.NONE);
+    return chart;
+  }
 
-    // BitmapEncoder.saveBitmap(chart, "example", BitmapFormat.PNG);
-    new SwingWrapper(chart).displayChart();
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

@@ -48,4 +48,9 @@ public class TestForIssue315 {
 
     new SwingWrapper(charts).displayChartMatrix();
   }
+  public static XYChart getChart() {
+
+    return getChart(true, true);
+  }
+
 }

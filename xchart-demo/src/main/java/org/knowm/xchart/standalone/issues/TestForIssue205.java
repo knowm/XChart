@@ -10,7 +10,7 @@ import org.knowm.xchart.SwingWrapper;
 
 public class TestForIssue205 {
 
-  public static void main(String[] args) throws IOException {
+  public static CategoryChart getChart() {
 
     List<Double> myData = new ArrayList();
     myData.add(10.0);
@@ -39,12 +39,11 @@ public class TestForIssue205 {
     chart.getStyler().setAvailableSpaceFill(.96);
     chart.getStyler().setOverlapped(false);
     chart.addSeries("histogram ", histogram.getxAxisData(), histogram.getyAxisData());
-    //    BitmapEncoder.saveBitmap(chart, "\\MyHistogram", BitmapFormat.JPG);
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+    return chart;
+  }
 
-    System.out.println(
-        "Bins :" + histogram.getxAxisData()); // Bins :[16.666666666666668, 30.000000000000004,
-    // 43.333333333333336]
-    System.out.println("frequency :" + histogram.getyAxisData()); // frequency :[7.0, 2.0, 3.0]
+  public static void main(String[] args) throws IOException {
+
+    new SwingWrapper<CategoryChart>(getChart()).displayChart();
   }
 }

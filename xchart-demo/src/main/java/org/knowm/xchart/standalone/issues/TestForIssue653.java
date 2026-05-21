@@ -30,4 +30,9 @@ public class TestForIssue653 {
 
     return chart;
   }
+  public static CategoryChart getChart() {
+
+    return getCategoryChart();
+  }
+
 }

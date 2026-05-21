@@ -9,7 +9,8 @@ import org.knowm.xchart.style.Styler;
 
 public class TestForIssue257 {
 
-  public static void main(String[] args) {
+  public static CategoryChart getChart() {
+
 
     CategoryChart chart =
         new CategoryChartBuilder()
@@ -42,7 +43,11 @@ public class TestForIssue257 {
 
     chart.addSeries("Average_Height", category_values, height);
     chart.addSeries("Average_Weight", category_values, weight);
+    return chart;
+  }
 
-    new SwingWrapper<CategoryChart>(chart).displayChart();
+  public static void main(String[] args) {
+
+    new SwingWrapper<CategoryChart>(getChart()).displayChart();
   }
 }

@@ -6,7 +6,8 @@ import org.knowm.xchart.style.Styler;
 
 public class TestForIssue539 {
 
-  public static void main(String[] args) {
+  public static XYChart getChart() {
+
     XYChart myChart = new XYChart(800, 600);
     myChart.setTitle("Multiple Y axes scale bug");
     myChart.getStyler().setYAxisGroupPosition(0, Styler.YAxisPosition.Left);
@@ -22,7 +23,10 @@ public class TestForIssue539 {
     myChart
         .addSeries("series on group one", new double[] {1, 2, 3}, new double[] {-100, -200, -300})
         .setYAxisGroup(1);
+    return myChart;
+  }
 
-    new SwingWrapper<>(myChart).displayChart();
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

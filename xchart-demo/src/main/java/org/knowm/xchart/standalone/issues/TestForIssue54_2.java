@@ -57,4 +57,9 @@ public class TestForIssue54_2 {
     chart.addSeries("y=cos(x)", xData2, yData2);
     return chart;
   }
+  public static XYChart getChart() {
+
+    return (XYChart) getLineChart();
+  }
+
 }

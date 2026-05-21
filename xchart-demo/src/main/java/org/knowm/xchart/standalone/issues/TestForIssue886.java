@@ -69,4 +69,9 @@ public class TestForIssue886 {
     chart.addSeries("flat", Arrays.asList(1, 2, 3, 4, 5), Arrays.asList(3, 3, 3, 3, 3));
     return chart;
   }
+  public static XYChart getChart() {
+
+    return getChartNormal();
+  }
+
 }

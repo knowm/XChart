@@ -53,4 +53,9 @@ public class TestForIssue582 {
 
     return chart;
   }
+  public static XYChart getChart() {
+
+    return getXYChart();
+  }
+
 }

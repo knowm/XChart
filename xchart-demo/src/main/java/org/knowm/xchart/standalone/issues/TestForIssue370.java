@@ -56,4 +56,9 @@ public class TestForIssue370 {
 
     return chart;
   }
+  public static XYChart getChart() {
+
+    return new TestForIssue370().getChart("Group yAxis DecimalPattern", false);
+  }
+
 }

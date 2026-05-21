@@ -54,4 +54,9 @@ public class TestForIssue545 {
     styler.setToolTipsAlwaysVisible(true);
     styler.setToolTipFont(new Font("SansSerif", Font.PLAIN, 14));
   }
+  public static BubbleChart getChart() {
+
+    return getBubbleChart();
+  }
+
 }

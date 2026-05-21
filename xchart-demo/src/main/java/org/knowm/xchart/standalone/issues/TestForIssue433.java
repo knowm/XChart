@@ -12,7 +12,10 @@ import org.knowm.xchart.XYChartBuilder;
 
 public class TestForIssue433 {
 
-  public static void main(String[] args) throws ParseException {
+  public static XYChart getChart() {
+
+    try {
+
     DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     List<Date> xData = new ArrayList<>();
@@ -40,7 +43,14 @@ public class TestForIssue433 {
 
     chart.getStyler().setDatePattern("HH:mm:ss");
     chart.getStyler().setXAxisTickMarkSpacingHint(chart.getWidth() / (xData.size() - 1));
+    return chart;
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-    new SwingWrapper<>(chart).displayChart();
+  public static void main(String[] args) throws ParseException {
+
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

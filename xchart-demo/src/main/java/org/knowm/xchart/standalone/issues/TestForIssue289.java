@@ -13,7 +13,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class TestForIssue289 {
 
-  public static void main(String[] args) throws IOException {
+  public static XYChart getChart() {
+
 
     // Create Chart
     XYChart chart =
@@ -58,7 +59,10 @@ public class TestForIssue289 {
     series = chart.addSeries("fit", xData, yData);
     series.setMarker(SeriesMarkers.NONE);
     series.setXYSeriesRenderStyle(XYSeriesRenderStyle.Line);
+    return chart;
+  }
 
-    new SwingWrapper<XYChart>(chart).displayChart();
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

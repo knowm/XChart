@@ -15,7 +15,10 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class TestForIssue527 {
 
-  public static void main(String[] args) throws ParseException {
+  public static XYChart getChart() {
+
+    try {
+
     String series = "ABC";
 
     List<Date> x = new ArrayList<>(); // List of dates
@@ -81,7 +84,14 @@ public class TestForIssue527 {
     XYSeries xyseries = chart.addSeries(series, x, y);
     xyseries.setMarker(SeriesMarkers.NONE);
     xyseries.setYAxisGroup(1);
-    new SwingWrapper<>(chart).displayChart();
-    //      BitmapEncoder.saveBitmap(chart,"XChart.png", BitmapEncoder.BitmapFormat.PNG);
+    return chart;
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static void main(String[] args) throws ParseException {
+
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

@@ -6,7 +6,8 @@ import org.knowm.xchart.SwingWrapper;
 
 public class TestForIssue111 {
 
-  public static void main(String[] args) {
+  public static CategoryChart getChart() {
+
 
     int[] x = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
     int[] y = new int[] {1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1};
@@ -16,6 +17,10 @@ public class TestForIssue111 {
     CategoryChart chart = new CategoryChartBuilder().width(640).height(480).build();
     chart.addSeries("test", x, y);
     chart.getStyler().setLegendVisible(false);
-    new SwingWrapper(chart).displayChart();
+    return chart;
+  }
+
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

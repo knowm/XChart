@@ -116,4 +116,9 @@ public class TestForPR866 {
 
     return chart;
   }
+  public static HorizontalBarChart getChart() {
+
+    return getChartBasic();
+  }
+
 }

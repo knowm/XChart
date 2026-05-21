@@ -11,7 +11,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class MultiYAxisTest {
 
-  public static void main(String[] args) throws Exception {
+  public static XYChart getChart() {
+
 
     List<Double> timeData = new LinkedList<>();
     List<Double> th1Data = new LinkedList<>();
@@ -38,7 +39,10 @@ public class MultiYAxisTest {
     XYSeries s2 = c.addSeries("th2", timeData, th2Data);
     s2.setYAxisGroup(1);
     s2.setMarker(SeriesMarkers.NONE);
+    return c;
+  }
 
-    new SwingWrapper<>(c).displayChart();
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

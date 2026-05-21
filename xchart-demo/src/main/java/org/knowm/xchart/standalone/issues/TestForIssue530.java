@@ -87,4 +87,13 @@ public class TestForIssue530 {
     yData.add(Double.valueOf(30 + i));
     return yData;
   }
+  public static CategoryChart getChart() {
+
+    try {
+      return getVolumesChart();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 }

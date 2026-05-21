@@ -45,6 +45,12 @@
               <arguments>
                 <argument>${site.output.dir}</argument>
               </arguments>
+              <systemProperties>
+                <systemProperty>
+                  <key>java.awt.headless</key>
+                  <value>true</value>
+                </systemProperty>
+              </systemProperties>
             </configuration>
           </execution>
         </executions>

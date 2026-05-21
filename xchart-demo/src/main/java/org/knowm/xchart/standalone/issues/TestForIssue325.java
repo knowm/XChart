@@ -57,4 +57,9 @@ public class TestForIssue325 {
     chart.getStyler().setYAxisLeftWidthHint(yAxisLeftWidth);
     return chart;
   }
+  public static XYChart getChart() {
+
+    return getChart(1, 0);
+  }
+
 }

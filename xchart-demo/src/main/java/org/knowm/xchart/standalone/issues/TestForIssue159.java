@@ -17,7 +17,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class TestForIssue159 {
 
-  public static void main(String[] args) throws Exception {
+  public static XYChart getChart() {
+
 
     XYChart chart =
         new XYChartBuilder()
@@ -67,7 +68,10 @@ public class TestForIssue159 {
     series.setMarkerColor(Color.RED);
     series.setMarker(SeriesMarkers.CIRCLE);
     series.setLineStyle(SeriesLines.SOLID);
+    return chart;
+  }
 
-    new SwingWrapper(chart).displayChart();
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }

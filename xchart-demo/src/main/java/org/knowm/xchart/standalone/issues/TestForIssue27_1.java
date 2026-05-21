@@ -10,7 +10,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class TestForIssue27_1 {
 
-  public static void main(String[] args) throws Exception {
+  public static XYChart getChart() {
+
 
     double[] xData = new double[] {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     double[] yData1 = new double[] {100, 100, 100, 50, 50, 50, 50};
@@ -35,7 +36,10 @@ public class TestForIssue27_1 {
     series3.setLineStyle(SeriesLines.DASH_DASH);
     series3.setMarker(SeriesMarkers.NONE);
     series3.setLineColor(XChartSeriesColors.RED);
+    return mychart;
+  }
 
-    new SwingWrapper(mychart).displayChart();
+  public static void main(String[] args) {
+    new SwingWrapper<>(getChart()).displayChart();
   }
 }
