@@ -12,7 +12,6 @@ public class XYStyler extends AxesChartStyler {
 
   // Cursor ////////////////////////////////
 
-  private boolean isCursorEnabled;
   private Color cursorColor;
   private float cursorLineWidth;
   private Font cursorFont;
@@ -37,7 +36,6 @@ public class XYStyler extends AxesChartStyler {
     xySeriesRenderStyle = XYSeriesRenderStyle.Line; // set default to line
 
     // Cursor ////////////////////////////////
-    this.isCursorEnabled = theme.isCursorEnabled();
     this.cursorColor = theme.getCursorColor();
     this.cursorLineWidth = theme.getCursorSize();
     this.cursorFont = theme.getCursorFont();
@@ -70,48 +68,6 @@ public class XYStyler extends AxesChartStyler {
   public XYStyler setDefaultSeriesRenderStyle(XYSeriesRenderStyle xySeriesRenderStyle) {
 
     this.xySeriesRenderStyle = xySeriesRenderStyle;
-    return this;
-  }
-
-  // Zoom — covariant overrides ///////////////////////////////
-
-  @Override
-  public XYStyler setZoomEnabled(boolean isZoomEnabled) {
-
-    super.setZoomEnabled(isZoomEnabled);
-    return this;
-  }
-
-  @Override
-  public XYStyler setZoomSelectionColor(Color zoomSelectionColor) {
-
-    super.setZoomSelectionColor(zoomSelectionColor);
-    return this;
-  }
-
-  @Override
-  public XYStyler setZoomResetByDoubleClick(boolean zoomResetByDoubleClick) {
-
-    super.setZoomResetByDoubleClick(zoomResetByDoubleClick);
-    return this;
-  }
-
-  @Override
-  public XYStyler setZoomResetByButton(boolean zoomResetByButton) {
-
-    super.setZoomResetByButton(zoomResetByButton);
-    return this;
-  }
-
-  // Cursor ///////////////////////////////
-
-  public boolean isCursorEnabled() {
-    return isCursorEnabled;
-  }
-
-  public XYStyler setCursorEnabled(boolean isCursorEnabled) {
-
-    this.isCursorEnabled = isCursorEnabled;
     return this;
   }
 

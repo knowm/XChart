@@ -41,7 +41,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
     // Y-Axis
     yTickSpace = boxPlotStyler.getPlotContentSize() * getBounds().getHeight();
     yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
-    boolean toolTipsEnabled = interactionData != null && chart.getStyler().isToolTipsEnabled();
+    boolean toolTipsEnabled = interactionData != null;
     double gridStep = xTickSpace / chart.getSeriesMap().size();
 
     BoxPlotDataCalculator<ST, S> boxPlotDataCalculator = new BoxPlotDataCalculator<>();
@@ -234,7 +234,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
     area.add(new Area(lowLine.getBounds()));
     area.add(new Area(rect.getBounds()));
 
-    if (interactionData != null && boxPlotStyler.isToolTipsEnabled()) {
+    if (interactionData != null) {
       interactionData.addToolTip(
           area,
           xOffset,

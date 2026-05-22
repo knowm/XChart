@@ -298,7 +298,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
         }
 
         // add tooltips
-        if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
+        if (interactionData != null) {
           interactionData.addToolTip(
               xOffset,
               yOffset,
@@ -306,7 +306,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
               chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
         }
 
-        if (interactionData != null && xyStyler.isCursorEnabled()) {
+        if (interactionData != null) {
           Format xFormat;
           Format yFormat;
           if (xyStyler.getCustomCursorXDataFormattingFunction() == null) {

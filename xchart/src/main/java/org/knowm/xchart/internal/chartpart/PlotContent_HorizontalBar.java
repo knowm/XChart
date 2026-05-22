@@ -171,7 +171,7 @@ public class PlotContent_HorizontalBar<
         }
 
         // add data labels
-        if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
+        if (interactionData != null) {
           Rectangle2D.Double rect =
               new Rectangle2D.Double(
                   zeroOffset, yOffset, Math.abs(xOffset - zeroOffset), barHeight);

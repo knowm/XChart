@@ -148,16 +148,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // ToolTips ///////////////////////////////
 
-  default boolean isToolTipsEnabled() {
-
-    return false;
-  }
-
-  default Styler.ToolTipType getToolTipType() {
-
-    return Styler.ToolTipType.xAndYLabels;
-  }
-
   default Font getToolTipFont() {
 
     return BASE_FONT;
@@ -214,8 +204,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
 
   // Cursor ///////////////////////////////
 
-  boolean isCursorEnabled();
-
   Color getCursorColor();
 
   float getCursorSize();
@@ -225,12 +213,6 @@ public interface Theme extends SeriesMarkers, SeriesLines, SeriesColors {
   Color getCursorFontColor();
 
   Color getCursorBackgroundColor();
-
-  // Zoom /////////////////////////////////////
-
-  default boolean isZoomEnabled() {
-    return false;
-  }
 
   // Bar Charts ///////////////////////////////
 

@@ -139,7 +139,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
           }
 
           // add tooltips
-          if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
+          if (interactionData != null) {
             interactionData.addToolTip(
                 xOffset,
                 yOffset,
@@ -250,7 +250,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
               g.draw(line);
               final double xStart = xOffset - candleHalfWidth;
               final double xEnd = xOffset + candleHalfWidth;
-              if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
+              if (interactionData != null) {
                 rect.setRect(
                     xOffset - lineWidth / 2, highOffset, lineWidth, lowOffset - highOffset);
                 toolTipArea = new Area(rect);
@@ -266,7 +266,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
                   // Doji: open == close, draw a horizontal line across the candle width
                   line.setLine(xStart, openOffset, xEnd, openOffset);
                   g.draw(line);
-                  if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
+                  if (interactionData != null) {
                     rect.setRect(xStart, openOffset - lineWidth / 2, xEnd - xStart, lineWidth);
                     toolTipArea.add(new Area(rect));
                   }
@@ -278,7 +278,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
                       Math.abs(closeOffset - openOffset));
                   g.fill(rect);
                   // add data labels
-                  if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
+                  if (interactionData != null) {
                     toolTipArea.add(new Area(rect));
                   }
                 }
@@ -289,7 +289,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
                 g.draw(line);
                 line.setLine(xOffset, closeOffset, xEnd, closeOffset);
                 g.draw(line);
-                if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
+                if (interactionData != null) {
                   rect.setRect(xStart, openOffset - lineWidth / 2, xOffset - xStart, lineWidth);
                   toolTipArea.add(new Area(rect));
                   rect.setRect(xOffset, closeOffset - lineWidth / 2, xEnd - xOffset, lineWidth);
@@ -300,7 +300,7 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
           }
 
           // add tooltips
-          if (interactionData != null && chart.getStyler().isToolTipsEnabled()) {
+          if (interactionData != null) {
 
             StringBuilder sb = new StringBuilder();
             if (series.getVolumeData() != null) {

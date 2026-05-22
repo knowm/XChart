@@ -77,9 +77,6 @@ public abstract class Styler {
   private ChartButtonPosition chartButtonPosition;
 
   // Tool Tips ///////////////////////////////
-  private boolean isToolTipsEnabled;
-  private boolean isToolTipsAlwaysVisible;
-  private ToolTipType toolTipType;
   private Color toolTipBackgroundColor;
   private Color toolTipBorderColor;
   private Font toolTipFont;
@@ -164,8 +161,6 @@ public abstract class Styler {
 
     // Tool Tips ///////////////////////////////
 
-    isToolTipsEnabled = theme.isToolTipsEnabled();
-    toolTipType = theme.getToolTipType();
     toolTipBackgroundColor = theme.getToolTipBackgroundColor();
     toolTipBorderColor = theme.getToolTipBorderColor();
     toolTipFont = theme.getToolTipFont();
@@ -751,45 +746,6 @@ public abstract class Styler {
   }
 
   // Tool Tips ///////////////////////////////
-
-  public boolean isToolTipsEnabled() {
-
-    return isToolTipsEnabled;
-  }
-
-  public Styler setToolTipsEnabled(boolean toolTipsEnabled) {
-
-    isToolTipsEnabled = toolTipsEnabled;
-    return this;
-  }
-
-  public boolean isToolTipsAlwaysVisible() {
-
-    return isToolTipsAlwaysVisible;
-  }
-
-  public Styler setToolTipsAlwaysVisible(boolean toolTipsAlwaysVisible) {
-
-    isToolTipsAlwaysVisible = toolTipsAlwaysVisible;
-    return this;
-  }
-
-  public ToolTipType getToolTipType() {
-
-    return toolTipType;
-  }
-
-  public Styler setToolTipType(ToolTipType toolTipType) {
-
-    this.toolTipType = toolTipType;
-    return this;
-  }
-
-  public enum ToolTipType {
-    xLabels,
-    yLabels,
-    xAndYLabels
-  }
 
   public Color getToolTipBackgroundColor() {
 

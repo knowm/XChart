@@ -12,6 +12,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.knowm.xchart.ToolTipType;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.HorizontalBarStyler;
 import org.knowm.xchart.style.OHLCStyler;
@@ -28,6 +29,8 @@ public class ToolTips extends MouseAdapter implements ChartPart {
 
   private final Chart chart;
   private final Styler styler;
+  private final boolean alwaysVisible;
+  private final ToolTipType toolTipType;
 
   // The tool tips and currently shown Tooltip
   private final List<ToolTip> toolTipList = new ArrayList<>();
@@ -38,11 +41,15 @@ public class ToolTips extends MouseAdapter implements ChartPart {
    * Constructor
    *
    * @param chart
+   * @param alwaysVisible
+   * @param toolTipType
    */
-  public ToolTips(Chart chart) {
+  public ToolTips(Chart chart, boolean alwaysVisible, ToolTipType toolTipType) {
 
     this.chart = chart;
     this.styler = chart.getStyler();
+    this.alwaysVisible = alwaysVisible;
+    this.toolTipType = toolTipType;
   }
 
   ////////////////////////////////////////////
@@ -107,7 +114,7 @@ public class ToolTips extends MouseAdapter implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    if (styler.isToolTipsAlwaysVisible()) {
+    if (this.alwaysVisible) {
       for (ToolTip tooltip : toolTipList) {
         paintToolTip(g, tooltip);
       }
@@ -307,7 +314,7 @@ public class ToolTips extends MouseAdapter implements ChartPart {
 
   private String getLabel(String xValue, String yValue) {
 
-    switch (styler.getToolTipType()) {
+    switch (this.toolTipType) {
       case xAndYLabels:
         return "(" + xValue + ", " + yValue + ")";
       case xLabels:

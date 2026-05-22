@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
-import org.knowm.xchart.style.Styler;
 
 public class BitmapEncoderTest {
 
@@ -29,9 +28,6 @@ public class BitmapEncoderTest {
   @Test
   public void getBufferedImageDoesNotNPEWithToolTipsEnabled() {
     XYChart chart = new XYChartBuilder().width(400).height(300).build();
-    chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setToolTipsAlwaysVisible(true);
-    chart.getStyler().setToolTipType(Styler.ToolTipType.yLabels);
     chart.addSeries("series", new double[] {1, 2, 3}, new double[] {4, 5, 6});
 
     assertDoesNotThrow(() -> BitmapEncoder.getBufferedImage(chart));
@@ -41,7 +37,6 @@ public class BitmapEncoderTest {
   @Test
   public void getBufferedImageDoesNotNPEWithZoomEnabled() {
     XYChart chart = new XYChartBuilder().width(400).height(300).build();
-    chart.getStyler().setZoomEnabled(true);
     chart.addSeries("series", new double[] {1, 2, 3}, new double[] {4, 5, 6});
 
     assertDoesNotThrow(() -> BitmapEncoder.getBufferedImage(chart));
