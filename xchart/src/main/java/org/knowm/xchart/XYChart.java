@@ -411,6 +411,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     }
     setSeriesStyles();
 
+    if (styler.isToolTipsAlwaysVisible()) enableInteractionData();
     paintBackground(g);
 
     axisPair.paint(g);
@@ -418,6 +419,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     chartTitle.paint(g);
     legend.paint(g);
     annotations.forEach(x -> x.paint(g));
+    paintAlwaysVisibleToolTips(g);
   }
 
   /** set the series color, marker and line style based on theme */

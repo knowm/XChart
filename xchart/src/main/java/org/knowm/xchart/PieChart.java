@@ -120,12 +120,14 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     }
     setSeriesStyles();
 
+    if (styler.isToolTipsAlwaysVisible()) enableInteractionData();
     paintBackground(g);
 
     plot.paint(g);
     chartTitle.paint(g);
     legend.paint(g);
     annotations.forEach(x -> x.paint(g));
+    paintAlwaysVisibleToolTips(g);
   }
 
   /** set the series color based on theme */

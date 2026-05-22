@@ -16,7 +16,7 @@ public class TestForIssue545 {
     BubbleChart chart = getBubbleChart();
     SwingWrapper<BubbleChart> sw = new SwingWrapper<BubbleChart>(chart);
     sw.displayChart();
-    sw.getXChartPanel().setToolTipsEnabled(true).setToolTipsAlwaysVisible(true);
+    sw.getXChartPanel().setToolTipsEnabled(true);
   }
 
   public static BubbleChart getBubbleChart() {
@@ -53,6 +53,7 @@ public class TestForIssue545 {
     styler.setXAxisTickMarkSpacingHint(50);
     styler.setAntiAlias(true);
     styler.setToolTipFont(new Font("SansSerif", Font.PLAIN, 14));
+    styler.setToolTipsAlwaysVisible(true);
   }
   public static BubbleChart getChart() {
 

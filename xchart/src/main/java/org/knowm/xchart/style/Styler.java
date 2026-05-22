@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.knowm.xchart.ToolTipType;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.markers.Marker;
 import org.knowm.xchart.style.theme.GGPlot2Theme;
@@ -81,6 +82,8 @@ public abstract class Styler {
   private Color toolTipBorderColor;
   private Font toolTipFont;
   private Color toolTipHighlightColor;
+  private boolean toolTipsAlwaysVisible;
+  private ToolTipType toolTipType;
 
   // Misc. ///////////////////////////////
   private boolean antiAlias = true;
@@ -165,6 +168,8 @@ public abstract class Styler {
     toolTipBorderColor = theme.getToolTipBorderColor();
     toolTipFont = theme.getToolTipFont();
     toolTipHighlightColor = theme.getToolTipHighlightColor();
+    toolTipsAlwaysVisible = false;
+    toolTipType = ToolTipType.xAndYLabels;
 
     // Formatting
     decimalPattern = null;
@@ -788,6 +793,40 @@ public abstract class Styler {
   public Styler setToolTipHighlightColor(Color toolTipHighlightColor) {
 
     this.toolTipHighlightColor = toolTipHighlightColor;
+    return this;
+  }
+
+  public boolean isToolTipsAlwaysVisible() {
+
+    return toolTipsAlwaysVisible;
+  }
+
+  /**
+   * When true, all data-point labels are rendered into the chart image (visible in BitmapEncoder
+   * output and Swing panels alike). This is a rendering/visual property; enable hover tooltips
+   * separately via {@link XChartPanel#setToolTipsEnabled(boolean)}.
+   *
+   * @param toolTipsAlwaysVisible true to render labels for every data point
+   */
+  public Styler setToolTipsAlwaysVisible(boolean toolTipsAlwaysVisible) {
+
+    this.toolTipsAlwaysVisible = toolTipsAlwaysVisible;
+    return this;
+  }
+
+  public ToolTipType getToolTipType() {
+
+    return toolTipType;
+  }
+
+  /**
+   * Sets which label components to render when tooltips are visible (x value, y value, or both).
+   *
+   * @param toolTipType the label type to display
+   */
+  public Styler setToolTipType(ToolTipType toolTipType) {
+
+    this.toolTipType = toolTipType;
     return this;
   }
 

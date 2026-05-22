@@ -31,7 +31,7 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
     CategoryChart chart = exampleChart.getChart();
     SwingWrapper<CategoryChart> wrapper = new SwingWrapper<>(chart);
     wrapper.displayChart();
-    wrapper.getXChartPanel().setToolTipsEnabled(true).setToolTipType(ToolTipType.yLabels);
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -51,6 +51,7 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setAvailableSpaceFill(.96);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
+    chart.getStyler().setToolTipType(ToolTipType.yLabels);
     // Series
     Histogram histogram1 = new Histogram(getGaussianData(1000), 10, -30, 30);
     chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());

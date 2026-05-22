@@ -41,22 +41,21 @@ public class TestForIssue862 {
 
     XYChart chart = getChart();
 
-    // Headless render — must not throw NPE (was the bug).
+    // Headless render — must not throw NPE (was the bug), and with setToolTipsAlwaysVisible(true)
+    // the PNG now contains rendered tooltip labels.
     BitmapEncoder.saveBitmap(chart, "/tmp/issue862", BitmapFormat.PNG);
-    System.out.println("Saved /tmp/issue862.png — no NPE.");
+    System.out.println("Saved /tmp/issue862.png — no NPE, tooltip labels rendered.");
 
-    // Interactive display — tooltips configured on the panel, not the styler.
+    // Interactive display — hover tooltips configured on the panel.
     SwingWrapper<XYChart> sw = new SwingWrapper<>(chart);
     sw.displayChart();
-    sw.getXChartPanel()
-        .setToolTipsEnabled(true)
-        .setToolTipsAlwaysVisible(true)
-        .setToolTipType(ToolTipType.yLabels);
+    sw.getXChartPanel().setToolTipsEnabled(true);
   }
 
   /**
    * Reproduces the exact chart from the bug report. Safe to call headlessly — no tooltip
-   * interaction is wired until an {@code XChartPanel} is created.
+   * interaction is wired until an {@code XChartPanel} is created. {@code setToolTipsAlwaysVisible}
+   * is a rendering/styler property so tooltip labels appear in BitmapEncoder output too.
    */
   public static XYChart getChart() {
 
@@ -81,6 +80,8 @@ public class TestForIssue862 {
     chart.getStyler().setYAxisLogarithmic(true);
     chart.getStyler().setXAxisLabelRotation(45);
     chart.getStyler().setToolTipBorderColor(Color.RED);
+    chart.getStyler().setToolTipsAlwaysVisible(true);
+    chart.getStyler().setToolTipType(ToolTipType.yLabels);
 
     chart.addSeries("10^x", xData, yData);
 

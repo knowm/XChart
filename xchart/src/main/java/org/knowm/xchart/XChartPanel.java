@@ -59,8 +59,6 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private Cursor cursor = null;
   private ChartZoom chartZoom = null;
   private boolean toolTipsEnabled = false;
-  private boolean toolTipsAlwaysVisible = false;
-  private ToolTipType toolTipType = ToolTipType.xAndYLabels;
   private boolean zoomEnabled = false;
   private java.awt.Color zoomSelectionColor = new java.awt.Color(0, 0, 0, 40);
   private boolean zoomResetByDoubleClick = true;
@@ -157,20 +155,6 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     return this;
   }
 
-  public XChartPanel<T> setToolTipsAlwaysVisible(boolean alwaysVisible) {
-
-    this.toolTipsAlwaysVisible = alwaysVisible;
-    rewireInteractions();
-    return this;
-  }
-
-  public XChartPanel<T> setToolTipType(ToolTipType toolTipType) {
-
-    this.toolTipType = toolTipType;
-    rewireInteractions();
-    return this;
-  }
-
   public XChartPanel<T> setZoomEnabled(boolean enabled) {
 
     this.zoomEnabled = enabled;
@@ -219,16 +203,6 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   public boolean isZoomResetByDoubleClick() {
 
     return zoomResetByDoubleClick;
-  }
-
-  public boolean isToolTipsAlwaysVisible() {
-
-    return toolTipsAlwaysVisible;
-  }
-
-  public ToolTipType getToolTipType() {
-
-    return toolTipType;
   }
 
   private void rewireInteractions() {
@@ -280,7 +254,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     if (toolTipsEnabled) {
       anyEnabled = true;
-      toolTips = new ToolTips(chart, toolTipsAlwaysVisible, toolTipType);
+      toolTips = new ToolTips(chart, false, chart.getStyler().getToolTipType());
       this.addMouseMotionListener(toolTips);
     }
 

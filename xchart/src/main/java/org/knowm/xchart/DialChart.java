@@ -111,11 +111,13 @@ public class DialChart extends Chart<DialStyler, DialSeries> {
     setWidth(width);
     setHeight(height);
 
+    if (styler.isToolTipsAlwaysVisible()) enableInteractionData();
     paintBackground(g);
 
     plot.paint(g);
     chartTitle.paint(g);
     //    legend.paint(g); // no legend for dial charts
     annotations.forEach(x -> x.paint(g));
+    paintAlwaysVisibleToolTips(g);
   }
 }

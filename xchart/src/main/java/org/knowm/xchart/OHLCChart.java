@@ -819,6 +819,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     }
     setSeriesStyles();
 
+    if (styler.isToolTipsAlwaysVisible()) enableInteractionData();
     paintBackground(g);
 
     axisPair.paint(g);
@@ -826,6 +827,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     chartTitle.paint(g);
     legend.paint(g);
     annotations.forEach(x -> x.paint(g));
+    paintAlwaysVisibleToolTips(g);
   }
 
   /** set the series color, marker and line style based on theme */

@@ -30,6 +30,7 @@ public class TestForIssue106 {
       // current default
       XYChart chart = alc.getChart();
       chart.getStyler().setToolTipBackgroundColor(Color.RED);
+      chart.getStyler().setToolTipType(ToolTipType.yLabels);
       chart.setTitle("Red background");
       charts.add(chart);
     }
@@ -44,7 +45,7 @@ public class TestForIssue106 {
     SwingWrapper<XYChart> wrapper = new SwingWrapper<XYChart>(charts);
     wrapper.displayChartMatrix();
     wrapper.getXChartPanel(0).setToolTipsEnabled(true);
-    wrapper.getXChartPanel(2).setToolTipsEnabled(true).setToolTipType(ToolTipType.yLabels);
+    wrapper.getXChartPanel(2).setToolTipsEnabled(true);
     wrapper.getXChartPanel(3).setToolTipsEnabled(true);
   }
 }
