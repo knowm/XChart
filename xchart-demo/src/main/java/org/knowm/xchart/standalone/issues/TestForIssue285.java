@@ -16,7 +16,7 @@ public class TestForIssue285 {
 
   public static void main(String[] args) throws IOException {
 
-    List<Chart> charts = new ArrayList<>();
+    List<Chart<?, ?>> charts = new ArrayList<>();
     charts.add(new AreaChart01().getChart());
     charts.add(new AreaChart02().getChart());
     charts.add(new LineChart01().getChart());
