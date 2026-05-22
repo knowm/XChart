@@ -20,7 +20,6 @@ target/
 javadoc/
 bin/
 log/
-*.class
 
 # Misc.
 .DS_Store
