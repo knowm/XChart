@@ -239,11 +239,12 @@ BoxChart chart =
 
 // Choose a calculation method
 chart.getStyler().setBoxplotCalCulationMethod(BoxplotCalCulationMethod.N_LESS_1_PLUS_1);
-chart.getStyler().setToolTipsEnabled(true);
 
 // Series
-chart.addSeries("boxOne",Arrays.asList(1,2,3,4));
-new SwingWrapper<BoxChart>(chart).displayChart();
+chart.addSeries("boxOne", Arrays.asList(1, 2, 3, 4));
+SwingWrapper<BoxChart> sw = new SwingWrapper<>(chart);
+sw.displayChart();
+sw.getXChartPanel().setToolTipsEnabled(true);
 ```
 
 Four calculation methods for boxplots:
@@ -474,14 +475,16 @@ double-clicking on the chart or by clicking on the "reset" button, which can be 
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Zoom.png)
 
-The following example zoom style options show which are available:
+Zoom is a Swing-panel feature and is configured on `XChartPanel`, not on the Styler:
 
 ```java
-chart.getStyler().setZoomEnabled(true);
-chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
-chart.getStyler().setZoomResetByDoubleClick(false);
-chart.getStyler().setZoomResetByButton(true);
-chart.getStyler().setZoomSelectionColor(new Color(0,0,192,128));
+SwingWrapper<XYChart> sw = new SwingWrapper<>(chart);
+sw.displayChart();
+sw.getXChartPanel()
+    .setZoomEnabled(true)
+    .setZoomResetByDoubleClick(false)
+    .setZoomResetByButton(true)
+    .setZoomSelectionColor(new Color(0, 0, 192, 128));
 ```
 
 A working example can be found at [DateChart01](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/date/DateChart01.java).
@@ -532,49 +535,58 @@ A working example can be found at [ScatterChart04](https://github.com/knowm/XCha
 
 ### Tool Tips
 
-For all chart types, tool tips can be activated on an `XChartPanel` via
+Tool tips come in two flavours:
+
+**1. Hover tooltips** — interactive labels that follow the mouse, visible only in a Swing panel. Configured on `XChartPanel`:
 
 ```java
-chart.getStyler().setToolTipsEnabled(true);
+SwingWrapper<XYChart> sw = new SwingWrapper<>(chart);
+sw.displayChart();
+sw.getXChartPanel().setToolTipsEnabled(true);
 ```
 
-![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Tooltips.png)
-
-The following example tooltip options show which are available:
+**2. Always-visible labels** — data-point labels baked into the chart image itself. These appear in Swing panels *and* in headless output such as `BitmapEncoder`. Configured on the Styler:
 
 ```java
-chart.getStyler().setToolTipsEnabled(true);
 chart.getStyler().setToolTipsAlwaysVisible(true);
-chart.getStyler().setToolTipFont( new Font("Verdana", Font.BOLD, 12));
+chart.getStyler().setToolTipType(ToolTipType.yLabels); // xAndYLabels (default), xLabels, yLabels
+```
+
+Both can be active at the same time. Tooltip visual appearance (font, colors) is always on the Styler:
+
+```java
+chart.getStyler().setToolTipFont(new Font("Verdana", Font.BOLD, 12));
 chart.getStyler().setToolTipHighlightColor(Color.CYAN);
 chart.getStyler().setToolTipBorderColor(Color.BLACK);
 chart.getStyler().setToolTipBackgroundColor(Color.LIGHT_GRAY);
-chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
 ```
+
+![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Tooltips.png)
 
 A working example can be found at [LineChart05](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart05.java).
 
 ### Cursor
 
-For the `XYChart` chart type, it is possible to add an interactive cursor on an `XChartPanel` via
+For the `XYChart` chart type, it is possible to add an interactive cursor on an `XChartPanel`. Cursor is a Swing-panel feature configured on `XChartPanel`:
 
 ```java
-chart.getStyler().setCursorEnabled(true);
+SwingWrapper<XYChart> sw = new SwingWrapper<>(chart);
+sw.displayChart();
+sw.getXChartPanel().setCursorEnabled(true);
 ```
 
 ![](https://raw.githubusercontent.com/knowm/XChart/develop/etc/XChart_Cursor.png)
 
-The following example cursor options show which are available:
+Cursor visual appearance is configured on the Styler:
 
 ```java
-chart.getStyler().setCursorEnabled(true);
 chart.getStyler().setCursorColor(Color.GREEN);
 chart.getStyler().setCursorLineWidth(30f);
 chart.getStyler().setCursorFont(new Font("Verdana", Font.BOLD, 12));
 chart.getStyler().setCursorFontColor(Color.ORANGE);
 chart.getStyler().setCursorBackgroundColor(Color.BLUE);
-chart.getStyler().setCustomCursorXDataFormattingFunction(x ->"hello xvalue: "+x);
-chart.getStyler().setCustomCursorYDataFormattingFunction(y ->"hello yvalue divided by 2: "+y /2);
+chart.getStyler().setCustomCursorXDataFormattingFunction(x -> "hello xvalue: " + x);
+chart.getStyler().setCustomCursorYDataFormattingFunction(y -> "hello yvalue divided by 2: " + y / 2);
 ```
 
 A working example can be found at [LineChart09](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart09.java).
