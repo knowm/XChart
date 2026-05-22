@@ -10,7 +10,7 @@ import de.erichseifert.vectorgraphics2d.util.PageSize;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.IChart;
 
 /** A helper class with static methods for saving Charts as vectors */
 public final class VectorGraphicsEncoder {
@@ -20,7 +20,7 @@ public final class VectorGraphicsEncoder {
 
   /** Write a chart to a file. */
   public static void saveVectorGraphic(
-      Chart<?, ?> chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
+      IChart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
     FileOutputStream file = new FileOutputStream(addFileExtension(fileName, vectorGraphicsFormat));
 
     try {
@@ -32,7 +32,7 @@ public final class VectorGraphicsEncoder {
 
   /** Write a chart to an OutputStream. */
   public static void saveVectorGraphic(
-      Chart<?, ?> chart, OutputStream os, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
+      IChart chart, OutputStream os, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
     final Processor p;
 
     switch (vectorGraphicsFormat) {
@@ -102,7 +102,7 @@ public final class VectorGraphicsEncoder {
       return null;
     }
 
-    public void savePdf(Chart<?, ?> chart, OutputStream os) throws IOException {
+    public void savePdf(IChart chart, OutputStream os) throws IOException {
 
       PdfboxGraphicsEncoder.savePdfboxGraphics(chart, os);
     }

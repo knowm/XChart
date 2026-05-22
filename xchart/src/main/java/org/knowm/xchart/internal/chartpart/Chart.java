@@ -17,7 +17,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
 /** An XChart Chart */
-public abstract class Chart<ST extends Styler, S extends Series> {
+public abstract class Chart<ST extends Styler, S extends Series> implements IChart {
 
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;

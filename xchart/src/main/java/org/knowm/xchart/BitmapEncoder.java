@@ -21,7 +21,7 @@ import javax.imageio.metadata.IIOInvalidTreeException;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.FileImageOutputStream;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.IChart;
 
 /** A helper class with static methods for saving Charts as bitmaps */
 public final class BitmapEncoder {
@@ -62,8 +62,8 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveBitmap(
-      T chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
+  public static void saveBitmap(
+      IChart chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
 
     try (OutputStream out = new FileOutputStream(addFileExtension(fileName, bitmapFormat))) {
       saveBitmap(chart, out, bitmapFormat);
@@ -79,8 +79,8 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveBitmap(
-      T chart, OutputStream targetStream, BitmapFormat bitmapFormat) throws IOException {
+  public static void saveBitmap(
+      IChart chart, OutputStream targetStream, BitmapFormat bitmapFormat) throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
@@ -97,8 +97,8 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveBitmap(
-      List<T> charts,
+  public static void saveBitmap(
+      List<? extends IChart> charts,
       Integer rows,
       Integer cols,
       String fileName,
@@ -122,8 +122,8 @@ public final class BitmapEncoder {
    * @param bitmapFormat
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveBitmap(
-      List<T> charts,
+  public static void saveBitmap(
+      List<? extends IChart> charts,
       Integer rows,
       Integer cols,
       OutputStream targetStream,
@@ -131,7 +131,7 @@ public final class BitmapEncoder {
       throws IOException {
 
     List<BufferedImage> chartImages = new LinkedList<>();
-    for (T c : charts) chartImages.add(getBufferedImage(c));
+    for (IChart c : charts) chartImages.add(getBufferedImage(c));
 
     BufferedImage bufferedImage = mergeImages(chartImages, rows, cols);
     ImageIO.write(bufferedImage, bitmapFormat.toString().toLowerCase(), targetStream);
@@ -146,8 +146,8 @@ public final class BitmapEncoder {
    * @param DPI
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveBitmapWithDPI(
-      T chart, String fileName, BitmapFormat bitmapFormat, int DPI) throws IOException {
+  public static void saveBitmapWithDPI(
+      IChart chart, String fileName, BitmapFormat bitmapFormat, int DPI) throws IOException {
 
     double scaleFactor = DPI / 72.0;
 
@@ -230,8 +230,8 @@ public final class BitmapEncoder {
    * @param quality - a float between 0 and 1 (1 = maximum quality)
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> void saveJPGWithQuality(
-      T chart, String fileName, float quality) throws IOException {
+  public static void saveJPGWithQuality(
+      IChart chart, String fileName, float quality) throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
 
@@ -258,7 +258,7 @@ public final class BitmapEncoder {
    * @return a byte[] for a given chart
    * @throws IOException
    */
-  public static <T extends Chart<?, ?>> byte[] getBitmapBytes(T chart, BitmapFormat bitmapFormat)
+  public static byte[] getBitmapBytes(IChart chart, BitmapFormat bitmapFormat)
       throws IOException {
 
     BufferedImage bufferedImage = getBufferedImage(chart);
@@ -273,7 +273,7 @@ public final class BitmapEncoder {
     return imageInBytes;
   }
 
-  public static <T extends Chart<?, ?>> BufferedImage getBufferedImage(T chart) {
+  public static BufferedImage getBufferedImage(IChart chart) {
 
     BufferedImage bufferedImage =
         new BufferedImage(chart.getWidth(), chart.getHeight(), BufferedImage.TYPE_INT_RGB);
