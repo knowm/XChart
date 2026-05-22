@@ -416,7 +416,6 @@ public class GenerateSite {
 
   // ── Package scanning ─────────────────────────────────────────────────────────
 
-  @SuppressWarnings("unchecked")
   private List<Class<?>> scanPackage(String packageName) throws Exception {
     List<Class<?>> classes = new ArrayList<>();
     String packagePath = packageName.replace('.', '/');

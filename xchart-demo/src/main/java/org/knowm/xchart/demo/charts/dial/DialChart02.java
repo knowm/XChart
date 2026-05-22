@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Font;
 import org.knowm.xchart.DialChart;
 import org.knowm.xchart.DialChartBuilder;
-import org.knowm.xchart.DialSeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -46,7 +45,7 @@ public class DialChart02 implements ExampleChart<DialChart> {
             .build();
 
     // Series
-    DialSeries series = chart.addSeries("Rate", 0.55, "55 %");
+    chart.addSeries("Rate", 0.55, "55 %");
 
     chart.getStyler().setLegendVisible(true);
     chart.getStyler().setArcAngle(330);

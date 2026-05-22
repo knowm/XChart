@@ -85,9 +85,9 @@ public class BarChart12 implements ExampleChart<CategoryChart> {
     }
 
     // Series
-    CategorySeries staked1 = chart.addSeries("Period 1", months, period1Values);
-    CategorySeries staked2 = chart.addSeries("Period 2", months, period2Values);
-    CategorySeries staked3 = chart.addSeries("Period 3", months, period3Values);
+    chart.addSeries("Period 1", months, period1Values);
+    chart.addSeries("Period 2", months, period2Values);
+    chart.addSeries("Period 3", months, period3Values);
     CategorySeries overlappedLine = chart.addSeries("Average", months, averageValues);
     overlappedLine.setOverlapped(true);
     overlappedLine.setChartCategorySeriesRenderStyle(CategorySeries.CategorySeriesRenderStyle.Line);

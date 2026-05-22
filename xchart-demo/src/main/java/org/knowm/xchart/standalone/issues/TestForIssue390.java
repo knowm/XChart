@@ -16,10 +16,7 @@ public class TestForIssue390 {
 
     Random rand = new Random();
 
-    double min = 0;
-    double max = 20;
     int nbServices = 20;
-    int nbInstances = 50;
 
     long s = 24;
     rand.setSeed(s);

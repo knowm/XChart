@@ -62,7 +62,7 @@ public class LineChart08 implements ExampleChart<XYChart> {
     // chart.getStyler().setXAxisLabelRotation(0);
 
     // Series
-    XYSeries series = chart.addSeries("10^x", xData, yData);
+    chart.addSeries("10^x", xData, yData);
 
     return chart;
   }

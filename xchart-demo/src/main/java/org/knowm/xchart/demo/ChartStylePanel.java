@@ -526,9 +526,9 @@ public class ChartStylePanel extends JPanel {
   }
 
   private EditorTable table;
-  private XChartPanel chartPanel;
+  private XChartPanel<?> chartPanel;
 
-  public ChartStylePanel(XChartPanel chartPanel) {
+  public ChartStylePanel(XChartPanel<?> chartPanel) {
     this.chartPanel = chartPanel;
     table = new EditorTable(this, chartPanel.getChart());
     JScrollPane scrollpane = new JScrollPane(table);
@@ -538,7 +538,7 @@ public class ChartStylePanel extends JPanel {
     setPreferredSize(new Dimension(800, 600));
   }
 
-  public void changeChart(XChartPanel chartPanel) {
+  public void changeChart(XChartPanel<?> chartPanel) {
 
     this.chartPanel = chartPanel;
     table.changeChart(chartPanel.getChart());

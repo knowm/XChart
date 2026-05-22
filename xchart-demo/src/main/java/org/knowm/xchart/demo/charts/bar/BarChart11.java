@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.util.Random;
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
-import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
@@ -72,10 +71,8 @@ public class BarChart11 implements ExampleChart<CategoryChart> {
     chart.getStyler().setLabelsRotation(45);
 
     // Series
-    CategorySeries series1 =
-        chart.addSeries("series1", getLinearValues(0, 200, 6), getRandomValues(10, 50, 6));
-    CategorySeries series2 =
-        chart.addSeries("series2", getLinearValues(0, 200, 6), getRandomValues(10, 50, 6));
+    chart.addSeries("series1", getLinearValues(0, 200, 6), getRandomValues(10, 50, 6));
+    chart.addSeries("series2", getLinearValues(0, 200, 6), getRandomValues(10, 50, 6));
 
     return chart;
   }
