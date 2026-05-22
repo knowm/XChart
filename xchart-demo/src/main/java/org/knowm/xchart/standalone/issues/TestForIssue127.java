@@ -23,15 +23,15 @@ public class TestForIssue127 {
         new XYChartBuilder().width(640).height(480).xAxisTitle("x").yAxisTitle("y").build();
     chart.setTitle("TEst");
     chart.getStyler().setLegendVisible(false);
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
     Thread.sleep(1000);
 
     chart.addSeries("test", x, y);
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
     Thread.sleep(1000);
 
     chart.removeSeries("test");
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
     Thread.sleep(1000);
 
     DateFormat sdf = new SimpleDateFormat("dd-HH-mm");
@@ -45,7 +45,7 @@ public class TestForIssue127 {
     yDate.add(3d);
     yDate.add(5d);
     chart.addSeries("test2", xDate, yDate);
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
     Thread.sleep(1000);
   }
   public static XYChart getChart() {

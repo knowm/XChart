@@ -5,16 +5,16 @@ import java.util.List;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.internal.chartpart.Chart;
+
 
 /** Creates a list of Charts and saves it as a PNG file. */
 public class TestForIssue1 {
 
   public static void main(String[] args) throws Exception {
 
-    List<Chart> charts =
+    List<XYChart> charts =
         Arrays.asList(
-            new Chart[] {
+            new XYChart[] {
               createChart("chart1", new double[] {2.0, 1.0, 0.0}),
               createChart("chart2", new double[] {3.0, 4.0, 0.0}),
               createChart("chart3", new double[] {4.0, 1.5, 0.0}),

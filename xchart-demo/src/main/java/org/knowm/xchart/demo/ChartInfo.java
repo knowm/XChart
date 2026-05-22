@@ -5,7 +5,7 @@ import org.knowm.xchart.demo.charts.ExampleChart;
 public final class ChartInfo {
 
   private final String exampleChartName;
-  private final ExampleChart exampleChart;
+  private final ExampleChart<?> exampleChart;
 
   /**
    * Constructor
@@ -13,7 +13,7 @@ public final class ChartInfo {
    * @param exampleChartName
    * @param exampleChart
    */
-  public ChartInfo(String exampleChartName, ExampleChart exampleChart) {
+  public ChartInfo(String exampleChartName, ExampleChart<?> exampleChart) {
 
     this.exampleChartName = exampleChartName;
     this.exampleChart = exampleChart;
@@ -24,7 +24,7 @@ public final class ChartInfo {
     return exampleChartName;
   }
 
-  public ExampleChart getExampleChart() {
+  public ExampleChart<?> getExampleChart() {
 
     return exampleChart;
   }

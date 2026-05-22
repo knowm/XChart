@@ -39,7 +39,7 @@ public class IntermediateExample {
         chart.addSeries("Gaussian Blob 2", getGaussian(1000, 1, 10), getGaussian(1000, 0, 5));
     series.setMarker(SeriesMarkers.DIAMOND);
 
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   private static List<Double> getGaussian(int number, double mean, double std) {

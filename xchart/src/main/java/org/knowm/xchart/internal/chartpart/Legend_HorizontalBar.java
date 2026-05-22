@@ -10,8 +10,6 @@ import org.knowm.xchart.style.Styler;
 public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeries>
     extends Legend_<ST, S> {
 
-  private final ST axesChartStyler;
-
   /**
    * Constructor
    *
@@ -20,7 +18,6 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
   public Legend_HorizontalBar(Chart<ST, S> chart) {
 
     super(chart);
-    axesChartStyler = chart.getStyler();
   }
 
   @Override

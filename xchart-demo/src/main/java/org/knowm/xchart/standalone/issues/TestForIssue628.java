@@ -11,7 +11,7 @@ public class TestForIssue628 {
   public static void main(String[] args) throws ParseException {
 
     XYChart chart = getCategoryChart();
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   public static XYChart getCategoryChart() {

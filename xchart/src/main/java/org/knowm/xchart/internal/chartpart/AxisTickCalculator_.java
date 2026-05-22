@@ -311,7 +311,6 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
         // This happens when the data values are almost the same but differ by a very tiny amount.
         // The solution for now is to create a single axis label and tick at the average value
         tickLabels.add(getAxisFormat().format(BigDecimal.valueOf((maxValue + minValue) / 2.0)));
-        double averageValue = (maxValue + minValue) / 2.0;
         tickLocations.add(workingSpace / 2.0);
         return;
       } else if (firstPositionAsDouble == Double.NEGATIVE_INFINITY) {

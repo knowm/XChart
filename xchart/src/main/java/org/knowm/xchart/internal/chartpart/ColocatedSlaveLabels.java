@@ -79,7 +79,7 @@ class ColocatedSlaveLabels {
       double maxTickLabelWidth,
       Map<Double, TextLayout> masterLayouts) {
 
-    List<? extends Axis_> colocatedSlaves = yAxis.getColocatedSlaves();
+    List<? extends Axis_<?, ?>> colocatedSlaves = yAxis.getColocatedSlaves();
     if (colocatedSlaves.isEmpty()) {
       return;
     }

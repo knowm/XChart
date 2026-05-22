@@ -20,7 +20,7 @@ public class SwingDemo {
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     // Add content to the window.
-    JPanel chartPanel = new XChartPanel(new AreaChart01().getChart());
+    JPanel chartPanel = new XChartPanel<>(new AreaChart01().getChart());
     frame.add(chartPanel);
 
     // Display the window.

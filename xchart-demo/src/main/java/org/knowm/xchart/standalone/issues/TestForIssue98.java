@@ -1,6 +1,5 @@
 package org.knowm.xchart.standalone.issues;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import org.knowm.xchart.SwingWrapper;

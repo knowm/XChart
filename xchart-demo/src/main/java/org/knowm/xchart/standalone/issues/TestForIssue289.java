@@ -1,7 +1,6 @@
 package org.knowm.xchart.standalone.issues;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.SwingWrapper;

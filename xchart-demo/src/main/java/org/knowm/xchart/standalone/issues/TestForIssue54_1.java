@@ -15,7 +15,6 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -28,23 +27,22 @@ public class TestForIssue54_1 {
 
   public static void main(String[] args) {
 
-    List<Chart> charts = new ArrayList<Chart>();
+    List<Chart<?, ?>> charts = new ArrayList<>();
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("Default axis");
       charts.add(chart);
     }
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("sin(x) on second axis with title");
-      Series series = (Series) chart.getSeriesMap().get("y=sin(x)");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x)");
       charts.add(chart);
     }
 
     {
-      Chart chart = getAreaChart();
+      XYChart chart = getAreaChart();
       chart.setTitle("Default axis");
       charts.add(chart);
     }
@@ -56,57 +54,51 @@ public class TestForIssue54_1 {
     //      charts.add(chart);
     //    }
     {
-      Chart chart = getAreaChart();
+      XYChart chart = getAreaChart();
       chart.setTitle("all different axis, b & c axis on right");
-      Series series = (Series) chart.getSeriesMap().get("b");
-      series.setYAxisGroup(1);
-      series = (Series) chart.getSeriesMap().get("c");
-      series.setYAxisGroup(2);
+      chart.getSeriesMap().get("b").setYAxisGroup(1);
+      chart.getSeriesMap().get("c").setYAxisGroup(2);
       chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       chart.getStyler().setYAxisGroupPosition(2, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
 
     {
-      Chart chart = getCaregoryChart();
+      CategoryChart chart = getCaregoryChart();
       chart.setTitle("Default axis");
       charts.add(chart);
     }
     {
-      Chart chart = getCaregoryChart();
+      CategoryChart chart = getCaregoryChart();
       chart.setTitle("b on second axis, b on right");
-      Series series = (Series) chart.getSeriesMap().get("b");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("b").setYAxisGroup(1);
       chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
 
     {
-      Chart chart = getCategoryLineChart();
+      CategoryChart chart = getCategoryLineChart();
       chart.setTitle("Default axis");
       charts.add(chart);
     }
     {
-      Chart chart = getCategoryLineChart();
+      CategoryChart chart = getCategoryLineChart();
       chart.setTitle("b&d on second axis");
-      Series series = (Series) chart.getSeriesMap().get("b");
-      series.setYAxisGroup(1);
-      series = (Series) chart.getSeriesMap().get("d");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("b").setYAxisGroup(1);
+      chart.getSeriesMap().get("d").setYAxisGroup(1);
       chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
 
     {
-      Chart chart = getBubleChart();
+      BubbleChart chart = getBubleChart();
       chart.setTitle("Default axis");
       charts.add(chart);
     }
     {
-      Chart chart = getBubleChart();
+      BubbleChart chart = getBubleChart();
       chart.setTitle("b on second axis");
-      Series series = (Series) chart.getSeriesMap().get("b");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("b").setYAxisGroup(1);
       charts.add(chart);
     }
 
@@ -114,20 +106,20 @@ public class TestForIssue54_1 {
     // charts.clear();
     // charts.add(chart);
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("Default axis on right");
       chart.getStyler().setYAxisGroupPosition(0, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
 
-    SwingWrapper wrapper = new SwingWrapper(charts);
+    SwingWrapper<Chart<?, ?>> wrapper = new SwingWrapper<>(charts);
     wrapper.displayChartMatrix();
     for (int i = 0; i < charts.size(); i++) {
       wrapper.getXChartPanel(i).setToolTipsEnabled(true);
     }
   }
 
-  static Chart getLineChart() {
+  static XYChart getLineChart() {
     XYChart chart =
         new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
@@ -154,7 +146,7 @@ public class TestForIssue54_1 {
     return chart;
   }
 
-  static Chart getAreaChart() {
+  static XYChart getAreaChart() {
 
     // Create Chart
     XYChart chart =
@@ -295,7 +287,7 @@ public class TestForIssue54_1 {
   }
   public static XYChart getChart() {
 
-    return (XYChart) getLineChart();
+    return getLineChart();
   }
 
 }

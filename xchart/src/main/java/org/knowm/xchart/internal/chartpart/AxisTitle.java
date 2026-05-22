@@ -25,7 +25,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
    * @param chart the Chart
    * @param direction the Direction
    */
-  AxisTitle(Chart<ST, S> chart, Direction direction, Axis_ yAxis, int yIndex) {
+  AxisTitle(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis, int yIndex) {
 
     this.chart = chart;
     this.direction = direction;

@@ -78,22 +78,22 @@ public class ChartStylePanel extends JPanel {
     ChartStylePanel csp;
     Object additionalParameter;
 
-    static HashMap<Class, TableCellEditor> editorMap;
-    static Class[] assignableClasses = {
+    static HashMap<Class<?>, TableCellEditor> editorMap;
+    static Class<?>[] assignableClasses = {
       Theme.class, BasicStroke.class, Marker.class, TimeZone.class
     };
 
     static {
-      editorMap = new HashMap<Class, TableCellEditor>();
+      editorMap = new HashMap<>();
       {
-        JComboBox comboBox = new JComboBox(new Boolean[] {Boolean.TRUE, Boolean.FALSE});
+        JComboBox<Boolean> comboBox = new JComboBox<>(new Boolean[] {Boolean.TRUE, Boolean.FALSE});
         TableCellEditor cellEditor = new DefaultCellEditor(comboBox);
         editorMap.put(Boolean.class, cellEditor);
         editorMap.put(Boolean.TYPE, cellEditor);
       }
 
       {
-        Class[][] clsArr = {
+        Class<?>[][] clsArr = {
           {int.class, Integer.class},
           {byte.class, Byte.class},
           {short.class, Short.class},
@@ -103,17 +103,17 @@ public class ChartStylePanel extends JPanel {
           {String.class, String.class}
         };
 
-        for (Class[] classes : clsArr) {
+        for (Class<?>[] classes : clsArr) {
           GenericEditorWithClass editor = new GenericEditorWithClass(classes[1]);
-          for (Class class1 : classes) {
+          for (Class<?> class1 : classes) {
             editorMap.put(class1, editor);
           }
         }
       }
 
       {
-        JComboBox comboBox =
-            new JComboBox(new Theme[] {new XChartTheme(), new GGPlot2Theme(), new MatlabTheme()});
+        JComboBox<Theme> comboBox =
+            new JComboBox<>(new Theme[] {new XChartTheme(), new GGPlot2Theme(), new MatlabTheme()});
         editorMap.put(Theme.class, new DefaultCellEditor(comboBox));
       }
 
@@ -125,7 +125,7 @@ public class ChartStylePanel extends JPanel {
           new LabelValue("DASH_DASH", SeriesLines.DASH_DASH),
           new LabelValue("DASH_DOT", SeriesLines.DASH_DOT)
         };
-        JComboBox comboBox = new JComboBox(values);
+        JComboBox<LabelValue> comboBox = new JComboBox<>(values);
         editorMap.put(BasicStroke.class, new DefaultCellEditor(comboBox));
       }
       {
@@ -156,13 +156,13 @@ public class ChartStylePanel extends JPanel {
           new LabelValue("GGPlot2 Tick Marks", new BasicStroke(1.5f)), //
           new LabelValue("Matlab Tick Marks", new BasicStroke(.5f)), //
         };
-        JComboBox comboBox = new JComboBox(values);
+        JComboBox<LabelValue> comboBox = new JComboBox<>(values);
         editorMap.put(Stroke.class, new DefaultCellEditor(comboBox));
       }
 
       {
         Marker[] seriesMarkers = new BaseSeriesMarkers().getSeriesMarkers();
-        JComboBox comboBox = new JComboBox(seriesMarkers);
+        JComboBox<Marker> comboBox = new JComboBox<>(seriesMarkers);
         editorMap.put(Marker.class, new DefaultCellEditor(comboBox));
       }
 
@@ -178,7 +178,7 @@ public class ChartStylePanel extends JPanel {
               Locale.GERMAN,
               Locale.forLanguageTag("tr-TR")
             };
-        JComboBox comboBox = new JComboBox(values);
+        JComboBox<Locale> comboBox = new JComboBox<>(values);
         editorMap.put(Locale.class, new DefaultCellEditor(comboBox));
       }
 
@@ -188,7 +188,7 @@ public class ChartStylePanel extends JPanel {
         for (int i = 0; i < values.length; i++) {
           values[i] = TimeZone.getTimeZone(availableIDs[i]);
         }
-        JComboBox comboBox = new JComboBox(values);
+        JComboBox<TimeZone> comboBox = new JComboBox<>(values);
         editorMap.put(TimeZone.class, new DefaultCellEditor(comboBox));
       }
     }
@@ -220,19 +220,19 @@ public class ChartStylePanel extends JPanel {
 
       try {
         Object val = getValue();
-        Class cls = val == null ? getValueClass() : val.getClass();
+        Class<?> cls = val == null ? getValueClass() : val.getClass();
         cellEditor = editorMap.get(cls);
         if (cellEditor != null) {
           return;
         }
 
         if (cls.isEnum()) {
-          JComboBox comboBox = new JComboBox(cls.getEnumConstants());
+          JComboBox<Object> comboBox = new JComboBox<>(cls.getEnumConstants());
           cellEditor = new DefaultCellEditor(comboBox);
           return;
         }
 
-        for (Class class1 : assignableClasses) {
+        for (Class<?> class1 : assignableClasses) {
           if (class1.isAssignableFrom(cls)) {
             cellEditor = editorMap.get(class1);
             return;
@@ -316,7 +316,7 @@ public class ChartStylePanel extends JPanel {
       return cellEditor;
     }
 
-    public Class getValueClass() {
+    public Class<?> getValueClass() {
 
       if (readMethod == null) {
         // obj is array
@@ -354,11 +354,11 @@ public class ChartStylePanel extends JPanel {
 
   static class GenericEditorWithClass extends DefaultCellEditor {
 
-    Class[] argTypes = new Class[] {String.class};
-    java.lang.reflect.Constructor constructor;
+    Class<?>[] argTypes = new Class<?>[] {String.class};
+    java.lang.reflect.Constructor<?> constructor;
     Object value;
 
-    public GenericEditorWithClass(Class cls) {
+    public GenericEditorWithClass(Class<?> cls) {
       super(new JTextField());
       getComponent().setName("Table.editor");
       try {
@@ -409,11 +409,11 @@ public class ChartStylePanel extends JPanel {
 
   public static class EditorTableModel extends DefaultTableModel {
     ArrayList<EditableProperty> properties;
-    Chart chart;
+    Chart<?, ?> chart;
     int rowCount;
     ChartStylePanel csp;
 
-    public EditorTableModel(ChartStylePanel csp, Chart chart) {
+    public EditorTableModel(ChartStylePanel csp, Chart<?, ?> chart) {
       this.csp = csp;
       addColumn("Name");
       addColumn("Type");
@@ -421,7 +421,7 @@ public class ChartStylePanel extends JPanel {
       changeChart(chart);
     }
 
-    public void changeChart(Chart chart) {
+    public void changeChart(Chart<?, ?> chart) {
 
       this.chart = chart;
       properties = getProperties(csp, chart);
@@ -487,7 +487,7 @@ public class ChartStylePanel extends JPanel {
   public static class EditorTable extends JTable {
     EditorTableModel tableModel;
 
-    public EditorTable(ChartStylePanel csp, Chart chart) {
+    public EditorTable(ChartStylePanel csp, Chart<?, ?> chart) {
       tableModel = new EditorTableModel(csp, chart);
 
       setModel(tableModel);
@@ -503,7 +503,7 @@ public class ChartStylePanel extends JPanel {
       setAutoCreateRowSorter(true);
     }
 
-    public void changeChart(Chart chart) {
+    public void changeChart(Chart<?, ?> chart) {
 
       tableModel.changeChart(chart);
     }
@@ -517,7 +517,7 @@ public class ChartStylePanel extends JPanel {
       if (editor != null) {
         return editor;
       }
-      Class valueClass = se.getValueClass();
+      Class<?> valueClass = se.getValueClass();
       TableCellEditor defaultEditor = getDefaultEditor(valueClass);
 
       // System.out.println(valueClass + "=>" + defaultEditor);
@@ -526,9 +526,9 @@ public class ChartStylePanel extends JPanel {
   }
 
   private EditorTable table;
-  private XChartPanel chartPanel;
+  private XChartPanel<?> chartPanel;
 
-  public ChartStylePanel(XChartPanel chartPanel) {
+  public ChartStylePanel(XChartPanel<?> chartPanel) {
     this.chartPanel = chartPanel;
     table = new EditorTable(this, chartPanel.getChart());
     JScrollPane scrollpane = new JScrollPane(table);
@@ -538,7 +538,7 @@ public class ChartStylePanel extends JPanel {
     setPreferredSize(new Dimension(800, 600));
   }
 
-  public void changeChart(XChartPanel chartPanel) {
+  public void changeChart(XChartPanel<?> chartPanel) {
 
     this.chartPanel = chartPanel;
     table.changeChart(chartPanel.getChart());
@@ -575,7 +575,7 @@ public class ChartStylePanel extends JPanel {
               "YAxisAlignment",
               "YAxisGroupPosition"));
 
-  public static ArrayList<EditableProperty> getProperties(ChartStylePanel csp, Chart chart) {
+  public static ArrayList<EditableProperty> getProperties(ChartStylePanel csp, Chart<?, ?> chart) {
 
     if (chart == null) {
       return new ArrayList<EditableProperty>();
@@ -585,10 +585,10 @@ public class ChartStylePanel extends JPanel {
         getObjectProperties(csp, chart.getStyler(), "styler.", skipSet);
     list.addAll(list2);
 
-    Map<String, Series> seriesMap = chart.getSeriesMap();
+    Map<String, ? extends Series> seriesMap = chart.getSeriesMap();
     int ind = 0;
     TreeSet<Integer> seriesIndSet = new TreeSet<Integer>();
-    for (Entry<String, Series> e : seriesMap.entrySet()) {
+    for (Entry<String, ? extends Series> e : seriesMap.entrySet()) {
       Series series = e.getValue();
       list2 = getObjectProperties(csp, series, "series[" + e.getKey() + "].", skipSet);
       list.addAll(list2);

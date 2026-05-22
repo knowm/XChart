@@ -11,7 +11,7 @@ public class TestForIssue707 {
   public static void main(String[] args) throws ParseException {
 
     CategoryChart chart = getCategoryChart();
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   public static CategoryChart getCategoryChart() {

@@ -1,10 +1,9 @@
 package org.knowm.xchart.standalone.issues;
 
-import java.io.IOException;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
+import org.knowm.xchart.style.XYStyler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
 public class TestForIssue83 {
@@ -13,7 +12,7 @@ public class TestForIssue83 {
 
 
     final XYChart chart = new XYChart(500, 580);
-    final Styler styleManager = chart.getStyler();
+    final XYStyler styleManager = chart.getStyler();
     styleManager.setLegendPosition(LegendPosition.InsideNW);
     styleManager.setLegendVisible(false);
 

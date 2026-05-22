@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.internal.chartpart.Chart;
 
 public class TestForIssue325 {
 
@@ -13,7 +12,7 @@ public class TestForIssue325 {
 
   public static void main(String[] args) {
 
-    List<Chart> charts = new ArrayList<>();
+    List<XYChart> charts = new ArrayList<>();
     int[] multiples = {1, 1000};
     int[] widths = {0, 15, 55};
     for (int m : multiples) {
@@ -24,7 +23,7 @@ public class TestForIssue325 {
       }
     }
 
-    new SwingWrapper(charts, charts.size() / widths.length, widths.length).displayChartMatrix();
+    new SwingWrapper<>(charts, charts.size() / widths.length, widths.length).displayChartMatrix();
 
     try {
       // wait frame to appear

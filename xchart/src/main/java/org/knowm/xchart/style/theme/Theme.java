@@ -4,7 +4,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import org.knowm.xchart.style.PieStyler.LabelType;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.SeriesColors;

@@ -10,7 +10,6 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.ToolTipType;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**

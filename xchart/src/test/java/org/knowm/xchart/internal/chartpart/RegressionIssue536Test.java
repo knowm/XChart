@@ -73,7 +73,7 @@ public class RegressionIssue536Test {
     XYSeries xyseries = chart.addSeries(series, x, y);
     xyseries.setMarker(SeriesMarkers.NONE);
     xyseries.setYAxisGroup(1);
-    byte[] bytes = BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+    BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
 
     List<String> tickLabels = chart.axisPair.getXAxis().getAxisTickCalculator().getTickLabels();
 

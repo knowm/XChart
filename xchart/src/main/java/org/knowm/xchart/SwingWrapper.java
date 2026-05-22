@@ -197,7 +197,7 @@ public class SwingWrapper<T extends Chart<?, ?>> {
    * @param isCentered
    * @return
    */
-  public SwingWrapper isCentered(boolean isCentered) {
+  public SwingWrapper<T> isCentered(boolean isCentered) {
     this.isCentered = isCentered;
     return this;
   }
@@ -208,7 +208,7 @@ public class SwingWrapper<T extends Chart<?, ?>> {
    * @param windowTitle
    * @return
    */
-  public SwingWrapper setTitle(String windowTitle) {
+  public SwingWrapper<T> setTitle(String windowTitle) {
     this.windowTitle = windowTitle;
     return this;
   }

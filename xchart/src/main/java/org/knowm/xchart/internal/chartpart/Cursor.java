@@ -29,7 +29,6 @@ public class Cursor extends MouseAdapter implements ChartPart {
   private final List<DataPoint> dataPointList = new ArrayList<>();
   private final List<DataPoint> matchingDataPointList = new ArrayList<>();
 
-  private final Chart chart;
   private final XYStyler styler;
 
   private final Map<String, Series> seriesMap;
@@ -47,15 +46,16 @@ public class Cursor extends MouseAdapter implements ChartPart {
    *
    * @param chart
    */
-  public Cursor(Chart chart) {
+  public Cursor(Chart<?, ?> chart) {
 
-    this.chart = chart;
     this.styler = (XYStyler) chart.getStyler();
 
     // clear lists
     dataPointList.clear();
 
-    this.seriesMap = chart.getSeriesMap();
+    @SuppressWarnings("unchecked")
+    Map<String, Series> tmp = (Map<String, Series>) (Map<?, ?>) chart.getSeriesMap();
+    this.seriesMap = tmp;
   }
 
   @Override

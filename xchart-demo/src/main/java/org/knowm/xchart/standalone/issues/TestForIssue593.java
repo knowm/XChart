@@ -5,7 +5,6 @@ import java.util.List;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYSeries;
 
 /**
  * Demonstrates the fix for issue #593 — cursor dataPointList memory leak in live XYCharts.

@@ -21,7 +21,7 @@ public class JavaFXDemo extends Application {
   public void start(Stage stage) {
 
     final SwingNode swingNode = new SwingNode();
-    JPanel chartPanel = new XChartPanel(new AreaChart01().getChart());
+    JPanel chartPanel = new XChartPanel<>(new AreaChart01().getChart());
     swingNode.setContent(chartPanel);
     Scene scene = new Scene(new StackPane(swingNode), 640, 480);
     stage.setScene(scene);

@@ -27,7 +27,6 @@ public class ToolTips extends MouseAdapter implements ChartPart {
   private static final int MARGIN = 5;
   private static final int MOUSE_MARGIN = 20;
 
-  private final Chart chart;
   private final Styler styler;
   private final boolean alwaysVisible;
   private final ToolTipType toolTipType;
@@ -44,9 +43,8 @@ public class ToolTips extends MouseAdapter implements ChartPart {
    * @param alwaysVisible
    * @param toolTipType
    */
-  public ToolTips(Chart chart, boolean alwaysVisible, ToolTipType toolTipType) {
+  public ToolTips(Chart<?, ?> chart, boolean alwaysVisible, ToolTipType toolTipType) {
 
-    this.chart = chart;
     this.styler = chart.getStyler();
     this.alwaysVisible = alwaysVisible;
     this.toolTipType = toolTipType;

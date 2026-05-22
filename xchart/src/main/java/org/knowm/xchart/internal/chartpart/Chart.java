@@ -17,7 +17,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
 
 /** An XChart Chart */
-public abstract class Chart<ST extends Styler, S extends Series> {
+public abstract class Chart<ST extends Styler, S extends Series> implements IChart {
 
   protected final ST styler;
   protected final ChartTitle<ST, S> chartTitle;
@@ -27,7 +27,7 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   /** Chart Parts */
   // TODO maybe move this to a secondary abstract class for inheritors with axes. Pie charts don't
   // have an axis for example
-  protected AxisPair axisPair;
+  protected AxisPair<?, ?> axisPair;
 
   protected Plot_<ST, S> plot;
   protected Legend_<ST, S> legend;
@@ -202,22 +202,22 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     return plot;
   }
 
-  Axis_X getXAxis() {
+  Axis_X<?, ?> getXAxis() {
 
     return axisPair.getXAxis();
   }
 
-  Axis_Y getYAxis() {
+  Axis_Y<?, ?> getYAxis() {
 
     return axisPair.getYAxis();
   }
 
-  Axis_Y getYAxis(int yIndex) {
+  Axis_Y<?, ?> getYAxis(int yIndex) {
 
     return axisPair.getYAxis(yIndex);
   }
 
-  AxisPair getAxisPair() {
+  AxisPair<?, ?> getAxisPair() {
 
     return axisPair;
   }

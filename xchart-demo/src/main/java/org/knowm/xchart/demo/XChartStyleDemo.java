@@ -21,7 +21,7 @@ public class XChartStyleDemo extends XChartDemo {
 
   @Override
   public void valueChanged(TreeSelectionEvent e) {
-    XChartPanel oldChartPanel = chartPanel;
+    XChartPanel<?> oldChartPanel = chartPanel;
     super.valueChanged(e);
     if (chartPanel != oldChartPanel) {
       stylePanel.changeChart(chartPanel);
