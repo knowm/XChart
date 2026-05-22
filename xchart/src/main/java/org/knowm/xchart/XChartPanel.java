@@ -260,6 +260,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     if (anyEnabled) {
       chart.enableInteractionData();
+      repaint();
     }
   }
 
