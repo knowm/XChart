@@ -23,7 +23,9 @@ public class LineChart09 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new LineChart09();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setCursorEnabled(true);
   }
 
   @Override
@@ -45,7 +47,6 @@ public class LineChart09 implements ExampleChart<XYChart> {
     chart.getStyler().setLegendPosition(LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
 
-    chart.getStyler().setCursorEnabled(true);
     //    chart.getStyler().setCursorColor(Color.GREEN);
     //    chart.getStyler().setCursorLineWidth(30f);
     //    chart.getStyler().setCursorFont(new Font("Verdana", Font.BOLD, 12));

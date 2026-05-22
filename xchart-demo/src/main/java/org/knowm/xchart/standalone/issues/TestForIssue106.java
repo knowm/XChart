@@ -8,7 +8,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.demo.charts.area.AreaChart03;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.ToolTipType;
 
 public class TestForIssue106 {
 
@@ -19,7 +19,6 @@ public class TestForIssue106 {
     {
       XYChart chart = alc.getChart();
       chart.setTitle("Default data labels");
-      chart.getStyler().setToolTipsEnabled(true);
       charts.add(chart);
     }
     {
@@ -30,21 +29,22 @@ public class TestForIssue106 {
     {
       // current default
       XYChart chart = alc.getChart();
-      chart.getStyler().setToolTipsEnabled(true);
       chart.getStyler().setToolTipBackgroundColor(Color.RED);
-      chart.getStyler().setToolTipType(Styler.ToolTipType.yLabels);
       chart.setTitle("Red background");
       charts.add(chart);
     }
     {
       XYChart chart = alc.getChart();
-      chart.getStyler().setToolTipsEnabled(true);
       chart.getStyler().setToolTipBorderColor(Color.BLUE);
       chart.getStyler().setToolTipFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
       chart.setTitle("Blue and custom Font");
       charts.add(chart);
     }
 
-    new SwingWrapper<XYChart>(charts).displayChartMatrix();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<XYChart>(charts);
+    wrapper.displayChartMatrix();
+    wrapper.getXChartPanel(0).setToolTipsEnabled(true);
+    wrapper.getXChartPanel(2).setToolTipsEnabled(true).setToolTipType(ToolTipType.yLabels);
+    wrapper.getXChartPanel(3).setToolTipsEnabled(true);
   }
 }

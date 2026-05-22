@@ -101,34 +101,40 @@ public class SwingWrapper<T extends Chart<?, ?>> {
 
     // Schedule a job for the event-dispatching thread:
     // creating and showing this application's GUI.
-    javax.swing.SwingUtilities.invokeLater(
-        new Runnable() {
+    try {
+      javax.swing.SwingUtilities.invokeAndWait(
+          new Runnable() {
 
-          @Override
-          public void run() {
+            @Override
+            public void run() {
 
-            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
+              frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+              frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
 
-            for (T chart : charts) {
-              if (chart != null) {
-                XChartPanel<T> chartPanel = new XChartPanel<T>(chart);
-                chartPanels.add(chartPanel);
-                frame.add(chartPanel);
-              } else {
-                JPanel chartPanel = new JPanel();
-                frame.getContentPane().add(chartPanel);
+              for (T chart : charts) {
+                if (chart != null) {
+                  XChartPanel<T> chartPanel = new XChartPanel<T>(chart);
+                  chartPanels.add(chartPanel);
+                  frame.add(chartPanel);
+                } else {
+                  JPanel chartPanel = new JPanel();
+                  frame.getContentPane().add(chartPanel);
+                }
               }
-            }
 
-            // Display the window.
-            frame.pack();
-            if (isCentered) {
-              frame.setLocationRelativeTo(null);
+              // Display the window.
+              frame.pack();
+              if (isCentered) {
+                frame.setLocationRelativeTo(null);
+              }
+              frame.setVisible(true);
             }
-            frame.setVisible(true);
-          }
-        });
+          });
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
 
     return frame;
   }

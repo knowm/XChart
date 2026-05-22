@@ -26,7 +26,9 @@ public class TestForIssue54_2 {
     chart.getStyler().setYAxisGroupPosition(0, YAxisPosition.Right);
     chart.setYAxisGroupTitle(1, "sin(x)");
 
-    new SwingWrapper(chart).displayChart();
+    SwingWrapper sw = new SwingWrapper(chart);
+    sw.displayChart();
+    sw.getXChartPanel().setToolTipsEnabled(true);
   }
 
   static Chart getLineChart() {
@@ -35,7 +37,6 @@ public class TestForIssue54_2 {
         new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     // generates sine data
     int size = 30;

@@ -120,7 +120,11 @@ public class TestForIssue54_1 {
       charts.add(chart);
     }
 
-    new SwingWrapper(charts).displayChartMatrix();
+    SwingWrapper wrapper = new SwingWrapper(charts);
+    wrapper.displayChartMatrix();
+    for (int i = 0; i < charts.size(); i++) {
+      wrapper.getXChartPanel(i).setToolTipsEnabled(true);
+    }
   }
 
   static Chart getLineChart() {
@@ -128,7 +132,6 @@ public class TestForIssue54_1 {
         new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     // generates sine data
     int size = 30;
@@ -171,7 +174,6 @@ public class TestForIssue54_1 {
     chart.setYAxisGroupTitle(2, "c");
 
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
-    chart.getStyler().setToolTipsEnabled(true);
 
     // Series
     chart.addSeries("a", new double[] {0, 3, 6, 9, 12}, new double[] {-1, 5, 9, 6, 5});
@@ -197,8 +199,6 @@ public class TestForIssue54_1 {
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setAvailableSpaceFill(.96);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
-    chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setToolTipType(Styler.ToolTipType.yLabels);
 
     // Series
     List<Integer> data = getGaussianData(1000);
@@ -245,7 +245,6 @@ public class TestForIssue54_1 {
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
     chart.getStyler().setAvailableSpaceFill(0);
     chart.getStyler().setOverlapped(true);
-    chart.getStyler().setToolTipsEnabled(true);
 
     // Declare data
     List<String> xAxisKeys =
@@ -279,7 +278,6 @@ public class TestForIssue54_1 {
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();
-    chart.getStyler().setToolTipsEnabled(true);
     // Customize Chart
 
     // Series

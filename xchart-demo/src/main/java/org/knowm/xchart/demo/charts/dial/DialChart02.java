@@ -27,7 +27,9 @@ public class DialChart02 implements ExampleChart<DialChart> {
 
     ExampleChart<DialChart> exampleChart = new DialChart02();
     DialChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<DialChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -45,7 +47,6 @@ public class DialChart02 implements ExampleChart<DialChart> {
     // Series
     DialSeries series = chart.addSeries("Rate", 0.55, "55 %");
 
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setLegendVisible(true);
     chart.getStyler().setArcAngle(330);
 

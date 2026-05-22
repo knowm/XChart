@@ -30,7 +30,9 @@ public class HeatMapChart03 implements ExampleChart<HeatMapChart> {
 
     ExampleChart<HeatMapChart> exampleChart = new HeatMapChart03();
     HeatMapChart chart = exampleChart.getChart();
-    new SwingWrapper<HeatMapChart>(chart).displayChart();
+    SwingWrapper<HeatMapChart> wrapper = new SwingWrapper<HeatMapChart>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -48,7 +50,6 @@ public class HeatMapChart03 implements ExampleChart<HeatMapChart> {
 
     chart.getStyler().setPlotContentSize(0.999);
     chart.getStyler().setLegendFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setPiecewise(true);
     chart.getStyler().setShowValue(true);
 

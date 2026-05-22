@@ -65,7 +65,11 @@ public class TestForIssue210 implements ExampleChart<DialChart> {
       chart.getStyler().setAxisTickLabelsVisible(false);
       charts.add(chart);
     }
-    new SwingWrapper<DialChart>(charts).displayChartMatrix();
+    SwingWrapper<DialChart> wrapper = new SwingWrapper<DialChart>(charts);
+    wrapper.displayChartMatrix();
+    for (int i = 0; i < charts.size(); i++) {
+      wrapper.getXChartPanel(i).setToolTipsEnabled(true);
+    }
   }
 
   @Override
@@ -76,7 +80,6 @@ public class TestForIssue210 implements ExampleChart<DialChart> {
 
     // Series
     chart.addSeries("Rate", 0.9381, "93.81 %");
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setLegendVisible(false);
 
     return chart;

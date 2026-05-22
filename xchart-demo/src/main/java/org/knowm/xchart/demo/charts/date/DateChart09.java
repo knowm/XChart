@@ -28,7 +28,9 @@ public class DateChart09 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new DateChart09();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setCursorEnabled(true);
   }
 
   @Override
@@ -63,7 +65,6 @@ public class DateChart09 implements ExampleChart<XYChart> {
             x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
 
     // set custom cursor tool tip text
-    chart.getStyler().setCursorEnabled(true);
     DateTimeFormatter cursorXFormatter = DateTimeFormatter.ofPattern("LLL dd");
     chart
         .getStyler()

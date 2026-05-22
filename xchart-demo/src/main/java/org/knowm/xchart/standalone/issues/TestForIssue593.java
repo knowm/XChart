@@ -26,6 +26,7 @@ public class TestForIssue593 {
     XYChart chart = getChart();
     SwingWrapper<XYChart> sw = new SwingWrapper<>(chart);
     sw.displayChart();
+    sw.getXChartPanel().setCursorEnabled(true);
 
     // Simulate a live chart updating every 500 ms
     List<Double> xData = Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0);
@@ -50,8 +51,6 @@ public class TestForIssue593 {
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();
-
-    chart.getStyler().setCursorEnabled(true);
 
     chart.addSeries("series", new double[]{1, 2, 3, 4, 5}, new double[]{1, 3, 2, 5, 4});
 

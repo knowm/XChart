@@ -7,7 +7,7 @@ import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.ToolTipType;
 
 /**
  * Demonstrates the fix for issue #862 — {@link BitmapEncoder#saveBitmap} throws NPE when tooltips
@@ -41,7 +41,9 @@ public class TestForIssue862 {
     System.out.println("Saved /tmp/issue862.png — no NPE.");
 
     // Also show the interactive chart to confirm tooltips still work with a panel.
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<XYChart> sw = new SwingWrapper<>(chart);
+    sw.displayChart();
+    sw.getXChartPanel().setToolTipsEnabled(true).setToolTipsAlwaysVisible(true).setToolTipType(ToolTipType.yLabels);
   }
 
   /**
@@ -58,10 +60,6 @@ public class TestForIssue862 {
             .xAxisTitle("X")
             .yAxisTitle("Y")
             .build();
-
-    chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setToolTipsAlwaysVisible(true);
-    chart.getStyler().setToolTipType(Styler.ToolTipType.yLabels);
 
     chart.addSeries("series", Arrays.asList(1, 2, 3, 4, 5), Arrays.asList(2.0, 4.0, 3.0, 7.0, 5.0));
 

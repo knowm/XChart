@@ -27,7 +27,9 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new ThemeChart03();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<XYChart>(chart).displayChart();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<XYChart>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -47,7 +49,6 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setPlotGridLinesVisible(false);
     chart.getStyler().setXAxisTickMarkSpacingHint(100);
-    chart.getStyler().setToolTipsEnabled(true);
 
     // Series
     List<Integer> xData = new ArrayList<Integer>();

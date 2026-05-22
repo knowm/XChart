@@ -14,7 +14,9 @@ public class TestForIssue545 {
   public static void main(String[] args) throws ParseException {
 
     BubbleChart chart = getBubbleChart();
-    new SwingWrapper(chart).displayChart();
+    SwingWrapper<BubbleChart> sw = new SwingWrapper<BubbleChart>(chart);
+    sw.displayChart();
+    sw.getXChartPanel().setToolTipsEnabled(true).setToolTipsAlwaysVisible(true);
   }
 
   public static BubbleChart getBubbleChart() {
@@ -50,8 +52,6 @@ public class TestForIssue545 {
     styler.setYAxisDecimalPattern("%");
     styler.setXAxisTickMarkSpacingHint(50);
     styler.setAntiAlias(true);
-    styler.setToolTipsEnabled(true);
-    styler.setToolTipsAlwaysVisible(true);
     styler.setToolTipFont(new Font("SansSerif", Font.PLAIN, 14));
   }
   public static BubbleChart getChart() {

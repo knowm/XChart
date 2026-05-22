@@ -17,7 +17,9 @@ public class BoxChart03 implements ExampleChart<BoxChart> {
   public static void main(String[] args) {
     ExampleChart<BoxChart> exampleChart = new BoxChart03();
     BoxChart chart = exampleChart.getChart();
-    new SwingWrapper<BoxChart>(chart).displayChart();
+    SwingWrapper<BoxChart> wrapper = new SwingWrapper<BoxChart>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -35,7 +37,6 @@ public class BoxChart03 implements ExampleChart<BoxChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setYAxisLogarithmic(true);
 
     // Series

@@ -17,7 +17,9 @@ public class BoxChart02 implements ExampleChart<BoxChart> {
   public static void main(String[] args) {
     ExampleChart<BoxChart> exampleChart = new BoxChart02();
     BoxChart chart = exampleChart.getChart();
-    new SwingWrapper<BoxChart>(chart).displayChart();
+    SwingWrapper<BoxChart> wrapper = new SwingWrapper<BoxChart>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -40,7 +42,6 @@ public class BoxChart02 implements ExampleChart<BoxChart> {
     chart.addSeries("bbb", Arrays.asList(1, 2, 3, 4, 5, 6, 17));
     chart.addSeries("ccc", Arrays.asList(-10, -8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 21));
     chart.getStyler().setShowWithinAreaPoint(true);
-    chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
 

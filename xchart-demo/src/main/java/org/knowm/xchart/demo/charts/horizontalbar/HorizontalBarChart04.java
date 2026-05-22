@@ -28,7 +28,9 @@ public class HorizontalBarChart04 implements ExampleChart<HorizontalBarChart> {
 
     ExampleChart<HorizontalBarChart> exampleChart = new HorizontalBarChart04();
     HorizontalBarChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<HorizontalBarChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -46,7 +48,6 @@ public class HorizontalBarChart04 implements ExampleChart<HorizontalBarChart> {
 
     // Customize Chart
     chart.getStyler().setLabelsVisible(true);
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);

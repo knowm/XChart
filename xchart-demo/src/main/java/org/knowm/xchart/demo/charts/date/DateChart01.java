@@ -33,7 +33,9 @@ public class DateChart01 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new DateChart01();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setZoomEnabled(true);
   }
 
   @Override
@@ -46,7 +48,6 @@ public class DateChart01 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
-    chart.getStyler().setZoomEnabled(true);
     //    chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
     //    chart.getStyler().setZoomResetByDoubleClick(false);
     //    chart.getStyler().setZoomResetByButton(true);

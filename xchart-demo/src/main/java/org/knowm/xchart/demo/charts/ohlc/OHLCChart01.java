@@ -25,7 +25,9 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
 
     ExampleChart<OHLCChart> exampleChart = new OHLCChart01();
     OHLCChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<OHLCChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   public static void populateData(
@@ -110,7 +112,6 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
 
     xData = null;
     chart.addSeries("Series", xData, openData, highData, lowData, closeData);
-    chart.getStyler().setToolTipsEnabled(true);
     return chart;
   }
 

@@ -25,7 +25,9 @@ public class RadarChart02 implements ExampleChart<RadarChart> {
 
     ExampleChart<RadarChart> exampleChart = new RadarChart02();
     RadarChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<RadarChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -39,7 +41,6 @@ public class RadarChart02 implements ExampleChart<RadarChart> {
             .title(getClass().getSimpleName())
             .theme(Styler.ChartTheme.GGPlot2)
             .build();
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setRadarRenderStyle(RadarStyler.RadarRenderStyle.Circle);
     chart.getStyler().setSeriesFilled(false);
     chart.getStyler().setRadiiTickMarksCount(4);

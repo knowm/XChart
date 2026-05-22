@@ -26,7 +26,9 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
 
     ExampleChart<OHLCChart> exampleChart = new OHLCChart02();
     OHLCChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<OHLCChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -39,7 +41,6 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
     chart.getStyler().setDefaultSeriesRenderStyle(OHLCSeries.OHLCSeriesRenderStyle.HiLo);
-    chart.getStyler().setToolTipsEnabled(true);
 
     List<Date> xData = new ArrayList<>();
     List<Double> openData = new ArrayList<>();

@@ -29,7 +29,9 @@ public class PieChart02 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart02();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<PieChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -60,7 +62,6 @@ public class PieChart02 implements ExampleChart<PieChart> {
     chart.getStyler().setSeriesColors(sliceColors);
     chart.getStyler().setCustomSeriesLabelFunction(generateSeriesLabel(total));
     // chart.getStyler().setDecimalPattern("#0.000");
-    chart.getStyler().setToolTipsEnabled(true);
     //    chart.getStyler().setToolTipsAlwaysVisible(true);
 
     return chart;

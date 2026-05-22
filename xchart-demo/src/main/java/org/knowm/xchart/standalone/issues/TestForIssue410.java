@@ -15,14 +15,14 @@ public class TestForIssue410 {
     BoxChart chart =
         new BoxChartBuilder().title("TestForIssue410").theme(ChartTheme.GGPlot2).build();
 
-    chart.getStyler().setToolTipsEnabled(true);
-
-    // Series
     chart.addSeries("boxOne", Arrays.asList(1000, 5000, 60000));
     return chart;
   }
 
   public static void main(String[] args) {
-    new SwingWrapper<>(getChart()).displayChart();
+    BoxChart chart = getChart();
+    SwingWrapper<BoxChart> sw = new SwingWrapper<>(chart);
+    sw.displayChart();
+    sw.getXChartPanel().setToolTipsEnabled(true);
   }
 }
