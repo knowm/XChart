@@ -312,9 +312,35 @@ public abstract class Chart<ST extends Styler, S extends Series> {
     plot.plotContent.interactionData = new PlotInteractionData();
   }
 
-  public PlotInteractionData getInteractionData() {
+  PlotInteractionData getInteractionData() {
 
     return plot.plotContent.getInteractionData();
+  }
+
+  /**
+   * Called by {@link org.knowm.xchart.XChartPanel} after {@code paint()} to feed collected
+   * interaction data into the hover-tooltip and cursor overlays and paint them on top of the chart.
+   * Keeping this method here avoids exposing the internal {@link PlotInteractionData} type in the
+   * public API.
+   *
+   * @param g the graphics context (same one used for chart painting)
+   * @param toolTips hover-tooltip handler, or {@code null} if not enabled
+   * @param cursor cursor handler, or {@code null} if not enabled
+   */
+  public void consumeInteractionData(Graphics2D g, ToolTips toolTips, Cursor cursor) {
+
+    PlotInteractionData data = getInteractionData();
+    if (data == null) {
+      return;
+    }
+    if (toolTips != null) {
+      toolTips.setData(data);
+      toolTips.paint(g);
+    }
+    if (cursor != null) {
+      cursor.setData(data);
+      cursor.paint(g);
+    }
   }
 
   /**

@@ -32,12 +32,10 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
-import org.knowm.xchart.ToolTipType;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ChartZoom;
 import org.knowm.xchart.internal.chartpart.Cursor;
-import org.knowm.xchart.internal.chartpart.PlotInteractionData;
 import org.knowm.xchart.internal.chartpart.ToolTips;
 import org.knowm.xchart.style.AxesChartStyler;
 
@@ -258,8 +256,11 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
       this.addMouseMotionListener(toolTips);
     }
 
-    if (anyEnabled) {
+    if (toolTipsEnabled || cursorEnabled) {
       chart.enableInteractionData();
+    }
+
+    if (anyEnabled) {
       repaint();
     }
   }
@@ -272,19 +273,9 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     Graphics2D g2d = (Graphics2D) g.create();
     chart.paint(g2d, getWidth(), getHeight());
 
-    PlotInteractionData interactionData = chart.getInteractionData();
-    if (interactionData != null) {
-      if (toolTips != null) {
-        toolTips.setData(interactionData);
-        toolTips.paint(g2d);
-      }
-      if (cursor != null) {
-        cursor.setData(interactionData);
-        cursor.paint(g2d);
-      }
-      if (chartZoom != null) {
-        chartZoom.paint(g2d);
-      }
+    chart.consumeInteractionData(g2d, toolTips, cursor);
+    if (chartZoom != null) {
+      chartZoom.paint(g2d);
     }
 
     g2d.dispose();

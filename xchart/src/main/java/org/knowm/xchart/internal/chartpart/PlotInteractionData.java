@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PlotInteractionData {
+class PlotInteractionData {
 
   Rectangle2D plotBounds;
 

@@ -62,32 +62,37 @@ public class SwingWrapper<T extends Chart<?, ?>> {
     // Create and set up the window.
     final JFrame frame = new JFrame(windowTitle);
 
-    // Schedule a job for the event-dispatching thread:
-    // creating and showing this application's GUI.
-    try {
-      javax.swing.SwingUtilities.invokeAndWait(
-          new Runnable() {
+    Runnable runnable =
+        new Runnable() {
 
-            @Override
-            public void run() {
+          @Override
+          public void run() {
 
-              frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-              XChartPanel<T> chartPanel = new XChartPanel<T>(charts.get(0));
-              chartPanels.add(chartPanel);
-              frame.add(chartPanel);
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            XChartPanel<T> chartPanel = new XChartPanel<T>(charts.get(0));
+            chartPanels.add(chartPanel);
+            frame.add(chartPanel);
 
-              // Display the window.
-              frame.pack();
-              if (isCentered) {
-                frame.setLocationRelativeTo(null);
-              }
-              frame.setVisible(true);
+            // Display the window.
+            frame.pack();
+            if (isCentered) {
+              frame.setLocationRelativeTo(null);
             }
-          });
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
+            frame.setVisible(true);
+          }
+        };
+
+    if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+      runnable.run();
+    } else {
+      try {
+        javax.swing.SwingUtilities.invokeAndWait(runnable);
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      }
     }
 
     return frame;
@@ -99,41 +104,46 @@ public class SwingWrapper<T extends Chart<?, ?>> {
     // Create and set up the window.
     final JFrame frame = new JFrame(windowTitle);
 
-    // Schedule a job for the event-dispatching thread:
-    // creating and showing this application's GUI.
-    try {
-      javax.swing.SwingUtilities.invokeAndWait(
-          new Runnable() {
+    Runnable runnable =
+        new Runnable() {
 
-            @Override
-            public void run() {
+          @Override
+          public void run() {
 
-              frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-              frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            frame.getContentPane().setLayout(new GridLayout(numRows, numColumns));
 
-              for (T chart : charts) {
-                if (chart != null) {
-                  XChartPanel<T> chartPanel = new XChartPanel<T>(chart);
-                  chartPanels.add(chartPanel);
-                  frame.add(chartPanel);
-                } else {
-                  JPanel chartPanel = new JPanel();
-                  frame.getContentPane().add(chartPanel);
-                }
+            for (T chart : charts) {
+              if (chart != null) {
+                XChartPanel<T> chartPanel = new XChartPanel<T>(chart);
+                chartPanels.add(chartPanel);
+                frame.add(chartPanel);
+              } else {
+                JPanel chartPanel = new JPanel();
+                frame.getContentPane().add(chartPanel);
               }
-
-              // Display the window.
-              frame.pack();
-              if (isCentered) {
-                frame.setLocationRelativeTo(null);
-              }
-              frame.setVisible(true);
             }
-          });
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
+
+            // Display the window.
+            frame.pack();
+            if (isCentered) {
+              frame.setLocationRelativeTo(null);
+            }
+            frame.setVisible(true);
+          }
+        };
+
+    if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+      runnable.run();
+    } else {
+      try {
+        javax.swing.SwingUtilities.invokeAndWait(runnable);
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        e.printStackTrace();
+      } catch (InvocationTargetException e) {
+        e.printStackTrace();
+      }
     }
 
     return frame;

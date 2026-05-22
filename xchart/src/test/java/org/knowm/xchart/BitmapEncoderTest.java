@@ -24,18 +24,26 @@ public class BitmapEncoderTest {
     assertEquals(".bmp", BitmapEncoder.addFileExtension(".BmP", BitmapEncoder.BitmapFormat.BMP));
   }
 
-  /** Regression test for issue #862: BitmapEncoder must not NPE when tooltips are enabled. */
+  /**
+   * Regression test for issue #862: BitmapEncoder must not NPE when always-visible tooltips are
+   * enabled. Tooltips should be rendered into the image.
+   */
   @Test
-  public void getBufferedImageDoesNotNPEWithToolTipsEnabled() {
+  public void getBufferedImageRendersAlwaysVisibleToolTips() {
     XYChart chart = new XYChartBuilder().width(400).height(300).build();
     chart.addSeries("series", new double[] {1, 2, 3}, new double[] {4, 5, 6});
+    chart.getStyler().setToolTipsAlwaysVisible(true);
 
     assertDoesNotThrow(() -> BitmapEncoder.getBufferedImage(chart));
   }
 
-  /** Regression test for issue #862: zoom-enabled charts must not NPE with BitmapEncoder. */
+  /**
+   * Regression test for issue #862: BitmapEncoder must not NPE when headless-rendering a chart
+   * where hover tooltips would be enabled in a panel at runtime. Since zoom/hover are panel-owned,
+   * they must not affect headless rendering.
+   */
   @Test
-  public void getBufferedImageDoesNotNPEWithZoomEnabled() {
+  public void getBufferedImageDoesNotNPEHeadless() {
     XYChart chart = new XYChartBuilder().width(400).height(300).build();
     chart.addSeries("series", new double[] {1, 2, 3}, new double[] {4, 5, 6});
 
