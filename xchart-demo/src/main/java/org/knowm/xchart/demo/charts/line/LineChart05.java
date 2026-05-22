@@ -2,6 +2,7 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
@@ -74,6 +75,12 @@ public class LineChart05 implements ExampleChart<XYChart> {
     series2.setLineColor(Color.BLACK);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<XYChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

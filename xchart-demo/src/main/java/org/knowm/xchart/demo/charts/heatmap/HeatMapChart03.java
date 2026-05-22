@@ -9,6 +9,7 @@ import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.HeatMapChartBuilder;
 import org.knowm.xchart.HeatMapSeries;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
@@ -85,6 +86,12 @@ public class HeatMapChart03 implements ExampleChart<HeatMapChart> {
     heatMapSeries.setMin(0);
     heatMapSeries.setMax(1000);
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<HeatMapChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

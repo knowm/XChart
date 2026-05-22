@@ -7,6 +7,7 @@ import java.util.Random;
 import org.knowm.xchart.OHLCChart;
 import org.knowm.xchart.OHLCChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
@@ -78,6 +79,12 @@ public class OHLCChart03 implements ExampleChart<OHLCChart> {
       result.add(sum / dayCount);
     }
     return result;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<OHLCChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

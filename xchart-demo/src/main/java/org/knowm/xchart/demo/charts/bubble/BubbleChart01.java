@@ -3,6 +3,7 @@ package org.knowm.xchart.demo.charts.bubble;
 import org.knowm.xchart.BubbleChart;
 import org.knowm.xchart.BubbleChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
@@ -56,6 +57,12 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
     chart.addSeries("B", xData2, yData2, bubbleData2);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<BubbleChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

@@ -3,6 +3,7 @@ package org.knowm.xchart.demo.charts.theme;
 import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
@@ -86,6 +87,12 @@ public class ThemeChart03 implements ExampleChart<XYChart> {
               * Math.exp(-(((integer - mean) * (integer - mean)) / ((2 * std * std)))));
     }
     return yData;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<XYChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

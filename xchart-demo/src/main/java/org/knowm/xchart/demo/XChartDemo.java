@@ -86,7 +86,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     if (node.isLeaf()) {
       ChartInfo chartInfo = (ChartInfo) nodeInfo;
       // displayURL(chartInfo.bookURL);
-      chartPanel = new XChartPanel(chartInfo.getExampleChart().getChart());
+      ExampleChart exampleChart = chartInfo.getExampleChart();
+      chartPanel = new XChartPanel(exampleChart.getChart());
+      exampleChart.customizePanel(chartPanel);
       splitPane.setBottomComponent(chartPanel);
 
       // start running a simulated data feed for the sample real-time plot

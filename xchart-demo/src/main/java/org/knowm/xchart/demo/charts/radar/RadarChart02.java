@@ -3,6 +3,7 @@ package org.knowm.xchart.demo.charts.radar;
 import org.knowm.xchart.RadarChart;
 import org.knowm.xchart.RadarChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.RadarStyler;
 import org.knowm.xchart.style.Styler;
@@ -78,6 +79,12 @@ public class RadarChart02 implements ExampleChart<RadarChart> {
         .setMarker(SeriesMarkers.NONE);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<RadarChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

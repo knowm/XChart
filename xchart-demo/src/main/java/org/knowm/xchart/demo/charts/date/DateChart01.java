@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
@@ -83,6 +84,12 @@ public class DateChart01 implements ExampleChart<XYChart> {
     chart.addSeries("series 2", xData2, yData2).setMarker(SeriesMarkers.NONE).setYAxisGroup(1);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<XYChart> panel) {
+
+    panel.setZoomEnabled(true);
   }
 
   @Override

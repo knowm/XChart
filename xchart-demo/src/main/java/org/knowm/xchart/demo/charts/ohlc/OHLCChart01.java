@@ -116,6 +116,12 @@ public class OHLCChart01 implements ExampleChart<OHLCChart> {
   }
 
   @Override
+  public void customizePanel(XChartPanel<OHLCChart> panel) {
+
+    panel.setToolTipsEnabled(true);
+  }
+
+  @Override
   public String getExampleChartName() {
 
     return getClass().getSimpleName() + " - HiLo rendering";

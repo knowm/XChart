@@ -4,6 +4,7 @@ import java.util.Arrays;
 import org.knowm.xchart.BoxChart;
 import org.knowm.xchart.BoxChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.BoxStyler.BoxplotCalCulationMethod;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -43,6 +44,12 @@ public class BoxChart02 implements ExampleChart<BoxChart> {
     chart.addSeries("ccc", Arrays.asList(-10, -8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 21));
     chart.getStyler().setShowWithinAreaPoint(true);
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<BoxChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

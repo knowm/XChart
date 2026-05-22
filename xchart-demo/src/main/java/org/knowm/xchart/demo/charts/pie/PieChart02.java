@@ -9,6 +9,7 @@ import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
@@ -65,6 +66,12 @@ public class PieChart02 implements ExampleChart<PieChart> {
     //    chart.getStyler().setToolTipsAlwaysVisible(true);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<PieChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

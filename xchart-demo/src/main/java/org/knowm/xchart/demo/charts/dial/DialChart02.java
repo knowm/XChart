@@ -7,6 +7,7 @@ import org.knowm.xchart.DialChart;
 import org.knowm.xchart.DialChartBuilder;
 import org.knowm.xchart.DialSeries;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
@@ -83,6 +84,12 @@ public class DialChart02 implements ExampleChart<DialChart> {
     chart.getStyler().setLabelFont(new Font(Font.MONOSPACED, Font.BOLD, 8));
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<DialChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

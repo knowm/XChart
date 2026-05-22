@@ -4,6 +4,7 @@ import java.util.Arrays;
 import org.knowm.xchart.BoxChart;
 import org.knowm.xchart.BoxChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
@@ -42,6 +43,12 @@ public class BoxChart03 implements ExampleChart<BoxChart> {
     // Series
     chart.addSeries("aaa", Arrays.asList(10, 40, 80, 120, 350));
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<BoxChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

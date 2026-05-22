@@ -8,6 +8,7 @@ import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.ToolTipType;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -59,6 +60,12 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
     chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<CategoryChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   private List<Integer> getGaussianData(int count) {

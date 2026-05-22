@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -72,6 +73,12 @@ public class DateChart09 implements ExampleChart<XYChart> {
             x -> startTime.plusDays(x.longValue()).format(cursorXFormatter));
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<XYChart> panel) {
+
+    panel.setCursorEnabled(true);
   }
 
   @Override

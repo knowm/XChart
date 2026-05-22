@@ -3,6 +3,7 @@ package org.knowm.xchart.demo.charts.radar;
 import org.knowm.xchart.RadarChart;
 import org.knowm.xchart.RadarChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
@@ -53,6 +54,12 @@ public class RadarChart01 implements ExampleChart<RadarChart> {
     chart.addSeries("Experimental System", new double[] {0.37, 0.93, 0.57, 0.55, 0.33, 0.73});
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<RadarChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

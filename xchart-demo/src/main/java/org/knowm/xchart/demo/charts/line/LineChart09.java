@@ -1,6 +1,7 @@
 package org.knowm.xchart.demo.charts.line;
 
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -63,6 +64,12 @@ public class LineChart09 implements ExampleChart<XYChart> {
     chart.addSeries("c", new double[] {0, 1.5, 5, 8, 9}, new double[] {-2, -1, 1, 0, 1});
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<XYChart> panel) {
+
+    panel.setCursorEnabled(true);
   }
 
   @Override

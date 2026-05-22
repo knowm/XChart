@@ -3,6 +3,7 @@ package org.knowm.xchart.demo.charts.horizontalbar;
 import org.knowm.xchart.HorizontalBarChart;
 import org.knowm.xchart.HorizontalBarChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
@@ -57,6 +58,12 @@ public class HorizontalBarChart04 implements ExampleChart<HorizontalBarChart> {
     chart.addSeries("male", Arrays.asList(40, 30, 20, null, 60), Arrays.asList(10, 20, 30, 40, 50));
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<HorizontalBarChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override
