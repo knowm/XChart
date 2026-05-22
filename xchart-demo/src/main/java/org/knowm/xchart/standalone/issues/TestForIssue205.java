@@ -12,7 +12,7 @@ public class TestForIssue205 {
 
   public static CategoryChart getChart() {
 
-    List<Double> myData = new ArrayList();
+    List<Double> myData = new ArrayList<>();
     myData.add(10.0);
     myData.add(20.0);
     myData.add(10.0);

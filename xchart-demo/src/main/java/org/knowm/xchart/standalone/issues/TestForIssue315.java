@@ -5,7 +5,6 @@ import java.util.List;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class TestForIssue315 {
@@ -32,7 +31,7 @@ public class TestForIssue315 {
 
   public static void main(String[] args) {
 
-    List<Chart> charts = new ArrayList<Chart>();
+    List<XYChart> charts = new ArrayList<>();
     boolean[] options = {true, false};
     for (boolean g0 : options) {
       for (boolean g1 : options) {
@@ -46,7 +45,7 @@ public class TestForIssue315 {
       }
     }
 
-    new SwingWrapper(charts).displayChartMatrix();
+    new SwingWrapper<>(charts).displayChartMatrix();
   }
   public static XYChart getChart() {
 

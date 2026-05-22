@@ -5,8 +5,6 @@ import java.util.List;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
@@ -18,20 +16,19 @@ public class TestForIssue54_2 {
 
   public static void main(String[] args) {
 
-    Chart chart = getLineChart();
+    XYChart chart = getLineChart();
     chart.setTitle("sin(x) on second axis with title");
-    Series series = (Series) chart.getSeriesMap().get("y=sin(x)");
-    series.setYAxisGroup(1);
+    chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
     chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Left);
     chart.getStyler().setYAxisGroupPosition(0, YAxisPosition.Right);
     chart.setYAxisGroupTitle(1, "sin(x)");
 
-    SwingWrapper sw = new SwingWrapper(chart);
+    SwingWrapper<XYChart> sw = new SwingWrapper<>(chart);
     sw.displayChart();
     sw.getXChartPanel().setToolTipsEnabled(true);
   }
 
-  static Chart getLineChart() {
+  static XYChart getLineChart() {
 
     XYChart chart =
         new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
@@ -60,7 +57,7 @@ public class TestForIssue54_2 {
   }
   public static XYChart getChart() {
 
-    return (XYChart) getLineChart();
+    return getLineChart();
   }
 
 }

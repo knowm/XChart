@@ -16,7 +16,7 @@ public class TestForIssue349 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new TestForIssue349();
     XYChart chart = exampleChart.getChart();
-    XChartPanel chartPanel = new XChartPanel(chart);
+    XChartPanel<XYChart> chartPanel = new XChartPanel<>(chart);
     chartPanel.setZoomEnabled(true);
 
     // Create and set up the window.

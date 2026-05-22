@@ -5,8 +5,6 @@ import java.util.List;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.internal.chartpart.Chart;
-import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.Styler.YAxisPosition;
@@ -18,17 +16,16 @@ public class TestForIssue244 {
 
   public static void main(String[] args) {
 
-    List<Chart> charts = new ArrayList<Chart>();
+    List<XYChart> charts = new ArrayList<>();
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("Default axis");
       charts.add(chart);
     }
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("sin(x) on second axis");
-      Series series = (Series) chart.getSeriesMap().get("y=sin(x)");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
@@ -36,30 +33,28 @@ public class TestForIssue244 {
     }
 
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("2 axis, default y max & y min");
-      Series series = (Series) chart.getSeriesMap().get("y=sin(x)");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
 
-      AxesChartStyler styler = (AxesChartStyler) chart.getStyler();
+      AxesChartStyler styler = chart.getStyler();
       styler.setYAxisMax(20.0);
       styler.setYAxisMin(-20.0);
 
       charts.add(chart);
     }
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("2 axis, max on group 0");
-      Series series = (Series) chart.getSeriesMap().get("y=sin(x)");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
 
-      AxesChartStyler styler = (AxesChartStyler) chart.getStyler();
+      AxesChartStyler styler = chart.getStyler();
       styler.setYAxisMax(0, 20.0);
       styler.setYAxisMin(0, -20.0);
 
@@ -67,15 +62,14 @@ public class TestForIssue244 {
     }
 
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("2 axis, max on group 0, 1");
-      Series series = (Series) chart.getSeriesMap().get("y=sin(x)");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
 
-      AxesChartStyler styler = (AxesChartStyler) chart.getStyler();
+      AxesChartStyler styler = chart.getStyler();
       styler.setYAxisMax(0, 20.0);
       styler.setYAxisMin(0, -20.0);
       styler.setYAxisMax(1, 2.0);
@@ -85,15 +79,14 @@ public class TestForIssue244 {
     }
 
     {
-      Chart chart = getLineChart();
+      XYChart chart = getLineChart();
       chart.setTitle("2 axis, max on group 0, 1, and default max");
-      Series series = (Series) chart.getSeriesMap().get("y=sin(x)");
-      series.setYAxisGroup(1);
+      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
 
-      AxesChartStyler styler = (AxesChartStyler) chart.getStyler();
+      AxesChartStyler styler = chart.getStyler();
       // these 2 lines will be overwritten by group max settings
       styler.setYAxisMax(100.0);
       styler.setYAxisMin(-100.0);
@@ -106,14 +99,14 @@ public class TestForIssue244 {
       charts.add(chart);
     }
 
-    SwingWrapper wrapper = new SwingWrapper(charts);
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<>(charts);
     wrapper.displayChartMatrix();
     for (int i = 0; i < charts.size(); i++) {
       wrapper.getXChartPanel(i).setToolTipsEnabled(true);
     }
   }
 
-  static Chart getLineChart() {
+  static XYChart getLineChart() {
 
     XYChart chart =
         new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
@@ -142,7 +135,7 @@ public class TestForIssue244 {
   }
   public static XYChart getChart() {
 
-    return (XYChart) getLineChart();
+    return getLineChart();
   }
 
 }

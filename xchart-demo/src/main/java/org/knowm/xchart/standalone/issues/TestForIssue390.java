@@ -58,7 +58,7 @@ public class TestForIssue390 {
   public static void main(String[] args) throws IOException {
 
     XYChart chart = getChart();
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
     BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapFormat.PNG);
   }
 }

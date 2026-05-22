@@ -33,7 +33,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
   private final JTree tree;
 
   /** The panel for chart */
-  protected XChartPanel chartPanel;
+  protected XChartPanel<?> chartPanel;
 
   Timer timer = new Timer();
 
@@ -57,7 +57,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     JScrollPane treeView = new JScrollPane(tree);
 
     // Create Chart Panel
-    chartPanel = new XChartPanel(new AreaChart01().getChart());
+    chartPanel = new XChartPanel<>(new AreaChart01().getChart());
 
     // Add the scroll panes to a split pane.
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -86,9 +86,8 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     if (node.isLeaf()) {
       ChartInfo chartInfo = (ChartInfo) nodeInfo;
       // displayURL(chartInfo.bookURL);
-      ExampleChart exampleChart = chartInfo.getExampleChart();
-      chartPanel = new XChartPanel(exampleChart.getChart());
-      exampleChart.customizePanel(chartPanel);
+      ExampleChart<?> exampleChart = chartInfo.getExampleChart();
+      updateChartPanel(exampleChart);
       splitPane.setBottomComponent(chartPanel);
 
       // start running a simulated data feed for the sample real-time plot
@@ -113,6 +112,16 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     }
   }
 
+  private void updateChartPanel(ExampleChart<?> exampleChart) {
+    doUpdateChartPanel(exampleChart);
+  }
+
+  private <C extends Chart<?, ?>> void doUpdateChartPanel(ExampleChart<C> exampleChart) {
+    XChartPanel<C> panel = new XChartPanel<>(exampleChart.getChart());
+    exampleChart.customizePanel(panel);
+    chartPanel = panel;
+  }
+
   /**
    * Create the tree
    *
@@ -127,7 +136,7 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
 
     List<ExampleChart<Chart<Styler, Series>>> exampleList = DemoChartsUtil.getAllDemoCharts();
     String categoryName = "";
-    for (ExampleChart exampleChart : exampleList) {
+    for (ExampleChart<Chart<Styler, Series>> exampleChart : exampleList) {
       String name = exampleChart.getClass().getSimpleName();
       name = name.substring(0, name.indexOf("Chart"));
       if (!categoryName.equals(name)) {

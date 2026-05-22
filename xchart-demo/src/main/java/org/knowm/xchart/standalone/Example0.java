@@ -16,6 +16,6 @@ public class Example0 {
     XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
 
     // Show it
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 }

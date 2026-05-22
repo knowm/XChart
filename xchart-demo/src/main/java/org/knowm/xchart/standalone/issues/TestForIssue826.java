@@ -12,7 +12,7 @@ public class TestForIssue826 {
   public static void main(String[] args) throws ParseException {
 
     CategoryChart chart = getChart();
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   public static CategoryChart getChart() {
