@@ -193,7 +193,7 @@ public abstract class Axis_<ST extends AxesChartStyler, S extends AxesChartSerie
    * Returns the (possibly empty) list of colocated slave axes registered on this master.
    * Non-Y axes always return an empty list.
    */
-  public List<? extends Axis_> getColocatedSlaves() {
+  public List<? extends Axis_<?, ?>> getColocatedSlaves() {
 
     return java.util.Collections.emptyList();
   }

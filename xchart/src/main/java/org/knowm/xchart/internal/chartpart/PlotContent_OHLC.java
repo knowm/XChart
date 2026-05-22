@@ -328,7 +328,4 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
       }
     }
   }
-
-  // line chart drawing logic
-  private void paintLine(Graphics2D g, S series) {}
 }

@@ -6,7 +6,6 @@ public class Trapezoid extends Marker {
   @Override
   public void paint(Graphics2D g, double xOffset, double yOffset, int markerSize) {
     g.setStroke(stroke);
-    double halfSize = (double) markerSize / 2;
     Polygon polygon = new Polygon();
 
     for (int i = 1; i <= 4; i++) {

@@ -4,7 +4,7 @@ import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
 /** A "Builder" to make creating charts easier */
-public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart> {
+public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart<?, ?>> {
 
   public int width = 800;
   public int height = 600;
@@ -15,24 +15,28 @@ public abstract class ChartBuilder<T extends ChartBuilder<?, ?>, C extends Chart
   /** Constructor */
   protected ChartBuilder() {}
 
+  @SuppressWarnings("unchecked")
   public T width(int width) {
 
     this.width = width;
     return (T) this;
   }
 
+  @SuppressWarnings("unchecked")
   public T height(int height) {
 
     this.height = height;
     return (T) this;
   }
 
+  @SuppressWarnings("unchecked")
   public T title(String title) {
 
     this.title = title;
     return (T) this;
   }
 
+  @SuppressWarnings("unchecked")
   public T theme(ChartTheme chartTheme) {
 
     this.chartTheme = chartTheme;

@@ -39,7 +39,7 @@ public class AnnotationTextPanel extends Annotation {
     this.y = y;
   }
 
-  public void init(Chart chart) {
+  public void init(Chart<?, ?> chart) {
 
     super.init(chart);
   }

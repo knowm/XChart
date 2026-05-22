@@ -30,7 +30,7 @@ public class PdfboxGraphicsEncoder {
    * @param fileName file name path
    * @throws IOException
    */
-  public static void savePdfboxGraphics(Chart chart, String fileName) throws IOException {
+  public static void savePdfboxGraphics(Chart<?, ?> chart, String fileName) throws IOException {
 
     savePdfboxGraphics(chart, new File(addFileExtension(fileName)));
   }
@@ -42,7 +42,7 @@ public class PdfboxGraphicsEncoder {
    * @param file File
    * @throws IOException
    */
-  public static void savePdfboxGraphics(Chart chart, File file) throws IOException {
+  public static void savePdfboxGraphics(Chart<?, ?> chart, File file) throws IOException {
 
     savePdfboxGraphics(chart, new BufferedOutputStream(new FileOutputStream(file)));
   }
@@ -54,9 +54,9 @@ public class PdfboxGraphicsEncoder {
    * @param os OutputStream
    * @throws IOException
    */
-  public static void savePdfboxGraphics(Chart chart, OutputStream os) throws IOException {
+  public static void savePdfboxGraphics(Chart<?, ?> chart, OutputStream os) throws IOException {
 
-    List<Chart> charts = new ArrayList<>();
+    List<Chart<?, ?>> charts = new ArrayList<>();
     charts.add(chart);
     savePdfboxGraphics(charts, os);
   }
@@ -64,11 +64,11 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to a file
    *
-   * @param charts List&lt;? extends Chart&gt;
+   * @param charts List&lt;? extends Chart&lt;?, ?&gt;&gt;
    * @param fileName file name path
    * @throws IOException
    */
-  public static void savePdfboxGraphics(List<? extends Chart> charts, String fileName)
+  public static void savePdfboxGraphics(List<? extends Chart<?, ?>> charts, String fileName)
       throws IOException {
 
     savePdfboxGraphics(charts, new File(addFileExtension(fileName)));
@@ -77,11 +77,11 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to a file
    *
-   * @param charts List&lt;? extends Chart&gt;
+   * @param charts List&lt;? extends Chart&lt;?, ?&gt;&gt;
    * @param file File
    * @throws IOException
    */
-  public static void savePdfboxGraphics(List<? extends Chart> charts, File file)
+  public static void savePdfboxGraphics(List<? extends Chart<?, ?>> charts, File file)
       throws IOException {
 
     savePdfboxGraphics(charts, new BufferedOutputStream(new FileOutputStream(file)));
@@ -90,11 +90,11 @@ public class PdfboxGraphicsEncoder {
   /**
    * Write multiple charts to an OutputStream
    *
-   * @param charts List&lt;? extends Chart&gt;
+   * @param charts List&lt;? extends Chart&lt;?, ?&gt;&gt;
    * @param os OutputStream
    * @throws IOException
    */
-  public static void savePdfboxGraphics(List<? extends Chart> charts, OutputStream os)
+  public static void savePdfboxGraphics(List<? extends Chart<?, ?>> charts, OutputStream os)
       throws IOException {
 
     PDDocument document = new PDDocument();
@@ -103,7 +103,7 @@ public class PdfboxGraphicsEncoder {
     PDPageContentStream contentStream = null;
     PdfBoxGraphics2D pdfBoxGraphics2D = null;
     PDFormXObject xform = null;
-    for (Chart chart : charts) {
+    for (Chart<?, ?> chart : charts) {
       mediaBox = new PDRectangle(chart.getWidth(), chart.getHeight());
       page = new PDPage(mediaBox);
       // add page

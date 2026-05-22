@@ -55,7 +55,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
       if (!series.isEnabled()) {
         continue;
       }
-      Axis_Y yAxis = chart.getYAxis(series.getYAxisGroup());
+      Axis_Y<?, ?> yAxis = chart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
       if (xyStyler.isYAxisLogarithmic()) {

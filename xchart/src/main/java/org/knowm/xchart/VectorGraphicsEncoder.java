@@ -20,7 +20,7 @@ public final class VectorGraphicsEncoder {
 
   /** Write a chart to a file. */
   public static void saveVectorGraphic(
-      Chart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
+      Chart<?, ?> chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
     FileOutputStream file = new FileOutputStream(addFileExtension(fileName, vectorGraphicsFormat));
 
     try {
@@ -32,7 +32,7 @@ public final class VectorGraphicsEncoder {
 
   /** Write a chart to an OutputStream. */
   public static void saveVectorGraphic(
-      Chart chart, OutputStream os, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
+      Chart<?, ?> chart, OutputStream os, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
     final Processor p;
 
     switch (vectorGraphicsFormat) {
@@ -102,7 +102,7 @@ public final class VectorGraphicsEncoder {
       return null;
     }
 
-    public void savePdf(Chart chart, OutputStream os) throws IOException {
+    public void savePdf(Chart<?, ?> chart, OutputStream os) throws IOException {
 
       PdfboxGraphicsEncoder.savePdfboxGraphics(chart, os);
     }

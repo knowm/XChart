@@ -73,9 +73,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     groupPainter.wireRelationships();
 
     // Left side
-    double leftStart =
-        groupPainter.paintLeft(
-            g, chartPadding, leftYAxisBounds, styler.getYAxisLeftWidthHint());
+    groupPainter.paintLeft(g, chartPadding, leftYAxisBounds, styler.getYAxisLeftWidthHint());
 
     // Right side
     double legendWidth = 0;

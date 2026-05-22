@@ -25,6 +25,6 @@ public class RegressionTestIssue536 {
     XYSeries series = chart.addSeries("Series", times, values);
     series.setMarker(SeriesMarkers.NONE);
 
-    byte[] bytes = BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+    BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
   }
 }
