@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
@@ -33,7 +34,9 @@ public class DateChart01 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new DateChart01();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setZoomEnabled(true);
   }
 
   @Override
@@ -46,7 +49,6 @@ public class DateChart01 implements ExampleChart<XYChart> {
     // Customize Chart
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
-    chart.getStyler().setZoomEnabled(true);
     //    chart.getStyler().setZoomResetButtomPosition(Styler.CardinalPosition.InsideS);
     //    chart.getStyler().setZoomResetByDoubleClick(false);
     //    chart.getStyler().setZoomResetByButton(true);
@@ -82,6 +84,12 @@ public class DateChart01 implements ExampleChart<XYChart> {
     chart.addSeries("series 2", xData2, yData2).setMarker(SeriesMarkers.NONE).setYAxisGroup(1);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<XYChart> panel) {
+
+    panel.setZoomEnabled(true);
   }
 
   @Override

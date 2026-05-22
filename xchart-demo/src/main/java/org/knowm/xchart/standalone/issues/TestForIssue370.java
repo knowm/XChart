@@ -17,7 +17,10 @@ public class TestForIssue370 {
     List<XYChart> charts = new ArrayList<>();
     charts.add(testForIssue370.getChart("Group yAxis DecimalPattern", false));
     charts.add(testForIssue370.getChart("Group yAxis DecimalPattern Logarithmic", true));
-    new SwingWrapper<XYChart>(charts).displayChartMatrix();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<XYChart>(charts);
+    wrapper.displayChartMatrix();
+    wrapper.getXChartPanel(0).setToolTipsEnabled(true);
+    wrapper.getXChartPanel(1).setToolTipsEnabled(true);
   }
 
   public XYChart getChart(String title, boolean isYAxisLogarithmic) {
@@ -36,9 +39,8 @@ public class TestForIssue370 {
     chart.getStyler().setLegendPosition(LegendPosition.OutsideE);
     chart.getStyler().setAxisTitlesVisible(false);
     chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Line);
-    chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setToolTipsAlwaysVisible(true);
     chart.getStyler().setYAxisLogarithmic(isYAxisLogarithmic);
+    chart.getStyler().setToolTipsAlwaysVisible(true);
 
     // Series
     chart.addSeries("a", new double[] {1, 2, 3, 4, 5}, new double[] {400, 200, 300, 200, 100});

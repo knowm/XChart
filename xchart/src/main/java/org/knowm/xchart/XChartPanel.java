@@ -38,8 +38,6 @@ import org.knowm.xchart.internal.chartpart.ChartZoom;
 import org.knowm.xchart.internal.chartpart.Cursor;
 import org.knowm.xchart.internal.chartpart.ToolTips;
 import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.OHLCStyler;
-import org.knowm.xchart.style.XYStyler;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -56,6 +54,14 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private String printString = "Print...";
   private String resetString = "Reset Zoom";
   private ToolTips toolTips = null;
+  private Cursor cursor = null;
+  private ChartZoom chartZoom = null;
+  private boolean toolTipsEnabled = false;
+  private boolean zoomEnabled = false;
+  private java.awt.Color zoomSelectionColor = new java.awt.Color(0, 0, 0, 40);
+  private boolean zoomResetByDoubleClick = true;
+  private boolean zoomResetByButton = true;
+  private boolean cursorEnabled = false;
 
   /**
    * Constructor
@@ -88,49 +94,13 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ctrlP, "print");
     this.getActionMap().put("print", new PrintAction());
 
-    // Mouse Listener for Zoom. Available for XYCharts and OHLCCharts
-    if ((chart instanceof XYChart && ((XYStyler) chart.getStyler()).isZoomEnabled())
-        || (chart instanceof OHLCChart && ((OHLCStyler) chart.getStyler()).isZoomEnabled())) {
-      @SuppressWarnings("unchecked")
-      ChartZoom chartZoom =
-          new ChartZoom((Chart<? extends AxesChartStyler, ?>) chart, this, resetString);
-      this.addMouseListener(chartZoom); // for clicking
-      this.addMouseMotionListener(chartZoom); // for moving
+    rewireInteractions();
 
-      // Escape key resets zoom (fix for issue #930)
-      KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-      this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(escape, "resetZoom");
-      this.getActionMap()
-          .put(
-              "resetZoom",
-              new AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                  chartZoom.resetZoom();
-                }
-              });
-    }
-
-    // Mouse motion listener for Cursor
-    if (chart instanceof XYChart && ((XYStyler) chart.getStyler()).isCursorEnabled()) {
-      this.addMouseMotionListener(new Cursor(chart));
-    }
-
-    // Mouse motion listener for Tooltips
-    if (chart.getStyler().isToolTipsEnabled()) {
-      toolTips = new ToolTips(chart);
-      this.addMouseMotionListener(toolTips); // for moving
-    }
-
-    // Recalculate Tooltips at component resize
+    // Recalculate interactions at component resize
     this.addComponentListener(
         new ComponentAdapter() {
           public void componentResized(ComponentEvent ev) {
-            if (chart.getStyler().isToolTipsEnabled()) {
-              XChartPanel.this.removeMouseListener(toolTips);
-              toolTips = new ToolTips(chart);
-              XChartPanel.this.addMouseMotionListener(toolTips);
-            }
+            rewireInteractions();
           }
         });
   }
@@ -176,6 +146,125 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     this.resetString = resetString;
   }
 
+  public XChartPanel<T> setToolTipsEnabled(boolean enabled) {
+
+    this.toolTipsEnabled = enabled;
+    rewireInteractions();
+    return this;
+  }
+
+  public XChartPanel<T> setZoomEnabled(boolean enabled) {
+
+    this.zoomEnabled = enabled;
+    rewireInteractions();
+    return this;
+  }
+
+  public XChartPanel<T> setZoomSelectionColor(java.awt.Color color) {
+
+    this.zoomSelectionColor = color;
+    rewireInteractions();
+    return this;
+  }
+
+  public XChartPanel<T> setZoomResetByDoubleClick(boolean reset) {
+
+    this.zoomResetByDoubleClick = reset;
+    rewireInteractions();
+    return this;
+  }
+
+  public XChartPanel<T> setZoomResetByButton(boolean reset) {
+
+    this.zoomResetByButton = reset;
+    rewireInteractions();
+    return this;
+  }
+
+  public XChartPanel<T> setCursorEnabled(boolean enabled) {
+
+    this.cursorEnabled = enabled;
+    rewireInteractions();
+    return this;
+  }
+
+  public java.awt.Color getZoomSelectionColor() {
+
+    return zoomSelectionColor;
+  }
+
+  public boolean isZoomResetByButton() {
+
+    return zoomResetByButton;
+  }
+
+  public boolean isZoomResetByDoubleClick() {
+
+    return zoomResetByDoubleClick;
+  }
+
+  private void rewireInteractions() {
+
+    if (toolTips != null) {
+      this.removeMouseMotionListener(toolTips);
+      toolTips = null;
+    }
+    if (cursor != null) {
+      this.removeMouseMotionListener(cursor);
+      cursor = null;
+    }
+    if (chartZoom != null) {
+      this.removeMouseListener(chartZoom);
+      this.removeMouseMotionListener(chartZoom);
+      chartZoom = null;
+      this.getInputMap(WHEN_IN_FOCUSED_WINDOW).remove(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+      this.getActionMap().remove("resetZoom");
+    }
+
+    boolean anyEnabled = false;
+
+    if (zoomEnabled && (chart instanceof XYChart || chart instanceof OHLCChart)) {
+      anyEnabled = true;
+      @SuppressWarnings("unchecked")
+      ChartZoom zoom =
+          new ChartZoom((Chart<? extends AxesChartStyler, ?>) chart, this, resetString);
+      this.chartZoom = zoom;
+      this.addMouseListener(zoom);
+      this.addMouseMotionListener(zoom);
+      KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+      this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(escape, "resetZoom");
+      this.getActionMap()
+          .put(
+              "resetZoom",
+              new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                  chartZoom.resetZoom();
+                }
+              });
+    }
+
+    if (cursorEnabled && chart instanceof XYChart) {
+      anyEnabled = true;
+      cursor = new Cursor(chart);
+      this.addMouseMotionListener(cursor);
+    }
+
+    if (toolTipsEnabled) {
+      anyEnabled = true;
+      toolTips = new ToolTips(chart, false, chart.getStyler().getToolTipType());
+      this.addMouseMotionListener(toolTips);
+    }
+
+    if (toolTipsEnabled || cursorEnabled) {
+      chart.enableInteractionData();
+    }
+
+    if (anyEnabled) {
+      repaint();
+    }
+  }
+
   @Override
   protected void paintComponent(Graphics g) {
 
@@ -183,6 +272,12 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     Graphics2D g2d = (Graphics2D) g.create();
     chart.paint(g2d, getWidth(), getHeight());
+
+    chart.consumeInteractionData(g2d, toolTips, cursor);
+    if (chartZoom != null) {
+      chartZoom.paint(g2d);
+    }
+
     g2d.dispose();
   }
 

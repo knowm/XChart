@@ -32,7 +32,10 @@ public class TestForIssue770 {
 
   public static void main(String[] args) {
 
-    new SwingWrapper<>(getChart()).displayChart();
+    OHLCChart chart = getChart();
+    SwingWrapper<OHLCChart> sw = new SwingWrapper<>(chart);
+    sw.displayChart();
+    sw.getXChartPanel().setZoomEnabled(true).setZoomResetByDoubleClick(true).setZoomResetByButton(true);
   }
 
   public static OHLCChart getChart() {
@@ -46,10 +49,6 @@ public class TestForIssue770 {
             .yAxisTitle("Price")
             .theme(Styler.ChartTheme.GGPlot2)
             .build();
-
-    chart.getStyler().setZoomEnabled(true);
-    chart.getStyler().setZoomResetByDoubleClick(true);
-    chart.getStyler().setZoomResetByButton(true);
 
     // Generate 200 candle bars
     int n = 200;

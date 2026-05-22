@@ -150,11 +150,13 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
     setWidth(width);
     setHeight(height);
     setSeriesStyles();
+    if (styler.isToolTipsAlwaysVisible()) enableInteractionData();
     paintBackground(g);
 
     axisPair.paint(g);
     plot.paint(g);
     chartTitle.paint(g);
     annotations.forEach(x -> x.paint(g));
+    paintAlwaysVisibleToolTips(g);
   }
 }

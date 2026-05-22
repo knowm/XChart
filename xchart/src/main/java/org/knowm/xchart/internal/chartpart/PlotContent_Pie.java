@@ -193,7 +193,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
       // TOOLTIPS ////////////////////////////////////////////////////
       // TOOLTIPS ////////////////////////////////////////////////////
 
-      if (toolTips != null && pieStyler.isToolTipsEnabled()) {
+      if (interactionData != null) {
         // add data labels
         // maybe another option to construct this label
         // TODO use tool tip label type enum and customize this label
@@ -209,7 +209,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
                 - Math.sin(Math.toRadians(angle))
                     * (pieBounds.getHeight() / 2 * pieStyler.getLabelsDistance());
 
-        toolTips.addData(toolTipShape, xOffset, yOffset + 10, 0, toolTipLabel);
+        interactionData.addToolTip(toolTipShape, xOffset, yOffset + 10, 0, toolTipLabel);
       }
 
       // TOOLTIPS ////////////////////////////////////////////////////

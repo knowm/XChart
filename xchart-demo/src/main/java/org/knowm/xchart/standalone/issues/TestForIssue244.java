@@ -106,7 +106,11 @@ public class TestForIssue244 {
       charts.add(chart);
     }
 
-    new SwingWrapper(charts).displayChartMatrix();
+    SwingWrapper wrapper = new SwingWrapper(charts);
+    wrapper.displayChartMatrix();
+    for (int i = 0; i < charts.size(); i++) {
+      wrapper.getXChartPanel(i).setToolTipsEnabled(true);
+    }
   }
 
   static Chart getLineChart() {
@@ -115,7 +119,6 @@ public class TestForIssue244 {
         new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     // generates sine data
     int size = 30;

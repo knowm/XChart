@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.demo.charts.ExampleChart;
@@ -28,7 +29,9 @@ public class DateChart09 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new DateChart09();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setCursorEnabled(true);
   }
 
   @Override
@@ -63,7 +66,6 @@ public class DateChart09 implements ExampleChart<XYChart> {
             x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
 
     // set custom cursor tool tip text
-    chart.getStyler().setCursorEnabled(true);
     DateTimeFormatter cursorXFormatter = DateTimeFormatter.ofPattern("LLL dd");
     chart
         .getStyler()
@@ -71,6 +73,12 @@ public class DateChart09 implements ExampleChart<XYChart> {
             x -> startTime.plusDays(x.longValue()).format(cursorXFormatter));
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<XYChart> panel) {
+
+    panel.setCursorEnabled(true);
   }
 
   @Override

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import org.knowm.xchart.BoxChart;
 import org.knowm.xchart.BoxChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.ChartTheme;
 
@@ -17,7 +18,9 @@ public class BoxChart03 implements ExampleChart<BoxChart> {
   public static void main(String[] args) {
     ExampleChart<BoxChart> exampleChart = new BoxChart03();
     BoxChart chart = exampleChart.getChart();
-    new SwingWrapper<BoxChart>(chart).displayChart();
+    SwingWrapper<BoxChart> wrapper = new SwingWrapper<BoxChart>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -35,12 +38,17 @@ public class BoxChart03 implements ExampleChart<BoxChart> {
             .build();
 
     // Customize Chart
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setYAxisLogarithmic(true);
 
     // Series
     chart.addSeries("aaa", Arrays.asList(10, 40, 80, 120, 350));
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<BoxChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

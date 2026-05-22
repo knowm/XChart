@@ -1,6 +1,5 @@
 package org.knowm.xchart.style;
 
-import java.awt.Color;
 import org.knowm.xchart.OHLCSeries;
 import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.style.theme.Theme;
@@ -48,35 +47,5 @@ public class OHLCStyler extends AxesChartStyler {
 
     this.theme = theme;
     setAllStyles();
-  }
-
-  // Zoom \u2014 covariant overrides ///////////////////////////////
-
-  @Override
-  public OHLCStyler setZoomEnabled(boolean isZoomEnabled) {
-
-    super.setZoomEnabled(isZoomEnabled);
-    return this;
-  }
-
-  @Override
-  public OHLCStyler setZoomSelectionColor(Color zoomSelectionColor) {
-
-    super.setZoomSelectionColor(zoomSelectionColor);
-    return this;
-  }
-
-  @Override
-  public OHLCStyler setZoomResetByDoubleClick(boolean zoomResetByDoubleClick) {
-
-    super.setZoomResetByDoubleClick(zoomResetByDoubleClick);
-    return this;
-  }
-
-  @Override
-  public OHLCStyler setZoomResetByButton(boolean zoomResetByButton) {
-
-    super.setZoomResetByButton(zoomResetByButton);
-    return this;
   }
 }

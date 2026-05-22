@@ -10,7 +10,9 @@ public class TestForIssue335 {
   public static void main(String[] args) {
 
     RadarChart chart = new TestForIssue335().getChart();
-    new SwingWrapper<RadarChart>(chart).displayChart();
+    SwingWrapper<RadarChart> sw = new SwingWrapper<RadarChart>(chart);
+    sw.displayChart();
+    sw.getXChartPanel().setToolTipsEnabled(true);
   }
 
   public RadarChart getChart() {
@@ -18,7 +20,6 @@ public class TestForIssue335 {
     // Create Chart
     RadarChart chart =
         new RadarChartBuilder().width(800).height(600).title("TestForIssue335").build();
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setSeriesFilled(false);
 
     // Series

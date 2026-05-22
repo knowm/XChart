@@ -3,6 +3,7 @@ package org.knowm.xchart.demo.charts.bubble;
 import org.knowm.xchart.BubbleChart;
 import org.knowm.xchart.BubbleChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
@@ -21,7 +22,9 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
 
     ExampleChart<BubbleChart> exampleChart = new BubbleChart01();
     BubbleChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<BubbleChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -38,7 +41,6 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
             .build();
     chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideN);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
-    chart.getStyler().setToolTipsEnabled(true);
 
     // Customize Chart
 
@@ -55,6 +57,12 @@ public class BubbleChart01 implements ExampleChart<BubbleChart> {
     chart.addSeries("B", xData2, yData2, bubbleData2);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<BubbleChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

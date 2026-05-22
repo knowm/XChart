@@ -3,6 +3,7 @@ package org.knowm.xchart.demo.charts.dial;
 import org.knowm.xchart.DialChart;
 import org.knowm.xchart.DialChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
@@ -20,7 +21,9 @@ public class DialChart01 implements ExampleChart<DialChart> {
 
     ExampleChart<DialChart> exampleChart = new DialChart01();
     DialChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<DialChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -32,10 +35,15 @@ public class DialChart01 implements ExampleChart<DialChart> {
 
     // Series
     chart.addSeries("Rate", 0.9381, "93.81 %");
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setLabelVisible(true);
     chart.getStyler().setLegendVisible(false);
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<DialChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

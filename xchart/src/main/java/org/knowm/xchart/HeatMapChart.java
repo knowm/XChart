@@ -157,6 +157,7 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
     prepareForPaint();
     // setSeriesStyles();
 
+    if (styler.isToolTipsAlwaysVisible()) enableInteractionData();
     paintBackground(g);
 
     axisPair.paint(g);
@@ -164,6 +165,7 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
     chartTitle.paint(g);
     legend.paint(g);
     annotations.forEach(x -> x.paint(g));
+    paintAlwaysVisibleToolTips(g);
   }
 
   private List<Integer> arrayToList(int[] data) {

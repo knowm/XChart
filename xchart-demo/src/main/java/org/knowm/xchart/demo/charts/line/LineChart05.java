@@ -2,6 +2,7 @@ package org.knowm.xchart.demo.charts.line;
 
 import java.awt.Color;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
@@ -27,7 +28,9 @@ public class LineChart05 implements ExampleChart<XYChart> {
 
     ExampleChart<XYChart> exampleChart = new LineChart05();
     XYChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<XYChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -50,13 +53,11 @@ public class LineChart05 implements ExampleChart<XYChart> {
     chart.getStyler().setYAxisMax(1000.0);
     chart.getStyler().setXAxisMin(2.0);
     chart.getStyler().setXAxisMax(7.0);
-    chart.getStyler().setToolTipsEnabled(true);
     //    chart.getStyler().setToolTipsAlwaysVisible(true);
     //    chart.getStyler().setToolTipFont(new Font("Verdana", Font.BOLD, 12));
     //    chart.getStyler().setToolTipHighlightColor(Color.CYAN);
     //    chart.getStyler().setToolTipBorderColor(Color.BLACK);
     //    chart.getStyler().setToolTipBackgroundColor(Color.LIGHT_GRAY);
-    //    chart.getStyler().setToolTipType(Styler.ToolTipType.xAndYLabels);
 
     // Series
     double[] xData = new double[] {0.0, 1.0, 2.0, 3.0, 4.0, 5, 6};
@@ -74,6 +75,12 @@ public class LineChart05 implements ExampleChart<XYChart> {
     series2.setLineColor(Color.BLACK);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<XYChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

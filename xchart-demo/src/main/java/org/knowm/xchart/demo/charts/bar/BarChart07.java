@@ -7,6 +7,8 @@ import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.Histogram;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.ToolTipType;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -28,7 +30,9 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
 
     ExampleChart<CategoryChart> exampleChart = new BarChart07();
     CategoryChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<CategoryChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -48,9 +52,7 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setAvailableSpaceFill(.96);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
-    chart.getStyler().setToolTipsEnabled(true);
-    chart.getStyler().setToolTipType(Styler.ToolTipType.yLabels);
-
+    chart.getStyler().setToolTipType(ToolTipType.yLabels);
     // Series
     Histogram histogram1 = new Histogram(getGaussianData(1000), 10, -30, 30);
     chart.addSeries("histogram 1", histogram1.getxAxisData(), histogram1.getyAxisData());
@@ -58,6 +60,12 @@ public class BarChart07 implements ExampleChart<CategoryChart> {
     chart.addSeries("histogram 2", histogram2.getxAxisData(), histogram2.getyAxisData());
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<CategoryChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   private List<Integer> getGaussianData(int count) {

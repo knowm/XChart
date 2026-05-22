@@ -41,7 +41,6 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
     this.xChartPanel = xChartPanel;
     this.chart = chart;
-    chart.plot.plotContent.setChartZoom(this);
 
     resetButton = new ChartButton(chart, xChartPanel, resetString);
     resetButton.addActionListener(this);
@@ -83,7 +82,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     } else if (x1 == -1 || x2 == -1) {
       return;
     } else {
-      g.setColor(chart.getStyler().getZoomSelectionColor());
+      g.setColor(xChartPanel.getZoomSelectionColor());
       int xStart = Math.min(x1, x2);
       int width = Math.abs(x1 - x2);
       bounds = g.getClipBounds();
@@ -124,7 +123,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
       }
 
       filtered = filterXByScreen(smallPoint, bigPoint);
-      resetButton.setVisible(filtered && chart.getStyler().isZoomResetByButton());
+      resetButton.setVisible(filtered && xChartPanel.isZoomResetByButton());
     }
 
     x1 = -1;
@@ -249,7 +248,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     if (!filtered) {
       return;
     }
-    if (chart.getStyler().isZoomResetByDoubleClick() && e.getClickCount() == 2) {
+    if (xChartPanel.isZoomResetByDoubleClick() && e.getClickCount() == 2) {
       resetZoom();
       return;
     }

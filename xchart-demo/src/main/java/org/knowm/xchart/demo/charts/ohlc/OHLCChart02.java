@@ -8,6 +8,7 @@ import org.knowm.xchart.OHLCChart;
 import org.knowm.xchart.OHLCChartBuilder;
 import org.knowm.xchart.OHLCSeries;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler;
 
@@ -26,7 +27,9 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
 
     ExampleChart<OHLCChart> exampleChart = new OHLCChart02();
     OHLCChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<OHLCChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -39,7 +42,6 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
     chart.getStyler().setDefaultSeriesRenderStyle(OHLCSeries.OHLCSeriesRenderStyle.HiLo);
-    chart.getStyler().setToolTipsEnabled(true);
 
     List<Date> xData = new ArrayList<>();
     List<Double> openData = new ArrayList<>();
@@ -55,6 +57,12 @@ public class OHLCChart02 implements ExampleChart<OHLCChart> {
         .setDownColor(Color.GREEN);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<OHLCChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

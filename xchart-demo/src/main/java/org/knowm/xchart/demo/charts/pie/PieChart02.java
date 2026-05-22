@@ -9,6 +9,7 @@ import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 
 /**
@@ -29,7 +30,9 @@ public class PieChart02 implements ExampleChart<PieChart> {
 
     ExampleChart<PieChart> exampleChart = new PieChart02();
     PieChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<PieChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -60,10 +63,15 @@ public class PieChart02 implements ExampleChart<PieChart> {
     chart.getStyler().setSeriesColors(sliceColors);
     chart.getStyler().setCustomSeriesLabelFunction(generateSeriesLabel(total));
     // chart.getStyler().setDecimalPattern("#0.000");
-    chart.getStyler().setToolTipsEnabled(true);
     //    chart.getStyler().setToolTipsAlwaysVisible(true);
 
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<PieChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override

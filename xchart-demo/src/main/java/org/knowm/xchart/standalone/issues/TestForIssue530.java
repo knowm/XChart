@@ -19,7 +19,10 @@ public class TestForIssue530 {
 
   public static void main(String[] args) {
     try {
-      new SwingWrapper<CategoryChart>(getVolumesChart()).displayChart();
+      CategoryChart chart = getVolumesChart();
+      SwingWrapper<CategoryChart> sw = new SwingWrapper<CategoryChart>(chart);
+      sw.displayChart();
+      sw.getXChartPanel().setToolTipsEnabled(true);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -49,7 +52,6 @@ public class TestForIssue530 {
     styler.setXAxisTickMarkSpacingHint(50);
     styler.setAntiAlias(true);
     styler.setChartTitleBoxBorderColor(Color.LIGHT_GRAY);
-    styler.setToolTipsEnabled(true);
     styler.setOverlapped(false);
     styler.setStacked(true);
     styler.setChartBackgroundColor(Color.DARK_GRAY);

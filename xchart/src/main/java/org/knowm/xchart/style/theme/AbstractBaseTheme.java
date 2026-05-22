@@ -307,12 +307,6 @@ public abstract class AbstractBaseTheme implements Theme {
   // Cursor ///////////////////////////////
 
   @Override
-  public boolean isCursorEnabled() {
-
-    return false;
-  }
-
-  @Override
   public Color getCursorColor() {
 
     return Color.BLACK;

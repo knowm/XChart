@@ -15,8 +15,6 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
 
   private final ST xyStyler;
 
-  Cursor cursor;
-
   /**
    * Constructor
    *
@@ -48,10 +46,6 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
     if (xyStyler.isXAxisLogarithmic()) {
       xMin = Math.log10(xMin);
       xMax = Math.log10(xMax);
-    }
-
-    if (cursor != null) {
-        cursor.clearDataPoints();
     }
 
     Map<String, S> map = chart.getSeriesMap();
@@ -304,15 +298,15 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
         }
 
         // add tooltips
-        if (toolTips != null && chart.getStyler().isToolTipsEnabled()) {
-          toolTips.addData(
+        if (interactionData != null) {
+          interactionData.addToolTip(
               xOffset,
               yOffset,
               chart.getXAxisFormat().format(x),
               chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
         }
 
-        if (cursor != null && xyStyler.isCursorEnabled()) {
+        if (interactionData != null) {
           Format xFormat;
           Format yFormat;
           if (xyStyler.getCustomCursorXDataFormattingFunction() == null) {
@@ -325,7 +319,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
           } else {
             yFormat = new Formatter_Custom(xyStyler.getCustomCursorYDataFormattingFunction());
           }
-          cursor.addData(
+          interactionData.addCursorPoint(
               xOffset, yOffset, xFormat.format(x), yFormat.format(yOrig), series.getName());
         }
       }
@@ -338,9 +332,6 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
       // close any open path for area charts
       g.setColor(series.getFillColor());
       closePathXY(g, path, previousX, yZeroOffset, polygonStartX, polygonStartY);
-    }
-    if (cursor != null && chart.getStyler().isCursorEnabled()) {
-      cursor.paint(g);
     }
   }
 
@@ -360,9 +351,5 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
       path.closePath();
       g.fill(path);
     }
-  }
-
-  public void setCursor(Cursor cursor) {
-    this.cursor = cursor;
   }
 }

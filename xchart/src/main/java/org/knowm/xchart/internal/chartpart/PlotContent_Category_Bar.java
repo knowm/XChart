@@ -484,7 +484,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           g.draw(line);
         }
         // add data labels
-        if (toolTips != null && chart.getStyler().isToolTipsEnabled()) {
+        if (interactionData != null) {
           Rectangle2D.Double rect =
               new Rectangle2D.Double(xOffset, yOffset, barWidth, Math.abs(yOffset - zeroOffset));
           double yPoint;
@@ -494,7 +494,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
             yPoint = yOffset;
           }
 
-          toolTips.addData(
+          interactionData.addToolTip(
               rect,
               xOffset,
               yPoint,

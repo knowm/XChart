@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
+import org.knowm.xchart.ToolTipType;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler;
@@ -304,5 +305,63 @@ public abstract class Chart<ST extends Styler, S extends Series> {
   public Map<String, S> getSeriesMap() {
 
     return seriesMap;
+  }
+
+  public void enableInteractionData() {
+
+    plot.plotContent.interactionData = new PlotInteractionData();
+  }
+
+  PlotInteractionData getInteractionData() {
+
+    return plot.plotContent.getInteractionData();
+  }
+
+  /**
+   * Called by {@link org.knowm.xchart.XChartPanel} after {@code paint()} to feed collected
+   * interaction data into the hover-tooltip and cursor overlays and paint them on top of the chart.
+   * Keeping this method here avoids exposing the internal {@link PlotInteractionData} type in the
+   * public API.
+   *
+   * @param g the graphics context (same one used for chart painting)
+   * @param toolTips hover-tooltip handler, or {@code null} if not enabled
+   * @param cursor cursor handler, or {@code null} if not enabled
+   */
+  public void consumeInteractionData(Graphics2D g, ToolTips toolTips, Cursor cursor) {
+
+    PlotInteractionData data = getInteractionData();
+    if (data == null) {
+      return;
+    }
+    if (toolTips != null) {
+      toolTips.setData(data);
+      toolTips.paint(g);
+    }
+    if (cursor != null) {
+      cursor.setData(data);
+      cursor.paint(g);
+    }
+  }
+
+  /**
+   * Renders always-visible data-point labels into the chart image. Called at the end of each
+   * chart's {@code paint()} when {@link Styler#isToolTipsAlwaysVisible()} is true. This makes
+   * tooltip labels appear in BitmapEncoder output and any other headless rendering context.
+   *
+   * @param g the graphics context to paint into
+   */
+  protected void paintAlwaysVisibleToolTips(Graphics2D g) {
+
+    if (!styler.isToolTipsAlwaysVisible()) {
+      return;
+    }
+    PlotInteractionData data = getInteractionData();
+    if (data == null) {
+      return;
+    }
+    ToolTipType type = styler.getToolTipType();
+    ToolTips toolTips = new ToolTips(this, true, type);
+    toolTips.setData(data);
+    toolTips.paint(g);
   }
 }

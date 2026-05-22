@@ -131,8 +131,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
           g.draw(bubble);
 
           // add tooltips
-          if (toolTips != null && chart.getStyler().isToolTipsEnabled()) {
-            toolTips.addData(
+          if (interactionData != null) {
+            interactionData.addToolTip(
                 bubble,
                 xOffset,
                 yOffset,

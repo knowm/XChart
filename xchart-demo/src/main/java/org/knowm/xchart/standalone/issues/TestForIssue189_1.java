@@ -30,7 +30,6 @@ public class TestForIssue189_1 {
       // current default
       RadarChart chart = alc.getChart();
       chart.setTitle("Radar chart with 3 variables and start angle");
-      chart.getStyler().setToolTipsEnabled(true);
       chart.getStyler().setStartAngleInDegrees(45);
       chart.setRadiiLabels(new String[] {"Sales", "Marketing", "Development"});
       charts.add(chart);
@@ -42,6 +41,8 @@ public class TestForIssue189_1 {
       charts.add(chart);
     }
 
-    new SwingWrapper<RadarChart>(charts).displayChartMatrix();
+    SwingWrapper<RadarChart> wrapper = new SwingWrapper<RadarChart>(charts);
+    wrapper.displayChartMatrix();
+    wrapper.getXChartPanel(2).setToolTipsEnabled(true);
   }
 }

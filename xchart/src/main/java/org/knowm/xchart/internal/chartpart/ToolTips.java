@@ -1,7 +1,6 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,6 +12,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import org.knowm.xchart.ToolTipType;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.HorizontalBarStyler;
 import org.knowm.xchart.style.OHLCStyler;
@@ -29,21 +29,27 @@ public class ToolTips extends MouseAdapter implements ChartPart {
 
   private final Chart chart;
   private final Styler styler;
+  private final boolean alwaysVisible;
+  private final ToolTipType toolTipType;
 
   // The tool tips and currently shown Tooltip
   private final List<ToolTip> toolTipList = new ArrayList<>();
   private ToolTip tooltip = null;
+  private Rectangle2D plotBounds = null;
 
   /**
    * Constructor
    *
    * @param chart
+   * @param alwaysVisible
+   * @param toolTipType
    */
-  public ToolTips(Chart chart) {
+  public ToolTips(Chart chart, boolean alwaysVisible, ToolTipType toolTipType) {
 
     this.chart = chart;
     this.styler = chart.getStyler();
-    chart.plot.plotContent.setToolTips(this);
+    this.alwaysVisible = alwaysVisible;
+    this.toolTipType = toolTipType;
   }
 
   ////////////////////////////////////////////
@@ -108,7 +114,7 @@ public class ToolTips extends MouseAdapter implements ChartPart {
   @Override
   public void paint(Graphics2D g) {
 
-    if (styler.isToolTipsAlwaysVisible()) {
+    if (this.alwaysVisible) {
       for (ToolTip tooltip : toolTipList) {
         paintToolTip(g, tooltip);
       }
@@ -155,16 +161,10 @@ public class ToolTips extends MouseAdapter implements ChartPart {
 
     //    System.out.println("paintToolTip");
 
-    int leftEdge = (int) chart.plot.plotContent.getBounds().getX();
-    int rightEdge =
-        (int)
-            (chart.plot.plotContent.getBounds().getX()
-                + chart.plot.plotContent.getBounds().getWidth());
-    int topEdge = (int) chart.plot.plotContent.getBounds().getY();
-    int bottomEdge =
-        (int)
-            (chart.plot.plotContent.getBounds().getY()
-                + chart.plot.plotContent.getBounds().getHeight());
+    int leftEdge = (int) plotBounds.getX();
+    int rightEdge = (int) (plotBounds.getX() + plotBounds.getWidth());
+    int topEdge = (int) plotBounds.getY();
+    int bottomEdge = (int) (plotBounds.getY() + plotBounds.getHeight());
     //    System.out.println("leftEdge = " + leftEdge);
     //    System.out.println("rightEdge = " + rightEdge);
     //    System.out.println("topEdge = " + topEdge);
@@ -237,14 +237,13 @@ public class ToolTips extends MouseAdapter implements ChartPart {
 
     //    System.out.println("paintMultiLineToolTip");
 
-    Rectangle clipBounds = g.getClipBounds();
     double startX = tooltip.x;
     double startY = tooltip.y;
-    if (tooltip.x + MOUSE_MARGIN + backgroundWidth > clipBounds.getX() + clipBounds.getWidth()) {
+    if (tooltip.x + MOUSE_MARGIN + backgroundWidth > plotBounds.getX() + plotBounds.getWidth()) {
       startX = tooltip.x - backgroundWidth - MOUSE_MARGIN;
     }
 
-    if (tooltip.y + MOUSE_MARGIN + backgroundHeight > clipBounds.getY() + clipBounds.getHeight()) {
+    if (tooltip.y + MOUSE_MARGIN + backgroundHeight > plotBounds.getY() + plotBounds.getHeight()) {
       startY = tooltip.y - backgroundHeight - MOUSE_MARGIN;
     }
 
@@ -315,7 +314,7 @@ public class ToolTips extends MouseAdapter implements ChartPart {
 
   private String getLabel(String xValue, String yValue) {
 
-    switch (styler.getToolTipType()) {
+    switch (this.toolTipType) {
       case xAndYLabels:
         return "(" + xValue + ", " + yValue + ")";
       case xLabels:
@@ -330,6 +329,31 @@ public class ToolTips extends MouseAdapter implements ChartPart {
 
   public void clearData() {
     toolTipList.clear();
+  }
+
+  public void setData(PlotInteractionData data) {
+
+    clearData();
+    if (data == null) {
+      plotBounds = null;
+      return;
+    }
+    plotBounds = data.getPlotBounds();
+    for (PlotInteractionData.ToolTipData td : data.getToolTipDataList()) {
+      if (td.label != null) {
+        if (td.shape != null) {
+          addData(td.shape, td.x, td.y, td.w, td.label);
+        } else {
+          addData(td.x, td.y, td.label);
+        }
+      } else {
+        if (td.shape != null) {
+          addData(td.shape, td.x, td.y, td.w, td.xValue, td.yValue);
+        } else {
+          addData(td.x, td.y, td.xValue, td.yValue);
+        }
+      }
+    }
   }
 
   static class ToolTip {

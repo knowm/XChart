@@ -29,6 +29,7 @@ public class TestForIssue291 {
     final SwingWrapper<XYChart> sw = new SwingWrapper<XYChart>(chart);
 
     sw.displayChart();
+    sw.getXChartPanel().setToolTipsEnabled(true);
 
     boolean seriesShown = true;
     while (true) {
@@ -65,7 +66,6 @@ public class TestForIssue291 {
         new XYChartBuilder().width(WIDTH).height(HEIGHT).xAxisTitle("X").yAxisTitle("Y").build();
 
     // Customize Chart
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     // generates sine data
     int size = 30;

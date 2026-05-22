@@ -1,28 +1,33 @@
 package org.knowm.xchart.standalone.issues;
 
+import java.awt.Color;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.ToolTipType;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Demonstrates the fix for issue #862 — {@link BitmapEncoder#saveBitmap} throws NPE when tooltips
  * are enabled.
  *
- * <p>Root cause: {@code ToolTips} and {@code Cursor} are only injected into the chart's
- * {@code PlotContent_} from {@code XChartPanel}. When rendering headlessly via {@link
- * BitmapEncoder}, no panel is created, so the fields remain {@code null}. Every {@code doPaint()}
- * override that called {@code toolTips.addData()} guarded only on {@code isToolTipsEnabled()},
- * causing an NPE at runtime.
+ * <p>Root cause: {@code ToolTips} and {@code Cursor} previously self-injected into the chart's
+ * {@code PlotContent_} inside their constructors (called from {@code XChartPanel}). When rendering
+ * headlessly via {@link BitmapEncoder}, no panel is ever created, so those fields remained {@code
+ * null}. Every {@code doPaint()} override that referenced {@code toolTips} therefore threw an NPE.
  *
- * <p>Fix: all {@code isToolTipsEnabled()} / {@code isCursorEnabled()} guards in every {@code
- * PlotContent_*} subclass now also check {@code toolTips != null} / {@code cursor != null}.
+ * <p>Fix: a full two-phase architecture via {@code PlotInteractionData}. Interaction objects ({@code
+ * ToolTips}, {@code ChartZoom}, {@code Cursor}) are owned exclusively by {@code XChartPanel} and
+ * are never wired into the core rendering pipeline. Headless rendering via {@link BitmapEncoder}
+ * is completely unaffected.
  *
- * <p>To verify the fix: calling {@link #getChart()} must not throw. Previously it threw:
+ * <p>Chart code is taken directly from the original bug report (logarithmic Y-axis, "Powers of
+ * Ten" dataset, red tooltip border). Previously it threw:
  *
  * <pre>
  *   java.lang.NullPointerException
@@ -36,35 +41,51 @@ public class TestForIssue862 {
 
     XYChart chart = getChart();
 
-    // Write to /tmp — confirms no NPE during headless rendering with tooltips enabled.
+    // Headless render — must not throw NPE (was the bug), and with setToolTipsAlwaysVisible(true)
+    // the PNG now contains rendered tooltip labels.
     BitmapEncoder.saveBitmap(chart, "/tmp/issue862", BitmapFormat.PNG);
-    System.out.println("Saved /tmp/issue862.png — no NPE.");
+    System.out.println("Saved /tmp/issue862.png — no NPE, tooltip labels rendered.");
 
-    // Also show the interactive chart to confirm tooltips still work with a panel.
-    new SwingWrapper<>(chart).displayChart();
+    // Interactive display — hover tooltips configured on the panel.
+    SwingWrapper<XYChart> sw = new SwingWrapper<>(chart);
+    sw.displayChart();
+    sw.getXChartPanel().setToolTipsEnabled(true);
   }
 
   /**
-   * Returns an XYChart with tooltips enabled. Calling this method previously triggered an NPE
-   * inside {@code BitmapEncoder.saveBitmap()} before the fix.
+   * Reproduces the exact chart from the bug report. Safe to call headlessly — no tooltip
+   * interaction is wired until an {@code XChartPanel} is created. {@code setToolTipsAlwaysVisible}
+   * is a rendering/styler property so tooltip labels appear in BitmapEncoder output too.
    */
   public static XYChart getChart() {
+
+    List<Integer> xData = new ArrayList<>();
+    List<Double> yData = new ArrayList<>();
+    for (int i = -3; i <= 3; i++) {
+      xData.add(i);
+      yData.add(Math.pow(10, i));
+    }
 
     XYChart chart =
         new XYChartBuilder()
             .width(800)
             .height(600)
-            .title("Issue #862 – BitmapEncoder + tooltips (was: NPE)")
-            .xAxisTitle("X")
-            .yAxisTitle("Y")
+            .title("Powers of Ten")
+            .xAxisTitle("Power")
+            .yAxisTitle("Value")
             .build();
 
-    chart.getStyler().setToolTipsEnabled(true);
+    chart.getStyler().setChartTitleVisible(true);
+    chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
+    chart.getStyler().setYAxisLogarithmic(true);
+    chart.getStyler().setXAxisLabelRotation(45);
+    chart.getStyler().setToolTipBorderColor(Color.RED);
     chart.getStyler().setToolTipsAlwaysVisible(true);
-    chart.getStyler().setToolTipType(Styler.ToolTipType.yLabels);
+    chart.getStyler().setToolTipType(ToolTipType.yLabels);
 
-    chart.addSeries("series", Arrays.asList(1, 2, 3, 4, 5), Arrays.asList(2.0, 4.0, 3.0, 7.0, 5.0));
+    chart.addSeries("10^x", xData, yData);
 
     return chart;
   }
 }
+

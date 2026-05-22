@@ -13,6 +13,7 @@ import java.util.List;
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.HeatMapChartBuilder;
 import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.demo.charts.ExampleChart;
 import org.knowm.xchart.style.Styler.LegendLayout;
 import org.knowm.xchart.style.Styler.LegendPosition;
@@ -36,7 +37,9 @@ public class HeatMapChart04 implements ExampleChart<HeatMapChart> {
 
     ExampleChart<HeatMapChart> exampleChart = new HeatMapChart04();
     HeatMapChart chart = exampleChart.getChart();
-    new SwingWrapper<>(chart).displayChart();
+    SwingWrapper<HeatMapChart> wrapper = new SwingWrapper<>(chart);
+    wrapper.displayChart();
+    wrapper.getXChartPanel().setToolTipsEnabled(true);
   }
 
   @Override
@@ -52,7 +55,6 @@ public class HeatMapChart04 implements ExampleChart<HeatMapChart> {
 
     chart.getStyler().setPlotContentSize(1);
     chart.getStyler().setLegendFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
-    chart.getStyler().setToolTipsEnabled(true);
     chart.getStyler().setDatePattern("HH");
     chart.getStyler().setShowValue(true);
     chart.getStyler().setLegendPosition(LegendPosition.OutsideS);
@@ -191,6 +193,12 @@ public class HeatMapChart04 implements ExampleChart<HeatMapChart> {
 
     chart.addSeries("heatMap", xData, yData, Arrays.asList(data));
     return chart;
+  }
+
+  @Override
+  public void customizePanel(XChartPanel<HeatMapChart> panel) {
+
+    panel.setToolTipsEnabled(true);
   }
 
   @Override
