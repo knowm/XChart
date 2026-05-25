@@ -93,6 +93,9 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
       double previousX = -Double.MAX_VALUE;
       double previousY = -Double.MAX_VALUE;
 
+      // smooth curve path for Line render style
+      Path2D.Double smoothPath = null;
+
       Iterator<?> xItr = series.getXData().iterator();
       Iterator<? extends Number> yItr = series.getYData().iterator();
       Iterator<? extends Number> ebItr = null;
@@ -113,6 +116,12 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         // skip when a value is null
         if (next == null) {
 
+          if (smoothPath != null) {
+            g.setColor(series.getLineColor());
+            g.setStroke(series.getLineStyle());
+            g.draw(smoothPath);
+            smoothPath = null;
+          }
           //          // for area charts
           //          closePath(g, path, previousX, getBounds(), yTopMargin);
           //          path = null;
@@ -398,9 +407,23 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
                 g.setColor(series.getLineColor());
                 g.setStroke(series.getLineStyle());
-                Shape line =
-                    new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);
-                g.draw(line);
+                if (series.isSmooth()) {
+                  if (smoothPath == null) {
+                    smoothPath = new Path2D.Double();
+                    smoothPath.moveTo(previousX, previousY);
+                  }
+                  smoothPath.curveTo(
+                      (previousX + xOffset + barWidth / 2) / 2,
+                      previousY,
+                      (previousX + xOffset + barWidth / 2) / 2,
+                      yOffset,
+                      xOffset + barWidth / 2,
+                      yOffset);
+                } else {
+                  Shape line =
+                      new Line2D.Double(previousX, previousY, xOffset + barWidth / 2, yOffset);
+                  g.draw(line);
+                }
               }
             }
           }
@@ -418,7 +441,17 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 path.moveTo(previousX, yBottomOfArea);
                 path.lineTo(previousX, previousY);
               }
-              path.lineTo(xOffset + barWidth / 2, yOffset);
+              if (series.isSmooth()) {
+                path.curveTo(
+                    (previousX + xOffset + barWidth / 2) / 2,
+                    previousY,
+                    (previousX + xOffset + barWidth / 2) / 2,
+                    yOffset,
+                    xOffset + barWidth / 2,
+                    yOffset);
+              } else {
+                path.lineTo(xOffset + barWidth / 2, yOffset);
+              }
             }
             if (xOffset < previousX) {
               throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
@@ -502,6 +535,14 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               chart.getXAxisFormat().format(nextCat),
               chart.getYAxisFormat().format(yOrig));
         }
+      }
+
+      // flush smooth path for line series
+      if (smoothPath != null) {
+        g.setColor(series.getLineColor());
+        g.setStroke(series.getLineStyle());
+        g.draw(smoothPath);
+        smoothPath = null;
       }
 
       // close any open path for area charts
