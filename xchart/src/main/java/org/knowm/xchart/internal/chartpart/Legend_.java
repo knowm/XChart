@@ -17,6 +17,7 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   static final int BOX_OUTLINE_WIDTH = 5;
   private static final int LEGEND_MARGIN = 6;
   private static final int MULTI_LINE_SPACE = 3;
+  private static final double MAX_LEGEND_TEXT_WIDTH_RATIO = 0.45;
   final Chart<ST, S> chart;
   double xOffset = 0;
   double yOffset = 0;
@@ -290,22 +291,22 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
     // FontMetrics fontMetrics = g.getFontMetrics(getChartPainter().getstyler().getLegendFont());
     // float fontDescent = fontMetrics.getDescent();
 
+    double maxTextWidth = chart.getWidth() * MAX_LEGEND_TEXT_WIDTH_RATIO;
+    FontRenderContext frc = new FontRenderContext(null, true, false);
     String lines[] = series.getLabel().split("\\n");
     Map<String, Rectangle2D> seriesTextBounds =
         new LinkedHashMap<String, Rectangle2D>(lines.length);
     for (String line : lines) {
       TextLayout textLayout =
-          new TextLayout(
-              line, chart.getStyler().getLegendFont(), new FontRenderContext(null, true, false));
+          new TextLayout(line, chart.getStyler().getLegendFont(), frc);
       Shape shape = textLayout.getOutline(null);
       Rectangle2D bounds = shape.getBounds2D();
-      // System.out.println(tl.getAscent());
-      // System.out.println(tl.getDescent());
-      // System.out.println(tl.getBounds());
-      // seriesTextBounds.put(line, new Rectangle2D.Double(bounds.getX(), bounds.getY(),
-      // bounds.getWidth(), bounds.getHeight() - tl.getDescent()));
-      // seriesTextBounds.put(line, new Rectangle2D.Double(bounds.getX(), bounds.getY(),
-      // bounds.getWidth(), tl.getAscent()));
+      if (bounds.getWidth() > maxTextWidth) {
+        line = truncateLabel(line, frc, maxTextWidth);
+        textLayout = new TextLayout(line, chart.getStyler().getLegendFont(), frc);
+        shape = textLayout.getOutline(null);
+        bounds = shape.getBounds2D();
+      }
       seriesTextBounds.put(line, bounds);
     }
     return seriesTextBounds;
@@ -380,5 +381,20 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       return getBoundsHintHorizontal(); // Actually, the only information contained in this bounds
       // is the width and height.
     }
+  }
+
+  private String truncateLabel(String text, FontRenderContext frc, double maxWidth) {
+    String ellipsis = "…";
+    StringBuilder sb = new StringBuilder(text);
+    while (sb.length() > 0) {
+      TextLayout tl =
+          new TextLayout(
+              sb.toString() + ellipsis, chart.getStyler().getLegendFont(), frc);
+      if (tl.getOutline(null).getBounds2D().getWidth() <= maxWidth) {
+        return sb.toString() + ellipsis;
+      }
+      sb.deleteCharAt(sb.length() - 1);
+    }
+    return ellipsis;
   }
 }
