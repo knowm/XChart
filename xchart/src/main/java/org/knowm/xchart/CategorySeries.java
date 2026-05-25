@@ -13,6 +13,9 @@ public class CategorySeries extends AxesChartSeriesCategory {
 
   private CategorySeriesRenderStyle chartCategorySeriesRenderStyle = null;
 
+  // smooth curve
+  private boolean smooth;
+
   /**
    * Constructor
    *
@@ -50,6 +53,22 @@ public class CategorySeries extends AxesChartSeriesCategory {
 
   public CategorySeries setOverlapped(boolean overlapped) {
     isOverlapped = overlapped;
+    return this;
+  }
+
+  public boolean isSmooth() {
+
+    return smooth;
+  }
+
+  /**
+   * Sets whether the line/area series should be rendered with smooth cubic Bezier curves.
+   *
+   * @param smooth true for smooth curves, false for straight lines
+   */
+  public CategorySeries setSmooth(boolean smooth) {
+
+    this.smooth = smooth;
     return this;
   }
 
