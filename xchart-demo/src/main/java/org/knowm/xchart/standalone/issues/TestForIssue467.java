@@ -29,9 +29,13 @@ public class TestForIssue467 {
             .yAxisTitle("Value")
             .build();
 
+    chart.getStyler().setOverlapped(true);
+    chart.getStyler().setAvailableSpaceFill(0.4);
+
     List<String> xData = Arrays.asList("Jan", "Feb", "Mar", "Apr", "May", "Jun");
     List<Integer> yData1 = Arrays.asList(4, 7, 3, 8, 5, 9);
     List<Integer> yData2 = Arrays.asList(2, 5, 6, 3, 7, 4);
+    List<Integer> yData3 = Arrays.asList(1, 3, 5, 2, 4, 6);
 
     CategorySeries series1 = chart.addSeries("Smooth", xData, yData1);
     series1.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Line);
@@ -40,6 +44,9 @@ public class TestForIssue467 {
     CategorySeries series2 = chart.addSeries("Normal", xData, yData2);
     series2.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Line);
     series2.setSmooth(false);
+
+    CategorySeries series3 = chart.addSeries("Bar", xData, yData3);
+    series3.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Bar);
 
     return chart;
   }
