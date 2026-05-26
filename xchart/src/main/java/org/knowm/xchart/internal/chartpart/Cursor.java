@@ -229,9 +229,18 @@ public class Cursor extends MouseAdapter implements ChartPart {
     for (PlotInteractionData.CursorData cd : data.getCursorDataList()) {
       dataPointList.add(new DataPoint(cd.x, cd.y, cd.xValue, cd.yValue, cd.seriesName));
     }
+    // Refresh matching points with the current mouse position so the cursor label
+    // updates on every repaint, not only on the next mouseMoved event (fixes #805).
+    if (!isMouseOutOfPlotContent()) {
+      calculateMatchingDataPoints();
+    }
   }
 
-  /** One DataPoint per series, keep the DataPoint closest to mouseX */
+  /**
+   * One entry per series in matchingDataPointList. When multiple points of the same series fall
+   * under the cursor, the closest one's X position is used and all their Y values are combined into
+   * a comma-separated string (fixes #805).
+   */
   private void calculateMatchingDataPoints() {
 
     List<DataPoint> dataPoints = new ArrayList<>();
@@ -244,20 +253,31 @@ public class Cursor extends MouseAdapter implements ChartPart {
     }
 
     if (dataPoints.size() > 0) {
-      Map<String, DataPoint> map = new HashMap<>();
-      String seriesName = "";
+      Map<String, DataPoint> closestMap = new HashMap<>();
+      Map<String, List<String>> yValuesMap = new HashMap<>();
       for (DataPoint dataPoint : dataPoints) {
-        seriesName = dataPoint.seriesName;
-        if (map.containsKey(seriesName)) {
-          if (Math.abs(dataPoint.x - mouseX) < Math.abs(map.get(seriesName).x - mouseX)) {
-            map.put(seriesName, dataPoint);
+        String seriesName = dataPoint.seriesName;
+        yValuesMap.computeIfAbsent(seriesName, k -> new ArrayList<>()).add(dataPoint.yValue);
+        if (closestMap.containsKey(seriesName)) {
+          if (Math.abs(dataPoint.x - mouseX) < Math.abs(closestMap.get(seriesName).x - mouseX)) {
+            closestMap.put(seriesName, dataPoint);
           }
         } else {
-          map.put(seriesName, dataPoint);
+          closestMap.put(seriesName, dataPoint);
         }
       }
       matchingDataPointList.clear();
-      matchingDataPointList.addAll(map.values());
+      for (Map.Entry<String, DataPoint> entry : closestMap.entrySet()) {
+        DataPoint closest = entry.getValue();
+        List<String> yVals = yValuesMap.get(entry.getKey());
+        if (yVals.size() > 1) {
+          String combinedY = String.join(", ", yVals);
+          matchingDataPointList.add(
+              new DataPoint(closest.x, closest.y, closest.xValue, combinedY, closest.seriesName));
+        } else {
+          matchingDataPointList.add(closest);
+        }
+      }
     }
   }
 
