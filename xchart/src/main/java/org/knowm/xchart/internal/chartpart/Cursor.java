@@ -12,7 +12,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.series.MarkerSeries;
@@ -231,8 +231,13 @@ public class Cursor extends MouseAdapter implements ChartPart {
     }
   }
 
-  /** One DataPoint per series, keep the DataPoint closest to mouseX */
+  /**
+   * Per series, collect all DataPoints under the cursor and combine their Y values. When multiple
+   * points of the same series share the same X position, their Y values are joined with ", ".
+   */
   private void calculateMatchingDataPoints() {
+
+    matchingDataPointList.clear();
 
     List<DataPoint> dataPoints = new ArrayList<>();
     for (DataPoint dataPoint : dataPointList) {
@@ -244,20 +249,24 @@ public class Cursor extends MouseAdapter implements ChartPart {
     }
 
     if (dataPoints.size() > 0) {
-      Map<String, DataPoint> map = new HashMap<>();
-      String seriesName = "";
+      // Preserve series order using a LinkedHashMap; accumulate Y values per series.
+      Map<String, DataPoint> representativeMap = new LinkedHashMap<>();
+      Map<String, StringBuilder> yValuesMap = new LinkedHashMap<>();
       for (DataPoint dataPoint : dataPoints) {
-        seriesName = dataPoint.seriesName;
-        if (map.containsKey(seriesName)) {
-          if (Math.abs(dataPoint.x - mouseX) < Math.abs(map.get(seriesName).x - mouseX)) {
-            map.put(seriesName, dataPoint);
-          }
+        String seriesName = dataPoint.seriesName;
+        if (representativeMap.containsKey(seriesName)) {
+          yValuesMap.get(seriesName).append(", ").append(dataPoint.yValue);
         } else {
-          map.put(seriesName, dataPoint);
+          representativeMap.put(seriesName, dataPoint);
+          yValuesMap.put(seriesName, new StringBuilder(dataPoint.yValue));
         }
       }
-      matchingDataPointList.clear();
-      matchingDataPointList.addAll(map.values());
+      for (Map.Entry<String, DataPoint> entry : representativeMap.entrySet()) {
+        DataPoint dp = entry.getValue();
+        String combinedY = yValuesMap.get(entry.getKey()).toString();
+        matchingDataPointList.add(
+            new DataPoint(dp.x, dp.y, dp.xValue, combinedY, dp.seriesName));
+      }
     }
   }
 
