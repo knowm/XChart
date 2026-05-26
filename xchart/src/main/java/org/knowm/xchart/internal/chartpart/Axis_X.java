@@ -237,6 +237,10 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
           Axis_.Direction.X, workingSpace, min, max, xData, axesChartStyler);
     } else if (axesChartStyler instanceof CategoryStyler || axesChartStyler instanceof BoxStyler) {
 
+      if (chart.getSeriesMap().isEmpty()) {
+        return new AxisTickCalculator_Category(
+            Axis_.Direction.X, workingSpace, List.of(), DataType.String, axesChartStyler);
+      }
       // TODO Cleanup? More elegant way?
       AxesChartSeriesCategory axesChartSeries =
           (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
@@ -279,7 +283,7 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
 
     // min & max is not set in category charts with string labels
     if (min > max) {
-      if (axesChartStyler instanceof CategoryStyler) {
+      if (axesChartStyler instanceof CategoryStyler && !chart.getSeriesMap().isEmpty()) {
         AxesChartSeriesCategory axesChartSeries =
             (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
         int count = axesChartSeries.getXData().size();
@@ -321,7 +325,7 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
 
     // min & max is not set in category charts with string labels
     if (min > max) {
-      if (axesChartStyler instanceof CategoryStyler) {
+      if (axesChartStyler instanceof CategoryStyler && !chart.getSeriesMap().isEmpty()) {
         AxesChartSeriesCategory axesChartSeries =
             (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
         int count = axesChartSeries.getXData().size();

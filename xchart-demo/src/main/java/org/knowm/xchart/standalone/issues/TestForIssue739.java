@@ -1,13 +1,11 @@
 package org.knowm.xchart.standalone.issues;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategoryChartBuilder;
 import org.knowm.xchart.SwingWrapper;
 
 /**
- * Demonstrates that clearing all series from a chart no longer throws NoSuchElementException when
+ * Demonstrates that removing all series from a chart no longer throws NoSuchElementException when
  * the chart is repainted (issue #739).
  */
 public class TestForIssue739 {
@@ -20,10 +18,9 @@ public class TestForIssue739 {
 
     Thread.sleep(2000);
 
-    // Clear all series — chart should render blank, not throw NoSuchElementException.
-    // Copy keys first to avoid ConcurrentModificationException while removing.
-    List<String> names = new ArrayList<>(chart.getSeriesMap().keySet());
-    names.forEach(chart::removeSeries);
+    // Remove all series via the public API — chart should render blank, not crash.
+    chart.removeSeries("series1");
+    chart.removeSeries("series2");
     sw.repaintChart();
   }
 
