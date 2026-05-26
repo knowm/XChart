@@ -15,7 +15,7 @@ public class Export2Rows {
         CSVImporter.getChartFromCSVDir("./CSV/CSVChartRows/", DataOrientation.Rows, 600, 400);
 
     // export a single series
-    CSVExporter.writeCSVRows(chart.getSeriesMap().get("series1"), "./CSV/CSVChartRowsExport/");
+    CSVExporter.writeCSVRows(chart.getSeries("series1"), "./CSV/CSVChartRowsExport/");
 
     // export all series
     CSVExporter.writeCSVRows(chart, "./CSV/CSVChartRowsExport/");

@@ -289,7 +289,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
           || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Stick) {
 
         // if stacked, we need to completely re-calculate min and max.
-        if (categoryStyler.isStacked()) {
+        if (categoryStyler.isStacked() && !chart.getSeriesMap().isEmpty()) {
 
           AxesChartSeriesCategory axesChartSeries =
               (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();

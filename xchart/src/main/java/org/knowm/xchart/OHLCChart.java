@@ -681,7 +681,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
 
     sanityCheck(seriesName, newOpenData, newHighData, newLowData, newCloseData, newVolumeData);
 
-    Map<String, OHLCSeries> seriesMap = getSeriesMap();
+    Map<String, OHLCSeries> seriesMap = this.seriesMap;
     OHLCSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
@@ -738,7 +738,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
    */
   public OHLCSeries updateOHLCSeries(String seriesName, double[] newXData, double[] newYData) {
 
-    Map<String, OHLCSeries> seriesMap = getSeriesMap();
+    Map<String, OHLCSeries> seriesMap = this.seriesMap;
     OHLCSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
@@ -810,7 +810,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
     setHeight(height);
 
     // set the series render styles if they are not set. Legend and Plot need it.
-    for (OHLCSeries series : getSeriesMap().values()) {
+    for (OHLCSeries series : seriesMap.values()) {
       OHLCSeries.OHLCSeriesRenderStyle renderStyle =
           series.getOhlcSeriesRenderStyle(); // would be directly set
       if (renderStyle == null) { // wasn't overridden, use default from Style Manager
@@ -838,7 +838,7 @@ public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
             getStyler().getSeriesColors(),
             getStyler().getSeriesMarkers(),
             getStyler().getSeriesLines());
-    for (OHLCSeries series : getSeriesMap().values()) {
+    for (OHLCSeries series : seriesMap.values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
           seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

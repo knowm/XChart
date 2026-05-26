@@ -240,7 +240,7 @@ public class CategoryChartTest {
 
     chart.paint(new CustomGraphic(), 20, 20);
 
-    for (CategorySeries series : chart.getSeriesMap().values()) {
+    for (CategorySeries series : chart.getSeriesCollection()) {
       CategorySeries.CategorySeriesRenderStyle seriesType =
           series.getChartCategorySeriesRenderStyle();
       if (seriesType != null) {

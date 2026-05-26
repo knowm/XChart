@@ -6,6 +6,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -227,6 +228,7 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
     return titleHeight + axisTickLabelsHeight;
   }
 
+  @SuppressWarnings("unchecked")
   private AxisTickCalculator getAxisTickCalculatorForY(double workingSpace) {
 
     // Slave axis in a merged visual group: borrow master's pixel positions and translate labels.
@@ -244,7 +246,7 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
     if (axesChartStyler instanceof HorizontalBarStyler) {
       Set<Double> uniqueYData = new LinkedHashSet<>();
       for (HorizontalBarSeries categorySeries :
-          ((HorizontalBarChart) chart).getSeriesMap().values()) {
+          (Collection<HorizontalBarSeries>) (Collection<?>) chart.getSeriesMap().values()) {
         uniqueYData.addAll(
             categorySeries.getYData().stream()
                 .filter(Objects::nonNull)
@@ -266,7 +268,8 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
               .collect(Collectors.toList());
     } else if (axesChartStyler instanceof CategoryStyler) {
       Set<Double> uniqueYData = new LinkedHashSet<>();
-      for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
+      for (CategorySeries categorySeries :
+          (Collection<CategorySeries>) (Collection<?>) chart.getSeriesMap().values()) {
         uniqueYData.addAll(
             categorySeries.getYData().stream()
                 .filter(Objects::nonNull)
@@ -277,7 +280,8 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       yData.addAll(uniqueYData);
     } else if (axesChartStyler instanceof XYStyler) {
       Set<Double> uniqueYData = new LinkedHashSet<>();
-      for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
+      for (XYSeries xySeries :
+          (Collection<XYSeries>) (Collection<?>) chart.getSeriesMap().values()) {
         uniqueYData.addAll(Arrays.stream(xySeries.getYData()).boxed().collect(Collectors.toList()));
       }
       yData.addAll(uniqueYData);
@@ -308,8 +312,8 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
           Axis_.Direction.Y, workingSpace, min, max, axesChartStyler, getYIndex());
     } else if (axesChartStyler instanceof HorizontalBarStyler) {
       List<?> categories =
-          ((HorizontalBarChart) chart)
-              .getSeriesMap().values().stream()
+          ((Collection<HorizontalBarSeries>) (Collection<?>) chart.getSeriesMap().values())
+              .stream()
                   .flatMap(it -> it.getYData().stream())
                   .distinct()
                   .collect(Collectors.toCollection(ArrayList::new));

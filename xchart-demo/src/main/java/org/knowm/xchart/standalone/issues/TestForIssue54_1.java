@@ -36,7 +36,7 @@ public class TestForIssue54_1 {
     {
       XYChart chart = getLineChart();
       chart.setTitle("sin(x) on second axis with title");
-      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
+      chart.getSeries("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x)");
       charts.add(chart);
     }
@@ -49,15 +49,15 @@ public class TestForIssue54_1 {
     //    {
     //      Chart chart = getAreaChart();
     //      chart.setTitle("b on second axis");
-    //      Series series = (Series) chart.getSeriesMap().get("b");
+    //      Series series = (Series) chart.getSeries("b");
     //      series.setYAxisGroup(1);
     //      charts.add(chart);
     //    }
     {
       XYChart chart = getAreaChart();
       chart.setTitle("all different axis, b & c axis on right");
-      chart.getSeriesMap().get("b").setYAxisGroup(1);
-      chart.getSeriesMap().get("c").setYAxisGroup(2);
+      chart.getSeries("b").setYAxisGroup(1);
+      chart.getSeries("c").setYAxisGroup(2);
       chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       chart.getStyler().setYAxisGroupPosition(2, Styler.YAxisPosition.Right);
       charts.add(chart);
@@ -71,7 +71,7 @@ public class TestForIssue54_1 {
     {
       CategoryChart chart = getCaregoryChart();
       chart.setTitle("b on second axis, b on right");
-      chart.getSeriesMap().get("b").setYAxisGroup(1);
+      chart.getSeries("b").setYAxisGroup(1);
       chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
@@ -84,8 +84,8 @@ public class TestForIssue54_1 {
     {
       CategoryChart chart = getCategoryLineChart();
       chart.setTitle("b&d on second axis");
-      chart.getSeriesMap().get("b").setYAxisGroup(1);
-      chart.getSeriesMap().get("d").setYAxisGroup(1);
+      chart.getSeries("b").setYAxisGroup(1);
+      chart.getSeries("d").setYAxisGroup(1);
       chart.getStyler().setYAxisGroupPosition(1, Styler.YAxisPosition.Right);
       charts.add(chart);
     }
@@ -98,7 +98,7 @@ public class TestForIssue54_1 {
     {
       BubbleChart chart = getBubleChart();
       chart.setTitle("b on second axis");
-      chart.getSeriesMap().get("b").setYAxisGroup(1);
+      chart.getSeries("b").setYAxisGroup(1);
       charts.add(chart);
     }
 

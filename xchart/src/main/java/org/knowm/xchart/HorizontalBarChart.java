@@ -143,7 +143,7 @@ public class HorizontalBarChart extends Chart<HorizontalBarStyler, HorizontalBar
   public HorizontalBarSeries updateCategorySeries(
       String seriesName, List<? extends Number> newXData, List<?> newYData) {
 
-    Map<String, HorizontalBarSeries> seriesMap = getSeriesMap();
+    Map<String, HorizontalBarSeries> seriesMap = this.seriesMap;
     HorizontalBarSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
@@ -230,7 +230,7 @@ public class HorizontalBarChart extends Chart<HorizontalBarStyler, HorizontalBar
             getStyler().getSeriesColors(),
             getStyler().getSeriesMarkers(),
             getStyler().getSeriesLines());
-    for (HorizontalBarSeries series : getSeriesMap().values()) {
+    for (HorizontalBarSeries series : seriesMap.values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
           seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

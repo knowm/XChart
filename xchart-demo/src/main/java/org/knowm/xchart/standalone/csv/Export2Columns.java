@@ -16,7 +16,7 @@ public class Export2Columns {
 
     // export a single series
     CSVExporter.writeCSVColumns(
-        chart.getSeriesMap().get("series1"), "./CSV/CSVChartColumnsExport/");
+        chart.getSeries("series1"), "./CSV/CSVChartColumnsExport/");
 
     // export all series
     CSVExporter.writeCSVColumns(chart, "./CSV/CSVChartColumnsExport/");

@@ -219,7 +219,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
       List<? extends Number> newYData,
       List<? extends Number> newErrorBarData) {
 
-    Map<String, CategorySeries> seriesMap = getSeriesMap();
+    Map<String, CategorySeries> seriesMap = this.seriesMap;
     CategorySeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
@@ -295,7 +295,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
     setHeight(height);
 
     // set the series render styles if they are not set. Legend and Plot need it.
-    for (CategorySeries seriesCategory : getSeriesMap().values()) {
+    for (CategorySeries seriesCategory : seriesMap.values()) {
       CategorySeries.CategorySeriesRenderStyle seriesType =
           seriesCategory.getChartCategorySeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
@@ -323,7 +323,7 @@ public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
             getStyler().getSeriesColors(),
             getStyler().getSeriesMarkers(),
             getStyler().getSeriesLines());
-    for (CategorySeries series : getSeriesMap().values()) {
+    for (CategorySeries series : seriesMap.values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
           seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
