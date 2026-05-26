@@ -17,7 +17,7 @@ public class CSVExporter {
    */
   public static void writeCSVRows(XYChart chart, String path2Dir) {
 
-    for (XYSeries xySeries : chart.getSeriesMap().values()) {
+    for (XYSeries xySeries : chart.getSeriesCollection()) {
       writeCSVRows(xySeries, path2Dir);
     }
   }
@@ -88,7 +88,7 @@ public class CSVExporter {
    */
   public static void writeCSVColumns(XYChart chart, String path2Dir) {
 
-    for (XYSeries xySeries : chart.getSeriesMap().values()) {
+    for (XYSeries xySeries : chart.getSeriesCollection()) {
       writeCSVColumns(xySeries, path2Dir);
     }
   }

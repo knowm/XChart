@@ -353,7 +353,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
   public XYSeries updateXYSeries(
       String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
 
-    Map<String, XYSeries> seriesMap = getSeriesMap();
+    Map<String, XYSeries> seriesMap = this.seriesMap;
     XYSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
@@ -402,7 +402,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
     setHeight(height);
 
     // set the series render styles if they are not set. Legend and Plot need it.
-    for (XYSeries xySeries : getSeriesMap().values()) {
+    for (XYSeries xySeries : seriesMap.values()) {
       XYSeries.XYSeriesRenderStyle chartXYSeriesRenderStyle =
           xySeries.getXYSeriesRenderStyle(); // would be directly set
       if (chartXYSeriesRenderStyle == null) { // wasn't overridden, use default from Style Manager
@@ -430,7 +430,7 @@ public class XYChart extends Chart<XYStyler, XYSeries> {
             getStyler().getSeriesColors(),
             getStyler().getSeriesMarkers(),
             getStyler().getSeriesLines());
-    for (XYSeries series : getSeriesMap().values()) {
+    for (XYSeries series : seriesMap.values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
           seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

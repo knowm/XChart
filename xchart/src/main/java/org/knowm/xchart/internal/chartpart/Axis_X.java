@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -168,12 +169,13 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
     return titleHeight + axisTickLabelsHeight;
   }
 
+  @SuppressWarnings("unchecked")
   private AxisTickCalculator_ getAxisTickCalculatorForX(double workingSpace) {
     List<Double> xData = new ArrayList<>();
     if (axesChartStyler instanceof HorizontalBarStyler) {
       Set<Double> uniqueXData = new LinkedHashSet<>();
       for (HorizontalBarSeries categorySeries :
-          ((HorizontalBarChart) chart).getSeriesMap().values()) {
+          (Collection<HorizontalBarSeries>) (Collection<?>) chart.getSeriesMap().values()) {
         List<Double> numericCategoryXData =
             categorySeries.getXData().stream()
                 .filter(Objects::nonNull)
@@ -194,7 +196,8 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
               .collect(Collectors.toList());
     } else if (axesChartStyler instanceof CategoryStyler) {
       Set<Double> uniqueXData = new LinkedHashSet<>();
-      for (CategorySeries categorySeries : ((CategoryChart) chart).getSeriesMap().values()) {
+      for (CategorySeries categorySeries :
+          (Collection<CategorySeries>) (Collection<?>) chart.getSeriesMap().values()) {
         List<Double> numericCategoryXData =
             categorySeries.getXData().stream()
                 .filter(Objects::nonNull)
@@ -207,7 +210,8 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       xData.addAll(uniqueXData);
     } else if (axesChartStyler instanceof XYStyler) {
       Set<Double> uniqueXData = new LinkedHashSet<>();
-      for (XYSeries xySeries : ((XYChart) chart).getSeriesMap().values()) {
+      for (XYSeries xySeries :
+          (Collection<XYSeries>) (Collection<?>) chart.getSeriesMap().values()) {
         uniqueXData.addAll(Arrays.stream(xySeries.getXData()).boxed().collect(Collectors.toList()));
       }
       xData.addAll(uniqueXData);

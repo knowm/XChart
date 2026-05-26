@@ -32,7 +32,7 @@ public class TestForIssue779 {
             .yAxisTitle("Y")
             .build();
     chartWithColor.addSeries("test 1", Arrays.asList(0, 1, 2, 3), Arrays.asList(4, 5, 4, 3));
-    chartWithColor.getSeriesMap().get("test 1").setFillColor(new Color(10, 150, 235));
+    chartWithColor.getSeries("test 1").setFillColor(new Color(10, 150, 235));
     chartWithColor.getStyler().setLabelsVisible(true);
 
     // Chart 2: without setFillColor - labels inside bar
@@ -58,7 +58,7 @@ public class TestForIssue779 {
             .yAxisTitle("Y")
             .build();
     chartStackSum.addSeries("test 1", Arrays.asList(0, 1, 2, 3), Arrays.asList(4, 5, 4, 3));
-    chartStackSum.getSeriesMap().get("test 1").setFillColor(new Color(10, 150, 235));
+    chartStackSum.getSeries("test 1").setFillColor(new Color(10, 150, 235));
     chartStackSum.getStyler().setLabelsVisible(true);
     chartStackSum.getStyler().setStacked(true);
     chartStackSum.getStyler().setShowStackSum(true);

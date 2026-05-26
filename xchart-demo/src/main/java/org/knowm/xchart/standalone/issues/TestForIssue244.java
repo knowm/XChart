@@ -25,7 +25,7 @@ public class TestForIssue244 {
     {
       XYChart chart = getLineChart();
       chart.setTitle("sin(x) on second axis");
-      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
+      chart.getSeries("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
@@ -35,7 +35,7 @@ public class TestForIssue244 {
     {
       XYChart chart = getLineChart();
       chart.setTitle("2 axis, default y max & y min");
-      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
+      chart.getSeries("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
@@ -49,7 +49,7 @@ public class TestForIssue244 {
     {
       XYChart chart = getLineChart();
       chart.setTitle("2 axis, max on group 0");
-      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
+      chart.getSeries("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
@@ -64,7 +64,7 @@ public class TestForIssue244 {
     {
       XYChart chart = getLineChart();
       chart.setTitle("2 axis, max on group 0, 1");
-      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
+      chart.getSeries("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
@@ -81,7 +81,7 @@ public class TestForIssue244 {
     {
       XYChart chart = getLineChart();
       chart.setTitle("2 axis, max on group 0, 1, and default max");
-      chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
+      chart.getSeries("y=sin(x)").setYAxisGroup(1);
       chart.setYAxisGroupTitle(1, "sin(x) [-1, 1]");
       chart.setYAxisGroupTitle(0, "cos(x) [-10, 10]");
       chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);

@@ -94,7 +94,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
    */
   public PieSeries updatePieSeries(String seriesName, Number value) {
 
-    Map<String, PieSeries> seriesMap = getSeriesMap();
+    Map<String, PieSeries> seriesMap = this.seriesMap;
     PieSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
@@ -111,7 +111,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     setHeight(height);
 
     // set the series types if they are not set. Legend and Plot need it.
-    for (PieSeries seriesPie : getSeriesMap().values()) {
+    for (PieSeries seriesPie : seriesMap.values()) {
       PieSeries.PieSeriesRenderStyle seriesType =
           seriesPie.getChartPieSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
@@ -138,7 +138,7 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
             getStyler().getSeriesColors(),
             getStyler().getSeriesMarkers(),
             getStyler().getSeriesLines());
-    for (Series series : getSeriesMap().values()) {
+    for (Series series : seriesMap.values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
           seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

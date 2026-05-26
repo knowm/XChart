@@ -66,7 +66,7 @@ public class TestForPR847 {
     addSlices(chart);
 
     double total =
-        chart.getSeriesMap().values().stream()
+        chart.getSeriesCollection().stream()
             .filter(s -> s.getValue() != null)
             .mapToDouble(s -> s.getValue().doubleValue())
             .sum();

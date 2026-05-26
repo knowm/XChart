@@ -18,7 +18,7 @@ public class TestForIssue54_2 {
 
     XYChart chart = getLineChart();
     chart.setTitle("sin(x) on second axis with title");
-    chart.getSeriesMap().get("y=sin(x)").setYAxisGroup(1);
+    chart.getSeries("y=sin(x)").setYAxisGroup(1);
     chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Left);
     chart.getStyler().setYAxisGroupPosition(0, YAxisPosition.Right);
     chart.setYAxisGroupTitle(1, "sin(x)");

@@ -16,7 +16,7 @@ public class TestForIssue243 {
     // Create Chart
     XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "1", xData, yData);
 
-    chart.getSeriesMap().get("1").setMarker(new Circle());
+    chart.getSeries("1").setMarker(new Circle());
 
     // Show it
     return chart;

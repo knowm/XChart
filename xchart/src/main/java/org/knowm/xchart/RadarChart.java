@@ -165,7 +165,7 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
             getStyler().getSeriesColors(),
             getStyler().getSeriesMarkers(),
             getStyler().getSeriesLines());
-    for (RadarSeries series : getSeriesMap().values()) {
+    for (RadarSeries series : seriesMap.values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
           seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

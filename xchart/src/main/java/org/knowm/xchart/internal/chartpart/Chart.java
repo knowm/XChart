@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -307,9 +308,18 @@ public abstract class Chart<ST extends Styler, S extends Series> implements ICha
    * specific series by name, or iterate over the values to access all series. To add or remove
    * series use the chart-specific {@code addSeries} / {@link #removeSeries(String)} methods.
    */
-  public Map<String, S> getSeriesMap() {
+  Map<String, S> getSeriesMap() {
 
     return Collections.unmodifiableMap(seriesMap);
+  }
+
+  /**
+   * Returns an unmodifiable view of the series values. Use this to iterate over all series or
+   * check the series count. To look up a series by name use {@link #getSeries(String)}.
+   */
+  public Collection<S> getSeriesCollection() {
+
+    return Collections.unmodifiableCollection(seriesMap.values());
   }
 
   /**

@@ -161,7 +161,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
   public BubbleSeries updateBubbleSeries(
       String seriesName, double[] newXData, double[] newYData, double[] newBubbleData) {
 
-    Map<String, BubbleSeries> seriesMap = getSeriesMap();
+    Map<String, BubbleSeries> seriesMap = this.seriesMap;
     BubbleSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
@@ -216,7 +216,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
     setHeight(height);
 
     // set the series types if they are not set. Legend and Plot need it.
-    for (BubbleSeries bubbleSeries : getSeriesMap().values()) {
+    for (BubbleSeries bubbleSeries : seriesMap.values()) {
       BubbleSeries.BubbleSeriesRenderStyle seriesType =
           bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
       if (seriesType == null) { // wasn't overridden, use default from Style Manager
@@ -244,7 +244,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
             getStyler().getSeriesColors(),
             getStyler().getSeriesMarkers(),
             getStyler().getSeriesLines());
-    for (BubbleSeries series : getSeriesMap().values()) {
+    for (BubbleSeries series : seriesMap.values()) {
 
       SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
           seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();

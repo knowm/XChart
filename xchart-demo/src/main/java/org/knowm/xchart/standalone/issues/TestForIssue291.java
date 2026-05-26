@@ -20,7 +20,7 @@ public class TestForIssue291 {
     final XYChart chart = getLineChart();
     chart.setTitle("sin(x) on second axis with title");
     String seriesName = "y=sin(x)";
-    XYSeries series = (XYSeries) chart.getSeriesMap().get(seriesName);
+    XYSeries series = chart.getSeries(seriesName);
     series.setYAxisGroup(1);
     chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Left);
     chart.getStyler().setYAxisGroupPosition(0, YAxisPosition.Right);

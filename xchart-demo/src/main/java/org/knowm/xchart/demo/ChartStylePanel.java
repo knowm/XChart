@@ -16,12 +16,12 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
@@ -585,12 +585,11 @@ public class ChartStylePanel extends JPanel {
         getObjectProperties(csp, chart.getStyler(), "styler.", skipSet);
     list.addAll(list2);
 
-    Map<String, ? extends Series> seriesMap = chart.getSeriesMap();
+    Collection<? extends Series> seriesCollection = chart.getSeriesCollection();
     int ind = 0;
     TreeSet<Integer> seriesIndSet = new TreeSet<Integer>();
-    for (Entry<String, ? extends Series> e : seriesMap.entrySet()) {
-      Series series = e.getValue();
-      list2 = getObjectProperties(csp, series, "series[" + e.getKey() + "].", skipSet);
+    for (Series series : seriesCollection) {
+      list2 = getObjectProperties(csp, series, "series[" + series.getName() + "].", skipSet);
       list.addAll(list2);
       seriesIndSet.add(series.getYAxisGroup());
       seriesIndSet.add(ind);

@@ -130,7 +130,7 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
   public HeatMapSeries updateSeries(
       String seriesName, List<?> xData, List<?> yData, List<Number[]> heatData) {
 
-    Map<String, HeatMapSeries> seriesMap = getSeriesMap();
+    Map<String, HeatMapSeries> seriesMap = this.seriesMap;
     HeatMapSeries series = seriesMap.get(seriesName);
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");

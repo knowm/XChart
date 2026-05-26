@@ -104,7 +104,7 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
 
   public BoxSeries updateBoxSeries(String seriesName, List<? extends Number> newYData) {
 
-    Map<String, BoxSeries> seriesMap = getSeriesMap();
+    Map<String, BoxSeries> seriesMap = this.seriesMap;
     BoxSeries series = seriesMap.get(seriesName);
 
     if (series == null) {
@@ -124,7 +124,7 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
             getStyler().getSeriesLines());
     SeriesColorMarkerLineStyle seriesColorMarkerLineStyle =
         seriesColorMarkerLineStyleCycler.getNextSeriesColorMarkerLineStyle();
-    for (BoxSeries series : getSeriesMap().values()) {
+    for (BoxSeries series : seriesMap.values()) {
 
       if (series.getLineStyle() == null) { // wasn't set manually
         series.setLineStyle(seriesColorMarkerLineStyle.getStroke());
