@@ -57,6 +57,12 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
       }
       boxPlotCounter++;
       boxPlotData = boxPlotDataList.get(boxPlotCounter);
+
+      // skip series with no usable data (e.g. all nulls or empty after filtering)
+      if (boxPlotData == null) {
+        continue;
+      }
+
       yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
       yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
 
@@ -141,6 +147,11 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
   }
 
   private void drawBoxPlot(Graphics2D g, String seriesName, BoxPlotData boxPlotData) {
+
+    // when all data values are the same yMin == yMax; offsets would be NaN, so skip rendering
+    if (yMax == yMin) {
+      return;
+    }
 
     double q1YOffset =
         getBounds().getY()
