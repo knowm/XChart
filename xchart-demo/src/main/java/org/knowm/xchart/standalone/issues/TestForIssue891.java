@@ -17,6 +17,7 @@ public class TestForIssue891 {
 
   public static void main(String[] args) {
 
+    demonstrateValidation();
     new SwingWrapper<>(getChart()).displayChart();
   }
 
