@@ -44,6 +44,10 @@ public class BoxPlotDataCalculator<ST extends AxesChartStyler, S extends AxesCha
         }
       }
 
+      if (data.isEmpty()) {
+        boxPlotDataList.add(null);
+        continue;
+      }
       Collections.sort(data);
       boxPlotData = calculate(data, boxPlotStyler);
       boxPlotDataList.add(boxPlotData);
