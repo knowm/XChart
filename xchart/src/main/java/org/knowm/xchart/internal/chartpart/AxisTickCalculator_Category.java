@@ -78,6 +78,13 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
       firstPosition = 0;
     }
 
+    // When no explicit label count cap is set, respect the spacing hint to avoid overlap.
+    // Compute how many categories to skip so adjacent labels are at least spacingHint pixels apart.
+    int skipFactor = 1;
+    if (xAxisMaxLabelCount == 0 && gridStep < styler.getXAxisTickMarkSpacingHint()) {
+      skipFactor = (int) Math.ceil(styler.getXAxisTickMarkSpacingHint() / gridStep);
+    }
+
     // set up String formatters that may be encountered
     if (axisType == Series.DataType.String) {
       axisFormat = new Formatter_String();
@@ -96,16 +103,17 @@ class AxisTickCalculator_Category extends AxisTickCalculator_ {
     int counter = 0;
 
     for (Object category : categories) {
-      if (axisType == Series.DataType.String) {
-        tickLabels.add(category.toString());
-      } else if (axisType == Series.DataType.Number) {
-        tickLabels.add(axisFormat.format(new BigDecimal(category.toString()).doubleValue()));
-      } else if (axisType == Series.DataType.Date) {
-        tickLabels.add(axisFormat.format((((Date) category).getTime())));
+      if (counter % skipFactor == 0) {
+        if (axisType == Series.DataType.String) {
+          tickLabels.add(category.toString());
+        } else if (axisType == Series.DataType.Number) {
+          tickLabels.add(axisFormat.format(new BigDecimal(category.toString()).doubleValue()));
+        } else if (axisType == Series.DataType.Date) {
+          tickLabels.add(axisFormat.format((((Date) category).getTime())));
+        }
+        tickLocations.add(margin + firstPosition + gridStep * counter);
       }
-
-      double tickLabelPosition = margin + firstPosition + gridStep * counter++;
-      tickLocations.add(tickLabelPosition);
+      counter++;
     }
   }
 }
