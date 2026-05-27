@@ -59,4 +59,36 @@ public class AxisTickCalculatorCategoryTest {
     assertThat(calculator.tickLocations)
         .isEqualTo(Arrays.asList(105.0, 243.0, 381.0, 519.0, 657.0, 795.0));
   }
+
+  @Test
+  public void shouldAutoSkipLabelsWhenCrowded() {
+    // 20 categories in 200px: gridStep ≈ 8.5 px < default spacingHint (74 px)
+    // skipFactor = ceil(74 / 8.5) = 9 → labels at indices 0, 9, 18 → 3 labels
+    List<String> categories =
+        Arrays.asList(
+            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
+            "r", "s", "t");
+    CategoryStyler styler = new CategoryStyler();
+
+    AxisTickCalculator_Category calculator =
+        new AxisTickCalculator_Category(
+            Axis_.Direction.X, 200, categories, Series.DataType.String, styler);
+
+    assertThat(calculator.tickLabels.size()).isLessThan(categories.size());
+    assertThat(calculator.tickLabels.get(0)).isEqualTo("a");
+  }
+
+  @Test
+  public void shouldNotAutoSkipWhenSpacingHintIsDisabled() {
+    // Setting spacingHint to 0 disables auto-skip; all labels should appear
+    List<String> categories = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "i", "j");
+    CategoryStyler styler = new CategoryStyler();
+    styler.setXAxisTickMarkSpacingHint(0);
+
+    AxisTickCalculator_Category calculator =
+        new AxisTickCalculator_Category(
+            Axis_.Direction.X, 200, categories, Series.DataType.String, styler);
+
+    assertThat(calculator.tickLabels.size()).isEqualTo(categories.size());
+  }
 }
