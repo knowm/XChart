@@ -288,24 +288,16 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
    */
   Map<String, Rectangle2D> getSeriesTextBounds(S series) {
 
-    // FontMetrics fontMetrics = g.getFontMetrics(getChartPainter().getstyler().getLegendFont());
-    // float fontDescent = fontMetrics.getDescent();
-
     double maxTextWidth = chart.getWidth() * MAX_LEGEND_TEXT_WIDTH_RATIO;
     FontRenderContext frc = new FontRenderContext(null, true, false);
     String lines[] = series.getLabel().split("\\n");
     Map<String, Rectangle2D> seriesTextBounds =
         new LinkedHashMap<String, Rectangle2D>(lines.length);
     for (String line : lines) {
-      TextLayout textLayout =
-          new TextLayout(line, chart.getStyler().getLegendFont(), frc);
-      Shape shape = textLayout.getOutline(null);
-      Rectangle2D bounds = shape.getBounds2D();
-      if (bounds.getWidth() > maxTextWidth) {
+      Rectangle2D bounds = TexRenderer.getBounds(line, chart.getStyler().getLegendFont());
+      if (!TexRenderer.isTeX(line) && bounds.getWidth() > maxTextWidth) {
         line = truncateLabel(line, frc, maxTextWidth);
-        textLayout = new TextLayout(line, chart.getStyler().getLegendFont(), frc);
-        shape = textLayout.getOutline(null);
-        bounds = shape.getBounds2D();
+        bounds = TexRenderer.getBounds(line, chart.getStyler().getLegendFont());
       }
       seriesTextBounds.put(line, bounds);
     }
@@ -349,24 +341,30 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
 
     for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
 
+      String label = entry.getKey();
       double height = entry.getValue().getHeight();
       double centerOffsetY = (Math.max(markerSize, height) - height) / 2.0;
 
-      FontRenderContext frc = g.getFontRenderContext();
-      TextLayout tl = new TextLayout(entry.getKey(), chart.getStyler().getLegendFont(), frc);
-      Shape shape = tl.getOutline(null);
-      AffineTransform orig = g.getTransform();
-      AffineTransform at = new AffineTransform();
-      at.translate(x, starty + height + centerOffsetY + multiLineOffset);
-      g.transform(at);
-      g.fill(shape);
-      g.setTransform(orig);
+      if (TexRenderer.isTeX(label)) {
+        TexRenderer.render(
+            g,
+            label,
+            x,
+            starty + centerOffsetY + multiLineOffset,
+            chart.getStyler().getLegendFont(),
+            chart.getStyler().getChartFontColor());
+      } else {
+        FontRenderContext frc = g.getFontRenderContext();
+        TextLayout tl = new TextLayout(label, chart.getStyler().getLegendFont(), frc);
+        Shape shape = tl.getOutline(null);
+        AffineTransform orig = g.getTransform();
+        AffineTransform at = new AffineTransform();
+        at.translate(x, starty + height + centerOffsetY + multiLineOffset);
+        g.transform(at);
+        g.fill(shape);
+        g.setTransform(orig);
+      }
 
-      // // debug box
-      // Rectangle2D boundsTemp = new Rectangle2D.Double(x, starty + centerOffsetY,
-      // entry.getValue().getWidth(), height);
-      // g.setColor(Color.blue);
-      // g.draw(boundsTemp);
       multiLineOffset += height + MULTI_LINE_SPACE;
     }
   }

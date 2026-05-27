@@ -27,6 +27,11 @@
             <groupId>com.madgag</groupId>
             <artifactId>animated-gif-lib</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.scilab.forge</groupId>
+            <artifactId>jlatexmath</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 </project>

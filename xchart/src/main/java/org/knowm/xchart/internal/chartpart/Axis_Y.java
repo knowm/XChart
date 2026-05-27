@@ -168,25 +168,32 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
     double axisTickLabelsHeight = 0.0;
     if (axesChartStyler.isYAxisTicksVisible()) {
 
-      String sampleLabel = "";
-      // find the longest String in all the labels
+      // find the widest label using the actual renderer (TeX or plain text)
+      double maxLabelWidth = 0;
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
-        if (axisTickCalculator.getTickLabels().get(i) != null
-            && axisTickCalculator.getTickLabels().get(i).length() > sampleLabel.length()) {
-          sampleLabel = axisTickCalculator.getTickLabels().get(i);
+        String lbl = axisTickCalculator.getTickLabels().get(i);
+        if (lbl == null || lbl.isEmpty()) {
+          continue;
+        }
+        double w;
+        if (TexRenderer.isTeX(lbl)) {
+          w = TexRenderer.getBounds(lbl, axesChartStyler.getAxisTickLabelsFont()).getWidth();
+        } else {
+          w =
+              new TextLayout(
+                      lbl,
+                      axesChartStyler.getAxisTickLabelsFont(),
+                      new FontRenderContext(null, true, false))
+                  .getBounds()
+                  .getWidth();
+        }
+        if (w > maxLabelWidth) {
+          maxLabelWidth = w;
         }
       }
 
-      // get the height of the label including rotation
-      TextLayout textLayout =
-          new TextLayout(
-              sampleLabel.length() == 0 ? " " : sampleLabel,
-              axesChartStyler.getAxisTickLabelsFont(),
-              new FontRenderContext(null, true, false));
-      Rectangle2D rectangle = textLayout.getBounds();
-
       axisTickLabelsHeight =
-          rectangle.getWidth()
+          maxLabelWidth
               + axesChartStyler.getAxisTickPadding()
               + axesChartStyler.getAxisTickMarkLength();
 
@@ -201,21 +208,31 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
                   axisTickCalculator.getTickLocations(),
                   axesChartStyler,
                   slave.index);
-          String slaveSampleLabel = "";
+          double slaveMaxWidth = 0;
           for (int i = 0; i < slaveCalc.getTickLabels().size(); i++) {
             String lbl = slaveCalc.getTickLabels().get(i);
-            if (lbl != null && lbl.length() > slaveSampleLabel.length()) {
-              slaveSampleLabel = lbl;
+            if (lbl == null || lbl.isEmpty()) {
+              continue;
+            }
+            double w;
+            if (TexRenderer.isTeX(lbl)) {
+              w = TexRenderer.getBounds(lbl, axesChartStyler.getAxisTickLabelsFont()).getWidth();
+            } else {
+              w =
+                  new TextLayout(
+                          lbl,
+                          axesChartStyler.getAxisTickLabelsFont(),
+                          new FontRenderContext(null, true, false))
+                      .getBounds()
+                      .getWidth();
+            }
+            if (w > slaveMaxWidth) {
+              slaveMaxWidth = w;
             }
           }
-          if (!slaveSampleLabel.isEmpty()) {
-            TextLayout slaveLayout =
-                new TextLayout(
-                    slaveSampleLabel,
-                    axesChartStyler.getAxisTickLabelsFont(),
-                    new FontRenderContext(null, true, false));
+          if (slaveMaxWidth > 0) {
             double slaveWidth =
-                slaveLayout.getBounds().getWidth()
+                slaveMaxWidth
                     + axesChartStyler.getAxisTickPadding()
                     + axesChartStyler.getAxisTickMarkLength();
             if (slaveWidth > axisTickLabelsHeight) {

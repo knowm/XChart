@@ -7,9 +7,7 @@ import java.awt.Shape;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-
-import org.knowm.xchart.internal.series.Series;
+import java.awt.geom.Rectangle2D;import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 
 /** Chart Title */
@@ -45,10 +43,8 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     // create rectangle first for sizing
-    FontRenderContext frc = g.getFontRenderContext();
-    TextLayout textLayout =
-        new TextLayout(chart.getTitle(), chart.getStyler().getChartTitleFont(), frc);
-    Rectangle2D textBounds = textLayout.getBounds();
+    String title = chart.getTitle();
+    Rectangle2D textBounds = TexRenderer.getBounds(title, chart.getStyler().getChartTitleFont());
 
     double xOffset = chart.getPlot().getBounds().getX(); // of plot left edge
     double yOffset = chart.getStyler().getChartPadding();
@@ -79,14 +75,23 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
             + textBounds.getHeight()
             + chart.getStyler().getChartTitlePadding();
 
-    g.setColor(chart.getStyler().getChartFontColor());
-    Shape shape = textLayout.getOutline(null);
-    AffineTransform orig = g.getTransform();
-    AffineTransform at = new AffineTransform();
-    at.translate(xOffset, yOffset);
-    g.transform(at);
-    g.fill(shape);
-    g.setTransform(orig);
+    if (TexRenderer.isTeX(title)) {
+      TexRenderer.render(
+          g, title, xOffset, yOffset - textBounds.getHeight(),
+          chart.getStyler().getChartTitleFont(), chart.getStyler().getChartFontColor());
+    } else {
+      g.setColor(chart.getStyler().getChartFontColor());
+      FontRenderContext frc = g.getFontRenderContext();
+      TextLayout textLayout =
+          new TextLayout(title, chart.getStyler().getChartTitleFont(), frc);
+      Shape shape = textLayout.getOutline(null);
+      AffineTransform orig = g.getTransform();
+      AffineTransform at = new AffineTransform();
+      at.translate(xOffset, yOffset);
+      g.transform(at);
+      g.fill(shape);
+      g.setTransform(orig);
+    }
 
     double width = 2 * chart.getStyler().getChartTitlePadding() + textBounds.getWidth();
     double height = 2 * chart.getStyler().getChartTitlePadding() + textBounds.getHeight();
@@ -111,12 +116,8 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
 
     if (chart.getStyler().isChartTitleVisible() && chart.getTitle().length() > 0) {
 
-      TextLayout textLayout =
-          new TextLayout(
-              chart.getTitle(),
-              chart.getStyler().getChartTitleFont(),
-              new FontRenderContext(null, true, false));
-      Rectangle2D rectangle = textLayout.getBounds();
+      Rectangle2D rectangle =
+          TexRenderer.getBounds(chart.getTitle(), chart.getStyler().getChartTitleFont());
       double width = 2 * chart.getStyler().getChartTitlePadding() + rectangle.getWidth();
       double height = 2 * chart.getStyler().getChartTitlePadding() + rectangle.getHeight();
 

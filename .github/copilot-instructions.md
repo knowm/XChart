@@ -164,6 +164,20 @@ mvn test -pl xchart
 mvn install -DskipTests
 ```
 
+### Running demo classes
+
+`xchart-demo` depends on `xchart` via the local Maven repository (not the source tree).
+You **must** install `xchart` first, then run the demo:
+
+```bash
+mvn install -pl xchart -DskipTests && \
+mvn compile exec:java \
+  -pl xchart-demo \
+  -Dexec.mainClass="org.knowm.xchart.standalone.issues.TestForIssueXXX"
+```
+
+Using just `exec:java` without the install step will run with a stale jar and changes won't be visible.
+
 Tests use **JUnit Jupiter 5** + **AssertJ**.
 
 ### Test patterns
