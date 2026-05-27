@@ -51,10 +51,8 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
         if (chart.getStyler().getYAxisGroupTitleColor(yIndex) != null) {
           g.setColor(chart.getStyler().getYAxisGroupTitleColor(yIndex));
         }
-        FontRenderContext frc = g.getFontRenderContext();
-        TextLayout nonRotatedTextLayout =
-            new TextLayout(yAxisTitle, chart.getStyler().getAxisTitleFont(), frc);
-        Rectangle2D nonRotatedRectangle = nonRotatedTextLayout.getBounds();
+        Rectangle2D nonRotatedRectangle =
+            TexRenderer.getBounds(yAxisTitle, chart.getStyler().getAxisTitleFont());
 
         // ///////////////////////////////////////////////
 
@@ -77,15 +75,27 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
                     + yAxis.getBounds().getY());
 
         AffineTransform rot = AffineTransform.getRotateInstance(-1 * Math.PI / 2, 0, 0);
-        Shape shape = nonRotatedTextLayout.getOutline(rot);
 
-        AffineTransform orig = g.getTransform();
-        AffineTransform at = new AffineTransform();
+        Color titleColor =
+            chart.getStyler().getYAxisGroupTitleColor(yIndex) != null
+                ? chart.getStyler().getYAxisGroupTitleColor(yIndex)
+                : chart.getStyler().getChartFontColor();
 
-        at.translate(xOffset, yOffset);
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
+        if (TexRenderer.isTeX(yAxisTitle)) {
+          TexRenderer.renderRotated(
+              g, yAxisTitle, xOffset, yOffset, chart.getStyler().getAxisTitleFont(), titleColor);
+        } else {
+          FontRenderContext frc = g.getFontRenderContext();
+          TextLayout nonRotatedTextLayout =
+              new TextLayout(yAxisTitle, chart.getStyler().getAxisTitleFont(), frc);
+          Shape shape = nonRotatedTextLayout.getOutline(rot);
+          AffineTransform orig = g.getTransform();
+          AffineTransform at = new AffineTransform();
+          at.translate(xOffset, yOffset);
+          g.transform(at);
+          g.fill(shape);
+          g.setTransform(orig);
+        }
 
         // ///////////////////////////////////////////////
         // System.out.println(nonRotatedRectangle.getHeight());
@@ -113,14 +123,9 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
           && !chart.getXAxisTitle().trim().equalsIgnoreCase("")
           && chart.getStyler().isXAxisTitleVisible()) {
 
-        if (chart.getStyler().getXAxisTitleColor() != null) {
-          g.setColor(chart.getStyler().getXAxisTitleColor());
-        }
-        FontRenderContext frc = g.getFontRenderContext();
-        TextLayout textLayout =
-            new TextLayout(chart.getXAxisTitle(), chart.getStyler().getAxisTitleFont(), frc);
-        Rectangle2D rectangle = textLayout.getBounds();
-        // System.out.println(rectangle);
+        String xAxisTitle = chart.getXAxisTitle();
+        Rectangle2D rectangle =
+            TexRenderer.getBounds(xAxisTitle, chart.getStyler().getAxisTitleFont());
 
         double xOffset =
             chart.getXAxis().getBounds().getX()
@@ -130,14 +135,25 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
                 + chart.getXAxis().getBounds().getHeight()
                 - rectangle.getHeight();
 
-        // textLayout.draw(g, (float) xOffset, (float) (yOffset - rectangle.getY()));
-        Shape shape = textLayout.getOutline(null);
-        AffineTransform orig = g.getTransform();
-        AffineTransform at = new AffineTransform();
-        at.translate((float) xOffset, (float) (yOffset - rectangle.getY()));
-        g.transform(at);
-        g.fill(shape);
-        g.setTransform(orig);
+        Color xTitleColor =
+            chart.getStyler().getXAxisTitleColor() != null
+                ? chart.getStyler().getXAxisTitleColor()
+                : chart.getStyler().getChartFontColor();
+
+        if (TexRenderer.isTeX(xAxisTitle)) {
+          TexRenderer.render(g, xAxisTitle, xOffset, yOffset, chart.getStyler().getAxisTitleFont(), xTitleColor);
+        } else {
+          FontRenderContext frc = g.getFontRenderContext();
+          TextLayout textLayout =
+              new TextLayout(xAxisTitle, chart.getStyler().getAxisTitleFont(), frc);
+          Shape shape = textLayout.getOutline(null);
+          AffineTransform orig = g.getTransform();
+          AffineTransform at = new AffineTransform();
+          at.translate((float) xOffset, (float) (yOffset - rectangle.getY()));
+          g.transform(at);
+          g.fill(shape);
+          g.setTransform(orig);
+        }
 
         bounds =
             new Rectangle2D.Double(
