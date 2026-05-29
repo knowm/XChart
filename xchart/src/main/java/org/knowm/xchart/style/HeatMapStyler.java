@@ -48,6 +48,10 @@ public class HeatMapStyler extends AxesChartStyler {
    *
    * @param theme
    */
+  /**
+   * @deprecated Use the builder's {@code .theme(Theme)} method instead.
+   */
+  @Deprecated
   public void setTheme(Theme theme) {
 
     this.theme = theme;

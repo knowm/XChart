@@ -89,6 +89,10 @@ public class RadarStyler extends Styler {
    *
    * @param theme
    */
+  /**
+   * @deprecated Use the builder's {@code .theme(Theme)} method instead.
+   */
+  @Deprecated
   public RadarStyler setTheme(Theme theme) {
 
     this.theme = theme;

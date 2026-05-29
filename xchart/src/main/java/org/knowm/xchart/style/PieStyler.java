@@ -351,6 +351,10 @@ public class PieStyler extends Styler {
    *
    * @param theme
    */
+  /**
+   * @deprecated Use the builder's {@code .theme(Theme)} method instead.
+   */
+  @Deprecated
   public PieStyler setTheme(Theme theme) {
 
     this.theme = theme;

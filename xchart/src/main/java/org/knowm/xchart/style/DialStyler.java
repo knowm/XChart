@@ -82,6 +82,10 @@ public class DialStyler extends Styler {
    *
    * @param theme
    */
+  /**
+   * @deprecated Use the builder's {@code .theme(Theme)} method instead.
+   */
+  @Deprecated
   public DialStyler setTheme(Theme theme) {
 
     this.theme = theme;
