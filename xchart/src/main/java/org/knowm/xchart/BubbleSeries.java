@@ -30,7 +30,7 @@ public class BubbleSeries extends NoMarkersSeries {
 
   public void setBubbleSeriesRenderStyle(BubbleSeriesRenderStyle bubbleSeriesRenderStyle) {
 
-    this.bubbleSeriesRenderStyle = Optional.of(bubbleSeriesRenderStyle);
+    this.bubbleSeriesRenderStyle = Optional.ofNullable(bubbleSeriesRenderStyle);
   }
 
   @Override

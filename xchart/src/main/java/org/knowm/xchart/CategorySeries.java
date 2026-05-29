@@ -44,7 +44,7 @@ public class CategorySeries extends AxesChartSeriesCategory {
   public CategorySeries setChartCategorySeriesRenderStyle(
       CategorySeriesRenderStyle categorySeriesRenderStyle) {
 
-    this.chartCategorySeriesRenderStyle = Optional.of(categorySeriesRenderStyle);
+    this.chartCategorySeriesRenderStyle = Optional.ofNullable(categorySeriesRenderStyle);
     return this;
   }
 

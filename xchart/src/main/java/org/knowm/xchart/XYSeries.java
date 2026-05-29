@@ -33,7 +33,7 @@ public class XYSeries extends AxesChartSeriesNumerical {
 
   public XYSeries setXYSeriesRenderStyle(XYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
-    this.xySeriesRenderStyle = Optional.of(chartXYSeriesRenderStyle);
+    this.xySeriesRenderStyle = Optional.ofNullable(chartXYSeriesRenderStyle);
     return this;
   }
 
