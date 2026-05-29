@@ -93,17 +93,6 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     yMax = yMinMax[1];
   }
 
-  /**
-   * Finds the min and max of a dataset
-   *
-   * @param data
-   * @return
-   */
-  double[] findMinMax(Collection<?> data, DataType dataType) {
-
-    return SeriesMinMaxCalculator.findMinMax(data, dataType);
-  }
-
   public Collection<?> getXData() {
 
     return xData;
