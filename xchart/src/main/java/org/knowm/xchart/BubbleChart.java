@@ -217,9 +217,7 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
 
     // set the series types if they are not set. Legend and Plot need it.
     for (BubbleSeries bubbleSeries : seriesMap.values()) {
-      BubbleSeries.BubbleSeriesRenderStyle seriesType =
-          bubbleSeries.getBubbleSeriesRenderStyle(); // would be directly set
-      if (seriesType == null) { // wasn't overridden, use default from Style Manager
+      if (bubbleSeries.getBubbleSeriesRenderStyle().isEmpty()) { // wasn't overridden, use default from Style Manager
         bubbleSeries.setBubbleSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
       }
     }

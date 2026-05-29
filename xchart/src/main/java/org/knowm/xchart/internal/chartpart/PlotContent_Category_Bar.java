@@ -175,9 +175,9 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           case 0: // span chart
             if (y >= 0.0) { // positive
               yTop = y;
-              if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar
-                  || series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick
-                  || series.getChartCategorySeriesRenderStyle()
+              if (series.getChartCategorySeriesRenderStyle().orElseThrow() == CategorySeriesRenderStyle.Bar
+                  || series.getChartCategorySeriesRenderStyle().orElseThrow() == CategorySeriesRenderStyle.Stick
+                  || series.getChartCategorySeriesRenderStyle().orElseThrow()
                       == CategorySeriesRenderStyle.SteppedBar) {
                 yBottom = 0.0;
               } else {
@@ -189,9 +189,9 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
               }
             } else {
-              if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar
-                  || series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Stick
-                  || series.getChartCategorySeriesRenderStyle()
+              if (series.getChartCategorySeriesRenderStyle().orElseThrow() == CategorySeriesRenderStyle.Bar
+                  || series.getChartCategorySeriesRenderStyle().orElseThrow() == CategorySeriesRenderStyle.Stick
+                  || series.getChartCategorySeriesRenderStyle().orElseThrow()
                       == CategorySeriesRenderStyle.SteppedBar) {
                 yTop = 0.0;
               } else {
@@ -229,7 +229,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         {
           double barWidthPercentage = stylerCategory.getAvailableSpaceFill();
           // SteppedBars can not have any space between them
-          if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar)
+          if (series.getChartCategorySeriesRenderStyle().orElseThrow() == CategorySeriesRenderStyle.SteppedBar)
             barWidthPercentage = 1;
 
           if (stylerCategory.isOverlapped() || stylerCategory.isStacked()) {
@@ -251,7 +251,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         }
 
         // SteppedBar. Partially drawn in loop, partially after loop.
-        if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.SteppedBar) {
+        if (series.getChartCategorySeriesRenderStyle().orElseThrow() == CategorySeriesRenderStyle.SteppedBar) {
 
           double yCenter = zeroOffset;
           double yTip = yOffset;
@@ -305,7 +305,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           previousY = y;
         }
         // paint series
-        else if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Bar) {
+        else if (series.getChartCategorySeriesRenderStyle().orElseThrow() == CategorySeriesRenderStyle.Bar) {
 
           // paint bar
           Path2D.Double barPath = new Path2D.Double();
@@ -370,7 +370,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
                 series.getFillColor());
           }
         } else if (CategorySeriesRenderStyle.Stick.equals(
-            series.getChartCategorySeriesRenderStyle())) {
+            series.getChartCategorySeriesRenderStyle().orElseThrow())) {
 
           // paint stick
           if (series.getLineStyle() != SeriesLines.NONE) {
@@ -400,7 +400,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         } else {
 
           // paint line
-          if (series.getChartCategorySeriesRenderStyle() == CategorySeriesRenderStyle.Line) {
+          if (series.getChartCategorySeriesRenderStyle().orElseThrow() == CategorySeriesRenderStyle.Line) {
 
             if (series.getLineStyle() != SeriesLines.NONE) {
 
@@ -429,7 +429,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
           }
 
           // paint area
-          if (CategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle())) {
+          if (CategorySeriesRenderStyle.Area.equals(series.getChartCategorySeriesRenderStyle().orElseThrow())) {
 
             if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
