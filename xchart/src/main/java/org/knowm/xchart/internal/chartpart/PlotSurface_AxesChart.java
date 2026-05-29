@@ -137,6 +137,7 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
             g.setColor(stylerAxesChart.getPlotGridLinesColor());
             g.setStroke(stylerAxesChart.getPlotGridLinesStroke());
             // g.setStroke(axesChartStyler.getPlotGridLinesStroke());
+            // System.out.println();
             Shape line =
                 stylerAxesChart
                     .getPlotGridLinesStroke()

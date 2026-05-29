@@ -32,10 +32,14 @@ public abstract class NoMarkersSeries extends AxesChartSeriesNumerical {
     double[] xMinMax = findMinMax(xData);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
+    // System.out.println(xMin);
+    // System.out.println(xMax);
 
     // yData
     double[] yMinMax = findMinMax(yData);
     yMin = yMinMax[0];
     yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
   }
 }

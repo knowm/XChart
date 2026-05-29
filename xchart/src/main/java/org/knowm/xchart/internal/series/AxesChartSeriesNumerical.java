@@ -99,6 +99,8 @@ public abstract class AxesChartSeriesNumerical extends MarkerSeries {
       }
     }
 
+    // System.out.println("Filtering between " + String.format("%.2f %.2f", minValue, maxValue) + "
+    // all: " + length + " rem: " + remainingDataCount);
     if (remainingDataCount == length) {
       return false;
     }
@@ -171,6 +173,8 @@ public abstract class AxesChartSeriesNumerical extends MarkerSeries {
     double[] xMinMax = findMinMax(xData);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
+    // System.out.println(xMin);
+    // System.out.println(xMax);
 
     // yData
     double[] yMinMax;
@@ -181,6 +185,8 @@ public abstract class AxesChartSeriesNumerical extends MarkerSeries {
     }
     yMin = yMinMax[0];
     yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
   }
 
   /**

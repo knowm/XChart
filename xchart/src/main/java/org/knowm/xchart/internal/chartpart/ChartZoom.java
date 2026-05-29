@@ -103,6 +103,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   }
 
   public void mouseReleased(MouseEvent e) {
+    //    System.out.println("Mouse released");
     if (!isOverlapping()) {
       x1 = -1;
       x2 = -1;

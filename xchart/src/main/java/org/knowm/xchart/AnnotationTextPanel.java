@@ -130,6 +130,7 @@ public class AnnotationTextPanel extends Annotation {
 
       multiLineOffset += lineHeight + MULTI_LINE_SPACE;
     }
+    //    System.out.println("bounds = " + bounds);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 

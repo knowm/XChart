@@ -70,6 +70,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       for (int i = 0; i < yAxis.getAxisTickCalculator().getTickLabels().size(); i++) {
 
         String tickLabel = yAxis.getAxisTickCalculator().getTickLabels().get(i);
+        //         System.out.println("** " + tickLabel);
         double tickLocation = yAxis.getAxisTickCalculator().getTickLocations().get(i);
         double flippedTickLocation = yOffset + height - tickLocation;
 
@@ -181,6 +182,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
       for (int i = 0; i < chart.getXAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
         String tickLabel = chart.getXAxis().getAxisTickCalculator().getTickLabels().get(i);
+        // System.out.println("tickLabel: " + tickLabel);
         double tickLocation = chart.getXAxis().getAxisTickCalculator().getTickLocations().get(i);
         double shiftedTickLocation = xOffset + tickLocation;
 
@@ -207,9 +209,12 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           }
         }
       }
+
+      // System.out.println("axisTick.getTickLabels().size(): " + axisTick.getTickLabels().size());
       for (int i = 0; i < chart.getXAxis().getAxisTickCalculator().getTickLabels().size(); i++) {
 
         String tickLabel = chart.getXAxis().getAxisTickCalculator().getTickLabels().get(i);
+        // System.out.println("tickLabel: " + tickLabel);
         double tickLocation = chart.getXAxis().getAxisTickCalculator().getTickLocations().get(i);
         double shiftedTickLocation = xOffset + tickLocation;
 
@@ -246,6 +251,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
             FontRenderContext frc = g.getFontRenderContext();
             TextLayout textLayout =
                 new TextLayout(tickLabel, styler.getAxisTickLabelsFont(), frc);
+            // System.out.println(textLayout.getOutline(null).getBounds().toString());
 
             // Shape shape = v.getOutline();
             AffineTransform rot =
@@ -282,12 +288,15 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
               default:
                 xPos = shiftedTickLocation - tickLabelBounds.getWidth() / 2.0;
             }
+            //          System.out.println("tickLabelBounds: " + tickLabelBounds.toString());
             double shiftX =
                 -1
                     * tickLabelBounds.getX()
                     * Math.sin(Math.toRadians(styler.getXAxisLabelRotation()));
             double shiftY =
                 -1 * (tickLabelBounds.getY() + tickLabelBounds.getHeight() + yAlignmentOffset);
+            // System.out.println(shiftX);
+            // System.out.println("shiftY: " + shiftY);
             at.translate(xPos + shiftX, yOffset + shiftY);
 
             if (xPos > 0 && xPos + tickLabelBounds.getWidth() < chart.getWidth()) {
@@ -306,6 +315,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
               //            g.setColor(chart.getStyler().getAxisTickLabelsColor());
             }
             //          else { // discarding based on the outside edges of the tick labels
+            //            System.out.println("discarding: " + tickLabel);
             //          }
             if (tickLabelBounds.getHeight() > maxTickLabelHeight) {
               maxTickLabelHeight = tickLabelBounds.getHeight();
@@ -313,6 +323,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
           }
         }
         //        else {// discarding based on the center of the tick labels
+        //          System.out.println("discarding: " + tickLabel);
         //        }
       }
 

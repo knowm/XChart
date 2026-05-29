@@ -83,6 +83,8 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     double[] xMinMax = findMinMax(xData, xAxisDataType);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
+    // System.out.println(xMin);
+    // System.out.println(xMax);
 
     // yData
     double[] yMinMax;
@@ -93,6 +95,8 @@ public abstract class AxesChartSeriesCategory extends MarkerSeries {
     }
     yMin = yMinMax[0];
     yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
   }
 
   /**

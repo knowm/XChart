@@ -40,12 +40,16 @@ public class HorizontalBarSeries extends AxesChartSeries {
     double[] xMinMax = findMinMax(xData, getxAxisDataType());
     xMin = xMinMax[0];
     xMax = xMinMax[1];
+    // System.out.println(xMin);
+    // System.out.println(xMax);
 
     // yData
     double[] yMinMax;
     yMinMax = findMinMax(yData, getyAxisDataType());
     yMin = yMinMax[0];
     yMax = yMinMax[1];
+    // System.out.println(yMin);
+    // System.out.println(yMax);
   }
 
   double[] findMinMax(Collection<?> data, DataType dataType) {
