@@ -33,11 +33,11 @@ import javax.swing.filechooser.FileFilter;
 
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
 import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
+import org.knowm.xchart.internal.chartpart.AxesChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ChartZoom;
 import org.knowm.xchart.internal.chartpart.Cursor;
 import org.knowm.xchart.internal.chartpart.ToolTips;
-import org.knowm.xchart.style.AxesChartStyler;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -227,7 +227,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
       anyEnabled = true;
       @SuppressWarnings("unchecked")
       ChartZoom zoom =
-          new ChartZoom((Chart<? extends AxesChartStyler, ?>) chart, this, resetString);
+          new ChartZoom((AxesChart<?, ?>) chart, this, resetString);
       this.chartZoom = zoom;
       this.addMouseListener(zoom);
       this.addMouseMotionListener(zoom);
