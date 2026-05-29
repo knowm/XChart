@@ -35,8 +35,8 @@ public class ThemeChart04 implements ExampleChart<XYChart> {
             .title("My Custom Theme")
             .xAxisTitle("X")
             .yAxisTitle("Y")
+            .theme(new MyCustomTheme())
             .build();
-    chart.getStyler().setTheme(new MyCustomTheme());
 
     // Customize Chart
     chart.getStyler().setMarkerSize(11);

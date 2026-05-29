@@ -62,7 +62,12 @@ public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
    */
   public BubbleChart(BubbleChartBuilder chartBuilder) {
 
-    this(chartBuilder.width, chartBuilder.height, chartBuilder.chartTheme);
+    this(
+        chartBuilder.width,
+        chartBuilder.height,
+        chartBuilder.customTheme != null
+            ? chartBuilder.customTheme
+            : chartBuilder.chartTheme.newInstance(chartBuilder.chartTheme));
     setTitle(chartBuilder.title);
     setXAxisTitle(chartBuilder.xAxisTitle);
     setYAxisTitle(chartBuilder.yAxisTitle);
