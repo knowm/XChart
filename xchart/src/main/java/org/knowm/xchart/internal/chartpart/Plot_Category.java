@@ -14,6 +14,6 @@ public class Plot_Category<ST extends CategoryStyler, S extends CategorySeries>
   public Plot_Category(AxesChart<ST, S> chart) {
 
     super(chart);
-    this.plotContent = new PlotContent_Category_Bar<ST, S>(chart);
+    this.plotContent = new PlotContent_Category<ST, S>(chart);
   }
 }
