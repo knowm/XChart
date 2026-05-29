@@ -28,9 +28,10 @@ public class BubbleSeries extends NoMarkersSeries {
     return bubbleSeriesRenderStyle;
   }
 
-  public void setBubbleSeriesRenderStyle(BubbleSeriesRenderStyle bubbleSeriesRenderStyle) {
+  public BubbleSeries setBubbleSeriesRenderStyle(BubbleSeriesRenderStyle bubbleSeriesRenderStyle) {
 
     this.bubbleSeriesRenderStyle = Optional.ofNullable(bubbleSeriesRenderStyle);
+    return this;
   }
 
   @Override
