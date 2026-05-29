@@ -6,14 +6,14 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.internal.chartpart.Axis_.Direction;
-import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.Styler.YAxisPosition;
 
 /** AxisTitle */
-public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements ChartPart {
+public class AxisTitle<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
-  private final Chart<ST, S> chart;
+  private final AxesChart<ST, S> chart;
   private final Direction direction;
   private final Axis_<?, ?> yAxis;
   private final int yIndex;
@@ -25,7 +25,7 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
    * @param chart the Chart
    * @param direction the Direction
    */
-  AxisTitle(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis, int yIndex) {
+  AxisTitle(AxesChart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis, int yIndex) {
 
     this.chart = chart;
     this.direction = direction;

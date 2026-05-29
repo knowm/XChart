@@ -17,7 +17,7 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
-  private final Chart<ST, S> chart;
+  private final AxesChart<ST, S> chart;
 
   private final Axis_X<ST, S> xAxis;
   private final Axis_Y<ST, S> yAxis;
@@ -42,7 +42,7 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    *
    * @param chart
    */
-  public AxisPair(Chart<ST, S> chart) {
+  public AxisPair(AxesChart<ST, S> chart) {
 
     this.chart = chart;
 

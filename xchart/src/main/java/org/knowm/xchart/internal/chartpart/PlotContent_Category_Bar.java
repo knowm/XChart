@@ -24,15 +24,17 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     extends PlotContent_<ST, S> {
 
   private final ST stylerCategory;
+  private final AxesChart<ST, S> axesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotContent_Category_Bar(Chart<ST, S> chart) {
+  PlotContent_Category_Bar(AxesChart<ST, S> chart) {
 
     super(chart);
+    this.axesChart = chart;
     this.stylerCategory = chart.getStyler();
   }
 
@@ -50,8 +52,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
     // System.out.println("gridStep: " + gridStep);
 
     // Y-Axis
-    double yMin = chart.getYAxis().getMin();
-    double yMax = chart.getYAxis().getMax();
+    double yMin = axesChart.getYAxis().getMin();
+    double yMax = axesChart.getYAxis().getMax();
 
     // figure out the general form of the chart
     final int chartForm; // 1=positive, -1=negative, 0=span
@@ -82,8 +84,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
         continue;
       }
 
-      yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
-      yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
+      yMin = axesChart.getYAxis(series.getYAxisGroup()).getMin();
+      yMax = axesChart.getYAxis(series.getYAxisGroup()).getMax();
       if (stylerCategory.isYAxisLogarithmic()) {
         yMin = Math.log10(yMin);
         yMax = Math.log10(yMax);
@@ -532,8 +534,8 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
               xOffset,
               yPoint,
               barWidth,
-              chart.getXAxisFormat().format(nextCat),
-              chart.getYAxisFormat().format(yOrig));
+              axesChart.getXAxisFormat().format(nextCat),
+              axesChart.getYAxisFormat().format(yOrig));
         }
       }
 
@@ -625,7 +627,7 @@ public class PlotContent_Category_Bar<ST extends CategoryStyler, S extends Categ
       boolean isTotalAnnotations,
       Color seriesColor) {
 
-    String numberAsString = chart.getYAxisFormat().format(next);
+    String numberAsString = axesChart.getYAxisFormat().format(next);
 
     TextLayout textLayout =
         new TextLayout(

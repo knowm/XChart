@@ -10,7 +10,7 @@ import java.util.Map;
 import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.AxesChart;
 import org.knowm.xchart.internal.chartpart.Legend_OHLC;
 import org.knowm.xchart.internal.chartpart.Plot_OHLC;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -20,7 +20,7 @@ import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-public class OHLCChart extends Chart<OHLCStyler, OHLCSeries> {
+public class OHLCChart extends AxesChart<OHLCStyler, OHLCSeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)

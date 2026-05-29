@@ -35,7 +35,7 @@ import org.knowm.xchart.style.XYStyler;
 /** X-Axis. */
 public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> extends Axis_<ST, S> {
 
-  Axis_X(Chart<ST, S> chart) {
+  Axis_X(AxesChart<ST, S> chart) {
 
     super(chart, 0);
     axisTitle = new AxisTitle<>(chart, Axis_.Direction.X, null, 0);

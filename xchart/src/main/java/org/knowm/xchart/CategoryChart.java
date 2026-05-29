@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.AxesChart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Category;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -18,7 +18,7 @@ import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-public class CategoryChart extends Chart<CategoryStyler, CategorySeries> {
+public class CategoryChart extends AxesChart<CategoryStyler, CategorySeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)

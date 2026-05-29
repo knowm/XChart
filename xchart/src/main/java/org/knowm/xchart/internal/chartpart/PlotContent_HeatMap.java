@@ -17,6 +17,7 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
     extends PlotContent_<ST, S> {
 
   private final ST heatMapStyler;
+  private final AxesChart<ST, S> axesChart;
   private final DecimalFormat df = new DecimalFormat("");
 
   /**
@@ -24,9 +25,10 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
    *
    * @param chart
    */
-  PlotContent_HeatMap(Chart<ST, S> chart) {
+  PlotContent_HeatMap(AxesChart<ST, S> chart) {
 
     super(chart);
+    this.axesChart = chart;
     heatMapStyler = chart.getStyler();
   }
 
@@ -103,9 +105,9 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
             0,
             series.getName()
                 + ": "
-                + chart.getXAxisFormat().format(xData.get(x))
+                + axesChart.getXAxisFormat().format(xData.get(x))
                 + ", "
-                + chart.getYAxisFormat().format(yData.get(y))
+                + axesChart.getYAxisFormat().format(yData.get(y))
                 + ", "
                 + df.format(numbers[2]));
       }

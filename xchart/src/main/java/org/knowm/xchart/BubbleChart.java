@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.AxesChart;
 import org.knowm.xchart.internal.chartpart.Legend_Bubble;
 import org.knowm.xchart.internal.chartpart.Plot_Bubble;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
@@ -14,7 +14,7 @@ import org.knowm.xchart.style.BubbleStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-public class BubbleChart extends Chart<BubbleStyler, BubbleSeries> {
+public class BubbleChart extends AxesChart<BubbleStyler, BubbleSeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)

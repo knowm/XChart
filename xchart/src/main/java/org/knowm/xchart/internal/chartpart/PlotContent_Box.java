@@ -18,6 +18,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
     extends PlotContent_<ST, S> {
 
   private final ST boxPlotStyler;
+  private final AxesChart<ST, S> axesChart;
   private double yMax;
   private double yMin;
   private double xLeftMargin;
@@ -26,9 +27,10 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
   private double xOffset;
   private double yOffset;
 
-  PlotContent_Box(Chart<ST, S> chart) {
+  PlotContent_Box(AxesChart<ST, S> chart) {
 
     super(chart);
+    this.axesChart = chart;
     boxPlotStyler = chart.getStyler();
   }
 
@@ -63,8 +65,8 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
         continue;
       }
 
-      yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
-      yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
+      yMin = axesChart.getYAxis(series.getYAxisGroup()).getMin();
+      yMax = axesChart.getYAxis(series.getYAxisGroup()).getMax();
 
       if (boxPlotStyler.isYAxisLogarithmic()) {
         yMin = Math.log10(yMin);
@@ -122,7 +124,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
                 series.getName()
                     + ":"
                     + System.lineSeparator()
-                    + chart.getYAxisFormat().format(yOrig));
+                    + axesChart.getYAxisFormat().format(yOrig));
           }
         } else if (chart.getStyler().getShowWithinAreaPoint()) {
 
@@ -137,7 +139,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
                 series.getName()
                     + ":"
                     + System.lineSeparator()
-                    + chart.getYAxisFormat().format(yOrig));
+                    + axesChart.getYAxisFormat().format(yOrig));
           }
         }
       }
@@ -255,19 +257,19 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
               + ":"
               + System.lineSeparator()
               + "upper: "
-              + chart.getYAxisFormat().format(boxPlotData.upper)
+              + axesChart.getYAxisFormat().format(boxPlotData.upper)
               + System.lineSeparator()
               + "q3: "
-              + chart.getYAxisFormat().format(boxPlotData.q3)
+              + axesChart.getYAxisFormat().format(boxPlotData.q3)
               + System.lineSeparator()
               + "median: "
-              + chart.getYAxisFormat().format(boxPlotData.median)
+              + axesChart.getYAxisFormat().format(boxPlotData.median)
               + System.lineSeparator()
               + "q1: "
-              + chart.getYAxisFormat().format(boxPlotData.q1)
+              + axesChart.getYAxisFormat().format(boxPlotData.q1)
               + System.lineSeparator()
               + "lower: "
-              + chart.getYAxisFormat().format(boxPlotData.lower));
+              + axesChart.getYAxisFormat().format(boxPlotData.lower));
     }
   }
 }

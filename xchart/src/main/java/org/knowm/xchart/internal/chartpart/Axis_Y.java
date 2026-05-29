@@ -54,7 +54,7 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
    */
   private final List<Axis_Y<?, ?>> colocatedSlaves = new ArrayList<>();
 
-  Axis_Y(Chart<ST, S> chart, int index) {
+  Axis_Y(AxesChart<ST, S> chart, int index) {
 
     super(chart, index);
     axisTitle = new AxisTitle<>(chart, Axis_.Direction.Y, this, index);

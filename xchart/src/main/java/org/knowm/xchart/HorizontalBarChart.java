@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.AxesChart;
 import org.knowm.xchart.internal.chartpart.Legend_HorizontalBar;
 import org.knowm.xchart.internal.chartpart.Plot_HorizontalBar;
 import org.knowm.xchart.internal.style.SeriesColorMarkerLineStyle;
@@ -15,7 +15,7 @@ import org.knowm.xchart.style.HorizontalBarStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-public class HorizontalBarChart extends Chart<HorizontalBarStyler, HorizontalBarSeries> {
+public class HorizontalBarChart extends AxesChart<HorizontalBarStyler, HorizontalBarSeries> {
 
   /**
    * Constructor - the default Chart Theme will be used (XChartTheme)

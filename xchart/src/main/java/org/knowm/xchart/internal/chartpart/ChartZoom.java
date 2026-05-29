@@ -11,12 +11,11 @@ import java.awt.geom.Rectangle2D;
 import org.knowm.xchart.OHLCSeries;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.internal.series.AxesChartSeriesNumerical;
-import org.knowm.xchart.style.AxesChartStyler;
 
 public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener {
 
   protected final XChartPanel<?> xChartPanel;
-  protected final Chart<? extends AxesChartStyler, ?> chart;
+  protected final AxesChart<?, ?> chart;
   protected Rectangle bounds;
 
   protected final ChartButton resetButton;
@@ -32,7 +31,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
    * @param resetString
    */
   public ChartZoom(
-      Chart<? extends AxesChartStyler, ?> chart,
+      AxesChart<?, ?> chart,
       XChartPanel<?> xChartPanel,
       String resetString) {
 
