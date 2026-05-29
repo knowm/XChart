@@ -12,7 +12,7 @@ import org.knowm.xchart.style.Styler.YAxisPosition;
 public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries>
     implements ChartPart {
 
-  private final Chart<ST, S> chart;
+  private final AxesChart<ST, S> chart;
   private final Direction direction;
   private final Axis_<?, ?> yAxis;
   private Rectangle2D bounds;
@@ -23,7 +23,7 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
    * @param chart
    * @param direction
    */
-  AxisTickMarks(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
+  AxisTickMarks(AxesChart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
 
     this.chart = chart;
     this.direction = direction;

@@ -9,7 +9,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 /** An axis tick */
 public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
-  private final Chart<ST, S> chart;
+  private final AxesChart<ST, S> chart;
   private final Direction direction;
 
   /** the axisticklabels */
@@ -27,7 +27,7 @@ public class AxisTick<ST extends AxesChartStyler, S extends AxesChartSeries> imp
    * @param direction
    * @param yAxis
    */
-  AxisTick(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
+  AxisTick(AxesChart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
 
     this.chart = chart;
     this.direction = direction;

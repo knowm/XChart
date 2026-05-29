@@ -15,15 +15,17 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
     extends PlotContent_<ST, S> {
 
   private final ST ohlcStyler;
+  private final AxesChart<ST, S> axesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotContent_OHLC(Chart<ST, S> chart) {
+  PlotContent_OHLC(AxesChart<ST, S> chart) {
 
     super(chart);
+    this.axesChart = chart;
     ohlcStyler = chart.getStyler();
   }
 
@@ -38,8 +40,8 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
     double yTickSpace = ohlcStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
-    double xMin = chart.getXAxis().getMin();
-    double xMax = chart.getXAxis().getMax();
+    double xMin = axesChart.getXAxis().getMin();
+    double xMax = axesChart.getXAxis().getMax();
 
     // get ymax and ymin later because it depends on what yaxisgroup it belongs to.
     double yMin;
@@ -62,8 +64,8 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
         continue;
       }
 
-      yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
-      yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
+      yMin = axesChart.getYAxis(series.getYAxisGroup()).getMin();
+      yMax = axesChart.getYAxis(series.getYAxisGroup()).getMax();
       if (ohlcStyler.isYAxisLogarithmic()) {
         yMin = Math.log10(yMin);
         yMax = Math.log10(yMax);
@@ -143,8 +145,8 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
             interactionData.addToolTip(
                 xOffset,
                 yOffset,
-                chart.getXAxisFormat().format(x),
-                chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
+                axesChart.getXAxisFormat().format(x),
+                axesChart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
           }
         }
       } else {
@@ -304,24 +306,24 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
             StringBuilder sb = new StringBuilder();
             if (series.getVolumeData() != null) {
-              sb.append(chart.getXAxisFormat().format(x));
+              sb.append(axesChart.getXAxisFormat().format(x));
               sb.append(System.lineSeparator()).append("Volume: " + series.getVolumeData()[i]);
               sb.append(System.lineSeparator()).append(" ").append(System.lineSeparator());
             }
-            sb.append(chart.getXAxisFormat().format(x));
+            sb.append(axesChart.getXAxisFormat().format(x));
             sb.append(System.lineSeparator()).append(series.getName()).append(":");
             sb.append(System.lineSeparator())
                 .append("open: ")
-                .append(chart.getYAxisFormat().format(openOrig));
+                .append(axesChart.getYAxisFormat().format(openOrig));
             sb.append(System.lineSeparator())
                 .append("close: ")
-                .append(chart.getYAxisFormat().format(closeOrig));
+                .append(axesChart.getYAxisFormat().format(closeOrig));
             sb.append(System.lineSeparator())
                 .append("low: ")
-                .append(chart.getYAxisFormat().format(lowOrig));
+                .append(axesChart.getYAxisFormat().format(lowOrig));
             sb.append(System.lineSeparator())
                 .append("high: ")
-                .append(chart.getYAxisFormat().format(highOrig));
+                .append(axesChart.getYAxisFormat().format(highOrig));
             interactionData.addToolTip(toolTipArea, xOffset, highOffset, 0, sb.toString());
           }
         }

@@ -8,7 +8,7 @@ public abstract class Annotation implements ChartPart {
   protected boolean isVisible = true;
   protected boolean isValueInScreenSpace;
 
-  protected Chart<?, ?> chart;
+  protected AxesChart<?, ?> chart;
   protected Styler styler;
   protected Rectangle2D bounds;
 
@@ -16,7 +16,7 @@ public abstract class Annotation implements ChartPart {
     this.isValueInScreenSpace = isValueInScreenSpace;
   }
 
-  public void init(Chart<?, ?> chart) {
+  public void init(AxesChart<?, ?> chart) {
 
     this.chart = chart;
     this.styler = chart.getStyler();

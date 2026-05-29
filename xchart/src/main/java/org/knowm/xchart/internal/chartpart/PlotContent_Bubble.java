@@ -11,15 +11,17 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
     extends PlotContent_<ST, S> {
 
   private final ST stylerBubble;
+  private final AxesChart<ST, S> axesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotContent_Bubble(Chart<ST, S> chart) {
+  PlotContent_Bubble(AxesChart<ST, S> chart) {
 
     super(chart);
+    this.axesChart = chart;
     stylerBubble = chart.getStyler();
   }
 
@@ -34,8 +36,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
     double yTickSpace = stylerBubble.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
-    double xMin = chart.getXAxis().getMin();
-    double xMax = chart.getXAxis().getMax();
+    double xMin = axesChart.getXAxis().getMin();
+    double xMax = axesChart.getXAxis().getMax();
 
     // logarithmic
     if (stylerBubble.isXAxisLogarithmic()) {
@@ -50,8 +52,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
         continue;
       }
 
-      double yMin = chart.getYAxis(series.getYAxisGroup()).getMin();
-      double yMax = chart.getYAxis(series.getYAxisGroup()).getMax();
+      double yMin = axesChart.getYAxis(series.getYAxisGroup()).getMin();
+      double yMax = axesChart.getYAxis(series.getYAxisGroup()).getMax();
       if (stylerBubble.isYAxisLogarithmic()) {
         yMin = Math.log10(yMin);
         yMax = Math.log10(yMax);
@@ -137,8 +139,8 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
                 xOffset,
                 yOffset,
                 0,
-                chart.getXAxisFormat().format(x),
-                chart.getYAxisFormat().format(yOrig));
+                axesChart.getXAxisFormat().format(x),
+                axesChart.getYAxisFormat().format(yOrig));
           }
         }
       }

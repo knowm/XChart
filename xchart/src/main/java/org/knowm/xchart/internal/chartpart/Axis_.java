@@ -13,7 +13,7 @@ import org.knowm.xchart.style.AxesChartStyler;
 public abstract class Axis_<ST extends AxesChartStyler, S extends AxesChartSeries>
     implements ChartPart {
 
-  final Chart<ST, S> chart;
+  final AxesChart<ST, S> chart;
   final Rectangle2D.Double bounds;
   final ST axesChartStyler;
 
@@ -35,7 +35,7 @@ public abstract class Axis_<ST extends AxesChartStyler, S extends AxesChartSerie
   double min;
   double max;
 
-  Axis_(Chart<ST, S> chart, int index) {
+  Axis_(AxesChart<ST, S> chart, int index) {
 
     this.chart = chart;
     this.axesChartStyler = chart.getStyler();

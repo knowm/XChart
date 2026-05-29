@@ -10,7 +10,7 @@ public class Plot_XY<ST extends XYStyler, S extends XYSeries> extends Plot_AxesC
    *
    * @param chart
    */
-  public Plot_XY(Chart<ST, S> chart) {
+  public Plot_XY(AxesChart<ST, S> chart) {
 
     super(chart);
     this.plotContent = new PlotContent_XY<ST, S>(chart);

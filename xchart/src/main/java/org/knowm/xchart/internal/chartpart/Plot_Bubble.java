@@ -11,7 +11,7 @@ public class Plot_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
    *
    * @param chart
    */
-  public Plot_Bubble(Chart<ST, S> chart) {
+  public Plot_Bubble(AxesChart<ST, S> chart) {
 
     super(chart);
     this.plotContent = new PlotContent_Bubble<ST, S>(chart);

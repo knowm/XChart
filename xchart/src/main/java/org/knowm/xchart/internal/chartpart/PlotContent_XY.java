@@ -14,15 +14,17 @@ import org.knowm.xchart.style.lines.SeriesLines;
 public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends PlotContent_<ST, S> {
 
   private final ST xyStyler;
+  private final AxesChart<ST, S> axesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotContent_XY(Chart<ST, S> chart) {
+  PlotContent_XY(AxesChart<ST, S> chart) {
 
     super(chart);
+    this.axesChart = chart;
     xyStyler = chart.getStyler();
   }
 
@@ -37,8 +39,8 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
     double yTickSpace = xyStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
-    double xMin = chart.getXAxis().getMin();
-    double xMax = chart.getXAxis().getMax();
+    double xMin = axesChart.getXAxis().getMin();
+    double xMax = axesChart.getXAxis().getMax();
 
     Line2D.Double line = new Line2D.Double();
 
@@ -55,7 +57,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
       if (!series.isEnabled()) {
         continue;
       }
-      Axis_Y<?, ?> yAxis = chart.getYAxis(series.getYAxisGroup());
+      Axis_Y<?, ?> yAxis = axesChart.getYAxis(series.getYAxisGroup());
       double yMin = yAxis.getMin();
       double yMax = yAxis.getMax();
       if (xyStyler.isYAxisLogarithmic()) {
@@ -302,20 +304,20 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
           interactionData.addToolTip(
               xOffset,
               yOffset,
-              chart.getXAxisFormat().format(x),
-              chart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
+              axesChart.getXAxisFormat().format(x),
+              axesChart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
         }
 
         if (interactionData != null) {
           Format xFormat;
           Format yFormat;
           if (xyStyler.getCustomCursorXDataFormattingFunction() == null) {
-            xFormat = chart.getXAxisFormat();
+            xFormat = axesChart.getXAxisFormat();
           } else {
             xFormat = new Formatter_Custom(xyStyler.getCustomCursorXDataFormattingFunction());
           }
           if (xyStyler.getCustomCursorYDataFormattingFunction() == null) {
-            yFormat = chart.getYAxisFormat(series.getYAxisDecimalPattern());
+            yFormat = axesChart.getYAxisFormat(series.getYAxisDecimalPattern());
           } else {
             yFormat = new Formatter_Custom(xyStyler.getCustomCursorYDataFormattingFunction());
           }

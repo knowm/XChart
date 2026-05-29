@@ -14,15 +14,17 @@ public class PlotContent_HorizontalBar<
     extends PlotContent_<ST, S> {
 
   private final ST styler;
+  private final AxesChart<ST, S> axesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotContent_HorizontalBar(Chart<ST, S> chart) {
+  PlotContent_HorizontalBar(AxesChart<ST, S> chart) {
 
     super(chart);
+    this.axesChart = chart;
     this.styler = chart.getStyler();
   }
 
@@ -40,8 +42,8 @@ public class PlotContent_HorizontalBar<
     // System.out.println("gridStep: " + gridStep);
 
     // Y-Axis
-    double xMin = chart.getXAxis().getMin();
-    double xMax = chart.getXAxis().getMax();
+    double xMin = axesChart.getXAxis().getMin();
+    double xMax = axesChart.getXAxis().getMax();
 
     // figure out the general form of the chart
     final int chartForm; // 1=positive, -1=negative, 0=span
@@ -69,8 +71,8 @@ public class PlotContent_HorizontalBar<
         continue;
       }
 
-      xMin = chart.getXAxis().getMin();
-      xMax = chart.getXAxis().getMax();
+      xMin = axesChart.getXAxis().getMin();
+      xMax = axesChart.getXAxis().getMax();
       if (styler.isXAxisLogarithmic()) {
         xMin = Math.log10(xMin);
         xMax = Math.log10(xMax);
@@ -187,8 +189,8 @@ public class PlotContent_HorizontalBar<
               xPoint,
               yOffset,
               barHeight,
-              chart.getXAxisFormat().format(xOrig),
-              chart.getYAxisFormat().format(nextCat));
+              axesChart.getXAxisFormat().format(xOrig),
+              axesChart.getYAxisFormat().format(nextCat));
         }
       }
 
@@ -205,7 +207,7 @@ public class PlotContent_HorizontalBar<
       double barHeight,
       Color seriesColor) {
 
-    String numberAsString = chart.getXAxisFormat().format(next);
+    String numberAsString = axesChart.getXAxisFormat().format(next);
 
     TextLayout textLayout =
         new TextLayout(

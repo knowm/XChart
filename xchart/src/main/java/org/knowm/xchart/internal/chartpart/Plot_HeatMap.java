@@ -11,7 +11,7 @@ public class Plot_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
    *
    * @param chart
    */
-  public Plot_HeatMap(Chart<ST, S> chart) {
+  public Plot_HeatMap(AxesChart<ST, S> chart) {
 
     super(chart);
     this.plotContent = new PlotContent_HeatMap<ST, S>(chart);

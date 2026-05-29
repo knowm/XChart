@@ -11,7 +11,7 @@ public class Plot_HorizontalBar<ST extends HorizontalBarStyler, S extends Horizo
    *
    * @param chart
    */
-  public Plot_HorizontalBar(Chart<ST, S> chart) {
+  public Plot_HorizontalBar(AxesChart<ST, S> chart) {
 
     super(chart);
     this.plotContent = new PlotContent_HorizontalBar<ST, S>(chart);

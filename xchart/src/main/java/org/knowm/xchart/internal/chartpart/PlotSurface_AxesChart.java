@@ -6,23 +6,25 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-import org.knowm.xchart.internal.series.Series;
+import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.style.AxesChartStyler;
 
 /** Draws the plot background, the plot border and the horizontal and vertical grid lines */
-public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
+public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends AxesChartSeries>
     extends PlotSurface_<ST, S> {
 
   private final ST stylerAxesChart;
+  private final AxesChart<ST, S> axesChart;
 
   /**
    * Constructor
    *
    * @param chart
    */
-  PlotSurface_AxesChart(Chart<ST, S> chart) {
+  PlotSurface_AxesChart(AxesChart<ST, S> chart) {
 
     super(chart);
+    this.axesChart = chart;
     this.stylerAxesChart = chart.getStyler();
   }
 
@@ -43,7 +45,7 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
     if (stylerAxesChart.isPlotGridHorizontalLinesVisible()) {
 
       List<Double> yAxisTickLocations =
-          chart.getAxisPair().getLeftGridlineMasterAxis().getAxisTickCalculator().getTickLocations();
+          axesChart.getAxisPair().getLeftGridlineMasterAxis().getAxisTickCalculator().getTickLocations();
       for (Double yAxisTickLocation : yAxisTickLocations) {
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
 
@@ -73,7 +75,7 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
 
       // draw left side
       List<Double> yAxisTickLocations =
-          chart.getAxisPair().getLeftGridlineMasterAxis().getAxisTickCalculator().getTickLocations();
+          axesChart.getAxisPair().getLeftGridlineMasterAxis().getAxisTickCalculator().getTickLocations();
       for (Double yAxisTickLocation : yAxisTickLocations) {
         double yOffset = bounds.getY() + bounds.getHeight() - yAxisTickLocation;
 
@@ -94,7 +96,7 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
 
       // draw right side
       yAxisTickLocations =
-          chart
+          axesChart
               .getAxisPair()
               .getRightGridlineMasterAxis()
               .getAxisTickCalculator()
@@ -123,7 +125,7 @@ public class PlotSurface_AxesChart<ST extends AxesChartStyler, S extends Series>
     if (stylerAxesChart.isPlotGridVerticalLinesVisible()
         || stylerAxesChart.isPlotTicksMarksVisible()) {
 
-      List<Double> xAxisTickLocations = chart.getXAxis().getAxisTickCalculator().getTickLocations();
+      List<Double> xAxisTickLocations = axesChart.getXAxis().getAxisTickCalculator().getTickLocations();
       for (Double xAxisTickLocation : xAxisTickLocations) {
 
         double tickLocation = xAxisTickLocation;

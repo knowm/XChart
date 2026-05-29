@@ -18,7 +18,7 @@ import org.knowm.xchart.style.Styler.YAxisPosition;
 public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSeries>
     implements ChartPart {
 
-  private final Chart<ST, S> chart;
+  private final AxesChart<ST, S> chart;
   private final Direction direction;
   private final Axis_<?, ?> yAxis;
   private final ColocatedSlaveLabels colocatedSlaveLabels;
@@ -30,7 +30,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
    * @param chart
    * @param direction
    */
-  AxisTickLabels(Chart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
+  AxisTickLabels(AxesChart<ST, S> chart, Direction direction, Axis_<?, ?> yAxis) {
 
     this.chart = chart;
     this.direction = direction;

@@ -23,7 +23,7 @@ import org.knowm.xchart.style.Styler.YAxisPosition;
  */
 class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
 
-  private final Chart<ST, S> chart;
+  private final AxesChart<ST, S> chart;
   private final TreeMap<Integer, Axis_Y<ST, S>> yAxisMap;
 
   // Results populated by paintLeft() / paintRight()
@@ -35,7 +35,7 @@ class YAxisGroupPainter<ST extends AxesChartStyler, S extends AxesChartSeries> {
   /** The adjusted x position used as the left origin; set during paintLeft(). */
   private double leftStartUsed;
 
-  YAxisGroupPainter(Chart<ST, S> chart, TreeMap<Integer, Axis_Y<ST, S>> yAxisMap) {
+  YAxisGroupPainter(AxesChart<ST, S> chart, TreeMap<Integer, Axis_Y<ST, S>> yAxisMap) {
 
     this.chart = chart;
     this.yAxisMap = yAxisMap;
