@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.AxisPair;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.AxesChart;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Box;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -16,7 +16,7 @@ import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.Styler.ChartTheme;
 import org.knowm.xchart.style.theme.Theme;
 
-public class BoxChart extends Chart<BoxStyler, BoxSeries> {
+public class BoxChart extends AxesChart<BoxStyler, BoxSeries> {
 
   private final List<String> xData = new ArrayList<>();
 

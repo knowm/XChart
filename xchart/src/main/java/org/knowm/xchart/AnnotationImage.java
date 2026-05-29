@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import org.knowm.xchart.internal.chartpart.Annotation;
-import org.knowm.xchart.internal.chartpart.Chart;
+import org.knowm.xchart.internal.chartpart.AxesChart;
 
 public class AnnotationImage extends Annotation {
 
@@ -28,7 +28,7 @@ public class AnnotationImage extends Annotation {
     this.y = y;
   }
 
-  public void init(Chart<?, ?> chart) {
+  public void init(AxesChart<?, ?> chart) {
 
     super.init(chart);
   }
