@@ -49,8 +49,9 @@ public class XYSeries extends AxesChartSeriesNumerical {
     return smooth;
   }
 
-  public void setSmooth(boolean smooth) {
+  public XYSeries setSmooth(boolean smooth) {
     this.smooth = smooth;
+    return this;
   }
 
   public enum XYSeriesRenderStyle implements RenderableSeries {

@@ -24,9 +24,10 @@ public class DialSeries extends Series {
     return value;
   }
 
-  public void setValue(double value) {
+  public DialSeries setValue(double value) {
 
     this.value = value;
+    return this;
   }
 
   public String getLabel() {

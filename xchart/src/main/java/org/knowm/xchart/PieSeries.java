@@ -48,9 +48,10 @@ public class PieSeries extends Series {
     return value;
   }
 
-  public void setValue(Number value) {
+  public PieSeries setValue(Number value) {
 
     this.value = value;
+    return this;
   }
 
   @Override

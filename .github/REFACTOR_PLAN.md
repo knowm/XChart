@@ -31,7 +31,7 @@ It is kept for historical reference and to explain decisions made along the way.
 | Item | Notes |
 |------|-------|
 | Series inheritance chain | The chain is currently 5 levels deep. Could be explored in a future refactor, but requires careful analysis of downstream impact. |
-| Fluent setter uniformity | Some series setters return `this` for chaining; others do not. A minor polish item that can be addressed incrementally. |
+| Fluent setter uniformity | ✅ Done — all series setters now return `this` for chaining (PRs: `BubbleSeries`, `DialSeries`, `PieSeries`, `RadarSeries`, `XYSeries`). |
 | Zoom data duplication | `filterXByValue` operates on non-contiguous ranges. A clean `DataRange` abstraction would be the right fix but requires more invasive changes across the rendering pipeline. |
 
 ---

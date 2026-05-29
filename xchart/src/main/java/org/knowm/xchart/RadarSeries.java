@@ -44,9 +44,10 @@ public class RadarSeries extends MarkerSeries {
     return values;
   }
 
-  public void setValues(double[] values) {
+  public RadarSeries setValues(double[] values) {
 
     this.values = values;
+    return this;
   }
 
   public String[] getTooltipOverrides() {
@@ -153,8 +154,9 @@ public class RadarSeries extends MarkerSeries {
     return LegendRenderType.Line;
   }
 
-  public void setTooltipOverrides(String[] tooltipOverrides) {
+  public RadarSeries setTooltipOverrides(String[] tooltipOverrides) {
 
     this.tooltipOverrides = tooltipOverrides;
+    return this;
   }
 }
