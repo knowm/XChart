@@ -59,7 +59,12 @@ public class RadarChart extends Chart<RadarStyler, RadarSeries> {
    */
   public RadarChart(RadarChartBuilder radarChartBuilder) {
 
-    this(radarChartBuilder.width, radarChartBuilder.height, radarChartBuilder.chartTheme);
+    this(
+        radarChartBuilder.width,
+        radarChartBuilder.height,
+        radarChartBuilder.customTheme != null
+            ? radarChartBuilder.customTheme
+            : radarChartBuilder.chartTheme.newInstance(radarChartBuilder.chartTheme));
     setTitle(radarChartBuilder.title);
   }
 

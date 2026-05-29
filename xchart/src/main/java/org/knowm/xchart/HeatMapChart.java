@@ -63,7 +63,12 @@ public class HeatMapChart extends Chart<HeatMapStyler, HeatMapSeries> {
    */
   public HeatMapChart(HeatMapChartBuilder heatMapChartBuilder) {
 
-    this(heatMapChartBuilder.width, heatMapChartBuilder.height, heatMapChartBuilder.chartTheme);
+    this(
+        heatMapChartBuilder.width,
+        heatMapChartBuilder.height,
+        heatMapChartBuilder.customTheme != null
+            ? heatMapChartBuilder.customTheme
+            : heatMapChartBuilder.chartTheme.newInstance(heatMapChartBuilder.chartTheme));
     setTitle(heatMapChartBuilder.title);
     setXAxisTitle(heatMapChartBuilder.xAxisTitle);
     setYAxisTitle(heatMapChartBuilder.yAxisTitle);
