@@ -103,8 +103,6 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
             y = yOrig;
           }
 
-          // System.out.println(y);
-
           double xTransform = xLeftMargin + ((x - xMin) / (xMax - xMin) * xTickSpace);
           double yTransform =
               getBounds().getHeight() - (yTopMargin + (y - yMin) / (yMax - yMin) * yTickSpace);
@@ -180,8 +178,6 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
           double highY;
           double lowY;
           double closeY;
-
-          // System.out.println(y);
           if (ohlcStyler.isYAxisLogarithmic()) {
             openY = Math.log10(openOrig);
             highY = Math.log10(highOrig);

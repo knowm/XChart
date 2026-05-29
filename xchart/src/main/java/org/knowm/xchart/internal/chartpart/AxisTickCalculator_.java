@@ -91,11 +91,6 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
    */
   double getFirstPosition(double gridStep) {
 
-    // System.out.println("******");
-
-    //    System.out.println("minValue = " + minValue);
-    //    System.out.println("(minValue % gridStep) = " + (minValue % gridStep));
-
     return minValue - (minValue % gridStep) - gridStep;
   }
 
@@ -176,8 +171,6 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
   protected void calculate() {
 
-    // System.out.println("calculate");
-
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
       tickLabels.add(getAxisFormat().format(BigDecimal.valueOf(maxValue).doubleValue()));
@@ -207,7 +200,6 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
     // same value i.e. "#0.00" for 0.0, 0.0001, 0.0002
     // issue #582
     if (isNumberFormatChoppingDecimals(maxValue, minValue)) {
-      //      System.out.println("returning");
       return;
     }
 
@@ -240,14 +232,10 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
     int gridStepInChartSpace;
 
     do {
-
-      //       System.out.println("calculating ticks...");
       tickLabels.clear();
       tickLocations.clear();
 
       tickSpacingHint += 5;
-
-      // System.out.println("tickSpacingHint: " + tickSpacingHint);
 
       // gridStepHint --> significand * 10 ** exponent
       // e.g. 724.1 --> 7.241 * 10 ** 2
@@ -284,16 +272,11 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       }
 
       //////////////////////////
-      // System.out.println("******************");
-      // System.out.println("gridStep: " + gridStep);
-      // System.out.println("***gridStepInChartSpace: " + gridStep / span * tickSpace);
       gridStepInChartSpace = (int) (gridStep / span * tickSpace);
-      // System.out.println("gridStepInChartSpace: " + gridStepInChartSpace);
       BigDecimal gridStepBigDecimal = new BigDecimal(gridStep, MathContext.DECIMAL64);
       // BigDecimal gridStepBigDecimal = BigDecimal.valueOf(gridStep);
       int scale = Math.min(10, gridStepBigDecimal.scale());
       // int scale = gridStepBigDecimal.scale();
-      // System.out.println("scale: " + scale);
       // int scale = gridStepBigDecimal.scale();
       BigDecimal cleanedGridStep0 =
           gridStepBigDecimal
@@ -303,7 +286,6 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
           cleanedGridStep0
               .setScale(scale, RoundingMode.HALF_DOWN)
               .stripTrailingZeros(); // chop off any double imprecision
-      // System.out.println("cleanedGridStep: " + cleanedGridStep);
 
       BigDecimal firstPosition = null;
       double firstPositionAsDouble = getFirstPosition(cleanedGridStep.doubleValue());
@@ -319,26 +301,13 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
         try {
           firstPosition = BigDecimal.valueOf(firstPositionAsDouble);
         } catch (java.lang.NumberFormatException e) {
-
-          System.out.println(
-              "Some debug stuff. This happens once in a blue moon, and I don't know why.");
-          System.out.println("scale: " + scale);
-          System.out.println("exponent: " + exponent);
-          System.out.println("gridStep: " + gridStep);
-          System.out.println("cleanedGridStep: " + cleanedGridStep);
-          System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
-          System.out.println(
-              "NumberFormatException caused by this number: "
-                  + getFirstPosition(cleanedGridStep.doubleValue()));
+          // ignore rare floating-point edge case
         }
       }
-
-      // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
       BigDecimal cleanedFirstPosition =
           firstPosition
               .setScale(10, RoundingMode.HALF_UP)
               .stripTrailingZeros(); // chop off any double imprecision
-      //      System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
 
       // generate all tickLabels and tickLocations from the first to last position
       for (BigDecimal value = cleanedFirstPosition;
@@ -352,9 +321,7 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
         // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 &&
         // value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
-        // System.out.println(value);
         String tickLabel = getAxisFormat().format(value.doubleValue());
-        // System.out.println(tickLabel);
         tickLabels.add(tickLabel);
 
         // here we convert tickPosition finally to plot space, i.e. pixels
@@ -440,13 +407,8 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
   }
 
   private boolean isNumberFormatChoppingDecimals(double axisMax, double axisMin) {
-
-    //        System.out.println("axisMax = " + axisMax);
-    //        System.out.println("axisMin = " + axisMin);
     String formattedMaxValue = getAxisFormat().format(axisMax);
-    //        System.out.println("formattedMaxValue = " + formattedMaxValue);
     String formattedMinValue = getAxisFormat().format(axisMin);
-    //        System.out.println("formattedMinValue = " + formattedMinValue);
     // if formatted number lost its decimals due to formatter
     if (formattedMaxValue.equals(formattedMinValue)) {
       return true;

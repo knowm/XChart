@@ -109,7 +109,6 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
     // this prevents an infinite loop when the plot gets sized really small.
     if (tickSpace < styler.getXAxisTickMarkSpacingHint()) {
-      // System.out.println("Returning!");
       return;
     }
 
@@ -137,7 +136,6 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
 
     // the span of the data
     long span = (long) Math.abs(maxValue - minValue); // in data space
-    // System.out.println("span: " + span);
 
     // Generate the labels first, see if they "look" OK and reiterate with an increased
     // tickSpacingHint
@@ -147,10 +145,7 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
                 : styler.getYAxisTickMarkSpacingHint())
             - 5;
     int gridStepInChartSpace;
-
-    // System.out.println("calculating ticks...");
     long gridStepHint = (long) (span / tickSpace * tickSpacingHint); // in time units (ms)
-    // System.out.println("gridStepHint: " + gridStepHint);
 
     //////////////////////////////////////////////
 
@@ -167,11 +162,9 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
       }
     }
     //    TimeSpan timeSpan1 = timeSpans.get(index);
-    //    System.out.println("timeSpan1 = " + timeSpan1);
 
     // use the pattern from the first timeSpan
     String datePattern = timeSpans.get(index).getDatePattern();
-    // System.out.println("index: " + index);
 
     // iterate BACKWARDS from previous point until the appropriate timespan is found for the
     // gridStepHint
@@ -206,20 +199,14 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
         continue;
       }
       //      TimeSpan timeSpan2 = timeSpans.get(index);
-      //      System.out.println("timeSpan2 = " + timeSpan2);
-
-      // System.out.println("gridStepInChartSpace: " + gridStepInChartSpace);
 
       double firstPosition = getFirstPosition(gridStep);
-      //      System.out.println("firstPosition = " + firstPosition);
-      //      System.out.println("   " + new Date((long) firstPosition).toGMTString());
 
       // Define Date Pattern
       // override pattern if one was explicitly given
       if (styler.getDatePattern() != null) {
         datePattern = styler.getDatePattern();
       }
-      // System.out.println("datePattern: " + datePattern);
 
       SimpleDateFormat simpleDateformat = new SimpleDateFormat(datePattern, styler.getLocale());
       simpleDateformat.setTimeZone(styler.getTimezone());
@@ -232,15 +219,12 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
           value = value + gridStep) {
 
         tickLabels.add(axisFormat.format(value));
-        //        System.out.println("ticklabel date = " + new Date((long) value).toGMTString());
         // here we convert tickPosition finally to plot space, i.e. pixels
         double tickLabelPosition =
             margin + ((value - minValue) / (maxValue - minValue) * tickSpace);
-        // System.out.println("tickLabelPosition: " + tickLabelPosition);
         tickLocations.add(tickLabelPosition);
         // }
       }
-      //      System.out.println("************");
       if (index >= timeSpans.size() - 1) {
         // Nothing matches, as mentioned above, first one is usually the best fit, force it!
         force = true;
@@ -251,7 +235,6 @@ class AxisTickCalculator_Date extends AxisTickCalculator_ {
     } while (skip
         || !areAllTickLabelsUnique(tickLabels)
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
-    //    System.out.println("are ticklabels unique? " + areAllTickLabelsUnique(tickLabels));
   }
 
   static class TimeSpan {

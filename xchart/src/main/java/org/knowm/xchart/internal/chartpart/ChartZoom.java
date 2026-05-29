@@ -10,7 +10,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.knowm.xchart.OHLCSeries;
 import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
+import org.knowm.xchart.internal.series.AxesChartSeriesNumerical;
 import org.knowm.xchart.style.AxesChartStyler;
 
 public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener {
@@ -103,8 +103,6 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   }
 
   public void mouseReleased(MouseEvent e) {
-
-    //    System.out.println("Mouse released");
     if (!isOverlapping()) {
       x1 = -1;
       x2 = -1;
@@ -154,8 +152,8 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
   private boolean filterSeriesByValue(Object series, double minValue, double maxValue) {
 
-    if (series instanceof AxesChartSeriesNumericalNoErrorBars) {
-      return ((AxesChartSeriesNumericalNoErrorBars) series).filterXByValue(minValue, maxValue);
+    if (series instanceof AxesChartSeriesNumerical) {
+      return ((AxesChartSeriesNumerical) series).filterXByValue(minValue, maxValue);
     } else if (series instanceof OHLCSeries) {
       return ((OHLCSeries) series).filterXByValue(minValue, maxValue);
     }
@@ -187,8 +185,8 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
 
   private double[] getXData(Object series) {
 
-    if (series instanceof AxesChartSeriesNumericalNoErrorBars) {
-      return ((AxesChartSeriesNumericalNoErrorBars) series).getXData();
+    if (series instanceof AxesChartSeriesNumerical) {
+      return ((AxesChartSeriesNumerical) series).getXData();
     } else if (series instanceof OHLCSeries) {
       return ((OHLCSeries) series).getXData();
     }
@@ -198,8 +196,8 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   public void resetFilter() {
 
     for (Object s : chart.getSeriesMap().values()) {
-      if (s instanceof AxesChartSeriesNumericalNoErrorBars) {
-        ((AxesChartSeriesNumericalNoErrorBars) s).resetFilter();
+      if (s instanceof AxesChartSeriesNumerical) {
+        ((AxesChartSeriesNumerical) s).resetFilter();
       } else if (s instanceof OHLCSeries) {
         ((OHLCSeries) s).resetFilter();
       }
@@ -209,8 +207,8 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
   public void filterXByIndex(int startIndex, int endIndex) {
 
     for (Object s : chart.getSeriesMap().values()) {
-      if (s instanceof AxesChartSeriesNumericalNoErrorBars) {
-        ((AxesChartSeriesNumericalNoErrorBars) s).filterXByIndex(startIndex, endIndex);
+      if (s instanceof AxesChartSeriesNumerical) {
+        ((AxesChartSeriesNumerical) s).filterXByIndex(startIndex, endIndex);
       } else if (s instanceof OHLCSeries) {
         ((OHLCSeries) s).filterXByIndex(startIndex, endIndex);
       }
@@ -227,8 +225,8 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     boolean isAllPointsSelected = true;
     for (Object s : chart.getSeriesMap().values()) {
       boolean allSelected;
-      if (s instanceof AxesChartSeriesNumericalNoErrorBars) {
-        allSelected = ((AxesChartSeriesNumericalNoErrorBars) s).isAllXData();
+      if (s instanceof AxesChartSeriesNumerical) {
+        allSelected = ((AxesChartSeriesNumerical) s).isAllXData();
       } else if (s instanceof OHLCSeries) {
         allSelected = ((OHLCSeries) s).isAllXData();
       } else {

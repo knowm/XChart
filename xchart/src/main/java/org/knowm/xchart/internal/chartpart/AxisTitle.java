@@ -98,7 +98,6 @@ public class AxisTitle<ST extends AxesChartStyler, S extends Series> implements 
         }
 
         // ///////////////////////////////////////////////
-        // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
         bounds =
