@@ -2,10 +2,10 @@ package org.knowm.xchart;
 
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
-import org.knowm.xchart.internal.series.AxesChartSeriesNumericalNoErrorBars;
+import org.knowm.xchart.internal.series.AxesChartSeriesNumerical;
 
 /** A Series containing X and Y data to be plotted on a Chart */
-public class XYSeries extends AxesChartSeriesNumericalNoErrorBars {
+public class XYSeries extends AxesChartSeriesNumerical {
 
   private XYSeriesRenderStyle xySeriesRenderStyle = null;
   // smooth curve

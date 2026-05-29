@@ -6,8 +6,7 @@ import java.util.Arrays;
  * A Series containing X and Y data to be plotted on a Chart with X and Y Axes. xData can be Number
  * or Date(epochtime), hence a double[]
  */
-// TODO weird name of class since it does contain extravalues for error bars!
-public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
+public abstract class AxesChartSeriesNumerical extends MarkerSeries {
 
   // full unfiltered data — retained so zoom can be reset to the original range
   double[] xDataAll;
@@ -27,7 +26,7 @@ public abstract class AxesChartSeriesNumericalNoErrorBars extends MarkerSeries {
    * @param yData
    * @param xAxisDataType
    */
-  public AxesChartSeriesNumericalNoErrorBars(
+  public AxesChartSeriesNumerical(
       String name, double[] xData, double[] yData, double[] extraValues, DataType xAxisDataType) {
 
     super(name, xAxisDataType);

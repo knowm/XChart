@@ -5,7 +5,7 @@ package org.knowm.xchart.internal.series;
  * with each X-Y point, could be used for bubble sizes for example, but no error bars, as the min
  * and max are calculated differently. No markers.
  */
-public abstract class NoMarkersSeries extends AxesChartSeriesNumericalNoErrorBars {
+public abstract class NoMarkersSeries extends AxesChartSeriesNumerical {
 
   /**
    * Constructor
