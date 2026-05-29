@@ -82,10 +82,10 @@ public class BoxChart extends Chart<BoxStyler, BoxSeries> {
   private void sanityCheckYData(List<? extends Number> yData) {
 
     if (yData == null) {
-      throw new IllegalArgumentException("Y-Axis data connot be null !!!");
+      throw new IllegalArgumentException("Y-Axis data cannot be null !!!");
     }
     if (yData.size() == 0) {
-      throw new IllegalArgumentException("Y-Axis data connot be empyt !!!");
+      throw new IllegalArgumentException("Y-Axis data cannot be empty !!!");
     }
     if (yData.contains(null)) {
       throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
