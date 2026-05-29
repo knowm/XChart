@@ -57,7 +57,7 @@ public class StickChart02 implements ExampleChart<CategoryChart> {
             .height(600)
             .title("$\\frac{1}{\\lambda} = R_H \\left( \\frac{1}{n_1^2} - \\frac{1}{n_2^2} \\right)$")
             .xAxisTitle("Transition")
-            .yAxisTitle("$\\lambda$ (nm)")
+            .yAxisTitle("$\\lambda\\;(\\text{nm})$")
             .build();
 
     chart.getStyler().setDefaultSeriesRenderStyle(CategorySeriesRenderStyle.Stick);
