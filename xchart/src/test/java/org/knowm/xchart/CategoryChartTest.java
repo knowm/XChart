@@ -241,12 +241,8 @@ public class CategoryChartTest {
     chart.paint(new CustomGraphic(), 20, 20);
 
     for (CategorySeries series : chart.getSeriesCollection()) {
-      CategorySeries.CategorySeriesRenderStyle seriesType =
-          series.getChartCategorySeriesRenderStyle();
-      if (seriesType != null) {
-        assertThat(series.getChartCategorySeriesRenderStyle())
-            .isEqualTo(chart.getStyler().getDefaultSeriesRenderStyle());
-      }
+      assertThat(series.getChartCategorySeriesRenderStyle())
+          .contains(chart.getStyler().getDefaultSeriesRenderStyle());
     }
   }
 }

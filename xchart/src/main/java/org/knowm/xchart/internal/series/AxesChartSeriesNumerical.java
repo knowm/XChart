@@ -9,6 +9,12 @@ import java.util.Arrays;
 public abstract class AxesChartSeriesNumerical extends MarkerSeries {
 
   // full unfiltered data — retained so zoom can be reset to the original range
+  // TODO(zoom-memory): For large datasets, xData/yData/extraValues duplicate xDataAll/yDataAll/
+  //   extraValuesAll for zoom filtering. A DataRange(startIndex, endIndex) abstraction could
+  //   replace the duplicated arrays for the index-based zoom path (filterXByIndex). The
+  //   value-based path (filterXByValue) is non-contiguous and would need a full index-mapping
+  //   approach (e.g. int[] filteredIndices), which is more invasive. Skipping for now to avoid
+  //   risk to ChartZoom and OHLCSeries which duplicate this same pattern.
   double[] xDataAll;
   double[] yDataAll;
   double[] extraValuesAll;
@@ -146,73 +152,26 @@ public abstract class AxesChartSeriesNumerical extends MarkerSeries {
    */
   double[] findMinMax(double[] data) {
 
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (double dataPoint : data) {
-
-      if (Double.isNaN(dataPoint)) {
-        continue;
-      } else {
-        if (dataPoint < min) {
-          min = dataPoint;
-        }
-        if (dataPoint > max) {
-          max = dataPoint;
-        }
-      }
-    }
-
-    return new double[] {min, max};
+    return SeriesMinMaxCalculator.findMinMax(data);
   }
 
   @Override
   protected void calculateMinMax() {
 
     // xData
-    double[] xMinMax = findMinMax(xData);
+    double[] xMinMax = SeriesMinMaxCalculator.findMinMax(xData);
     xMin = xMinMax[0];
     xMax = xMinMax[1];
-    // System.out.println(xMin);
-    // System.out.println(xMax);
 
     // yData
     double[] yMinMax;
     if (extraValues == null) {
-      yMinMax = findMinMax(yData);
+      yMinMax = SeriesMinMaxCalculator.findMinMax(yData);
     } else {
-      yMinMax = findMinMaxWithErrorBars(yData, extraValues);
+      yMinMax = SeriesMinMaxCalculator.findMinMaxWithErrorBars(yData, extraValues);
     }
     yMin = yMinMax[0];
     yMax = yMinMax[1];
-    // System.out.println(yMin);
-    // System.out.println(yMax);
-  }
-
-  /**
-   * Finds the min and max of a dataset accounting for error bars
-   *
-   * @param data
-   * @param errorBars
-   * @return
-   */
-  private double[] findMinMaxWithErrorBars(double[] data, double[] errorBars) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (int i = 0; i < data.length; i++) {
-
-      double d = data[i];
-      double eb = errorBars[i];
-      if (d - eb < min) {
-        min = d - eb;
-      }
-      if (d + eb > max) {
-        max = d + eb;
-      }
-    }
-    return new double[] {min, max};
   }
 
   /**
