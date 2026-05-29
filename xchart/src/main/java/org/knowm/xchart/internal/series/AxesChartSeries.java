@@ -1,6 +1,7 @@
 package org.knowm.xchart.internal.series;
 
 import java.awt.*;
+import java.util.Collection;
 
 /** A Series containing X and Y data to be plotted on a Chart with X and Y Axes. */
 public abstract class AxesChartSeries extends Series {
@@ -57,6 +58,11 @@ public abstract class AxesChartSeries extends Series {
   }
 
   protected abstract void calculateMinMax();
+
+  protected double[] findMinMax(Collection<?> data, DataType dataType) {
+
+    return SeriesMinMaxCalculator.findMinMax(data, dataType);
+  }
 
   public double getXMin() {
 

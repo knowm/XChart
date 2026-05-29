@@ -1,6 +1,7 @@
 package org.knowm.xchart;
 
 import java.util.List;
+import java.util.Optional;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
@@ -11,7 +12,7 @@ public class CategorySeries extends AxesChartSeriesCategory {
 
   private boolean isOverlapped = false;
 
-  private CategorySeriesRenderStyle chartCategorySeriesRenderStyle = null;
+  private Optional<CategorySeriesRenderStyle> chartCategorySeriesRenderStyle = Optional.empty();
 
   // smooth curve
   private boolean smooth;
@@ -35,7 +36,7 @@ public class CategorySeries extends AxesChartSeriesCategory {
     super(name, xData, yData, errorBars, axisType);
   }
 
-  public CategorySeriesRenderStyle getChartCategorySeriesRenderStyle() {
+  public Optional<CategorySeriesRenderStyle> getChartCategorySeriesRenderStyle() {
 
     return chartCategorySeriesRenderStyle;
   }
@@ -43,7 +44,7 @@ public class CategorySeries extends AxesChartSeriesCategory {
   public CategorySeries setChartCategorySeriesRenderStyle(
       CategorySeriesRenderStyle categorySeriesRenderStyle) {
 
-    this.chartCategorySeriesRenderStyle = categorySeriesRenderStyle;
+    this.chartCategorySeriesRenderStyle = Optional.ofNullable(categorySeriesRenderStyle);
     return this;
   }
 
@@ -75,7 +76,9 @@ public class CategorySeries extends AxesChartSeriesCategory {
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    return chartCategorySeriesRenderStyle.getLegendRenderType();
+    return chartCategorySeriesRenderStyle
+        .orElseThrow(() -> new IllegalStateException("Category render style not set"))
+        .getLegendRenderType();
   }
 
   public enum CategorySeriesRenderStyle implements RenderableSeries {

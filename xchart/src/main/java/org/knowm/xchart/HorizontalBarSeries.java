@@ -1,6 +1,8 @@
 package org.knowm.xchart;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 
@@ -40,48 +42,11 @@ public class HorizontalBarSeries extends AxesChartSeries {
     double[] xMinMax = findMinMax(xData, getxAxisDataType());
     xMin = xMinMax[0];
     xMax = xMinMax[1];
-    // System.out.println(xMin);
-    // System.out.println(xMax);
 
     // yData
-    double[] yMinMax;
-    yMinMax = findMinMax(yData, getyAxisDataType());
+    double[] yMinMax = findMinMax(yData, getyAxisDataType());
     yMin = yMinMax[0];
     yMax = yMinMax[1];
-    // System.out.println(yMin);
-    // System.out.println(yMax);
-  }
-
-  double[] findMinMax(Collection<?> data, DataType dataType) {
-
-    double min = Double.MAX_VALUE;
-    double max = -Double.MAX_VALUE;
-
-    for (Object dataPoint : data) {
-
-      if (dataPoint == null) {
-        continue;
-      }
-
-      double value = 0.0;
-
-      if (dataType == DataType.Number) {
-        value = ((Number) dataPoint).doubleValue();
-      } else if (dataType == DataType.Date) {
-        Date date = (Date) dataPoint;
-        value = date.getTime();
-      } else if (dataType == DataType.String) {
-        return new double[] {Double.NaN, Double.NaN};
-      }
-      if (value < min) {
-        min = value;
-      }
-      if (value > max) {
-        max = value;
-      }
-    }
-
-    return new double[] {min, max};
   }
 
   @Override

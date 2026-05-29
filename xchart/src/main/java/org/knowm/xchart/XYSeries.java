@@ -1,5 +1,6 @@
 package org.knowm.xchart;
 
+import java.util.Optional;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeriesNumerical;
@@ -7,7 +8,7 @@ import org.knowm.xchart.internal.series.AxesChartSeriesNumerical;
 /** A Series containing X and Y data to be plotted on a Chart */
 public class XYSeries extends AxesChartSeriesNumerical {
 
-  private XYSeriesRenderStyle xySeriesRenderStyle = null;
+  private Optional<XYSeriesRenderStyle> xySeriesRenderStyle = Optional.empty();
   // smooth curve
   private boolean smooth;
 
@@ -25,21 +26,23 @@ public class XYSeries extends AxesChartSeriesNumerical {
     super(name, xData, yData, errorBars, axisType);
   }
 
-  public XYSeriesRenderStyle getXYSeriesRenderStyle() {
+  public Optional<XYSeriesRenderStyle> getXYSeriesRenderStyle() {
 
     return xySeriesRenderStyle;
   }
 
   public XYSeries setXYSeriesRenderStyle(XYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
-    this.xySeriesRenderStyle = chartXYSeriesRenderStyle;
+    this.xySeriesRenderStyle = Optional.ofNullable(chartXYSeriesRenderStyle);
     return this;
   }
 
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    return xySeriesRenderStyle.getLegendRenderType();
+    return xySeriesRenderStyle
+        .orElseThrow(() -> new IllegalStateException("XY render style not set"))
+        .getLegendRenderType();
   }
 
   public boolean isSmooth() {

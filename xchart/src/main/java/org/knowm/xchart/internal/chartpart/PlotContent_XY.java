@@ -150,12 +150,12 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
         // paint line
 
         boolean isSeriesLineOrArea =
-            XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle();
+            XYSeriesRenderStyle.Line == series.getXYSeriesRenderStyle().orElseThrow()
+                || XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle().orElseThrow()
+                || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle().orElseThrow();
         boolean isSeriesStepLineOrStepArea =
-            XYSeriesRenderStyle.Step == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle();
+            XYSeriesRenderStyle.Step == series.getXYSeriesRenderStyle().orElseThrow()
+                || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle().orElseThrow();
 
         if (isSeriesLineOrArea || isSeriesStepLineOrStepArea) {
           if (series.getLineStyle() != SeriesLines.NONE) {
@@ -195,14 +195,14 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
         }
 
         // paint area
-        if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
-            || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle()
-            || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle()) {
+        if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle().orElseThrow()
+            || XYSeriesRenderStyle.StepArea == series.getXYSeriesRenderStyle().orElseThrow()
+            || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle().orElseThrow()) {
 
           if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
             if (path == null) {
               path = new Path2D.Double();
-              if (XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle()) {
+              if (XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle().orElseThrow()) {
                 path.moveTo(previousX, previousY);
                 polygonStartX = previousX;
                 polygonStartY = previousY;
@@ -211,8 +211,8 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
                 path.lineTo(previousX, previousY);
               }
             }
-            if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle()
-                || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle()) {
+            if (XYSeriesRenderStyle.Area == series.getXYSeriesRenderStyle().orElseThrow()
+                || XYSeriesRenderStyle.PolygonArea == series.getXYSeriesRenderStyle().orElseThrow()) {
               if (series.isSmooth()) {
                 path.curveTo(
                     (previousX + xOffset) / 2,
@@ -234,7 +234,7 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
             }
           }
           if (xOffset < previousX
-              && XYSeriesRenderStyle.PolygonArea != series.getXYSeriesRenderStyle()) {
+              && XYSeriesRenderStyle.PolygonArea != series.getXYSeriesRenderStyle().orElseThrow()) {
             throw new RuntimeException("X-Data must be in ascending order for Area Charts!!!");
           }
         }

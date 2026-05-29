@@ -1,5 +1,6 @@
 package org.knowm.xchart;
 
+import java.util.Optional;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.NoMarkersSeries;
@@ -7,7 +8,7 @@ import org.knowm.xchart.internal.series.NoMarkersSeries;
 /** A Series containing X, Y and bubble size data to be plotted on a Chart */
 public class BubbleSeries extends NoMarkersSeries {
 
-  private BubbleSeriesRenderStyle bubbleSeriesRenderStyle = null;
+  private Optional<BubbleSeriesRenderStyle> bubbleSeriesRenderStyle = Optional.empty();
 
   /**
    * Constructor
@@ -22,20 +23,22 @@ public class BubbleSeries extends NoMarkersSeries {
     super(name, xData, yData, bubbleSizes, DataType.Number);
   }
 
-  public BubbleSeriesRenderStyle getBubbleSeriesRenderStyle() {
+  public Optional<BubbleSeriesRenderStyle> getBubbleSeriesRenderStyle() {
 
     return bubbleSeriesRenderStyle;
   }
 
   public void setBubbleSeriesRenderStyle(BubbleSeriesRenderStyle bubbleSeriesRenderStyle) {
 
-    this.bubbleSeriesRenderStyle = bubbleSeriesRenderStyle;
+    this.bubbleSeriesRenderStyle = Optional.ofNullable(bubbleSeriesRenderStyle);
   }
 
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    return bubbleSeriesRenderStyle.getLegendRenderType();
+    return bubbleSeriesRenderStyle
+        .orElseThrow(() -> new IllegalStateException("Bubble render style not set"))
+        .getLegendRenderType();
   }
 
   public enum BubbleSeriesRenderStyle implements RenderableSeries {
