@@ -3,10 +3,10 @@ package org.knowm.xchart.demo.charts.date;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -45,20 +45,21 @@ public class DateChart09 implements ExampleChart<XYChart> {
     chart.getStyler().setLegendVisible(false);
     chart.getStyler().setXAxisLabelRotation(90);
 
-    // Series
-    List<Integer> xData = IntStream.range(0, 365).boxed().collect(Collectors.toList());
+    // One data point per month so each month gets a single, non-repeating tick label.
+    // X values are day-of-year offsets from startTime; Y values are arbitrary sample data.
+    LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
     Random random = new Random();
 
-    List<Double> yData =
-        IntStream.range(0, xData.size())
-            .mapToDouble(x -> random.nextDouble())
-            .boxed()
-            .collect(Collectors.toList());
+    List<Integer> xData = new ArrayList<>();
+    List<Double> yData = new ArrayList<>();
+    for (int month = 0; month < 12; month++) {
+      xData.add((int) ChronoUnit.DAYS.between(startTime, startTime.plusMonths(month)));
+      yData.add(random.nextDouble());
+    }
 
-    chart.addSeries("blah", xData, yData);
+    chart.addSeries("Monthly Value", xData, yData);
 
     // set custom X-Axis tick labels
-    LocalDateTime startTime = LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0);
     DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
     chart
         .getStyler()
