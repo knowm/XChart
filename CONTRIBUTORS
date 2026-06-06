@@ -17,11 +17,14 @@ The following list of authors was automatically generated from the XChart projec
     git log --format='%aN' | sort -u
 
 Adam Walsh
+alessiosavi
 Alex Kofke
 Alex Nugent
 AlexanderRadaev
+alexmaycon
 Anthony Quiros
 Arthur Peters
+Bartosz Schiller
 Bryan Cardillo
 Bryn Jeffries
 Carlos Lopez-Camey
@@ -30,54 +33,56 @@ Chiamh
 Christoffer SOOP
 Colm Costelloe
 Damian Szczypior
+dependabot-preview[bot]
+dependabot[bot]
 Ekkart Kleinod
 Emil Sauer Lynge
 Flole998
+giambo
+Giambo
+gitkonst
 Greg Oledzki
 Grzegorz Olędzki
 Hakan
 Hakan Işıktekin
+hakantkn
+heavySea
 Hongjia Cao
 Hua Shao
 Hwaipy Li
 Jean Niklas L'orange
+jjcard
 Jonathan Leitschuh
+Jose M. Palomar
 Juha-Matti Tilli
+kalan
+kibertoad
 Marc Jakobi
 Marshall Pierce
 Martin Crawford
 Matan Rubin
 Michael Stummvoll
 Mike Jensen
+MN Research
 Mr14huashao
 Mykola Makhin
 Nathan Klick
 Nicolas Roduit
 Niklas Polke
 Ramon Chiara
+rebaomi
 Ross Jourdain
 Roughy
+ruX[Ruslan Zaharov]
 Sebastian Jaenicke
+Stefan Mücke
 Sylvain Furt
 Thomas Diesler
 Thomas Neidhart
 Tim Molter
-TomTroppmann
-Tomas Svensson
-Tornai András, PMK-ACS-SWA
-alessiosavi
-alexmaycon
-dependabot-preview[bot]
-dependabot[bot]
-gitkonst
-hakantkn
-heavySea
-kalan
-kibertoad
-rebaomi
-ruX[Ruslan Zaharov]
 timmolter
+Tomas Svensson
+TomTroppmann
+Tornai András, PMK-ACS-SWA
 yuan
 zhzzang
-
-
