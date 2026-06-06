@@ -252,51 +252,17 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
 
         // paint error bars
         if (errorBars != null) {
-
-          double eb = errorBars[i];
-
-          // set error bar style
-          if (xyStyler.isErrorBarsColorSeriesColor()) {
-            g.setColor(series.getLineColor());
-          } else {
-            g.setColor(xyStyler.getErrorBarsColor());
-          }
-          g.setStroke(ERROR_BAR_STROKE);
-
-          // Top value
-          double topValue;
-          if (xyStyler.isYAxisLogarithmic()) {
-            topValue = yOrig + eb;
-            topValue = Math.log10(topValue);
-          } else {
-            topValue = y + eb;
-          }
-          double topEBTransform =
-              getBounds().getHeight()
-                  - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
-          double topEBOffset = getBounds().getY() + topEBTransform;
-
-          // Bottom value
-          double bottomValue;
-          if (xyStyler.isYAxisLogarithmic()) {
-            bottomValue = yOrig - eb;
-            // System.out.println(bottomValue);
-            bottomValue = Math.log10(bottomValue);
-          } else {
-            bottomValue = y - eb;
-          }
-          double bottomEBTransform =
-              getBounds().getHeight()
-                  - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
-          double bottomEBOffset = getBounds().getY() + bottomEBTransform;
-
-          // Draw it
-          line.setLine(xOffset, topEBOffset, xOffset, bottomEBOffset);
-          g.draw(line);
-          line.setLine(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
-          g.draw(line);
-          line.setLine(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
-          g.draw(line);
+          paintErrorBar(
+              g,
+              series,
+              errorBars[i],
+              xOffset,
+              y,
+              yOrig,
+              yMin,
+              yMax,
+              yTickSpace,
+              yTopMargin);
         }
 
         // add tooltips
@@ -335,6 +301,63 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
       g.setColor(series.getFillColor());
       closePathXY(g, path, previousX, yZeroOffset, polygonStartX, polygonStartY);
     }
+  }
+
+  /** Draws vertical error bars for a single data point. */
+  private void paintErrorBar(
+      Graphics2D g,
+      S series,
+      double eb,
+      double xOffset,
+      double y,
+      double yOrig,
+      double yMin,
+      double yMax,
+      double yTickSpace,
+      double yTopMargin) {
+
+    // set error bar style
+    if (xyStyler.isErrorBarsColorSeriesColor()) {
+      g.setColor(series.getLineColor());
+    } else {
+      g.setColor(xyStyler.getErrorBarsColor());
+    }
+    g.setStroke(ERROR_BAR_STROKE);
+
+    // Top value
+    double topValue;
+    if (xyStyler.isYAxisLogarithmic()) {
+      topValue = yOrig + eb;
+      topValue = Math.log10(topValue);
+    } else {
+      topValue = y + eb;
+    }
+    double topEBTransform =
+        getBounds().getHeight()
+            - (yTopMargin + (topValue - yMin) / (yMax - yMin) * yTickSpace);
+    double topEBOffset = getBounds().getY() + topEBTransform;
+
+    // Bottom value
+    double bottomValue;
+    if (xyStyler.isYAxisLogarithmic()) {
+      bottomValue = yOrig - eb;
+      bottomValue = Math.log10(bottomValue);
+    } else {
+      bottomValue = y - eb;
+    }
+    double bottomEBTransform =
+        getBounds().getHeight()
+            - (yTopMargin + (bottomValue - yMin) / (yMax - yMin) * yTickSpace);
+    double bottomEBOffset = getBounds().getY() + bottomEBTransform;
+
+    // Draw it
+    Line2D.Double line = new Line2D.Double();
+    line.setLine(xOffset, topEBOffset, xOffset, bottomEBOffset);
+    g.draw(line);
+    line.setLine(xOffset - 3, bottomEBOffset, xOffset + 3, bottomEBOffset);
+    g.draw(line);
+    line.setLine(xOffset - 3, topEBOffset, xOffset + 3, topEBOffset);
+    g.draw(line);
   }
 
   void closePathXY(
