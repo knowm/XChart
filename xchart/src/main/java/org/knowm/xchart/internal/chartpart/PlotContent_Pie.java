@@ -6,6 +6,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.*;
 import java.awt.geom.Arc2D.Double;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Map;
 import org.knowm.xchart.PieSeries;
 import org.knowm.xchart.PieSeries.PieSeriesRenderStyle;
@@ -17,7 +18,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     extends PlotContent_<ST, S> {
 
   private final ST pieStyler;
-  private final DecimalFormat df = new DecimalFormat("#.0");
+  private final DecimalFormat df;
 
   /**
    * Constructor
@@ -28,6 +29,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
     super(chart);
     pieStyler = chart.getStyler();
+    df = new DecimalFormat("#.0", new DecimalFormatSymbols(pieStyler.getLocale()));
   }
 
   // TODO get rid of this

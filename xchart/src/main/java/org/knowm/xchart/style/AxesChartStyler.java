@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.function.Function;
@@ -54,7 +53,6 @@ public abstract class AxesChartStyler extends Styler {
   private boolean isErrorBarsColorSeriesColor;
 
   // Formatting ////////////////////////////////
-  private Locale locale;
   private TimeZone timezone;
   private String datePattern;
   private String xAxisDecimalPattern;
@@ -138,7 +136,6 @@ public abstract class AxesChartStyler extends Styler {
     this.isErrorBarsColorSeriesColor = theme.isErrorBarsColorSeriesColor();
 
     // Formatting ////////////////////////////////
-    this.locale = Locale.getDefault();
     this.timezone = TimeZone.getDefault();
     this.datePattern = null; // if not null, this override pattern will be used
     this.xAxisDecimalPattern = null;
@@ -693,22 +690,6 @@ public abstract class AxesChartStyler extends Styler {
   }
 
   // Formatting ////////////////////////////////
-
-  public Locale getLocale() {
-
-    return locale;
-  }
-
-  /**
-   * Set the locale to use for rendering the chart
-   *
-   * @param locale - the locale to use when formatting Strings and dates for the axis tick labels
-   */
-  public AxesChartStyler setLocale(Locale locale) {
-
-    this.locale = locale;
-    return this;
-  }
 
   public TimeZone getTimezone() {
 
