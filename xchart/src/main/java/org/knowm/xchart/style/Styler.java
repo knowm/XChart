@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.knowm.xchart.ToolTipType;
@@ -89,6 +90,7 @@ public abstract class Styler {
   private boolean antiAlias = true;
   private boolean textAntiAlias = true;
   private String decimalPattern;
+  private Locale locale;
   // TODO I don't think this should be in styler directly?
   private final HashMap<Integer, YAxisPosition> yAxisAlignmentMap = new HashMap<>();
   private int yAxisLeftWidthHint;
@@ -173,6 +175,7 @@ public abstract class Styler {
 
     // Formatting
     decimalPattern = null;
+    locale = Locale.getDefault();
 
     // Line, Scatter, Area, Radar Charts ///////////////////////////////
     this.markerSize = theme.getMarkerSize();
@@ -845,6 +848,22 @@ public abstract class Styler {
   public Styler setDecimalPattern(String decimalPattern) {
 
     this.decimalPattern = decimalPattern;
+    return this;
+  }
+
+  public Locale getLocale() {
+
+    return locale;
+  }
+
+  /**
+   * Set the locale to use for number and date formatting on the chart
+   *
+   * @param locale the locale to use
+   */
+  public Styler setLocale(Locale locale) {
+
+    this.locale = locale;
     return this;
   }
 

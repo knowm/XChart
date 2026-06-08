@@ -25,7 +25,6 @@ import org.knowm.xchart.style.Styler;
  * uses this to reset the zoom function. When it is clicked it fires its actionPerformed action and
  * whoever is listening to it can react to it.
  */
-// TODO tie this to the styler properties
 public class ChartButton extends MouseAdapter implements ChartPart {
 
   private final Styler styler;
