@@ -7,8 +7,6 @@ import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import org.knowm.xchart.BoxSeries;
 import org.knowm.xchart.internal.Utils;
@@ -73,13 +71,8 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
         yMax = Math.log10(yMax);
       }
       // data points
-      Collection<? extends Number> yData = series.getYData();
-      Iterator<? extends Number> yItr = yData.iterator();
-      while (yItr.hasNext()) {
-
-        Number next = yItr.next();
-
-        double yOrig = next.doubleValue();
+      double[] yArr = series.getYData();
+      for (double yOrig : yArr) {
         double y;
 
         if (boxPlotStyler.isYAxisLogarithmic()) {

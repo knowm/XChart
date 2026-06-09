@@ -102,11 +102,21 @@ public class CategoryChart extends AxesChart<CategoryStyler, CategorySeries> {
   public CategorySeries addSeries(
       String seriesName, double[] xData, double[] yData, double[] errorBars) {
 
-    return addSeries(
-        seriesName,
-        Utils.getNumberListFromDoubleArray(xData),
-        Utils.getNumberListFromDoubleArray(yData),
-        Utils.getNumberListFromDoubleArray(errorBars));
+    List<?> xList = xData != null ? Utils.getNumberListFromDoubleArray(xData) : null;
+    if (xList != null) {
+      sanityCheck(seriesName, xList, yData, errorBars);
+      if (xList.size() != yData.length) {
+        throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+      }
+    } else {
+      sanityCheck(seriesName, null, yData, errorBars);
+      xList = Utils.getGeneratedDataAsList(yData.length);
+    }
+    CategorySeries series =
+        new CategorySeries(seriesName, xList, yData, errorBars, DataType.Number);
+    seriesMap.put(seriesName, series);
+
+    return series;
   }
 
   /**
@@ -133,11 +143,28 @@ public class CategoryChart extends AxesChart<CategoryStyler, CategorySeries> {
    */
   public CategorySeries addSeries(String seriesName, int[] xData, int[] yData, int[] errorBars) {
 
-    return addSeries(
-        seriesName,
-        Utils.getNumberListFromIntArray(xData),
-        Utils.getNumberListFromIntArray(yData),
-        Utils.getNumberListFromIntArray(errorBars));
+    double[] yDoubles = new double[yData.length];
+    for (int i = 0; i < yData.length; i++) yDoubles[i] = yData[i];
+    double[] ebDoubles = null;
+    if (errorBars != null) {
+      ebDoubles = new double[errorBars.length];
+      for (int i = 0; i < errorBars.length; i++) ebDoubles[i] = errorBars[i];
+    }
+    List<?> xList = xData != null ? Utils.getNumberListFromIntArray(xData) : null;
+    if (xList != null) {
+      sanityCheck(seriesName, xList, yDoubles, ebDoubles);
+      if (xList.size() != yDoubles.length) {
+        throw new IllegalArgumentException("X and Y-Axis sizes are not the same!!!");
+      }
+    } else {
+      sanityCheck(seriesName, null, yDoubles, ebDoubles);
+      xList = Utils.getGeneratedDataAsList(yDoubles.length);
+    }
+    CategorySeries series =
+        new CategorySeries(seriesName, xList, yDoubles, ebDoubles, DataType.Number);
+    seriesMap.put(seriesName, series);
+
+    return series;
   }
 
   /**
@@ -256,11 +283,19 @@ public class CategoryChart extends AxesChart<CategoryStyler, CategorySeries> {
   public CategorySeries updateCategorySeries(
       String seriesName, double[] newXData, double[] newYData, double[] newErrorBarData) {
 
-    return updateCategorySeries(
-        seriesName,
-        Utils.getNumberListFromDoubleArray(newXData),
-        Utils.getNumberListFromDoubleArray(newYData),
-        Utils.getNumberListFromDoubleArray(newErrorBarData));
+    Map<String, CategorySeries> seriesMap = this.seriesMap;
+    CategorySeries series = seriesMap.get(seriesName);
+    if (series == null) {
+      throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
+    }
+    if (newXData == null) {
+      series.replaceData(Utils.getGeneratedDataAsList(newYData.length), newYData, newErrorBarData);
+    } else {
+      series.replaceData(
+          Utils.getNumberListFromDoubleArray(newXData), newYData, newErrorBarData);
+    }
+
+    return series;
   }
 
   ///////////////////////////////////////////////////
@@ -289,6 +324,28 @@ public class CategoryChart extends AxesChart<CategoryStyler, CategorySeries> {
       throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
     }
     if (errorBars != null && errorBars.size() != yData.size()) {
+      throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!!");
+    }
+  }
+
+  private void sanityCheck(String seriesName, List<?> xData, double[] yData, double[] errorBars) {
+
+    if (seriesMap.containsKey(seriesName)) {
+      throw new IllegalArgumentException(
+          "Series name >"
+              + seriesName
+              + "< has already been used. Use unique names for each series!!!");
+    }
+    if (yData == null) {
+      throw new IllegalArgumentException("Y-Axis data cannot be null!!!");
+    }
+    if (yData.length == 0) {
+      throw new IllegalArgumentException("Y-Axis data cannot be empty!!!");
+    }
+    if (xData != null && xData.size() == 0) {
+      throw new IllegalArgumentException("X-Axis data cannot be empty!!!");
+    }
+    if (errorBars != null && errorBars.length != yData.length) {
       throw new IllegalArgumentException("Error bars and Y-Axis sizes are not the same!!!");
     }
   }

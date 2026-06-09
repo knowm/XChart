@@ -2,7 +2,6 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -308,20 +307,19 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
             }
 
             int categoryCounter = 0;
-            Iterator<? extends Number> yItr = axesChartSeriesCategory.getYData().iterator();
-            while (yItr.hasNext()) {
+            double[] yArr = axesChartSeriesCategory.getYData();
+            for (double next : yArr) {
 
-              Number next = yItr.next();
-              // skip when a value is null
-              if (next == null) {
+              // skip when a value is NaN (was null in the original list)
+              if (Double.isNaN(next)) {
                 categoryCounter++;
                 continue;
               }
 
-              if (next.doubleValue() > 0) {
-                accumulatedStackOffsetPos[categoryCounter] += next.doubleValue();
-              } else if (next.doubleValue() < 0) {
-                accumulatedStackOffsetNeg[categoryCounter] += next.doubleValue();
+              if (next > 0) {
+                accumulatedStackOffsetPos[categoryCounter] += next;
+              } else if (next < 0) {
+                accumulatedStackOffsetNeg[categoryCounter] += next;
               }
               categoryCounter++;
             }

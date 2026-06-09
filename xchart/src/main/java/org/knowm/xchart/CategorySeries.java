@@ -18,7 +18,7 @@ public class CategorySeries extends AxesChartSeriesCategory {
   private boolean smooth;
 
   /**
-   * Constructor
+   * Constructor — accepts Lists (yData/errorBars are converted to double[] internally).
    *
    * @param name
    * @param xData
@@ -31,6 +31,25 @@ public class CategorySeries extends AxesChartSeriesCategory {
       List<?> xData,
       List<? extends Number> yData,
       List<? extends Number> errorBars,
+      Series.DataType axisType) {
+
+    super(name, xData, yData, errorBars, axisType);
+  }
+
+  /**
+   * Constructor — direct primitive-array path; avoids boxing entirely.
+   *
+   * @param name
+   * @param xData
+   * @param yData
+   * @param errorBars
+   * @param axisType
+   */
+  public CategorySeries(
+      String name,
+      List<?> xData,
+      double[] yData,
+      double[] errorBars,
       Series.DataType axisType) {
 
     super(name, xData, yData, errorBars, axisType);
