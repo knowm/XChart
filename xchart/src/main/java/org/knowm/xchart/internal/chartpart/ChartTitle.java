@@ -78,9 +78,9 @@ public class ChartTitle<ST extends Styler, S extends Series> implements ChartPar
     if (TexRenderer.isTeX(title)) {
       TexRenderer.render(
           g, title, xOffset, yOffset - textBounds.getHeight(),
-          chart.getStyler().getChartTitleFont(), chart.getStyler().getChartFontColor());
+          chart.getStyler().getChartTitleFont(), chart.getStyler().getChartTitleFontColor());
     } else {
-      g.setColor(chart.getStyler().getChartFontColor());
+      g.setColor(chart.getStyler().getChartTitleFontColor());
       FontRenderContext frc = g.getFontRenderContext();
       TextLayout textLayout =
           new TextLayout(title, chart.getStyler().getChartTitleFont(), frc);

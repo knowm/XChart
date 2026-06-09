@@ -34,6 +34,7 @@ public abstract class Styler {
 
   // Chart Title ///////////////////////////////
   private Font chartTitleFont;
+  private Color chartTitleFontColor;
   private boolean isChartTitleVisible;
   private boolean isChartTitleBoxVisible;
   private Color chartTitleBoxBackgroundColor;
@@ -297,6 +298,22 @@ public abstract class Styler {
   public Styler setChartTitleFont(Font chartTitleFont) {
 
     this.chartTitleFont = chartTitleFont;
+    return this;
+  }
+
+  public Color getChartTitleFontColor() {
+
+    return chartTitleFontColor != null ? chartTitleFontColor : chartFontColor;
+  }
+
+  /**
+   * Set the chart title font color. When not set, falls back to {@link #getChartFontColor()}.
+   *
+   * @param chartTitleFontColor the color to use for the chart title text
+   */
+  public Styler setChartTitleFontColor(Color chartTitleFontColor) {
+
+    this.chartTitleFontColor = chartTitleFontColor;
     return this;
   }
 
