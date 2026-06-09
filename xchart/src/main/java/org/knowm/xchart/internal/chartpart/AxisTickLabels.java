@@ -75,6 +75,7 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         double flippedTickLocation = yOffset + height - tickLocation;
 
         if (tickLabel != null
+            && !tickLabel.isEmpty()
             && flippedTickLocation > yOffset
             && flippedTickLocation < yOffset + height) { // some are null for logarithmic axes
           Rectangle2D tickLabelBounds;
@@ -186,8 +187,9 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         double tickLocation = chart.getXAxis().getAxisTickCalculator().getTickLocations().get(i);
         double shiftedTickLocation = xOffset + tickLocation;
 
-        // discard null and out of bounds labels
+        // discard null, empty, and out of bounds labels
         if (tickLabel != null
+            && !tickLabel.isEmpty()
             && shiftedTickLocation > xOffset
             && shiftedTickLocation < xOffset + width) {
           // some are null for logarithmic axes
@@ -218,8 +220,9 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
         double tickLocation = chart.getXAxis().getAxisTickCalculator().getTickLocations().get(i);
         double shiftedTickLocation = xOffset + tickLocation;
 
-        // discard null and out of bounds labels
+        // discard null, empty, and out of bounds labels
         if (tickLabel != null
+            && !tickLabel.isEmpty()
             && shiftedTickLocation > xOffset
             && shiftedTickLocation < xOffset + width) { // some are null for logarithmic axes
 

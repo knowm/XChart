@@ -109,6 +109,7 @@ class ColocatedSlaveLabels {
         double flippedTickLocation = yOffset + height - tickLocation;
 
         if (label != null
+            && !label.isEmpty()
             && flippedTickLocation > yOffset
             && flippedTickLocation < yOffset + height) {
           TextLayout layout = new TextLayout(label, styler.getAxisTickLabelsFont(), frc);
