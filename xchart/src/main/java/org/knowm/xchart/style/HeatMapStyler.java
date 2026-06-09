@@ -43,21 +43,6 @@ public class HeatMapStyler extends AxesChartStyler {
 
   private Function<Double, String> heatMapDecimalValueFormatter;
 
-  /**
-   * Set the theme the styler should use
-   *
-   * @param theme
-   */
-  /**
-   * @deprecated Use the builder's {@code .theme(Theme)} method instead.
-   */
-  @Deprecated
-  public void setTheme(Theme theme) {
-
-    this.theme = theme;
-    setAllStyles();
-  }
-
   @Override
   public void setAllStyles() {
 
@@ -127,8 +112,9 @@ public class HeatMapStyler extends AxesChartStyler {
         this.rangeColors = new Color[2];
         this.rangeColors[0] = rangeColors[0];
         this.rangeColors[1] = rangeColors[0];
+      } else {
+        this.rangeColors = rangeColors;
       }
-      this.rangeColors = rangeColors;
     } else {
       this.rangeColors = DEFAULT_RANGE_COLORS;
     }

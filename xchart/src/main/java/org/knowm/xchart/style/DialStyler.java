@@ -77,22 +77,6 @@ public class DialStyler extends Styler {
     labelsFont = theme.getBaseFont();
   }
 
-  /**
-   * Set the theme the styler should use
-   *
-   * @param theme
-   */
-  /**
-   * @deprecated Use the builder's {@code .theme(Theme)} method instead.
-   */
-  @Deprecated
-  public DialStyler setTheme(Theme theme) {
-
-    this.theme = theme;
-    setAllStyles();
-    return this;
-  }
-
   public boolean isCircular() {
 
     return isCircular;
