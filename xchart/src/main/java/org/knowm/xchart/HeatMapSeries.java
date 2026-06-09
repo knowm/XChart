@@ -48,7 +48,7 @@ public class HeatMapSeries extends AxesChartSeries {
   protected void calculateMinMax() {
 
     min = Double.MAX_VALUE;
-    max = Double.MIN_VALUE;
+    max = -Double.MAX_VALUE;
     Number number = null;
     for (Number[] numbers : heatData) {
       if (numbers == null) {

@@ -329,7 +329,12 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     Rectangle2D rect = null;
     // paint gradient color Column
     if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
-      start = new Point2D.Double(startx, starty + chart.getStyler().getGradientColorColumnHeight());
+      start =
+          new Point2D.Double(
+              startx,
+              starty
+                  + chart.getStyler().getLegendFont().getSize()
+                  + chart.getStyler().getGradientColorColumnHeight());
       end = new Point2D.Double(startx, starty + chart.getStyler().getLegendFont().getSize());
       rect =
           new Rectangle2D.Double(

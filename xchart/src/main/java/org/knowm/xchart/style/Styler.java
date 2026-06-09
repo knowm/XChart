@@ -807,7 +807,7 @@ public abstract class Styler {
   /**
    * When true, all data-point labels are rendered into the chart image (visible in BitmapEncoder
    * output and Swing panels alike). This is a rendering/visual property; enable hover tooltips
-   * separately via {@link XChartPanel#setToolTipsEnabled(boolean)}.
+   * separately via {@link org.knowm.xchart.XChartPanel#setToolTipsEnabled(boolean)}.
    *
    * @param toolTipsAlwaysVisible true to render labels for every data point
    */
@@ -1028,5 +1028,17 @@ public abstract class Styler {
   public Theme getTheme() {
 
     return theme;
+  }
+
+  /**
+   * Sets the theme for this styler and re-applies all styles. Prefer constructing the chart via its
+   * builder ({@code .theme(Theme)}) over calling this method after construction.
+   *
+   * @param theme the theme to apply
+   */
+  public void setTheme(Theme theme) {
+
+    this.theme = theme;
+    setAllStyles();
   }
 }
