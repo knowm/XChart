@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 
 /**
@@ -42,6 +43,7 @@ public class TestForIssue879 {
     }
 
     XYChart chart = getChart(xData, yData);
+    XYSeries series = (XYSeries) chart.getSeriesCollection().iterator().next();
     XChartPanel<XYChart> chartPanel = new XChartPanel<>(chart);
 
     JButton button = new JButton("Add New Data");
@@ -52,9 +54,9 @@ public class TestForIssue879 {
                   (int) (Math.random() * 255),
                   (int) (Math.random() * 255),
                   (int) (Math.random() * 255));
-          chart.getSeriesMap().get("mockData").setMarkerColor(randomColor);
-          chart.getSeriesMap().get("mockData").setLineColor(randomColor);
-          chart.getSeriesMap().get("mockData").setFillColor(randomColor);
+          series.setMarkerColor(randomColor);
+          series.setLineColor(randomColor);
+          series.setFillColor(randomColor);
           SwingUtilities.invokeLater(
               () -> {
                 chart.updateXYSeries("mockData", xData, yData, null);
