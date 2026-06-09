@@ -9,7 +9,7 @@ import java.util.Arrays;
 public abstract class AxesChartSeriesNumerical extends MarkerSeries {
 
   // full unfiltered data — retained so zoom can be reset to the original range
-  // TODO(zoom-memory): For large datasets, xData/yData/extraValues duplicate xDataAll/yDataAll/
+  // For large datasets, xData/yData/extraValues duplicate xDataAll/yDataAll/
   //   extraValuesAll for zoom filtering. A DataRange(startIndex, endIndex) abstraction could
   //   replace the duplicated arrays for the index-based zoom path (filterXByIndex). The
   //   value-based path (filterXByValue) is non-contiguous and would need a full index-mapping

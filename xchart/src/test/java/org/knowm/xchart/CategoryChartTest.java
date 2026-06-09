@@ -141,8 +141,8 @@ public class CategoryChartTest {
         () ->
             assertThat(series.getXData())
                 .isEqualTo(Arrays.asList("Blue", "Red", "Green", "Yellow", "Orange")),
-        () -> assertThat(series.getYData()).isEqualTo(Arrays.asList(-40, 40.8, 20, 60, 60)),
-        () -> assertThat(series.getExtraValues()).isEqualTo(Arrays.asList(3, 3, 4, 3, 5)),
+        () -> assertThat(series.getYData()).containsExactly(-40.0, 40.8, 20.0, 60.0, 60.0),
+        () -> assertThat(series.getExtraValues()).containsExactly(3.0, 3.0, 4.0, 3.0, 5.0),
         () -> assertThat(series.getYData()).hasSize(5));
   }
 
@@ -193,7 +193,7 @@ public class CategoryChartTest {
         Arrays.asList(50, 10, -20, 40, 60),
         null);
 
-    assertThat(fruit.getYData()).isEqualTo(Arrays.asList(50, 10, -20, 40, 60));
+    assertThat(fruit.getYData()).containsExactly(50.0, 10.0, -20.0, 40.0, 60.0);
   }
 
   @Test
@@ -211,7 +211,7 @@ public class CategoryChartTest {
         Arrays.asList(-40, 30, 20, 60, 60),
         Arrays.asList(3, 1, 2, 1, 2));
 
-    assertThat(fruit.getExtraValues()).isEqualTo(Arrays.asList(3, 1, 2, 1, 2));
+    assertThat(fruit.getExtraValues()).containsExactly(3.0, 1.0, 2.0, 1.0, 2.0);
   }
 
   @Test

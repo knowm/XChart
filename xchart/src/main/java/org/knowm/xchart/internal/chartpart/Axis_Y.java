@@ -288,9 +288,8 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       for (CategorySeries categorySeries :
           (Collection<CategorySeries>) (Collection<?>) chart.getSeriesMap().values()) {
         uniqueYData.addAll(
-            categorySeries.getYData().stream()
-                .filter(Objects::nonNull)
-                .mapToDouble(Number::doubleValue)
+            Arrays.stream(categorySeries.getYData())
+                .filter(v -> !Double.isNaN(v))
                 .boxed()
                 .collect(Collectors.toList()));
       }

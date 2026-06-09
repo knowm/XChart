@@ -1,9 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.internal.series.AxesChartSeries;
@@ -22,43 +20,38 @@ public class BoxPlotDataCalculator<ST extends AxesChartStyler, S extends AxesCha
 
   public List<BoxPlotData> calculate(Map<String, S> seriesMap, ST boxPlotStyler) {
 
-    // Box plot data information for all series
     List<BoxPlotData> boxPlotDataList = new ArrayList<>();
-    BoxPlotData boxPlotData = null;
-    List<Double> data = null;
-    Collection<? extends Number> yData = null;
-    Iterator<? extends Number> yDataIterator = null;
-    Number next = null;
     for (S series : seriesMap.values()) {
       if (!series.isEnabled()) {
         continue;
       }
 
-      yData = ((AxesChartSeriesCategory) series).getYData();
-      yDataIterator = yData.iterator();
-      data = new ArrayList<>();
-      while (yDataIterator.hasNext()) {
-        next = yDataIterator.next();
-        if (next != null) {
-          data.add(next.doubleValue());
-        }
-      }
+      double[] yRaw = ((AxesChartSeriesCategory) series).getYData();
 
-      if (data.isEmpty()) {
+      // filter out NaN values (converted from null), then sort a copy
+      int count = 0;
+      for (double v : yRaw) {
+        if (!Double.isNaN(v)) count++;
+      }
+      if (count == 0) {
         boxPlotDataList.add(null);
         continue;
       }
-      Collections.sort(data);
-      boxPlotData = calculate(data, boxPlotStyler);
-      boxPlotDataList.add(boxPlotData);
+      double[] data = new double[count];
+      int idx = 0;
+      for (double v : yRaw) {
+        if (!Double.isNaN(v)) data[idx++] = v;
+      }
+      Arrays.sort(data);
+      boxPlotDataList.add(calculate(data, boxPlotStyler));
     }
     return boxPlotDataList;
   }
 
-  private BoxPlotData calculate(List<Double> data, ST boxPlotStyler) {
+  private BoxPlotData calculate(double[] data, ST boxPlotStyler) {
 
     BoxPlotData boxPlotData = new BoxPlotData();
-    int n = data.size();
+    int n = data.length;
     BoxplotCalCulationMethod boxplotCalCulationMethod =
         ((BoxStyler) boxPlotStyler).getBoxplotCalCulationMethod();
     double q1P = 0.0;
@@ -92,39 +85,39 @@ public class BoxPlotDataCalculator<ST extends AxesChartStyler, S extends AxesCha
 
     // Lower whisker, lower = Q1 - 1.5 * IQR
     boxPlotData.lower = boxPlotData.q1 - 1.5 * irq;
-    if (boxPlotData.lower < data.get(0)) {
-      boxPlotData.lower = data.get(0);
+    if (boxPlotData.lower < data[0]) {
+      boxPlotData.lower = data[0];
     }
 
     // Upper whisker, upper = Q3 + 1.5 * IQR
     boxPlotData.upper = boxPlotData.q3 + 1.5 * irq;
-    if (boxPlotData.upper > data.get(data.size() - 1)) {
-      boxPlotData.upper = data.get(data.size() - 1);
+    if (boxPlotData.upper > data[data.length - 1]) {
+      boxPlotData.upper = data[data.length - 1];
     }
     return boxPlotData;
   }
 
   private static double getQuartile(
-      List<Double> data, double qiP, BoxplotCalCulationMethod boxplotCalCulationMethod) {
+      double[] data, double qiP, BoxplotCalCulationMethod boxplotCalCulationMethod) {
 
     int previousItem = (int) Math.floor(qiP);
     int previousItem_index = previousItem == 0 ? 0 : previousItem - 1;
     int nextItem = (int) Math.ceil(qiP);
-    int nextItem_index = data.size() == 1 ? 0 : nextItem - 1;
+    int nextItem_index = data.length == 1 ? 0 : nextItem - 1;
     final double qi;
     if (BoxplotCalCulationMethod.NP == boxplotCalCulationMethod) {
       if (previousItem == nextItem) {
-        qi = (data.get(previousItem_index) + data.get(nextItem_index)) / 2;
+        qi = (data[previousItem_index] + data[nextItem_index]) / 2;
       } else {
-        qi = data.get(nextItem_index);
+        qi = data[nextItem_index];
       }
     } else {
       if (previousItem == nextItem) {
-        qi = data.get(previousItem_index);
+        qi = data[previousItem_index];
       } else {
         qi =
-            data.get(previousItem_index) * (nextItem - qiP)
-                + data.get(nextItem_index) * (qiP - previousItem);
+            data[previousItem_index] * (nextItem - qiP)
+                + data[nextItem_index] * (qiP - previousItem);
       }
     }
     return qi;

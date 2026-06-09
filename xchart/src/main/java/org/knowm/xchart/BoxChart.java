@@ -54,12 +54,18 @@ public class BoxChart extends AxesChart<BoxStyler, BoxSeries> {
 
   public BoxSeries addSeries(String seriesName, int[] yData) {
 
-    return addSeries(seriesName, Utils.getNumberListFromIntArray(yData));
+    double[] doubles = new double[yData.length];
+    for (int i = 0; i < yData.length; i++) doubles[i] = yData[i];
+    return addSeries(seriesName, doubles);
   }
 
   public BoxSeries addSeries(String seriesName, double[] yData) {
 
-    return addSeries(seriesName, Utils.getNumberListFromDoubleArray(yData));
+    sanityCheckYData(yData);
+    xData.add(seriesName);
+    BoxSeries series = new BoxSeries(seriesName, xData, yData, null, DataType.String);
+    seriesMap.put(seriesName, series);
+    return series;
   }
 
   public BoxSeries addSeries(String seriesName, List<? extends Number> yData) {
@@ -97,14 +103,33 @@ public class BoxChart extends AxesChart<BoxStyler, BoxSeries> {
     }
   }
 
+  private void sanityCheckYData(double[] yData) {
+
+    if (yData == null) {
+      throw new IllegalArgumentException("Y-Axis data cannot be null !!!");
+    }
+    if (yData.length == 0) {
+      throw new IllegalArgumentException("Y-Axis data cannot be empty !!!");
+    }
+  }
+
   public BoxSeries updateBoxSeries(String seriesName, int[] newYData) {
 
-    return updateBoxSeries(seriesName, Utils.getNumberListFromIntArray(newYData));
+    double[] doubles = new double[newYData.length];
+    for (int i = 0; i < newYData.length; i++) doubles[i] = newYData[i];
+    return updateBoxSeries(seriesName, doubles);
   }
 
   public BoxSeries updateBoxSeries(String seriesName, double[] newYData) {
 
-    return updateBoxSeries(seriesName, Utils.getNumberListFromDoubleArray(newYData));
+    Map<String, BoxSeries> seriesMap = this.seriesMap;
+    BoxSeries series = seriesMap.get(seriesName);
+
+    if (series == null) {
+      throw new IllegalArgumentException("Series name > " + seriesName + " < not found !!!");
+    }
+    series.replaceData(newYData);
+    return series;
   }
 
   public BoxSeries updateBoxSeries(String seriesName, List<? extends Number> newYData) {

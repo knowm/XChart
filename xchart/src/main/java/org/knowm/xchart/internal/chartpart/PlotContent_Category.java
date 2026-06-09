@@ -9,9 +9,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.knowm.xchart.CategorySeries;
@@ -91,13 +89,9 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
       // smooth curve path for Line render style
       Path2D.Double smoothPath = null;
 
-      Iterator<?> xItr = series.getXData().iterator();
-      Iterator<? extends Number> yItr = series.getYData().iterator();
-      Iterator<? extends Number> ebItr = null;
-      Collection<? extends Number> errorBars = series.getExtraValues();
-      if (errorBars != null) {
-        ebItr = errorBars.iterator();
-      }
+      List<?> xDataList = (List<?>) series.getXData();
+      double[] yArr = series.getYData();
+      double[] errorBars = series.getExtraValues();
 
       // Stepped bars are drawn in chunks rather than for each individual bar
       ArrayList<Point2D.Double> steppedPath = new ArrayList<>();
@@ -105,11 +99,11 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
       Path2D.Double path = null;
       int categoryCounter = 0;
 
-      while (yItr.hasNext()) {
+      for (int dataIndex = 0; dataIndex < yArr.length; dataIndex++) {
 
-        Number next = yItr.next();
-        // skip when a value is null
-        if (next == null) {
+        double next = yArr[dataIndex];
+        // skip when a value is NaN (was null in the original list)
+        if (Double.isNaN(next)) {
 
           if (smoothPath != null) {
             g.setColor(series.getLineColor());
@@ -123,9 +117,9 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
           categoryCounter++;
           continue;
         }
-        Object nextCat = xItr.next();
+        Object nextCat = xDataList.get(dataIndex);
 
-        double yOrig = next.doubleValue();
+        double yOrig = next;
         double y;
         if (stylerCategory.isYAxisLogarithmic()) {
           y = Math.log10(yOrig);
@@ -212,7 +206,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
 
         // Record the first series yOffset value, update totalYOffset value
         // when next is greater then 0
-        if (seriesCounter == 0 || next.doubleValue() > 0) {
+        if (seriesCounter == 0 || next > 0) {
           accumulatedStackOffsetTotalYOffset[categoryCounter] = yOffset;
         }
 
@@ -241,7 +235,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
                   xOffset,
                   gridStep,
                   seriesCounter,
-                  !yItr.hasNext(),
+                  dataIndex == yArr.length - 1,
                   steppedPath,
                   steppedReturnPath,
                   previousY);
@@ -280,7 +274,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
           // g.draw(path);
           // }
 
-          if (stylerCategory.isLabelsVisible() && next != null) {
+          if (stylerCategory.isLabelsVisible()) {
             drawLabels(
                 g,
                 next,
@@ -296,7 +290,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
               && stylerCategory.isShowStackSum()
               && stylerCategory.isStacked()
               && seriesCounter == (seriesMap.size() - 1)) {
-            Number totalNext =
+            double totalNext =
                 accumulatedStackOffsetPos[categoryCounter - 1]
                     - accumulatedStackOffsetNeg[categoryCounter - 1];
             double totalYOffset = accumulatedStackOffsetTotalYOffset[categoryCounter - 1];
@@ -415,7 +409,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
         // paint error bars
         if (errorBars != null) {
 
-          double eb = ebItr.next().doubleValue();
+          double eb = errorBars[dataIndex];
 
           // set error bar style
           if (stylerCategory.isErrorBarsColorSeriesColor()) {
@@ -676,7 +670,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
 
   private void drawLabels(
       Graphics2D g,
-      Number next,
+      double next,
       double xOffset,
       double yOffset,
       double zeroOffset,
@@ -711,7 +705,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
     if (showStackSum) {
       labelY = yOffset - 4;
     } else {
-      if (next.doubleValue() >= 0.0) {
+      if (next >= 0.0) {
         labelY =
             yOffset
                 + (zeroOffset - yOffset) * (1 - stylerCategory.getLabelsPosition())
