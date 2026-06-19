@@ -5,7 +5,7 @@ import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
 /**
- * Demonstrates the fix for issue #792 — {@code setxAxisTickLabelsFormattingFunction} dropping
+ * Demonstrates the fix for issue #792 — {@code setXAxisTickLabelsFormattingFunction} dropping
  * tick labels when the formatting function intentionally returns duplicate strings.
  *
  * <p>Before the fix: the internal {@code do-while} loop in {@code AxisTickCalculator_} kept
@@ -35,7 +35,7 @@ public class TestForIssue792 {
     // Hide every odd x tick label — previously this caused all but two ticks to disappear.
     chart
         .getStyler()
-        .setxAxisTickLabelsFormattingFunction(
+        .setXAxisTickLabelsFormattingFunction(
             x -> x.intValue() % 2 == 0 ? String.valueOf(x.intValue()) : " ");
 
     return chart;

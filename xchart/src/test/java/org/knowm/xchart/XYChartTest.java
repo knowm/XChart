@@ -18,7 +18,7 @@ public class XYChartTest {
     double[] xData = new double[] {0.0, 1.0, 2.0};
     double[] yData = new double[] {2.0, 1.0, 0.0};
     XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
-    chart.getStyler().setyAxisTickLabelsFormattingFunction(yValue -> "1");
+    chart.getStyler().setYAxisTickLabelsFormattingFunction(yValue -> "1");
 
     DigestOutputStream output =
         new DigestOutputStream(new ByteArrayOutputStream(), MessageDigest.getInstance(digestType));

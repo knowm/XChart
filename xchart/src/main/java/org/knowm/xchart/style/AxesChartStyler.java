@@ -793,24 +793,66 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  public Function<Double, String> getxAxisTickLabelsFormattingFunction() {
+  public Function<Double, String> getXAxisTickLabelsFormattingFunction() {
+
     return xAxisTickLabelsFormattingFunction;
   }
 
-  public AxesChartStyler setxAxisTickLabelsFormattingFunction(
+  /**
+   * Sets a custom formatting function for X-axis tick labels. The function receives the raw tick
+   * value as a {@code Double} and returns the label string to display.
+   *
+   * @param xAxisTickLabelsFormattingFunction the formatting function; pass {@code null} to remove
+   */
+  public AxesChartStyler setXAxisTickLabelsFormattingFunction(
       Function<Double, String> xAxisTickLabelsFormattingFunction) {
+
     this.xAxisTickLabelsFormattingFunction = xAxisTickLabelsFormattingFunction;
     return this;
   }
 
-  public Function<Double, String> getyAxisTickLabelsFormattingFunction() {
+  /** @deprecated Use {@link #getXAxisTickLabelsFormattingFunction()} instead. */
+  @Deprecated
+  public Function<Double, String> getxAxisTickLabelsFormattingFunction() {
+    return getXAxisTickLabelsFormattingFunction();
+  }
+
+  /** @deprecated Use {@link #setXAxisTickLabelsFormattingFunction(Function)} instead. */
+  @Deprecated
+  public AxesChartStyler setxAxisTickLabelsFormattingFunction(
+      Function<Double, String> xAxisTickLabelsFormattingFunction) {
+    return setXAxisTickLabelsFormattingFunction(xAxisTickLabelsFormattingFunction);
+  }
+
+  public Function<Double, String> getYAxisTickLabelsFormattingFunction() {
+
     return yAxisTickLabelsFormattingFunction;
   }
 
-  public AxesChartStyler setyAxisTickLabelsFormattingFunction(
+  /**
+   * Sets a custom formatting function for Y-axis tick labels. The function receives the raw tick
+   * value as a {@code Double} and returns the label string to display.
+   *
+   * @param yAxisTickLabelsFormattingFunction the formatting function; pass {@code null} to remove
+   */
+  public AxesChartStyler setYAxisTickLabelsFormattingFunction(
       Function<Double, String> yAxisTickLabelsFormattingFunction) {
+
     this.yAxisTickLabelsFormattingFunction = yAxisTickLabelsFormattingFunction;
     return this;
+  }
+
+  /** @deprecated Use {@link #getYAxisTickLabelsFormattingFunction()} instead. */
+  @Deprecated
+  public Function<Double, String> getyAxisTickLabelsFormattingFunction() {
+    return getYAxisTickLabelsFormattingFunction();
+  }
+
+  /** @deprecated Use {@link #setYAxisTickLabelsFormattingFunction(Function)} instead. */
+  @Deprecated
+  public AxesChartStyler setyAxisTickLabelsFormattingFunction(
+      Function<Double, String> yAxisTickLabelsFormattingFunction) {
+    return setYAxisTickLabelsFormattingFunction(yAxisTickLabelsFormattingFunction);
   }
 
   // TickLabels and MarksColor colors for xAxis, yAxis, yAxisGroup ////////////////////////////////

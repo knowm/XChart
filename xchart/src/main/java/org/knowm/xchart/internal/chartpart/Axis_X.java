@@ -217,10 +217,10 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       xData.addAll(uniqueXData);
     }
 
-    if (axesChartStyler.getxAxisTickLabelsFormattingFunction() != null) {
+    if (axesChartStyler.getXAxisTickLabelsFormattingFunction() != null) {
       if (!xData.isEmpty()) { // TODO why would this be empty?
         return new AxisTickCalculator_Callback(
-            axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+            axesChartStyler.getXAxisTickLabelsFormattingFunction(),
             Axis_.Direction.X,
             workingSpace,
             min,
@@ -229,7 +229,7 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
             axesChartStyler);
       }
       return new AxisTickCalculator_Callback(
-          axesChartStyler.getxAxisTickLabelsFormattingFunction(),
+          axesChartStyler.getXAxisTickLabelsFormattingFunction(),
           Axis_.Direction.X,
           workingSpace,
           min,
