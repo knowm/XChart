@@ -217,7 +217,19 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       xData.addAll(uniqueXData);
     }
 
-    if (axesChartStyler.getXAxisTickLabelsFormattingFunction() != null) {
+    if (axesChartStyler.getXAxisTickLabelsFormattingFunction() != null
+        && axesChartStyler.isXAxisLogarithmic()
+        && getDataType() != DataType.Date) {
+
+      return new AxisTickCalculator_Logarithmic(
+          Axis_.Direction.X,
+          workingSpace,
+          min,
+          max,
+          axesChartStyler,
+          axesChartStyler.getXAxisTickLabelsFormattingFunction());
+
+    } else if (axesChartStyler.getXAxisTickLabelsFormattingFunction() != null) {
       if (!xData.isEmpty()) { // TODO why would this be empty?
         return new AxisTickCalculator_Callback(
             axesChartStyler.getXAxisTickLabelsFormattingFunction(),
