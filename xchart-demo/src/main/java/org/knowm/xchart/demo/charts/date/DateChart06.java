@@ -62,7 +62,7 @@ public class DateChart06 implements ExampleChart<XYChart> {
 
     chart
         .getStyler()
-        .setyAxisTickLabelsFormattingFunction(x -> NumberWordConverter.convert(x.intValue()));
+        .setYAxisTickLabelsFormattingFunction(x -> NumberWordConverter.convert(x.intValue()));
 
     return chart;
   }

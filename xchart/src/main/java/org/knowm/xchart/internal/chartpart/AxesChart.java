@@ -79,21 +79,25 @@ public abstract class AxesChart<ST extends AxesChartStyler, S extends AxesChartS
   }
 
   /**
-   * @Deprecated - use styler instead
+   * Sets a custom formatting function for X-axis tick labels. The function receives the raw tick
+   * value as a {@code Double} and returns the label string to display. This is a convenience
+   * shortcut for {@code chart.getStyler().setXAxisTickLabelsFormattingFunction(fn)}.
    *
-   * @param customFormattingFunction
+   * @param customFormattingFunction the formatting function; pass {@code null} to remove
    */
   public void setCustomXAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
-    styler.setxAxisTickLabelsFormattingFunction(customFormattingFunction);
+    styler.setXAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
 
   /**
-   * @Deprecated - use styler instead
+   * Sets a custom formatting function for Y-axis tick labels. The function receives the raw tick
+   * value as a {@code Double} and returns the label string to display. This is a convenience
+   * shortcut for {@code chart.getStyler().setYAxisTickLabelsFormattingFunction(fn)}.
    *
-   * @param customFormattingFunction
+   * @param customFormattingFunction the formatting function; pass {@code null} to remove
    */
   public void setCustomYAxisTickLabelsFormatter(Function<Double, String> customFormattingFunction) {
-    styler.setyAxisTickLabelsFormattingFunction(customFormattingFunction);
+    styler.setYAxisTickLabelsFormattingFunction(customFormattingFunction);
   }
 
   Axis_X<ST, S> getXAxis() {

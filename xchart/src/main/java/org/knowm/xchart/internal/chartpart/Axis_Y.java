@@ -303,10 +303,10 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       yData.addAll(uniqueYData);
     }
 
-    if (axesChartStyler.getyAxisTickLabelsFormattingFunction() != null) {
+    if (axesChartStyler.getYAxisTickLabelsFormattingFunction() != null) {
       if (!yData.isEmpty()) {
         return new AxisTickCalculator_Callback(
-            axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+            axesChartStyler.getYAxisTickLabelsFormattingFunction(),
             Axis_.Direction.Y,
             workingSpace,
             min,
@@ -315,7 +315,7 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
             axesChartStyler);
       }
       return new AxisTickCalculator_Callback(
-          axesChartStyler.getyAxisTickLabelsFormattingFunction(),
+          axesChartStyler.getYAxisTickLabelsFormattingFunction(),
           Axis_.Direction.Y,
           workingSpace,
           min,

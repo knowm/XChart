@@ -20,7 +20,7 @@ public class RegressionIssue792Test {
     XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", null, yData);
     chart
         .getStyler()
-        .setxAxisTickLabelsFormattingFunction(
+        .setXAxisTickLabelsFormattingFunction(
             x -> x.intValue() % 2 == 0 ? String.valueOf(x.intValue()) : " ");
 
     // when

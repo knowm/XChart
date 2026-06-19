@@ -63,7 +63,7 @@ public class DateChart09 implements ExampleChart<XYChart> {
     DateTimeFormatter xTickFormatter = DateTimeFormatter.ofPattern("LLL");
     chart
         .getStyler()
-        .setxAxisTickLabelsFormattingFunction(
+        .setXAxisTickLabelsFormattingFunction(
             x -> startTime.plusDays(x.longValue()).format(xTickFormatter));
 
     // set custom cursor tool tip text
