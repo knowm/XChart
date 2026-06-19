@@ -69,6 +69,34 @@ public class XYChartTest {
         .doesNotThrowAnyException();
   }
 
+  // https://github.com/knowm/XChart/issues/712 — painting a tiny chart (degenerate bounds) must not NPE
+  @Test
+  public void paintingTinyChartDoesNotThrow() throws Exception {
+
+    // A 1×1 pixel chart has a zero/negative plot area after axis columns are subtracted; the
+    // guard in Plot_AxesChart.paint() must bail out without throwing.
+    XYChart chart = new XYChartBuilder().width(1).height(1).build();
+    chart.addSeries("s", new double[] {1, 2, 3}, new double[] {1, 2, 3});
+
+    assertThatCode(() -> BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG))
+        .doesNotThrowAnyException();
+  }
+
+  // Variant: multiple Y-axis groups (more axis columns → plot area goes negative sooner)
+  @Test
+  public void paintingTinyChartWithMultipleYAxisGroupsDoesNotThrow() throws Exception {
+
+    XYChart chart = new XYChartBuilder().width(1).height(1).build();
+    chart.addSeries("a", new double[] {1, 2, 3}, new double[] {10, 20, 30});
+    XYSeries b = chart.addSeries("b", new double[] {1, 2, 3}, new double[] {100, 200, 300});
+    b.setYAxisGroup(1);
+    XYSeries c = chart.addSeries("c", new double[] {1, 2, 3}, new double[] {1000, 2000, 3000});
+    c.setYAxisGroup(2);
+
+    assertThatCode(() -> BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG))
+        .doesNotThrowAnyException();
+  }
+
   // https://github.com/knowm/XChart/issues/834 — custom formatter must not break logarithmic axis
   @Test
   public void customYAxisFormatterPreservesLogarithmicScale() throws Exception {
