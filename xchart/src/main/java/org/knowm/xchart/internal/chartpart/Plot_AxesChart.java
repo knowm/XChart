@@ -42,6 +42,13 @@ public class Plot_AxesChart<ST extends AxesChartStyler, S extends AxesChartSerie
     // Rectangle2D. See issue #712.
     if (width <= 0 || height <= 0) {
       this.bounds = new Rectangle2D.Double(xOffset, yOffset, 0, 0);
+      // Clear any stale tooltip/cursor state so hover overlays don't persist after
+      // the window is shrunk to a size where no plot can be drawn.
+      PlotInteractionData id = plotContent.getInteractionData();
+      if (id != null) {
+        id.clear();
+        id.plotBounds = this.bounds;
+      }
       return;
     }
 
