@@ -374,9 +374,11 @@ public class PieStyler extends Styler {
   }
 
   /**
-   * @deprecated Use {@link LabelType} with {@link #setLabelType(LabelType)} instead. Mapping:
-   *     {@code Label} → {@link LabelType#Name}, {@code LabelAndPercentage} → {@link
-   *     LabelType#NameAndPercentage}, {@code LabelAndValue} → {@link LabelType#NameAndValue}.
+   * @deprecated Use {@link LabelType} with {@link #setLabelType(LabelType)} instead. Full mapping:
+   *     {@code Value} → {@link LabelType#Value}, {@code Percentage} → {@link
+   *     LabelType#Percentage}, {@code Label} → {@link LabelType#Name}, {@code LabelAndPercentage}
+   *     → {@link LabelType#NameAndPercentage}, {@code LabelAndValue} → {@link
+   *     LabelType#NameAndValue}.
    */
   @Deprecated
   public enum AnnotationType {
