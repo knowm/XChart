@@ -1,11 +1,14 @@
 package org.knowm.xchart;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.io.ByteArrayOutputStream;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -74,16 +77,25 @@ public class XYChartTest {
     XYChart chart = new XYChartBuilder().width(800).height(600).build();
     chart.addSeries("test", xData, yData);
     chart.getStyler().setYAxisLogarithmic(true);
+
+    List<Double> seenValues = new ArrayList<>();
     chart.setCustomYAxisTickLabelsFormatter(
         value -> {
-          if (value < 1e3) return String.format("%.0f nJ", value);
-          else if (value < 1e6) return String.format("%.2f µJ", value / 1e3);
-          else if (value < 1e9) return String.format("%.2f mJ", value / 1e6);
-          else return String.format("%.2f J", value / 1e9);
+          seenValues.add(value);
+          return String.valueOf(value);
         });
 
-    assertThatCode(() -> BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG))
-        .doesNotThrowAnyException();
+    BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+
+    // Every value the formatter receives must be a power of ten (log10 is a whole number).
+    // A linear fallback would produce evenly-spaced values like 0, 1e7, 2e7 ... which fail this.
+    assertThat(seenValues).isNotEmpty();
+    for (double v : seenValues) {
+      double log = Math.log10(v);
+      assertThat(Math.abs(log - Math.round(log)))
+          .as("Expected power-of-ten tick value but got %s", v)
+          .isLessThan(1e-9);
+    }
   }
 
   // https://github.com/knowm/XChart/issues/834 — same for logarithmic X-axis
@@ -94,9 +106,22 @@ public class XYChartTest {
     XYChart chart = new XYChartBuilder().width(800).height(600).build();
     chart.addSeries("test", xData, yData);
     chart.getStyler().setXAxisLogarithmic(true);
-    chart.setCustomXAxisTickLabelsFormatter(value -> String.format("10^%.0f", Math.log10(value)));
 
-    assertThatCode(() -> BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG))
-        .doesNotThrowAnyException();
+    List<Double> seenValues = new ArrayList<>();
+    chart.setCustomXAxisTickLabelsFormatter(
+        value -> {
+          seenValues.add(value);
+          return String.valueOf(value);
+        });
+
+    BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+
+    assertThat(seenValues).isNotEmpty();
+    for (double v : seenValues) {
+      double log = Math.log10(v);
+      assertThat(Math.abs(log - Math.round(log)))
+          .as("Expected power-of-ten tick value but got %s", v)
+          .isLessThan(1e-9);
+    }
   }
 }

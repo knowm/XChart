@@ -218,7 +218,8 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
     }
 
     if (axesChartStyler.getXAxisTickLabelsFormattingFunction() != null
-        && axesChartStyler.isXAxisLogarithmic()) {
+        && axesChartStyler.isXAxisLogarithmic()
+        && getDataType() != DataType.Date) {
 
       return new AxisTickCalculator_Logarithmic(
           Axis_.Direction.X,

@@ -18,6 +18,7 @@ public class TestForIssue834 {
     new SwingWrapper<>(getChart()).displayChart();
   }
 
+  /** Constructs and returns the chart without launching a window (headless-safe). */
   public static XYChart getChart() {
 
     XYChart chart =
