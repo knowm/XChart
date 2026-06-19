@@ -373,6 +373,58 @@ public class PieStyler extends Styler {
     NameAndValue
   }
 
+  /**
+   * @deprecated Use {@link LabelType} with {@link #setLabelType(LabelType)} instead. Full mapping:
+   *     {@code Value} → {@link LabelType#Value}, {@code Percentage} → {@link
+   *     LabelType#Percentage}, {@code Label} → {@link LabelType#Name}, {@code LabelAndPercentage}
+   *     → {@link LabelType#NameAndPercentage}, {@code LabelAndValue} → {@link
+   *     LabelType#NameAndValue}.
+   */
+  @Deprecated
+  public enum AnnotationType {
+    Value,
+    Percentage,
+    Label,
+    LabelAndPercentage,
+    LabelAndValue
+  }
+
+  /**
+   * @deprecated Use {@link #setLabelType(LabelType)} instead.
+   * @param annotationType the old annotation type
+   */
+  @Deprecated
+  public PieStyler setAnnotationType(AnnotationType annotationType) {
+
+    if (annotationType == null) {
+      return setLabelType(null);
+    }
+    switch (annotationType) {
+      case Value:
+        return setLabelType(LabelType.Value);
+      case Percentage:
+        return setLabelType(LabelType.Percentage);
+      case Label:
+        return setLabelType(LabelType.Name);
+      case LabelAndPercentage:
+        return setLabelType(LabelType.NameAndPercentage);
+      case LabelAndValue:
+        return setLabelType(LabelType.NameAndValue);
+      default:
+        return setLabelType(null);
+    }
+  }
+
+  /**
+   * @deprecated Use {@link #setLabelsDistance(double)} instead.
+   * @param annotationDistance the distance from center (0 = center, 1 = edge, &gt;1 = outside)
+   */
+  @Deprecated
+  public PieStyler setAnnotationDistance(double annotationDistance) {
+
+    return setLabelsDistance(annotationDistance);
+  }
+
   public enum ClockwiseDirectionType {
     CLOCKWISE,
     COUNTER_CLOCKWISE

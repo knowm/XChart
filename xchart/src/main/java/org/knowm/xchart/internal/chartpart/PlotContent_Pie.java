@@ -364,7 +364,9 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         // draw label
         if (pieStyler.isForceAllLabelsVisible() || labelWillFit) {
 
-          if (pieStyler.isLabelsFontColorAutomaticEnabled()) {
+          if (pieStyler.isLabelsFontColorAutomaticEnabled() && pieStyler.getLabelsDistance() <= 1.0) {
+            // Auto color only makes sense for inside labels where the slice fill is the background.
+            // Outside labels sit on the plot background, so use the configured label color.
             g.setColor(pieStyler.getLabelsFontColor(series.getFillColor()));
           } else {
             g.setColor(pieStyler.getLabelsFontColor());
