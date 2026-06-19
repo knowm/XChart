@@ -65,4 +65,38 @@ public class XYChartTest {
     assertThatCode(() -> BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG))
         .doesNotThrowAnyException();
   }
+
+  // https://github.com/knowm/XChart/issues/834 — custom formatter must not break logarithmic axis
+  @Test
+  public void customYAxisFormatterPreservesLogarithmicScale() throws Exception {
+    double[] xData = new double[] {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    double[] yData = new double[] {1, 10, 100, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8};
+    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+    chart.addSeries("test", xData, yData);
+    chart.getStyler().setYAxisLogarithmic(true);
+    chart.setCustomYAxisTickLabelsFormatter(
+        value -> {
+          if (value < 1e3) return String.format("%.0f nJ", value);
+          else if (value < 1e6) return String.format("%.2f µJ", value / 1e3);
+          else if (value < 1e9) return String.format("%.2f mJ", value / 1e6);
+          else return String.format("%.2f J", value / 1e9);
+        });
+
+    assertThatCode(() -> BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG))
+        .doesNotThrowAnyException();
+  }
+
+  // https://github.com/knowm/XChart/issues/834 — same for logarithmic X-axis
+  @Test
+  public void customXAxisFormatterPreservesLogarithmicScale() throws Exception {
+    double[] xData = new double[] {1, 10, 100, 1e3, 1e4, 1e5};
+    double[] yData = new double[] {1, 2, 3, 4, 5, 6};
+    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+    chart.addSeries("test", xData, yData);
+    chart.getStyler().setXAxisLogarithmic(true);
+    chart.setCustomXAxisTickLabelsFormatter(value -> String.format("10^%.0f", Math.log10(value)));
+
+    assertThatCode(() -> BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG))
+        .doesNotThrowAnyException();
+  }
 }

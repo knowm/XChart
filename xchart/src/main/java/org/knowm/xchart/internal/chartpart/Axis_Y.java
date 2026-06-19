@@ -303,7 +303,20 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       yData.addAll(uniqueYData);
     }
 
-    if (axesChartStyler.getYAxisTickLabelsFormattingFunction() != null) {
+    if (axesChartStyler.getYAxisTickLabelsFormattingFunction() != null
+        && axesChartStyler.isYAxisLogarithmic()
+        && getDataType() != DataType.Date) {
+
+      return new AxisTickCalculator_Logarithmic(
+          Axis_.Direction.Y,
+          workingSpace,
+          min,
+          max,
+          axesChartStyler,
+          getYIndex(),
+          axesChartStyler.getYAxisTickLabelsFormattingFunction());
+
+    } else if (axesChartStyler.getYAxisTickLabelsFormattingFunction() != null) {
       if (!yData.isEmpty()) {
         return new AxisTickCalculator_Callback(
             axesChartStyler.getYAxisTickLabelsFormattingFunction(),

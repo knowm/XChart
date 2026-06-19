@@ -1,6 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -59,12 +60,63 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
     calculate();
   }
 
+  /**
+   * Constructor with a custom label formatting callback. Tick positions are still computed
+   * logarithmically; only the label text is produced by the supplied function.
+   *
+   * @param axisDirection
+   * @param workingSpace
+   * @param minValue
+   * @param maxValue
+   * @param styler
+   * @param customFormattingFunction
+   */
+  public AxisTickCalculator_Logarithmic(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler,
+      Function<Double, String> customFormattingFunction) {
+
+    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    formatterLogNumber = new Formatter_LogNumber(styler, axisDirection);
+    axisFormat = new Formatter_Custom(customFormattingFunction);
+    calculate();
+  }
+
+  /**
+   * Constructor with a custom label formatting callback for a specific Y-axis index.
+   *
+   * @param axisDirection
+   * @param workingSpace
+   * @param minValue
+   * @param maxValue
+   * @param styler
+   * @param yIndex
+   * @param customFormattingFunction
+   */
+  public AxisTickCalculator_Logarithmic(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler,
+      int yIndex,
+      Function<Double, String> customFormattingFunction) {
+
+    super(axisDirection, workingSpace, minValue, maxValue, styler);
+    formatterLogNumber = new Formatter_LogNumber(styler, axisDirection, yIndex);
+    axisFormat = new Formatter_Custom(customFormattingFunction);
+    calculate();
+  }
+
   @Override
   protected void calculate() {
 
     // a check if all axis data are the exact same values
     if (minValue == maxValue) {
-      tickLabels.add(formatterLogNumber.format(BigDecimal.valueOf(maxValue).doubleValue()));
+      tickLabels.add(axisFormat.format(BigDecimal.valueOf(maxValue).doubleValue()));
       tickLocations.add(workingSpace / 2.0);
       return;
     }
@@ -137,7 +189,7 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
 
         // only add labels for the decades
         if (!axisDecadeOnly || j == 1 || j == 10) {
-          tickLabels.add(formatterLogNumber.format(tickValue));
+          tickLabels.add(axisFormat.format(tickValue));
         } else {
           tickLabels.add(null);
         }
@@ -155,9 +207,9 @@ class AxisTickCalculator_Logarithmic extends AxisTickCalculator_ {
       firstPosition = 2;
     }
     if (tickLocations.size() <= 1) {
-      tickLabels.add(formatterLogNumber.format(minValue));
+      tickLabels.add(axisFormat.format(minValue));
       tickLocations.add(margin);
-      tickLabels.add(formatterLogNumber.format(maxValue));
+      tickLabels.add(axisFormat.format(maxValue));
       tickLocations.add(margin + tickSpace);
     }
   }
