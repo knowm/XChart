@@ -62,6 +62,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private boolean zoomResetByDoubleClick = true;
   private boolean zoomResetByButton = true;
   private boolean cursorEnabled = false;
+  private ChartButtonConfig chartButtonConfig = new ChartButtonConfig();
 
   /**
    * Constructor
@@ -201,6 +202,22 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   public boolean isZoomResetByDoubleClick() {
 
     return zoomResetByDoubleClick;
+  }
+
+  public ChartButtonConfig getChartButtonConfig() {
+
+    return chartButtonConfig;
+  }
+
+  /**
+   * Replaces the default {@link ChartButtonConfig} for the zoom-reset button.
+   *
+   * @param chartButtonConfig the new config
+   */
+  public XChartPanel<T> setChartButtonConfig(ChartButtonConfig chartButtonConfig) {
+
+    this.chartButtonConfig = chartButtonConfig;
+    return this;
   }
 
   private void rewireInteractions() {
