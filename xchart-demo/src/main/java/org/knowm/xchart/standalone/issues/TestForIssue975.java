@@ -1,9 +1,8 @@
 package org.knowm.xchart.standalone.issues;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import org.knowm.xchart.ChartButtonConfig;
 import org.knowm.xchart.ChartButtonConfig.ChartButtonPosition;
+import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -26,30 +25,20 @@ public class TestForIssue975 {
 
   public static void main(String[] args) {
 
-    SwingUtilities.invokeLater(
-        () -> {
-          XYChart chart = getChart();
+    SwingWrapper<XYChart> sw = new SwingWrapper<>(getChart());
+    sw.displayChart();
 
-          XChartPanel<XYChart> panel = new XChartPanel<>(chart);
-
-          // Customise button styling via ChartButtonConfig — no longer touches the Styler.
-          panel.setChartButtonConfig(
-              new ChartButtonConfig()
-                  .setBackgroundColor(ChartColor.RED.getColor())
-                  .setBorderColor(ChartColor.DARK_GREY.getColor())
-                  .setFontColor(java.awt.Color.WHITE)
-                  .setMargin(8)
-                  .setPosition(ChartButtonPosition.InsideSE));
-
-          panel.setZoomEnabled(true);
-          panel.setZoomResetByButton(true);
-
-          JFrame frame = new JFrame("Issue #975 – ChartButtonConfig demo");
-          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-          frame.getContentPane().add(panel);
-          frame.pack();
-          frame.setVisible(true);
-        });
+    // Configure zoom and the custom button style on the panel created by SwingWrapper.
+    sw.getXChartPanel()
+        .setChartButtonConfig(
+            new ChartButtonConfig()
+                .setBackgroundColor(ChartColor.RED.getColor())
+                .setBorderColor(ChartColor.DARK_GREY.getColor())
+                .setFontColor(java.awt.Color.WHITE)
+                .setMargin(8)
+                .setPosition(ChartButtonPosition.InsideSE))
+        .setZoomEnabled(true)
+        .setZoomResetByButton(true);
   }
 
   /** Constructs and returns the chart without launching a window (headless-safe). */

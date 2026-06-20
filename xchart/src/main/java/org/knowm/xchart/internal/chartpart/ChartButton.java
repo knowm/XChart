@@ -2,7 +2,6 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -116,9 +115,6 @@ public class ChartButton extends MouseAdapter implements ChartPart {
       return;
     }
 
-    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
     g.setColor(chartButtonConfig.getFontColor());
     g.setFont(chartButtonConfig.getFont());
 
@@ -154,8 +150,6 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     g.transform(at);
     g.fill(shape);
     g.setTransform(orig);
-
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   private void calculatePosition(Rectangle2D textBounds) {

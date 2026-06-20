@@ -23,7 +23,6 @@ public class ChartButtonConfig {
 
   private Color backgroundColor = ChartColor.LIGHT_GREY.getColor();
   private Color borderColor = ChartColor.DARK_GREY.getColor();
-  private Color hoverColor = ChartColor.LIGHT_GREY.getColor().brighter();
   private Color fontColor = ChartColor.BLACK.getColor();
   private Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 11);
   private int margin = 6;
@@ -58,22 +57,6 @@ public class ChartButtonConfig {
   public ChartButtonConfig setBorderColor(Color borderColor) {
 
     this.borderColor = borderColor;
-    return this;
-  }
-
-  public Color getHoverColor() {
-
-    return hoverColor;
-  }
-
-  /**
-   * Sets the button hover color.
-   *
-   * @param hoverColor the hover color
-   */
-  public ChartButtonConfig setHoverColor(Color hoverColor) {
-
-    this.hoverColor = hoverColor;
     return this;
   }
 
