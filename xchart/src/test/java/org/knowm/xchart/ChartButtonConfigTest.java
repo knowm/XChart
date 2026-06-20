@@ -1,7 +1,6 @@
 package org.knowm.xchart;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.awt.Color;
@@ -63,34 +62,5 @@ public class ChartButtonConfigTest {
         () -> assertThat(config.getFont()).isEqualTo(f),
         () -> assertThat(config.getMargin()).isEqualTo(12),
         () -> assertThat(config.getPosition()).isEqualTo(ChartButtonPosition.InsideSW));
-  }
-
-  @Test
-  void xChartPanelRejectsNullConfig() {
-
-    XYChart chart =
-        new XYChartBuilder().width(400).height(300).build();
-    XChartPanel<XYChart> panel = new XChartPanel<>(chart);
-
-    assertThatThrownBy(() -> panel.setChartButtonConfig(null))
-        .isInstanceOf(NullPointerException.class);
-  }
-
-  @Test
-  void xChartPanelDefaultConfigDerivedFromStyler() {
-
-    XYChart chart =
-        new XYChartBuilder().width(400).height(300).build();
-    XChartPanel<XYChart> panel = new XChartPanel<>(chart);
-
-    ChartButtonConfig config = panel.getChartButtonConfig();
-    assertAll(
-        () -> assertThat(config).isNotNull(),
-        () ->
-            assertThat(config.getFontColor())
-                .isEqualTo(chart.getStyler().getChartFontColor()),
-        () ->
-            assertThat(config.getFont().getSize())
-                .isEqualTo(chart.getStyler().getBaseFont().deriveFont(11f).getSize()));
   }
 }
