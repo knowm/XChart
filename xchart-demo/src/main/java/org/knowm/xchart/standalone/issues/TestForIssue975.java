@@ -1,8 +1,9 @@
 package org.knowm.xchart.standalone.issues;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import org.knowm.xchart.ChartButtonConfig;
 import org.knowm.xchart.ChartButtonConfig.ChartButtonPosition;
-import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -25,22 +26,30 @@ public class TestForIssue975 {
 
   public static void main(String[] args) {
 
-    XYChart chart = getChart();
-    XChartPanel<XYChart> panel = new XChartPanel<>(chart);
+    SwingUtilities.invokeLater(
+        () -> {
+          XYChart chart = getChart();
 
-    // Customise button styling via ChartButtonConfig — no longer touches the Styler.
-    panel.setChartButtonConfig(
-        new ChartButtonConfig()
-            .setBackgroundColor(ChartColor.RED.getColor())
-            .setBorderColor(ChartColor.DARK_GREY.getColor())
-            .setFontColor(java.awt.Color.WHITE)
-            .setMargin(8)
-            .setPosition(ChartButtonPosition.InsideSE));
+          XChartPanel<XYChart> panel = new XChartPanel<>(chart);
 
-    panel.setZoomEnabled(true);
-    panel.setZoomResetByButton(true);
+          // Customise button styling via ChartButtonConfig — no longer touches the Styler.
+          panel.setChartButtonConfig(
+              new ChartButtonConfig()
+                  .setBackgroundColor(ChartColor.RED.getColor())
+                  .setBorderColor(ChartColor.DARK_GREY.getColor())
+                  .setFontColor(java.awt.Color.WHITE)
+                  .setMargin(8)
+                  .setPosition(ChartButtonPosition.InsideSE));
 
-    new SwingWrapper<>(chart).displayChart();
+          panel.setZoomEnabled(true);
+          panel.setZoomResetByButton(true);
+
+          JFrame frame = new JFrame("Issue #975 – ChartButtonConfig demo");
+          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+          frame.getContentPane().add(panel);
+          frame.pack();
+          frame.setVisible(true);
+        });
   }
 
   /** Constructs and returns the chart without launching a window (headless-safe). */
