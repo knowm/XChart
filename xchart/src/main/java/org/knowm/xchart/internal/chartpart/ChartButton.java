@@ -17,9 +17,6 @@ import javax.swing.event.EventListenerList;
 
 import org.knowm.xchart.ChartButtonConfig;
 import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.Styler;
 
 /**
  * A button that can be used on the chart for whatever function. For example the ChartZoom class
@@ -28,7 +25,6 @@ import org.knowm.xchart.style.Styler;
  */
 public class ChartButton extends MouseAdapter implements ChartPart {
 
-  private final Styler styler;
   private final ChartButtonConfig chartButtonConfig;
   private Rectangle bounds;
 
@@ -49,28 +45,13 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   /**
    * Constructor
    *
-   * @param xyChart
    * @param xChartPanel
    * @param text
    */
-  public ChartButton(XYChart xyChart, XChartPanel<XYChart> xChartPanel, String text) {
-
-    this(xyChart, (XChartPanel<?>) xChartPanel, text);
-  }
-
-  /**
-   * Constructor
-   *
-   * @param chart
-   * @param xChartPanel
-   * @param text
-   */
-  public ChartButton(
-      Chart<? extends AxesChartStyler, ?> chart, XChartPanel<?> xChartPanel, String text) {
+  public ChartButton(XChartPanel<?> xChartPanel, String text) {
 
     this.text = text;
 
-    styler = chart.getStyler();
     chartButtonConfig = xChartPanel.getChartButtonConfig();
 
     xChartPanel.addMouseListener(this);
@@ -136,11 +117,7 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     }
 
     Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(
-        RenderingHints.KEY_ANTIALIASING,
-        styler.getTextAntiAlias()
-            ? RenderingHints.VALUE_ANTIALIAS_ON
-            : RenderingHints.VALUE_ANTIALIAS_OFF);
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
     g.setColor(chartButtonConfig.getFontColor());
     g.setFont(chartButtonConfig.getFont());
