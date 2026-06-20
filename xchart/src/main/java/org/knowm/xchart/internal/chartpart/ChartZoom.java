@@ -41,7 +41,7 @@ public class ChartZoom extends MouseAdapter implements ChartPart, ActionListener
     this.xChartPanel = xChartPanel;
     this.chart = chart;
 
-    resetButton = new ChartButton(chart, xChartPanel, resetString);
+    resetButton = new ChartButton(xChartPanel, resetString);
     resetButton.addActionListener(this);
     resetButton.setVisible(false);
   }

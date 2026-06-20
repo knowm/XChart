@@ -2,7 +2,6 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +14,8 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.event.EventListenerList;
 
+import org.knowm.xchart.ChartButtonConfig;
 import org.knowm.xchart.XChartPanel;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.style.AxesChartStyler;
-import org.knowm.xchart.style.Styler;
 
 /**
  * A button that can be used on the chart for whatever function. For example the ChartZoom class
@@ -27,7 +24,7 @@ import org.knowm.xchart.style.Styler;
  */
 public class ChartButton extends MouseAdapter implements ChartPart {
 
-  private final Styler styler;
+  private final ChartButtonConfig chartButtonConfig;
   private Rectangle bounds;
 
   // properties
@@ -47,28 +44,14 @@ public class ChartButton extends MouseAdapter implements ChartPart {
   /**
    * Constructor
    *
-   * @param xyChart
    * @param xChartPanel
    * @param text
    */
-  public ChartButton(XYChart xyChart, XChartPanel<XYChart> xChartPanel, String text) {
-
-    this(xyChart, (XChartPanel<?>) xChartPanel, text);
-  }
-
-  /**
-   * Constructor
-   *
-   * @param chart
-   * @param xChartPanel
-   * @param text
-   */
-  public ChartButton(
-      Chart<? extends AxesChartStyler, ?> chart, XChartPanel<?> xChartPanel, String text) {
+  public ChartButton(XChartPanel<?> xChartPanel, String text) {
 
     this.text = text;
 
-    styler = chart.getStyler();
+    chartButtonConfig = xChartPanel.getChartButtonConfig();
 
     xChartPanel.addMouseListener(this);
     xChartPanel.addMouseMotionListener(this);
@@ -132,18 +115,11 @@ public class ChartButton extends MouseAdapter implements ChartPart {
       return;
     }
 
-    Object oldHint = g.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
-    g.setRenderingHint(
-        RenderingHints.KEY_ANTIALIASING,
-        styler.getTextAntiAlias()
-            ? RenderingHints.VALUE_ANTIALIAS_ON
-            : RenderingHints.VALUE_ANTIALIAS_OFF);
-
-    g.setColor(styler.getChartButtonFontColor());
-    g.setFont(styler.getChartButtonFont());
+    g.setColor(chartButtonConfig.getFontColor());
+    g.setFont(chartButtonConfig.getFont());
 
     FontRenderContext frc = g.getFontRenderContext();
-    TextLayout tl = new TextLayout(text, styler.getChartButtonFont(), frc);
+    TextLayout tl = new TextLayout(text, chartButtonConfig.getFont(), frc);
     Shape shape = tl.getOutline(null);
 
     Rectangle2D textBounds = shape.getBounds2D();
@@ -155,18 +131,18 @@ public class ChartButton extends MouseAdapter implements ChartPart {
         new Rectangle2D.Double(
             xOffset,
             yOffset,
-            textWidth + styler.getChartButtonMargin() * 2,
-            textHeight + styler.getChartButtonMargin() * 2);
-    g.setColor(styler.getChartButtonBackgroundColor());
+            textWidth + chartButtonConfig.getMargin() * 2,
+            textHeight + chartButtonConfig.getMargin() * 2);
+    g.setColor(chartButtonConfig.getBackgroundColor());
     g.fill(buttonRect);
     g.setStroke(SOLID_STROKE);
-    g.setColor(styler.getChartButtonBorderColor());
+    g.setColor(chartButtonConfig.getBorderColor());
     g.draw(buttonRect);
 
-    double startx = xOffset + styler.getChartButtonMargin();
-    double starty = yOffset + styler.getChartButtonMargin();
+    double startx = xOffset + chartButtonConfig.getMargin();
+    double starty = yOffset + chartButtonConfig.getMargin();
 
-    g.setColor(styler.getChartButtonFontColor());
+    g.setColor(chartButtonConfig.getFontColor());
 
     AffineTransform orig = g.getTransform();
     AffineTransform at = new AffineTransform();
@@ -174,43 +150,43 @@ public class ChartButton extends MouseAdapter implements ChartPart {
     g.transform(at);
     g.fill(shape);
     g.setTransform(orig);
-
-    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
   }
 
   private void calculatePosition(Rectangle2D textBounds) {
 
     double textHeight = textBounds.getHeight();
     double textWidth = textBounds.getWidth();
-    double widthAdjustment = textWidth + styler.getChartButtonMargin() * 3;
-    double heightAdjustment = textHeight + styler.getChartButtonMargin() * 3;
+    double widthAdjustment = textWidth + chartButtonConfig.getMargin() * 3;
+    double heightAdjustment = textHeight + chartButtonConfig.getMargin() * 3;
 
     double boundsWidth = bounds.getWidth();
     double boundsHeight = bounds.getHeight();
 
-    switch (styler.getChartButtonPosition()) {
+    switch (chartButtonConfig.getPosition()) {
       case InsideNW:
-        xOffset = bounds.getX() + styler.getChartButtonMargin();
-        yOffset = bounds.getY() + styler.getChartButtonMargin();
+        xOffset = bounds.getX() + chartButtonConfig.getMargin();
+        yOffset = bounds.getY() + chartButtonConfig.getMargin();
         break;
       case InsideNE:
         xOffset = bounds.getX() + boundsWidth - widthAdjustment;
-        yOffset = bounds.getY() + styler.getChartButtonMargin();
+        yOffset = bounds.getY() + chartButtonConfig.getMargin();
         break;
       case InsideSE:
         xOffset = bounds.getX() + boundsWidth - widthAdjustment;
         yOffset = bounds.getY() + boundsHeight - heightAdjustment;
         break;
       case InsideSW:
-        xOffset = bounds.getX() + styler.getChartButtonMargin();
+        xOffset = bounds.getX() + chartButtonConfig.getMargin();
         yOffset = bounds.getY() + boundsHeight - heightAdjustment;
         break;
       case InsideN:
-        xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - styler.getChartButtonMargin();
-        yOffset = bounds.getY() + styler.getChartButtonMargin();
+        xOffset =
+            bounds.getX() + boundsWidth / 2 - textWidth / 2 - chartButtonConfig.getMargin();
+        yOffset = bounds.getY() + chartButtonConfig.getMargin();
         break;
       case InsideS:
-        xOffset = bounds.getX() + boundsWidth / 2 - textWidth / 2 - styler.getChartButtonMargin();
+        xOffset =
+            bounds.getX() + boundsWidth / 2 - textWidth / 2 - chartButtonConfig.getMargin();
         yOffset = bounds.getY() + boundsHeight - heightAdjustment;
         break;
       default:

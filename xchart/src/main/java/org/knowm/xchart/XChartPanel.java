@@ -19,6 +19,7 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -38,6 +39,7 @@ import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ChartZoom;
 import org.knowm.xchart.internal.chartpart.Cursor;
 import org.knowm.xchart.internal.chartpart.ToolTips;
+import org.knowm.xchart.style.Styler;
 
 /**
  * A Swing JPanel that contains a Chart
@@ -62,6 +64,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private boolean zoomResetByDoubleClick = true;
   private boolean zoomResetByButton = true;
   private boolean cursorEnabled = false;
+  private ChartButtonConfig chartButtonConfig;
 
   /**
    * Constructor
@@ -72,6 +75,12 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     this.chart = chart;
     preferredSize = new Dimension(chart.getWidth(), chart.getHeight());
+
+    Styler styler = chart.getStyler();
+    chartButtonConfig =
+        new ChartButtonConfig()
+            .setFontColor(styler.getChartFontColor())
+            .setFont(styler.getBaseFont().deriveFont(11f));
 
     // Right-click listener for saving chart
     this.addMouseListener(new PopUpMenuClickListener());
@@ -201,6 +210,25 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   public boolean isZoomResetByDoubleClick() {
 
     return zoomResetByDoubleClick;
+  }
+
+  public ChartButtonConfig getChartButtonConfig() {
+
+    return chartButtonConfig;
+  }
+
+  /**
+   * Replaces the default {@link ChartButtonConfig} for the zoom-reset button. If zoom has already
+   * been enabled, interactions are rewired so the new config takes effect immediately.
+   *
+   * @param chartButtonConfig the new config (must not be null)
+   */
+  public XChartPanel<T> setChartButtonConfig(ChartButtonConfig chartButtonConfig) {
+
+    Objects.requireNonNull(chartButtonConfig, "chartButtonConfig must not be null");
+    this.chartButtonConfig = chartButtonConfig;
+    rewireInteractions();
+    return this;
   }
 
   private void rewireInteractions() {
