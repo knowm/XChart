@@ -13,6 +13,7 @@ import org.knowm.xchart.custom.CustomGraphic;
 import org.knowm.xchart.custom.CustomTheme;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler.ChartTheme;
 
 public class CategoryChartTest {
 
@@ -244,5 +245,27 @@ public class CategoryChartTest {
       assertThat(series.getChartCategorySeriesRenderStyle())
           .contains(chart.getStyler().getDefaultSeriesRenderStyle());
     }
+  }
+
+  /**
+   * Regression test for <a href="https://github.com/knowm/XChart/issues/707">issue 707</a>.
+   *
+   * <p>The last bar in a Bar-style CategoryChart was drawn twice (overwriting its label) because
+   * the bar loop reused the shared {@code path} variable that {@code closePath()} consumes after
+   * the loop. The fix uses a local {@code barPath} so {@code path} stays {@code null} for bar
+   * series and {@code closePath()} becomes a no-op.
+   */
+  @Test
+  void barChartWithLabelsVisibleRendersWithoutError() throws Exception {
+    CategoryChart barChart =
+        new CategoryChart(800, 600, ChartTheme.Matlab);
+    barChart.getStyler().setLabelsVisible(true);
+    barChart.addSeries(
+        "y(x)",
+        Arrays.asList(0.0, 1.0, 2.0, 3.0, 4.0),
+        Arrays.asList(2.0, 1.5, 4.0, 3.77, 2.5));
+
+    assertDoesNotThrow(
+        () -> BitmapEncoder.getBitmapBytes(barChart, BitmapEncoder.BitmapFormat.PNG));
   }
 }
