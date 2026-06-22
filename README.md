@@ -622,7 +622,7 @@ Add the XChart library as a dependency to your pom.xml file:
 <dependency>
     <groupId>org.knowm.xchart</groupId>
     <artifactId>xchart</artifactId>
-    <version>3.9.0</version>
+    <version>4.0.2</version>
 </dependency>
 ```
 
@@ -645,7 +645,7 @@ For snapshots, add the following to your pom.xml file:
 <dependency>
 <groupId>org.knowm.xchart</groupId>
 <artifactId>xchart</artifactId>
-<version>4.0.2-SNAPSHOT</version>
+<version>4.0.3-SNAPSHOT</version>
 </dependency>
 ```
 
