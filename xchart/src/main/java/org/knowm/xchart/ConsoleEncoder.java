@@ -16,7 +16,7 @@ public final class ConsoleEncoder {
   /**
    * Generate a console string for a given chart using default dimensions
    *
-   * @param chart
+   * @param chart the chart to render
    * @return a console string for a given chart
    */
   public static String getConsoleString(IChart chart) {
@@ -38,7 +38,7 @@ public final class ConsoleEncoder {
   /**
    * Generate a console string for a given chart
    *
-   * @param chart
+   * @param chart the chart to render
    * @param columns number of character columns
    * @param rows number of character rows
    * @return a console string for a given chart
@@ -53,7 +53,7 @@ public final class ConsoleEncoder {
   /**
    * Print a console string for a given chart to System.out
    *
-   * @param chart
+   * @param chart the chart to render
    */
   public static void printConsole(IChart chart) {
 
@@ -71,8 +71,6 @@ public final class ConsoleEncoder {
   }
 
   private static String getConsoleString(BufferedImage bufferedImage, int columns, int rows) {
-
-    validateDimensions(columns, rows);
 
     StringBuilder builder = new StringBuilder(rows * (columns + 1));
     int imageWidth = bufferedImage.getWidth();
