@@ -1,6 +1,11 @@
 package org.knowm.xchart;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This class is used to export Chart data to a folder containing one or more CSV files. The parent
@@ -8,6 +13,8 @@ import java.io.*;
  * series' name becomes the CSV files' name.
  */
 public class CSVExporter {
+
+  private static final String LINE_SEPARATOR = System.lineSeparator();
 
   /**
    * Export all XYChart series as rows in separate CSV files.
@@ -31,29 +38,20 @@ public class CSVExporter {
   public static void writeCSVRows(XYSeries series, String path2Dir) {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
-    Writer out = null;
-    try {
+    try (Writer out =
+        new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8))) {
 
-      out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
-      String csv = join(series.getXData(), ",") + System.getProperty("line.separator");
+      String csv = join(series.getXData(), ",") + LINE_SEPARATOR;
       out.write(csv);
-      csv = join(series.getYData(), ",") + System.getProperty("line.separator");
+      csv = join(series.getYData(), ",") + LINE_SEPARATOR;
       out.write(csv);
       if (series.getExtraValues() != null) {
-        csv = join(series.getExtraValues(), ",") + System.getProperty("line.separator");
+        csv = join(series.getExtraValues(), ",") + LINE_SEPARATOR;
         out.write(csv);
       }
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      if (out != null) {
-        try {
-          out.flush();
-          out.close();
-        } catch (IOException e) {
-          // NOP
-        }
-      }
     }
   }
 
@@ -102,10 +100,10 @@ public class CSVExporter {
   public static void writeCSVColumns(XYSeries series, String path2Dir) {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
-    Writer out = null;
-    try {
+    try (Writer out =
+        new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8))) {
 
-      out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
       double[] xData = series.getXData();
       double[] yData = series.getYData();
       double[] errorBarData = series.getExtraValues();
@@ -118,24 +116,12 @@ public class CSVExporter {
           sb.append(errorBarData[i]).append(",");
         }
         sb.setLength(sb.length() - 1);
-        sb.append(System.getProperty("line.separator"));
+        sb.append(LINE_SEPARATOR);
 
-        // String csv = xDataPoint + "," + yDataPoint + errorBarValue == null ? "" : ("," +
-        // errorBarValue) + System.getProperty("line.separator");
-        // String csv = + yDataPoint + System.getProperty("line.separator");
         out.write(sb.toString());
       }
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      if (out != null) {
-        try {
-          out.flush();
-          out.close();
-        } catch (IOException e) {
-          // NOP
-        }
-      }
     }
   }
 }
