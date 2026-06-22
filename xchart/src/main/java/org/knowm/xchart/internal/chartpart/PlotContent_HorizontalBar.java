@@ -226,22 +226,37 @@ public class PlotContent_HorizontalBar<
     } else {
       labelY = yOffset + barHeight / 2 + labelRectangle.getHeight() / 2;
     }
+    double labelsPosition = styler.getLabelsPosition();
     double labelX;
-
-    if (next.doubleValue() >= 0.0) {
-      labelX =
-          xOffset
-              + (zeroOffset - xOffset) * (1 - styler.getLabelsPosition())
-              - labelRectangle.getWidth() * styler.getLabelsPosition();
+    if (labelsPosition <= 1) {
+      // inside the bar: the position is a fraction of the bar's length
+      if (next.doubleValue() >= 0.0) {
+        labelX =
+            xOffset
+                + (zeroOffset - xOffset) * (1 - labelsPosition)
+                - labelRectangle.getWidth() * labelsPosition;
+      } else {
+        labelX =
+            zeroOffset
+                - (zeroOffset - xOffset) * (1 - labelsPosition)
+                - labelRectangle.getWidth() * (1 - labelsPosition);
+      }
     } else {
-      labelX =
-          zeroOffset
-              - (zeroOffset - xOffset) * (1 - styler.getLabelsPosition())
-              - labelRectangle.getWidth() * (1 - styler.getLabelsPosition());
+      // outside the bar: a fixed pixel gap beyond the bar's end, independent of the bar's length
+      double outsideOffset = (labelsPosition - 1) * OUTSIDE_LABELS_OFFSET_SCALE;
+      if (next.doubleValue() >= 0.0) {
+        labelX = xOffset + outsideOffset;
+      } else {
+        labelX = zeroOffset - outsideOffset - labelRectangle.getWidth();
+      }
     }
 
     if (styler.isLabelsFontColorAutomaticEnabled()) {
-      g.setColor(styler.getLabelsFontColor(seriesColor));
+      // When the label is drawn outside the bar it sits on the plot background, not on the bar, so
+      // the automatic contrast color must be computed against the plot background color.
+      Color contrastBackgroundColor =
+          labelsPosition > 1 ? styler.getPlotBackgroundColor() : seriesColor;
+      g.setColor(styler.getLabelsFontColor(contrastBackgroundColor));
     } else {
       g.setColor(styler.getLabelsFontColor());
     }

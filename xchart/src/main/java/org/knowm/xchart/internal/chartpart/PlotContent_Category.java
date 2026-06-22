@@ -701,24 +701,39 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
     } else {
       labelX = xOffset + barWidth / 2 - labelRectangle.getWidth() / 2 - 1;
     }
+    double labelsPosition = stylerCategory.getLabelsPosition();
     double labelY;
     if (showStackSum) {
       labelY = yOffset - 4;
-    } else {
+    } else if (labelsPosition <= 1) {
+      // inside the bar: the position is a fraction of the bar's height
       if (next >= 0.0) {
         labelY =
             yOffset
-                + (zeroOffset - yOffset) * (1 - stylerCategory.getLabelsPosition())
-                + labelRectangle.getHeight() * stylerCategory.getLabelsPosition();
+                + (zeroOffset - yOffset) * (1 - labelsPosition)
+                + labelRectangle.getHeight() * labelsPosition;
       } else {
         labelY =
             zeroOffset
-                - (zeroOffset - yOffset) * (1 - stylerCategory.getLabelsPosition())
-                + labelRectangle.getHeight() * (1 - stylerCategory.getLabelsPosition());
+                - (zeroOffset - yOffset) * (1 - labelsPosition)
+                + labelRectangle.getHeight() * (1 - labelsPosition);
+      }
+    } else {
+      // outside the bar: a fixed pixel gap beyond the bar's edge, independent of the bar's height
+      double outsideOffset = (labelsPosition - 1) * OUTSIDE_LABELS_OFFSET_SCALE;
+      if (next >= 0.0) {
+        labelY = yOffset - outsideOffset;
+      } else {
+        labelY = zeroOffset + outsideOffset + labelRectangle.getHeight();
       }
     }
     if (stylerCategory.isLabelsFontColorAutomaticEnabled()) {
-      g.setColor(stylerCategory.getLabelsFontColor(seriesColor));
+      // When the label is drawn outside the bar it sits on the plot background, not on the bar, so
+      // the automatic contrast color must be computed against the plot background color.
+      boolean labelOutsideBar = showStackSum || labelsPosition > 1;
+      Color contrastBackgroundColor =
+          labelOutsideBar ? stylerCategory.getPlotBackgroundColor() : seriesColor;
+      g.setColor(stylerCategory.getLabelsFontColor(contrastBackgroundColor));
     } else {
       g.setColor(stylerCategory.getLabelsFontColor());
     }

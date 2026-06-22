@@ -19,6 +19,7 @@ import org.knowm.xchart.style.Styler;
  *   <li>Missing point in series
  *   <li>Manually setting y-axis min and max values
  *   <li>Bar Chart Annotations
+ *   <li>Data labels positioned on top of (outside) the bars
  *   <li>Horizontal Legend OutsideS
  */
 public class BarChart04 implements ExampleChart<CategoryChart> {
@@ -47,6 +48,8 @@ public class BarChart04 implements ExampleChart<CategoryChart> {
     chart.getStyler().setYAxisMin(5.0);
     chart.getStyler().setYAxisMax(70.0);
     chart.getStyler().setLabelsVisible(true);
+    // A value greater than 1 places the labels on top of (outside) the bars
+    chart.getStyler().setLabelsPosition(1.05);
     chart.getStyler().setPlotGridVerticalLinesVisible(false);
     chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
     chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);

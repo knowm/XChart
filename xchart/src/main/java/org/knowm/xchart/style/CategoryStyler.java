@@ -211,7 +211,11 @@ public class CategoryStyler extends AxesChartStyler {
   }
 
   /**
-   * A number between 0 and 1 setting the vertical position of the data label. Default is 0.5
+   * Sets the vertical position of the data label relative to the bar. For values between 0 and 1 the
+   * label is drawn inside the bar as a fraction of its height: 0 places it at the baseline and 1 at
+   * the top of the bar. Values greater than 1 draw the label outside the bar (above positive bars,
+   * below negative bars) at a fixed pixel gap that does not scale with the bar's height, where the
+   * gap is (labelsPosition - 1) * 100 pixels (e.g. 1.1 places it 10px outside). Default is 0.5,
    * placing it in the center.
    *
    * @param labelsPosition
@@ -219,8 +223,8 @@ public class CategoryStyler extends AxesChartStyler {
    */
   public CategoryStyler setLabelsPosition(double labelsPosition) {
 
-    if (labelsPosition < 0 || labelsPosition > 1) {
-      throw new IllegalArgumentException("Annotations position must between 0 and 1!!!");
+    if (labelsPosition < 0) {
+      throw new IllegalArgumentException("Labels position must be greater than or equal to 0!!!");
     }
     this.labelsPosition = labelsPosition;
     return this;
