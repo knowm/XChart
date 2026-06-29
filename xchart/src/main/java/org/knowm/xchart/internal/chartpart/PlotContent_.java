@@ -16,6 +16,11 @@ public abstract class PlotContent_<ST extends Styler, S extends Series> implemen
   static final BasicStroke ERROR_BAR_STROKE =
       new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL);
 
+  // Converts the fraction of a labels position above 1 into a fixed pixel gap outside the bar, so
+  // the gap does not scale with the bar's size (e.g. a position of 1.1 places the label 10px out).
+  // Also used when reserving axis headroom so outside labels are not clipped at the plot edge.
+  static final double OUTSIDE_LABELS_OFFSET_SCALE = 100;
+
   /**
    * Constructor
    *

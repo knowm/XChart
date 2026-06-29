@@ -16,6 +16,10 @@ import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
 
+  // Fraction of the axis range reserved as headroom when data labels are drawn outside the bars, so
+  // they are not clipped at the plot edge.
+  private static final double OUTSIDE_LABELS_AXIS_PADDING = 0.05;
+
   private final AxesChart<ST, S> chart;
 
   private final Axis_X<ST, S> xAxis;
@@ -255,11 +259,25 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     double overrideXAxisMaxValue = xAxis.getMax();
 
     if (chart.getStyler() instanceof HorizontalBarStyler) {
+      HorizontalBarStyler horizontalBarStyler = (HorizontalBarStyler) chart.getStyler();
       if (xAxis.getMin() > 0.0) {
         overrideXAxisMinValue = 0.0;
       }
       if (xAxis.getMax() < 0.0) {
         overrideXAxisMaxValue = 0.0;
+      }
+
+      // When labels are drawn outside the bars, reserve axis headroom so they are not clipped at
+      // the plot edge.
+      if (horizontalBarStyler.isLabelsVisible() && horizontalBarStyler.getLabelsPosition() > 1) {
+        double extra =
+            (overrideXAxisMaxValue - overrideXAxisMinValue) * OUTSIDE_LABELS_AXIS_PADDING;
+        if (overrideXAxisMaxValue > 0.0) {
+          overrideXAxisMaxValue += extra;
+        }
+        if (overrideXAxisMinValue < 0.0) {
+          overrideXAxisMinValue -= extra;
+        }
       }
     }
 
@@ -353,6 +371,19 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
         }
         if (yAxis.getMax() < 0.0) {
           overrideYAxisMaxValue = 0.0;
+        }
+
+        // When labels are drawn outside the bars, reserve axis headroom so they are not clipped at
+        // the plot edge.
+        if (categoryStyler.isLabelsVisible() && categoryStyler.getLabelsPosition() > 1) {
+          double extra =
+              (overrideYAxisMaxValue - overrideYAxisMinValue) * OUTSIDE_LABELS_AXIS_PADDING;
+          if (overrideYAxisMaxValue > 0.0) {
+            overrideYAxisMaxValue += extra;
+          }
+          if (overrideYAxisMinValue < 0.0) {
+            overrideYAxisMinValue -= extra;
+          }
         }
       }
     }
