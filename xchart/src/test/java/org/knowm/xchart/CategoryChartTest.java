@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.custom.CustomGraphic;
 import org.knowm.xchart.custom.CustomTheme;
 import org.knowm.xchart.internal.series.Series;
@@ -298,6 +299,66 @@ public class CategoryChartTest {
             diff5,
             diffNaN)
         .isGreaterThan(diffNaN);
+  }
+
+  /**
+   * Regression test for <a href="https://github.com/knowm/XChart/issues/465">issue 465</a>.
+   *
+   * <p>Stacked area charts must stack like stacked bars: the Y-axis has to scale to the per-category
+   * stacked sum, not the raw maximum single value. This mirrors the AnyChart "stacked area" data
+   * where three series per season sum to as much as 100k while no single value exceeds 40k.
+   *
+   * <p>{@code getScreenYFromChart(v)} maps a data value to its pixel Y using the computed axis, so a
+   * stacked area chart should map any value identically to a stacked bar chart of the same data
+   * (both scale to the stack sum), and differently from a non-stacked area chart (which scales only
+   * to the raw max).
+   */
+  @Test
+  void issue465StackedAreaScalesToStackSum() {
+    List<String> seasons = Arrays.asList("Winter", "Spring", "Summer", "Autumn");
+    List<Integer> s1 = Arrays.asList(20000, 20000, 40000, 20000);
+    List<Integer> s2 = Arrays.asList(40000, 40000, 30000, 20000);
+    List<Integer> s3 = Arrays.asList(20000, 40000, 30000, 40000); // Spring stack sum = 100k
+
+    CategoryChart stackedBar = buildIssue465Chart(seasons, s1, s2, s3, true, CategorySeriesRenderStyle.Bar);
+    CategoryChart stackedArea = buildIssue465Chart(seasons, s1, s2, s3, true, CategorySeriesRenderStyle.Area);
+    CategoryChart nonStackedArea = buildIssue465Chart(seasons, s1, s2, s3, false, CategorySeriesRenderStyle.Area);
+
+    // painting computes the axis min/max used by getScreenYFromChart
+    BitmapEncoder.getBufferedImage(stackedBar);
+    BitmapEncoder.getBufferedImage(stackedArea);
+    BitmapEncoder.getBufferedImage(nonStackedArea);
+
+    // The stack sum (100k) must land at the same pixel for stacked area as for stacked bar.
+    double barTop = stackedBar.getScreenYFromChart(100000);
+    double areaTop = stackedArea.getScreenYFromChart(100000);
+    double nonStackedTop = nonStackedArea.getScreenYFromChart(100000);
+
+    assertThat(areaTop)
+        .as("stacked area must scale to the stack sum just like a stacked bar chart")
+        .isEqualTo(barTop, org.assertj.core.api.Assertions.within(0.5));
+
+    // A non-stacked area chart only scales to the raw max (40k), so 100k maps far above the plot —
+    // proving the stacked behavior is actually engaged, not incidental.
+    assertThat(Math.abs(areaTop - nonStackedTop))
+        .as("stacked and non-stacked area charts must scale their Y-axis differently")
+        .isGreaterThan(1.0);
+  }
+
+  private CategoryChart buildIssue465Chart(
+      List<String> seasons,
+      List<Integer> s1,
+      List<Integer> s2,
+      List<Integer> s3,
+      boolean stacked,
+      CategorySeriesRenderStyle renderStyle) {
+    CategoryChart chart = new CategoryChart(800, 600, ChartTheme.Matlab);
+    chart.getStyler().setStacked(stacked);
+    chart.getStyler().setDefaultSeriesRenderStyle(renderStyle);
+    chart.addSeries("Series 1", seasons, s1);
+    chart.addSeries("Series 2", seasons, s2);
+    chart.addSeries("Series 3", seasons, s3);
+    return chart;
   }
 
   private CategoryChart buildIssue707Chart(
