@@ -1,6 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,7 +132,13 @@ public abstract class AxesChart<ST extends AxesChartStyler, S extends AxesChartS
   Format getYAxisFormat(String yAxisDecimalPattern) {
     final Format format;
     if (yAxisDecimalPattern != null) {
-      format = new DecimalFormat(yAxisDecimalPattern);
+      // Use the styler's locale for the decimal format symbols so the tooltip's decimal separator
+      // matches the axis, which formats via the styler locale (see Formatter_Number). Otherwise a
+      // JVM default locale like French/German would render the decimal separator as a comma in the
+      // tooltip while the axis shows a period.
+      format =
+          new DecimalFormat(
+              yAxisDecimalPattern, DecimalFormatSymbols.getInstance(styler.getLocale()));
     } else {
       format = axisPair.getYAxis().getAxisTickCalculator().getAxisFormat();
     }
