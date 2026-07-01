@@ -1,5 +1,12 @@
 package org.knowm.xchart.internal;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -114,6 +121,19 @@ public class Utils {
 
   public static double[] getDoubleArrayFromDateList(List<?> data) {
 
+    return getDoubleArrayFromDateList(data, ZoneId.systemDefault());
+  }
+
+  /**
+   * Converts a list of date/time values to an array of epoch milliseconds. Supports {@link Date} as
+   * well as the {@code java.time} types {@link Instant}, {@link ZonedDateTime}, {@link
+   * OffsetDateTime}, {@link LocalDateTime}, {@link LocalDate} and {@link LocalTime}. The supplied
+   * {@code zoneId} is only used for the zone-less types ({@code LocalDateTime}, {@code LocalDate},
+   * {@code LocalTime}); the zoned/instant types carry their own offset. Pass the chart's styler
+   * timezone so that conversion and axis-label formatting agree.
+   */
+  public static double[] getDoubleArrayFromDateList(List<?> data, ZoneId zoneId) {
+
     if (data == null) {
       return null;
     }
@@ -121,9 +141,34 @@ public class Utils {
 
     int i = 0;
     for (Object date : data) {
-      doubles[i++] = ((Date) date).getTime();
+      doubles[i++] = toEpochMillis(date, zoneId);
     }
     return doubles;
+  }
+
+  private static double toEpochMillis(Object value, ZoneId zoneId) {
+
+    if (value instanceof Date) {
+      return ((Date) value).getTime();
+    } else if (value instanceof Instant) {
+      return ((Instant) value).toEpochMilli();
+    } else if (value instanceof ZonedDateTime) {
+      return ((ZonedDateTime) value).toInstant().toEpochMilli();
+    } else if (value instanceof OffsetDateTime) {
+      return ((OffsetDateTime) value).toInstant().toEpochMilli();
+    } else if (value instanceof LocalDateTime) {
+      return ((LocalDateTime) value).atZone(zoneId).toInstant().toEpochMilli();
+    } else if (value instanceof LocalDate) {
+      return ((LocalDate) value).atStartOfDay(zoneId).toInstant().toEpochMilli();
+    } else if (value instanceof LocalTime) {
+      // anchor a time-of-day to the epoch day so it renders correctly with a time-only pattern
+      return ((LocalTime) value).atDate(LocalDate.ofEpochDay(0)).atZone(zoneId).toInstant().toEpochMilli();
+    }
+    throw new IllegalArgumentException(
+        "Unsupported date/time type: "
+            + (value == null ? "null" : value.getClass().getName())
+            + ". Supported types are java.util.Date, Instant, ZonedDateTime, OffsetDateTime, "
+            + "LocalDateTime, LocalDate and LocalTime.");
   }
 
   public static double[] getGeneratedDataAsArray(int length) {
