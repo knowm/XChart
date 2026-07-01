@@ -3,6 +3,7 @@ package org.knowm.xchart;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -262,7 +263,7 @@ public class OHLCChart extends AxesChart<OHLCStyler, OHLCSeries> {
       case Date:
         return addSeries(
             seriesName,
-            Utils.getDoubleArrayFromDateList(xData),
+            Utils.getDoubleArrayFromDateList(xData, styler.getTimezone().toZoneId()),
             Utils.getDoubleArrayFromNumberList(openData),
             Utils.getDoubleArrayFromNumberList(highData),
             Utils.getDoubleArrayFromNumberList(lowData),
@@ -309,7 +310,7 @@ public class OHLCChart extends AxesChart<OHLCStyler, OHLCSeries> {
       case Date:
         return addSeries(
             seriesName,
-            Utils.getDoubleArrayFromDateList(xData),
+            Utils.getDoubleArrayFromDateList(xData, styler.getTimezone().toZoneId()),
             Utils.getDoubleArrayFromNumberList(openData),
             Utils.getDoubleArrayFromNumberList(highData),
             Utils.getDoubleArrayFromNumberList(lowData),
@@ -412,7 +413,7 @@ public class OHLCChart extends AxesChart<OHLCStyler, OHLCSeries> {
       case Date:
         return addSeries(
             seriesName,
-            Utils.getDoubleArrayFromDateList(xData),
+            Utils.getDoubleArrayFromDateList(xData, styler.getTimezone().toZoneId()),
             Utils.getDoubleArrayFromNumberList(yData),
             getDataType(xData));
 
@@ -437,7 +438,7 @@ public class OHLCChart extends AxesChart<OHLCStyler, OHLCSeries> {
     Object dataPoint = itr.next();
     if (dataPoint instanceof Number) {
       axisType = DataType.Number;
-    } else if (dataPoint instanceof Date) {
+    } else if (dataPoint instanceof Date || dataPoint instanceof Temporal) {
       axisType = DataType.Date;
     } else {
       throw new IllegalArgumentException("Series data must be either Number or Date type!!!");
@@ -588,7 +589,7 @@ public class OHLCChart extends AxesChart<OHLCStyler, OHLCSeries> {
       case Date:
         return updateOHLCSeries(
             seriesName,
-            Utils.getDoubleArrayFromDateList(newXData),
+            Utils.getDoubleArrayFromDateList(newXData, styler.getTimezone().toZoneId()),
             Utils.getDoubleArrayFromNumberList(newOpenData),
             Utils.getDoubleArrayFromNumberList(newHighData),
             Utils.getDoubleArrayFromNumberList(newLowData),
@@ -619,7 +620,7 @@ public class OHLCChart extends AxesChart<OHLCStyler, OHLCSeries> {
       case Date:
         return updateOHLCSeries(
             seriesName,
-            Utils.getDoubleArrayFromDateList(newXData),
+            Utils.getDoubleArrayFromDateList(newXData, styler.getTimezone().toZoneId()),
             Utils.getDoubleArrayFromNumberList(newOpenData),
             Utils.getDoubleArrayFromNumberList(newHighData),
             Utils.getDoubleArrayFromNumberList(newLowData),
@@ -722,7 +723,7 @@ public class OHLCChart extends AxesChart<OHLCStyler, OHLCSeries> {
       case Date:
         return updateOHLCSeries(
             seriesName,
-            Utils.getDoubleArrayFromDateList(newXData),
+            Utils.getDoubleArrayFromDateList(newXData, styler.getTimezone().toZoneId()),
             Utils.getDoubleArrayFromNumberList(newYData));
 
       default:

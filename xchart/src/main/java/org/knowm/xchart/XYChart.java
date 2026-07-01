@@ -1,6 +1,7 @@
 package org.knowm.xchart;
 
 import java.awt.Graphics2D;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -235,7 +236,7 @@ public class XYChart extends AxesChart<XYStyler, XYSeries> {
       case Date:
         return addSeries(
             seriesName,
-            Utils.getDoubleArrayFromDateList(xData),
+            Utils.getDoubleArrayFromDateList(xData, styler.getTimezone().toZoneId()),
             Utils.getDoubleArrayFromNumberList(yData),
             Utils.getDoubleArrayFromNumberList(errorBars),
             DataType.Date);
@@ -263,7 +264,7 @@ public class XYChart extends AxesChart<XYStyler, XYSeries> {
     Object dataPoint = itr.next();
     if (dataPoint instanceof Number) {
       axisType = DataType.Number;
-    } else if (dataPoint instanceof Date) {
+    } else if (dataPoint instanceof Date || dataPoint instanceof Temporal) {
       axisType = DataType.Date;
     } else {
       throw new IllegalArgumentException("Series data must be either Number or Date type!!!");
@@ -332,7 +333,7 @@ public class XYChart extends AxesChart<XYStyler, XYSeries> {
       case Date:
         return updateXYSeries(
             seriesName,
-            Utils.getDoubleArrayFromDateList(newXData),
+            Utils.getDoubleArrayFromDateList(newXData, styler.getTimezone().toZoneId()),
             Utils.getDoubleArrayFromNumberList(newYData),
             Utils.getDoubleArrayFromNumberList(newErrorBarData));
 
