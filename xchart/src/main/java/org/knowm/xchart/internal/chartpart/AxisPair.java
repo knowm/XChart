@@ -302,67 +302,68 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     if (chart.getStyler() instanceof CategoryStyler) {
 
       CategoryStyler categoryStyler = (CategoryStyler) chart.getStyler();
-      if (categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar
-          || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Stick
-          || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Area) {
 
-        // if stacked, we need to completely re-calculate min and max.
-        if (categoryStyler.isStacked() && !chart.getSeriesMap().isEmpty()) {
+      // If stacked, recalculate min and max from the per-category stack sums. This is independent of
+      // the render style (bar, stick, area, ...) since stacking sums the series values the same way,
+      // and it also covers charts where individual series override the default render style.
+      if (categoryStyler.isStacked() && !chart.getSeriesMap().isEmpty()) {
 
-          AxesChartSeriesCategory axesChartSeries =
-              (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
-          List<?> categories = (List<?>) axesChartSeries.getXData();
+        AxesChartSeriesCategory axesChartSeries =
+            (AxesChartSeriesCategory) chart.getSeriesMap().values().iterator().next();
+        List<?> categories = (List<?>) axesChartSeries.getXData();
 
-          int numCategories = categories.size();
-          double[] accumulatedStackOffsetPos = new double[numCategories];
-          double[] accumulatedStackOffsetNeg = new double[numCategories];
+        int numCategories = categories.size();
+        double[] accumulatedStackOffsetPos = new double[numCategories];
+        double[] accumulatedStackOffsetNeg = new double[numCategories];
 
-          for (S series : chart.getSeriesMap().values()) {
+        for (S series : chart.getSeriesMap().values()) {
 
-            AxesChartSeriesCategory axesChartSeriesCategory = (AxesChartSeriesCategory) series;
+          AxesChartSeriesCategory axesChartSeriesCategory = (AxesChartSeriesCategory) series;
 
-            if (!series.isEnabled()) {
+          if (!series.isEnabled()) {
+            continue;
+          }
+
+          int categoryCounter = 0;
+          double[] yArr = axesChartSeriesCategory.getYData();
+          for (double next : yArr) {
+
+            // skip when a value is NaN (was null in the original list)
+            if (Double.isNaN(next)) {
+              categoryCounter++;
               continue;
             }
 
-            int categoryCounter = 0;
-            double[] yArr = axesChartSeriesCategory.getYData();
-            for (double next : yArr) {
-
-              // skip when a value is NaN (was null in the original list)
-              if (Double.isNaN(next)) {
-                categoryCounter++;
-                continue;
-              }
-
-              if (next > 0) {
-                accumulatedStackOffsetPos[categoryCounter] += next;
-              } else if (next < 0) {
-                accumulatedStackOffsetNeg[categoryCounter] += next;
-              }
-              categoryCounter++;
+            if (next > 0) {
+              accumulatedStackOffsetPos[categoryCounter] += next;
+            } else if (next < 0) {
+              accumulatedStackOffsetNeg[categoryCounter] += next;
             }
+            categoryCounter++;
           }
-
-          double max = accumulatedStackOffsetPos[0];
-          for (int i = 1; i < accumulatedStackOffsetPos.length; i++) {
-            if (accumulatedStackOffsetPos[i] > max) {
-              max = accumulatedStackOffsetPos[i];
-            }
-          }
-
-          double min = accumulatedStackOffsetNeg[0];
-          for (int i = 1; i < accumulatedStackOffsetNeg.length; i++) {
-            if (accumulatedStackOffsetNeg[i] < min) {
-              min = accumulatedStackOffsetNeg[i];
-            }
-          }
-
-          overrideYAxisMaxValue = max;
-          overrideYAxisMinValue = min;
-          // System.out.println("overrideYAxisMaxValue: " + overrideYAxisMaxValue);
-          // System.out.println("overrideYAxisMinValue: " + overrideYAxisMinValue);
         }
+
+        double max = accumulatedStackOffsetPos[0];
+        for (int i = 1; i < accumulatedStackOffsetPos.length; i++) {
+          if (accumulatedStackOffsetPos[i] > max) {
+            max = accumulatedStackOffsetPos[i];
+          }
+        }
+
+        double min = accumulatedStackOffsetNeg[0];
+        for (int i = 1; i < accumulatedStackOffsetNeg.length; i++) {
+          if (accumulatedStackOffsetNeg[i] < min) {
+            min = accumulatedStackOffsetNeg[i];
+          }
+        }
+
+        overrideYAxisMaxValue = max;
+        overrideYAxisMinValue = min;
+      }
+
+      if (categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar
+          || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Stick
+          || categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Area) {
 
         // override min/max value for bar charts' Y-Axis
         // There is a special case where it's desired to anchor the axis min or max to zero, like in

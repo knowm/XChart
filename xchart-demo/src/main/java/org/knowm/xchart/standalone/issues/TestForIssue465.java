@@ -32,12 +32,21 @@ public class TestForIssue465 {
 
   public static void main(String[] args) {
 
-    List<CategoryChart> charts =
-        Arrays.asList(
-            buildChart("Stacked Bar", CategorySeriesRenderStyle.Bar),
-            buildChart("Stacked Area", CategorySeriesRenderStyle.Area));
+    new SwingWrapper<>(getCharts(), 1, 2).displayChartMatrix();
+  }
 
-    new SwingWrapper<>(charts, 1, 2).displayChartMatrix();
+  /** The stacked area chart, for headless/automated callers. */
+  public CategoryChart getChart() {
+
+    return buildChart("Stacked Area", CategorySeriesRenderStyle.Area);
+  }
+
+  /** The stacked bar and stacked area charts, shown side by side. */
+  public static List<CategoryChart> getCharts() {
+
+    return Arrays.asList(
+        buildChart("Stacked Bar", CategorySeriesRenderStyle.Bar),
+        buildChart("Stacked Area", CategorySeriesRenderStyle.Area));
   }
 
   private static CategoryChart buildChart(String title, CategorySeriesRenderStyle renderStyle) {

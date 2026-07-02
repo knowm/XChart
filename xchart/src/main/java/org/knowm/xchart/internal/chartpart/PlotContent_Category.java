@@ -134,6 +134,10 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
             smoothPath = null;
           }
 
+          // flush the current stacked-area band so it does not bridge across the gap
+          fillStackedAreaBand(
+              g, series, stackedAreaTopPoints, stackedAreaFloorYOffsets, series.isSmooth());
+
           previousX = -Double.MAX_VALUE;
           previousY = -Double.MAX_VALUE;
           categoryCounter++;
@@ -526,22 +530,9 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
       g.setColor(series.getFillColor());
       closePath(g, path, previousX, getBounds(), yTopMargin);
 
-      // fill the stacked-area band: top edge left-to-right, then floor edge right-to-left
-      if (!stackedAreaTopPoints.isEmpty()) {
-        Path2D.Double areaBand = new Path2D.Double();
-        Point2D.Double firstPoint = stackedAreaTopPoints.get(0);
-        areaBand.moveTo(firstPoint.getX(), firstPoint.getY());
-        for (int i = 1; i < stackedAreaTopPoints.size(); i++) {
-          Point2D.Double p = stackedAreaTopPoints.get(i);
-          areaBand.lineTo(p.getX(), p.getY());
-        }
-        for (int i = stackedAreaTopPoints.size() - 1; i >= 0; i--) {
-          areaBand.lineTo(stackedAreaTopPoints.get(i).getX(), stackedAreaFloorYOffsets.get(i));
-        }
-        areaBand.closePath();
-        g.setColor(series.getFillColor());
-        g.fill(areaBand);
-      }
+      // fill any remaining stacked-area band (a series with no NaN gaps has one band)
+      fillStackedAreaBand(
+          g, series, stackedAreaTopPoints, stackedAreaFloorYOffsets, series.isSmooth());
 
       // Final drawing of a steppedBar is done after the main loop,
       // as it continues on null and we may end up missing the final iteration.
@@ -657,6 +648,65 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
     steppedReturnPath.add(new Point2D.Double(xOffset + stepLength, yCenter));
 
     return y;
+  }
+
+  /**
+   * Fills one stacked-area band: the top edge (this series' cumulative line) left-to-right, then the
+   * floor edge (the previous series' cumulative line, or the zero line for the first series)
+   * right-to-left. When {@code smooth} is true the edges use the same cubic interpolation as
+   * non-stacked smooth areas, so a band's floor exactly retraces the curve of the band below it. The
+   * passed lists are cleared afterward so the caller can begin a new contiguous segment (e.g. after
+   * a NaN gap).
+   */
+  private void fillStackedAreaBand(
+      Graphics2D g,
+      S series,
+      ArrayList<Point2D.Double> topPoints,
+      ArrayList<Double> floorYOffsets,
+      boolean smooth) {
+
+    if (topPoints.isEmpty()) {
+      return;
+    }
+
+    Path2D.Double band = new Path2D.Double();
+    Point2D.Double first = topPoints.get(0);
+    band.moveTo(first.getX(), first.getY());
+
+    // top edge, left to right
+    for (int i = 1; i < topPoints.size(); i++) {
+      Point2D.Double prev = topPoints.get(i - 1);
+      Point2D.Double cur = topPoints.get(i);
+      if (smooth) {
+        double midX = (prev.getX() + cur.getX()) / 2;
+        band.curveTo(midX, prev.getY(), midX, cur.getY(), cur.getX(), cur.getY());
+      } else {
+        band.lineTo(cur.getX(), cur.getY());
+      }
+    }
+
+    // floor edge, right to left
+    int last = topPoints.size() - 1;
+    band.lineTo(topPoints.get(last).getX(), floorYOffsets.get(last));
+    for (int i = last; i > 0; i--) {
+      double curX = topPoints.get(i).getX();
+      double prevX = topPoints.get(i - 1).getX();
+      double curFloor = floorYOffsets.get(i);
+      double prevFloor = floorYOffsets.get(i - 1);
+      if (smooth) {
+        double midX = (curX + prevX) / 2;
+        band.curveTo(midX, curFloor, midX, prevFloor, prevX, prevFloor);
+      } else {
+        band.lineTo(prevX, prevFloor);
+      }
+    }
+
+    band.closePath();
+    g.setColor(series.getFillColor());
+    g.fill(band);
+
+    topPoints.clear();
+    floorYOffsets.clear();
   }
 
   /** Draws the accumulated stepped-bar path after all data points have been processed. */
