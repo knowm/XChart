@@ -9,6 +9,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,23 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
     double[] accumulatedStackOffsetNeg = new double[numCategories];
     double[] accumulatedStackOffsetTotalYOffset = new double[numCategories];
 
+    // For stacked area charts, each series is drawn as a filled band between the previous series'
+    // cumulative line (the floor) and its own cumulative line. Positive and negative stacks grow
+    // away from the value-zero line in opposite directions (mirroring stacked bars), so track a
+    // floor per direction per category, both starting at the zero line.
+    double yAxisMinChart = axesChart.getYAxis().getMin();
+    double yAxisMaxChart = axesChart.getYAxis().getMax();
+    double zeroValue = Math.max(yAxisMinChart, Math.min(yAxisMaxChart, 0.0));
+    double zeroLineYOffset =
+        getBounds().getY()
+            + getBounds().getHeight()
+            - (yTopMargin
+                + (zeroValue - yAxisMinChart) / (yAxisMaxChart - yAxisMinChart) * yTickSpace);
+    double[] stackedAreaFloorYOffsetPos = new double[numCategories];
+    double[] stackedAreaFloorYOffsetNeg = new double[numCategories];
+    Arrays.fill(stackedAreaFloorYOffsetPos, zeroLineYOffset);
+    Arrays.fill(stackedAreaFloorYOffsetNeg, zeroLineYOffset);
+
     for (S series : seriesMap.values()) {
 
       if (!series.isEnabled()) {
@@ -96,6 +114,10 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
       // Stepped bars are drawn in chunks rather than for each individual bar
       ArrayList<Point2D.Double> steppedPath = new ArrayList<>();
       ArrayList<Point2D.Double> steppedReturnPath = new ArrayList<>();
+      // Stacked area top points and matching floor Y-offsets, collected across the data loop and
+      // painted as a single filled band afterward.
+      ArrayList<Point2D.Double> stackedAreaTopPoints = new ArrayList<>();
+      ArrayList<Double> stackedAreaFloorYOffsets = new ArrayList<>();
       Path2D.Double path = null;
       int categoryCounter = 0;
 
@@ -111,6 +133,10 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
             g.draw(smoothPath);
             smoothPath = null;
           }
+
+          // flush the current stacked-area band so it does not bridge across the gap
+          fillStackedAreaBand(
+              g, series, stackedAreaTopPoints, stackedAreaFloorYOffsets, series.isSmooth());
 
           previousX = -Double.MAX_VALUE;
           previousY = -Double.MAX_VALUE;
@@ -174,7 +200,10 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
               if (stylerCategory.isStacked() && !series.isOverlapped()) {
                 yTop += accumulatedStackOffsetPos[categoryCounter];
                 yBottom += accumulatedStackOffsetPos[categoryCounter];
-                accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
+                // Grow the stack by the actual value. For bars (yBottom == 0) this equals
+                // (yTop - yBottom), but for area/line (yBottom == yTop) that difference would be 0,
+                // so the stack must be advanced by y directly.
+                accumulatedStackOffsetPos[categoryCounter] += y;
               }
             } else {
               if (series.getChartCategorySeriesRenderStyle().orElseThrow()
@@ -192,7 +221,9 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
               if (stylerCategory.isStacked() && !series.isOverlapped()) {
                 yTop -= accumulatedStackOffsetNeg[categoryCounter];
                 yBottom -= accumulatedStackOffsetNeg[categoryCounter];
-                accumulatedStackOffsetNeg[categoryCounter] += (yTop - yBottom);
+                // Grow the negative stack by the magnitude of y (y < 0 here), for the same reason
+                // as the positive branch: for area/line (yTop - yBottom) would be 0.
+                accumulatedStackOffsetNeg[categoryCounter] -= y;
               }
             }
             break;
@@ -369,7 +400,21 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
           if (CategorySeriesRenderStyle.Area.equals(
               series.getChartCategorySeriesRenderStyle().orElseThrow())) {
 
-            if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
+            double xCenter = xOffset + barWidth / 2;
+
+            if (stylerCategory.isStacked() && !series.isOverlapped()) {
+              // Stacked: collect this point and the floor it rests on (the previous series'
+              // cumulative line for this category). The band is filled after the data loop. Advance
+              // the floor so the next series stacks on top of this series.
+              double[] floors =
+                  (y >= 0.0) ? stackedAreaFloorYOffsetPos : stackedAreaFloorYOffsetNeg;
+              double floor = dataIndex < floors.length ? floors[dataIndex] : zeroLineYOffset;
+              stackedAreaTopPoints.add(new Point2D.Double(xCenter, yOffset));
+              stackedAreaFloorYOffsets.add(floor);
+              if (dataIndex < floors.length) {
+                floors[dataIndex] = yOffset;
+              }
+            } else if (previousX != -Double.MAX_VALUE && previousY != -Double.MAX_VALUE) {
 
               g.setColor(series.getFillColor());
               double yBottomOfArea = getBounds().getY() + getBounds().getHeight() - yTopMargin;
@@ -381,14 +426,14 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
               }
               if (series.isSmooth()) {
                 path.curveTo(
-                    (previousX + xOffset + barWidth / 2) / 2,
+                    (previousX + xCenter) / 2,
                     previousY,
-                    (previousX + xOffset + barWidth / 2) / 2,
+                    (previousX + xCenter) / 2,
                     yOffset,
-                    xOffset + barWidth / 2,
+                    xCenter,
                     yOffset);
               } else {
-                path.lineTo(xOffset + barWidth / 2, yOffset);
+                path.lineTo(xCenter, yOffset);
               }
             }
             if (xOffset < previousX) {
@@ -484,6 +529,10 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
       // close any open path for area charts
       g.setColor(series.getFillColor());
       closePath(g, path, previousX, getBounds(), yTopMargin);
+
+      // fill any remaining stacked-area band (a series with no NaN gaps has one band)
+      fillStackedAreaBand(
+          g, series, stackedAreaTopPoints, stackedAreaFloorYOffsets, series.isSmooth());
 
       // Final drawing of a steppedBar is done after the main loop,
       // as it continues on null and we may end up missing the final iteration.
@@ -599,6 +648,65 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
     steppedReturnPath.add(new Point2D.Double(xOffset + stepLength, yCenter));
 
     return y;
+  }
+
+  /**
+   * Fills one stacked-area band: the top edge (this series' cumulative line) left-to-right, then the
+   * floor edge (the previous series' cumulative line, or the zero line for the first series)
+   * right-to-left. When {@code smooth} is true the edges use the same cubic interpolation as
+   * non-stacked smooth areas, so a band's floor exactly retraces the curve of the band below it. The
+   * passed lists are cleared afterward so the caller can begin a new contiguous segment (e.g. after
+   * a NaN gap).
+   */
+  private void fillStackedAreaBand(
+      Graphics2D g,
+      S series,
+      ArrayList<Point2D.Double> topPoints,
+      ArrayList<Double> floorYOffsets,
+      boolean smooth) {
+
+    if (topPoints.isEmpty()) {
+      return;
+    }
+
+    Path2D.Double band = new Path2D.Double();
+    Point2D.Double first = topPoints.get(0);
+    band.moveTo(first.getX(), first.getY());
+
+    // top edge, left to right
+    for (int i = 1; i < topPoints.size(); i++) {
+      Point2D.Double prev = topPoints.get(i - 1);
+      Point2D.Double cur = topPoints.get(i);
+      if (smooth) {
+        double midX = (prev.getX() + cur.getX()) / 2;
+        band.curveTo(midX, prev.getY(), midX, cur.getY(), cur.getX(), cur.getY());
+      } else {
+        band.lineTo(cur.getX(), cur.getY());
+      }
+    }
+
+    // floor edge, right to left
+    int last = topPoints.size() - 1;
+    band.lineTo(topPoints.get(last).getX(), floorYOffsets.get(last));
+    for (int i = last; i > 0; i--) {
+      double curX = topPoints.get(i).getX();
+      double prevX = topPoints.get(i - 1).getX();
+      double curFloor = floorYOffsets.get(i);
+      double prevFloor = floorYOffsets.get(i - 1);
+      if (smooth) {
+        double midX = (curX + prevX) / 2;
+        band.curveTo(midX, curFloor, midX, prevFloor, prevX, prevFloor);
+      } else {
+        band.lineTo(prevX, prevFloor);
+      }
+    }
+
+    band.closePath();
+    g.setColor(series.getFillColor());
+    g.fill(band);
+
+    topPoints.clear();
+    floorYOffsets.clear();
   }
 
   /** Draws the accumulated stepped-bar path after all data points have been processed. */
