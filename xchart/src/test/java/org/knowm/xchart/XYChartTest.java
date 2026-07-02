@@ -205,11 +205,19 @@ public class XYChartTest {
     BufferedImage lateDefaultImage = BitmapEncoder.getBufferedImage(lateDefaultChart);
     BufferedImage earlyDefaultImage = BitmapEncoder.getBufferedImage(earlyDefaultChart);
 
+    XYChart repaintDefaultChart = buildIssue181LikeChart();
+    XYSeries repaintDefaultSeries = addIssue181LikeSeries(repaintDefaultChart);
+    BitmapEncoder.getBufferedImage(repaintDefaultChart);
+    repaintDefaultChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+    BufferedImage repaintDefaultImage = BitmapEncoder.getBufferedImage(repaintDefaultChart);
+
     assertThat(lateDefaultSeries.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
     assertThat(earlyDefaultSeries.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
+    assertThat(repaintDefaultSeries.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
     assertThat(lateDefaultImage.getWidth()).isEqualTo(earlyDefaultImage.getWidth());
     assertThat(lateDefaultImage.getHeight()).isEqualTo(earlyDefaultImage.getHeight());
     assertThat(countDiffPixels(lateDefaultImage, earlyDefaultImage)).isZero();
+    assertThat(countDiffPixels(repaintDefaultImage, earlyDefaultImage)).isZero();
   }
 
   private XYChart buildIssue181LikeChart() {
