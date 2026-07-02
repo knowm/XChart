@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
 
 public class XYChartTest {
   private static final String digestType = "md5";
@@ -151,5 +152,36 @@ public class XYChartTest {
           .as("Expected power-of-ten tick value but got %s", v)
           .isLessThan(1e-9);
     }
+  }
+
+  @Test
+  public void addSeriesUsesConfiguredDefaultSeriesRenderStyleImmediately() {
+    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
+
+    XYSeries series = chart.addSeries("test", new double[] {1, 2, 3}, new double[] {1, 2, 3});
+
+    assertThat(series.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Area);
+  }
+
+  @Test
+  public void addSeriesUsesDefaultLineRenderStyleImmediately() {
+    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+
+    XYSeries series = chart.addSeries("test", new double[] {1, 2, 3}, new double[] {1, 2, 3});
+
+    assertThat(series.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Line);
+  }
+
+  @Test
+  public void explicitSeriesRenderStyleSurvivesPaint() throws Exception {
+    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
+    XYSeries series = chart.addSeries("test", new double[] {1, 2, 3}, new double[] {1, 2, 3});
+    series.setXYSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+
+    BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+
+    assertThat(series.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
   }
 }

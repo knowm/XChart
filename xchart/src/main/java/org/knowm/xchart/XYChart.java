@@ -307,6 +307,9 @@ public class XYChart extends AxesChart<XYStyler, XYSeries> {
               seriesName, Utils.getGeneratedDataAsArray(yData.length), yData, errorBars, dataType);
     }
 
+    if (series.getXYSeriesRenderStyle().isEmpty()) {
+      series.setXYSeriesRenderStyle(styler.getDefaultSeriesRenderStyle());
+    }
     seriesMap.put(seriesName, series);
 
     return series;
