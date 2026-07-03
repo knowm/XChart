@@ -2,6 +2,7 @@ package org.knowm.xchart;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class CSVImporter {
       DataOrientation dataOrientation,
       int width,
       int height,
-      ChartTheme chartTheme) {
+      ChartTheme chartTheme)
+      throws IOException {
 
     // 1. get the directory, name chart the dir name
     XYChart chart;
@@ -68,7 +70,7 @@ public class CSVImporter {
   }
 
   public static SeriesData getSeriesDataFromCSVFile(
-      String path2CSVFile, DataOrientation dataOrientation) {
+      String path2CSVFile, DataOrientation dataOrientation) throws IOException {
 
     // 1. get csv file in the dir
     File csvFile = new File(path2CSVFile);
@@ -94,7 +96,8 @@ public class CSVImporter {
    * @return
    */
   public static XYChart getChartFromCSVDir(
-      String path2Directory, DataOrientation dataOrientation, int width, int height) {
+      String path2Directory, DataOrientation dataOrientation, int width, int height)
+      throws IOException {
 
     return getChartFromCSVDir(path2Directory, dataOrientation, width, height, null);
   }
@@ -105,27 +108,15 @@ public class CSVImporter {
    * @param csvFile
    * @return
    */
-  private static String[] getSeriesDataFromCSVRows(File csvFile) {
+  private static String[] getSeriesDataFromCSVRows(File csvFile) throws IOException {
 
     String[] xAndYData = new String[3];
 
-    BufferedReader bufferedReader = null;
-    try {
+    try (BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile))) {
       int counter = 0;
       String line;
-      bufferedReader = new BufferedReader(new FileReader(csvFile));
       while ((line = bufferedReader.readLine()) != null) {
         xAndYData[counter++] = line;
-      }
-    } catch (Exception e) {
-      System.out.println("Exception while reading csv file: " + e);
-    } finally {
-      if (bufferedReader != null) {
-        try {
-          bufferedReader.close();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
       }
     }
     return xAndYData;
@@ -135,33 +126,21 @@ public class CSVImporter {
    * @param csvFile
    * @return
    */
-  private static String[] getSeriesDataFromCSVColumns(File csvFile) {
+  private static String[] getSeriesDataFromCSVColumns(File csvFile) throws IOException {
 
     String[] xAndYData = new String[3];
     xAndYData[0] = "";
     xAndYData[1] = "";
     xAndYData[2] = "";
 
-    BufferedReader bufferedReader = null;
-    try {
+    try (BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile))) {
       String line;
-      bufferedReader = new BufferedReader(new FileReader(csvFile));
       while ((line = bufferedReader.readLine()) != null) {
         String[] dataArray = line.split(",");
         xAndYData[0] += dataArray[0] + ",";
         xAndYData[1] += dataArray[1] + ",";
         if (dataArray.length > 2) {
           xAndYData[2] += dataArray[2] + ",";
-        }
-      }
-    } catch (Exception e) {
-      System.out.println("Exception while reading csv file: " + e);
-    } finally {
-      if (bufferedReader != null) {
-        try {
-          bufferedReader.close();
-        } catch (IOException e) {
-          e.printStackTrace();
         }
       }
     }
@@ -177,13 +156,7 @@ public class CSVImporter {
     List<Number> axisData = new ArrayList<Number>();
     String[] stringDataArray = stringData.split(",");
     for (String dataPoint : stringDataArray) {
-      try {
-        Double value = Double.parseDouble(dataPoint);
-        axisData.add(value);
-      } catch (NumberFormatException e) {
-        System.out.println("Error parsing >" + dataPoint + "< !");
-        throw (e);
-      }
+      axisData.add(Double.parseDouble(dataPoint));
     }
     return axisData;
   }
@@ -196,7 +169,7 @@ public class CSVImporter {
    * @param regex - ex. ".*.csv"
    * @return File[] - an array of files
    */
-  private static File[] getAllFiles(String dirName, String regex) {
+  private static File[] getAllFiles(String dirName, String regex) throws FileNotFoundException {
 
     File[] allFiles = getAllFiles(dirName);
 
@@ -218,25 +191,24 @@ public class CSVImporter {
    * @param dirName - ex. "./path/to/directory/" *make sure you have the '/' on the end
    * @return File[] - an array of files
    */
-  private static File[] getAllFiles(String dirName) {
+  private static File[] getAllFiles(String dirName) throws FileNotFoundException {
 
     File dir = new File(dirName);
 
     File[] files = dir.listFiles(); // returns files and folders
 
-    if (files != null) {
-      List<File> filteredFiles = new ArrayList<File>();
-      for (File file : files) {
-
-        if (file.isFile()) {
-          filteredFiles.add(file);
-        }
-      }
-      return filteredFiles.toArray(new File[filteredFiles.size()]);
-    } else {
-      System.out.println(dirName + " does not denote a valid directory!");
-      return new File[0];
+    if (files == null) {
+      throw new FileNotFoundException(dirName + " does not denote a valid directory!");
     }
+
+    List<File> filteredFiles = new ArrayList<File>();
+    for (File file : files) {
+
+      if (file.isFile()) {
+        filteredFiles.add(file);
+      }
+    }
+    return filteredFiles.toArray(new File[filteredFiles.size()]);
   }
 
   public enum DataOrientation {

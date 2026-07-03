@@ -1,6 +1,7 @@
 package org.knowm.xchart;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This class is used to export Chart data to a folder containing one or more CSV files. The parent
@@ -15,7 +16,7 @@ public class CSVExporter {
    * @param chart
    * @param path2Dir
    */
-  public static void writeCSVRows(XYChart chart, String path2Dir) {
+  public static void writeCSVRows(XYChart chart, String path2Dir) throws IOException {
 
     for (XYSeries xySeries : chart.getSeriesCollection()) {
       writeCSVRows(xySeries, path2Dir);
@@ -28,13 +29,13 @@ public class CSVExporter {
    * @param series
    * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
    */
-  public static void writeCSVRows(XYSeries series, String path2Dir) {
+  public static void writeCSVRows(XYSeries series, String path2Dir) throws IOException {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
-    Writer out = null;
-    try {
+    try (Writer out =
+        new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8))) {
 
-      out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
       String csv = join(series.getXData(), ",") + System.getProperty("line.separator");
       out.write(csv);
       csv = join(series.getYData(), ",") + System.getProperty("line.separator");
@@ -42,17 +43,6 @@ public class CSVExporter {
       if (series.getExtraValues() != null) {
         csv = join(series.getExtraValues(), ",") + System.getProperty("line.separator");
         out.write(csv);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      if (out != null) {
-        try {
-          out.flush();
-          out.close();
-        } catch (IOException e) {
-          // NOP
-        }
       }
     }
   }
@@ -86,7 +76,7 @@ public class CSVExporter {
    * @param chart
    * @param path2Dir
    */
-  public static void writeCSVColumns(XYChart chart, String path2Dir) {
+  public static void writeCSVColumns(XYChart chart, String path2Dir) throws IOException {
 
     for (XYSeries xySeries : chart.getSeriesCollection()) {
       writeCSVColumns(xySeries, path2Dir);
@@ -99,13 +89,13 @@ public class CSVExporter {
    * @param series
    * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
    */
-  public static void writeCSVColumns(XYSeries series, String path2Dir) {
+  public static void writeCSVColumns(XYSeries series, String path2Dir) throws IOException {
 
     File newFile = new File(path2Dir + series.getName() + ".csv");
-    Writer out = null;
-    try {
+    try (Writer out =
+        new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream(newFile), StandardCharsets.UTF_8))) {
 
-      out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile), "UTF8"));
       double[] xData = series.getXData();
       double[] yData = series.getYData();
       double[] errorBarData = series.getExtraValues();
@@ -124,17 +114,6 @@ public class CSVExporter {
         // errorBarValue) + System.getProperty("line.separator");
         // String csv = + yDataPoint + System.getProperty("line.separator");
         out.write(sb.toString());
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally {
-      if (out != null) {
-        try {
-          out.flush();
-          out.close();
-        } catch (IOException e) {
-          // NOP
-        }
       }
     }
   }
