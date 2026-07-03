@@ -77,14 +77,15 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
    */
   public PieSeries addSeries(String seriesName, Number value) {
 
-    PieSeries series = new PieSeries(seriesName, value);
-
     if (seriesMap.containsKey(seriesName)) {
       throw new IllegalArgumentException(
           "Series name >"
               + seriesName
               + "< has already been used. Use unique names for each series!!!");
     }
+    sanityCheck(seriesName, value);
+
+    PieSeries series = new PieSeries(seriesName, value);
     seriesMap.put(seriesName, series);
 
     return series;
@@ -104,9 +105,31 @@ public class PieChart extends Chart<PieStyler, PieSeries> {
     if (series == null) {
       throw new IllegalArgumentException("Series name >" + seriesName + "< not found!!!");
     }
+    sanityCheck(seriesName, value);
     series.replaceData(value);
 
     return series;
+  }
+
+  /**
+   * Pie slices represent a fraction of a whole, so only non-negative, finite values make sense. Fail
+   * fast on invalid input rather than rendering a corrupted chart.
+   *
+   * @param seriesName
+   * @param value
+   */
+  private void sanityCheck(String seriesName, Number value) {
+
+    if (value == null) {
+      throw new IllegalArgumentException("Value cannot be null!!! >" + seriesName);
+    }
+    double doubleValue = value.doubleValue();
+    if (Double.isNaN(doubleValue) || Double.isInfinite(doubleValue)) {
+      throw new IllegalArgumentException("Value cannot be NaN or infinite!!! >" + seriesName);
+    }
+    if (doubleValue < 0.0) {
+      throw new IllegalArgumentException("Value cannot be negative!!! >" + seriesName);
+    }
   }
 
   @Override
