@@ -36,11 +36,6 @@ public class XYSeries extends AxesChartSeriesNumerical {
     return Optional.ofNullable(defaultRenderStyleSupplier.get());
   }
 
-  Optional<XYSeriesRenderStyle> getExplicitXYSeriesRenderStyle() {
-
-    return xySeriesRenderStyle;
-  }
-
   public XYSeries setXYSeriesRenderStyle(XYSeriesRenderStyle chartXYSeriesRenderStyle) {
 
     this.xySeriesRenderStyle = Optional.ofNullable(chartXYSeriesRenderStyle);
