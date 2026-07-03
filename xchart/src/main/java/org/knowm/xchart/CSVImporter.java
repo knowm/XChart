@@ -23,6 +23,7 @@ public class CSVImporter {
    * @param height
    * @param chartTheme
    * @return
+   * @throws IOException if the directory is invalid or a CSV file cannot be read or parsed
    */
   public static XYChart getChartFromCSVDir(
       String path2Directory,
@@ -94,6 +95,7 @@ public class CSVImporter {
    * @param width
    * @param height
    * @return
+   * @throws IOException if the directory is invalid or a CSV file cannot be read or parsed
    */
   public static XYChart getChartFromCSVDir(
       String path2Directory, DataOrientation dataOrientation, int width, int height)
@@ -107,6 +109,8 @@ public class CSVImporter {
    *
    * @param csvFile
    * @return
+   * @throws IOException if the file cannot be read or does not contain the expected 2 or 3 rows (x,
+   *     y, and optionally error bars)
    */
   private static String[] getSeriesDataFromCSVRows(File csvFile) throws IOException {
 
@@ -116,7 +120,19 @@ public class CSVImporter {
       int counter = 0;
       String line;
       while ((line = bufferedReader.readLine()) != null) {
+        if (line.trim().isEmpty()) {
+          continue;
+        }
+        if (counter >= xAndYData.length) {
+          throw new IOException(
+              "Expected at most 3 rows (x, y, and optionally error bars) in CSV file: "
+                  + csvFile.getPath());
+        }
         xAndYData[counter++] = line;
+      }
+      if (counter < 2) {
+        throw new IOException(
+            "Expected at least 2 rows (x and y) in CSV file: " + csvFile.getPath());
       }
     }
     return xAndYData;
@@ -125,6 +141,8 @@ public class CSVImporter {
   /**
    * @param csvFile
    * @return
+   * @throws IOException if the file cannot be read or a line does not contain at least the 2
+   *     expected comma-separated values (x, y)
    */
   private static String[] getSeriesDataFromCSVColumns(File csvFile) throws IOException {
 
@@ -136,7 +154,15 @@ public class CSVImporter {
     try (BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile))) {
       String line;
       while ((line = bufferedReader.readLine()) != null) {
+        if (line.trim().isEmpty()) {
+          continue;
+        }
         String[] dataArray = line.split(",");
+        if (dataArray.length < 2) {
+          throw new IOException(
+              "Expected at least 2 comma-separated values (x, y) per line in CSV file: "
+                  + csvFile.getPath());
+        }
         xAndYData[0] += dataArray[0] + ",";
         xAndYData[1] += dataArray[1] + ",";
         if (dataArray.length > 2) {

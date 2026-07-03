@@ -15,6 +15,7 @@ public class CSVExporter {
    *
    * @param chart
    * @param path2Dir
+   * @throws IOException if a CSV file cannot be written
    */
   public static void writeCSVRows(XYChart chart, String path2Dir) throws IOException {
 
@@ -28,6 +29,7 @@ public class CSVExporter {
    *
    * @param series
    * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
+   * @throws IOException if the CSV file cannot be written
    */
   public static void writeCSVRows(XYSeries series, String path2Dir) throws IOException {
 
@@ -75,6 +77,7 @@ public class CSVExporter {
    *
    * @param chart
    * @param path2Dir
+   * @throws IOException if a CSV file cannot be written
    */
   public static void writeCSVColumns(XYChart chart, String path2Dir) throws IOException {
 
@@ -88,6 +91,7 @@ public class CSVExporter {
    *
    * @param series
    * @param path2Dir - ex. "./path/to/directory/" *make sure you have the '/' on the end
+   * @throws IOException if the CSV file cannot be written
    */
   public static void writeCSVColumns(XYSeries series, String path2Dir) throws IOException {
 
