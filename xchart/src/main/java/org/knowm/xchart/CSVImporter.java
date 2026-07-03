@@ -23,7 +23,8 @@ public class CSVImporter {
    * @param height
    * @param chartTheme
    * @return
-   * @throws IOException if the directory is invalid or a CSV file cannot be read or parsed
+   * @throws IOException if the directory is invalid or a CSV file cannot be read
+   * @throws IllegalArgumentException if a CSV file is malformed
    */
   public static XYChart getChartFromCSVDir(
       String path2Directory,
@@ -95,7 +96,8 @@ public class CSVImporter {
    * @param width
    * @param height
    * @return
-   * @throws IOException if the directory is invalid or a CSV file cannot be read or parsed
+   * @throws IOException if the directory is invalid or a CSV file cannot be read
+   * @throws IllegalArgumentException if a CSV file is malformed
    */
   public static XYChart getChartFromCSVDir(
       String path2Directory, DataOrientation dataOrientation, int width, int height)
@@ -109,8 +111,9 @@ public class CSVImporter {
    *
    * @param csvFile
    * @return
-   * @throws IOException if the file cannot be read or does not contain the expected 2 or 3 rows (x,
-   *     y, and optionally error bars)
+   * @throws IOException if the file cannot be read
+   * @throws IllegalArgumentException if the file does not contain the expected 2 or 3 rows (x, y,
+   *     and optionally error bars)
    */
   private static String[] getSeriesDataFromCSVRows(File csvFile) throws IOException {
 
@@ -124,14 +127,14 @@ public class CSVImporter {
           continue;
         }
         if (counter >= xAndYData.length) {
-          throw new IOException(
+          throw new IllegalArgumentException(
               "Expected at most 3 rows (x, y, and optionally error bars) in CSV file: "
                   + csvFile.getPath());
         }
         xAndYData[counter++] = line;
       }
       if (counter < 2) {
-        throw new IOException(
+        throw new IllegalArgumentException(
             "Expected at least 2 rows (x and y) in CSV file: " + csvFile.getPath());
       }
     }
@@ -141,8 +144,9 @@ public class CSVImporter {
   /**
    * @param csvFile
    * @return
-   * @throws IOException if the file cannot be read or a line does not contain at least the 2
-   *     expected comma-separated values (x, y)
+   * @throws IOException if the file cannot be read
+   * @throws IllegalArgumentException if a line does not contain at least the 2 expected
+   *     comma-separated values (x, y)
    */
   private static String[] getSeriesDataFromCSVColumns(File csvFile) throws IOException {
 
@@ -159,7 +163,7 @@ public class CSVImporter {
         }
         String[] dataArray = line.split(",");
         if (dataArray.length < 2) {
-          throw new IOException(
+          throw new IllegalArgumentException(
               "Expected at least 2 comma-separated values (x, y) per line in CSV file: "
                   + csvFile.getPath());
         }
