@@ -320,16 +320,16 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
           firstPosition = BigDecimal.valueOf(firstPositionAsDouble);
         } catch (java.lang.NumberFormatException e) {
 
-          System.out.println(
-              "Some debug stuff. This happens once in a blue moon, and I don't know why.");
-          System.out.println("scale: " + scale);
-          System.out.println("exponent: " + exponent);
-          System.out.println("gridStep: " + gridStep);
-          System.out.println("cleanedGridStep: " + cleanedGridStep);
-          System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
-          System.out.println(
-              "NumberFormatException caused by this number: "
-                  + getFirstPosition(cleanedGridStep.doubleValue()));
+          // System.out.println(
+          //     "Some debug stuff. This happens once in a blue moon, and I don't know why.");
+          // System.out.println("scale: " + scale);
+          // System.out.println("exponent: " + exponent);
+          // System.out.println("gridStep: " + gridStep);
+          // System.out.println("cleanedGridStep: " + cleanedGridStep);
+          // System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
+          // System.out.println(
+          //     "NumberFormatException caused by this number: "
+          //         + getFirstPosition(cleanedGridStep.doubleValue()));
         }
       }
 
