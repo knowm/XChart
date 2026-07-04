@@ -46,46 +46,40 @@ public final class VectorGraphicsEncoder {
   @Deprecated
   public static void saveVectorGraphic(
       IChart chart, OutputStream os, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
-    final Processor p;
 
-    if (VectorGraphicsFormat.PDF != vectorGraphicsFormat) {
-      // SVG and EPS are produced by VectorGraphics2D; PDF delegates to the (separately guarded)
-      // PdfboxGraphicsEncoder below.
-      Utils.requireOnClasspath(
-          "de.erichseifert.vectorgraphics2d.VectorGraphics2D",
-          vectorGraphicsFormat + " export",
-          "de.erichseifert.vectorgraphics2d:VectorGraphics2D");
+    // PDF is produced by pdfbox-graphics2d, not VectorGraphics2D. Delegate before referencing any
+    // VectorGraphics2D type so PDF export works even when the (now optional) VectorGraphics2D
+    // dependency is absent.
+    if (VectorGraphicsFormat.PDF == vectorGraphicsFormat) {
+      PdfboxGraphicsEncoder.savePdfboxGraphics(chart, os);
+      return;
     }
 
+    // SVG and EPS are produced by VectorGraphics2D.
+    Utils.requireOnClasspath(
+        "de.erichseifert.vectorgraphics2d.VectorGraphics2D",
+        vectorGraphicsFormat + " export",
+        "de.erichseifert.vectorgraphics2d:VectorGraphics2D");
+
+    final Processor p;
     switch (vectorGraphicsFormat) {
       case EPS:
         p = new EPSProcessor();
         break;
-      case PDF:
-        p = new PDFBoxProcessor();
-        break;
       case SVG:
         p = new SVGProcessor();
         break;
-
       default:
         throw new UnsupportedOperationException(
             "Unsupported vector graphics format: " + vectorGraphicsFormat);
     }
 
-    if (VectorGraphicsFormat.PDF != vectorGraphicsFormat) {
-      VectorGraphics2D vg2d = new VectorGraphics2D();
-      //    vg2d.draw(new Rectangle2D.Double(0.0, 0.0, chart.getWidth(), chart.getHeight()));
-      CommandSequence commands = vg2d.getCommands();
-
-      chart.paint(vg2d, chart.getWidth(), chart.getHeight());
-
-      PageSize pageSize = new PageSize(0.0, 0.0, chart.getWidth(), chart.getHeight());
-      Document doc = p.getDocument(commands, pageSize);
-      doc.writeTo(os);
-    } else {
-      ((PDFBoxProcessor) p).savePdf(chart, os);
-    }
+    VectorGraphics2D vg2d = new VectorGraphics2D();
+    CommandSequence commands = vg2d.getCommands();
+    chart.paint(vg2d, chart.getWidth(), chart.getHeight());
+    PageSize pageSize = new PageSize(0.0, 0.0, chart.getWidth(), chart.getHeight());
+    Document doc = p.getDocument(commands, pageSize);
+    doc.writeTo(os);
   }
 
   /**
@@ -114,20 +108,5 @@ public final class VectorGraphicsEncoder {
     EPS,
     PDF,
     SVG
-  }
-
-  private static class PDFBoxProcessor implements Processor {
-
-    @Override
-    public Document getDocument(CommandSequence arg0, PageSize arg1) {
-
-      return null;
-    }
-
-    @SuppressWarnings("deprecation")
-    public void savePdf(IChart chart, OutputStream os) throws IOException {
-
-      PdfboxGraphicsEncoder.savePdfboxGraphics(chart, os);
-    }
   }
 }

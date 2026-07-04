@@ -30,8 +30,6 @@ public class PdfboxGraphicsEncoder {
    * @param chart Chart
    * @param fileName file name path
    * @throws IOException
-   */
-  /**
    * @deprecated use {@link ChartEncoder#saveChart(IChart, String, String)} with format {@code
    *     "pdf"} instead
    */
@@ -47,8 +45,6 @@ public class PdfboxGraphicsEncoder {
    * @param chart Chart
    * @param file File
    * @throws IOException
-   */
-  /**
    * @deprecated use {@link ChartEncoder#saveChart(IChart, OutputStream, String)} with format {@code
    *     "pdf"} instead
    */
@@ -64,8 +60,6 @@ public class PdfboxGraphicsEncoder {
    * @param chart Chart
    * @param os OutputStream
    * @throws IOException
-   */
-  /**
    * @deprecated use {@link ChartEncoder#saveChart(IChart, OutputStream, String)} with format {@code
    *     "pdf"} instead
    */
@@ -83,8 +77,6 @@ public class PdfboxGraphicsEncoder {
    * @param charts List&lt;? extends IChart&gt;
    * @param fileName file name path
    * @throws IOException
-   */
-  /**
    * @deprecated use {@link ChartEncoder} per chart, or merge charts before export
    */
   @Deprecated
@@ -100,8 +92,6 @@ public class PdfboxGraphicsEncoder {
    * @param charts List&lt;? extends IChart&gt;
    * @param file File
    * @throws IOException
-   */
-  /**
    * @deprecated use {@link ChartEncoder} per chart, or merge charts before export
    */
   @Deprecated
@@ -117,8 +107,6 @@ public class PdfboxGraphicsEncoder {
    * @param charts List&lt;? extends IChart&gt;
    * @param os OutputStream
    * @throws IOException
-   */
-  /**
    * @deprecated use {@link ChartEncoder} per chart, or merge charts before export
    */
   @Deprecated

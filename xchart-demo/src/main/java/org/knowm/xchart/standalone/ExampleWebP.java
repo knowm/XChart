@@ -9,8 +9,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * Generates a WebP sample chart ({@code ./Sample_Chart.webp}) in the project root.
  *
  * <p>WebP is not built into the JDK. This example works because the demo module declares an ImageIO
- * WebP writer plugin ({@code com.github.gotson:webp-imageio}, which bundles native binaries for
- * Windows/Linux/macOS). With any such plugin on the classpath, {@link ChartEncoder} needs no
+ * WebP writer plugin ({@code com.github.usefulness:webp-imageio}, which bundles native binaries for
+ * Windows/Linux/macOS including Apple Silicon). With any such plugin on the classpath, {@link ChartEncoder} needs no
  * special-casing: it simply hands the {@code "webp"} format name to {@code javax.imageio.ImageIO}.
  *
  * <p>To enable WebP export in your own project, add a WebP ImageIO plugin to your build; no XChart
