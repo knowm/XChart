@@ -1,6 +1,7 @@
 package org.knowm.xchart;
 
 import java.util.Optional;
+import java.util.function.Supplier;
 import org.knowm.xchart.internal.chartpart.RenderableSeries;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.AxesChartSeriesNumerical;
@@ -9,6 +10,7 @@ import org.knowm.xchart.internal.series.AxesChartSeriesNumerical;
 public class XYSeries extends AxesChartSeriesNumerical {
 
   private Optional<XYSeriesRenderStyle> xySeriesRenderStyle = Optional.empty();
+  private Supplier<XYSeriesRenderStyle> defaultRenderStyleSupplier = () -> null;
   // smooth curve
   private boolean smooth;
 
@@ -28,7 +30,10 @@ public class XYSeries extends AxesChartSeriesNumerical {
 
   public Optional<XYSeriesRenderStyle> getXYSeriesRenderStyle() {
 
-    return xySeriesRenderStyle;
+    if (xySeriesRenderStyle.isPresent()) {
+      return xySeriesRenderStyle;
+    }
+    return Optional.ofNullable(defaultRenderStyleSupplier.get());
   }
 
   public XYSeries setXYSeriesRenderStyle(XYSeriesRenderStyle chartXYSeriesRenderStyle) {
@@ -37,10 +42,18 @@ public class XYSeries extends AxesChartSeriesNumerical {
     return this;
   }
 
+  XYSeries setDefaultRenderStyleSupplier(
+      Supplier<XYSeriesRenderStyle> defaultRenderStyleSupplier) {
+
+    this.defaultRenderStyleSupplier =
+        defaultRenderStyleSupplier == null ? () -> null : defaultRenderStyleSupplier;
+    return this;
+  }
+
   @Override
   public LegendRenderType getLegendRenderType() {
 
-    return xySeriesRenderStyle
+    return getXYSeriesRenderStyle()
         .orElseThrow(() -> new IllegalStateException("XY render style not set"))
         .getLegendRenderType();
   }

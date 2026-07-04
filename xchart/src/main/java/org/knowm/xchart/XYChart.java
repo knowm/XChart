@@ -307,6 +307,7 @@ public class XYChart extends AxesChart<XYStyler, XYSeries> {
               seriesName, Utils.getGeneratedDataAsArray(yData.length), yData, errorBars, dataType);
     }
 
+    series.setDefaultRenderStyleSupplier(() -> styler.getDefaultSeriesRenderStyle());
     seriesMap.put(seriesName, series);
 
     return series;
@@ -407,10 +408,12 @@ public class XYChart extends AxesChart<XYStyler, XYSeries> {
     setWidth(width);
     setHeight(height);
 
-    // set the series render styles if they are not set. Legend and Plot need it.
+    // Validate that every series has an effective render style (explicit or default). Legend and
+    // Plot need it. The style is resolved lazily by getXYSeriesRenderStyle(), so nothing is mutated
+    // here.
     for (XYSeries xySeries : seriesMap.values()) {
-      if (xySeries.getXYSeriesRenderStyle().isEmpty()) { // wasn't overridden, use default from Style Manager
-        xySeries.setXYSeriesRenderStyle(getStyler().getDefaultSeriesRenderStyle());
+      if (xySeries.getXYSeriesRenderStyle().isEmpty()) {
+        throw new IllegalStateException("XY render style not set");
       }
     }
     setSeriesStyles();

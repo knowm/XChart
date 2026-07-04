@@ -3,6 +3,7 @@ package org.knowm.xchart;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
@@ -11,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.lines.SeriesLines;
 
 public class XYChartTest {
   private static final String digestType = "md5";
@@ -151,5 +155,117 @@ public class XYChartTest {
           .as("Expected power-of-ten tick value but got %s", v)
           .isLessThan(1e-9);
     }
+  }
+
+  @Test
+  public void addSeriesUsesConfiguredDefaultSeriesRenderStyleImmediately() {
+    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
+
+    XYSeries series = chart.addSeries("test", new double[] {1, 2, 3}, new double[] {1, 2, 3});
+
+    assertThat(series.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Area);
+  }
+
+  @Test
+  public void addSeriesUsesDefaultLineRenderStyleImmediately() {
+    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+
+    XYSeries series = chart.addSeries("test", new double[] {1, 2, 3}, new double[] {1, 2, 3});
+
+    assertThat(series.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Line);
+  }
+
+  @Test
+  public void explicitSeriesRenderStyleSurvivesPaint() throws Exception {
+    XYChart chart = new XYChartBuilder().width(800).height(600).build();
+    chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
+    XYSeries series = chart.addSeries("test", new double[] {1, 2, 3}, new double[] {1, 2, 3});
+    series.setXYSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+
+    BitmapEncoder.getBitmapBytes(chart, BitmapEncoder.BitmapFormat.PNG);
+
+    assertThat(series.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
+  }
+
+  @Test
+  public void defaultSeriesRenderStyleSetAfterAddIsUsedByGetterAndRendering()
+      throws Exception {
+
+    XYChart lateDefaultChart = buildIssue181LikeChart();
+    XYSeries lateDefaultSeries = addIssue181LikeSeries(lateDefaultChart);
+    lateDefaultChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+
+    assertThat(lateDefaultSeries.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
+
+    XYChart earlyDefaultChart = buildIssue181LikeChart();
+    earlyDefaultChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+    XYSeries earlyDefaultSeries = addIssue181LikeSeries(earlyDefaultChart);
+
+    BufferedImage lateDefaultImage = BitmapEncoder.getBufferedImage(lateDefaultChart);
+    BufferedImage earlyDefaultImage = BitmapEncoder.getBufferedImage(earlyDefaultChart);
+
+    XYChart repaintDefaultChart = buildIssue181LikeChart();
+    XYSeries repaintDefaultSeries = addIssue181LikeSeries(repaintDefaultChart);
+    BitmapEncoder.getBufferedImage(repaintDefaultChart);
+    repaintDefaultChart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Scatter);
+    BufferedImage repaintDefaultImage = BitmapEncoder.getBufferedImage(repaintDefaultChart);
+
+    assertThat(lateDefaultSeries.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
+    assertThat(earlyDefaultSeries.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
+    assertThat(repaintDefaultSeries.getXYSeriesRenderStyle()).contains(XYSeriesRenderStyle.Scatter);
+    assertThat(lateDefaultImage.getWidth()).isEqualTo(earlyDefaultImage.getWidth());
+    assertThat(lateDefaultImage.getHeight()).isEqualTo(earlyDefaultImage.getHeight());
+    assertThat(countDiffPixels(lateDefaultImage, earlyDefaultImage)).isZero();
+    assertThat(countDiffPixels(repaintDefaultImage, earlyDefaultImage)).isZero();
+  }
+
+  private XYChart buildIssue181LikeChart() {
+
+    XYChart chart =
+        new XYChartBuilder().width(500).height(350).theme(Styler.ChartTheme.Matlab).build();
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+    chart.getStyler().setMarkerSize(5);
+    chart.getStyler().setAxisTicksVisible(true);
+    chart.getStyler().setXAxisMin(0.0);
+    chart.getStyler().setYAxisMin(0.0);
+    chart.getStyler().setPlotGridLinesVisible(false);
+    chart.getStyler().setPlotContentSize(1.0);
+    return chart;
+  }
+
+  private XYSeries addIssue181LikeSeries(XYChart chart) {
+
+    XYSeries gaussianBlob =
+        chart.addSeries(
+            "Gaussian Blob",
+            new double[] {0.3, 1.2, 2.1, 2.9, 3.8, 4.6, 5.4, 6.3, 7.1, 8.0},
+            new double[] {7.8, 5.9, 6.7, 4.8, 6.1, 3.9, 4.7, 2.6, 3.4, 1.5});
+
+    XYSeries vertical = chart.addSeries("vertical", new double[] {5, 5}, new double[] {0, 10});
+    vertical.setShowInLegend(false);
+    vertical.setXYSeriesRenderStyle(XYSeriesRenderStyle.Line);
+    vertical.setLineStyle(SeriesLines.SOLID);
+
+    XYSeries horizontal =
+        chart.addSeries("horizontal", new double[] {0, 10}, new double[] {5, 5});
+    horizontal.setShowInLegend(false);
+    horizontal.setXYSeriesRenderStyle(XYSeriesRenderStyle.Line);
+    horizontal.setLineStyle(SeriesLines.SOLID);
+
+    return gaussianBlob;
+  }
+
+  private int countDiffPixels(BufferedImage a, BufferedImage b) {
+
+    int count = 0;
+    for (int x = 0; x < a.getWidth(); x++) {
+      for (int y = 0; y < a.getHeight(); y++) {
+        if (a.getRGB(x, y) != b.getRGB(x, y)) {
+          count++;
+        }
+      }
+    }
+    return count;
   }
 }
