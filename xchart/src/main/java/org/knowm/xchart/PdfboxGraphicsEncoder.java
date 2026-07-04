@@ -13,6 +13,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.IChart;
 
 /** A helper class with static methods for saving Charts as a PDF file */
@@ -30,6 +31,11 @@ public class PdfboxGraphicsEncoder {
    * @param fileName file name path
    * @throws IOException
    */
+  /**
+   * @deprecated use {@link ChartEncoder#saveChart(IChart, String, String)} with format {@code
+   *     "pdf"} instead
+   */
+  @Deprecated
   public static void savePdfboxGraphics(IChart chart, String fileName) throws IOException {
 
     savePdfboxGraphics(chart, new File(addFileExtension(fileName)));
@@ -42,6 +48,11 @@ public class PdfboxGraphicsEncoder {
    * @param file File
    * @throws IOException
    */
+  /**
+   * @deprecated use {@link ChartEncoder#saveChart(IChart, OutputStream, String)} with format {@code
+   *     "pdf"} instead
+   */
+  @Deprecated
   public static void savePdfboxGraphics(IChart chart, File file) throws IOException {
 
     savePdfboxGraphics(chart, new BufferedOutputStream(new FileOutputStream(file)));
@@ -54,6 +65,11 @@ public class PdfboxGraphicsEncoder {
    * @param os OutputStream
    * @throws IOException
    */
+  /**
+   * @deprecated use {@link ChartEncoder#saveChart(IChart, OutputStream, String)} with format {@code
+   *     "pdf"} instead
+   */
+  @Deprecated
   public static void savePdfboxGraphics(IChart chart, OutputStream os) throws IOException {
 
     List<IChart> charts = new ArrayList<>();
@@ -68,6 +84,10 @@ public class PdfboxGraphicsEncoder {
    * @param fileName file name path
    * @throws IOException
    */
+  /**
+   * @deprecated use {@link ChartEncoder} per chart, or merge charts before export
+   */
+  @Deprecated
   public static void savePdfboxGraphics(List<? extends IChart> charts, String fileName)
       throws IOException {
 
@@ -81,6 +101,10 @@ public class PdfboxGraphicsEncoder {
    * @param file File
    * @throws IOException
    */
+  /**
+   * @deprecated use {@link ChartEncoder} per chart, or merge charts before export
+   */
+  @Deprecated
   public static void savePdfboxGraphics(List<? extends IChart> charts, File file)
       throws IOException {
 
@@ -94,9 +118,17 @@ public class PdfboxGraphicsEncoder {
    * @param os OutputStream
    * @throws IOException
    */
+  /**
+   * @deprecated use {@link ChartEncoder} per chart, or merge charts before export
+   */
+  @Deprecated
   public static void savePdfboxGraphics(List<? extends IChart> charts, OutputStream os)
       throws IOException {
 
+    Utils.requireOnClasspath(
+        "de.rototor.pdfbox.graphics2d.PdfBoxGraphics2D",
+        "PDF export",
+        "de.rototor.pdfbox:graphics2d");
     PDDocument document = new PDDocument();
     PDRectangle mediaBox = null;
     PDPage page = null;

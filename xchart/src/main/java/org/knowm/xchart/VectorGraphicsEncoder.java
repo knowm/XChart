@@ -10,6 +10,7 @@ import de.erichseifert.vectorgraphics2d.util.PageSize;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.IChart;
 
 /** A helper class with static methods for saving Charts as vectors */
@@ -18,7 +19,13 @@ public final class VectorGraphicsEncoder {
   /** Constructor - Private constructor to prevent instantiation */
   private VectorGraphicsEncoder() {}
 
-  /** Write a chart to a file. */
+  /**
+   * Write a chart to a file.
+   *
+   * @deprecated use {@link ChartEncoder#saveChart(IChart, String, String)} with format {@code
+   *     "svg"}, {@code "eps"} or {@code "pdf"} instead
+   */
+  @Deprecated
   public static void saveVectorGraphic(
       IChart chart, String fileName, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
     FileOutputStream file = new FileOutputStream(addFileExtension(fileName, vectorGraphicsFormat));
@@ -30,10 +37,25 @@ public final class VectorGraphicsEncoder {
     }
   }
 
-  /** Write a chart to an OutputStream. */
+  /**
+   * Write a chart to an OutputStream.
+   *
+   * @deprecated use {@link ChartEncoder#saveChart(IChart, OutputStream, String)} with format {@code
+   *     "svg"}, {@code "eps"} or {@code "pdf"} instead
+   */
+  @Deprecated
   public static void saveVectorGraphic(
       IChart chart, OutputStream os, VectorGraphicsFormat vectorGraphicsFormat) throws IOException {
     final Processor p;
+
+    if (VectorGraphicsFormat.PDF != vectorGraphicsFormat) {
+      // SVG and EPS are produced by VectorGraphics2D; PDF delegates to the (separately guarded)
+      // PdfboxGraphicsEncoder below.
+      Utils.requireOnClasspath(
+          "de.erichseifert.vectorgraphics2d.VectorGraphics2D",
+          vectorGraphicsFormat + " export",
+          "de.erichseifert.vectorgraphics2d:VectorGraphics2D");
+    }
 
     switch (vectorGraphicsFormat) {
       case EPS:
@@ -102,6 +124,7 @@ public final class VectorGraphicsEncoder {
       return null;
     }
 
+    @SuppressWarnings("deprecation")
     public void savePdf(IChart chart, OutputStream os) throws IOException {
 
       PdfboxGraphicsEncoder.savePdfboxGraphics(chart, os);

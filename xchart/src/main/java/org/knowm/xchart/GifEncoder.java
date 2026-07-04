@@ -29,6 +29,10 @@ public class GifEncoder {
    * @param delay delay time in milliseconds
    */
   public static void saveGif(String filePath, List<BufferedImage> images, int repeat, int delay) {
+    Utils.requireOnClasspath(
+        "com.madgag.gif.fmsware.AnimatedGifEncoder",
+        "Animated GIF export",
+        "com.madgag:animated-gif-lib");
     AnimatedGifEncoder gif = new AnimatedGifEncoder();
     gif.setRepeat(repeat);
     gif.start(Utils.addFileExtension(filePath, GIF_FILE_EXTENSION));

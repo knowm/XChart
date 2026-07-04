@@ -22,8 +22,8 @@ XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yDa
 // Show it
 new SwingWrapper(chart).displayChart();
 
-// Save it
-BitmapEncoder.saveBitmap(chart, "./Sample_Chart",BitmapFormat.PNG);
+// Save it (any format: png, jpg, bmp, gif, tiff, svg, eps, pdf, …)
+ChartEncoder.saveChart(chart, "./Sample_Chart", "png");
 
 // or save it in high-res
 BitmapEncoder.saveBitmapWithDPI(chart, "./Sample_Chart_300_DPI",BitmapFormat.PNG, 300);
@@ -143,11 +143,45 @@ repaint.
 * [x] Definable legend placement
 * [x] CSV import and export
 * [x] High resolution chart export
-* [x] Export as PNG, JPG, BMP, GIF with custom DPI setting
+* [x] Unified `ChartEncoder.saveChart(chart, fileName, format)` export for every format
+* [x] Export as PNG, JPG, BMP, GIF, TIFF (with custom DPI setting for bitmaps)
+* [x] Export any other raster format (e.g. WebP, AVIF) by adding a matching ImageIO plugin to the classpath
 * [x] Export SVG, EPS using optional `de.erichseifert.vectorgraphics2d` library
 * [x] Export PDF using optional `pdfbox-graphics2d` library
 * [x] Real-time charts
 * [x] Java 8 and up
+
+## Exporting Charts
+
+Use the unified `ChartEncoder` to export a chart to any format. The format string selects the encoder:
+
+```java
+ChartEncoder.saveChart(chart, "./MyChart", "png");   // raster via ImageIO
+ChartEncoder.saveChart(chart, "./MyChart", "tiff");  // raster via ImageIO (built into the JDK)
+ChartEncoder.saveChart(chart, "./MyChart", "svg");   // vector
+ChartEncoder.saveChart(chart, "./MyChart", "pdf");   // vector
+
+// stream / byte[] variants
+ChartEncoder.saveChart(chart, outputStream, "png");
+byte[] bytes = ChartEncoder.getBytes(chart, "png");
+```
+
+* **Raster formats** (`png`, `jpg`, `bmp`, `gif`, `tiff`) are delegated to `javax.imageio.ImageIO`. Any other format for which an `ImageWriter` plugin is registered on the classpath works too — e.g. add `com.github.usefulness:webp-imageio` to export `webp` (see the `ExampleWebP` demo), or an AVIF plugin to export `avif`. Call `ChartEncoder.getSupportedRasterFormats()` to see what the current classpath can write. For AVIF, where no bundleable ImageIO writer exists yet, the `ExampleAvif` demo shows a portable fallback that pipes a PNG through the `avifenc` CLI (`brew install libavif`).
+* **Vector formats** (`svg`, `eps`, `pdf`) require the optional dependencies below.
+
+### Optional export dependencies
+
+The vector/animated encoders are declared `<optional>true</optional>`, so they are **not** pulled in transitively. Add the one(s) you need to your own build:
+
+| Format(s)        | Dependency                                    |
+|------------------|-----------------------------------------------|
+| SVG, EPS         | `de.erichseifert.vectorgraphics2d:VectorGraphics2D` |
+| PDF              | `de.rototor.pdfbox:graphics2d`                |
+| Animated GIF     | `com.madgag:animated-gif-lib`                 |
+
+If the dependency is missing, XChart throws an `IllegalStateException` naming the exact artifact to add.
+
+> The per-format `BitmapEncoder.saveBitmap(...)`, `VectorGraphicsEncoder.saveVectorGraphic(...)` and `PdfboxGraphicsEncoder.savePdfboxGraphics(...)` methods are now **deprecated** in favor of `ChartEncoder`. `BitmapEncoder.saveBitmapWithDPI(...)` (custom DPI) and `saveJPGWithQuality(...)` (JPEG quality) remain, as they have no `ChartEncoder` equivalent.
 
 ## Chart Types
 

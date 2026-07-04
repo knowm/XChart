@@ -27,6 +27,28 @@
             <groupId>org.scilab.forge</groupId>
             <artifactId>jlatexmath</artifactId>
         </dependency>
+        <!-- XChart's export dependencies are optional; the demo exercises them, so it must
+             declare them explicitly (SVG/EPS, PDF and animated-GIF export). -->
+        <dependency>
+            <groupId>de.erichseifert.vectorgraphics2d</groupId>
+            <artifactId>VectorGraphics2D</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.rototor.pdfbox</groupId>
+            <artifactId>graphics2d</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.madgag</groupId>
+            <artifactId>animated-gif-lib</artifactId>
+        </dependency>
+        <!-- Demo-only: an ImageIO WebP writer plugin (bundles native binaries) so the ExampleWebP
+             sample can be generated. This is NOT a dependency of the xchart library itself; WebP
+             export works with any ImageIO WebP plugin the user chooses to add. -->
+        <dependency>
+            <groupId>com.github.usefulness</groupId>
+            <artifactId>webp-imageio</artifactId>
+            <version>0.11.0</version>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-swing</artifactId>
