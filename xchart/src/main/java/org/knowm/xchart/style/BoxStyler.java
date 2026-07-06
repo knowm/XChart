@@ -5,6 +5,7 @@ import org.knowm.xchart.style.theme.Theme;
 public class BoxStyler extends AxesChartStyler {
 
   private BoxplotCalCulationMethod boxplotCalCulationMethod;
+  private double boxWidthFraction = -1;
 
   public BoxStyler() {
 
@@ -18,6 +19,7 @@ public class BoxStyler extends AxesChartStyler {
     this.theme = theme;
     super.setAllStyles();
     boxplotCalCulationMethod = BoxplotCalCulationMethod.N_LESS_1_PLUS_1;
+    boxWidthFraction = -1;
   }
 
   public BoxplotCalCulationMethod getBoxplotCalCulationMethod() {
@@ -28,6 +30,26 @@ public class BoxStyler extends AxesChartStyler {
   public BoxStyler setBoxplotCalCulationMethod(BoxplotCalCulationMethod boxplotCalCulationMethod) {
 
     this.boxplotCalCulationMethod = boxplotCalCulationMethod;
+    return this;
+  }
+
+  public double getBoxWidthFraction() {
+
+    return boxWidthFraction;
+  }
+
+  /**
+   * Set the width of each box as a fraction of the horizontal space available to it (i.e. the slot
+   * for one series). Valid values are in the range (0, 1]; a value of 1 makes adjacent boxes touch.
+   * Any value &lt;= 0 (the default of -1) keeps the legacy width, which is derived from {@link
+   * #setPlotContentSize(double)} and is independent of the number of series.
+   *
+   * @param boxWidthFraction fraction of the per-series slot, in (0, 1]; &lt;= 0 for legacy width
+   * @return the styler
+   */
+  public BoxStyler setBoxWidthFraction(double boxWidthFraction) {
+
+    this.boxWidthFraction = boxWidthFraction;
     return this;
   }
 

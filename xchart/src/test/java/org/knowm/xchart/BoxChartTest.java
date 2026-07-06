@@ -81,4 +81,33 @@ class BoxChartTest {
     assertDoesNotThrow(
         () -> BitmapEncoder.saveBitmap(chart, out, BitmapEncoder.BitmapFormat.PNG));
   }
+
+  // https://github.com/knowm/XChart/issues/816
+  @Test
+  void boxWidthFractionDefaultsToLegacy() {
+
+    assertThat(chart.getStyler().getBoxWidthFraction()).isEqualTo(-1);
+  }
+
+  // https://github.com/knowm/XChart/issues/816
+  @Test
+  void boxWidthFractionRoundTrips() {
+
+    chart.getStyler().setBoxWidthFraction(0.4);
+
+    assertThat(chart.getStyler().getBoxWidthFraction()).isEqualTo(0.4);
+  }
+
+  // https://github.com/knowm/XChart/issues/816
+  @Test
+  void chartWithBoxWidthFractionCanBeSaved() {
+
+    chart.addSeries("aaa", Arrays.asList(40, 30, 20, 60, 50));
+    chart.addSeries("bbb", Arrays.asList(-20, -10, -30, -15, -25));
+    chart.getStyler().setBoxWidthFraction(0.3);
+
+    java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+    assertDoesNotThrow(
+        () -> BitmapEncoder.saveBitmap(chart, out, BitmapEncoder.BitmapFormat.PNG));
+  }
 }
