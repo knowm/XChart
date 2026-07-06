@@ -24,6 +24,7 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
   private double yTickSpace;
   private double xOffset;
   private double yOffset;
+  private double halfBoxWidth;
 
   PlotContent_Box(AxesChart<ST, S> chart) {
 
@@ -43,6 +44,15 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
     yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
     boolean toolTipsEnabled = interactionData != null;
     double gridStep = xTickSpace / chart.getSeriesMap().size();
+
+    // Box half-width: legacy default is tied to the plot margin (independent of the number of
+    // series); when a box width fraction is set, size each box relative to its per-series slot.
+    double boxWidthFraction = boxPlotStyler.getBoxWidthFraction();
+    if (boxWidthFraction > 0) {
+      halfBoxWidth = Math.min(boxWidthFraction, 1.0) * gridStep / 2.0;
+    } else {
+      halfBoxWidth = xLeftMargin;
+    }
 
     BoxPlotDataCalculator<ST, S> boxPlotDataCalculator = new BoxPlotDataCalculator<>();
     // Calculate box plot data for all series
@@ -200,24 +210,24 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
                     * yTickSpace);
     Shape middleline =
         new Line2D.Double(
-            xOffset - xLeftMargin, medianYOffset, xOffset + xLeftMargin, medianYOffset);
+            xOffset - halfBoxWidth, medianYOffset, xOffset + halfBoxWidth, medianYOffset);
     Shape maxLine =
         new Line2D.Double(
-            xOffset - (xLeftMargin / 2.0),
+            xOffset - (halfBoxWidth / 2.0),
             upperYOffset,
-            xOffset + (xLeftMargin / 2.0),
+            xOffset + (halfBoxWidth / 2.0),
             upperYOffset);
     Shape minLine =
         new Line2D.Double(
-            xOffset - (xLeftMargin / 2.0),
+            xOffset - (halfBoxWidth / 2.0),
             lowerYOffset,
-            xOffset + (xLeftMargin / 2.0),
+            xOffset + (halfBoxWidth / 2.0),
             lowerYOffset);
     Shape upLine = new Line2D.Double(xOffset, upperYOffset, xOffset, q3YOffset);
     Shape lowLine = new Line2D.Double(xOffset, lowerYOffset, xOffset, q1YOffset);
     Rectangle2D rect =
         new Rectangle2D.Double(
-            xOffset - xLeftMargin, q3YOffset, 2.0 * xLeftMargin, q1YOffset - q3YOffset);
+            xOffset - halfBoxWidth, q3YOffset, 2.0 * halfBoxWidth, q1YOffset - q3YOffset);
     g.setColor(Color.BLUE);
     g.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL));
     g.draw(rect);
