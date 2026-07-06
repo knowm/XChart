@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.TreeMap;
 
+import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
@@ -303,9 +304,12 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
 
       CategoryStyler categoryStyler = (CategoryStyler) chart.getStyler();
 
-      // If stacked, recalculate min and max from the per-category stack sums. This is independent of
-      // the render style (bar, stick, area, ...) since stacking sums the series values the same way,
-      // and it also covers charts where individual series override the default render style.
+      // If stacked, recalculate min and max from the per-category stack sums. Only series belonging
+      // to this Y-axis group are summed, and only stackable render styles (bar, stick, stepped bar,
+      // area) contribute — Line and Scatter series are drawn at their own values, so they neither
+      // stack nor inflate another axis group's range. Stacking otherwise sums the series values the
+      // same way regardless of style, and covers charts where individual series override the default
+      // render style.
       if (categoryStyler.isStacked() && !chart.getSeriesMap().isEmpty()) {
 
         AxesChartSeriesCategory axesChartSeries =
@@ -316,14 +320,21 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
         double[] accumulatedStackOffsetPos = new double[numCategories];
         double[] accumulatedStackOffsetNeg = new double[numCategories];
 
+        boolean hasStackedSeries = false;
         for (S series : chart.getSeriesMap().values()) {
 
-          AxesChartSeriesCategory axesChartSeriesCategory = (AxesChartSeriesCategory) series;
-
-          if (!series.isEnabled()) {
+          if (!series.isEnabled() || series.getYAxisGroup() != yAxis.getYIndex()) {
             continue;
           }
+          if (!((CategorySeries) series)
+              .getChartCategorySeriesRenderStyle()
+              .orElseThrow()
+              .isStackable()) {
+            continue;
+          }
+          hasStackedSeries = true;
 
+          AxesChartSeriesCategory axesChartSeriesCategory = (AxesChartSeriesCategory) series;
           int categoryCounter = 0;
           double[] yArr = axesChartSeriesCategory.getYData();
           for (double next : yArr) {
@@ -343,22 +354,28 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
           }
         }
 
-        double max = accumulatedStackOffsetPos[0];
-        for (int i = 1; i < accumulatedStackOffsetPos.length; i++) {
-          if (accumulatedStackOffsetPos[i] > max) {
-            max = accumulatedStackOffsetPos[i];
-          }
-        }
+        // Only override this axis group's range when it actually contains stacked series; a group
+        // with only Line/Scatter series keeps the raw data range computed earlier.
+        if (hasStackedSeries) {
 
-        double min = accumulatedStackOffsetNeg[0];
-        for (int i = 1; i < accumulatedStackOffsetNeg.length; i++) {
-          if (accumulatedStackOffsetNeg[i] < min) {
-            min = accumulatedStackOffsetNeg[i];
+          double max = accumulatedStackOffsetPos[0];
+          for (int i = 1; i < accumulatedStackOffsetPos.length; i++) {
+            if (accumulatedStackOffsetPos[i] > max) {
+              max = accumulatedStackOffsetPos[i];
+            }
           }
-        }
 
-        overrideYAxisMaxValue = max;
-        overrideYAxisMinValue = min;
+          double min = accumulatedStackOffsetNeg[0];
+          for (int i = 1; i < accumulatedStackOffsetNeg.length; i++) {
+            if (accumulatedStackOffsetNeg[i] < min) {
+              min = accumulatedStackOffsetNeg[i];
+            }
+          }
+
+          // Keep any non-stacked (Line/Scatter) series sharing this axis group in view.
+          overrideYAxisMaxValue = Math.max(max, yAxis.getMax());
+          overrideYAxisMinValue = Math.min(min, yAxis.getMin());
+        }
       }
 
       if (categoryStyler.getDefaultSeriesRenderStyle() == CategorySeriesRenderStyle.Bar

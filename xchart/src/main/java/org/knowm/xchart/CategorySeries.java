@@ -125,5 +125,28 @@ public class CategorySeries extends AxesChartSeriesCategory {
 
       return legendRenderType;
     }
+
+    /**
+     * Whether this render style participates in stacking when {@link
+     * org.knowm.xchart.style.CategoryStyler#isStacked()} is enabled. Only the bar/area family ({@link
+     * #Bar}, {@link #Area}, {@link #Stick}, {@link #SteppedBar}) stacks; point- and line-based styles
+     * ({@link #Line}, {@link #Scatter}) are drawn at their own values and are never stacked on top of
+     * the bar/area stack. Enumerated as an explicit allow-list so any future render style defaults to
+     * non-stackable until intentionally opted in.
+     *
+     * @return true if series of this style are stacked
+     */
+    public boolean isStackable() {
+
+      switch (this) {
+        case Bar:
+        case Area:
+        case Stick:
+        case SteppedBar:
+          return true;
+        default:
+          return false;
+      }
+    }
   }
 }
