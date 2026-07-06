@@ -125,5 +125,18 @@ public class CategorySeries extends AxesChartSeriesCategory {
 
       return legendRenderType;
     }
+
+    /**
+     * Whether this render style participates in stacking when {@link
+     * org.knowm.xchart.style.CategoryStyler#isStacked()} is enabled. Point- and line-based styles
+     * ({@link #Line}, {@link #Scatter}) are drawn at their own values and are never stacked on top
+     * of the bar/area stack.
+     *
+     * @return true if series of this style are stacked
+     */
+    public boolean isStackable() {
+
+      return this != Line && this != Scatter;
+    }
   }
 }

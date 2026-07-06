@@ -111,6 +111,11 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
       double[] yArr = series.getYData();
       double[] errorBars = series.getExtraValues();
 
+      // Line and Scatter series are drawn at their own values; they never participate in stacking.
+      boolean seriesStacked =
+          stylerCategory.isStacked()
+              && series.getChartCategorySeriesRenderStyle().orElseThrow().isStackable();
+
       // Stepped bars are drawn in chunks rather than for each individual bar
       ArrayList<Point2D.Double> steppedPath = new ArrayList<>();
       ArrayList<Point2D.Double> steppedReturnPath = new ArrayList<>();
@@ -164,7 +169,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
             }
             yTop = y;
             yBottom = yMin;
-            if (stylerCategory.isStacked()) {
+            if (seriesStacked) {
               yTop += accumulatedStackOffsetPos[categoryCounter];
               yBottom += accumulatedStackOffsetPos[categoryCounter];
               accumulatedStackOffsetPos[categoryCounter] += (yTop - yBottom);
@@ -178,7 +183,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
             }
             yTop = yMax;
             yBottom = y;
-            if (stylerCategory.isStacked()) {
+            if (seriesStacked) {
               yTop -= accumulatedStackOffsetNeg[categoryCounter];
               yBottom -= accumulatedStackOffsetNeg[categoryCounter];
               accumulatedStackOffsetNeg[categoryCounter] += (yTop - yBottom);
@@ -197,7 +202,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
               } else {
                 yBottom = y;
               }
-              if (stylerCategory.isStacked() && !series.isOverlapped()) {
+              if (seriesStacked && !series.isOverlapped()) {
                 yTop += accumulatedStackOffsetPos[categoryCounter];
                 yBottom += accumulatedStackOffsetPos[categoryCounter];
                 // Grow the stack by the actual value. For bars (yBottom == 0) this equals
@@ -218,7 +223,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
                 // yBottom.
               }
               yBottom = y;
-              if (stylerCategory.isStacked() && !series.isOverlapped()) {
+              if (seriesStacked && !series.isOverlapped()) {
                 yTop -= accumulatedStackOffsetNeg[categoryCounter];
                 yBottom -= accumulatedStackOffsetNeg[categoryCounter];
                 // Grow the negative stack by the magnitude of y (y < 0 here), for the same reason
@@ -402,7 +407,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
 
             double xCenter = xOffset + barWidth / 2;
 
-            if (stylerCategory.isStacked() && !series.isOverlapped()) {
+            if (seriesStacked && !series.isOverlapped()) {
               // Stacked: collect this point and the floor it rests on (the previous series'
               // cumulative line for this category). The band is filled after the data loop. Advance
               // the floor so the next series stacks on top of this series.
