@@ -242,4 +242,29 @@ public class Utils {
     }
     return fileNameWithFileExtension;
   }
+
+  /**
+   * Verifies that an optional export dependency is present on the classpath, throwing a helpful
+   * message naming the missing Maven artifact if it is not. XChart marks the vector/PDF/animated-GIF
+   * libraries as optional, so they are not pulled in transitively; callers that need them must add
+   * the dependency to their own build.
+   *
+   * @param className a class that is only present when the dependency is on the classpath
+   * @param feature human-readable description of the feature that needs the dependency
+   * @param mavenCoordinate the {@code groupId:artifactId} the user must add
+   * @throws IllegalStateException if the class cannot be found
+   */
+  public static void requireOnClasspath(
+      String className, String feature, String mavenCoordinate) {
+    try {
+      Class.forName(className);
+    } catch (ClassNotFoundException e) {
+      throw new IllegalStateException(
+          feature
+              + " requires the optional dependency '"
+              + mavenCoordinate
+              + "', which is not on the classpath. Add it to your build to enable this format.",
+          e);
+    }
+  }
 }

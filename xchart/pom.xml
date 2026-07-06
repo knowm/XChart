@@ -15,17 +15,27 @@
     <description>The core XChart library</description>
 
     <dependencies>
+        <!--
+            The three encoders below are optional: they are only needed if you export to their
+            formats (SVG/EPS, PDF, animated GIF). Marking them <optional>true</optional> here (not
+            just in the parent's <dependencyManagement>, where the flag is NOT inherited) keeps them
+            off the transitive classpath of projects that only need the built-in PNG/JPG/BMP/GIF/TIFF
+            raster export. Add the matching dependency to your own build to enable a format.
+        -->
         <dependency>
             <groupId>de.erichseifert.vectorgraphics2d</groupId>
             <artifactId>VectorGraphics2D</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>de.rototor.pdfbox</groupId>
             <artifactId>graphics2d</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.madgag</groupId>
             <artifactId>animated-gif-lib</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.scilab.forge</groupId>

@@ -61,7 +61,9 @@ public final class BitmapEncoder {
    * @param fileName
    * @param bitmapFormat
    * @throws IOException
+   * @deprecated use {@link ChartEncoder#saveChart(IChart, String, String)} instead
    */
+  @Deprecated
   public static void saveBitmap(
       IChart chart, String fileName, BitmapFormat bitmapFormat) throws IOException {
 
@@ -78,7 +80,9 @@ public final class BitmapEncoder {
    * @param targetStream
    * @param bitmapFormat
    * @throws IOException
+   * @deprecated use {@link ChartEncoder#saveChart(IChart, OutputStream, String)} instead
    */
+  @Deprecated
   public static void saveBitmap(
       IChart chart, OutputStream targetStream, BitmapFormat bitmapFormat) throws IOException {
 
@@ -257,7 +261,9 @@ public final class BitmapEncoder {
    * @param chart
    * @return a byte[] for a given chart
    * @throws IOException
+   * @deprecated use {@link ChartEncoder#getBytes(IChart, String)} instead
    */
+  @Deprecated
   public static byte[] getBitmapBytes(IChart chart, BitmapFormat bitmapFormat)
       throws IOException {
 

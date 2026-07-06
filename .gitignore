@@ -33,3 +33,7 @@ log/
 *.eps
 *.png
 *.gif
+*.tif
+*.tiff
+*.webp
+*.avif
