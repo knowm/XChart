@@ -49,6 +49,8 @@ public class BarChart13 implements ExampleChart<CategoryChart> {
     chart.getStyler().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyler().setStacked(true); // affects stackable (bar/area/stick) series only
     chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right); // secondary axis on the right
+    chart.getStyler().setYAxisMax(0, 200.0); // primary (bars) axis
+    chart.getStyler().setYAxisMax(1, 200.0); // secondary (line) axis
 
     // Stacked bar series on the primary (left) Y-Axis group
     chart.addSeries("Series A", Arrays.asList("A", "B", "C", "D"), Arrays.asList(10, 20, 15, 25));
