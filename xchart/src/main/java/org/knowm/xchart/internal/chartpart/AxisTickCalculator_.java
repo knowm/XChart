@@ -366,6 +366,34 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       }
     } while (!areAllTickLabelsUnique(tickLabels)
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+
+    // Prune ticks that fall outside the actual data band [minValue, maxValue]. The generation loop
+    // above intentionally overshoots by up to a grid step on each end (getFirstPosition starts one
+    // grid step below minValue and the loop bound runs two grid steps past maxValue); those overshoot
+    // ticks must not become visible labels. Gridlines and tick marks already clip to the plot bounds,
+    // but the tick-label renderer clips to the taller axis-column bounds, so an out-of-range label --
+    // e.g. a negative label when all data is positive -- can leak into the plot margin. Issue #634.
+    // A tick value v maps to pixel margin + (v - minValue) / (maxValue - minValue) * tickSpace, so
+    // v is within [minValue, maxValue] exactly when its pixel is within [margin, margin + tickSpace].
+    double bandLow = margin - 1e-6;
+    double bandHigh = margin + tickSpace + 1e-6;
+    List<String> keptLabels = new ArrayList<>(tickLabels.size());
+    List<Double> keptLocations = new ArrayList<>(tickLocations.size());
+    for (int i = 0; i < tickLocations.size(); i++) {
+      double loc = tickLocations.get(i);
+      if (loc >= bandLow && loc <= bandHigh) {
+        keptLabels.add(tickLabels.get(i));
+        keptLocations.add(loc);
+      }
+    }
+    // Only apply the pruning if at least one tick survives, so a degenerate range can never blank the
+    // axis entirely (falls back to the pre-prune behavior).
+    if (!keptLocations.isEmpty() && keptLocations.size() < tickLocations.size()) {
+      tickLabels.clear();
+      tickLabels.addAll(keptLabels);
+      tickLocations.clear();
+      tickLocations.addAll(keptLocations);
+    }
   }
 
   private boolean areValuesEquallySpaced(List<Double> values) {
