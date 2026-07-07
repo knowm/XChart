@@ -47,7 +47,10 @@ public class TestForIssue634 {
     List<Long> y =
         Arrays.asList(23073516369L, 1466500686L, 1248980380L, 1248980380L, 60126163L, 60126163L);
 
-    styler.setYAxisMin(y.stream().reduce(Long::min).orElse(0L).doubleValue());
+    // Note: the axis minimum is left at its default (0). The bug does NOT need a custom Y-axis
+    // minimum -- with min == 0, getFirstPosition() still returns 0 - 0 - gridStep == -gridStep, so a
+    // negative tick is generated regardless. Leaving min at 0 keeps the meaningful "0" baseline tick
+    // for the bars, so the only thing the fix removes is the spurious negative label.
 
     chart.addSeries("1111111", x, y);
 
