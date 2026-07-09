@@ -9,6 +9,7 @@ public class RadarStyler extends Styler {
   private RadarRenderStyle radarRenderStyle;
   private boolean isCircular;
   private double startAngleInDegrees;
+  private boolean counterClockwise;
 
   // radii tick marks
   private boolean radiiTicksMarksVisible;
@@ -38,6 +39,7 @@ public class RadarStyler extends Styler {
     this.radarRenderStyle = RadarRenderStyle.Polygon;
     this.isCircular = theme.isCircular();
     this.startAngleInDegrees = theme.getStartAngleInDegrees();
+    this.counterClockwise = false;
 
     this.markerSize = theme.getMarkerSize();
 
@@ -81,6 +83,26 @@ public class RadarStyler extends Styler {
   public RadarStyler setStartAngleInDegrees(double startAngleInDegrees) {
 
     this.startAngleInDegrees = startAngleInDegrees;
+    return this;
+  }
+
+  public boolean isCounterClockwise() {
+
+    return counterClockwise;
+  }
+
+  /**
+   * Sets the direction in which the radii (labels and data points) are laid out around the chart.
+   * By default the chart is drawn clockwise, matching the common radar/spider chart convention. Set
+   * this to {@code true} to lay the radii out counter-clockwise instead. This only changes the
+   * winding direction; use {@link #setStartAngleInDegrees(double)} to also rotate the start
+   * position.
+   *
+   * @param counterClockwise true to draw counter-clockwise, false (default) for clockwise
+   */
+  public RadarStyler setCounterClockwise(boolean counterClockwise) {
+
+    this.counterClockwise = counterClockwise;
     return this;
   }
 
