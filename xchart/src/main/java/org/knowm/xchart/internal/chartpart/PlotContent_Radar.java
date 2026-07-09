@@ -65,6 +65,8 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
     int numRadiiLabels = radiiLabels.length;
     double[] cosArr = new double[numRadiiLabels];
     double[] sinArr = new double[numRadiiLabels];
+    // increasing angles wind counter-clockwise (math convention); negate for the default clockwise
+    double angleStep = styler.isCounterClockwise() ? radiiAngle : -radiiAngle;
     double startAngle = styler.getStartAngleInDegrees() + 90;
     for (int i = 0; i < numRadiiLabels; i++) {
       double radians = Math.toRadians(startAngle);
@@ -72,7 +74,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
       double sin = Math.sin(radians);
       cosArr[i] = cos;
       sinArr[i] = sin;
-      startAngle += radiiAngle;
+      startAngle += angleStep;
     }
 
     // paint radii lines and labels
@@ -129,7 +131,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
         g.setTransform(orig);
       }
 
-      startAngle += radiiAngle;
+      startAngle += angleStep;
     }
 
     // draw radii tick marks ie. concentric circles/polygons
