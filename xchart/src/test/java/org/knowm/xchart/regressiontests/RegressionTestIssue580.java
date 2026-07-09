@@ -2,11 +2,14 @@ package org.knowm.xchart.regressiontests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import org.junit.jupiter.api.Test;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.RadarChart;
 import org.knowm.xchart.RadarChartBuilder;
+import org.knowm.xchart.RadarSeries;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Regression test for <a href="https://github.com/knowm/XChart/issues/580">issue 580</a>: radar
@@ -48,7 +51,13 @@ public class RegressionTestIssue580 {
     chart.getStyler().setCounterClockwise(counterClockwise);
     chart.getStyler().setLegendVisible(false);
     chart.setRadiiLabels(labels);
-    chart.addSeries("s", values);
+
+    // Pin the series to a strong blue and drop markers so the pixel assertion isolates the
+    // clockwise/counter-clockwise winding from theme/color-cycler defaults.
+    RadarSeries series = chart.addSeries("s", values);
+    series.setLineColor(Color.BLUE);
+    series.setFillColor(Color.BLUE);
+    series.setMarker(SeriesMarkers.NONE);
     return BitmapEncoder.getBufferedImage(chart);
   }
 
