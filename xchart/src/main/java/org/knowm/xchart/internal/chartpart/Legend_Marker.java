@@ -40,6 +40,28 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     Map<String, S> map = chart.getSeriesMap();
+
+    // In a horizontal legend all entries share one row, so they must be vertically centered
+    // against a common row height. Otherwise mixed render styles (e.g. a Bar's 20px box vs. a
+    // Line's smaller marker) center against their own graphic height and sit at different
+    // baselines (issue #892). In a vertical legend each entry gets its own row, so the per-entry
+    // height is the correct reference.
+    boolean isHorizontal =
+        chart.getStyler().getLegendLayout() == Styler.LegendLayout.Horizontal;
+    float commonRowHeight = 0;
+    if (isHorizontal) {
+      for (S series : map.values()) {
+        if (!series.isShowInLegend() || !series.isEnabled()) {
+          continue;
+        }
+        commonRowHeight =
+            Math.max(
+                commonRowHeight,
+                getLegendEntryHeight(
+                    getSeriesTextBounds(series), (int) getSeriesLegendRenderGraphicHeight(series)));
+      }
+    }
+
     for (S series : map.values()) {
 
       if (!series.isShowInLegend()) {
@@ -58,6 +80,9 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
                   ? axesChartStyler.getMarkerSize()
                   : BOX_SIZE));
 
+      // vertical centering reference for this entry's graphics and text
+      float rowHeight = isHorizontal ? commonRowHeight : legendEntryHeight;
+
       // paint line and marker
       if (series.getLegendRenderType() == LegendRenderType.Line
           || series.getLegendRenderType() == LegendRenderType.Scatter) {
@@ -70,9 +95,9 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
           Shape line =
               new Line2D.Double(
                   startx,
-                  starty + legendEntryHeight / 2.0,
+                  starty + rowHeight / 2.0,
                   startx + chart.getStyler().getLegendSeriesLineLength(),
-                  starty + legendEntryHeight / 2.0);
+                  starty + rowHeight / 2.0);
           g.draw(line);
         }
 
@@ -84,13 +109,16 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
               .paint(
                   g,
                   startx + chart.getStyler().getLegendSeriesLineLength() / 2.0,
-                  starty + legendEntryHeight / 2.0,
+                  starty + rowHeight / 2.0,
                   axesChartStyler.getMarkerSize());
         }
       } else { // bar/pie type series
 
+        // center the box within the (possibly taller) shared row
+        double boxStarty = starty + (rowHeight - BOX_SIZE) / 2.0;
+
         // paint inner box
-        Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
+        Shape rectSmall = new Rectangle2D.Double(startx, boxStarty, BOX_SIZE, BOX_SIZE);
         g.setColor(series.getFillColor());
         g.fill(rectSmall);
 
@@ -119,10 +147,10 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
           Path2D.Double outlinePath = new Path2D.Double();
 
           double lineOffset = existingLineStyle.getLineWidth() * 0.5;
-          outlinePath.moveTo(startx + lineOffset, starty + lineOffset);
-          outlinePath.lineTo(startx + lineOffset, starty + BOX_SIZE - lineOffset);
-          outlinePath.lineTo(startx + BOX_SIZE - lineOffset, starty + BOX_SIZE - lineOffset);
-          outlinePath.lineTo(startx + BOX_SIZE - lineOffset, starty + lineOffset);
+          outlinePath.moveTo(startx + lineOffset, boxStarty + lineOffset);
+          outlinePath.lineTo(startx + lineOffset, boxStarty + BOX_SIZE - lineOffset);
+          outlinePath.lineTo(startx + BOX_SIZE - lineOffset, boxStarty + BOX_SIZE - lineOffset);
+          outlinePath.lineTo(startx + BOX_SIZE - lineOffset, boxStarty + lineOffset);
           outlinePath.closePath();
 
           g.draw(outlinePath);
@@ -137,11 +165,11 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
             startx
                 + chart.getStyler().getLegendSeriesLineLength()
                 + chart.getStyler().getLegendPadding();
-        paintSeriesText(g, seriesTextBounds, axesChartStyler.getMarkerSize(), x, starty);
+        paintSeriesText(g, seriesTextBounds, (int) rowHeight, x, starty);
       } else { // bar/pie type series
 
         double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
-        paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
+        paintSeriesText(g, seriesTextBounds, (int) rowHeight, x, starty);
       }
 
       if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
