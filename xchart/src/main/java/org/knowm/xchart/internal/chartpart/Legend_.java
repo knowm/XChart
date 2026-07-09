@@ -256,8 +256,13 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       }
 
       legendEntryHeight -= MULTI_LINE_SPACE; // subtract away the bottom MULTI_LINE_SPACE
+      // Accumulate the tallest entry across ALL series (text or graphic, whichever is taller) so
+      // the single-row horizontal legend box is tall enough for the biggest entry (e.g. a 20px
+      // box) regardless of series order (issue #892).
       legendTextContentMaxHeight =
-          Math.max(legendEntryHeight, getSeriesLegendRenderGraphicHeight(series));
+          Math.max(
+              legendTextContentMaxHeight,
+              Math.max(legendEntryHeight, getSeriesLegendRenderGraphicHeight(series)));
 
       legendContentWidth += legendEntryMaxWidth + chart.getStyler().getLegendPadding();
 
