@@ -16,9 +16,9 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
  * text is displayed wonky." (reported with a horizontal, OutsideS legend)
  *
  * <p>Expected: in a horizontal legend, the markers/boxes and their text should line up uniformly
- * across mixed render styles. Currently a Bar entry centers its text within the 20px legend box
- * while a Line entry centers within the (smaller) marker size, so the two entries sit at different
- * vertical baselines.
+ * across mixed render styles. Before the fix, a Bar entry centered its text within the 20px legend
+ * box while a Line entry centered within the (smaller) marker size, so the two entries sat at
+ * different vertical baselines.
  *
  * <p>This is the reporter's original example, verbatim except for being wrapped in a headless-safe
  * {@link #getChart()} so it can also be rendered/asserted in tests.

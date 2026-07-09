@@ -48,11 +48,19 @@ public class RegressionTestIssue892 {
 
     BufferedImage image = BitmapEncoder.getBufferedImage(chart);
 
-    // The OutsideS legend sits at the very bottom. Its background matches the (white) plot
-    // background higher up, so locate the legend container as the bottom-most contiguous block of
-    // background-colored rows (below it is only the chart-background margin). Then measure the
-    // entries strictly within its rows, so plot content can never leak into the measurement.
+    // Locate the legend container so the entries can be measured strictly within it (plot content
+    // can never leak in). In the default XChartTheme the chart background is grey while both the
+    // plot and legend backgrounds are white, so the white regions are the plot area (upper) and
+    // the legend (bottom), separated by a grey margin. The OutsideS legend is therefore the
+    // bottom-most contiguous band of white rows.
     int[] containerRows = bottomMostBand(image, chart.getStyler().getLegendBackgroundColor());
+    // Guard against a degenerate detection (e.g. if backgrounds ever became indistinguishable, the
+    // band would swallow the plot): a legend is a small fraction of the image height.
+    assertTrue(
+        containerRows[1] - containerRows[0] < image.getHeight() / 4,
+        "detected legend container is implausibly tall ("
+            + (containerRows[1] - containerRows[0])
+            + "px) — background detection likely captured the plot area");
     int[] barRows = verticalExtent(image, BAR_FILL, containerRows[0]);
     int[] lineRows = verticalExtent(image, LINE_COLOR, containerRows[0]);
     double barCenter = (barRows[0] + barRows[1]) / 2.0;

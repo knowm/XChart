@@ -80,8 +80,12 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
                   ? axesChartStyler.getMarkerSize()
                   : BOX_SIZE));
 
-      // vertical centering reference for this entry's graphics and text
-      float rowHeight = isHorizontal ? commonRowHeight : legendEntryHeight;
+      // In a horizontal layout every entry shares one row, so center this entry's natural block
+      // within the shared row by shifting its vertical origin. All per-element math below then
+      // stays exactly as in the vertical layout, just drawn from entryStarty. In a vertical layout
+      // each entry has its own row, so the shift is zero.
+      double entryStarty =
+          isHorizontal ? starty + (commonRowHeight - legendEntryHeight) / 2.0 : starty;
 
       // paint line and marker
       if (series.getLegendRenderType() == LegendRenderType.Line
@@ -95,9 +99,9 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
           Shape line =
               new Line2D.Double(
                   startx,
-                  starty + rowHeight / 2.0,
+                  entryStarty + legendEntryHeight / 2.0,
                   startx + chart.getStyler().getLegendSeriesLineLength(),
-                  starty + rowHeight / 2.0);
+                  entryStarty + legendEntryHeight / 2.0);
           g.draw(line);
         }
 
@@ -109,13 +113,12 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
               .paint(
                   g,
                   startx + chart.getStyler().getLegendSeriesLineLength() / 2.0,
-                  starty + rowHeight / 2.0,
+                  entryStarty + legendEntryHeight / 2.0,
                   axesChartStyler.getMarkerSize());
         }
       } else { // bar/pie type series
 
-        // center the box within the (possibly taller) shared row
-        double boxStarty = starty + (rowHeight - BOX_SIZE) / 2.0;
+        double boxStarty = entryStarty;
 
         // paint inner box
         Shape rectSmall = new Rectangle2D.Double(startx, boxStarty, BOX_SIZE, BOX_SIZE);
@@ -165,11 +168,11 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
             startx
                 + chart.getStyler().getLegendSeriesLineLength()
                 + chart.getStyler().getLegendPadding();
-        paintSeriesText(g, seriesTextBounds, (int) rowHeight, x, starty);
+        paintSeriesText(g, seriesTextBounds, axesChartStyler.getMarkerSize(), x, entryStarty);
       } else { // bar/pie type series
 
         double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
-        paintSeriesText(g, seriesTextBounds, (int) rowHeight, x, starty);
+        paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, entryStarty);
       }
 
       if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
