@@ -171,8 +171,10 @@ public abstract class Chart<ST extends Styler, S extends Series> implements ICha
    * @param g the graphics context (same one used for chart painting)
    * @param toolTips hover-tooltip handler, or {@code null} if not enabled
    * @param cursor cursor handler, or {@code null} if not enabled
+   * @param dataPointDispatcher data-point listener dispatcher, or {@code null} if not enabled
    */
-  public void consumeInteractionData(Graphics2D g, ToolTips toolTips, Cursor cursor) {
+  public void consumeInteractionData(
+      Graphics2D g, ToolTips toolTips, Cursor cursor, DataPointDispatcher dataPointDispatcher) {
 
     PlotInteractionData data = getInteractionData();
     if (data == null) {
@@ -185,6 +187,9 @@ public abstract class Chart<ST extends Styler, S extends Series> implements ICha
     if (cursor != null) {
       cursor.setData(data);
       cursor.paint(g);
+    }
+    if (dataPointDispatcher != null) {
+      dataPointDispatcher.setData(data);
     }
   }
 

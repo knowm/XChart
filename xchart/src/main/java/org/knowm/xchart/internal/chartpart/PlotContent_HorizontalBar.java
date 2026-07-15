@@ -184,13 +184,16 @@ public class PlotContent_HorizontalBar<
             xPoint = xOffset;
           }
 
-          interactionData.addToolTip(
-              rect,
-              xPoint,
-              yOffset,
-              barHeight,
-              axesChart.getXAxisFormat().format(xOrig),
-              axesChart.getYAxisFormat().format(nextCat));
+          interactionData
+              .addToolTip(
+                  rect,
+                  xPoint,
+                  yOffset,
+                  barHeight,
+                  axesChart.getXAxisFormat().format(xOrig),
+                  axesChart.getYAxisFormat().format(nextCat))
+              // categoryCounter was post-incremented above, so this bar's index is one less
+              .withSeries(series.getName(), categoryCounter - 1);
         }
       }
 

@@ -513,13 +513,15 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
             yPoint = yOffset;
           }
 
-          interactionData.addToolTip(
-              rect,
-              xOffset,
-              yPoint,
-              barWidth,
-              axesChart.getXAxisFormat().format(nextCat),
-              axesChart.getYAxisFormat().format(yOrig));
+          interactionData
+              .addToolTip(
+                  rect,
+                  xOffset,
+                  yPoint,
+                  barWidth,
+                  axesChart.getXAxisFormat().format(nextCat),
+                  axesChart.getYAxisFormat().format(yOrig))
+              .withSeries(series.getName(), dataIndex);
         }
       }
 
