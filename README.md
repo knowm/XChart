@@ -136,6 +136,7 @@ repaint.
 * [x] Number, Date, Bubble and Category X-Axis
 * [x] Multiple series
 * [x] Tool tips
+* [x] Data point listeners (hover / exit / click on individual bars, markers, slices, ...)
 * [x] Extensive customization
 * [x] Themes - XChart, GGPlot2, Matlab
 * [x] Right-click, Save-As...
@@ -624,6 +625,36 @@ chart.getStyler().setCustomCursorYDataFormattingFunction(y -> "hello yvalue divi
 ```
 
 A working example can be found at [LineChart09](https://github.com/knowm/XChart/blob/develop/xchart-demo/src/main/java/org/knowm/xchart/demo/charts/line/LineChart09.java).
+
+### Data Point Listeners
+
+Sometimes you need to react to the user interacting with an individual data point rather than just show a tool tip — for example to drill down into the clicked category, show a custom pop-up, or update a linked view. Register a `DataPointListener` on the `XChartPanel` to be notified when the mouse hovers over, leaves, or clicks a rendered data point (a bar, marker, bubble, pie slice, etc.). Collision detection reuses the same per-data-point hit shapes that drive the tool-tip feature, so it works for every chart type and does not require tool tips to be enabled.
+
+```java
+SwingWrapper<CategoryChart> sw = new SwingWrapper<>(chart);
+sw.displayChart();
+
+sw.getXChartPanel()
+    .addDataPointListener(
+        new DataPointListener() {
+          @Override
+          public void onDataPointHover(ChartDataPoint dataPoint, MouseEvent e) {
+            System.out.println("Hovering " + dataPoint.getSeriesName());
+          }
+
+          @Override
+          public void onDataPointClick(ChartDataPoint dataPoint, MouseEvent e) {
+            System.out.println(
+                "Clicked " + dataPoint.getSeriesName() + " point #" + dataPoint.getDataPointIndex());
+          }
+        });
+```
+
+All three callbacks — `onDataPointHover`, `onDataPointExit` and `onDataPointClick` — are `default` no-ops, so you only override the ones you need. Each `ChartDataPoint` reports the series name, the data-point index within that series, the formatted x/y values (or single label), the pixel coordinates, and the hit `Shape`. The originating `MouseEvent` is passed through so you can inspect modifiers or the mouse button; note that inside a click handler you should use `SwingUtilities.isRightMouseButton(e)` rather than `MouseEvent.isPopupTrigger()`, which is only meaningful on press/release events.
+
+When a `DataPointListener` is registered and the user right-clicks directly on a data point, the built-in *Save As... / Print* pop-up menu is automatically suppressed so you can show your own context menu instead; right-clicking elsewhere on the chart still shows the default menu.
+
+A working example can be found in the `TestForIssue492` class.
 
 ## Chart Themes
 

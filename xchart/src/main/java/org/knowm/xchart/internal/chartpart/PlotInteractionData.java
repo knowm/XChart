@@ -32,23 +32,28 @@ class PlotInteractionData {
   }
 
   // Pattern 1: x+y label pair, default ellipse hit shape
-  void addToolTip(double x, double y, String xValue, String yValue) {
-    toolTipDataList.add(new ToolTipData(null, x, y, 0, xValue, yValue, null));
+  ToolTipData addToolTip(double x, double y, String xValue, String yValue) {
+    return add(new ToolTipData(null, x, y, 0, xValue, yValue, null));
   }
 
   // Pattern 2: single label, default ellipse hit shape
-  void addToolTip(double x, double y, String label) {
-    toolTipDataList.add(new ToolTipData(null, x, y, 0, null, null, label));
+  ToolTipData addToolTip(double x, double y, String label) {
+    return add(new ToolTipData(null, x, y, 0, null, null, label));
   }
 
   // Pattern 3: x+y label pair with explicit hit shape
-  void addToolTip(Shape shape, double x, double y, double w, String xValue, String yValue) {
-    toolTipDataList.add(new ToolTipData(shape, x, y, w, xValue, yValue, null));
+  ToolTipData addToolTip(Shape shape, double x, double y, double w, String xValue, String yValue) {
+    return add(new ToolTipData(shape, x, y, w, xValue, yValue, null));
   }
 
   // Pattern 4: single label with explicit hit shape
-  void addToolTip(Shape shape, double x, double y, double w, String label) {
-    toolTipDataList.add(new ToolTipData(shape, x, y, w, null, null, label));
+  ToolTipData addToolTip(Shape shape, double x, double y, double w, String label) {
+    return add(new ToolTipData(shape, x, y, w, null, null, label));
+  }
+
+  private ToolTipData add(ToolTipData toolTipData) {
+    toolTipDataList.add(toolTipData);
+    return toolTipData;
   }
 
   void addCursorPoint(double x, double y, String xValue, String yValue, String seriesName) {
@@ -64,6 +69,8 @@ class PlotInteractionData {
     final String xValue; // non-null for x+y pair
     final String yValue; // non-null for x+y pair
     final String label; // non-null for single-label case
+    String seriesName; // series identity, null if the chart type doesn't report it
+    int dataPointIndex = -1; // index within the series, -1 if not reported
 
     ToolTipData(
         Shape shape,
@@ -80,6 +87,13 @@ class PlotInteractionData {
       this.xValue = xValue;
       this.yValue = yValue;
       this.label = label;
+    }
+
+    /** Attaches series identity to this tooltip so {@code DataPointListener}s can report it. */
+    ToolTipData withSeries(String seriesName, int dataPointIndex) {
+      this.seriesName = seriesName;
+      this.dataPointIndex = dataPointIndex;
+      return this;
     }
   }
 

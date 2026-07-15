@@ -271,11 +271,13 @@ public class PlotContent_XY<ST extends XYStyler, S extends XYSeries> extends Plo
 
         // add tooltips
         if (interactionData != null) {
-          interactionData.addToolTip(
-              xOffset,
-              yOffset,
-              axesChart.getXAxisFormat().format(x),
-              axesChart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
+          interactionData
+              .addToolTip(
+                  xOffset,
+                  yOffset,
+                  axesChart.getXAxisFormat().format(x),
+                  axesChart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig))
+              .withSeries(series.getName(), i);
         }
 
         if (interactionData != null) {

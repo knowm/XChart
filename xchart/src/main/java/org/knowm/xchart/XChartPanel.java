@@ -19,6 +19,8 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.swing.AbstractAction;
@@ -38,6 +40,7 @@ import org.knowm.xchart.internal.chartpart.AxesChart;
 import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.internal.chartpart.ChartZoom;
 import org.knowm.xchart.internal.chartpart.Cursor;
+import org.knowm.xchart.internal.chartpart.DataPointDispatcher;
 import org.knowm.xchart.internal.chartpart.ToolTips;
 import org.knowm.xchart.style.Styler;
 
@@ -58,6 +61,8 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
   private ToolTips toolTips = null;
   private Cursor cursor = null;
   private ChartZoom chartZoom = null;
+  private DataPointDispatcher dataPointDispatcher = null;
+  private final List<DataPointListener> dataPointListeners = new ArrayList<>();
   private boolean toolTipsEnabled = false;
   private boolean zoomEnabled = false;
   private java.awt.Color zoomSelectionColor = new java.awt.Color(0, 0, 0, 40);
@@ -197,6 +202,34 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     return this;
   }
 
+  /**
+   * Registers a listener that is notified when the mouse hovers over, leaves, or clicks an
+   * individual rendered data point (bar, marker, bubble, etc.). Collision detection reuses the
+   * per-data-point hit shapes that drive the hover-tooltip feature, so it works for every chart type
+   * and does not require tooltips to be enabled.
+   *
+   * @param listener the listener to add (must not be null)
+   */
+  public XChartPanel<T> addDataPointListener(DataPointListener listener) {
+
+    Objects.requireNonNull(listener, "listener must not be null");
+    dataPointListeners.add(listener);
+    rewireInteractions();
+    return this;
+  }
+
+  /**
+   * Removes a previously registered {@link DataPointListener}.
+   *
+   * @param listener the listener to remove
+   */
+  public XChartPanel<T> removeDataPointListener(DataPointListener listener) {
+
+    dataPointListeners.remove(listener);
+    rewireInteractions();
+    return this;
+  }
+
   public java.awt.Color getZoomSelectionColor() {
 
     return zoomSelectionColor;
@@ -241,6 +274,11 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
       this.removeMouseMotionListener(cursor);
       cursor = null;
     }
+    if (dataPointDispatcher != null) {
+      this.removeMouseMotionListener(dataPointDispatcher);
+      this.removeMouseListener(dataPointDispatcher);
+      dataPointDispatcher = null;
+    }
     if (chartZoom != null) {
       this.removeMouseListener(chartZoom);
       this.removeMouseMotionListener(chartZoom);
@@ -284,7 +322,14 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
       this.addMouseMotionListener(toolTips);
     }
 
-    if (toolTipsEnabled || cursorEnabled) {
+    if (!dataPointListeners.isEmpty()) {
+      anyEnabled = true;
+      dataPointDispatcher = new DataPointDispatcher(dataPointListeners);
+      this.addMouseMotionListener(dataPointDispatcher);
+      this.addMouseListener(dataPointDispatcher);
+    }
+
+    if (toolTipsEnabled || cursorEnabled || !dataPointListeners.isEmpty()) {
       chart.enableInteractionData();
     }
 
@@ -301,7 +346,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     Graphics2D g2d = (Graphics2D) g.create();
     chart.paint(g2d, getWidth(), getHeight());
 
-    chart.consumeInteractionData(g2d, toolTips, cursor);
+    chart.consumeInteractionData(g2d, toolTips, cursor, dataPointDispatcher);
     if (chartZoom != null) {
       chartZoom.paint(g2d);
     }
@@ -572,7 +617,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     @Override
     public void mousePressed(MouseEvent e) {
 
-      if (e.isPopupTrigger()) {
+      if (e.isPopupTrigger() && !isOverListenedDataPoint(e)) {
         doPop(e);
       }
     }
@@ -580,9 +625,21 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     @Override
     public void mouseReleased(MouseEvent e) {
 
-      if (e.isPopupTrigger()) {
+      if (e.isPopupTrigger() && !isOverListenedDataPoint(e)) {
         doPop(e);
       }
+    }
+
+    /**
+     * When a DataPointListener is registered and the right-click lands on a data point, the default
+     * Save As / Print menu is suppressed so the listener can show its own context menu instead.
+     * Right-clicks elsewhere still show the default menu.
+     */
+    private boolean isOverListenedDataPoint(MouseEvent e) {
+
+      return dataPointDispatcher != null
+          && !dataPointListeners.isEmpty()
+          && dataPointDispatcher.isOverDataPoint(e.getX(), e.getY());
     }
 
     private void doPop(MouseEvent e) {
