@@ -10,6 +10,12 @@ public class BubbleSeries extends NoMarkersSeries {
 
   private Optional<BubbleSeriesRenderStyle> bubbleSeriesRenderStyle = Optional.empty();
 
+  /** whether to use the custom, per-data-point tooltip strings instead of the x/y axis values */
+  private boolean customToolTips;
+
+  /** the custom tooltip strings, one per data point, indexed the same as the x/y/size data */
+  private String[] toolTips;
+
   /**
    * Constructor
    *
@@ -31,6 +37,42 @@ public class BubbleSeries extends NoMarkersSeries {
   public BubbleSeries setBubbleSeriesRenderStyle(BubbleSeriesRenderStyle bubbleSeriesRenderStyle) {
 
     this.bubbleSeriesRenderStyle = Optional.ofNullable(bubbleSeriesRenderStyle);
+    return this;
+  }
+
+  public boolean isCustomToolTips() {
+
+    return customToolTips;
+  }
+
+  /**
+   * Set whether to show the custom, per-data-point tooltip strings set via {@link
+   * #setToolTips(String[])} instead of the default formatted x/y axis values. Requires tooltips to
+   * be enabled on the styler.
+   *
+   * @param customToolTips
+   */
+  public BubbleSeries setCustomToolTips(boolean customToolTips) {
+
+    this.customToolTips = customToolTips;
+    return this;
+  }
+
+  public String[] getToolTips() {
+
+    return toolTips;
+  }
+
+  /**
+   * Set the custom tooltip strings, one per data point, indexed the same as the x/y/bubble-size
+   * data. A null entry (or a null array) falls back to the default formatted x/y axis values for
+   * that data point. Also requires {@link #setCustomToolTips(boolean)} to be set to true.
+   *
+   * @param toolTips
+   */
+  public BubbleSeries setToolTips(String[] toolTips) {
+
+    this.toolTips = toolTips;
     return this;
   }
 

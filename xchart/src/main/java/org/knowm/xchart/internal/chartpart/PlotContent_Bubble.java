@@ -134,13 +134,22 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
 
           // add tooltips
           if (interactionData != null) {
-            interactionData.addToolTip(
-                bubble,
-                xOffset,
-                yOffset,
-                0,
-                axesChart.getXAxisFormat().format(x),
-                axesChart.getYAxisFormat().format(yOrig));
+
+            String[] customToolTips = series.getToolTips();
+            if (series.isCustomToolTips()
+                && customToolTips != null
+                && i < customToolTips.length
+                && customToolTips[i] != null) {
+              interactionData.addToolTip(bubble, xOffset, yOffset, 0, customToolTips[i]);
+            } else {
+              interactionData.addToolTip(
+                  bubble,
+                  xOffset,
+                  yOffset,
+                  0,
+                  axesChart.getXAxisFormat().format(x),
+                  axesChart.getYAxisFormat().format(yOrig));
+            }
           }
         }
       }
