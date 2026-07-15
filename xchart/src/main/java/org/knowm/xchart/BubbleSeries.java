@@ -50,7 +50,8 @@ public class BubbleSeries extends NoMarkersSeries {
    * #setToolTips(String[])} instead of the default formatted x/y axis values. Requires tooltips to
    * be enabled on the styler.
    *
-   * @param customToolTips
+   * @param customToolTips true to show the per-data-point strings from {@link
+   *     #setToolTips(String[])}; false to show the default formatted x/y axis values
    */
   public BubbleSeries setCustomToolTips(boolean customToolTips) {
 
@@ -68,7 +69,8 @@ public class BubbleSeries extends NoMarkersSeries {
    * data. A null entry (or a null array) falls back to the default formatted x/y axis values for
    * that data point. Also requires {@link #setCustomToolTips(boolean)} to be set to true.
    *
-   * @param toolTips
+   * @param toolTips the tooltip strings, one per data point; a null entry (or a null array) falls
+   *     back to the default formatted x/y axis values for that data point
    */
   public BubbleSeries setToolTips(String[] toolTips) {
 

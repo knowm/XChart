@@ -35,7 +35,7 @@ public class TestForIssue545 {
     setBubbleStyler(chart);
     BubbleSeries bubbleSeries =
         chart.addSeries(
-            "seriesName", new double[] {1298}, new double[] {data[1]}, new double[] {data[2]});
+            "seriesName", new double[] {data[0]}, new double[] {data[1]}, new double[] {data[2]});
     String tooltip =
         new DecimalFormat("#%").format(data[1])
             + " ("
