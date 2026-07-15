@@ -73,22 +73,24 @@ public class DataPointDispatcher extends MouseAdapter {
     ChartDataPoint hit = hitTest(e.getX(), e.getY());
 
     if (hit == null) {
-      if (hovered != null) {
-        ChartDataPoint exited = hovered;
-        hovered = null;
-        for (DataPointListener listener : listeners) {
-          listener.onDataPointExit(exited, e);
-        }
-      }
+      fireExit(e);
       return;
     }
 
     if (!hit.equals(hovered)) {
       hovered = hit;
-      for (DataPointListener listener : listeners) {
+      // snapshot: a listener may add/remove listeners from inside the callback
+      for (DataPointListener listener : new ArrayList<>(listeners)) {
         listener.onDataPointHover(hit, e);
       }
     }
+  }
+
+  @Override
+  public void mouseExited(MouseEvent e) {
+
+    // the cursor left the panel; clear hover state and notify so listeners aren't left "stuck"
+    fireExit(e);
   }
 
   @Override
@@ -99,9 +101,23 @@ public class DataPointDispatcher extends MouseAdapter {
     }
     ChartDataPoint hit = hitTest(e.getX(), e.getY());
     if (hit != null) {
-      for (DataPointListener listener : listeners) {
+      // snapshot: a listener may add/remove listeners from inside the callback
+      for (DataPointListener listener : new ArrayList<>(listeners)) {
         listener.onDataPointClick(hit, e);
       }
+    }
+  }
+
+  private void fireExit(MouseEvent e) {
+
+    if (hovered == null) {
+      return;
+    }
+    ChartDataPoint exited = hovered;
+    hovered = null;
+    // snapshot: a listener may add/remove listeners from inside the callback
+    for (DataPointListener listener : new ArrayList<>(listeners)) {
+      listener.onDataPointExit(exited, e);
     }
   }
 }

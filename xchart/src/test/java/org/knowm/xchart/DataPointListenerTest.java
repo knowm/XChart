@@ -116,6 +116,54 @@ class DataPointListenerTest {
     assertThat(panel.getMouseMotionListeners()).isEmpty();
   }
 
+  @Test
+  void exitFiresWhenMouseLeavesPanelWhileHovering() {
+
+    CategoryChart chart =
+        new CategoryChartBuilder().width(WIDTH).height(HEIGHT).title("test").build();
+    chart.addSeries("test 1", Arrays.asList(0, 1, 2, 3, 4), Arrays.asList(4, 5, 9, 6, 5));
+
+    XChartPanel<CategoryChart> panel = new XChartPanel<>(chart);
+    panel.setSize(WIDTH, HEIGHT);
+
+    List<ChartDataPoint> hovers = new ArrayList<>();
+    List<ChartDataPoint> exits = new ArrayList<>();
+    panel.addDataPointListener(
+        new DataPointListener() {
+          @Override
+          public void onDataPointHover(ChartDataPoint dataPoint, MouseEvent e) {
+            hovers.add(dataPoint);
+          }
+
+          @Override
+          public void onDataPointExit(ChartDataPoint dataPoint, MouseEvent e) {
+            exits.add(dataPoint);
+          }
+        });
+
+    paintOffscreen(panel);
+
+    // scan the plot until we land on a bar
+    for (int y = 0; y < HEIGHT && hovers.isEmpty(); y += 4) {
+      for (int x = 0; x < WIDTH && hovers.isEmpty(); x += 4) {
+        fireMouseMoved(panel, x, y);
+      }
+    }
+    assertThat(hovers).isNotEmpty();
+
+    // move to the bar's center so it remains the hovered point
+    ChartDataPoint bar = hovers.get(hovers.size() - 1);
+    int cx = (int) bar.getShape().getBounds().getCenterX();
+    int cy = (int) bar.getShape().getBounds().getCenterY();
+    fireMouseMoved(panel, cx, cy);
+
+    int exitsBefore = exits.size();
+    fireMouseExited(panel, cx, cy);
+
+    assertThat(exits.size()).isGreaterThan(exitsBefore);
+    assertThat(exits.get(exits.size() - 1)).isEqualTo(bar);
+  }
+
   private static void paintOffscreen(XChartPanel<?> panel) {
     BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     Graphics2D g = image.createGraphics();
@@ -137,6 +185,13 @@ class DataPointListenerTest {
             panel, MouseEvent.MOUSE_CLICKED, 1L, 0, x, y, 1, false, MouseEvent.BUTTON1);
     for (MouseListener l : panel.getMouseListeners()) {
       l.mouseClicked(e);
+    }
+  }
+
+  private static void fireMouseExited(XChartPanel<?> panel, int x, int y) {
+    MouseEvent e = new MouseEvent(panel, MouseEvent.MOUSE_EXITED, 1L, 0, x, y, 0, false);
+    for (MouseListener l : panel.getMouseListeners()) {
+      l.mouseExited(e);
     }
   }
 }

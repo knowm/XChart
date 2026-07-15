@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
  * panel.addDataPointListener(
  *     new DataPointListener() {
  *       @Override
- *       public void onDataPointClick(ChartDataPoint dataPoint) {
+ *       public void onDataPointClick(ChartDataPoint dataPoint, MouseEvent e) {
  *         System.out.println("Clicked " + dataPoint.getSeriesName()
  *             + " point #" + dataPoint.getDataPointIndex());
  *       }
@@ -36,18 +36,19 @@ public interface DataPointListener {
   default void onDataPointHover(ChartDataPoint dataPoint, MouseEvent e) {}
 
   /**
-   * Called once when the mouse leaves the data point it was hovering over (without immediately
-   * entering another).
+   * Called once when the mouse leaves the data point it was hovering over, either by moving off it
+   * (without immediately entering another) or by leaving the chart panel entirely.
    *
    * @param dataPoint the data point the mouse just left
-   * @param e the mouse-move event during which the point was left
+   * @param e the mouse event during which the point was left (a move or a panel-exit event)
    */
   default void onDataPointExit(ChartDataPoint dataPoint, MouseEvent e) {}
 
   /**
-   * Called when a data point's shape is clicked. Use {@link MouseEvent#getButton()} /{@link
-   * MouseEvent#isPopupTrigger()} to distinguish left-clicks from right-clicks (e.g. to show a
-   * context menu).
+   * Called when a data point's shape is clicked. Inside a click handler, use {@link
+   * javax.swing.SwingUtilities#isRightMouseButton(MouseEvent)} (or {@link MouseEvent#getButton()})
+   * to distinguish left-clicks from right-clicks — e.g. to show a context menu. Note that {@link
+   * MouseEvent#isPopupTrigger()} is only reliable on press/release events, not on a click.
    *
    * @param dataPoint the clicked data point
    * @param e the originating mouse-click event
