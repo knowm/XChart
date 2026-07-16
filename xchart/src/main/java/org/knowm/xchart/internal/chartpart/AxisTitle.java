@@ -56,14 +56,19 @@ public class AxisTitle<ST extends AxesChartStyler, S extends AxesChartSeries> im
 
         // ///////////////////////////////////////////////
 
+        int axisTitlePadding = chart.getStyler().getAxisTitlePadding();
         boolean onRight =
             chart.getStyler().getYAxisGroupPosistion(yAxis.getYIndex()) == YAxisPosition.Right;
         int xOffset;
         if (onRight) {
+          // Push the title outward past the tick labels by the padding, so the padding forms a
+          // gap between the tick labels and the title — mirroring the left side, where the padding
+          // is baked into the title bounds width that the tick labels are offset by. See issue #503.
           xOffset =
               (int)
                   (yAxis.getAxisTick().getBounds().getX()
                       + yAxis.getAxisTick().getBounds().getWidth()
+                      + axisTitlePadding
                       + nonRotatedRectangle.getHeight());
         } else {
           xOffset = (int) (yAxis.getBounds().getX() + nonRotatedRectangle.getHeight());
@@ -101,11 +106,18 @@ public class AxisTitle<ST extends AxesChartStyler, S extends AxesChartSeries> im
         // System.out.println(nonRotatedRectangle.getHeight());
 
         // bounds
+        // The bounds start at the inner edge of the title's column. On the right the padding sits
+        // between the tick labels and the title text, so the origin is padding further inward than
+        // the text; on the left the padding trails the text and the origin is at the text itself.
+        double boundsX =
+            onRight
+                ? xOffset - nonRotatedRectangle.getHeight() - axisTitlePadding
+                : xOffset - nonRotatedRectangle.getHeight();
         bounds =
             new Rectangle2D.Double(
-                xOffset - nonRotatedRectangle.getHeight(),
+                boundsX,
                 yOffset - nonRotatedRectangle.getWidth(),
-                nonRotatedRectangle.getHeight() + chart.getStyler().getAxisTitlePadding(),
+                nonRotatedRectangle.getHeight() + axisTitlePadding,
                 nonRotatedRectangle.getWidth());
         // g.setColor(Color.blue);
         // g.draw(bounds);
