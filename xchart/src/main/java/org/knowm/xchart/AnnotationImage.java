@@ -45,7 +45,7 @@ public class AnnotationImage extends Annotation {
 
     if (isValueInScreenSpace) {
       xOffset = (int) x - image.getWidth() / 2;
-      yOffset = chart.getHeight() - (int) y - image.getWidth() / 2;
+      yOffset = chart.getHeight() - (int) y - image.getHeight() / 2;
     } else {
       xOffset = (int) (getXAxisScreenValue(x) + 0.5) - image.getWidth() / 2;
       yOffset = (int) (getYAxisScreenValue(y) + 0.5) - image.getHeight() / 2;
