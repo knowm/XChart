@@ -41,26 +41,13 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
 
     Map<String, S> map = chart.getSeriesMap();
 
-    // In a horizontal legend all entries share one row, so they must be vertically centered
-    // against a common row height. Otherwise mixed render styles (e.g. a Bar's 20px box vs. a
-    // Line's smaller marker) center against their own graphic height and sit at different
-    // baselines (issue #892). In a vertical legend each entry gets its own row, so the per-entry
-    // height is the correct reference.
-    boolean isHorizontal =
-        chart.getStyler().getLegendLayout() == Styler.LegendLayout.Horizontal;
-    float commonRowHeight = 0;
-    if (isHorizontal) {
-      for (S series : map.values()) {
-        if (!series.isShowInLegend() || !series.isEnabled()) {
-          continue;
-        }
-        commonRowHeight =
-            Math.max(
-                commonRowHeight,
-                getLegendEntryHeight(
-                    getSeriesTextBounds(series), (int) getSeriesLegendRenderGraphicHeight(series)));
-      }
-    }
+    // In a horizontal legend entries flow across shared rows (wrapping to a new row when a row
+    // fills up - issue #577), and all entries in a row are vertically centered against a common row
+    // height. Otherwise mixed render styles (e.g. a Bar's 20px box vs. a Line's smaller marker)
+    // center against their own graphic height and sit at different baselines (issue #892). In a
+    // vertical legend each entry gets its own row, so the per-entry height is the correct reference.
+    boolean isHorizontal = chart.getStyler().getLegendLayout() == Styler.LegendLayout.Horizontal;
+    HorizontalCursor cursor = isHorizontal ? new HorizontalCursor(startx, starty) : null;
 
     for (S series : map.values()) {
 
@@ -80,12 +67,21 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
                   ? axesChartStyler.getMarkerSize()
                   : BOX_SIZE));
 
-      // In a horizontal layout every entry shares one row, so center this entry's natural block
-      // within the shared row by shifting its vertical origin. All per-element math below then
-      // stays exactly as in the vertical layout, just drawn from entryStarty. In a vertical layout
-      // each entry has its own row, so the shift is zero.
+      // In a horizontal layout, position this entry via the wrapping cursor and center its natural
+      // block within the shared row by shifting its vertical origin. All per-element math below then
+      // stays exactly as in the vertical layout, just drawn from startx/entryStarty. In a vertical
+      // layout each entry has its own row, so the shift is zero.
+      double entryAdvanceWidth = 0;
+      if (isHorizontal) {
+        entryAdvanceWidth =
+            getLegendEntryWidth(seriesTextBounds, getLegendEntryMarkerWidth(series))
+                + chart.getStyler().getLegendPadding();
+        cursor.maybeWrap(entryAdvanceWidth);
+        startx = cursor.x;
+      }
+
       double entryStarty =
-          isHorizontal ? starty + (commonRowHeight - legendEntryHeight) / 2.0 : starty;
+          isHorizontal ? cursor.y + (cursor.rowHeight - legendEntryHeight) / 2.0 : starty;
 
       // paint line and marker
       if (series.getLegendRenderType() == LegendRenderType.Line
@@ -175,15 +171,10 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
         paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, entryStarty);
       }
 
-      if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
-        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
+      if (isHorizontal) {
+        cursor.advance(entryAdvanceWidth);
       } else {
-        int markerWidth = BOX_SIZE;
-        if (series.getLegendRenderType() == LegendRenderType.Line) {
-          markerWidth = chart.getStyler().getLegendSeriesLineLength();
-        }
-        float legendEntryWidth = getLegendEntryWidth(seriesTextBounds, markerWidth);
-        startx += legendEntryWidth + chart.getStyler().getLegendPadding();
+        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
       }
     }
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);

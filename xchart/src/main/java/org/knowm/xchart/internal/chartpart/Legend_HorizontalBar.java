@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 import org.knowm.xchart.HorizontalBarSeries;
-import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.style.Styler;
 
 public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeries>
@@ -35,6 +34,12 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     Map<String, S> map = chart.getSeriesMap();
+
+    // In a horizontal legend, entries flow across shared rows and wrap to a new row when a row
+    // fills up (issue #577); in a vertical legend each entry gets its own row.
+    boolean isHorizontal = chart.getStyler().getLegendLayout() == Styler.LegendLayout.Horizontal;
+    HorizontalCursor cursor = isHorizontal ? new HorizontalCursor(startx, starty) : null;
+
     for (S series : map.values()) {
 
       if (!series.isShowInLegend()) {
@@ -47,7 +52,15 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);
 
-      // paint line and marker
+      double entryAdvanceWidth = 0;
+      if (isHorizontal) {
+        entryAdvanceWidth =
+            getLegendEntryWidth(seriesTextBounds, getLegendEntryMarkerWidth(series))
+                + chart.getStyler().getLegendPadding();
+        cursor.maybeWrap(entryAdvanceWidth);
+        startx = cursor.x;
+        starty = cursor.y;
+      }
 
       // paint inner box
       Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
@@ -58,15 +71,10 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
       double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
       paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
 
-      if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
-        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
+      if (isHorizontal) {
+        cursor.advance(entryAdvanceWidth);
       } else {
-        int markerWidth = BOX_SIZE;
-        if (series.getLegendRenderType() == LegendRenderType.Line) {
-          markerWidth = chart.getStyler().getLegendSeriesLineLength();
-        }
-        float legendEntryWidth = getLegendEntryWidth(seriesTextBounds, markerWidth);
-        startx += legendEntryWidth + chart.getStyler().getLegendPadding();
+        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
       }
     }
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
