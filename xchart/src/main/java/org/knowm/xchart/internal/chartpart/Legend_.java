@@ -140,6 +140,17 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
         break;
     }
 
+    // An OutsideS legend is centered on the plot, whose center sits right of the image center (the
+    // left y-axis consumes horizontal space). A wide (wrapped) horizontal legend can therefore
+    // still run off the right image edge even though every row fits within
+    // getHorizontalLegendMaxRowWidth(). Clamp the box so it always stays fully within the image
+    // (issue #577). For a legend narrower than the image this only nudges it left when it would
+    // otherwise be cut off; a normal centered legend is left untouched.
+    if (chart.getStyler().getLegendPosition() == Styler.LegendPosition.OutsideS) {
+      xOffset = Math.min(xOffset, chart.getWidth() - bounds.getWidth() - LEGEND_MARGIN);
+      xOffset = Math.max(xOffset, LEGEND_MARGIN);
+    }
+
     // draw legend box background and border
     Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
     g.setColor(chart.getStyler().getLegendBackgroundColor());
@@ -311,12 +322,15 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
   }
 
   /**
-   * The width of the legend graphic (line or box) preceding an entry's text. Subclasses whose
+   * The width of the legend graphic (line/marker or box) preceding an entry's text. Line and
+   * Scatter entries reserve the series-line length (their text is painted at that offset, with the
+   * marker centered within it); box-style entries reserve {@link #BOX_SIZE}. Subclasses whose
    * graphic isn't sized by render type (e.g. OHLC) override this.
    */
   int getLegendEntryMarkerWidth(S series) {
 
-    return series.getLegendRenderType() == LegendRenderType.Line
+    return (series.getLegendRenderType() == LegendRenderType.Line
+            || series.getLegendRenderType() == LegendRenderType.Scatter)
         ? chart.getStyler().getLegendSeriesLineLength()
         : BOX_SIZE;
   }
