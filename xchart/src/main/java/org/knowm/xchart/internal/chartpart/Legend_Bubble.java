@@ -40,6 +40,12 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     Map<String, S> map = chart.getSeriesMap();
+
+    // In a horizontal legend, entries flow across shared rows and wrap to a new row when a row
+    // fills up (issue #577); in a vertical legend each entry gets its own row.
+    boolean isHorizontal = chart.getStyler().getLegendLayout() == Styler.LegendLayout.Horizontal;
+    HorizontalCursor cursor = isHorizontal ? new HorizontalCursor(startx, starty) : null;
+
     for (S series : map.values()) {
 
       if (!series.isShowInLegend()) {
@@ -51,6 +57,16 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries
 
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight = getLegendEntryHeight(seriesTextBounds, BOX_SIZE);
+
+      double entryAdvanceWidth = 0;
+      if (isHorizontal) {
+        entryAdvanceWidth =
+            getLegendEntryWidth(seriesTextBounds, getLegendEntryMarkerWidth(series))
+                + chart.getStyler().getLegendPadding();
+        cursor.maybeWrap(entryAdvanceWidth);
+        startx = cursor.x;
+        starty = cursor.y;
+      }
 
       // paint little circle
       Shape rectSmall = new Ellipse2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
@@ -64,15 +80,10 @@ public class Legend_Bubble<ST extends AxesChartStyler, S extends AxesChartSeries
       final double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
       paintSeriesText(g, seriesTextBounds, BOX_SIZE, x, starty);
 
-      if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
-        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
+      if (isHorizontal) {
+        cursor.advance(entryAdvanceWidth);
       } else {
-        int markerWidth = BOX_SIZE;
-        if (series.getLegendRenderType() == LegendRenderType.Line) {
-          markerWidth = chart.getStyler().getLegendSeriesLineLength();
-        }
-        float legendEntryWidth = getLegendEntryWidth(seriesTextBounds, markerWidth);
-        startx += legendEntryWidth + chart.getStyler().getLegendPadding();
+        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
       }
     }
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);

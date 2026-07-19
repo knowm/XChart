@@ -41,6 +41,12 @@ public class Legend_OHLC<ST extends OHLCStyler, S extends OHLCSeries> extends Le
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     Map<String, S> map = chart.getSeriesMap();
+
+    // In a horizontal legend, entries flow across shared rows and wrap to a new row when a row
+    // fills up (issue #577); in a vertical legend each entry gets its own row.
+    boolean isHorizontal = chart.getStyler().getLegendLayout() == Styler.LegendLayout.Horizontal;
+    HorizontalCursor cursor = isHorizontal ? new HorizontalCursor(startx, starty) : null;
+
     for (S series : map.values()) {
 
       if (!series.isShowInLegend()) {
@@ -53,6 +59,16 @@ public class Legend_OHLC<ST extends OHLCStyler, S extends OHLCSeries> extends Le
       Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
       float legendEntryHeight =
           getLegendEntryHeight(seriesTextBounds, axesChartStyler.getMarkerSize());
+
+      double entryAdvanceWidth = 0;
+      if (isHorizontal) {
+        entryAdvanceWidth =
+            getLegendEntryWidth(seriesTextBounds, getLegendEntryMarkerWidth(series))
+                + chart.getStyler().getLegendPadding();
+        cursor.maybeWrap(entryAdvanceWidth);
+        startx = cursor.x;
+        starty = cursor.y;
+      }
 
       if (series.getOhlcSeriesRenderStyle() != OHLCSeriesRenderStyle.Line) {
 
@@ -105,12 +121,10 @@ public class Legend_OHLC<ST extends OHLCStyler, S extends OHLCSeries> extends Le
               + chart.getStyler().getLegendPadding();
       paintSeriesText(g, seriesTextBounds, axesChartStyler.getMarkerSize(), x, starty);
 
-      if (chart.getStyler().getLegendLayout() == Styler.LegendLayout.Vertical) {
-        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
+      if (isHorizontal) {
+        cursor.advance(entryAdvanceWidth);
       } else {
-        int markerWidth = chart.getStyler().getLegendSeriesLineLength();
-        float legendEntryWidth = getLegendEntryWidth(seriesTextBounds, markerWidth);
-        startx += legendEntryWidth + chart.getStyler().getLegendPadding();
+        starty += legendEntryHeight + chart.getStyler().getLegendPadding();
       }
     }
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
@@ -123,5 +137,13 @@ public class Legend_OHLC<ST extends OHLCStyler, S extends OHLCSeries> extends Le
             || series.getLegendRenderType() == LegendRenderType.BoxNoOutline)
         ? BOX_SIZE
         : axesChartStyler.getMarkerSize();
+  }
+
+  @Override
+  int getLegendEntryMarkerWidth(S series) {
+
+    // An OHLC legend graphic is always drawn at the series-line length (candle box or line), not the
+    // render-type default, so the advance width used for wrapping matches what is painted.
+    return chart.getStyler().getLegendSeriesLineLength();
   }
 }

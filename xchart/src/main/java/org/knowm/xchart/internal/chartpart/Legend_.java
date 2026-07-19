@@ -140,6 +140,17 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
         break;
     }
 
+    // An OutsideS legend is centered on the plot, whose center sits right of the image center (the
+    // left y-axis consumes horizontal space). A wide (wrapped) horizontal legend can therefore
+    // still run off the right image edge even though every row fits within
+    // getHorizontalLegendMaxRowWidth(). Clamp the box so it always stays fully within the image
+    // (issue #577). For a legend narrower than the image this only nudges it left when it would
+    // otherwise be cut off; a normal centered legend is left untouched.
+    if (chart.getStyler().getLegendPosition() == Styler.LegendPosition.OutsideS) {
+      xOffset = Math.min(xOffset, chart.getWidth() - bounds.getWidth() - LEGEND_MARGIN);
+      xOffset = Math.max(xOffset, LEGEND_MARGIN);
+    }
+
     // draw legend box background and border
     Shape rect = new Rectangle2D.Double(xOffset, yOffset, bounds.getWidth(), height);
     g.setColor(chart.getStyler().getLegendBackgroundColor());
@@ -230,11 +241,20 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
       // 0).
     }
 
-    // determine legend text content max height
-    double legendTextContentMaxHeight = 0;
+    // All rows in a wrapping horizontal legend share the same (tallest) row height so entries line
+    // up regardless of series order (issue #892).
+    double rowHeight = computeHorizontalRowHeight();
 
-    // determine total legend content width
-    double legendContentWidth = 0;
+    // Entries flow left-to-right and wrap to a new row once the current row would exceed the
+    // available width, so a legend with many (or long-named) series no longer spills past the image
+    // edge (issue #577). getBoundsHintHorizontal() and the subclass doPaint() methods walk the same
+    // series in the same order using the same per-entry advance width, so they wrap at identical
+    // points and the reported box matches what is painted.
+    double maxRowWidth = getHorizontalLegendMaxRowWidth();
+
+    double currentRowWidth = 0;
+    double widestRow = 0;
+    int rowCount = 1;
 
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
@@ -246,41 +266,117 @@ public abstract class Legend_<ST extends Styler, S extends Series> implements Ch
         continue;
       }
 
-      Map<String, Rectangle2D> seriesTextBounds = getSeriesTextBounds(series);
+      double entryAdvanceWidth = getHorizontalLegendEntryAdvanceWidth(series);
 
-      double legendEntryHeight = 0; // could be multi-line
-      double legendEntryMaxWidth = 0; // could be multi-line
-      for (Map.Entry<String, Rectangle2D> entry : seriesTextBounds.entrySet()) {
-        legendEntryHeight += entry.getValue().getHeight() + MULTI_LINE_SPACE;
-        legendEntryMaxWidth = Math.max(legendEntryMaxWidth, entry.getValue().getWidth());
+      // Wrap to the next row when this entry would overflow the current one (but never wrap an
+      // empty row, so a single over-wide entry still gets its own row).
+      if (currentRowWidth > 0 && currentRowWidth + entryAdvanceWidth > maxRowWidth) {
+        widestRow = Math.max(widestRow, currentRowWidth);
+        rowCount++;
+        currentRowWidth = 0;
       }
+      currentRowWidth += entryAdvanceWidth;
+    }
+    widestRow = Math.max(widestRow, currentRowWidth);
 
-      legendEntryHeight -= MULTI_LINE_SPACE; // subtract away the bottom MULTI_LINE_SPACE
-      // Accumulate the tallest entry across ALL series (text or graphic, whichever is taller) so
-      // the single-row horizontal legend box is tall enough for the biggest entry (e.g. a 20px
-      // box) regardless of series order (issue #892).
-      legendTextContentMaxHeight =
+    // Legend Box. For a single row this reduces to the previous formula
+    // (widestRow + padding wide, rowHeight + 2*padding tall).
+    double width = widestRow + chart.getStyler().getLegendPadding();
+    double height =
+        rowCount * rowHeight
+            + (rowCount - 1) * chart.getStyler().getLegendPadding()
+            + chart.getStyler().getLegendPadding() * 2;
+
+    return new Rectangle2D.Double(0, 0, width, height); // 0 indicates not sure yet.
+  }
+
+  /**
+   * The tallest legend entry across all shown series (text or graphic, whichever is taller). Every
+   * row in a horizontal legend uses this so entries share a common baseline (issue #892).
+   */
+  double computeHorizontalRowHeight() {
+
+    double rowHeight = 0;
+    for (S series : chart.getSeriesMap().values()) {
+      if (!series.isShowInLegend() || !series.isEnabled()) {
+        continue;
+      }
+      rowHeight =
           Math.max(
-              legendTextContentMaxHeight,
-              Math.max(legendEntryHeight, getSeriesLegendRenderGraphicHeight(series)));
+              rowHeight,
+              getLegendEntryHeight(
+                  getSeriesTextBounds(series), (int) getSeriesLegendRenderGraphicHeight(series)));
+    }
+    return rowHeight;
+  }
 
-      legendContentWidth += legendEntryMaxWidth + chart.getStyler().getLegendPadding();
+  /**
+   * The horizontal distance a single legend entry consumes, including the trailing padding that
+   * separates it from the next entry. Used by both bounds calculation and painting so they wrap at
+   * exactly the same points.
+   */
+  double getHorizontalLegendEntryAdvanceWidth(S series) {
 
-      if (series.getLegendRenderType() == LegendRenderType.Line) {
-        legendContentWidth =
-            chart.getStyler().getLegendSeriesLineLength()
-                + chart.getStyler().getLegendPadding()
-                + legendContentWidth;
-      } else {
-        legendContentWidth = BOX_SIZE + chart.getStyler().getLegendPadding() + legendContentWidth;
+    return getLegendEntryWidth(getSeriesTextBounds(series), getLegendEntryMarkerWidth(series))
+        + chart.getStyler().getLegendPadding();
+  }
+
+  /**
+   * The width of the legend graphic (line/marker or box) preceding an entry's text. Line and
+   * Scatter entries reserve the series-line length (their text is painted at that offset, with the
+   * marker centered within it); box-style entries reserve {@link #BOX_SIZE}. Subclasses whose
+   * graphic isn't sized by render type (e.g. OHLC) override this.
+   */
+  int getLegendEntryMarkerWidth(S series) {
+
+    return (series.getLegendRenderType() == LegendRenderType.Line
+            || series.getLegendRenderType() == LegendRenderType.Scatter)
+        ? chart.getStyler().getLegendSeriesLineLength()
+        : BOX_SIZE;
+  }
+
+  /**
+   * The maximum width one row of a horizontal legend may occupy before wrapping. Keyed off the
+   * chart width (minus margin and padding) so the centered OutsideS legend box never extends past
+   * the image edge (issue #577).
+   */
+  double getHorizontalLegendMaxRowWidth() {
+
+    return chart.getWidth() - 2.0 * LEGEND_MARGIN - 2.0 * chart.getStyler().getLegendPadding();
+  }
+
+  /**
+   * A left-to-right pen for laying out a wrapping horizontal legend. Subclass painters advance it
+   * per entry and read {@link #x}/{@link #y} as the current entry's origin.
+   */
+  final class HorizontalCursor {
+
+    final double leftOrigin;
+    final double rowHeight;
+    private final double maxRowWidth;
+    double x;
+    double y;
+
+    HorizontalCursor(double startx, double starty) {
+      this.leftOrigin = startx;
+      this.x = startx;
+      this.y = starty;
+      this.rowHeight = computeHorizontalRowHeight();
+      this.maxRowWidth = getHorizontalLegendMaxRowWidth();
+    }
+
+    /** Wrap to the next row if placing an entry of the given advance width would overflow. */
+    void maybeWrap(double entryAdvanceWidth) {
+      if (x > leftOrigin && (x - leftOrigin) + entryAdvanceWidth > maxRowWidth) {
+        x = leftOrigin;
+        y += rowHeight + chart.getStyler().getLegendPadding();
       }
     }
 
-    // Legend Box
-    double width = legendContentWidth + chart.getStyler().getLegendPadding();
-    double height = legendTextContentMaxHeight + chart.getStyler().getLegendPadding() * 2;
-
-    return new Rectangle2D.Double(0, 0, width, height); // 0 indicates not sure yet.
+    /** Move past an entry of the given advance width. */
+    void advance(double entryAdvanceWidth) {
+      x += entryAdvanceWidth;
+    }
   }
 
   /**
