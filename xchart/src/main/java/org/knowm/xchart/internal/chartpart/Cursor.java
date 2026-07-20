@@ -26,7 +26,8 @@ public class Cursor extends MouseAdapter implements ChartPart {
 
   private static final int MOUSE_SPACING = 15;
 
-  private final List<DataPoint> dataPointList = new ArrayList<>();
+  // package-private so tests in this package can assert it doesn't grow across repaints
+  final List<DataPoint> dataPointList = new ArrayList<>();
   // package-private so tests in this package can assert on what the cursor label shows
   final List<DataPoint> matchingDataPointList = new ArrayList<>();
 
