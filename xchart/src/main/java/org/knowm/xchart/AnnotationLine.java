@@ -67,7 +67,24 @@ public class AnnotationLine extends Annotation {
         new Rectangle2D.Double(x1, y1, Math.max(x2 - x1, lineWidth), Math.max(y2 - y1, lineWidth));
   }
 
-  public void setValue(double value) {
+  public AnnotationLine setValue(double value) {
     this.value = value;
+    return this;
+  }
+
+  // Covariant overrides so base-class setters can appear anywhere in a chain
+
+  @Override
+  public AnnotationLine setYAxisGroup(int yAxisGroup) {
+
+    super.setYAxisGroup(yAxisGroup);
+    return this;
+  }
+
+  @Override
+  public AnnotationLine setVisible(boolean visible) {
+
+    super.setVisible(visible);
+    return this;
   }
 }

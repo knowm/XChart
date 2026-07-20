@@ -78,15 +78,34 @@ public class AnnotationText extends Annotation {
         new Rectangle2D.Double(xOffset, yOffset, textBounds.getWidth(), textBounds.getHeight());
   }
 
-  public void setText(String text) {
+  public AnnotationText setText(String text) {
     this.text = text;
+    return this;
   }
 
-  public void setX(double x) {
+  public AnnotationText setX(double x) {
     this.x = x;
+    return this;
   }
 
-  public void setY(double y) {
+  public AnnotationText setY(double y) {
     this.y = y;
+    return this;
+  }
+
+  // Covariant overrides so base-class setters can appear anywhere in a chain
+
+  @Override
+  public AnnotationText setYAxisGroup(int yAxisGroup) {
+
+    super.setYAxisGroup(yAxisGroup);
+    return this;
+  }
+
+  @Override
+  public AnnotationText setVisible(boolean visible) {
+
+    super.setVisible(visible);
+    return this;
   }
 }
