@@ -78,19 +78,11 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
             && !tickLabel.isEmpty()
             && flippedTickLocation > yOffset
             && flippedTickLocation < yOffset + height) { // some are null for logarithmic axes
-          Rectangle2D tickLabelBounds;
           FontRenderContext frc = g.getFontRenderContext();
-          if (TexRenderer.isTeX(tickLabel)) {
-            tickLabelBounds = TexRenderer.getBounds(tickLabel, styler.getAxisTickLabelsFont());
-          } else {
-            tickLabelBounds =
-                new TextLayout(tickLabel, styler.getAxisTickLabelsFont(), frc)
-                    .getOutline(null)
-                    .getBounds2D();
-          }
-          double boundWidth = tickLabelBounds.getWidth();
-          if (boundWidth > maxTickLabelWidth) {
-            maxTickLabelWidth = boundWidth;
+          double labelWidth =
+              TickLabelMetrics.width(tickLabel, styler.getAxisTickLabelsFont(), frc);
+          if (labelWidth > maxTickLabelWidth) {
+            maxTickLabelWidth = labelWidth;
           }
           axisLabelStrings.put(tickLocation, tickLabel);
           // axisLabelTextLayouts is used by colocatedSlaveLabels; use a space for TeX labels
@@ -123,19 +115,11 @@ public class AxisTickLabels<ST extends AxesChartStyler, S extends AxesChartSerie
 
         double flippedTickLocation = yOffset + height - tickLocation;
 
-        double boundWidth = tickLabelBounds.getWidth();
-        double xPos;
-        switch (styler.getYAxisLabelAlignment()) {
-          case Right:
-            xPos = xOffset + maxTickLabelWidth - boundWidth;
-            break;
-          case Centre:
-            xPos = xOffset + (maxTickLabelWidth - boundWidth) / 2;
-            break;
-          case Left:
-          default:
-            xPos = xOffset;
-        }
+        double labelWidth =
+            TickLabelMetrics.width(tickLabel, styler.getAxisTickLabelsFont(), g.getFontRenderContext());
+        double xPos =
+            TickLabelMetrics.alignedXPos(
+                xOffset, maxTickLabelWidth, labelWidth, styler.getYAxisLabelAlignment());
 
         double yPos = flippedTickLocation + tickLabelBounds.getHeight() / 2.0;
 
