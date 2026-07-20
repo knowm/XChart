@@ -55,15 +55,34 @@ public class AnnotationImage extends Annotation {
     bounds = new Rectangle2D.Double(xOffset, yOffset, image.getWidth(), image.getHeight());
   }
 
-  public void setImage(BufferedImage image) {
+  public AnnotationImage setImage(BufferedImage image) {
     this.image = image;
+    return this;
   }
 
-  public void setX(double x) {
+  public AnnotationImage setX(double x) {
     this.x = x;
+    return this;
   }
 
-  public void setY(double y) {
+  public AnnotationImage setY(double y) {
     this.y = y;
+    return this;
+  }
+
+  // Covariant overrides so base-class setters can appear anywhere in a chain
+
+  @Override
+  public AnnotationImage setYAxisGroup(int yAxisGroup) {
+
+    super.setYAxisGroup(yAxisGroup);
+    return this;
+  }
+
+  @Override
+  public AnnotationImage setVisible(boolean visible) {
+
+    super.setVisible(visible);
+    return this;
   }
 }

@@ -148,15 +148,34 @@ public class AnnotationTextPanel extends Annotation {
     return textBounds;
   }
 
-  public void setLines(List<String> lines) {
+  public AnnotationTextPanel setLines(List<String> lines) {
     this.lines = lines;
+    return this;
   }
 
-  public void setX(double x) {
+  public AnnotationTextPanel setX(double x) {
     this.x = x;
+    return this;
   }
 
-  public void setY(double y) {
+  public AnnotationTextPanel setY(double y) {
     this.y = y;
+    return this;
+  }
+
+  // Covariant overrides so base-class setters can appear anywhere in a chain
+
+  @Override
+  public AnnotationTextPanel setYAxisGroup(int yAxisGroup) {
+
+    super.setYAxisGroup(yAxisGroup);
+    return this;
+  }
+
+  @Override
+  public AnnotationTextPanel setVisible(boolean visible) {
+
+    super.setVisible(visible);
+    return this;
   }
 }

@@ -34,8 +34,10 @@ public abstract class Annotation implements ChartPart {
     return bounds;
   }
 
-  public void setVisible(boolean visible) {
+  public Annotation setVisible(boolean visible) {
+
     isVisible = visible;
+    return this;
   }
 
   /**

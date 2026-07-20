@@ -107,4 +107,25 @@ public class AnnotationYAxisGroupTest {
     // test - no NPE, and it lands on the primary axis
     assertEquals(onPrimary.getBounds().getY(), onMissingGroup.getBounds().getY(), 0.001);
   }
+
+  @Test
+  public void settersChainInEitherOrder() throws IOException {
+
+    // given - base-class setters before and after subclass-specific ones
+    XYChart chart = buildTwoAxisChart();
+    AnnotationLine a = new AnnotationLine(0.0, false, false).setYAxisGroup(1).setValue(5.0);
+    AnnotationLine b = new AnnotationLine(0.0, false, false).setValue(5.0).setYAxisGroup(1);
+    AnnotationText c = new AnnotationText("x", 1.0, 0.0, false).setVisible(true).setY(5.0);
+    chart.addAnnotation(a);
+    chart.addAnnotation(b);
+    chart.addAnnotation(c);
+
+    // when
+    render(chart);
+
+    // test
+    assertEquals(a.getBounds().getY(), b.getBounds().getY(), 0.001);
+    assertEquals(1, a.getYAxisGroup());
+    assertEquals(1, b.getYAxisGroup());
+  }
 }
