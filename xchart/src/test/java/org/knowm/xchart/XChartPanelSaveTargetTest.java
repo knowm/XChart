@@ -3,7 +3,6 @@ package org.knowm.xchart;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import javax.swing.filechooser.FileFilter;
 import org.junit.jupiter.api.Test;
 
@@ -15,16 +14,13 @@ import org.junit.jupiter.api.Test;
 public class XChartPanelSaveTargetTest {
 
   /** Builds the same filter instances the Save As dialog installs. */
-  private static FileFilter filter(String suffix) throws Exception {
+  private static FileFilter filter(String suffix) {
 
-    Class<?> clazz = Class.forName("org.knowm.xchart.XChartPanel$SuffixSaveFilter");
-    Constructor<?> ctor = clazz.getDeclaredConstructor(String.class);
-    ctor.setAccessible(true);
-    return (FileFilter) ctor.newInstance(suffix);
+    return new XChartPanel.SuffixSaveFilter(suffix);
   }
 
   @Test
-  public void testExtensionIsAppendedWhenTheUserOmitsIt() throws Exception {
+  public void testExtensionIsAppendedWhenTheUserOmitsIt() {
 
     // The case that made the bug bite: "chart" is written as "chart.png", so an overwrite check
     // against the raw selection would never fire.
@@ -34,7 +30,7 @@ public class XChartPanelSaveTargetTest {
   }
 
   @Test
-  public void testExtensionIsNotDuplicatedWhenTheUserTypesIt() throws Exception {
+  public void testExtensionIsNotDuplicatedWhenTheUserTypesIt() {
 
     assertEquals(
         "chart.png", XChartPanel.resolveSaveTarget(new File("chart.png"), filter("png")).getName());
@@ -43,7 +39,7 @@ public class XChartPanelSaveTargetTest {
   }
 
   @Test
-  public void testResolvedTargetMatchesWhatTheEncoderWrites() throws Exception {
+  public void testResolvedTargetMatchesWhatTheEncoderWrites() {
 
     // The overwrite check is only trustworthy if it names the exact file the encoder opens.
     String selected = "chart";
@@ -65,7 +61,7 @@ public class XChartPanelSaveTargetTest {
   }
 
   @Test
-  public void testSuffixIsReadFromTheFilterRatherThanItsDescription() throws Exception {
+  public void testSuffixIsReadFromTheFilterRatherThanItsDescription() {
 
     assertEquals("eps", XChartPanel.suffixOf(filter("eps")));
     assertEquals("bmp", XChartPanel.suffixOf(filter("bmp")));
