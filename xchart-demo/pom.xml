@@ -13,10 +13,22 @@
     <name>XChart Demo</name>
     <description>A Swing App demonstration of various charts using XChart</description>
 
-    <properties>
-        <!-- skip test compilation during release:prepare's clean verify subprocess -->
-        <maven.test.skip>true</maven.test.skip>
-    </properties>
+    <profiles>
+        <!-- Skip test compilation during release:prepare's clean verify subprocess. The release
+             plugin passes -DskipDemoTests (see the root pom), so this stays scoped to the release
+             instead of disabling this module's tests for every build and for CI. -->
+        <profile>
+            <id>skip-demo-tests</id>
+            <activation>
+                <property>
+                    <name>skipDemoTests</name>
+                </property>
+            </activation>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>org.knowm.xchart</groupId>
