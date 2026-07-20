@@ -661,7 +661,8 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     }
   }
 
-  private static class SuffixSaveFilter extends FileFilter {
+  // package-private so tests in this package can build the same filters the dialog installs
+  static class SuffixSaveFilter extends FileFilter {
 
     private final String suffix;
 
