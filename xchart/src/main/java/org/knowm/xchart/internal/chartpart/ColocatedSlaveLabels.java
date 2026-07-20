@@ -47,8 +47,7 @@ class ColocatedSlaveLabels {
       FontRenderContext frc = g.getFontRenderContext();
       for (String label : slave.getAxisTickCalculator().getTickLabels()) {
         if (label != null && !label.isEmpty()) {
-          TextLayout tl = new TextLayout(label, styler.getAxisTickLabelsFont(), frc);
-          double w = tl.getBounds().getWidth();
+          double w = TickLabelMetrics.width(label, styler.getAxisTickLabelsFont(), frc);
           if (w > maxWidth) {
             maxWidth = w;
           }
@@ -114,20 +113,13 @@ class ColocatedSlaveLabels {
             && flippedTickLocation < yOffset + height) {
           TextLayout layout = new TextLayout(label, styler.getAxisTickLabelsFont(), frc);
           Shape shape = layout.getOutline(null);
-          Rectangle2D slaveBounds = shape.getBounds();
+          Rectangle2D slaveBounds = shape.getBounds2D();
 
-          double xPos;
-          switch (styler.getYAxisLabelAlignment()) {
-            case Right:
-              xPos = xOffset + maxTickLabelWidth - slaveBounds.getWidth();
-              break;
-            case Centre:
-              xPos = xOffset + (maxTickLabelWidth - slaveBounds.getWidth()) / 2;
-              break;
-            case Left:
-            default:
-              xPos = xOffset;
-          }
+          double labelWidth =
+              TickLabelMetrics.width(label, styler.getAxisTickLabelsFont(), frc);
+          double xPos =
+              TickLabelMetrics.alignedXPos(
+                  xOffset, maxTickLabelWidth, labelWidth, styler.getYAxisLabelAlignment());
 
           AffineTransform orig = g.getTransform();
           AffineTransform at = new AffineTransform();
