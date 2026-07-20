@@ -96,35 +96,40 @@ class RegressionIssue618Test {
   }
 
   @Test
-  void rightEdgesAreLessRaggedThanInkWidthAlignment() {
+  void inkWidthAlignmentDriftsWhereAdvanceAlignmentDoesNot() {
 
     // Guards against a regression to the pre-fix maths, which aligned on ink width and so shifted
-    // every label by its own left side bearing. What residual raggedness remains is right side
-    // bearing — a property of the glyph outlines themselves, which tabular alignment neither can
-    // nor should remove: '7' reaches further right than '5' in a spreadsheet column too.
-    double legacy = legacyInkRightEdgeSpread();
-    assertThat(legacy).as("pre-fix spread, sanity check").isGreaterThan(2.0);
-    assertThat(inkRightEdgeSpread()).as("post-fix spread").isLessThan(legacy);
+    // every label by its own left side bearing. Stated as a contrast between the two algorithms
+    // over one label length, so it holds on any font whose digits have differing bearings — the
+    // exact drift in px is font specific and deliberately not asserted here.
+    String[] singleDigits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+
+    assertThat(legacyRightEdgeSpread(singleDigits))
+        .as("pre-fix drift across single digits")
+        .isGreaterThan(0.0);
+    assertThat(advanceOriginSpread(singleDigits))
+        .as("post-fix drift across single digits")
+        .isCloseTo(0.0, within(TOLERANCE));
   }
 
-  /** Spread of rendered ink right edges under the current, advance-based alignment. */
-  private double inkRightEdgeSpread() {
+  /** Spread of drawing origins under the current, advance-based alignment. */
+  private double advanceOriginSpread(String... labels) {
 
     double min = Double.MAX_VALUE;
     double max = -Double.MAX_VALUE;
-    for (String label : LABELS) {
-      double edge = renderedRightEdge(label, TextAlignment.Right);
-      min = Math.min(min, edge);
-      max = Math.max(max, edge);
+    for (String label : labels) {
+      double origin = xPos(label, TextAlignment.Right);
+      min = Math.min(min, origin);
+      max = Math.max(max, origin);
     }
     return max - min;
   }
 
   /** Spread of rendered ink right edges under the pre-fix maths, reproduced here for comparison. */
-  private double legacyInkRightEdgeSpread() {
+  private double legacyRightEdgeSpread(String... labels) {
 
     double legacyColumnWidth = 0;
-    for (String label : LABELS) {
+    for (String label : labels) {
       legacyColumnWidth =
           Math.max(
               legacyColumnWidth,
@@ -133,7 +138,7 @@ class RegressionIssue618Test {
 
     double min = Double.MAX_VALUE;
     double max = -Double.MAX_VALUE;
-    for (String label : LABELS) {
+    for (String label : labels) {
       Rectangle2D ink = new TextLayout(label, font, frc).getOutline(null).getBounds2D();
       // Legacy: xPos ignored the bearing, but the filled outline still honoured it.
       double edge = (COLUMN_X + legacyColumnWidth - ink.getWidth()) + ink.getX() + ink.getWidth();
@@ -188,9 +193,11 @@ class RegressionIssue618Test {
   }
 
   @Test
-  void advanceWidthIsNeverNarrowerThanTheInk() {
+  void advanceWidthIsNotNarrowerThanTheInk() {
 
     // The column must reserve room for both side bearings, otherwise the widest label is clipped.
+    // This holds for text faces such as the logical SansSerif pinned here; it is not universal —
+    // script faces with overhanging glyphs (Zapfino, Brush Script) can ink wider than they advance.
     for (String label : LABELS) {
       double ink = new TextLayout(label, font, frc).getOutline(null).getBounds2D().getWidth();
       assertThat(TickLabelMetrics.width(label, font, frc))
@@ -202,6 +209,7 @@ class RegressionIssue618Test {
   @Test
   void renderedInkStaysInsideTheColumn() {
 
+    // Also font dependent for the same reason as advanceWidthIsNotNarrowerThanTheInk.
     double columnWidth = columnWidth();
     for (TextAlignment alignment : TextAlignment.values()) {
       for (String label : LABELS) {
