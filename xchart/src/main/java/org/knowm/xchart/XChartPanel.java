@@ -21,12 +21,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
@@ -397,7 +399,7 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
 
     UIManager.put("FileChooser.saveButtonText", "Save");
     UIManager.put("FileChooser.fileNameLabelText", "File Name:");
-    JFileChooser fileChooser = new JFileChooser();
+    JFileChooser fileChooser = new OverwriteConfirmingFileChooser();
     FileFilter pngFileFilter = new SuffixSaveFilter("png"); // default
     fileChooser.addChoosableFileFilter(pngFileFilter);
     fileChooser.addChoosableFileFilter(new SuffixSaveFilter("jpg"));
@@ -429,30 +431,34 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 
       if (fileChooser.getSelectedFile() != null) {
-        File theFileToSave = fileChooser.getSelectedFile();
         try {
-          if (fileChooser.getFileFilter() == null) {
-            BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.PNG);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.jpg,*.JPG")) {
-            BitmapEncoder.saveJPGWithQuality(
-                chart,
-                BitmapEncoder.addFileExtension(theFileToSave.getCanonicalPath(), BitmapFormat.JPG),
-                1.0f);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.png,*.PNG")) {
-            BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.PNG);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.bmp,*.BMP")) {
-            BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.BMP);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.gif,*.GIF")) {
-            BitmapEncoder.saveBitmap(chart, theFileToSave.getCanonicalPath(), BitmapFormat.GIF);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.svg,*.SVG")) {
-            VectorGraphicsEncoder.saveVectorGraphic(
-                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.SVG);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.eps,*.EPS")) {
-            VectorGraphicsEncoder.saveVectorGraphic(
-                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.EPS);
-          } else if (fileChooser.getFileFilter().getDescription().equals("*.pdf,*.PDF")) {
-            VectorGraphicsEncoder.saveVectorGraphic(
-                chart, theFileToSave.getCanonicalPath(), VectorGraphicsFormat.PDF);
+          // The extension is already applied here, matching the path the overwrite check used.
+          String path =
+              resolveSaveTarget(fileChooser.getSelectedFile(), fileChooser.getFileFilter())
+                  .getCanonicalPath();
+          switch (suffixOf(fileChooser.getFileFilter())) {
+            case "jpg":
+              BitmapEncoder.saveJPGWithQuality(chart, path, 1.0f);
+              break;
+            case "bmp":
+              BitmapEncoder.saveBitmap(chart, path, BitmapFormat.BMP);
+              break;
+            case "gif":
+              BitmapEncoder.saveBitmap(chart, path, BitmapFormat.GIF);
+              break;
+            case "svg":
+              VectorGraphicsEncoder.saveVectorGraphic(chart, path, VectorGraphicsFormat.SVG);
+              break;
+            case "eps":
+              VectorGraphicsEncoder.saveVectorGraphic(chart, path, VectorGraphicsFormat.EPS);
+              break;
+            case "pdf":
+              VectorGraphicsEncoder.saveVectorGraphic(chart, path, VectorGraphicsFormat.PDF);
+              break;
+            case "png":
+            default:
+              BitmapEncoder.saveBitmap(chart, path, BitmapFormat.PNG);
+              break;
           }
         } catch (IOException e) {
           e.printStackTrace();
@@ -580,6 +586,81 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
    * File filter based on the suffix of a file. This file filter accepts all files that end with
    * .suffix or the capitalized suffix.
    */
+  /**
+   * Returns the file extension implied by the given save-dialog file filter, without the leading
+   * dot. Falls back to {@code "png"} for a null or unrecognized filter, matching both the dialog's
+   * default filter and the encoder used when no filter is set.
+   */
+  static String suffixOf(FileFilter fileFilter) {
+
+    if (fileFilter instanceof SuffixSaveFilter) {
+      return ((SuffixSaveFilter) fileFilter).getSuffix().toLowerCase(Locale.ROOT);
+    }
+    return "png";
+  }
+
+  /**
+   * Resolves the file that the Save As dialog will actually write, applying the extension implied
+   * by the selected filter exactly as the encoder would.
+   *
+   * <p>The selected file is frequently extension-less, since the user just types "chart" and picks
+   * a format from the filter drop-down. An overwrite check therefore has to be made against this
+   * resolved path rather than against the raw selection, or the most common case would still
+   * clobber silently. The extension is applied by the very same {@code addFileExtension} method the
+   * matching encoder calls, so the checked path and the written path cannot drift apart.
+   */
+  static File resolveSaveTarget(File selectedFile, FileFilter fileFilter) {
+
+    String path = selectedFile.getPath();
+    switch (suffixOf(fileFilter)) {
+      case "jpg":
+        return new File(BitmapEncoder.addFileExtension(path, BitmapFormat.JPG));
+      case "bmp":
+        return new File(BitmapEncoder.addFileExtension(path, BitmapFormat.BMP));
+      case "gif":
+        return new File(BitmapEncoder.addFileExtension(path, BitmapFormat.GIF));
+      case "svg":
+        return new File(VectorGraphicsEncoder.addFileExtension(path, VectorGraphicsFormat.SVG));
+      case "eps":
+        return new File(VectorGraphicsEncoder.addFileExtension(path, VectorGraphicsFormat.EPS));
+      case "pdf":
+        return new File(VectorGraphicsEncoder.addFileExtension(path, VectorGraphicsFormat.PDF));
+      case "png":
+      default:
+        return new File(BitmapEncoder.addFileExtension(path, BitmapFormat.PNG));
+    }
+  }
+
+  /**
+   * A JFileChooser that asks before replacing an existing file. Swing has no built-in overwrite
+   * confirmation, so overriding {@code approveSelection} is the standard way to add one; declining
+   * leaves the dialog open so the user can pick a different name.
+   */
+  private static class OverwriteConfirmingFileChooser extends JFileChooser {
+
+    @Override
+    public void approveSelection() {
+
+      File selectedFile = getSelectedFile();
+      if (getDialogType() == SAVE_DIALOG && selectedFile != null) {
+        File target = resolveSaveTarget(selectedFile, getFileFilter());
+        if (target.exists()) {
+          int answer =
+              JOptionPane.showConfirmDialog(
+                  this,
+                  target.getName() + " already exists.\nDo you want to replace it?",
+                  "Confirm Save As",
+                  JOptionPane.YES_NO_OPTION,
+                  JOptionPane.WARNING_MESSAGE);
+          if (answer != JOptionPane.YES_OPTION) {
+            return;
+          }
+        }
+      }
+      super.approveSelection();
+    }
+  }
+
   private static class SuffixSaveFilter extends FileFilter {
 
     private final String suffix;
@@ -591,6 +672,11 @@ public class XChartPanel<T extends Chart<?, ?>> extends JPanel {
     public SuffixSaveFilter(String suffix) {
 
       this.suffix = suffix;
+    }
+
+    public String getSuffix() {
+
+      return suffix;
     }
 
     @Override
