@@ -12,8 +12,9 @@ import org.knowm.xchart.XYChartBuilder;
  * <p>Before the fix: each repaint appended new DataPoints to the cursor's list without ever
  * clearing it, causing a memory leak and stale/wrong tooltip values on live charts.
  *
- * <p>After the fix: {@code PlotContent_XY.doPaint()} calls {@code cursor.clearDataPoints()} at
- * the start of each paint cycle, so only the current frame's points are present.
+ * <p>After the fix: interaction data is collected fresh on every paint ({@code
+ * PlotContent_.paint()} clears it) and {@code Cursor.setData()} rebuilds its own list from it, so
+ * only the current frame's points are ever present.
  *
  * <p>To observe: enable the cursor, hover over the chart while it repaints, and confirm the
  * tooltip always reflects the current data rather than accumulating old entries.
