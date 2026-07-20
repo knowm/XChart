@@ -82,8 +82,9 @@ public class XChartDemo extends JPanel implements TreeSelectionListener {
     }
 
     Object nodeInfo = node.getUserObject();
-    // tree leaf
-    if (node.isLeaf()) {
+    // tree leaf. Category and root nodes carry a String rather than a ChartInfo, and either can be
+    // a leaf if no charts were found, so check the type instead of assuming leaf == chart.
+    if (node.isLeaf() && nodeInfo instanceof ChartInfo) {
       ChartInfo chartInfo = (ChartInfo) nodeInfo;
       // displayURL(chartInfo.bookURL);
       ExampleChart<?> exampleChart = chartInfo.getExampleChart();

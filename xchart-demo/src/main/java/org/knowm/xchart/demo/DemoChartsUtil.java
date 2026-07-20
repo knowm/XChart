@@ -1,7 +1,6 @@
 package org.knowm.xchart.demo;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,17 +20,24 @@ public class DemoChartsUtil {
 
   public static List<ExampleChart<Chart<Styler, Series>>> getAllDemoCharts() {
 
-    List<ExampleChart<Chart<Styler, Series>>> demoCharts = null;
     String packagePath = DEMO_CHARTS_PACKAGE.replace(".", "/");
     ClassLoader loader = Thread.currentThread().getContextClassLoader();
     URL url = loader.getResource(packagePath);
 
-    if (url != null) {
-      try {
-        demoCharts = getAllDemoCharts(url);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+    if (url == null) {
+      throw new IllegalStateException(
+          "Could not find the demo charts package on the classpath: " + DEMO_CHARTS_PACKAGE);
+    }
+
+    List<ExampleChart<Chart<Styler, Series>>> demoCharts;
+    try {
+      demoCharts = getAllDemoCharts(url);
+    } catch (Exception e) {
+      throw new IllegalStateException("Could not load the demo charts from: " + url, e);
+    }
+
+    if (demoCharts.isEmpty()) {
+      throw new IllegalStateException("No demo charts were found at: " + url);
     }
 
     return demoCharts;
@@ -61,16 +67,17 @@ public class DemoChartsUtil {
     return demoCharts;
   }
 
-  private static List<Class<?>> getAllAssignedClasses(URL url)
-      throws ClassNotFoundException, IOException {
+  private static List<Class<?>> getAllAssignedClasses(URL url) throws Exception {
 
     List<Class<?>> classes = null;
 
+    // Note: go through URI rather than URL.getFile(), which hands back a percent-encoded path and
+    // so resolves to a non-existent directory whenever the project path contains a space.
     String type = url.getProtocol();
     if ("file".equals(type)) {
-      classes = getClassesByFile(new File(url.getFile()), DEMO_CHARTS_PACKAGE);
+      classes = getClassesByFile(new File(url.toURI()), DEMO_CHARTS_PACKAGE);
     } else if ("jar".equals(type)) {
-      classes = getClassesByJar(url.getPath());
+      classes = getClassesByJar(url);
     }
     List<Class<?>> allAssignedClasses = new ArrayList<>();
     if (classes != null) {
@@ -91,8 +98,13 @@ public class DemoChartsUtil {
       return classes;
     }
 
+    File[] files = dir.listFiles();
+    if (files == null) {
+      return classes;
+    }
+
     String fileName = "";
-    for (File f : dir.listFiles()) {
+    for (File f : files) {
       fileName = f.getName();
       if (f.isDirectory()) {
         classes.addAll(getClassesByFile(f, pk + "." + fileName));
@@ -105,24 +117,26 @@ public class DemoChartsUtil {
     return classes;
   }
 
-  @SuppressWarnings("resource")
-  private static List<Class<?>> getClassesByJar(String jarPath)
-      throws IOException, ClassNotFoundException {
+  private static List<Class<?>> getClassesByJar(URL url) throws Exception {
 
     List<Class<?>> classes = new ArrayList<>();
-    String[] jarInfo = jarPath.split("!");
-    String jarFilePath = jarInfo[0].substring(jarInfo[0].indexOf("/"));
+    String[] jarInfo = url.getPath().split("!");
+    // the jar part is itself a URL, so let File decode it rather than chopping off the scheme by
+    // hand - that keeps paths containing spaces (and Windows drive letters) intact
+    File jarFilePath = new File(new URL(jarInfo[0]).toURI());
     String packagePath = jarInfo[1].substring(1);
-    Enumeration<JarEntry> entrys = new JarFile(jarFilePath).entries();
-    JarEntry jarEntry = null;
-    String entryName = "";
-    String className = "";
-    while (entrys.hasMoreElements()) {
-      jarEntry = entrys.nextElement();
-      entryName = jarEntry.getName();
-      if (entryName.endsWith(".class") && entryName.startsWith(packagePath)) {
-        className = entryName.replace("/", ".").substring(0, entryName.lastIndexOf("."));
-        classes.add(Class.forName(className));
+    try (JarFile jarFile = new JarFile(jarFilePath)) {
+      Enumeration<JarEntry> entrys = jarFile.entries();
+      JarEntry jarEntry = null;
+      String entryName = "";
+      String className = "";
+      while (entrys.hasMoreElements()) {
+        jarEntry = entrys.nextElement();
+        entryName = jarEntry.getName();
+        if (entryName.endsWith(".class") && entryName.startsWith(packagePath)) {
+          className = entryName.replace("/", ".").substring(0, entryName.lastIndexOf("."));
+          classes.add(Class.forName(className));
+        }
       }
     }
     return classes;

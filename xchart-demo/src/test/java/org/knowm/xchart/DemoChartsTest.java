@@ -47,7 +47,7 @@ public class DemoChartsTest {
   }
 
   private void configureInteractiveFeatures(Chart chart) {
-    new ToolTips(chart);
+    new ToolTips(chart, false, ToolTipType.xAndYLabels);
     if (chart instanceof XYChart && chart.getStyler() instanceof XYStyler) {
       new Cursor(chart);
     }
