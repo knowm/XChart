@@ -27,7 +27,8 @@ public class Cursor extends MouseAdapter implements ChartPart {
   private static final int MOUSE_SPACING = 15;
 
   private final List<DataPoint> dataPointList = new ArrayList<>();
-  private final List<DataPoint> matchingDataPointList = new ArrayList<>();
+  // package-private so tests in this package can assert on what the cursor label shows
+  final List<DataPoint> matchingDataPointList = new ArrayList<>();
 
   private final XYStyler styler;
 
@@ -281,7 +282,7 @@ public class Cursor extends MouseAdapter implements ChartPart {
     }
   }
 
-  private static class DataPoint {
+  static class DataPoint {
 
     // edge detection
     private static final int MARGIN = 5;
