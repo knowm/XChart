@@ -10,6 +10,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Map;
 import org.knowm.xchart.RadarChart;
@@ -20,7 +21,6 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
     extends PlotContent_<ST, S> {
 
   private final RadarStyler styler;
-  private static final NumberFormat df = DecimalFormat.getPercentInstance();
 
   /**
    * Constructor
@@ -198,8 +198,13 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
     }
 
     // series lines and markers and Tooltips
+    // Build the format at paint time so that a locale set on the styler after chart construction
+    // is respected (issue #868).
     NumberFormat decimalFormat =
-        (styler.getDecimalPattern() == null) ? df : new DecimalFormat(styler.getDecimalPattern());
+        (styler.getDecimalPattern() == null)
+            ? NumberFormat.getPercentInstance(styler.getLocale())
+            : new DecimalFormat(
+                styler.getDecimalPattern(), new DecimalFormatSymbols(styler.getLocale()));
     Map<String, S> map = chart.getSeriesMap();
     for (S series : map.values()) {
 

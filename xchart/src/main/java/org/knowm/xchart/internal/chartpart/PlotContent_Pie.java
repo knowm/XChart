@@ -18,7 +18,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
     extends PlotContent_<ST, S> {
 
   private final ST pieStyler;
-  private final DecimalFormat df;
+  private DecimalFormat df;
 
   /**
    * Constructor
@@ -29,7 +29,6 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
 
     super(chart);
     pieStyler = chart.getStyler();
-    df = new DecimalFormat("#.0", new DecimalFormatSymbols(pieStyler.getLocale()));
   }
 
   // TODO get rid of this
@@ -79,10 +78,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
   @Override
   public void doPaint(Graphics2D g) {
 
-    // Apply the given pattern to decimalPattern if decimalPattern is not null
-    if (pieStyler.getDecimalPattern() != null) {
-      df.applyPattern(pieStyler.getDecimalPattern());
-    }
+    // Build the format at paint time so that a locale or pattern set on the styler after chart
+    // construction is respected (issue #868).
+    String pattern = pieStyler.getDecimalPattern() != null ? pieStyler.getDecimalPattern() : "#.0";
+    df = new DecimalFormat(pattern, new DecimalFormatSymbols(pieStyler.getLocale()));
 
     // pie getBounds()
     double pieFillPercentage = pieStyler.getPlotContentSize();

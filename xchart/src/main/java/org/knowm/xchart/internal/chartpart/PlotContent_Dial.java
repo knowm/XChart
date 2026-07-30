@@ -8,6 +8,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Map;
 import org.knowm.xchart.DialSeries;
@@ -17,7 +18,7 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
     extends PlotContent_<ST, S> {
 
   private final ST styler;
-  private final NumberFormat df = DecimalFormat.getPercentInstance();
+  private NumberFormat df;
   private double height_r;
 
   PlotContent_Dial(Chart<ST, S> chart) {
@@ -28,6 +29,10 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
 
   @Override
   public void doPaint(Graphics2D g) {
+
+    // Build the format at paint time so that a locale set on the styler after chart construction
+    // is respected (issue #868).
+    df = NumberFormat.getPercentInstance(styler.getLocale());
 
     Rectangle2D pieBounds = getPieBounds();
 
@@ -175,7 +180,9 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
         String label = series.getLabel();
         if (label == null) {
           if (styler.getDecimalPattern() != null) {
-            DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
+            DecimalFormat df =
+                new DecimalFormat(
+                    styler.getDecimalPattern(), new DecimalFormatSymbols(styler.getLocale()));
             label = df.format(value);
           } else {
             label = df.format(value);
@@ -227,7 +234,9 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
         String label = series.getLabel();
         if (label == null) {
           if (styler.getDecimalPattern() != null) {
-            DecimalFormat df = new DecimalFormat(styler.getDecimalPattern());
+            DecimalFormat df =
+                new DecimalFormat(
+                    styler.getDecimalPattern(), new DecimalFormatSymbols(styler.getLocale()));
             label = df.format(value);
           } else {
             label = df.format(value);
