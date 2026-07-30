@@ -30,6 +30,17 @@ public class RegressionTestIssue868 {
   }
 
   @Test
+  public void valueLabelsWithoutPatternUseStylerLocale() {
+
+    // Value labels used to bypass the DecimalFormat via y.toString() when no decimal pattern was
+    // set; they now always go through the format: "1234,5" vs "1234.5"
+    BufferedImage german = renderPie(Locale.GERMANY, null, LabelType.Value);
+    BufferedImage us = renderPie(Locale.US, null, LabelType.Value);
+
+    assertThat(imagesEqual(german, us)).isFalse();
+  }
+
+  @Test
   public void customDecimalPatternUsesStylerLocaleSymbols() {
 
     // "30,86%" vs "30.86%" in the slice labels, formatted with the custom pattern
@@ -50,11 +61,16 @@ public class RegressionTestIssue868 {
   }
 
   private static BufferedImage renderPie(Locale locale, String decimalPattern) {
+    return renderPie(locale, decimalPattern, LabelType.Percentage);
+  }
+
+  private static BufferedImage renderPie(
+      Locale locale, String decimalPattern, LabelType labelType) {
 
     PieChart chart = new PieChartBuilder().width(400).height(300).build();
     // The point of issue #868: the locale can only be set after the chart is constructed.
     chart.getStyler().setLocale(locale);
-    chart.getStyler().setLabelType(LabelType.Percentage);
+    chart.getStyler().setLabelType(labelType);
     chart.getStyler().setDecimalPattern(decimalPattern);
     chart.getStyler().setLegendVisible(false);
     chart.addSeries("a", 1234.5);

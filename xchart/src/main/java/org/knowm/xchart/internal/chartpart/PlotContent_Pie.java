@@ -272,11 +272,9 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
         String label = "";
         if (pieStyler.getLabelType() == LabelType.Value) {
 
-          if (pieStyler.getDecimalPattern() != null) {
-            label = df.format(y);
-          } else {
-            label = y.toString();
-          }
+          // Always format via df (not y.toString()) so the styler locale is respected and the
+          // label matches the tooltip, which also formats via df (issue #868).
+          label = df.format(y);
         } else if (pieStyler.getLabelType() == LabelType.Name) {
           label = series.getName();
         } else if (pieStyler.getLabelType() == LabelType.NameAndPercentage) {
@@ -286,11 +284,7 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
           double percentage = y.doubleValue() / total * 100;
           label = df.format(percentage) + "%";
         } else if (pieStyler.getLabelType() == LabelType.NameAndValue) {
-          if (pieStyler.getDecimalPattern() != null) {
-            label = series.getName() + " (" + df.format(y) + ")";
-          } else {
-            label = series.getName() + " (" + y.toString() + ")";
-          }
+          label = series.getName() + " (" + df.format(y) + ")";
         } else if (pieStyler.getCustomSeriesLabelFunction() != null) {
           label = pieStyler.getCustomSeriesLabelFunction().apply(series);
         }
