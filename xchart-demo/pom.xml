@@ -16,6 +16,7 @@
     <properties>
         <!-- skip test compilation during release:prepare's clean verify subprocess -->
         <maven.test.skip>true</maven.test.skip>
+        <javafx.version>17.0.20</javafx.version>
     </properties>
     <dependencies>
         <dependency>
@@ -49,15 +50,17 @@
             <artifactId>webp-imageio</artifactId>
             <version>0.11.0</version>
         </dependency>
+        <!-- JavaFX 17 is the newest LTS line that still runs on Java 11 (the minimum JDK only
+             rose to 17 with JavaFX 21) and the first with Apple Silicon (mac-aarch64) natives. -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-swing</artifactId>
-            <version>11.0.2</version>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>11.0.2</version>
+            <version>${javafx.version}</version>
         </dependency>
     </dependencies>
     <build>
