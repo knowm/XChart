@@ -7,6 +7,7 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 import org.knowm.xchart.HeatMapChart;
 import org.knowm.xchart.HeatMapSeries;
@@ -18,7 +19,7 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
 
   private final ST heatMapStyler;
   private final AxesChart<ST, S> axesChart;
-  private final DecimalFormat df = new DecimalFormat("");
+  private DecimalFormat df;
 
   /**
    * Constructor
@@ -43,6 +44,9 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
     double yTickSpace = heatMapStyler.getPlotContentSize() * getBounds().getHeight();
     double yTopMargin = Utils.getTickStartOffset((int) getBounds().getHeight(), yTickSpace);
 
+    // Build the format at paint time so that a locale set on the styler after chart construction
+    // is respected (issue #868).
+    df = new DecimalFormat("", new DecimalFormatSymbols(heatMapStyler.getLocale()));
     if (heatMapStyler.getHeatMapValueDecimalPattern() != null) {
       df.applyPattern(heatMapStyler.getHeatMapValueDecimalPattern());
     }

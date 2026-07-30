@@ -11,6 +11,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.Format;
 import java.util.function.BiFunction;
 import org.knowm.xchart.HeatMapChart;
@@ -440,7 +441,9 @@ public class Legend_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeries>
     if (chart.getStyler().getHeatMapDecimalValueFormatter() != null) {
       format = new Formatter_Custom(chart.getStyler().getHeatMapDecimalValueFormatter());
     } else {
-      format = new DecimalFormat("");
+      // Build the format at paint time so that a locale set on the styler after chart construction
+      // is respected (issue #868).
+      format = new DecimalFormat("", new DecimalFormatSymbols(chart.getStyler().getLocale()));
       if (chart.getStyler().getHeatMapValueDecimalPattern() != null) {
         ((DecimalFormat) format).applyPattern(chart.getStyler().getHeatMapValueDecimalPattern());
       }
