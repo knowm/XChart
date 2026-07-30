@@ -150,7 +150,7 @@ repaint.
 * [x] Export SVG, EPS using optional `de.erichseifert.vectorgraphics2d` library
 * [x] Export PDF using optional `pdfbox-graphics2d` library
 * [x] Real-time charts
-* [x] Java 8 and up
+* [x] Java 11 and up (XChart 3.x.x supports Java 8)
 
 ## Exporting Charts
 
