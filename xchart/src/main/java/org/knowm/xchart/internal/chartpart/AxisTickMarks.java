@@ -105,15 +105,17 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
       g.setColor(styler.getXAxisTickMarksColor());
       int axisTickMarkLength = styler.getAxisTickMarkLength();
       double xOffset = chart.getXAxis().getBounds().getX();
-      double yOffset =
-          chart.getXAxis().getAxisTick().getAxisTickLabels().getBounds().getY()
-              - styler.getAxisTickPadding();
+      // anchor the axis line to the top of the x-axis bounds — which sits exactly plotMargin
+      // below the plot area — rather than deriving it from the tick label geometry, whose
+      // measured height can drift sub-pixel from the reserved bounds and shift the line
+      double lineYOffset = chart.getXAxis().getBounds().getY();
+      double yOffset = lineYOffset + axisTickMarkLength;
 
       // bounds
       bounds =
           new Rectangle2D.Double(
               xOffset,
-              yOffset - axisTickMarkLength,
+              lineYOffset,
               chart.getXAxis().getBounds().getWidth(),
               axisTickMarkLength);
       // g.setColor(Color.yellow);
@@ -145,11 +147,13 @@ public class AxisTickMarks<ST extends AxesChartStyler, S extends AxesChartSeries
       if (styler.isAxisTicksLineVisible()) {
 
         g.setStroke(styler.getAxisTickMarksStroke());
-        g.drawLine(
-            (int) xOffset,
-            (int) (yOffset - axisTickMarkLength),
-            (int) (xOffset + chart.getXAxis().getBounds().getWidth()),
-            (int) (yOffset - axisTickMarkLength));
+        Shape line =
+            new Line2D.Double(
+                xOffset,
+                lineYOffset,
+                xOffset + chart.getXAxis().getBounds().getWidth(),
+                lineYOffset);
+        g.draw(line);
       }
     } else {
       bounds = new Rectangle2D.Double();
