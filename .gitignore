@@ -24,6 +24,7 @@ log/
 # Misc.
 .DS_Store
 *.bak
+.claude/
 
 # Sample images
 *.jpg
