@@ -193,7 +193,7 @@ public class PlotContent_HorizontalBar<
                   axesChart.getXAxisFormat().format(xOrig),
                   axesChart.getYAxisFormat().format(nextCat))
               // categoryCounter was post-incremented above, so this bar's index is one less
-              .withSeries(series.getName(), categoryCounter - 1);
+              .withSeries(series, categoryCounter - 1);
         }
       }
 

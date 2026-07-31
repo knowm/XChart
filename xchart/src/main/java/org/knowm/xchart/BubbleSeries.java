@@ -40,6 +40,11 @@ public class BubbleSeries extends NoMarkersSeries {
     return this;
   }
 
+  /**
+   * @deprecated use {@link #setToolTipGenerator(ToolTipGenerator)} instead; will be removed in
+   *     4.1.0
+   */
+  @Deprecated
   public boolean isCustomToolTips() {
 
     return customToolTips;
@@ -52,13 +57,22 @@ public class BubbleSeries extends NoMarkersSeries {
    *
    * @param customToolTips true to show the per-data-point strings from {@link
    *     #setToolTips(String[])}; false to show the default formatted x/y axis values
+   * @deprecated use {@link #setToolTipGenerator(ToolTipGenerator)} instead, which works on every
+   *     chart type and takes precedence over these strings when both are set; will be removed in
+   *     4.1.0
    */
+  @Deprecated
   public BubbleSeries setCustomToolTips(boolean customToolTips) {
 
     this.customToolTips = customToolTips;
     return this;
   }
 
+  /**
+   * @deprecated use {@link #setToolTipGenerator(ToolTipGenerator)} instead; will be removed in
+   *     4.1.0
+   */
+  @Deprecated
   public String[] getToolTips() {
 
     return toolTips;
@@ -71,7 +85,11 @@ public class BubbleSeries extends NoMarkersSeries {
    *
    * @param toolTips the tooltip strings, one per data point; a null entry (or a null array) falls
    *     back to the default formatted x/y axis values for that data point
+   * @deprecated use {@link #setToolTipGenerator(ToolTipGenerator)} instead, which works on every
+   *     chart type and takes precedence over these strings when both are set; will be removed in
+   *     4.1.0
    */
+  @Deprecated
   public BubbleSeries setToolTips(String[] toolTips) {
 
     this.toolTips = toolTips;

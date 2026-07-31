@@ -142,7 +142,7 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
                 && customToolTips[i] != null) {
               interactionData
                   .addToolTip(bubble, xOffset, yOffset, 0, customToolTips[i])
-                  .withSeries(series.getName(), i);
+                  .withSeries(series, i);
             } else {
               interactionData
                   .addToolTip(
@@ -152,7 +152,7 @@ public class PlotContent_Bubble<ST extends BubbleStyler, S extends BubbleSeries>
                       0,
                       axesChart.getXAxisFormat().format(x),
                       axesChart.getYAxisFormat().format(yOrig))
-                  .withSeries(series.getName(), i);
+                  .withSeries(series, i);
             }
           }
         }

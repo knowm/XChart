@@ -521,7 +521,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
                   barWidth,
                   axesChart.getXAxisFormat().format(nextCat),
                   axesChart.getYAxisFormat().format(yOrig))
-              .withSeries(series.getName(), dataIndex);
+              .withSeries(series, dataIndex);
         }
       }
 

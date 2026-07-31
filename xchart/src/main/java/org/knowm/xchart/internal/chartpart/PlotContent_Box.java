@@ -82,7 +82,8 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
       }
       // data points
       double[] yArr = series.getYData();
-      for (double yOrig : yArr) {
+      for (int dataIndex = 0; dataIndex < yArr.length; dataIndex++) {
+        double yOrig = yArr[dataIndex];
         double y;
 
         if (boxPlotStyler.isYAxisLogarithmic()) {
@@ -121,13 +122,15 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
           g.draw(outPointLine2);
 
           if (toolTipsEnabled) {
-            interactionData.addToolTip(
-                xOffset,
-                yOffset,
-                series.getName()
-                    + ":"
-                    + System.lineSeparator()
-                    + axesChart.getYAxisFormat().format(yOrig));
+            interactionData
+                .addToolTip(
+                    xOffset,
+                    yOffset,
+                    series.getName()
+                        + ":"
+                        + System.lineSeparator()
+                        + axesChart.getYAxisFormat().format(yOrig))
+                .withSeries(series, dataIndex);
           }
         } else if (chart.getStyler().getShowWithinAreaPoint()) {
 
@@ -136,22 +139,24 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
           series.getMarker().paint(g, xOffset, yOffset, boxPlotStyler.getMarkerSize());
 
           if (toolTipsEnabled) {
-            interactionData.addToolTip(
-                xOffset,
-                yOffset,
-                series.getName()
-                    + ":"
-                    + System.lineSeparator()
-                    + axesChart.getYAxisFormat().format(yOrig));
+            interactionData
+                .addToolTip(
+                    xOffset,
+                    yOffset,
+                    series.getName()
+                        + ":"
+                        + System.lineSeparator()
+                        + axesChart.getYAxisFormat().format(yOrig))
+                .withSeries(series, dataIndex);
           }
         }
       }
 
-      drawBoxPlot(g, series.getName(), boxPlotData);
+      drawBoxPlot(g, series, boxPlotData);
     }
   }
 
-  private void drawBoxPlot(Graphics2D g, String seriesName, BoxPlotData boxPlotData) {
+  private void drawBoxPlot(Graphics2D g, S series, BoxPlotData boxPlotData) {
 
     // when all data values are the same yMin == yMax; offsets would be NaN, so skip rendering
     if (yMax == yMin) {
@@ -251,28 +256,31 @@ public class PlotContent_Box<ST extends BoxStyler, S extends BoxSeries>
     area.add(new Area(rect.getBounds()));
 
     if (interactionData != null) {
-      interactionData.addToolTip(
-          area,
-          xOffset,
-          yOffset,
-          10,
-          seriesName
-              + ":"
-              + System.lineSeparator()
-              + "upper: "
-              + axesChart.getYAxisFormat().format(boxPlotData.upper)
-              + System.lineSeparator()
-              + "q3: "
-              + axesChart.getYAxisFormat().format(boxPlotData.q3)
-              + System.lineSeparator()
-              + "median: "
-              + axesChart.getYAxisFormat().format(boxPlotData.median)
-              + System.lineSeparator()
-              + "q1: "
-              + axesChart.getYAxisFormat().format(boxPlotData.q1)
-              + System.lineSeparator()
-              + "lower: "
-              + axesChart.getYAxisFormat().format(boxPlotData.lower));
+      interactionData
+          .addToolTip(
+              area,
+              xOffset,
+              yOffset,
+              10,
+              series.getName()
+                  + ":"
+                  + System.lineSeparator()
+                  + "upper: "
+                  + axesChart.getYAxisFormat().format(boxPlotData.upper)
+                  + System.lineSeparator()
+                  + "q3: "
+                  + axesChart.getYAxisFormat().format(boxPlotData.q3)
+                  + System.lineSeparator()
+                  + "median: "
+                  + axesChart.getYAxisFormat().format(boxPlotData.median)
+                  + System.lineSeparator()
+                  + "q1: "
+                  + axesChart.getYAxisFormat().format(boxPlotData.q1)
+                  + System.lineSeparator()
+                  + "lower: "
+                  + axesChart.getYAxisFormat().format(boxPlotData.lower))
+          // the box aggregates the whole series, so there is no single data point index
+          .withSeries(series, -1);
     }
   }
 }

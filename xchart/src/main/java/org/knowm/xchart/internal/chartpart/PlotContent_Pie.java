@@ -210,7 +210,10 @@ public class PlotContent_Pie<ST extends PieStyler, S extends PieSeries>
                 - Math.sin(Math.toRadians(angle))
                     * (pieBounds.getHeight() / 2 * pieStyler.getLabelsDistance());
 
-        interactionData.addToolTip(toolTipShape, xOffset, yOffset + 10, 0, toolTipLabel);
+        // a pie series is a single slice, so its only data point is index 0
+        interactionData
+            .addToolTip(toolTipShape, xOffset, yOffset + 10, 0, toolTipLabel)
+            .withSeries(series, 0);
       }
 
       // TOOLTIPS ////////////////////////////////////////////////////

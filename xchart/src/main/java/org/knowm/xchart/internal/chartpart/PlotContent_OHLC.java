@@ -142,11 +142,13 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
 
           // add tooltips
           if (interactionData != null) {
-            interactionData.addToolTip(
-                xOffset,
-                yOffset,
-                axesChart.getXAxisFormat().format(x),
-                axesChart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig));
+            interactionData
+                .addToolTip(
+                    xOffset,
+                    yOffset,
+                    axesChart.getXAxisFormat().format(x),
+                    axesChart.getYAxisFormat(series.getYAxisDecimalPattern()).format(yOrig))
+                .withSeries(series, i);
           }
         }
       } else {
@@ -324,7 +326,9 @@ public class PlotContent_OHLC<ST extends AxesChartStyler, S extends OHLCSeries>
             sb.append(System.lineSeparator())
                 .append("high: ")
                 .append(axesChart.getYAxisFormat().format(highOrig));
-            interactionData.addToolTip(toolTipArea, xOffset, highOffset, 0, sb.toString());
+            interactionData
+                .addToolTip(toolTipArea, xOffset, highOffset, 0, sb.toString())
+                .withSeries(series, i);
           }
         }
       }
