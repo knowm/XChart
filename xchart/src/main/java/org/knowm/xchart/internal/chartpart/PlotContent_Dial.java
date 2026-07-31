@@ -242,7 +242,8 @@ public class PlotContent_Dial<ST extends DialStyler, S extends DialSeries>
             label = df.format(value);
           }
         }
-        interactionData.addToolTip(path, xOffset, yOffset + 10, 0, label);
+        // a dial series is a single value, so its only data point is index 0
+        interactionData.addToolTip(path, xOffset, yOffset + 10, 0, label).withSeries(series, 0);
       }
       path.moveTo(xCenter, yCenter);
 

@@ -27,10 +27,10 @@ public class RadarSeries extends MarkerSeries {
   private double[] values;
   private String[] tooltipOverrides;
 
-  // TODO refactor tooltips override
   /**
    * @param tooltipOverrides Adds custom tooltipOverrides for series. If tooltipOverrides is null,
-   *     they are automatically generated.
+   *     they are automatically generated. Deprecated: pass null and use {@link
+   *     #setToolTipGenerator(ToolTipGenerator)} instead.
    */
   public RadarSeries(String name, double[] values, String[] tooltipOverrides) {
 
@@ -50,6 +50,11 @@ public class RadarSeries extends MarkerSeries {
     return this;
   }
 
+  /**
+   * @deprecated use {@link #setToolTipGenerator(ToolTipGenerator)} instead; will be removed in
+   *     4.1.0
+   */
+  @Deprecated
   public String[] getTooltipOverrides() {
 
     return tooltipOverrides;
@@ -154,6 +159,12 @@ public class RadarSeries extends MarkerSeries {
     return LegendRenderType.Line;
   }
 
+  /**
+   * @deprecated use {@link #setToolTipGenerator(ToolTipGenerator)} instead, which works on every
+   *     chart type and takes precedence over these strings when both are set; will be removed in
+   *     4.1.0
+   */
+  @Deprecated
   public RadarSeries setTooltipOverrides(String[] tooltipOverrides) {
 
     this.tooltipOverrides = tooltipOverrides;

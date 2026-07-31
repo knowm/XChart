@@ -1,12 +1,27 @@
 package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.knowm.xchart.ChartDataPoint;
+import org.knowm.xchart.ToolTipGenerator;
+import org.knowm.xchart.internal.series.Series;
 
 class PlotInteractionData {
+
+  // matches the marker highlight size used by ToolTips.ToolTip
+  private static final double DEFAULT_MARKER_MARGIN = 5;
+
+  /** The default hit shape used when a tooltip is added without an explicit shape. */
+  static Shape defaultMarkerShape(double x, double y) {
+
+    double halfSize = DEFAULT_MARKER_MARGIN * 1.5;
+    double markerSize = DEFAULT_MARKER_MARGIN * 3;
+    return new Ellipse2D.Double(x - halfSize, y - halfSize, markerSize, markerSize);
+  }
 
   Rectangle2D plotBounds;
 
@@ -71,6 +86,7 @@ class PlotInteractionData {
     final String label; // non-null for single-label case
     String seriesName; // series identity, null if the chart type doesn't report it
     int dataPointIndex = -1; // index within the series, -1 if not reported
+    String customLabel; // from the series' ToolTipGenerator, null for the default label
 
     ToolTipData(
         Shape shape,
@@ -94,6 +110,29 @@ class PlotInteractionData {
       this.seriesName = seriesName;
       this.dataPointIndex = dataPointIndex;
       return this;
+    }
+
+    /**
+     * Attaches series identity to this tooltip and, if the series has a {@link ToolTipGenerator},
+     * applies it to replace the default label. A custom label always takes precedence over the
+     * default label the chart type built, including the deprecated per-point tooltip strings.
+     */
+    ToolTipData withSeries(Series series, int dataPointIndex) {
+
+      withSeries(series.getName(), dataPointIndex);
+      ToolTipGenerator generator = series.getToolTipGenerator();
+      if (generator != null) {
+        Shape hitShape = shape != null ? shape : defaultMarkerShape(x, y);
+        customLabel =
+            generator.generateToolTip(
+                new ChartDataPoint(seriesName, dataPointIndex, label, xValue, yValue, x, y, hitShape));
+      }
+      return this;
+    }
+
+    /** The label to display: the generator's custom label if one was produced, else null. */
+    String getCustomLabel() {
+      return customLabel;
     }
   }
 

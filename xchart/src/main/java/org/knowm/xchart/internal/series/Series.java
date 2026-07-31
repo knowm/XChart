@@ -1,6 +1,7 @@
 package org.knowm.xchart.internal.series;
 
 import java.awt.*;
+import org.knowm.xchart.ToolTipGenerator;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 
 /** A Series to be plotted on a Chart */
@@ -12,6 +13,9 @@ public abstract class Series {
   private Color fillColor;
   private boolean showInLegend = true;
   private boolean isEnabled = true;
+
+  /** generates custom tooltip text for this series' data points; null means default labels */
+  private ToolTipGenerator toolTipGenerator;
 
   // TODO there is not always a y-axis group (pie chart for example) move this to an axis series
   // tyoe??
@@ -109,6 +113,25 @@ public abstract class Series {
   public Series setYAxisDecimalPattern(String yAxisDecimalPattern) {
 
     this.yAxisDecimalPattern = yAxisDecimalPattern;
+    return this;
+  }
+
+  public ToolTipGenerator getToolTipGenerator() {
+
+    return toolTipGenerator;
+  }
+
+  /**
+   * Set a generator that produces custom tooltip text for this series' data points, replacing the
+   * default label built from the formatted axis values. The generator is called once per rendered
+   * data point on every repaint; returning {@code null} for a data point falls back to the default
+   * label. Requires tooltips to be enabled on the chart's styler.
+   *
+   * @param toolTipGenerator the generator, or {@code null} to restore the default labels
+   */
+  public Series setToolTipGenerator(ToolTipGenerator toolTipGenerator) {
+
+    this.toolTipGenerator = toolTipGenerator;
     return this;
   }
 

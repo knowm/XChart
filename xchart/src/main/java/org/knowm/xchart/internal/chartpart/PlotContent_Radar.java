@@ -249,7 +249,7 @@ public class PlotContent_Radar<ST extends RadarStyler, S extends RadarSeries>
             String ystr = decimalFormat.format(value);
             label = series.getName() + " (" + radiiLabels[i] + ": " + ystr + ")";
           }
-          interactionData.addToolTip(xOffset, yOffset, label);
+          interactionData.addToolTip(xOffset, yOffset, label).withSeries(series, i);
         }
       }
       path.closePath();

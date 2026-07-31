@@ -3,7 +3,6 @@ package org.knowm.xchart.internal.chartpart;
 import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.ChartDataPoint;
@@ -16,9 +15,6 @@ import org.knowm.xchart.DataPointListener;
  * a mouse (motion) listener and fed fresh data after every repaint via {@link #setData}.
  */
 public class DataPointDispatcher extends MouseAdapter {
-
-  // Matches the default marker hit shape built in ToolTips.ToolTip when no explicit shape is given.
-  private static final double MARGIN = 5;
 
   private final List<DataPointListener> listeners;
   private final List<ChartDataPoint> dataPoints = new ArrayList<>();
@@ -35,18 +31,13 @@ public class DataPointDispatcher extends MouseAdapter {
       return;
     }
     for (PlotInteractionData.ToolTipData td : data.getToolTipDataList()) {
-      Shape shape = td.shape != null ? td.shape : defaultMarkerShape(td.x, td.y);
+      Shape shape = td.shape != null ? td.shape : PlotInteractionData.defaultMarkerShape(td.x, td.y);
+      // listeners see the label that is actually displayed, custom or default
+      String label = td.getCustomLabel() != null ? td.getCustomLabel() : td.label;
       dataPoints.add(
           new ChartDataPoint(
-              td.seriesName, td.dataPointIndex, td.label, td.xValue, td.yValue, td.x, td.y, shape));
+              td.seriesName, td.dataPointIndex, label, td.xValue, td.yValue, td.x, td.y, shape));
     }
-  }
-
-  private static Shape defaultMarkerShape(double x, double y) {
-
-    double halfSize = MARGIN * 1.5;
-    double markerSize = MARGIN * 3;
-    return new Ellipse2D.Double(x - halfSize, y - halfSize, markerSize, markerSize);
   }
 
   private ChartDataPoint hitTest(int x, int y) {

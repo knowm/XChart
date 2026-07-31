@@ -72,7 +72,8 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
     double yOffset = 0.0;
     Rectangle2D rect = null;
     Color heatMapValueColor = null;
-    for (Number[] numbers : list) {
+    for (int dataIndex = 0; dataIndex < list.size(); dataIndex++) {
+      Number[] numbers = list.get(dataIndex);
       if (numbers == null) {
         continue;
       }
@@ -102,18 +103,20 @@ public class PlotContent_HeatMap<ST extends HeatMapStyler, S extends HeatMapSeri
       }
 
       if (interactionData != null) {
-        interactionData.addToolTip(
-            rect,
-            rect.getCenterX(),
-            rect.getCenterY() + heatMapStyler.getToolTipFont().getSize(),
-            0,
-            series.getName()
-                + ": "
-                + axesChart.getXAxisFormat().format(xData.get(x))
-                + ", "
-                + axesChart.getYAxisFormat().format(yData.get(y))
-                + ", "
-                + df.format(numbers[2]));
+        interactionData
+            .addToolTip(
+                rect,
+                rect.getCenterX(),
+                rect.getCenterY() + heatMapStyler.getToolTipFont().getSize(),
+                0,
+                series.getName()
+                    + ": "
+                    + axesChart.getXAxisFormat().format(xData.get(x))
+                    + ", "
+                    + axesChart.getYAxisFormat().format(yData.get(y))
+                    + ", "
+                    + df.format(numbers[2]))
+            .withSeries(series, dataIndex);
       }
     }
   }

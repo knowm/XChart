@@ -120,10 +120,11 @@ public class ToolTips extends MouseAdapter implements ChartPart {
 
     // TODO need this null check??
     if (tooltip != null) { // dataPoint was created in mouse move, need to render it
-      // TODO See OHLC04. The line series are rendering as multi-line. Can we just define the
-      // tooltip during creation and if it's multiline, paint it
-      // as multiline??
-      if (styler instanceof BoxStyler || styler instanceof OHLCStyler) {
+      // multi-line labels (Box/OHLC defaults, or custom labels containing line separators) get
+      // the multi-line treatment; everything else is painted as a single line
+      if (styler instanceof BoxStyler
+          || styler instanceof OHLCStyler
+          || tooltip.label.contains(System.lineSeparator())) {
         paintMultiLineToolTip(g);
       } else {
         paintToolTip(g, tooltip);
@@ -338,7 +339,14 @@ public class ToolTips extends MouseAdapter implements ChartPart {
     }
     plotBounds = data.getPlotBounds();
     for (PlotInteractionData.ToolTipData td : data.getToolTipDataList()) {
-      if (td.label != null) {
+      // a custom label from the series' ToolTipGenerator replaces whatever default was built
+      if (td.getCustomLabel() != null) {
+        if (td.shape != null) {
+          addData(td.shape, td.x, td.y, td.w, td.getCustomLabel());
+        } else {
+          addData(td.x, td.y, td.getCustomLabel());
+        }
+      } else if (td.label != null) {
         if (td.shape != null) {
           addData(td.shape, td.x, td.y, td.w, td.label);
         } else {
