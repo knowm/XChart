@@ -168,25 +168,17 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
     double axisTickLabelsHeight = 0.0;
     if (axesChartStyler.isYAxisTicksVisible()) {
 
-      // find the widest label using the actual renderer (TeX or plain text)
+      // find the widest label using the same metric AxisTickLabels paints with — any mismatch
+      // between this hint and the painted column shifts the axis line away from its intended
+      // plotMargin distance to the plot area
+      FontRenderContext frc = new FontRenderContext(null, true, false);
       double maxLabelWidth = 0;
       for (int i = 0; i < axisTickCalculator.getTickLabels().size(); i++) {
         String lbl = axisTickCalculator.getTickLabels().get(i);
         if (lbl == null || lbl.isEmpty()) {
           continue;
         }
-        double w;
-        if (TexRenderer.isTeX(lbl)) {
-          w = TexRenderer.getBounds(lbl, axesChartStyler.getAxisTickLabelsFont()).getWidth();
-        } else {
-          w =
-              new TextLayout(
-                      lbl,
-                      axesChartStyler.getAxisTickLabelsFont(),
-                      new FontRenderContext(null, true, false))
-                  .getBounds()
-                  .getWidth();
-        }
+        double w = TickLabelMetrics.width(lbl, axesChartStyler.getAxisTickLabelsFont(), frc);
         if (w > maxLabelWidth) {
           maxLabelWidth = w;
         }
@@ -214,18 +206,7 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
             if (lbl == null || lbl.isEmpty()) {
               continue;
             }
-            double w;
-            if (TexRenderer.isTeX(lbl)) {
-              w = TexRenderer.getBounds(lbl, axesChartStyler.getAxisTickLabelsFont()).getWidth();
-            } else {
-              w =
-                  new TextLayout(
-                          lbl,
-                          axesChartStyler.getAxisTickLabelsFont(),
-                          new FontRenderContext(null, true, false))
-                      .getBounds()
-                      .getWidth();
-            }
+            double w = TickLabelMetrics.width(lbl, axesChartStyler.getAxisTickLabelsFont(), frc);
             if (w > slaveMaxWidth) {
               slaveMaxWidth = w;
             }
