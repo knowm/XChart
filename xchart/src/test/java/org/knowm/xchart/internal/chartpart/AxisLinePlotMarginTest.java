@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.style.Styler.LegendLayout;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 // The axis tick lines that hug the plot area must sit at the same distance (plotMargin) from the
 // plot on both the y-axis and x-axis sides. Historically the y-axis line was positioned from the
@@ -21,13 +23,38 @@ class AxisLinePlotMarginTest {
   @Test
   void axisLinesSitAtPlotMarginOnBothSides() throws Exception {
 
+    XYChart chart = buildChart();
+    chart.getStyler().setLegendVisible(false);
+
+    assertAxisLinesAtPlotMargin(chart);
+  }
+
+  // Issue #1024: Axis_X.preparePaint() subtracted the OutsideS legend height from the top of the
+  // x-axis bounds even though the y-axis (whose bottom defines the plot bottom) had already
+  // reserved that space, so the x-axis line — anchored to that top — was drawn inside the plot
+  // area and painted over by the plot background.
+  @Test
+  void axisLinesSitAtPlotMarginWithOutsideSLegend() throws Exception {
+
+    XYChart chart = buildChart();
+    chart.getStyler().setLegendPosition(LegendPosition.OutsideS);
+    chart.getStyler().setLegendLayout(LegendLayout.Horizontal);
+
+    assertAxisLinesAtPlotMargin(chart);
+  }
+
+  private static XYChart buildChart() {
+
     XYChart chart = new XYChartBuilder().width(800).height(600).title("t").build();
     chart.addSeries("s", new double[] {1, 2, 3}, new double[] {10, 20, 30});
-    chart.getStyler().setLegendVisible(false);
     chart.getStyler().setPlotGridLinesVisible(false);
     chart.getStyler().setPlotBackgroundColor(Color.YELLOW);
     chart.getStyler().setPlotBorderVisible(true);
     chart.getStyler().setPlotBorderColor(Color.RED);
+    return chart;
+  }
+
+  private static void assertAxisLinesAtPlotMargin(XYChart chart) throws Exception {
 
     BufferedImage img = BitmapEncoder.getBufferedImage(chart);
 
