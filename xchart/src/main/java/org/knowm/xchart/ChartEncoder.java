@@ -1,5 +1,6 @@
 package org.knowm.xchart;
 
+import java.awt.Graphics2D;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,7 +14,8 @@ import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.chartpart.IChart;
 
 /**
- * Unified, format-agnostic entry point for exporting a {@link org.knowm.xchart.internal.chartpart.IChart}.
+ * Unified, format-agnostic entry point for exporting a {@link
+ * org.knowm.xchart.internal.chartpart.IChart}.
  *
  * <p>A single {@code format} string selects the encoder:
  *
@@ -23,10 +25,10 @@ import org.knowm.xchart.internal.chartpart.IChart;
  *   <li>{@code "pdf"} &rarr; {@link PdfboxGraphicsEncoder} (optional {@code
  *       de.rototor.pdfbox:graphics2d})
  *   <li>any other name &rarr; the raster path, delegating to {@link javax.imageio.ImageIO}. This
- *       covers the JDK's built-in writers ({@code png}, {@code jpg}/{@code jpeg}, {@code bmp}, {@code
- *       gif}, {@code tiff}/{@code tif}, {@code wbmp}) plus <em>any</em> additional format for which
- *       an ImageIO plugin is registered on the classpath (e.g. {@code webp}, {@code avif} via a
- *       TwelveMonkeys / native plugin).
+ *       covers the JDK's built-in writers ({@code png}, {@code jpg}/{@code jpeg}, {@code bmp},
+ *       {@code gif}, {@code tiff}/{@code tif}, {@code wbmp}) plus <em>any</em> additional format
+ *       for which an ImageIO plugin is registered on the classpath (e.g. {@code webp}, {@code avif}
+ *       via a TwelveMonkeys / native plugin).
  * </ul>
  *
  * <p>Because raster export is delegated to ImageIO's pluggable Service Provider Interface, new
@@ -47,8 +49,8 @@ public final class ChartEncoder {
    *
    * @param chart the chart to export
    * @param fileName target file name, with or without extension
-   * @param format the format name, e.g. {@code "png"}, {@code "svg"}, {@code "pdf"}, {@code "tiff"},
-   *     {@code "webp"}
+   * @param format the format name, e.g. {@code "png"}, {@code "svg"}, {@code "pdf"}, {@code
+   *     "tiff"}, {@code "webp"}
    * @throws IOException if writing fails or no encoder is available for the format
    */
   public static void saveChart(IChart chart, String fileName, String format) throws IOException {
@@ -65,8 +67,8 @@ public final class ChartEncoder {
    *
    * @param chart the chart to export
    * @param out the target stream
-   * @param format the format name, e.g. {@code "png"}, {@code "svg"}, {@code "pdf"}, {@code "tiff"},
-   *     {@code "webp"}
+   * @param format the format name, e.g. {@code "png"}, {@code "svg"}, {@code "pdf"}, {@code
+   *     "tiff"}, {@code "webp"}
    * @throws IOException if writing fails or no encoder is available for the format
    */
   @SuppressWarnings("deprecation")
@@ -103,6 +105,96 @@ public final class ChartEncoder {
     }
   }
 
+  /**
+   * Save a chart to a file at an explicit rendering size. The extension is appended if missing.
+   *
+   * <p>The chart is laid out at the requested size, not scaled from a previously rendered image. As
+   * with {@link IChart#paint(Graphics2D, int, int)}, rendering may update the chart's dimensions.
+   *
+   * @param chart the chart to export
+   * @param fileName target file name, with or without extension
+   * @param format the format name, e.g. {@code "png"}, {@code "svg"}, or {@code "pdf"}
+   * @param width positive rendering width (pixels for raster formats)
+   * @param height positive rendering height (pixels for raster formats)
+   * @throws IllegalArgumentException if either dimension is not positive
+   * @throws IOException if writing fails or no encoder is available for the format
+   */
+  public static void saveChart(IChart chart, String fileName, String format, int width, int height)
+      throws IOException {
+
+    saveChart(withSize(chart, width, height), fileName, format);
+  }
+
+  /**
+   * Write a chart to a stream at an explicit rendering size. Does not close the target stream.
+   *
+   * <p>The chart is laid out at the requested size, not scaled from a previously rendered image. As
+   * with {@link IChart#paint(Graphics2D, int, int)}, rendering may update the chart's dimensions.
+   *
+   * @param chart the chart to export
+   * @param out the target stream
+   * @param format the format name, e.g. {@code "png"}, {@code "svg"}, or {@code "pdf"}
+   * @param width positive rendering width (pixels for raster formats)
+   * @param height positive rendering height (pixels for raster formats)
+   * @throws IllegalArgumentException if either dimension is not positive
+   * @throws IOException if writing fails or no encoder is available for the format
+   */
+  public static void saveChart(IChart chart, OutputStream out, String format, int width, int height)
+      throws IOException {
+
+    saveChart(withSize(chart, width, height), out, format);
+  }
+
+  /**
+   * Generate encoded chart bytes at an explicit rendering size.
+   *
+   * <p>The chart is laid out at the requested size, not scaled from a previously rendered image. As
+   * with {@link IChart#paint(Graphics2D, int, int)}, rendering may update the chart's dimensions.
+   *
+   * @param chart the chart to export
+   * @param format the format name
+   * @param width positive rendering width (pixels for raster formats)
+   * @param height positive rendering height (pixels for raster formats)
+   * @return the encoded image bytes
+   * @throws IllegalArgumentException if either dimension is not positive
+   * @throws IOException if writing fails or no encoder is available for the format
+   */
+  public static byte[] getBytes(IChart chart, String format, int width, int height)
+      throws IOException {
+
+    return getBytes(withSize(chart, width, height), format);
+  }
+
+  private static IChart withSize(IChart chart, int width, int height) {
+    if (width <= 0 || height <= 0) {
+      throw new IllegalArgumentException("Width and height must be positive");
+    }
+    return new IChart() {
+      @Override
+      public void paint(Graphics2D graphics, int paintWidth, int paintHeight) {
+        chart.paint(graphics, paintWidth, paintHeight);
+      }
+
+      @Override
+      public int getWidth() {
+
+        return width;
+      }
+
+      @Override
+      public int getHeight() {
+
+        return height;
+      }
+
+      @Override
+      public String getTitle() {
+
+        return chart.getTitle();
+      }
+    };
+  }
+
   /** Raster export via ImageIO's pluggable writers. */
   private static void saveRaster(IChart chart, OutputStream out, String format) throws IOException {
 
@@ -134,9 +226,9 @@ public final class ChartEncoder {
   }
 
   /**
-   * Returns the sorted set of raster format names that can be written on the current classpath. This
-   * reflects the JDK's built-in writers plus any registered ImageIO plugins, but not the vector
-   * formats ({@code svg}, {@code eps}, {@code pdf}).
+   * Returns the sorted set of raster format names that can be written on the current classpath.
+   * This reflects the JDK's built-in writers plus any registered ImageIO plugins, but not the
+   * vector formats ({@code svg}, {@code eps}, {@code pdf}).
    *
    * @return the available raster format names, lower-cased
    */
