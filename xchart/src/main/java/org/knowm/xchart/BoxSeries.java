@@ -43,8 +43,10 @@ public class BoxSeries extends AxesChartSeriesCategory {
     if (newYData.isEmpty()) {
       throw new IllegalArgumentException("Y-Axis data cannot be empty !!!");
     }
-    if (newYData.contains(null)) {
-      throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
+    for (Number value : newYData) {
+      if (value == null) {
+        throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
+      }
     }
     super.replaceData(newYData);
   }

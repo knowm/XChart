@@ -78,8 +78,7 @@ class BoxChartTest {
     chart.addSeries("single", Arrays.asList(42));
 
     java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-    assertDoesNotThrow(
-        () -> BitmapEncoder.saveBitmap(chart, out, BitmapEncoder.BitmapFormat.PNG));
+    assertDoesNotThrow(() -> BitmapEncoder.saveBitmap(chart, out, BitmapEncoder.BitmapFormat.PNG));
   }
 
   // https://github.com/knowm/XChart/issues/816
@@ -107,7 +106,30 @@ class BoxChartTest {
     chart.getStyler().setBoxWidthFraction(0.3);
 
     java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-    assertDoesNotThrow(
-        () -> BitmapEncoder.saveBitmap(chart, out, BitmapEncoder.BitmapFormat.PNG));
+    assertDoesNotThrow(() -> BitmapEncoder.saveBitmap(chart, out, BitmapEncoder.BitmapFormat.PNG));
+  }
+
+  @Test
+  void addSeriesAcceptsNullFreeImmutableLists() {
+    assertThat(chart.addSeries("two", java.util.List.of(1, 2)).getYData())
+        .containsExactly(1.0, 2.0);
+    assertThat(chart.addSeries("three", java.util.List.of(1, 2, 3)).getYData())
+        .containsExactly(1.0, 2.0, 3.0);
+  }
+
+  @Test
+  void replaceDataAcceptsNullFreeImmutableLists() {
+    BoxSeries series = chart.addSeries("test", Arrays.asList(1, 2, 3));
+    series.replaceData(java.util.List.of(4, 5));
+    assertThat(series.getYData()).containsExactly(4.0, 5.0);
+    chart.updateBoxSeries("test", java.util.List.of(6, 7, 8));
+    assertThat(series.getYData()).containsExactly(6.0, 7.0, 8.0);
+  }
+
+  @Test
+  void addSeriesStillRejectsNullElements() {
+    assertThatThrownBy(() -> chart.addSeries("test", Arrays.asList(1, null, 3)))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("null");
   }
 }
