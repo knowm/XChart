@@ -2,7 +2,6 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.util.List;
 import java.util.function.Function;
-
 import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
 
@@ -29,7 +28,19 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
       double maxValue,
       AxesChartStyler styler) {
 
+    this(formattingCallback, axisDirection, workingSpace, minValue, maxValue, styler, 0);
+  }
+
+  AxisTickCalculator_Callback(
+      Function<Double, String> formattingCallback,
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      AxesChartStyler styler,
+      int yIndex) {
     super(axisDirection, workingSpace, minValue, maxValue, styler);
+    this.yIndex = yIndex;
     axisFormat = new Formatter_Custom(formattingCallback);
     calculate();
   }
@@ -42,7 +53,21 @@ class AxisTickCalculator_Callback extends AxisTickCalculator_ {
       double maxValue,
       List<Double> axisValues,
       AxesChartStyler styler) {
+    this(
+        formattingCallback, axisDirection, workingSpace, minValue, maxValue, axisValues, styler, 0);
+  }
+
+  AxisTickCalculator_Callback(
+      Function<Double, String> formattingCallback,
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      List<Double> axisValues,
+      AxesChartStyler styler,
+      int yIndex) {
     super(axisDirection, workingSpace, minValue, maxValue, axisValues, styler);
+    this.yIndex = yIndex;
     axisFormat = new Formatter_Custom(formattingCallback);
     calculate();
   }
