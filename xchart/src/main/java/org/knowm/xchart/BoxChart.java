@@ -4,9 +4,8 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.knowm.xchart.internal.Utils;
-import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.AxesChart;
+import org.knowm.xchart.internal.chartpart.AxisPair;
 import org.knowm.xchart.internal.chartpart.Legend_Marker;
 import org.knowm.xchart.internal.chartpart.Plot_Box;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -98,8 +97,10 @@ public class BoxChart extends AxesChart<BoxStyler, BoxSeries> {
     if (yData.size() == 0) {
       throw new IllegalArgumentException("Y-Axis data cannot be empty !!!");
     }
-    if (yData.contains(null)) {
-      throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
+    for (Number value : yData) {
+      if (value == null) {
+        throw new IllegalArgumentException("Y-Axis data cannot contain null !!!");
+      }
     }
   }
 

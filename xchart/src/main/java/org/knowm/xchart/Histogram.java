@@ -78,8 +78,10 @@ public class Histogram {
     if (data.isEmpty()) {
       throw new IllegalArgumentException("Histogram data cannot be empty!!!");
     }
-    if (data.contains(null)) {
-      throw new IllegalArgumentException("Histogram data cannot contain null!!!");
+    for (Number value : data) {
+      if (value == null) {
+        throw new IllegalArgumentException("Histogram data cannot contain null!!!");
+      }
     }
 
     if (numBins <= 0) {
