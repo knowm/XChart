@@ -96,6 +96,26 @@ public abstract class Chart<ST extends Styler, S extends Series> implements ICha
     this.height = height;
   }
 
+  /**
+   * Sets the chart's width and height in pixels. This is useful for a chart constructed elsewhere
+   * that should be exported or displayed at a different size than it was built with. Exporters
+   * such as {@code ChartEncoder} lay the chart out at these dimensions.
+   *
+   * @param width the new width, greater than 0
+   * @param height the new height, greater than 0
+   * @return this chart, for chaining
+   * @throws IllegalArgumentException if either dimension is not positive
+   */
+  public Chart<ST, S> setSize(int width, int height) {
+
+    if (width <= 0 || height <= 0) {
+      throw new IllegalArgumentException("Chart width and height must be greater than 0 !!!");
+    }
+    this.width = width;
+    this.height = height;
+    return this;
+  }
+
   // TODO remove public
   public String getTitle() {
 
