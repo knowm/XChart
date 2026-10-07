@@ -3,6 +3,7 @@ package org.knowm.xchart;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class HistogramTest {
@@ -30,5 +31,24 @@ public class HistogramTest {
     assertThat(histogram.getMax()).isEqualTo(-1);
     assertThat(histogram.getMin()).isEqualTo(-6);
     assertThat(histogram.getNumBins()).isEqualTo(3);
+  }
+
+  // https://github.com/knowm/XChart/issues/1032
+  @Test
+  public void acceptsNullFreeImmutableLists() {
+
+    Histogram histogram = new Histogram(List.of(1, 2, 3, 4, 5, 6), 3);
+
+    assertThat(histogram.getMax()).isEqualTo(6);
+    assertThat(histogram.getMin()).isEqualTo(1);
+    assertThat(histogram.getNumBins()).isEqualTo(3);
+  }
+
+  @Test
+  public void stillRejectsNullElements() {
+
+    assertThatThrownBy(() -> new Histogram(Arrays.asList(1, null, 3), 3))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("null");
   }
 }
