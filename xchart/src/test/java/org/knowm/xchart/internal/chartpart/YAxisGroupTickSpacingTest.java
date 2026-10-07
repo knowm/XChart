@@ -22,20 +22,20 @@ class YAxisGroupTickSpacingTest {
   void groupOverridesAreIndependentAndCanBeRemoved() {
     AxesChartStyler styler = new XYStyler();
     styler.setYAxisTickMarkSpacingHint(40);
-    assertThat(styler.setYAxisTickMarkSpacingHint(1, 120)).isSameAs(styler);
-    assertThat(styler.getYAxisTickMarkSpacingHint(1)).isEqualTo(120);
-    assertThat(styler.getYAxisTickMarkSpacingHint(0)).isNull();
+    assertThat(styler.setYAxisGroupTickMarkSpacingHint(1, 120)).isSameAs(styler);
+    assertThat(styler.getYAxisGroupTickMarkSpacingHint(1)).isEqualTo(120);
+    assertThat(styler.getYAxisGroupTickMarkSpacingHint(0)).isNull();
     assertThat(styler.getYAxisTickMarkSpacingHint()).isEqualTo(40);
     styler.setYAxisTickMarkSpacingHint(60);
-    assertThat(styler.getYAxisTickMarkSpacingHint(1)).isEqualTo(120);
-    styler.setYAxisTickMarkSpacingHint(1, null);
-    assertThat(styler.getYAxisTickMarkSpacingHint(1)).isNull();
+    assertThat(styler.getYAxisGroupTickMarkSpacingHint(1)).isEqualTo(120);
+    styler.setYAxisGroupTickMarkSpacingHint(1, null);
+    assertThat(styler.getYAxisGroupTickMarkSpacingHint(1)).isNull();
     assertThat(styler.getYAxisTickMarkSpacingHint()).isEqualTo(60);
-    styler.setYAxisTickMarkSpacingHint(1, 0);
-    assertThat(styler.getYAxisTickMarkSpacingHint(1)).isZero();
-    assertThatThrownBy(() -> styler.setYAxisTickMarkSpacingHint(1, -1))
+    styler.setYAxisGroupTickMarkSpacingHint(1, 0);
+    assertThat(styler.getYAxisGroupTickMarkSpacingHint(1)).isZero();
+    assertThatThrownBy(() -> styler.setYAxisGroupTickMarkSpacingHint(1, -1))
         .isInstanceOf(IllegalArgumentException.class);
-    assertThat(styler.getYAxisTickMarkSpacingHint(1)).isZero();
+    assertThat(styler.getYAxisGroupTickMarkSpacingHint(1)).isZero();
   }
 
   @Test
@@ -44,11 +44,11 @@ class YAxisGroupTickSpacingTest {
     paint(chart);
     List<Double> primary = ticks(chart, 0);
     List<Double> secondary = ticks(chart, 1);
-    chart.getStyler().setYAxisTickMarkSpacingHint(1, 180);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, 180);
     paint(chart);
     assertThat(ticks(chart, 0)).isEqualTo(primary);
     assertThat(ticks(chart, 1).size()).isLessThan(secondary.size());
-    chart.getStyler().setYAxisTickMarkSpacingHint(1, null);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, null);
     paint(chart);
     assertThat(ticks(chart, 1)).isEqualTo(secondary);
   }
@@ -57,8 +57,8 @@ class YAxisGroupTickSpacingTest {
   void customFormattingKeepsGroupSpecificSpacing() {
     XYChart chart = chart();
     chart.getStyler().setYAxisTickLabelsFormattingFunction(value -> "value " + value);
-    chart.getStyler().setYAxisTickMarkSpacingHint(0, 35);
-    chart.getStyler().setYAxisTickMarkSpacingHint(1, 180);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(0, 35);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, 180);
     paint(chart);
     assertThat(ticks(chart, 1).size()).isLessThan(ticks(chart, 0).size());
     assertThat(chart.axisPair.getYAxis(1).getAxisTickCalculator().getTickLabels())
@@ -72,8 +72,8 @@ class YAxisGroupTickSpacingTest {
     List<Integer> values = Arrays.asList(0, 20, 40, 60, 80, 100);
     chart.addSeries("first", categories, values);
     chart.addSeries("second", categories, values).setYAxisGroup(1);
-    chart.getStyler().setYAxisTickMarkSpacingHint(0, 35);
-    chart.getStyler().setYAxisTickMarkSpacingHint(1, 180);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(0, 35);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, 180);
     paint(chart);
     assertThat(chart.axisPair.getYAxis(1).getAxisTickCalculator().getTickLocations().size())
         .isLessThan(chart.axisPair.getYAxis(0).getAxisTickCalculator().getTickLocations().size());
@@ -83,8 +83,8 @@ class YAxisGroupTickSpacingTest {
   void mergedAxesFollowTheMasterSpacingHint() {
     XYChart chart = chart();
     chart.getStyler().mergeYAxisGroups(0, 1);
-    chart.getStyler().setYAxisTickMarkSpacingHint(0, 180);
-    chart.getStyler().setYAxisTickMarkSpacingHint(1, 35);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(0, 180);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, 35);
     paint(chart);
     assertThat(ticks(chart, 1)).isEqualTo(ticks(chart, 0));
   }
@@ -93,17 +93,62 @@ class YAxisGroupTickSpacingTest {
   void smallPlotsKeepExplicitGroupHints() {
     XYStyler styler = new XYStyler();
     styler.setPlotContentSize(1.0);
-    styler.setYAxisTickMarkSpacingHint(0, 100);
+    styler.setYAxisGroupTickMarkSpacingHint(0, 100);
     AxisTickCalculator_Number wide =
         new AxisTickCalculator_Number(Axis_.Direction.Y, 150, 0, 100, styler, 0);
-    styler.setYAxisTickMarkSpacingHint(0, 30);
+    styler.setYAxisGroupTickMarkSpacingHint(0, 30);
     AxisTickCalculator_Number narrow =
         new AxisTickCalculator_Number(Axis_.Direction.Y, 150, 0, 100, styler, 0);
     assertThat(wide.getTickLocations().size()).isLessThan(narrow.getTickLocations().size());
-    styler.setYAxisTickMarkSpacingHint(0, 200);
+    styler.setYAxisGroupTickMarkSpacingHint(0, 200);
     assertThat(
             new AxisTickCalculator_Number(Axis_.Direction.Y, 150, 0, 100, styler, 0)
                 .getTickLocations())
+        .containsExactly(0.0, 150.0);
+  }
+
+  @Test
+  void oversizedGroupHintsKeepFormattedEndpoints() {
+    XYStyler styler = new XYStyler();
+    styler.setPlotContentSize(0.8);
+    styler.setYAxisGroupTickMarkSpacingHint(1, Integer.MAX_VALUE);
+    AxisTickCalculator_Number numeric =
+        new AxisTickCalculator_Number(Axis_.Direction.Y, 150, -2.5, 7.5, styler, 1);
+    assertThat(numeric.getTickLabels()).containsExactly("-2.5", "7.5");
+    assertThat(numeric.getTickLocations()).containsExactly(15.0, 135.0);
+    AxisTickCalculator_Callback callback =
+        new AxisTickCalculator_Callback(
+            value -> "value " + value, Axis_.Direction.Y, 150, -2.5, 7.5, styler, 1);
+    assertThat(callback.getTickLabels()).containsExactly("value -2.5", "value 7.5");
+    assertThat(callback.getTickLocations()).containsExactly(15.0, 135.0);
+    assertThat(
+            new AxisTickCalculator_Number(Axis_.Direction.Y, 0, 0, 1, styler, 1).getTickLocations())
+        .isEmpty();
+  }
+
+  @Test
+  void resizingKeepsLargeGroupHintsVisible() {
+    XYChart chart = new XYChartBuilder().width(900).height(600).build();
+    double[] x = {0, 1, 2, 3, 4, 5};
+    chart.addSeries("Measurement", x, new double[] {0, 20, 40, 60, 80, 100});
+    chart.addSeries("Enabled", x, new double[] {0, 0, 1, 1, 0, 1}).setYAxisGroup(1);
+    chart.getStyler().setYAxisMin(1, 0.0);
+    chart.getStyler().setYAxisMax(1, 1.0);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, 400);
+    for (int height : new int[] {600, 500, 400, 300, 600}) {
+      paint(chart, 900, height);
+      assertThat(chart.axisPair.getYAxis(1).getAxisTickCalculator().getTickLabels())
+          .containsExactly("0", "1");
+      assertThat(ticks(chart, 1)).hasSize(2);
+    }
+  }
+
+  @Test
+  void globalOversizedHintKeepsExistingBehavior() {
+    XYStyler styler = new XYStyler();
+    styler.setYAxisTickMarkSpacingHint(400);
+    assertThat(
+            new AxisTickCalculator_Number(Axis_.Direction.Y, 150, 0, 1, styler).getTickLocations())
         .isEmpty();
   }
 
@@ -112,7 +157,7 @@ class YAxisGroupTickSpacingTest {
     XYStyler styler = new XYStyler();
     AxisTickCalculator_Number before =
         new AxisTickCalculator_Number(Axis_.Direction.X, 800, 0, 100, styler);
-    styler.setYAxisTickMarkSpacingHint(0, 500);
+    styler.setYAxisGroupTickMarkSpacingHint(0, 500);
     AxisTickCalculator_Number after =
         new AxisTickCalculator_Number(Axis_.Direction.X, 800, 0, 100, styler);
     assertThat(after.getTickLocations()).isEqualTo(before.getTickLocations());
@@ -133,10 +178,14 @@ class YAxisGroupTickSpacingTest {
   }
 
   private void paint(Chart<?, ?> chart) {
-    BufferedImage image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
+    paint(chart, 800, 600);
+  }
+
+  private void paint(Chart<?, ?> chart, int width, int height) {
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     Graphics2D graphics = image.createGraphics();
     try {
-      chart.paint(graphics, 800, 600);
+      chart.paint(graphics, width, height);
     } finally {
       graphics.dispose();
     }

@@ -30,7 +30,7 @@ public class TestForIssue797 {
     chart.getStyler().setYAxisMin(1, 0.0);
     chart.getStyler().setYAxisMax(1, 1.0);
     chart.getStyler().setYAxisTickMarkSpacingHint(40);
-    chart.getStyler().setYAxisTickMarkSpacingHint(1, 400);
+    chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, 200);
     return chart;
   }
 }

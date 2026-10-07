@@ -180,14 +180,14 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
   }
 
   private boolean hasYAxisGroupSpacingHint() {
-    return axisDirection == Direction.Y && styler.getYAxisTickMarkSpacingHint(yIndex) != null;
+    return axisDirection == Direction.Y && styler.getYAxisGroupTickMarkSpacingHint(yIndex) != null;
   }
 
   private int getTickMarkSpacingHint() {
     if (axisDirection == Direction.X) {
       return styler.getXAxisTickMarkSpacingHint();
     }
-    Integer groupHint = styler.getYAxisTickMarkSpacingHint(yIndex);
+    Integer groupHint = styler.getYAxisGroupTickMarkSpacingHint(yIndex);
     return groupHint != null ? groupHint : styler.getYAxisTickMarkSpacingHint();
   }
 
@@ -217,6 +217,16 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       return;
     }
     if (axisDirection == Direction.Y && tickSpace < getTickMarkSpacingHint()) {
+      // An explicit group hint requests sparse ticks, not an empty axis after resizing.
+      if (hasYAxisGroupSpacingHint()
+          && tickSpace > 0
+          && !isNumberFormatChoppingDecimals(maxValue, minValue)) {
+        double margin = Utils.getTickStartOffset(workingSpace, tickSpace);
+        tickLabels.add(getAxisFormat().format(minValue));
+        tickLocations.add(margin);
+        tickLabels.add(getAxisFormat().format(maxValue));
+        tickLocations.add(margin + tickSpace);
+      }
       return;
     }
 
@@ -229,13 +239,11 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
     }
 
     // where the tick should begin in the working space in pixels
-    double margin =
-        Utils.getTickStartOffset(
-            workingSpace,
-            tickSpace); // in plot space double gridStep = getGridStepForDecimal(tickSpace);
+    double margin = Utils.getTickStartOffset(workingSpace, tickSpace); // in plot space
     // the span of the data
     double span = Math.abs(Math.min((maxValue - minValue), Double.MAX_VALUE - 1)); // in data space
 
+    // Explicit group spacing takes precedence over data-driven, equally spaced ticks.
     if (axisValues != null && areValuesEquallySpaced(axisValues) && !hasYAxisGroupSpacingHint()) {
       calculateForEquallySpacedAxisValues(tickSpace, margin);
       return;
@@ -245,7 +253,7 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
 
     int tickSpacingHint = getTickMarkSpacingHint() - 5;
 
-    // for very short plots, squeeze some more ticks in than normal into the Y-Axis
+    // Squeeze more ticks into short Y-axes unless the caller explicitly set group spacing.
     if (axisDirection == Direction.Y && tickSpace < 160 && !hasYAxisGroupSpacingHint()) {
       tickSpacingHint = 25 - 5;
     }
@@ -380,18 +388,10 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
     } while (!areAllTickLabelsUnique(tickLabels)
         || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
 
-    // Prune ticks that fall outside the actual data band [minValue, maxValue]. The generation loop
-    // above intentionally overshoots by up to a grid step on each end (getFirstPosition starts one
-    // grid step below minValue and the loop bound runs two grid steps past maxValue); those
-    // overshoot
-    // ticks must not become visible labels. Gridlines and tick marks already clip to the plot
-    // bounds,
-    // but the tick-label renderer clips to the taller axis-column bounds, so an out-of-range label
-    // --
-    // e.g. a negative label when all data is positive -- can leak into the plot margin. Issue #634.
-    // A tick value v maps to pixel margin + (v - minValue) / (maxValue - minValue) * tickSpace, so
-    // v is within [minValue, maxValue] exactly when its pixel is within [margin, margin +
-    // tickSpace].
+    // Prune ticks outside [minValue, maxValue]. Generation intentionally overshoots the
+    // data range by a grid step. Tick marks and gridlines clip to the plot, but labels clip
+    // to the taller axis column and can leak into the margin (issue #634).
+    // Data values in this range map to pixels in [margin, margin + tickSpace].
     double bandLow = margin - 1e-6;
     double bandHigh = margin + tickSpace + 1e-6;
     List<String> keptLabels = new ArrayList<>(tickLabels.size());
@@ -403,9 +403,7 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
         keptLocations.add(loc);
       }
     }
-    // Only apply the pruning if at least one tick survives, so a degenerate range can never blank
-    // the
-    // axis entirely (falls back to the pre-prune behavior).
+    // Keep the original ticks if pruning a degenerate range would empty the axis.
     if (!keptLocations.isEmpty() && keptLocations.size() < tickLocations.size()) {
       tickLabels.clear();
       tickLabels.addAll(keptLabels);

@@ -458,7 +458,7 @@ public abstract class AxesChartStyler extends Styler {
    * @param yAxisGroup the Y-axis group
    * @return the group-specific hint in pixels, or {@code null}
    */
-  public Integer getYAxisTickMarkSpacingHint(int yAxisGroup) {
+  public Integer getYAxisGroupTickMarkSpacingHint(int yAxisGroup) {
 
     return yAxisTickMarkSpacingHintMap.get(yAxisGroup);
   }
@@ -467,14 +467,16 @@ public abstract class AxesChartStyler extends Styler {
    * Sets a tick spacing hint in pixels for a linear numeric Y-axis group. This overrides the global
    * hint for that group, including when its data values are equally spaced. Tick positions are
    * calculated automatically; this does not set an interval in data units. Merged axes use the
-   * master group's tick positions.
+   * master group's tick positions. Explicit group hints take precedence over the short-plot
+   * squeeze. When a hint exceeds the available space, the axis retains its minimum and maximum
+   * ticks if their formatted labels differ and positive tick space remains.
    *
    * @param yAxisGroup the Y-axis group
    * @param yAxisTickMarkSpacingHint the non-negative spacing hint, or {@code null} to use the
    *     global hint again
    * @return this styler
    */
-  public AxesChartStyler setYAxisTickMarkSpacingHint(
+  public AxesChartStyler setYAxisGroupTickMarkSpacingHint(
       int yAxisGroup, Integer yAxisTickMarkSpacingHint) {
 
     if (yAxisTickMarkSpacingHint == null) {
