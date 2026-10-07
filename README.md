@@ -167,6 +167,13 @@ ChartEncoder.saveChart(chart, outputStream, "png");
 byte[] bytes = ChartEncoder.getBytes(chart, "png");
 ```
 
+To export a chart at a different size than it was built with, for example a chart constructed by code you don't control, resize it first with `setSize`:
+
+```java
+chart.setSize(1920, 1080);
+ChartEncoder.saveChart(chart, "./MyChart", "png");
+```
+
 * **Raster formats** (`png`, `jpg`, `bmp`, `gif`, `tiff`) are delegated to `javax.imageio.ImageIO`. Any other format for which an `ImageWriter` plugin is registered on the classpath works too — e.g. add `com.github.usefulness:webp-imageio` to export `webp` (see the `ExampleWebP` demo), or an AVIF plugin to export `avif`. Call `ChartEncoder.getSupportedRasterFormats()` to see what the current classpath can write. For AVIF, where no bundleable ImageIO writer exists yet, the `ExampleAvif` demo shows a portable fallback that pipes a PNG through the `avifenc` CLI (`brew install libavif`).
 * **Vector formats** (`svg`, `eps`, `pdf`) require the optional dependencies below.
 
