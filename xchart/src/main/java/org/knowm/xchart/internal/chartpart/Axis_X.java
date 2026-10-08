@@ -61,7 +61,7 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
             leftYAxisBounds.getY() + leftYAxisBounds.getHeight(),
             rightYAxisBounds.getY() + rightYAxisBounds.getHeight());
     double xOffset = leftYAxisBounds.getWidth() + leftYAxisBounds.getX();
-    double yOffset = maxYAxisY + axesChartStyler.getPlotMargin() - legendHeightOffset;
+    double yOffset = maxYAxisY + axesChartStyler.getPlotMargin();
 
     double legendWidth = 0;
     if (axesChartStyler.getLegendPosition() == LegendPosition.OutsideE
@@ -85,7 +85,8 @@ public class Axis_X<ST extends AxesChartStyler, S extends AxesChartSeries> exten
         chart.getHeight()
             - maxYAxisY
             - axesChartStyler.getChartPadding()
-            - axesChartStyler.getPlotMargin();
+            - axesChartStyler.getPlotMargin()
+            - legendHeightOffset;
 
     bounds.setRect(xOffset, yOffset, width, height);
   }
