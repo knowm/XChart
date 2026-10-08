@@ -447,6 +447,22 @@ chart.getStyler().setyAxisTickLabelsFormattingFunction(x ->NumberWordConverter.c
 
 ### Multiple Axes
 
+Linear numeric Y-axis groups can use different tick spacing hints (in pixels):
+
+```java
+chart.getStyler().setYAxisTickMarkSpacingHint(40); // default for all groups
+chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, 120); // wider spacing for group 1
+chart.getStyler().setYAxisGroupTickMarkSpacingHint(1, null); // restore the default
+```
+
+A group override also applies to equally spaced data and custom tick label formatters.
+It takes precedence over the short-plot squeeze. If the hint exceeds the available tick
+space, the minimum and maximum ticks are retained when there is positive space and
+their formatted labels differ.
+It is a pixel hint, not a fixed interval in data units. Logarithmic and categorical axes
+keep their existing tick rules; merged axes follow the master group's ticks.
+
+
 XChart has multiple y axes feature. Y offset is calculated according to the Y-Axis the series configured. Max `y` value in this axis is calculated
 according to the series on this axis only.
 To set the y group:

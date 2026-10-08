@@ -13,13 +13,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.knowm.xchart.CategoryChart;
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.HeatMapChart;
-import org.knowm.xchart.HorizontalBarChart;
 import org.knowm.xchart.HorizontalBarSeries;
-import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.Series.DataType;
@@ -306,7 +302,8 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
             min,
             max,
             yData,
-            axesChartStyler);
+            axesChartStyler,
+            getYIndex());
       }
       return new AxisTickCalculator_Callback(
           axesChartStyler.getYAxisTickLabelsFormattingFunction(),
@@ -314,7 +311,8 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
           workingSpace,
           min,
           max,
-          axesChartStyler);
+          axesChartStyler,
+          getYIndex());
 
     } else if (axesChartStyler.isYAxisLogarithmic() && getDataType() != DataType.Date) {
 
@@ -342,7 +340,7 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
     } else {
       if (!yData.isEmpty()) {
         return new AxisTickCalculator_Number(
-            Axis_.Direction.Y, workingSpace, min, max, yData, axesChartStyler);
+            Axis_.Direction.Y, workingSpace, min, max, yData, axesChartStyler, getYIndex());
       }
       return new AxisTickCalculator_Number(
           Axis_.Direction.Y, workingSpace, min, max, axesChartStyler, getYIndex());
@@ -438,8 +436,7 @@ public class Axis_Y<ST extends AxesChartStyler, S extends AxesChartSeries> exten
       return minVal;
     }
 
-    double margin =
-        org.knowm.xchart.internal.Utils.getTickStartOffset(workingSpace, tickSpace);
+    double margin = org.knowm.xchart.internal.Utils.getTickStartOffset(workingSpace, tickSpace);
 
     minVal = isLog ? Math.log10(minVal) : minVal;
     maxVal = isLog ? Math.log10(maxVal) : maxVal;

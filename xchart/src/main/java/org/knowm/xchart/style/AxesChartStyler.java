@@ -30,6 +30,7 @@ public abstract class AxesChartStyler extends Styler {
   private int axisTitlePadding;
   private int xAxisTickMarkSpacingHint;
   private int yAxisTickMarkSpacingHint;
+  private Map<Integer, Integer> yAxisTickMarkSpacingHintMap;
   private boolean isXAxisLogarithmic;
   private boolean isYAxisLogarithmic;
   private Double xAxisMin;
@@ -79,7 +80,9 @@ public abstract class AxesChartStyler extends Styler {
    */
   private final HashMap<Integer, Integer> yAxisGroupMergeMap = new HashMap<>();
 
-  /** @see #setMergedAxisColocateSlaveLabels */
+  /**
+   * @see #setMergedAxisColocateSlaveLabels
+   */
   private boolean mergedAxisColocateSlaveLabels = false;
 
   /**
@@ -89,6 +92,7 @@ public abstract class AxesChartStyler extends Styler {
    * @see #setMergedAxisColocatedSlaveLabelsGap
    */
   private double mergedAxisColocatedSlaveLabelsGap = 6.0;
+
   private TextAlignment xAxisLabelAlignment = TextAlignment.Centre;
   private TextAlignment xAxisLabelAlignmentVertical = TextAlignment.Centre;
   private TextAlignment yAxisLabelAlignment = TextAlignment.Left;
@@ -117,6 +121,7 @@ public abstract class AxesChartStyler extends Styler {
     this.axisTitlePadding = theme.getAxisTitlePadding();
     this.xAxisTickMarkSpacingHint = theme.getXAxisTickMarkSpacingHint();
     this.yAxisTickMarkSpacingHint = theme.getYAxisTickMarkSpacingHint();
+    this.yAxisTickMarkSpacingHintMap = new HashMap<>();
     this.isXAxisLogarithmic = false;
     this.isYAxisLogarithmic = false;
     this.xAxisMin = null;
@@ -443,6 +448,45 @@ public abstract class AxesChartStyler extends Styler {
       throw new IllegalArgumentException("yAxisTickMarkSpacingHint cannot be less than 0 !!!");
     }
     this.yAxisTickMarkSpacingHint = yAxisTickMarkSpacingHint;
+    return this;
+  }
+
+  /**
+   * Returns the spacing hint configured for a Y-axis group, or {@code null} if it uses the global
+   * hint.
+   *
+   * @param yAxisGroup the Y-axis group
+   * @return the group-specific hint in pixels, or {@code null}
+   */
+  public Integer getYAxisGroupTickMarkSpacingHint(int yAxisGroup) {
+
+    return yAxisTickMarkSpacingHintMap.get(yAxisGroup);
+  }
+
+  /**
+   * Sets a tick spacing hint in pixels for a linear numeric Y-axis group. This overrides the global
+   * hint for that group, including when its data values are equally spaced. Tick positions are
+   * calculated automatically; this does not set an interval in data units. Merged axes use the
+   * master group's tick positions. Explicit group hints take precedence over the short-plot
+   * squeeze. When a hint exceeds the available space, the axis retains its minimum and maximum
+   * ticks if their formatted labels differ and positive tick space remains.
+   *
+   * @param yAxisGroup the Y-axis group
+   * @param yAxisTickMarkSpacingHint the non-negative spacing hint, or {@code null} to use the
+   *     global hint again
+   * @return this styler
+   */
+  public AxesChartStyler setYAxisGroupTickMarkSpacingHint(
+      int yAxisGroup, Integer yAxisTickMarkSpacingHint) {
+
+    if (yAxisTickMarkSpacingHint == null) {
+      yAxisTickMarkSpacingHintMap.remove(yAxisGroup);
+    } else {
+      if (yAxisTickMarkSpacingHint < 0) {
+        throw new IllegalArgumentException("yAxisTickMarkSpacingHint cannot be less than 0 !!!");
+      }
+      yAxisTickMarkSpacingHintMap.put(yAxisGroup, yAxisTickMarkSpacingHint);
+    }
     return this;
   }
 
@@ -811,13 +855,17 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  /** @deprecated Use {@link #getXAxisTickLabelsFormattingFunction()} instead. */
+  /**
+   * @deprecated Use {@link #getXAxisTickLabelsFormattingFunction()} instead.
+   */
   @Deprecated
   public Function<Double, String> getxAxisTickLabelsFormattingFunction() {
     return getXAxisTickLabelsFormattingFunction();
   }
 
-  /** @deprecated Use {@link #setXAxisTickLabelsFormattingFunction(Function)} instead. */
+  /**
+   * @deprecated Use {@link #setXAxisTickLabelsFormattingFunction(Function)} instead.
+   */
   @Deprecated
   public AxesChartStyler setxAxisTickLabelsFormattingFunction(
       Function<Double, String> xAxisTickLabelsFormattingFunction) {
@@ -842,13 +890,17 @@ public abstract class AxesChartStyler extends Styler {
     return this;
   }
 
-  /** @deprecated Use {@link #getYAxisTickLabelsFormattingFunction()} instead. */
+  /**
+   * @deprecated Use {@link #getYAxisTickLabelsFormattingFunction()} instead.
+   */
   @Deprecated
   public Function<Double, String> getyAxisTickLabelsFormattingFunction() {
     return getYAxisTickLabelsFormattingFunction();
   }
 
-  /** @deprecated Use {@link #setYAxisTickLabelsFormattingFunction(Function)} instead. */
+  /**
+   * @deprecated Use {@link #setYAxisTickLabelsFormattingFunction(Function)} instead.
+   */
   @Deprecated
   public AxesChartStyler setyAxisTickLabelsFormattingFunction(
       Function<Double, String> yAxisTickLabelsFormattingFunction) {
@@ -950,9 +1002,9 @@ public abstract class AxesChartStyler extends Styler {
    * Merge multiple Y-axis groups onto a single shared visual axis line per side. All specified
    * logical group indices will share the axis line of the lowest-numbered index in the set.
    *
-   * <p>Example: {@code styler.mergeYAxisGroups(0, 1)} causes group 1 to share group 0's axis
-   * line. Group 0 acts as master (drives gridline positions); group 1 is a slave (translates
-   * master tick pixels into its own value labels).
+   * <p>Example: {@code styler.mergeYAxisGroups(0, 1)} causes group 1 to share group 0's axis line.
+   * Group 0 acts as master (drives gridline positions); group 1 is a slave (translates master tick
+   * pixels into its own value labels).
    *
    * <p>This is opt-in: charts that do not call this method behave exactly as before.
    *
@@ -998,8 +1050,8 @@ public abstract class AxesChartStyler extends Styler {
 
   /**
    * When {@code true}, slave Y-axis tick labels are rendered stacked below the master's labels on
-   * the shared axis column instead of appearing as a separate axis column. Colors are controlled
-   * by {@link AxesChartStyler#setYAxisGroupTickLabelsColorMap}. Default: {@code false}.
+   * the shared axis column instead of appearing as a separate axis column. Colors are controlled by
+   * {@link AxesChartStyler#setYAxisGroupTickLabelsColorMap}. Default: {@code false}.
    */
   public AxesChartStyler setMergedAxisColocateSlaveLabels(boolean val) {
     this.mergedAxisColocateSlaveLabels = val;

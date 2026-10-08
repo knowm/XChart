@@ -41,8 +41,20 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       double maxValue,
       List<Double> axisValues,
       AxesChartStyler styler) {
+    this(axisDirection, workingSpace, minValue, maxValue, axisValues, styler, 0);
+  }
+
+  AxisTickCalculator_Number(
+      Direction axisDirection,
+      double workingSpace,
+      double minValue,
+      double maxValue,
+      List<Double> axisValues,
+      AxesChartStyler styler,
+      int yIndex) {
     super(axisDirection, workingSpace, minValue, maxValue, axisValues, styler);
-    formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue);
+    this.yIndex = yIndex;
+    formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue, yIndex);
     axisFormat = formatterNumber;
     calculate();
   }
@@ -66,6 +78,7 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
       int yIndex) {
 
     super(axisDirection, workingSpace, minValue, maxValue, styler);
+    this.yIndex = yIndex;
     formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue, yIndex);
     axisFormat = formatterNumber;
     calculate();
