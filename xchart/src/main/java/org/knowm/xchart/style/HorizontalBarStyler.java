@@ -18,6 +18,9 @@ public class HorizontalBarStyler extends AxesChartStyler {
   private Color labelsFontColorAutomaticLight;
   private Color labelsFontColorAutomaticDark;
 
+  /** Two-color bar gradient; flat fills stay the default. */
+  private boolean isBarFillGradientEnabled;
+
   /** Constructor */
   public HorizontalBarStyler() {
 
@@ -38,6 +41,7 @@ public class HorizontalBarStyler extends AxesChartStyler {
     isLabelsFontColorAutomaticEnabled = theme.isLabelsFontColorAutomaticEnabled();
     labelsFontColorAutomaticLight = theme.getLabelsFontColorAutomaticLight();
     labelsFontColorAutomaticDark = theme.getLabelsFontColorAutomaticDark();
+    isBarFillGradientEnabled = false;
   }
 
   public double getAvailableSpaceFill() {
@@ -175,6 +179,26 @@ public class HorizontalBarStyler extends AxesChartStyler {
 
   public HorizontalBarStyler setLabelsFontColorAutomaticDark(Color labelsFontColorAutomaticDark) {
     this.labelsFontColorAutomaticDark = labelsFontColorAutomaticDark;
+    return this;
+  }
+
+  public boolean isBarFillGradientEnabled() {
+
+    return isBarFillGradientEnabled;
+  }
+
+  /**
+   * Enables a two-color gradient fill for horizontal bars. The series fill color is painted at the
+   * bar base and {@code fill.brighter()} at the value end. Negative bars reverse that direction so
+   * the brighter end stays at the value, away from zero. Disabled by default, which keeps the flat
+   * series fill. A bar whose base and value endpoints coincide also stays flat.
+   *
+   * @param barFillGradientEnabled {@code true} to paint bars with the gradient
+   * @return this styler
+   */
+  public HorizontalBarStyler setBarFillGradientEnabled(boolean barFillGradientEnabled) {
+
+    this.isBarFillGradientEnabled = barFillGradientEnabled;
     return this;
   }
 

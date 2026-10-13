@@ -25,6 +25,9 @@ public class CategoryStyler extends AxesChartStyler {
   private Color labelsFontColorAutomaticLight;
   private Color labelsFontColorAutomaticDark;
 
+  /** Two-color bar gradient; flat fills stay the default. */
+  private boolean isBarFillGradientEnabled;
+
   /** Constructor */
   public CategoryStyler() {
 
@@ -48,6 +51,7 @@ public class CategoryStyler extends AxesChartStyler {
     isLabelsFontColorAutomaticEnabled = theme.isLabelsFontColorAutomaticEnabled();
     labelsFontColorAutomaticLight = theme.getLabelsFontColorAutomaticLight();
     labelsFontColorAutomaticDark = theme.getLabelsFontColorAutomaticDark();
+    isBarFillGradientEnabled = false;
   }
 
   public CategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -255,6 +259,26 @@ public class CategoryStyler extends AxesChartStyler {
 
   public CategoryStyler setLabelsFontColorAutomaticDark(Color labelsFontColorAutomaticDark) {
     this.labelsFontColorAutomaticDark = labelsFontColorAutomaticDark;
+    return this;
+  }
+
+  public boolean isBarFillGradientEnabled() {
+
+    return isBarFillGradientEnabled;
+  }
+
+  /**
+   * Enables a two-color gradient fill for category bars. The series fill color is painted at the
+   * bar base and {@code fill.brighter()} at the value end. Negative bars reverse that direction so
+   * the brighter end stays at the value, away from zero. Disabled by default, which keeps the flat
+   * series fill. A bar whose base and value endpoints coincide also stays flat.
+   *
+   * @param barFillGradientEnabled {@code true} to paint bars with the gradient
+   * @return this styler
+   */
+  public CategoryStyler setBarFillGradientEnabled(boolean barFillGradientEnabled) {
+
+    this.isBarFillGradientEnabled = barFillGradientEnabled;
     return this;
   }
 

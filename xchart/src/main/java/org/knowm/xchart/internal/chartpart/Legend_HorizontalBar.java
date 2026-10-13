@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
 import org.knowm.xchart.HorizontalBarSeries;
+import org.knowm.xchart.style.HorizontalBarStyler;
 import org.knowm.xchart.style.Styler;
 
 public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeries>
@@ -34,6 +35,9 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     Map<String, S> map = chart.getSeriesMap();
+    boolean barFillGradient =
+        chart.getStyler() instanceof HorizontalBarStyler
+            && ((HorizontalBarStyler) chart.getStyler()).isBarFillGradientEnabled();
 
     // In a horizontal legend, entries flow across shared rows and wrap to a new row when a row
     // fills up (issue #577); in a vertical legend each entry gets its own row.
@@ -62,10 +66,21 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
         starty = cursor.y;
       }
 
-      // paint inner box
+      // paint inner box. Enabled charts use a left-to-right positive-bar gradient.
       Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
-      g.setColor(series.getFillColor());
-      g.fill(rectSmall);
+      Color fill = series.getFillColor();
+      if (barFillGradient && fill != null) {
+        Paint previousPaint = g.getPaint();
+        float baseX = (float) startx;
+        float valueX = (float) (startx + BOX_SIZE);
+        float y = (float) starty;
+        g.setPaint(new GradientPaint(baseX, y, fill, valueX, y, fill.brighter(), false));
+        g.fill(rectSmall);
+        g.setPaint(previousPaint);
+      } else {
+        g.setColor(fill);
+        g.fill(rectSmall);
+      }
 
       // paint series text
       double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
