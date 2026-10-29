@@ -2,17 +2,21 @@ package org.knowm.xchart.internal.chartpart;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
 import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
+import org.knowm.xchart.OHLCSeries;
+import org.knowm.xchart.OHLCSeries.OHLCSeriesRenderStyle;
 import org.knowm.xchart.internal.series.AxesChartSeries;
 import org.knowm.xchart.internal.series.AxesChartSeriesCategory;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.BoxStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.HorizontalBarStyler;
+import org.knowm.xchart.style.OHLCStyler;
 import org.knowm.xchart.style.Styler.LegendPosition;
 
 public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> implements ChartPart {
@@ -282,6 +286,17 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
       }
     }
 
+    if (chart.getStyler() instanceof OHLCStyler && !chart.getStyler().isXAxisLogarithmic()) {
+
+      // The x-axis range spans exactly [dataMin, dataMax], which centers the first and last
+      // candles on the plot edges and clips half of each candle body (issue #992). Pad the range
+      // by half the candle spacing per side so edge candles render fully; one candle period then
+      // maps to exactly the candle width PlotContent_OHLC draws (xTickSpace / candleCount).
+      double halfSpacing = widestOhlcCandleSpacing() / 2.0;
+      overrideXAxisMinValue -= halfSpacing;
+      overrideXAxisMaxValue += halfSpacing;
+    }
+
     // override min and maxValue if specified
     if (chart.getStyler().getXAxisMin() != null) {
 
@@ -293,6 +308,37 @@ public class AxisPair<ST extends AxesChartStyler, S extends AxesChartSeries> imp
     }
     xAxis.setMin(overrideXAxisMinValue);
     xAxis.setMax(overrideXAxisMaxValue);
+  }
+
+  /**
+   * The widest median x-spacing among the enabled candle-style OHLC series — the series with the
+   * fewest candles draws the widest bodies, so it needs the most padding. The median rather than
+   * the mean of the spacings is used so that gaps in date data (weekends, holidays) don't inflate
+   * the estimate. Returns 0 when no series needs edge padding (line render style has no width).
+   */
+  private double widestOhlcCandleSpacing() {
+
+    double widestSpacing = 0;
+    for (S series : chart.getSeriesMap().values()) {
+      if (!(series instanceof OHLCSeries) || !series.isEnabled()) {
+        continue;
+      }
+      OHLCSeries ohlcSeries = (OHLCSeries) series;
+      if (ohlcSeries.getOhlcSeriesRenderStyle() == OHLCSeriesRenderStyle.Line) {
+        continue;
+      }
+      double[] xData = ohlcSeries.getXData();
+      if (xData == null || xData.length < 2) {
+        continue;
+      }
+      double[] spacings = new double[xData.length - 1];
+      for (int i = 1; i < xData.length; i++) {
+        spacings[i - 1] = Math.abs(xData[i] - xData[i - 1]);
+      }
+      Arrays.sort(spacings);
+      widestSpacing = Math.max(widestSpacing, spacings[spacings.length / 2]);
+    }
+    return widestSpacing;
   }
 
   private void overrideMinMaxForYAxis(Axis_Y<ST, S> yAxis) {
