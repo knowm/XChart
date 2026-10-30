@@ -167,22 +167,24 @@ public class PlotContent_HorizontalBar<
 
         // Same base-to-value gradient as category bars, along X. xOffset is the right edge and
         // zeroOffset the left, including for negative bars. Positive-only axes (including a
-        // logarithmic axis) keep the brighter end at the value; negative bars flip it.
-        boolean negativeBar = barExtendsNegative(chartForm, x);
-        double baseX = negativeBar ? xOffset : zeroOffset;
-        double valueX = negativeBar ? zeroOffset : xOffset;
-        fillBar(
-            g,
-            barPath,
-            series.getFillColor(),
-            styler.isBarFillGradientEnabled(),
-            baseX,
-            yOffset,
-            valueX,
-            yOffset);
+        // logarithmic axis) keep the lighter end at the value; negative bars flip it. Endpoints
+        // are clamped to the plot so a bar clipped at an axis limit still spans the gradient.
+        boolean gradient = styler.isBarFillGradientEnabled();
+        boolean negativeBar = BarGradient.extendsNegative(chartForm, x);
+        double plotLeft = getBounds().getMinX();
+        double plotRight = getBounds().getMaxX();
+        double baseX = BarGradient.clamp(negativeBar ? xOffset : zeroOffset, plotLeft, plotRight);
+        double valueX = BarGradient.clamp(negativeBar ? zeroOffset : xOffset, plotLeft, plotRight);
+        BarGradient.fill(
+            g, barPath, series.getFillColor(), gradient, baseX, yOffset, valueX, yOffset);
 
         if (styler.isLabelsVisible() && next != null) {
-          drawLabels(g, next, xOffset, yOffset, zeroOffset, barHeight, series.getFillColor());
+          // Inside labels get their automatic contrast color from the gradient at their position.
+          Color labelBackground =
+              gradient
+                  ? BarGradient.colorAt(series.getFillColor(), styler.getLabelsPosition())
+                  : series.getFillColor();
+          drawLabels(g, next, xOffset, yOffset, zeroOffset, barHeight, labelBackground);
         }
 
         // add data labels
@@ -212,50 +214,6 @@ public class PlotContent_HorizontalBar<
 
       seriesCounter++;
     }
-  }
-
-  /** True when the bar grows toward more negative transformed values. */
-  private static boolean barExtendsNegative(int chartForm, double transformed) {
-
-    if (chartForm > 0) {
-      return false;
-    }
-    if (chartForm < 0) {
-      return true;
-    }
-    return transformed < 0.0;
-  }
-
-  /**
-   * Fills {@code bar} with {@code fill}, or with a non-cyclic gradient from {@code fill} at the
-   * base to {@code fill.brighter()} at the value end. Coincident endpoints keep the flat fill. The
-   * paint in effect before a gradient fill is restored.
-   */
-  private static void fillBar(
-      Graphics2D g,
-      Shape bar,
-      Color fill,
-      boolean gradient,
-      double baseX,
-      double baseY,
-      double valueX,
-      double valueY) {
-
-    if (gradient && fill != null) {
-      float x1 = (float) baseX;
-      float y1 = (float) baseY;
-      float x2 = (float) valueX;
-      float y2 = (float) valueY;
-      if (x1 != x2 || y1 != y2) {
-        Paint previousPaint = g.getPaint();
-        g.setPaint(new GradientPaint(x1, y1, fill, x2, y2, fill.brighter(), false));
-        g.fill(bar);
-        g.setPaint(previousPaint);
-        return;
-      }
-    }
-    g.setColor(fill);
-    g.fill(bar);
   }
 
   private void drawLabels(

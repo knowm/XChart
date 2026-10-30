@@ -183,25 +183,35 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
   }
 
   /**
-   * Category bars with the gradient enabled use a bottom-to-top positive-bar gradient inside the
-   * swatch. Every other legend entry, including non-bar category styles and charts that share this
-   * renderer, keeps the flat fill.
+   * Category bars with the gradient enabled use the bar gradient inside the swatch, lighter at the
+   * top, or at the bottom when every bar on the plot grows downward (an all-negative y-axis). Every
+   * other legend entry, including non-bar category styles and charts that share this renderer,
+   * keeps the flat fill.
    */
   private void fillLegendBox(Graphics2D g, S series, Shape box, double x, double y) {
 
-    Color fill = series.getFillColor();
-    if (isCategoryBarGradient(series) && fill != null) {
-      Paint previousPaint = g.getPaint();
-      float baseX = (float) x;
-      float baseY = (float) (y + BOX_SIZE);
-      float valueY = (float) y;
-      g.setPaint(new GradientPaint(baseX, baseY, fill, baseX, valueY, fill.brighter(), false));
-      g.fill(box);
-      g.setPaint(previousPaint);
-    } else {
-      g.setColor(fill);
-      g.fill(box);
+    boolean gradient = isCategoryBarGradient(series);
+    double top = y;
+    double bottom = y + BOX_SIZE;
+    boolean negative = gradient && allNegativeYAxis();
+    BarGradient.fill(
+        g,
+        box,
+        series.getFillColor(),
+        gradient,
+        x,
+        negative ? top : bottom,
+        x,
+        negative ? bottom : top);
+  }
+
+  private boolean allNegativeYAxis() {
+
+    if (!(chart instanceof AxesChart)) {
+      return false;
     }
+    Axis_Y<?, ?> yAxis = ((AxesChart<?, ?>) chart).getYAxis();
+    return yAxis.getMin() < 0.0 && yAxis.getMax() < 0.0;
   }
 
   private boolean isCategoryBarGradient(S series) {

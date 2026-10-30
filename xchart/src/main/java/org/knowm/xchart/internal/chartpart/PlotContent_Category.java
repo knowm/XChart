@@ -287,21 +287,20 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
           barPath.lineTo(xOffset, zeroOffset);
           barPath.closePath();
 
-          // Gradient runs from the segment base (fill) to the value end (brighter). Positive-only
+          // Gradient runs from the segment base (fill) to the value end (lighter). Positive-only
           // axes, including logarithmic axes, always use that direction. Negative bars flip it so
-          // the brighter end stays away from zero. Each stacked segment restarts at its own base.
-          boolean negativeBar = barExtendsNegative(chartForm, y);
-          double baseY = negativeBar ? yOffset : zeroOffset;
-          double valueY = negativeBar ? zeroOffset : yOffset;
-          fillBar(
-              g,
-              barPath,
-              series.getFillColor(),
-              stylerCategory.isBarFillGradientEnabled(),
-              xOffset,
-              baseY,
-              xOffset,
-              valueY);
+          // the lighter end stays away from zero. Each stacked segment restarts at its own base.
+          // Endpoints are clamped to the plot so a bar clipped at an axis limit still spans the
+          // whole gradient.
+          boolean gradient = stylerCategory.isBarFillGradientEnabled();
+          boolean negativeBar = BarGradient.extendsNegative(chartForm, y);
+          double plotTop = getBounds().getMinY();
+          double plotBottom = getBounds().getMaxY();
+          double baseY = BarGradient.clamp(negativeBar ? yOffset : zeroOffset, plotTop, plotBottom);
+          double valueY =
+              BarGradient.clamp(negativeBar ? zeroOffset : yOffset, plotTop, plotBottom);
+          BarGradient.fill(
+              g, barPath, series.getFillColor(), gradient, xOffset, baseY, xOffset, valueY);
 
           // TODO maybe we want outlines of the bars?
           // Legend markers now also draw the outline. It has been disabled for
@@ -324,6 +323,12 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
           // }
 
           if (stylerCategory.isLabelsVisible()) {
+            // An inside label sits labelsPosition of the way from the base to the value end, so
+            // its automatic contrast color is computed against the gradient at that point.
+            Color labelBackground =
+                gradient
+                    ? BarGradient.colorAt(series.getFillColor(), stylerCategory.getLabelsPosition())
+                    : series.getFillColor();
             drawLabels(
                 g,
                 next,
@@ -333,7 +338,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
                 barWidth,
                 false,
                 false,
-                series.getFillColor());
+                labelBackground);
           }
           if (stylerCategory.isLabelsVisible()
               && stylerCategory.isShowStackSum()
@@ -794,50 +799,6 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
     }
 
     drawStepBarLine(g, series, drawPath);
-  }
-
-  /** True when the bar grows toward more negative transformed values. */
-  private static boolean barExtendsNegative(int chartForm, double transformed) {
-
-    if (chartForm > 0) {
-      return false;
-    }
-    if (chartForm < 0) {
-      return true;
-    }
-    return transformed < 0.0;
-  }
-
-  /**
-   * Fills {@code bar} with {@code fill}, or with a non-cyclic gradient from {@code fill} at the
-   * base to {@code fill.brighter()} at the value end. Coincident endpoints keep the flat fill. The
-   * paint in effect before a gradient fill is restored.
-   */
-  private static void fillBar(
-      Graphics2D g,
-      Shape bar,
-      Color fill,
-      boolean gradient,
-      double baseX,
-      double baseY,
-      double valueX,
-      double valueY) {
-
-    if (gradient && fill != null) {
-      float x1 = (float) baseX;
-      float y1 = (float) baseY;
-      float x2 = (float) valueX;
-      float y2 = (float) valueY;
-      if (x1 != x2 || y1 != y2) {
-        Paint previousPaint = g.getPaint();
-        g.setPaint(new GradientPaint(x1, y1, fill, x2, y2, fill.brighter(), false));
-        g.fill(bar);
-        g.setPaint(previousPaint);
-        return;
-      }
-    }
-    g.setColor(fill);
-    g.fill(bar);
   }
 
   private void drawLabels(

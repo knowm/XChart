@@ -54,7 +54,7 @@ public class BarFillGradientTest {
   private static final int BRIGHTNESS_DELTA = 20;
 
   @Test
-  public void stylersDefaultToFalseAndResetWithTheTheme() {
+  public void stylersDefaultToFalseAndKeepTheOptInAcrossThemes() {
 
     CategoryChart category = new CategoryChartBuilder().width(200).height(150).build();
     CategoryStyler categoryStyler = category.getStyler();
@@ -63,7 +63,7 @@ public class BarFillGradientTest {
     assertThat(categoryStyler.isBarFillGradientEnabled()).isTrue();
     categoryStyler.setLabelsVisible(true);
     categoryStyler.setTheme(new GGPlot2Theme());
-    assertThat(categoryStyler.isBarFillGradientEnabled()).isFalse();
+    assertThat(categoryStyler.isBarFillGradientEnabled()).isTrue();
     assertThat(categoryStyler.isLabelsVisible()).isFalse();
     assertThat(categoryStyler.setBarFillGradientEnabled(false).isBarFillGradientEnabled())
         .isFalse();
@@ -75,8 +75,120 @@ public class BarFillGradientTest {
     assertThat(horizontalStyler.isBarFillGradientEnabled()).isTrue();
     horizontalStyler.setLabelsVisible(true);
     horizontalStyler.setTheme(new XChartTheme());
-    assertThat(horizontalStyler.isBarFillGradientEnabled()).isFalse();
+    assertThat(horizontalStyler.isBarFillGradientEnabled()).isTrue();
     assertThat(horizontalStyler.isLabelsVisible()).isFalse();
+  }
+
+  @Test
+  public void endColorLightensSaturatedAndBlackFills() {
+
+    for (Color fill :
+        Arrays.asList(Color.RED, Color.GREEN, Color.BLUE, Color.BLACK, new Color(255, 0, 0, 90))) {
+      Color end = BarGradient.endColor(fill);
+      assertThat(brightness(end)).as("end of %s", fill).isGreaterThan(brightness(fill) + 150);
+      assertThat(end.getAlpha()).isEqualTo(fill.getAlpha());
+    }
+    assertThat(BarGradient.endColor(Color.RED)).isEqualTo(new Color(255, 102, 102));
+    assertThat(BarGradient.colorAt(FILL, 0.0)).isEqualTo(FILL);
+    assertThat(BarGradient.colorAt(FILL, 1.0)).isEqualTo(BarGradient.endColor(FILL));
+    assertThat(BarGradient.colorAt(FILL, 2.0)).isEqualTo(BarGradient.endColor(FILL));
+    Color mid = BarGradient.colorAt(FILL, 0.5);
+    assertThat(brightness(mid))
+        .isStrictlyBetween(brightness(FILL), brightness(BarGradient.endColor(FILL)));
+  }
+
+  @Test
+  public void pureRedBarsGetAVisibleGradient() {
+
+    CategoryChart chart = categoryChart();
+    chart.getStyler().setBarFillGradientEnabled(true);
+    chart.getStyler().setYAxisMin(0.0);
+    chart.getStyler().setYAxisMax(10.0);
+    chart.addSeries("a", Arrays.asList("x"), Arrays.asList(8)).setFillColor(Color.RED);
+    BufferedImage image = BitmapEncoder.getBufferedImage(chart);
+    assertVerticalGradient(image, onlyBox(image, Color.RED, true), Color.RED, true);
+
+    HorizontalBarChart horizontal = horizontalChart();
+    horizontal.getStyler().setBarFillGradientEnabled(true);
+    horizontal.getStyler().setXAxisMin(0.0);
+    horizontal.getStyler().setXAxisMax(10.0);
+    horizontal.addSeries("a", Arrays.asList(8), Arrays.asList("x")).setFillColor(Color.RED);
+    BufferedImage hImage = BitmapEncoder.getBufferedImage(horizontal);
+    assertHorizontalGradient(hImage, onlyBox(hImage, Color.RED, true), Color.RED, true);
+  }
+
+  @Test
+  public void automaticLabelColorUsesTheGradientUnderTheLabel() {
+
+    // Flat fill is just dark enough for a light label; the lighter value end needs a dark one.
+    Color fill = new Color(110, 110, 110);
+    for (boolean gradient : new boolean[] {false, true}) {
+      CategoryChart chart = categoryChart();
+      chart.getStyler().setBarFillGradientEnabled(gradient);
+      chart.getStyler().setYAxisMin(0.0);
+      chart.getStyler().setYAxisMax(10.0);
+      chart.getStyler().setLabelsVisible(true);
+      chart.getStyler().setLabelsPosition(1.0);
+      chart.getStyler().setLabelsFontColorAutomaticEnabled(true);
+      chart.getStyler().setLabelsFontColorAutomaticLight(Color.WHITE);
+      chart.getStyler().setLabelsFontColorAutomaticDark(LABEL);
+      chart.addSeries("a", Arrays.asList("x"), Arrays.asList(8)).setFillColor(fill);
+      BufferedImage image = BitmapEncoder.getBufferedImage(chart);
+      Color expected =
+          chart.getStyler().getLabelsFontColor(gradient ? BarGradient.endColor(fill) : fill);
+      Color other = expected.equals(LABEL) ? Color.WHITE : LABEL;
+      assertThat(expected).isNotEqualTo(other);
+      if (gradient) {
+        assertThat(expected).isEqualTo(LABEL);
+        assertThat(countNear(image, null, LABEL, 2)).isGreaterThan(0);
+      } else {
+        assertThat(expected).isEqualTo(Color.WHITE);
+        assertThat(countNear(image, null, LABEL, 2)).isZero();
+      }
+    }
+  }
+
+  @Test
+  public void legendSwatchesFollowAllNegativeBars() {
+
+    CategoryChart chart = categoryChart();
+    chart.getStyler().setBarFillGradientEnabled(true);
+    chart.getStyler().setLegendVisible(true);
+    chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+    chart.getStyler().setLegendBackgroundColor(Color.WHITE);
+    chart.getStyler().setYAxisMin(-30.0);
+    chart.getStyler().setYAxisMax(-1.0);
+    chart.addSeries("bars", Arrays.asList("c"), Arrays.asList(-20)).setFillColor(FILL);
+    BufferedImage image = BitmapEncoder.getBufferedImage(chart);
+    Rectangle legend = legendRegion(chart);
+    assertVerticalGradient(image, onlyBox(image, legend, FILL, true), FILL, false);
+    List<Rectangle> bars = boxes(image, null, FILL, true);
+    bars.removeIf(legend::intersects);
+    assertThat(bars).hasSize(1);
+    assertVerticalGradient(image, bars.get(0), FILL, false);
+
+    HorizontalBarChart horizontal = horizontalChart();
+    horizontal.getStyler().setBarFillGradientEnabled(true);
+    horizontal.getStyler().setLegendVisible(true);
+    horizontal.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+    horizontal.getStyler().setLegendBackgroundColor(Color.WHITE);
+    horizontal.getStyler().setXAxisMin(-30.0);
+    horizontal.getStyler().setXAxisMax(-1.0);
+    horizontal.addSeries("bars", Arrays.asList(-20), Arrays.asList("c")).setFillColor(FILL);
+    BufferedImage hImage = BitmapEncoder.getBufferedImage(horizontal);
+    Rectangle hLegend = legendRegion(horizontal);
+    assertHorizontalGradient(hImage, onlyBox(hImage, hLegend, FILL, true), FILL, false);
+  }
+
+  @Test
+  public void vectorGraphicsGetTheFlatFill() {
+
+    de.erichseifert.vectorgraphics2d.VectorGraphics2D vg =
+        new de.erichseifert.vectorgraphics2d.VectorGraphics2D();
+    vg.setColor(Color.GRAY);
+    BarGradient.fill(vg, new Rectangle(0, 0, 10, 10), FILL, true, 0, 10, 0, 0);
+    assertThat(vg.getPaint()).isEqualTo(FILL);
+    assertThat(vg.getColor()).isEqualTo(FILL);
   }
 
   @Test
@@ -235,6 +347,9 @@ public class BarFillGradientTest {
     assertVerticalGradient(clippedImage, clippedBoxes.get(0), FILL, true);
     assertVerticalGradient(clippedImage, clippedBoxes.get(1), FILL, true);
     assertThat(clippedBoxes.get(1).height).isGreaterThan(clippedBoxes.get(0).height);
+    // The bar above yAxisMax is clipped, but its gradient is clamped to the plot, so the visible
+    // top still reaches the end color.
+    assertEndsNear(clippedImage, clippedBoxes.get(1), FILL, true);
 
     CategoryChart logOff = logCategory(false);
     CategoryChart logOn = logCategory(true);
@@ -279,6 +394,7 @@ public class BarFillGradientTest {
     assertHorizontalGradient(clippedHImage, clippedHBoxes.get(0), FILL, true);
     assertHorizontalGradient(clippedHImage, clippedHBoxes.get(1), FILL, true);
     assertThat(clippedHBoxes.get(1).width).isGreaterThan(clippedHBoxes.get(0).width);
+    assertEndsNear(clippedHImage, clippedHBoxes.get(1), FILL, false);
 
     HorizontalBarChart logHOff = logHorizontal(false);
     HorizontalBarChart logHOn = logHorizontal(true);
@@ -655,9 +771,23 @@ public class BarFillGradientTest {
     assertFlat(left, right, fill);
   }
 
+  private static void assertEndsNear(
+      BufferedImage image, Rectangle box, Color fill, boolean vertical) {
+
+    Color valueEnd;
+    if (vertical) {
+      valueEnd = new Color(image.getRGB(sampleX(box), box.y + 1));
+    } else {
+      valueEnd = new Color(image.getRGB(box.x + box.width - 2, box.y + box.height / 3));
+    }
+    assertThat(maxChannel(valueEnd, BarGradient.endColor(fill)))
+        .as("visible value end %s vs end color %s", valueEnd, BarGradient.endColor(fill))
+        .isLessThanOrEqualTo(6);
+  }
+
   private static void assertEndpointOrder(Color valueEnd, Color baseEnd, Color fill) {
 
-    Color bright = fill.brighter();
+    Color bright = BarGradient.endColor(fill);
     assertThat(brightness(valueEnd))
         .as(
             "value end %s should be brighter than base %s (fill %s, bright %s)",
@@ -688,13 +818,13 @@ public class BarFillGradientTest {
       tip = new Color(image.getRGB(box.x + box.width - 1 - inset(box.width), y));
     }
     Color blendedFill = blend(ALPHA_FILL, Color.WHITE);
-    Color blendedBright = blend(ALPHA_FILL.brighter(), Color.WHITE);
+    Color blendedBright = blend(BarGradient.endColor(ALPHA_FILL), Color.WHITE);
     Color opaqueFill = new Color(ALPHA_FILL.getRed(), ALPHA_FILL.getGreen(), ALPHA_FILL.getBlue());
     Color opaqueBright =
         new Color(
-            ALPHA_FILL.brighter().getRed(),
-            ALPHA_FILL.brighter().getGreen(),
-            ALPHA_FILL.brighter().getBlue());
+            BarGradient.endColor(ALPHA_FILL).getRed(),
+            BarGradient.endColor(ALPHA_FILL).getGreen(),
+            BarGradient.endColor(ALPHA_FILL).getBlue());
     assertThat(brightness(tip)).isGreaterThan(brightness(base) + BRIGHTNESS_DELTA);
     assertThat(maxChannel(base, blendedFill)).isLessThan(maxChannel(base, opaqueFill));
     assertThat(maxChannel(tip, blendedBright)).isLessThan(maxChannel(tip, opaqueBright));
@@ -702,18 +832,20 @@ public class BarFillGradientTest {
 
   private static void assertSolid(BufferedImage image, Color color) {
 
+    // The gradient end is the fill blended toward white, so a translucent flat fill over a white
+    // plot also lands in that range. A gradient shows up as many distinct shades instead.
     int flat = countNear(image, null, color, 4);
-    int drifted = 0;
+    java.util.Set<Integer> shades = new java.util.HashSet<>();
     int w = image.getWidth();
     int h = image.getHeight();
     int[] pixels = image.getRGB(0, 0, w, h, null, 0, w);
     for (int rgb : pixels) {
       if (maxChannel(rgb, color) > 12 && inGradient(rgb, color, 3)) {
-        drifted++;
+        shades.add(rgb & 0xFFFFFF);
       }
     }
     assertThat(flat).as("flat pixels of %s", color).isGreaterThan(30);
-    assertThat(drifted).as("gradient pixels of %s", color).isZero();
+    assertThat(shades.size()).as("gradient shades of %s: %s", color, shades).isLessThanOrEqualTo(4);
   }
 
   private static int countNear(BufferedImage image, Rectangle region, Color color, int tolerance) {
@@ -744,7 +876,7 @@ public class BarFillGradientTest {
   private static Rectangle alphaBox(BufferedImage image) {
 
     Color start = blend(ALPHA_FILL, Color.WHITE);
-    Color end = blend(ALPHA_FILL.brighter(), Color.WHITE);
+    Color end = blend(BarGradient.endColor(ALPHA_FILL), Color.WHITE);
     List<Rectangle> found = boxes(image, null, rgb -> betweenColors(rgb, start, end, 4));
     assertThat(found).as("alpha gradient box").hasSize(1);
     return found.get(0);
@@ -870,15 +1002,25 @@ public class BarFillGradientTest {
     return maxChannel(rgb, fill) <= 2;
   }
 
+  /** True when {@code rgb} lies within {@code tolerance} of the fill-to-end color segment. */
   private static boolean inGradient(int rgb, Color fill, int tolerance) {
 
-    Color bright = fill.brighter();
-    int r = (rgb >> 16) & 0xFF;
-    int g = (rgb >> 8) & 0xFF;
-    int b = rgb & 0xFF;
-    return between(r, fill.getRed(), bright.getRed(), tolerance)
-        && between(g, fill.getGreen(), bright.getGreen(), tolerance)
-        && between(b, fill.getBlue(), bright.getBlue(), tolerance);
+    Color end = BarGradient.endColor(fill);
+    double[] p = {(rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF};
+    double[] a = {fill.getRed(), fill.getGreen(), fill.getBlue()};
+    double[] d = {end.getRed() - a[0], end.getGreen() - a[1], end.getBlue() - a[2]};
+    double len2 = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
+    double t = 0.0;
+    if (len2 > 0) {
+      t = ((p[0] - a[0]) * d[0] + (p[1] - a[1]) * d[1] + (p[2] - a[2]) * d[2]) / len2;
+      t = Math.max(0.0, Math.min(1.0, t));
+    }
+    double dist2 = 0.0;
+    for (int i = 0; i < 3; i++) {
+      double diff = p[i] - (a[i] + d[i] * t);
+      dist2 += diff * diff;
+    }
+    return dist2 <= (double) tolerance * tolerance * 3;
   }
 
   private static boolean between(int value, int a, int b, int tolerance) {

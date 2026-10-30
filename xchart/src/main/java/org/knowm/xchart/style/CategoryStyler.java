@@ -51,7 +51,6 @@ public class CategoryStyler extends AxesChartStyler {
     isLabelsFontColorAutomaticEnabled = theme.isLabelsFontColorAutomaticEnabled();
     labelsFontColorAutomaticLight = theme.getLabelsFontColorAutomaticLight();
     labelsFontColorAutomaticDark = theme.getLabelsFontColorAutomaticDark();
-    isBarFillGradientEnabled = false;
   }
 
   public CategorySeriesRenderStyle getDefaultSeriesRenderStyle() {
@@ -269,9 +268,12 @@ public class CategoryStyler extends AxesChartStyler {
 
   /**
    * Enables a two-color gradient fill for category bars. The series fill color is painted at the
-   * bar base and {@code fill.brighter()} at the value end. Negative bars reverse that direction so
-   * the brighter end stays at the value, away from zero. Disabled by default, which keeps the flat
-   * series fill. A bar whose base and value endpoints coincide also stays flat.
+   * bar base and a lighter tint of it (the fill blended 40% toward white, alpha kept) at the value
+   * end. Negative bars reverse that direction so the lighter end stays at the value, away from
+   * zero. Disabled by default, which keeps the flat series fill. A bar whose base and value
+   * endpoints coincide also stays flat. The setting is not part of a theme, so {@code setTheme}
+   * leaves it unchanged. Vector exports ({@code VectorGraphicsEncoder}) draw flat fills because
+   * the vector backend does not render gradient paints.
    *
    * @param barFillGradientEnabled {@code true} to paint bars with the gradient
    * @return this styler

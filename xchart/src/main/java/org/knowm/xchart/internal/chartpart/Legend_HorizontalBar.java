@@ -38,6 +38,8 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
     boolean barFillGradient =
         chart.getStyler() instanceof HorizontalBarStyler
             && ((HorizontalBarStyler) chart.getStyler()).isBarFillGradientEnabled();
+    // Match the bars: lighter at the right, or at the left when every bar grows leftward.
+    boolean allNegative = barFillGradient && allNegativeXAxis();
 
     // In a horizontal legend, entries flow across shared rows and wrap to a new row when a row
     // fills up (issue #577); in a vertical legend each entry gets its own row.
@@ -66,21 +68,19 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
         starty = cursor.y;
       }
 
-      // paint inner box. Enabled charts use a left-to-right positive-bar gradient.
+      // paint inner box, with the bar gradient when enabled
       Shape rectSmall = new Rectangle2D.Double(startx, starty, BOX_SIZE, BOX_SIZE);
-      Color fill = series.getFillColor();
-      if (barFillGradient && fill != null) {
-        Paint previousPaint = g.getPaint();
-        float baseX = (float) startx;
-        float valueX = (float) (startx + BOX_SIZE);
-        float y = (float) starty;
-        g.setPaint(new GradientPaint(baseX, y, fill, valueX, y, fill.brighter(), false));
-        g.fill(rectSmall);
-        g.setPaint(previousPaint);
-      } else {
-        g.setColor(fill);
-        g.fill(rectSmall);
-      }
+      double left = startx;
+      double right = startx + BOX_SIZE;
+      BarGradient.fill(
+          g,
+          rectSmall,
+          series.getFillColor(),
+          barFillGradient,
+          allNegative ? right : left,
+          starty,
+          allNegative ? left : right,
+          starty);
 
       // paint series text
       double x = startx + BOX_SIZE + chart.getStyler().getLegendPadding();
@@ -99,5 +99,14 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
   public double getSeriesLegendRenderGraphicHeight(S series) {
 
     return BOX_SIZE;
+  }
+
+  private boolean allNegativeXAxis() {
+
+    if (!(chart instanceof AxesChart)) {
+      return false;
+    }
+    Axis_X<?, ?> xAxis = ((AxesChart<?, ?>) chart).getXAxis();
+    return xAxis.getMin() < 0.0 && xAxis.getMax() < 0.0;
   }
 }
