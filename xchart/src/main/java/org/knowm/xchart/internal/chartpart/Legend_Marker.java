@@ -5,8 +5,11 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Map;
+import org.knowm.xchart.CategorySeries;
+import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.internal.chartpart.RenderableSeries.LegendRenderType;
 import org.knowm.xchart.internal.series.MarkerSeries;
+import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.lines.SeriesLines;
 
@@ -118,8 +121,7 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
 
         // paint inner box
         Shape rectSmall = new Rectangle2D.Double(startx, boxStarty, BOX_SIZE, BOX_SIZE);
-        g.setColor(series.getFillColor());
-        g.fill(rectSmall);
+        fillLegendBox(g, series, rectSmall, startx, boxStarty);
 
         // Draw outline
         if (series.getLegendRenderType() != LegendRenderType.BoxNoOutline) {
@@ -178,6 +180,50 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
       }
     }
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
+  }
+
+  /**
+   * Category bars with the gradient enabled use the bar gradient inside the swatch, lighter at the
+   * top, or at the bottom when every bar on the plot grows downward (an all-negative y-axis). Every
+   * other legend entry, including non-bar category styles and charts that share this renderer,
+   * keeps the flat fill.
+   */
+  private void fillLegendBox(Graphics2D g, S series, Shape box, double x, double y) {
+
+    boolean gradient = isCategoryBarGradient(series);
+    double top = y;
+    double bottom = y + BOX_SIZE;
+    boolean negative = gradient && allNegativeYAxis();
+    BarGradient.fill(
+        g,
+        box,
+        series.getFillColor(),
+        gradient,
+        x,
+        negative ? top : bottom,
+        x,
+        negative ? bottom : top);
+  }
+
+  private boolean allNegativeYAxis() {
+
+    if (!(chart instanceof AxesChart)) {
+      return false;
+    }
+    Axis_Y<?, ?> yAxis = ((AxesChart<?, ?>) chart).getYAxis();
+    return yAxis.getMin() < 0.0 && yAxis.getMax() < 0.0;
+  }
+
+  private boolean isCategoryBarGradient(S series) {
+
+    if (!(series instanceof CategorySeries) || !(axesChartStyler instanceof CategoryStyler)) {
+      return false;
+    }
+    if (!((CategoryStyler) axesChartStyler).isBarFillGradientEnabled()) {
+      return false;
+    }
+    return ((CategorySeries) series).getChartCategorySeriesRenderStyle().orElse(null)
+        == CategorySeriesRenderStyle.Bar;
   }
 
   @Override

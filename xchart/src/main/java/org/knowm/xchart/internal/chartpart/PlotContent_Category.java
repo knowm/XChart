@@ -287,8 +287,20 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
           barPath.lineTo(xOffset, zeroOffset);
           barPath.closePath();
 
-          g.setColor(series.getFillColor());
-          g.fill(barPath);
+          // Gradient runs from the segment base (fill) to the value end (lighter). Positive-only
+          // axes, including logarithmic axes, always use that direction. Negative bars flip it so
+          // the lighter end stays away from zero. Each stacked segment restarts at its own base.
+          // Endpoints are clamped to the plot so a bar clipped at an axis limit still spans the
+          // whole gradient.
+          boolean gradient = stylerCategory.isBarFillGradientEnabled();
+          boolean negativeBar = BarGradient.extendsNegative(chartForm, y);
+          double plotTop = getBounds().getMinY();
+          double plotBottom = getBounds().getMaxY();
+          double baseY = BarGradient.clamp(negativeBar ? yOffset : zeroOffset, plotTop, plotBottom);
+          double valueY =
+              BarGradient.clamp(negativeBar ? zeroOffset : yOffset, plotTop, plotBottom);
+          BarGradient.fill(
+              g, barPath, series.getFillColor(), gradient, xOffset, baseY, xOffset, valueY);
 
           // TODO maybe we want outlines of the bars?
           // Legend markers now also draw the outline. It has been disabled for
@@ -311,6 +323,12 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
           // }
 
           if (stylerCategory.isLabelsVisible()) {
+            // An inside label sits labelsPosition of the way from the base to the value end, so
+            // its automatic contrast color is computed against the gradient at that point.
+            Color labelBackground =
+                gradient
+                    ? BarGradient.colorAt(series.getFillColor(), stylerCategory.getLabelsPosition())
+                    : series.getFillColor();
             drawLabels(
                 g,
                 next,
@@ -320,7 +338,7 @@ public class PlotContent_Category<ST extends CategoryStyler, S extends CategoryS
                 barWidth,
                 false,
                 false,
-                series.getFillColor());
+                labelBackground);
           }
           if (stylerCategory.isLabelsVisible()
               && stylerCategory.isShowStackSum()

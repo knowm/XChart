@@ -165,11 +165,26 @@ public class PlotContent_HorizontalBar<
         barPath.lineTo(zeroOffset, yOffset + barHeight);
         barPath.closePath();
 
-        g.setColor(series.getFillColor());
-        g.fill(barPath);
+        // Same base-to-value gradient as category bars, along X. xOffset is the right edge and
+        // zeroOffset the left, including for negative bars. Positive-only axes (including a
+        // logarithmic axis) keep the lighter end at the value; negative bars flip it. Endpoints
+        // are clamped to the plot so a bar clipped at an axis limit still spans the gradient.
+        boolean gradient = styler.isBarFillGradientEnabled();
+        boolean negativeBar = BarGradient.extendsNegative(chartForm, x);
+        double plotLeft = getBounds().getMinX();
+        double plotRight = getBounds().getMaxX();
+        double baseX = BarGradient.clamp(negativeBar ? xOffset : zeroOffset, plotLeft, plotRight);
+        double valueX = BarGradient.clamp(negativeBar ? zeroOffset : xOffset, plotLeft, plotRight);
+        BarGradient.fill(
+            g, barPath, series.getFillColor(), gradient, baseX, yOffset, valueX, yOffset);
 
         if (styler.isLabelsVisible() && next != null) {
-          drawLabels(g, next, xOffset, yOffset, zeroOffset, barHeight, series.getFillColor());
+          // Inside labels get their automatic contrast color from the gradient at their position.
+          Color labelBackground =
+              gradient
+                  ? BarGradient.colorAt(series.getFillColor(), styler.getLabelsPosition())
+                  : series.getFillColor();
+          drawLabels(g, next, xOffset, yOffset, zeroOffset, barHeight, labelBackground);
         }
 
         // add data labels
