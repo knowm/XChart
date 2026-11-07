@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +22,13 @@ import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.HorizontalBarChart;
 import org.knowm.xchart.HorizontalBarChartBuilder;
+import org.knowm.xchart.VectorGraphicsEncoder;
+import org.knowm.xchart.VectorGraphicsEncoder.VectorGraphicsFormat;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.knowm.xchart.internal.XChartRenderingHints;
 import org.knowm.xchart.style.AxesChartStyler;
 import org.knowm.xchart.style.CategoryStyler;
 import org.knowm.xchart.style.HorizontalBarStyler;
@@ -181,14 +186,45 @@ public class BarFillGradientTest {
   }
 
   @Test
-  public void vectorGraphicsGetTheFlatFill() {
+  public void flatFillsOnlyHintGivesTheFlatFill() {
 
-    de.erichseifert.vectorgraphics2d.VectorGraphics2D vg =
-        new de.erichseifert.vectorgraphics2d.VectorGraphics2D();
-    vg.setColor(Color.GRAY);
-    BarGradient.fill(vg, new Rectangle(0, 0, 10, 10), FILL, true, 0, 10, 0, 0);
-    assertThat(vg.getPaint()).isEqualTo(FILL);
-    assertThat(vg.getColor()).isEqualTo(FILL);
+    BufferedImage hinted = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g = hinted.createGraphics();
+    g.setRenderingHint(XChartRenderingHints.KEY_FLAT_FILLS_ONLY, Boolean.TRUE);
+    g.setColor(Color.GRAY);
+    BarGradient.fill(g, new Rectangle(0, 0, 10, 10), FILL, true, 0, 10, 0, 0);
+    assertThat(g.getPaint()).isEqualTo(FILL);
+    g.dispose();
+    assertThat(new Color(hinted.getRGB(5, 0))).isEqualTo(FILL);
+    assertThat(new Color(hinted.getRGB(5, 9))).isEqualTo(FILL);
+
+    BufferedImage plain = new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D p = plain.createGraphics();
+    p.setColor(Color.GRAY);
+    BarGradient.fill(p, new Rectangle(0, 0, 10, 10), FILL, true, 0, 10, 0, 0);
+    assertThat(p.getPaint()).isEqualTo(Color.GRAY);
+    p.dispose();
+    assertThat(new Color(plain.getRGB(5, 0))).isNotEqualTo(new Color(plain.getRGB(5, 9)));
+    assertThat(brightness(new Color(plain.getRGB(5, 0))))
+        .isGreaterThan(brightness(new Color(plain.getRGB(5, 9))));
+  }
+
+  @Test
+  public void svgAndEpsExportsGetTheFlatFill() throws Exception {
+
+    CategoryChart chart = categoryChart();
+    chart.getStyler().setBarFillGradientEnabled(true);
+    chart.getStyler().setYAxisMin(0.0);
+    chart.getStyler().setYAxisMax(10.0);
+    chart.addSeries("a", Arrays.asList("c"), Arrays.asList(10)).setFillColor(FILL);
+
+    ByteArrayOutputStream svg = new ByteArrayOutputStream();
+    VectorGraphicsEncoder.saveVectorGraphic(chart, svg, VectorGraphicsFormat.SVG);
+    assertThat(svg.toString("UTF-8")).contains("rgb(40,70,160)");
+
+    ByteArrayOutputStream eps = new ByteArrayOutputStream();
+    VectorGraphicsEncoder.saveVectorGraphic(chart, eps, VectorGraphicsFormat.EPS);
+    assertThat(eps.size()).isPositive();
   }
 
   @Test

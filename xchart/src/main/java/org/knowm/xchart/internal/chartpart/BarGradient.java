@@ -5,6 +5,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
+import org.knowm.xchart.internal.XChartRenderingHints;
 
 /**
  * Shared two-color bar gradient used by the category and horizontal bar plots and their legends.
@@ -15,8 +16,6 @@ final class BarGradient {
 
   /** Share of white blended into the fill to get the value-end color. */
   static final float END_COLOR_WHITE_BLEND = 0.4f;
-
-  private static final String VECTOR_GRAPHICS_PACKAGE = "de.erichseifert.vectorgraphics2d";
 
   private BarGradient() {}
 
@@ -55,8 +54,9 @@ final class BarGradient {
   /**
    * Fills {@code shape} with {@code fill}, or with a non-cyclic gradient from {@code fill} at the
    * base to {@link #endColor(Color)} at the value end. Coincident endpoints keep the flat fill, as
-   * do vector backends, whose writers fill from the last {@code setColor} and drop a {@link
-   * GradientPaint}. The paint in effect before a gradient fill is restored.
+   * does a {@code g} carrying {@link XChartRenderingHints#KEY_FLAT_FILLS_ONLY}, which encoders set
+   * for backends that drop a {@link GradientPaint}. The paint in effect before a gradient fill is
+   * restored.
    */
   static void fill(
       Graphics2D g,
@@ -68,7 +68,7 @@ final class BarGradient {
       double valueX,
       double valueY) {
 
-    if (gradient && fill != null && !isVectorGraphics(g)) {
+    if (gradient && fill != null && !XChartRenderingHints.isFlatFillsOnly(g)) {
       float x1 = (float) baseX;
       float y1 = (float) baseY;
       float x2 = (float) valueX;
@@ -88,11 +88,6 @@ final class BarGradient {
   static double clamp(double value, double min, double max) {
 
     return Math.max(min, Math.min(max, value));
-  }
-
-  private static boolean isVectorGraphics(Graphics2D g) {
-
-    return g.getClass().getName().startsWith(VECTOR_GRAPHICS_PACKAGE);
   }
 
   private static Color lerp(Color from, Color to, double t) {
