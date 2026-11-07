@@ -15,7 +15,8 @@ import org.knowm.xchart.style.Styler.LegendPosition;
  * <ul>
  *   <li>Opt-in bar gradient from the series fill color at the base to a brighter color at the value
  *   <li>Positive and negative values, with the brighter end away from zero
- *   <li>Legend swatches use the positive-bar gradient
+ *   <li>Legend swatches follow the axis direction: lighter at the top, or at the bottom on an
+ *       all-negative y-axis
  * </ul>
  */
 public class BarChart14 implements ExampleChart<CategoryChart> {
