@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import org.knowm.xchart.internal.Utils;
+import org.knowm.xchart.internal.XChartRenderingHints;
 import org.knowm.xchart.internal.chartpart.IChart;
 
 /** A helper class with static methods for saving Charts as vectors */
@@ -75,6 +76,9 @@ public final class VectorGraphicsEncoder {
     }
 
     VectorGraphics2D vg2d = new VectorGraphics2D();
+    // VectorGraphics2D writes fills from the last setColor and drops GradientPaint, so ask chart
+    // parts for flat fills. PDF (pdfbox-graphics2d) renders gradients and does not get this hint.
+    vg2d.setRenderingHint(XChartRenderingHints.KEY_FLAT_FILLS_ONLY, Boolean.TRUE);
     CommandSequence commands = vg2d.getCommands();
     chart.paint(vg2d, chart.getWidth(), chart.getHeight());
     PageSize pageSize = new PageSize(0.0, 0.0, chart.getWidth(), chart.getHeight());
