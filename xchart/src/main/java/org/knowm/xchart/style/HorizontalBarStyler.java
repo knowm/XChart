@@ -188,12 +188,12 @@ public class HorizontalBarStyler extends AxesChartStyler {
 
   /**
    * Enables a two-color gradient fill for horizontal bars. The series fill color is painted at the
-   * bar base and a lighter tint of it (the fill blended 40% toward white, alpha kept) at the value
-   * end. Negative bars reverse that direction so the lighter end stays at the value, away from
-   * zero. Disabled by default, which keeps the flat series fill. A bar whose base and value
-   * endpoints coincide also stays flat. The setting is not part of a theme, so {@code setTheme}
-   * leaves it unchanged. SVG and EPS exports draw flat fills because their VectorGraphics2D
-   * backend does not render gradient paints. PDF export keeps the gradient.
+   * bar base and a lighter tint of the fill color at the value end. Negative bars reverse that
+   * direction so the lighter end stays at the value, away from zero. Disabled by default, which
+   * keeps the flat series fill. A bar whose base and value endpoints coincide also stays flat. The
+   * setting is not part of a theme, so {@code setTheme} leaves it unchanged. SVG and EPS exports
+   * draw flat fills because their VectorGraphics2D backend does not render gradient paints. PDF
+   * export keeps the gradient.
    *
    * @param barFillGradientEnabled {@code true} to paint bars with the gradient
    * @return this styler
