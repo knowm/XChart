@@ -35,9 +35,7 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
             : RenderingHints.VALUE_ANTIALIAS_OFF);
 
     Map<String, S> map = chart.getSeriesMap();
-    boolean barFillGradient =
-        chart.getStyler() instanceof HorizontalBarStyler
-            && ((HorizontalBarStyler) chart.getStyler()).isBarFillGradientEnabled();
+    boolean barFillGradient = ((HorizontalBarStyler) chart.getStyler()).isBarFillGradientEnabled();
     // Match the bars: lighter at the right, or at the left when every bar grows leftward.
     boolean allNegative = barFillGradient && allNegativeXAxis();
 
@@ -103,9 +101,6 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
 
   private boolean allNegativeXAxis() {
 
-    if (!(chart instanceof AxesChart)) {
-      return false;
-    }
     Axis_X<?, ?> xAxis = ((AxesChart<?, ?>) chart).getXAxis();
     return xAxis.getMin() < 0.0 && xAxis.getMax() <= 0.0;
   }

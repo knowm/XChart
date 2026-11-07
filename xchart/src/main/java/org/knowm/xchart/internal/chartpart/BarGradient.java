@@ -35,8 +35,7 @@ final class BarGradient {
    */
   static Color colorAt(Color fill, double fraction) {
 
-    double t = Math.max(0.0, Math.min(1.0, fraction));
-    return lerp(fill, endColor(fill), t);
+    return lerp(fill, endColor(fill), clamp(fraction, 0.0, 1.0));
   }
 
   /** True when the bar grows toward more negative transformed values. */
