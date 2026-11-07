@@ -107,6 +107,6 @@ public class Legend_HorizontalBar<ST extends Styler, S extends HorizontalBarSeri
       return false;
     }
     Axis_X<?, ?> xAxis = ((AxesChart<?, ?>) chart).getXAxis();
-    return xAxis.getMin() < 0.0 && xAxis.getMax() < 0.0;
+    return xAxis.getMin() < 0.0 && xAxis.getMax() <= 0.0;
   }
 }

@@ -211,7 +211,7 @@ public class Legend_Marker<ST extends Styler, S extends MarkerSeries> extends Le
       return false;
     }
     Axis_Y<?, ?> yAxis = ((AxesChart<?, ?>) chart).getYAxis();
-    return yAxis.getMin() < 0.0 && yAxis.getMax() < 0.0;
+    return yAxis.getMin() < 0.0 && yAxis.getMax() <= 0.0;
   }
 
   private boolean isCategoryBarGradient(S series) {
