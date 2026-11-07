@@ -216,6 +216,78 @@ public class CategoryChart extends AxesChart<CategoryStyler, CategorySeries> {
     return series;
   }
 
+  /**
+   * Add a series with Number, Date or String categories and primitive double Y values.
+   *
+   * <p>The separate method name preserves existing {@code addSeries(name, null, yData)} calls.
+   * Values are converted to the List-based API and use its validation rules.
+   *
+   * @param seriesName the series name
+   * @param xData the categories, or null to generate values from 1 through the Y data size
+   * @param yData the Y-Axis data
+   * @return a series object that you can set properties on
+   */
+  public CategorySeries addSeriesWithCategories(String seriesName, List<?> xData, double[] yData) {
+
+    return addSeriesWithCategories(seriesName, xData, yData, null);
+  }
+
+  /**
+   * Add a series with categories, primitive double Y values and optional error bars.
+   *
+   * @param seriesName the series name
+   * @param xData Number, Date or String categories, or null to generate increasing values from 1
+   * @param yData the Y-Axis data
+   * @param errorBars the error bar data, or null for no error bars
+   * @return a series object that you can set properties on
+   * @see #addSeriesWithCategories(String, List, double[])
+   */
+  public CategorySeries addSeriesWithCategories(
+      String seriesName, List<?> xData, double[] yData, double[] errorBars) {
+
+    return addSeries(
+        seriesName,
+        xData,
+        Utils.getNumberListFromDoubleArray(yData),
+        Utils.getNumberListFromDoubleArray(errorBars));
+  }
+
+  /**
+   * Add a series with Number, Date or String categories and primitive integer Y values.
+   *
+   * <p>The separate method name preserves existing {@code addSeries(name, null, yData)} calls.
+   * Values are converted to the List-based API and use its validation rules.
+   *
+   * @param seriesName the series name
+   * @param xData the categories, or null to generate values from 1 through the Y data size
+   * @param yData the Y-Axis data
+   * @return a series object that you can set properties on
+   */
+  public CategorySeries addSeriesWithCategories(String seriesName, List<?> xData, int[] yData) {
+
+    return addSeriesWithCategories(seriesName, xData, yData, null);
+  }
+
+  /**
+   * Add a series with categories, primitive integer Y values and optional error bars.
+   *
+   * @param seriesName the series name
+   * @param xData Number, Date or String categories, or null to generate increasing values from 1
+   * @param yData the Y-Axis data
+   * @param errorBars the error bar data, or null for no error bars
+   * @return a series object that you can set properties on
+   * @see #addSeriesWithCategories(String, List, int[])
+   */
+  public CategorySeries addSeriesWithCategories(
+      String seriesName, List<?> xData, int[] yData, int[] errorBars) {
+
+    return addSeries(
+        seriesName,
+        xData,
+        Utils.getNumberListFromIntArray(yData),
+        Utils.getNumberListFromIntArray(errorBars));
+  }
+
   private DataType getDataType(List<?> data) {
 
     DataType axisType;
