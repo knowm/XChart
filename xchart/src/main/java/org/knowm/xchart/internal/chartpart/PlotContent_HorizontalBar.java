@@ -169,14 +169,21 @@ public class PlotContent_HorizontalBar<
         // zeroOffset the left, including for negative bars. Positive-only axes (including a
         // logarithmic axis) keep the lighter end at the value; negative bars flip it. Endpoints
         // are clamped to the plot so a bar clipped at an axis limit still spans the gradient.
+        // With the gradient off, bars paint exactly as before.
         boolean gradient = styler.isBarFillGradientEnabled();
-        boolean negativeBar = BarGradient.extendsNegative(chartForm, x);
-        double plotLeft = getBounds().getMinX();
-        double plotRight = getBounds().getMaxX();
-        double baseX = BarGradient.clamp(negativeBar ? xOffset : zeroOffset, plotLeft, plotRight);
-        double valueX = BarGradient.clamp(negativeBar ? zeroOffset : xOffset, plotLeft, plotRight);
-        BarGradient.fill(
-            g, barPath, series.getFillColor(), gradient, baseX, yOffset, valueX, yOffset);
+        if (gradient) {
+          boolean negativeBar = BarGradient.extendsNegative(chartForm, x);
+          double plotLeft = getBounds().getMinX();
+          double plotRight = getBounds().getMaxX();
+          double baseX =
+              BarGradient.clamp(negativeBar ? xOffset : zeroOffset, plotLeft, plotRight);
+          double valueX =
+              BarGradient.clamp(negativeBar ? zeroOffset : xOffset, plotLeft, plotRight);
+          BarGradient.fill(g, barPath, series.getFillColor(), true, baseX, yOffset, valueX, yOffset);
+        } else {
+          g.setColor(series.getFillColor());
+          g.fill(barPath);
+        }
 
         if (styler.isLabelsVisible() && next != null) {
           // Inside labels get their automatic contrast color from the gradient at their position.
