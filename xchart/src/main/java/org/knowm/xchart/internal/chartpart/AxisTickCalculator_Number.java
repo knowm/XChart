@@ -1,5 +1,7 @@
 package org.knowm.xchart.internal.chartpart;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.internal.chartpart.Axis_.Direction;
 import org.knowm.xchart.style.AxesChartStyler;
@@ -82,5 +84,31 @@ class AxisTickCalculator_Number extends AxisTickCalculator_ {
     formatterNumber = new Formatter_Number(styler, axisDirection, minValue, maxValue, yIndex);
     axisFormat = formatterNumber;
     calculate();
+  }
+
+  @Override
+  List<String> labelsForGridSpacing(
+      BigDecimal lower, BigDecimal upper, BigDecimal first, BigDecimal next, BigDecimal step) {
+    // Include the neighbouring built-in number labels in the spacing estimate. A minus sign
+    // or an extra digit can change which grid fits. These labels are never emitted, and
+    // custom formatters only receive visible values.
+    List<String> labels = new ArrayList<>();
+    BigDecimal start = lower.divideToIntegralValue(step).subtract(BigDecimal.ONE).multiply(step);
+    for (BigDecimal value = start; value.compareTo(first) < 0; value = value.add(step)) {
+      addSpacingLabel(labels, value);
+    }
+    labels.addAll(getTickLabels());
+    BigDecimal limit = upper.add(step).add(step);
+    for (BigDecimal value = next; value.compareTo(limit) < 0; value = value.add(step)) {
+      addSpacingLabel(labels, value);
+    }
+    return labels;
+  }
+
+  private void addSpacingLabel(List<String> labels, BigDecimal value) {
+    double tick = value.doubleValue();
+    if (Double.isFinite(tick)) {
+      labels.add(formatterNumber.format(tick));
+    }
   }
 }
