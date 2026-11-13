@@ -258,6 +258,9 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       tickSpacingHint = 25 - 5;
     }
 
+    BigDecimal lower = BigDecimal.valueOf(minValue);
+    BigDecimal upper = BigDecimal.valueOf(maxValue);
+    List<String> layoutLabels;
     int gridStepInChartSpace;
 
     do {
@@ -326,90 +329,35 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
               .stripTrailingZeros(); // chop off any double imprecision
       // System.out.println("cleanedGridStep: " + cleanedGridStep);
 
-      BigDecimal firstPosition = null;
-      double firstPositionAsDouble = getFirstPosition(cleanedGridStep.doubleValue());
-      if (Double.isNaN(firstPositionAsDouble)) {
-        // This happens when the data values are almost the same but differ by a very tiny amount.
-        // The solution for now is to create a single axis label and tick at the average value
-        tickLabels.add(getAxisFormat().format(BigDecimal.valueOf((maxValue + minValue) / 2.0)));
+      // Decimal arithmetic keeps exact grid multiples at either boundary.
+      BigDecimal first =
+          cleanedGridStep.signum() == 0
+              ? null
+              : lower.divide(cleanedGridStep, 0, RoundingMode.CEILING).multiply(cleanedGridStep);
+      if (first == null || first.compareTo(upper) > 0) {
+        double middle = lower.add(upper).divide(BigDecimal.valueOf(2)).doubleValue();
+        tickLabels.add(getAxisFormat().format(middle));
         tickLocations.add(workingSpace / 2.0);
         return;
-      } else if (firstPositionAsDouble == Double.NEGATIVE_INFINITY) {
-        firstPosition = BigDecimal.valueOf(-1 * Double.MAX_VALUE);
-      } else {
-        try {
-          firstPosition = BigDecimal.valueOf(firstPositionAsDouble);
-        } catch (java.lang.NumberFormatException e) {
-
-          // System.out.println(
-          //     "Some debug stuff. This happens once in a blue moon, and I don't know why.");
-          // System.out.println("scale: " + scale);
-          // System.out.println("exponent: " + exponent);
-          // System.out.println("gridStep: " + gridStep);
-          // System.out.println("cleanedGridStep: " + cleanedGridStep);
-          // System.out.println("cleanedGridStep.doubleValue(): " + cleanedGridStep.doubleValue());
-          // System.out.println(
-          //     "NumberFormatException caused by this number: "
-          //         + getFirstPosition(cleanedGridStep.doubleValue()));
-        }
       }
-
-      // System.out.println("firstPosition: " + firstPosition); // chop off any double imprecision
-      BigDecimal cleanedFirstPosition =
-          firstPosition
-              .setScale(10, RoundingMode.HALF_UP)
-              .stripTrailingZeros(); // chop off any double imprecision
-      //      System.out.println("cleanedFirstPosition: " + cleanedFirstPosition);
-
-      // generate all tickLabels and tickLocations from the first to last position
-      for (BigDecimal value = cleanedFirstPosition;
-          value.compareTo(
-                  BigDecimal.valueOf(
-                      (maxValue + 2 * cleanedGridStep.doubleValue()) == Double.POSITIVE_INFINITY
-                          ? Double.MAX_VALUE
-                          : maxValue + 2 * cleanedGridStep.doubleValue()))
-              < 0;
-          value = value.add(cleanedGridStep)) {
-
-        // if (value.compareTo(BigDecimal.valueOf(maxValue)) <= 0 &&
-        // value.compareTo(BigDecimal.valueOf(minValue)) >= 0) {
-        // System.out.println(value);
-        String tickLabel = getAxisFormat().format(value.doubleValue());
-        // System.out.println(tickLabel);
-        tickLabels.add(tickLabel);
-
-        // here we convert tickPosition finally to plot space, i.e. pixels
-        double tickLabelPosition =
-            margin + ((value.doubleValue() - minValue) / (maxValue - minValue) * tickSpace);
-        tickLocations.add(tickLabelPosition);
-        // }
-
+      BigDecimal value = first;
+      while (value.compareTo(upper) <= 0) {
+        double tick = value.doubleValue();
+        tickLabels.add(getAxisFormat().format(tick));
+        tickLocations.add(margin + (tick - minValue) / (maxValue - minValue) * tickSpace);
+        value = value.add(cleanedGridStep);
       }
-    } while (!areAllTickLabelsUnique(tickLabels)
-        || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
-
-    // Prune ticks outside [minValue, maxValue]. Generation intentionally overshoots the
-    // data range by a grid step. Tick marks and gridlines clip to the plot, but labels clip
-    // to the taller axis column and can leak into the margin (issue #634).
-    // Data values in this range map to pixels in [margin, margin + tickSpace].
-    double bandLow = margin - 1e-6;
-    double bandHigh = margin + tickSpace + 1e-6;
-    List<String> keptLabels = new ArrayList<>(tickLabels.size());
-    List<Double> keptLocations = new ArrayList<>(tickLocations.size());
-    for (int i = 0; i < tickLocations.size(); i++) {
-      double loc = tickLocations.get(i);
-      if (loc >= bandLow && loc <= bandHigh) {
-        keptLabels.add(tickLabels.get(i));
-        keptLocations.add(loc);
+      if (tickLabels.size() == 1) {
+        return;
       }
-    }
-    // Keep the original ticks if pruning a degenerate range would empty the axis.
-    if (!keptLocations.isEmpty() && keptLocations.size() < tickLocations.size()) {
-      tickLabels.clear();
-      tickLabels.addAll(keptLabels);
-      tickLocations.clear();
-      tickLocations.addAll(keptLocations);
-    }
+      layoutLabels = labelsForGridSpacing(lower, upper, first, value, cleanedGridStep);
+    } while (!areAllTickLabelsUnique(layoutLabels)
+        || !willLabelsFitInTickSpaceHint(layoutLabels, gridStepInChartSpace));
+  }
+
+  List<String> labelsForGridSpacing(
+      BigDecimal lower, BigDecimal upper, BigDecimal first, BigDecimal next, BigDecimal step) {
+    return tickLabels;
   }
 
   private boolean areValuesEquallySpaced(List<Double> values) {
@@ -437,6 +385,10 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       throw new IllegalStateException("No axis values.");
     }
     int gridStepInChartSpace;
+    List<Double> visibleValues =
+        axisValues.stream()
+            .filter(value -> value >= minValue && value <= maxValue)
+            .collect(Collectors.toList());
     int tickValuesHint = 0;
     List<Double> tickLabelValues;
     double tickLabelMaxValue;
@@ -450,9 +402,9 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       tickLabels.clear();
       int finalTickValuesHint = tickValuesHint;
       tickLabelValues =
-          IntStream.range(0, axisValues.size())
+          IntStream.range(0, visibleValues.size())
               .filter(it -> it % finalTickValuesHint == 0)
-              .mapToDouble(axisValues::get)
+              .mapToDouble(visibleValues::get)
               .boxed()
               .collect(Collectors.toList());
       tickLabelMaxValue = tickLabelValues.stream().mapToDouble(x -> x).max().orElse(maxValue);
@@ -469,8 +421,9 @@ public abstract class AxisTickCalculator_ implements AxisTickCalculator {
       double gridStep = span / (tickLabelValues.size() - 1);
 
       gridStepInChartSpace = (int) (gridStep / span * tickSpace);
-    } while (!areAllTickLabelsUnique(tickLabels)
-        || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace));
+    } while (tickLabels.size() > 1
+        && (!areAllTickLabelsUnique(tickLabels)
+            || !willLabelsFitInTickSpaceHint(tickLabels, gridStepInChartSpace)));
 
     tickLocations.clear();
     tickLocations.addAll(
