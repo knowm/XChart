@@ -7,16 +7,17 @@ updates:
     time: "12:00"
   open-pull-requests-limit: 10
   ignore:
-  # The project builds and runs on Java 11. JavaFX 20+ requires JDK 17 and
-  # JUnit 6+ requires Java 17, so those updates fail to compile on CI.
+  # The project builds and runs on Java 11. JavaFX 20+ requires JDK 17, and
+  # 18 and 19 are not LTS lines, so stay on the JavaFX 17 LTS line. JUnit 6+
+  # requires Java 17, so those updates fail to compile on CI.
   - dependency-name: org.openjfx:javafx-controls
     versions:
     - 15.0.1
-    - ">= 20"
+    - ">= 18"
   - dependency-name: org.openjfx:javafx-swing
     versions:
     - 15.0.1
-    - ">= 20"
+    - ">= 18"
   - dependency-name: org.junit.jupiter:junit-jupiter-engine
     update-types:
     - version-update:semver-major
