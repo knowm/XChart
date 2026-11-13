@@ -16,7 +16,7 @@
     <properties>
         <!-- skip test compilation during release:prepare's clean verify subprocess -->
         <maven.test.skip>true</maven.test.skip>
-        <javafx.version>17.0.20</javafx.version>
+        <javafx.version>17.0.21</javafx.version>
     </properties>
     <dependencies>
         <dependency>
