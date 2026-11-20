@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.knowm.xchart.CategorySeries.CategorySeriesRenderStyle;
 import org.knowm.xchart.custom.CustomGraphic;
 import org.knowm.xchart.custom.CustomTheme;
+import org.knowm.xchart.internal.Utils;
 import org.knowm.xchart.internal.series.Series;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.ChartTheme;
@@ -148,6 +149,118 @@ public class CategoryChartTest {
         () -> assertThat(series.getYData()).containsExactly(-40.0, 40.8, 20.0, 60.0, 60.0),
         () -> assertThat(series.getExtraValues()).containsExactly(3.0, 3.0, 4.0, 3.0, 5.0),
         () -> assertThat(series.getYData()).hasSize(5));
+  }
+
+  @Test
+  void primitiveYWithCategoriesMatchesListSeries() {
+    List<List<?>> categories =
+        Arrays.asList(
+            Arrays.asList("B", "A"),
+            Arrays.asList(new Date(86400000), new Date(0)),
+            Arrays.asList(20, 10));
+    for (int i = 0; i < categories.size(); i++) {
+      List<?> xData = categories.get(i);
+      CategorySeries doubles =
+          chart.addSeriesWithCategories(
+              "double" + i, xData, new double[] {-2.5, 4}, new double[] {0.5, 1.5});
+      CategorySeries expectedDoubles =
+          chart.addSeries(
+              "listDouble" + i, xData, Arrays.asList(-2.5, 4.0), Arrays.asList(0.5, 1.5));
+      assertCategoryDataEquals(expectedDoubles, doubles);
+      CategorySeries integers =
+          chart.addSeriesWithCategories("int" + i, xData, new int[] {-2, 4}, new int[] {1, 2});
+      CategorySeries expectedIntegers =
+          chart.addSeries("listInt" + i, xData, Arrays.asList(-2, 4), Arrays.asList(1, 2));
+      assertCategoryDataEquals(expectedIntegers, integers);
+      assertSame(doubles, chart.getSeries("double" + i));
+      assertSame(integers, chart.getSeries("int" + i));
+    }
+  }
+
+  @Test
+  void primitiveYWithCategoriesSupportsMissingCategoriesAndErrorBars() {
+    CategorySeries doubles = chart.addSeriesWithCategories("double", null, new double[] {2.5, 4});
+    CategorySeries integers = chart.addSeriesWithCategories("int", null, new int[] {2, 4});
+    assertCategoryDataEquals(chart.addSeries("listDouble", null, Arrays.asList(2.5, 4.0)), doubles);
+    assertCategoryDataEquals(chart.addSeries("listInt", null, Arrays.asList(2, 4)), integers);
+    assertEquals(Arrays.asList(1.0, 2.0), doubles.getXData());
+    assertThat(doubles.getExtraValues()).isNull();
+    assertThat(integers.getExtraValues()).isNull();
+    assertCategoryDataEquals(
+        chart.addSeries("noErrors", Arrays.asList("A", "B"), Arrays.asList(2, 4)),
+        chart.addSeriesWithCategories("namedNoErrors", Arrays.asList("A", "B"), new int[] {2, 4}));
+  }
+
+  @Test
+  void primitiveYWithCategoriesPreservesListValidationAndFailedInsertion() {
+    assertPrimitiveCategoryFailure(Arrays.asList("A"), null, null);
+    assertPrimitiveCategoryFailure(Arrays.asList("A"), new int[] {}, null);
+    assertPrimitiveCategoryFailure(Collections.emptyList(), new int[] {1}, null);
+    assertPrimitiveCategoryFailure(Arrays.asList("A", "B"), new int[] {1}, null);
+    assertPrimitiveCategoryFailure(Arrays.asList("A"), new int[] {1}, new int[] {1, 2});
+    assertPrimitiveCategoryFailure(Arrays.asList(new Object()), new int[] {1}, null);
+    chart.addSeries("duplicate", null, Arrays.asList(1));
+    for (boolean integerY : new boolean[] {false, true}) {
+      assertThatThrownBy(
+              () -> {
+                if (integerY) {
+                  chart.addSeriesWithCategories("duplicate", null, (int[]) null);
+                } else {
+                  chart.addSeriesWithCategories("duplicate", null, (double[]) null);
+                }
+              })
+          .isInstanceOf(IllegalArgumentException.class)
+          .hasMessage(
+              "Series name >duplicate< has already been used. Use unique names for each series!!!");
+    }
+    assertThat(chart.getSeriesCollection())
+        .extracting(CategorySeries::getName)
+        .containsExactly("duplicate");
+  }
+
+  @Test
+  void existingPrimitiveNullCategoryCallsRemainUnambiguous() {
+    chart.addSeries("double", null, new double[] {1});
+    chart.addSeries("int", null, new int[] {1});
+    chart.addSeries("doubleErrors", null, new double[] {1}, null);
+    chart.addSeries("intErrors", null, new int[] {1}, null);
+    chart.addSeries("list", null, Arrays.asList(1));
+    chart.addSeries("listErrors", null, Arrays.asList(1), null);
+    assertThat(chart.getSeriesCollection()).hasSize(6);
+  }
+
+  private void assertPrimitiveCategoryFailure(List<?> xData, int[] yData, int[] errorBars) {
+    List<Double> yList = Utils.getNumberListFromIntArray(yData);
+    List<Double> errors = Utils.getNumberListFromIntArray(errorBars);
+    IllegalArgumentException expected =
+        assertThrows(
+            IllegalArgumentException.class, () -> chart.addSeries("invalid", xData, yList, errors));
+    IllegalArgumentException integers =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> chart.addSeriesWithCategories("invalid", xData, yData, errorBars));
+    double[] doubleY =
+        yList == null ? null : yList.stream().mapToDouble(Double::doubleValue).toArray();
+    double[] doubleErrors =
+        errors == null ? null : errors.stream().mapToDouble(Double::doubleValue).toArray();
+    IllegalArgumentException doubles =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> chart.addSeriesWithCategories("invalid", xData, doubleY, doubleErrors));
+    assertEquals(expected.getMessage(), integers.getMessage());
+    assertEquals(expected.getMessage(), doubles.getMessage());
+    assertThat(chart.getSeriesCollection()).isEmpty();
+  }
+
+  private void assertCategoryDataEquals(CategorySeries expected, CategorySeries actual) {
+    assertEquals(expected.getxAxisDataType(), actual.getxAxisDataType());
+    assertEquals(expected.getXData(), actual.getXData());
+    assertArrayEquals(expected.getYData(), actual.getYData());
+    assertArrayEquals(expected.getExtraValues(), actual.getExtraValues());
+    assertEquals(expected.getXMin(), actual.getXMin());
+    assertEquals(expected.getXMax(), actual.getXMax());
+    assertEquals(expected.getYMin(), actual.getYMin());
+    assertEquals(expected.getYMax(), actual.getYMax());
   }
 
   @Test
